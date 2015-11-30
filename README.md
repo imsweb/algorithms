@@ -23,7 +23,10 @@ The following algorithms are available:
 
 ## Download
 
-The library will soon be available on Maven Central.
+The library is available on [Maven Central](http://search.maven.org/); type `g:"com.imsweb" AND a:"algorithms"` in the search to find it.
+
+You can check out the [release page](https://github.com/imsweb/algorithms/releases) for a list of the releases and their changes.
+
 
 ## Algorithm versions
 
