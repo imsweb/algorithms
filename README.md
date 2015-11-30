@@ -23,7 +23,9 @@ The following algorithms are available:
 
 ## Download
 
-The library is available on [Maven Central](http://search.maven.org/); type `g:"com.imsweb" AND a:"algorithms"` in the search to find it.
+The library is available on [Maven Central](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.imsweb%22%20AND%20a%3A%22algorithms%22).
+
+To include it to your Maven or Gradle project, use the group ID `com.imsweb` and the artifact ID `algorithms`.
 
 You can check out the [release page](https://github.com/imsweb/algorithms/releases) for a list of the releases and their changes.
 
