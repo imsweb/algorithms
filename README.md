@@ -1,4 +1,4 @@
-# Algorithms
+# SEER Algorithms
 
 [![Build Status](https://travis-ci.org/imsweb/algorithms.svg?branch=master)](https://travis-ci.org/imsweb/algorithms)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.imsweb/algorithms/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.imsweb/algorithms)
