@@ -1,0 +1,99 @@
+seqNumCentral,icdRevisionNum,causeOfDeath,primarySite,histology,dolcYear,vitalStatus,cause-specific,cause-other,comment
+,1,C798,C400,8000,2012,,9,9,null sequence number
+AA,1,C798,C400,8000,2012,,9,9,invalid sequence number
+02,1,C798,C400,8000,2012,,9,9,not supported sequence number
+66,,,,,,,9,9,not supported sequence number
+00,2,C798,C400,8000,2012,,0,1,not supported icd revision
+01,A,C798,C400,8000,2012,,0,1,invalid icd revision
+00,,C798,C400,8000,2012,,0,1,null icd revision
+00,0,C798,C400,8000,2012,,0,0,patient is alive
+00,0,,,,,,0,0,patient is alive
+00,1,,C809,8100,2012,4,0,1,cod blank patient dead
+00,1,,C809,8100,2012,1,0,0,cod blank patient alive
+00,1,,C809,8100,2012,,0,0,cod blank 
+00,8,140 ,,,,,1,0,icd-8 sequence 00 any cancer (140-239)
+00,8,1407,C809,8000,2012,,1,0,icd-8 sequence 00 any cancer (140-239)
+00,8,161 ,,8000,2012,,1,0,icd-8 sequence 00 any cancer (140-239)
+00,8,2222,C809,,2012,,1,0,icd-8 sequence 00 any cancer (140-239)
+00,8,2399,,,2012,,1,0,icd-8 sequence 00 any cancer (140-239)
+00,8,2759,C809,8000,2012,,1,0,icd-8 sequence 00 site specific miscellaneous
+00,8,2840,C100,9740,2012,,1,0,icd-8 sequence 00 site specific miscellaneous
+00,8,2840,C100,9740,2012,,1,0,icd-8 sequence 00 site specific miscellaneous
+00,8,5960,C569,8140,2012,,1,0,icd-8 sequence 00 site specific ovary
+00,8,614 ,C569,8140,2012,,1,0,icd-8 sequence 00 site specific ovary
+00,8,6139,C569,8140,2012,,1,0,icd-8 sequence 00 site specific ovary
+00,8,6152,C569,8140,2012,,1,0,icd-8 sequence 00 site specific ovary
+00,8,6158,C569,8140,2012,,1,0,icd-8 sequence 00 site specific ovary
+01,8,199 ,C569,8140,2012,,1,0,icd-8 sequence 01 unknown primary and secondary site
+01,8,1998,C700,,2012,,1,0,icd-8 sequence 01 unknown primary and secondary site
+01,8,172 ,C900,8799,2012,,1,0,icd-8 sequence 01 melanoma
+01,8,2169,,8740,2012,,1,0,icd-8 sequence 01 melanoma
+01,8,2322,,8720,2012,,1,0,icd-8 sequence 01 melanoma
+01,8,1894,C659,8200,2012,,1,0,icd-8 sequence 01 site specific kidney and renal pelvis
+01,8,1981,C649,8200,2012,,1,0,icd-8 sequence 01 site specific kidney and renal pelvis
+01,8,224 ,C659,8100,2012,,1,0,icd-8 sequence 01 site specific kidney and renal pelvis
+01,8,5933,C649,8300,2012,,1,0,icd-8 sequence 01 site specific kidney and renal pelvis
+00,9,1686,C809,8000,2012,,1,0,icd-9 sequence 00 any cancer (140-239)
+00,9,222 ,,8000,2012,,1,0,icd-9 sequence 00 any cancer (140-239)
+00,9,239 ,C809,,2012,,1,0,icd-9 sequence 00 any cancer (140-239)
+00,9,0422,,,2012,,1,0,icd-9 sequence 00 hiv and malignant (042.2)
+00,9,0421,C140,9589,2012,,1,0,icd-9 sequence 00 site specific oral cavity and pharynx
+00,9,0429,C142,8000,2012,,1,0,icd-9 sequence 00 site specific oral cavity and pharynx
+00,9,0444,C148,8900,2012,,1,0,icd-9 sequence 00 site specific oral cavity and pharynx
+01,9,199 ,,8000,2012,,1,0,icd-9 sequence 01 unknown primary and secondary site
+01,9,1990,C100,9000,2012,,1,0,icd-9 sequence 01 unknown primary and secondary site
+01,9,1725,C900,8799,2012,,1,0,icd-9 sequence 01 melanoma
+01,9,2164,,8740,2012,,1,0,icd-9 sequence 01 melanoma
+01,9,232 ,C809,8720,2012,,1,0,icd-9 sequence 01 melanoma
+01,9,2308,C240,8199,2012,,1,0,icd-9 sequence 01 site specific other biliary
+01,9,5333,C244,8040,2012,,1,0,icd-9 sequence 01 site specific other biliary
+01,9,578 ,C249,8220,2012,,1,0,icd-9 sequence 01 site specific other biliary
+00,1,C00 ,,,2012,,1,0,icd-10 sequence 00 any cancer (C00-D489)
+00,1,C98 ,C705,8022,2012,,1,0,icd-10 sequence 00 any cancer (C00-D489)
+00,1,C777,,,2012,,1,0,icd-10 sequence 00 any cancer (C00-D489)
+00,1,D00 ,C809,,2012,,1,0,icd-10 sequence 00 any cancer (C00-D489)
+00,1,D48 ,,8989,2012,,1,0,icd-10 sequence 00 any cancer (C00-D489)
+00,1,D227,C105,9022,2012,,1,0,icd-10 sequence 00 any cancer (C00-D489)
+00,1,B21 ,C000,,2012,,1,0,icd-10 sequence 00 aids and cancer (B210-B219)
+00,1,B210,,,2012,,1,0,icd-10 sequence 00 aids and cancer (B210-B219)
+00,1,B215,C111,8888,2012,,1,0,icd-10 sequence 00 aids and cancer (B210-B219)
+00,1,D36 ,,9950,2012,,1,0,icd-10 sequence 00 last rows under miscellaneous
+00,1,D455,,9960,2012,,1,0,icd-10 sequence 00 last rows under miscellaneous
+00,1,D466,,9962,2012,,1,0,icd-10 sequence 00 last rows under miscellaneous
+00,1,D477,,9989,2012,,1,0,icd-10 sequence 00 last rows under miscellaneous
+00,1,B20 ,C210,8950,2012,,1,0,icd-10 sequence 00 site specific Anus, Anal Canal and Anorectum
+00,1,K531,C211,8960,2012,,1,0,icd-10 sequence 00 site specific Anus, Anal Canal and Anorectum
+00,1,K578,C212,8962,2012,,1,0,icd-10 sequence 00 site specific Anus, Anal Canal and Anorectum
+00,1,K920,C218,8989,2012,,1,0,icd-10 sequence 00 site specific Anus, Anal Canal and Anorectum
+01,1,C798,,,2012,,1,0,icd-10 sequence 01 secondary other specified (C798)
+01,1,C80 ,C705,8022,2012,,1,0,icd-10 sequence 01 unknown primary (C80)
+01,1,C805,,,2012,,1,0,icd-10 sequence 01 unknown primary (C80)
+01,1,C978,C809,,2012,,1,0,icd-10 sequence 01 multiple cancer (C97)
+01,1,D489,,8989,2012,,1,0,icd-10 sequence 01 neoplasm nos (D489)
+01,1,C770,C111,9950,2012,,1,0,icd-10 sequence 01 last 4 rows under miscellaneous
+01,1,C857,C000,9960,2012,,1,0,icd-10 sequence 01 last 4 rows under miscellaneous
+01,1,C94 ,,9963,2012,,1,0,icd-10 sequence 01 last 4 rows under miscellaneous
+01,1,D365,C223,9985,2012,,1,0,icd-10 sequence 01 last 4 rows under miscellaneous
+01,1,D478,C800,9989,2012,,1,0,icd-10 sequence 01 last 4 rows under miscellaneous
+01,1,C002,C423,8950,2012,,1,0,icd-10 sequence 01 site specific miscellaneous other
+01,1,D48 ,C760,8960,2012,,1,0,icd-10 sequence 01 site specific miscellaneous other
+01,1,D430,C809,8963,2012,,1,0,icd-10 sequence 01 site specific miscellaneous other
+01,1,D619,C774,8985,2012,,1,0,icd-10 sequence 01 site specific miscellaneous other
+01,1,C43 ,C900,8799,2012,,1,0,icd-10 sequence 01 melanoma
+01,1,D036,,8740,2012,,1,0,icd-10 sequence 01 melanoma
+01,1,D220,C000,8720,2012,,1,0,icd-10 sequence 01 melanoma
+01,1,D375,C480,8199,2012,,1,0,icd-10 sequence 01 site specific Retroperitoneum
+01,1,K29 ,C480,8140,2012,,1,0,icd-10 sequence 01 site specific Retroperitoneum
+01,1,K510,C480,8120,2012,,1,0,icd-10 sequence 01 site specific Retroperitoneum
+00,8,139 ,,,,,0,1,icd-8 sequence 00 NOT in any cancer (140-239)
+00,8,7865,C619,8300,,,0,1,icd-8 sequence 00 not NOT site specific prostate
+00,8,6089,C619,8300,,,0,1,icd-8 sequence 00 not NOT site specific prostate
+01,8,2323,C619,8720,,,0,1,icd-8 sequence 01 not NOT site specific melanoma
+00,9,0420,C619,8220,,,0,1,icd-9 sequence 00 not NOT any cancer or hiv malignant
+00,9,0420,C140,8220,,,1,0,icd-9 sequence 00 site specific Other Oral Cavity and Pharynx
+00,9,0420,C180,8220,,,0,1,icd-9 sequence 00 not site specific cecum
+00,1,B235,C145,8220,,,1,0,icd-10 sequence 00 site specific Oral Cavity and Pharynx
+01,9,2362,C580,8220,,,1,0,icd-9 sequence 01 site specific Other female genital organs
+00,8,7857,C215,8220,,,0,1,icd-8 sequence 00 not in any cancer (140-239)
+01,1,D375,,8100,2012,,0,1,site blank
+01,1,D375,C480,,2012,,0,1,histology blank

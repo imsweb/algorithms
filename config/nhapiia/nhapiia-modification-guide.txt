@@ -1,0 +1,11 @@
+Steps to modify Nhia/Napiia from sas code:
+1. Read the sas code and the change document (if any) and apply them to NhiaUtils and NapiiaUtils.
+2. Usually since the data (name and hispanic percentage) also changed, get the new version of sas export file (.xpt).
+3. Then copy the printformat.sas code in this project folder and and the xpt folder to home folder (eg H://Napiia)
+4. Edit the sas code to modify the xpt file and the lst output file location.
+5. Run the sas code (sas printformat.sas)
+6. You will get the lst file, which has all the name, county hispanic percentage data.
+7. Then there is a java class NhapiiaFormatsLab under test/java/lab. Run this class's main method to get those nhia and napiia csv files under main/resources/tools.
+   (You may need to change the formats name (tables name) if it is changed in saS, like ($PCT_HSP was converted to $PCT10_HSP) in 2013/09/12)
+8. Create a new folder under config/nhapiia and save the xpt, lst and sas code.
+  
