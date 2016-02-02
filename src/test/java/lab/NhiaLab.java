@@ -76,7 +76,7 @@ public class NhiaLab {
             else if ("2".equals(option))
                 opt2List.add(rec);
             else
-                throw new RuntimeException("Unsuppoted option: " + option);
+                throw new RuntimeException("Unsupported option: " + option);
 
         }
 
