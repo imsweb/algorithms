@@ -175,8 +175,8 @@ public abstract class MPGroup {
                 if (parts.length <= 1)
                     result.add(range);
                 else {
-                    int start = Integer.valueOf(parts[0]);
-                    int end = Integer.valueOf(parts[1]);
+                    Integer start = Integer.valueOf(parts[0]);
+                    Integer end = Integer.valueOf(parts[1]);
                     while (start <= end) {
                         result.add(String.valueOf(start++));
                     }
