@@ -29,7 +29,7 @@ public class MPGroupLung extends MPGroup {
             @Override
             public MPRuleResult apply(MPInput i1, MPInput i2) {
                 MPRuleResult result = new MPRuleResult();
-                result.setResult(differentCategory(i1.getHistologIcdO3(), i2.getHistologIcdO3(), Collections.singletonList("8046"), Arrays.asList("8041", "8042", "8043", "8044",
+                result.setResult(differentCategory(i1.getHistologyIcdO3(), i2.getHistologyIcdO3(), Collections.singletonList("8046"), Arrays.asList("8041", "8042", "8043", "8044",
                         "8045")) ? RuleResult.TRUE : RuleResult.FALSE);
                 return result;
             }
@@ -43,7 +43,7 @@ public class MPGroupLung extends MPGroup {
             @Override
             public MPRuleResult apply(MPInput i1, MPInput i2) {
                 MPRuleResult result = new MPRuleResult();
-                result.setResult(differentCategory(i1.getHistologIcdO3(), i2.getHistologIcdO3(), Collections.singletonList("8255"), Arrays.asList("8250", "8251", "8252", "8253",
+                result.setResult(differentCategory(i1.getHistologyIcdO3(), i2.getHistologyIcdO3(), Collections.singletonList("8255"), Arrays.asList("8250", "8251", "8252", "8253",
                         "8254")) ? RuleResult.TRUE : RuleResult.FALSE);
                 return result;
             }
@@ -81,7 +81,7 @@ public class MPGroupLung extends MPGroup {
                 if (i1.getLaterality().equals(i2.getLaterality()) && !"4".equals(i1.getLaterality()))
                     result.setResult(RuleResult.FALSE);
                 else {
-                    String hist1 = i1.getHistologIcdO3(), hist2 = i2.getHistologIcdO3();
+                    String hist1 = i1.getHistologyIcdO3(), hist2 = i2.getHistologyIcdO3();
                     result.setResult(((hist1.charAt(0) != hist2.charAt(0)) || (hist1.charAt(1) != hist2.charAt(1)) || (hist1.charAt(2) != hist2.charAt(
                             2))) ? RuleResult.TRUE : RuleResult.FALSE);
                 }
@@ -123,7 +123,7 @@ public class MPGroupLung extends MPGroup {
                 MPRuleResult result = new MPRuleResult();
                 List<String> specificNonSmall = Arrays.asList("8033", "8980", "8031", "8022", "8972", "8032", "8012", "8140", "8200", "8430", "8560", "8070", "8550", "8255", "8251", "8250", "8252",
                         "8253", "8254", "8310", "8470", "8480", "8481", "8260", "8490", "8230", "8333", "8013", "8014", "8082", "8123", "8310", "8083", "8052", "8084", "8071", "8072", "8073");
-                result.setResult(differentCategory(i1.getHistologIcdO3(), i2.getHistologIcdO3(), Collections.singletonList("8046"), specificNonSmall) ? RuleResult.TRUE : RuleResult.FALSE);
+                result.setResult(differentCategory(i1.getHistologyIcdO3(), i2.getHistologyIcdO3(), Collections.singletonList("8046"), specificNonSmall) ? RuleResult.TRUE : RuleResult.FALSE);
                 return result;
             }
         };

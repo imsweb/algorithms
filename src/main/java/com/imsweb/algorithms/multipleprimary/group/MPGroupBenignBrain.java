@@ -91,7 +91,7 @@ public class MPGroupBenignBrain extends MPGroup {
                 }
                 else
                     result.setResult(!i1.getLaterality().equals(i2.getLaterality()) ? RuleResult.TRUE : RuleResult.FALSE);
-                    
+
                 return result;
             }
         };
@@ -104,11 +104,21 @@ public class MPGroupBenignBrain extends MPGroup {
             @Override
             public MPRuleResult apply(MPInput i1, MPInput i2) {
                 MPRuleResult result = new MPRuleResult();
-                if (!"9390".equals(i1.getHistologIcdO3()) || !"9390".equals(i2.getHistologIcdO3()))
+                if (!"9390".equals(i1.getHistologyIcdO3()) || !"9390".equals(i2.getHistologyIcdO3()))
                     result.setResult(RuleResult.FALSE);
-                else
-                   result.setResult(differentCategory(i1.getBehaviorIcdO3(), i2.getBehaviorIcdO3(), Arrays.asList("0"), Arrays.asList("1"))? RuleResult.TRUE : RuleResult.FALSE);
-                
+                else {
+                    int laterDiagnosedTumor = MPGroup.compareDxDate(i1, i2);
+                    if (-1 == laterDiagnosedTumor) { //If impossible to decide which tumor is diagnosed later
+                        result.setResult(RuleResult.UNKNOWN);
+                        result.setMessage("Unable to apply Rule" + this.getStep() + " of " + this.getGroupId() + ". Known diagnosis date should be provided.");
+                    }
+                    else if (1 == laterDiagnosedTumor && "1".equals(i1.getBehaviorIcdO3()) && "0".equals(i2.getBehaviorIcdO3()))
+                        result.setResult(RuleResult.TRUE);
+                    else if (2 == laterDiagnosedTumor && "1".equals(i2.getBehaviorIcdO3()) && "0".equals(i1.getBehaviorIcdO3()))
+                        result.setResult(RuleResult.TRUE);
+                    else
+                        result.setResult(RuleResult.FALSE);
+                }
                 return result;
             }
         };
@@ -122,10 +132,21 @@ public class MPGroupBenignBrain extends MPGroup {
             @Override
             public MPRuleResult apply(MPInput i1, MPInput i2) {
                 MPRuleResult result = new MPRuleResult();
-                if (!"9540".equals(i1.getHistologIcdO3()) || !"9540".equals(i2.getHistologIcdO3()))
+                if (!"9540".equals(i1.getHistologyIcdO3()) || !"9540".equals(i2.getHistologyIcdO3()))
                     result.setResult(RuleResult.FALSE);
-                else
-                    result.setResult(differentCategory(i1.getBehaviorIcdO3(), i2.getBehaviorIcdO3(), Arrays.asList("0"), Arrays.asList("1")) ? RuleResult.TRUE : RuleResult.FALSE);
+                else {
+                    int laterDiagnosedTumor = MPGroup.compareDxDate(i1, i2);
+                    if (-1 == laterDiagnosedTumor) { //If impossible to decide which tumor is diagnosed first
+                        result.setResult(RuleResult.UNKNOWN);
+                        result.setMessage("Unable to apply Rule" + this.getStep() + " of " + this.getGroupId() + ". Known diagnosis date should be provided.");
+                    }
+                    else if (1 == laterDiagnosedTumor && "1".equals(i1.getBehaviorIcdO3()) && "0".equals(i2.getBehaviorIcdO3()))
+                        result.setResult(RuleResult.TRUE);
+                    else if (2 == laterDiagnosedTumor && "1".equals(i2.getBehaviorIcdO3()) && "0".equals(i1.getBehaviorIcdO3()))
+                        result.setResult(RuleResult.TRUE);
+                    else
+                        result.setResult(RuleResult.FALSE);
+                }
 
                 return result;
             }
@@ -140,19 +161,14 @@ public class MPGroupBenignBrain extends MPGroup {
             @Override
             public MPRuleResult apply(MPInput i1, MPInput i2) {
                 MPRuleResult result = new MPRuleResult();
-                //two or more histologic types
-                if (i1.getHistologIcdO3().equals(i2.getHistologIcdO3())){
-                    result.setResult(RuleResult.FALSE);
-                    return result;
-                }
-                String icd1 = i1.getHistologIcdO3() + "/" + i1.getBehaviorIcdO3(), icd2 = i2.getHistologIcdO3() + "/" + i2.getBehaviorIcdO3();
-                String branch1 = _CHART1_MAP.get(icd1) != null ? _CHART1_MAP.get(icd1) : _CHART1_MAP.get(i1.getHistologIcdO3());
-                String branch2 = _CHART1_MAP.get(icd2) != null ? _CHART1_MAP.get(icd2) : _CHART1_MAP.get(i2.getHistologIcdO3());
+                String icd1 = i1.getHistologyIcdO3() + "/" + i1.getBehaviorIcdO3(), icd2 = i2.getHistologyIcdO3() + "/" + i2.getBehaviorIcdO3();
+                String branch1 = _CHART1_MAP.get(icd1) != null ? _CHART1_MAP.get(icd1) : _CHART1_MAP.get(i1.getHistologyIcdO3());
+                String branch2 = _CHART1_MAP.get(icd2) != null ? _CHART1_MAP.get(icd2) : _CHART1_MAP.get(i2.getHistologyIcdO3());
                 if (branch1 == null || branch2 == null)
                     result.setResult(RuleResult.FALSE);
                 else
                     result.setResult(branch1.equals(branch2) ? RuleResult.TRUE : RuleResult.FALSE);
-                
+
                 return result;
             }
         };
@@ -165,19 +181,14 @@ public class MPGroupBenignBrain extends MPGroup {
             @Override
             public MPRuleResult apply(MPInput i1, MPInput i2) {
                 MPRuleResult result = new MPRuleResult();
-                //two or more histologic types
-                if (i1.getHistologIcdO3().equals(i2.getHistologIcdO3())){
-                    result.setResult(RuleResult.FALSE);
-                    return result;
-                }
-                String icd1 = i1.getHistologIcdO3() + "/" + i1.getBehaviorIcdO3(), icd2 = i2.getHistologIcdO3() + "/" + i2.getBehaviorIcdO3();
-                String branch1 = _CHART1_MAP.get(icd1) != null ? _CHART1_MAP.get(icd1) : _CHART1_MAP.get(i1.getHistologIcdO3());
-                String branch2 = _CHART1_MAP.get(icd2) != null ? _CHART1_MAP.get(icd2) : _CHART1_MAP.get(i2.getHistologIcdO3());
+                String icd1 = i1.getHistologyIcdO3() + "/" + i1.getBehaviorIcdO3(), icd2 = i2.getHistologyIcdO3() + "/" + i2.getBehaviorIcdO3();
+                String branch1 = _CHART1_MAP.get(icd1) != null ? _CHART1_MAP.get(icd1) : _CHART1_MAP.get(i1.getHistologyIcdO3());
+                String branch2 = _CHART1_MAP.get(icd2) != null ? _CHART1_MAP.get(icd2) : _CHART1_MAP.get(i2.getHistologyIcdO3());
                 if (branch1 == null || branch2 == null)
                     result.setResult(RuleResult.FALSE);
                 else
                     result.setResult(!branch1.equals(branch2) ? RuleResult.TRUE : RuleResult.FALSE);
-                
+
                 return result;
             }
         };
@@ -190,20 +201,15 @@ public class MPGroupBenignBrain extends MPGroup {
             @Override
             public MPRuleResult apply(MPInput i1, MPInput i2) {
                 MPRuleResult result = new MPRuleResult();
-                //two or more histologic types
-                if (i1.getHistologIcdO3().equals(i2.getHistologIcdO3())){
-                    result.setResult(RuleResult.FALSE);
-                    return result;
-                }
-                String icd1 = i1.getHistologIcdO3() + "/" + i1.getBehaviorIcdO3(), icd2 = i2.getHistologIcdO3() + "/" + i2.getBehaviorIcdO3();
-                String branch1 = _CHART1_MAP.get(icd1) != null ? _CHART1_MAP.get(icd1) : _CHART1_MAP.get(i1.getHistologIcdO3());
-                String branch2 = _CHART1_MAP.get(icd2) != null ? _CHART1_MAP.get(icd2) : _CHART1_MAP.get(i2.getHistologIcdO3());
+                String icd1 = i1.getHistologyIcdO3() + "/" + i1.getBehaviorIcdO3(), icd2 = i2.getHistologyIcdO3() + "/" + i2.getBehaviorIcdO3();
+                String branch1 = _CHART1_MAP.get(icd1) != null ? _CHART1_MAP.get(icd1) : _CHART1_MAP.get(i1.getHistologyIcdO3());
+                String branch2 = _CHART1_MAP.get(icd2) != null ? _CHART1_MAP.get(icd2) : _CHART1_MAP.get(i2.getHistologyIcdO3());
                 //This rule is used only when one histology code is listed in chart and the other not, see note for M11
                 if (branch1 == null && branch2 == null)
                     result.setResult(RuleResult.FALSE);
                 else
                     result.setResult((branch1 == null || branch2 == null) ? RuleResult.TRUE : RuleResult.FALSE);
-                
+
                 return result;
             }
         };

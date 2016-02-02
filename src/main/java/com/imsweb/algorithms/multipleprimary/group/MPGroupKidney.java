@@ -23,7 +23,7 @@ public class MPGroupKidney extends MPGroup {
             @Override
             public MPRuleResult apply(MPInput i1, MPInput i2) {
                 MPRuleResult result = new MPRuleResult();
-                if ("3".equals(i1.getBehaviorIcdO3()) && "3".equals(i2.getBehaviorIcdO3()) && "8960".equals(i1.getHistologIcdO3()) && "8960".equals(i2.getHistologIcdO3()))
+                if ("3".equals(i1.getBehaviorIcdO3()) && "3".equals(i2.getBehaviorIcdO3()) && "8960".equals(i1.getHistologyIcdO3()) && "8960".equals(i2.getHistologyIcdO3()))
                     result.setResult(RuleResult.TRUE);
                 else
                     result.setResult(RuleResult.FALSE);
@@ -58,7 +58,7 @@ public class MPGroupKidney extends MPGroup {
         rule.getNotes().add("Abstract as a single primary when the tumors in one kidney are documented to be metastatic from the other kidney.");
         _rules.add(rule);
 
-        // M6 - Tumors diagnosed more than three (3) years apart are multiple primaries. 
+        // M6 - Tumors diagnosed more than three (3) years apart are multiple primaries.
         rule = new MPRule("kidney", "M6", MPResult.MULTIPLE_PRIMARIES) {
             @Override
             public MPRuleResult apply(MPInput i1, MPInput i2) {
@@ -88,7 +88,7 @@ public class MPGroupKidney extends MPGroup {
             public MPRuleResult apply(MPInput i1, MPInput i2) {
                 MPRuleResult result = new MPRuleResult();
                 List<String> specificRenalCellType = Arrays.asList("8260", "8310", "8316", "8317", "8318", "8319", "8320", "8510", "8959");
-                String hist1 = i1.getHistologIcdO3(), hist2 = i2.getHistologIcdO3();
+                String hist1 = i1.getHistologyIcdO3(), hist2 = i2.getHistologyIcdO3();
                 result.setResult((specificRenalCellType.containsAll(Arrays.asList(hist1, hist2)) && !hist1.equals(hist2)) ? RuleResult.TRUE : RuleResult.FALSE);
                 return result;
             }
@@ -102,10 +102,10 @@ public class MPGroupKidney extends MPGroup {
             @Override
             public MPRuleResult apply(MPInput i1, MPInput i2) {
                 MPRuleResult result = new MPRuleResult();
-                String hist1 = i1.getHistologIcdO3(), hist2 = i2.getHistologIcdO3();
+                String hist1 = i1.getHistologyIcdO3(), hist2 = i2.getHistologyIcdO3();
                 List<String> nosList = Arrays.asList("8000", "8010", "8140", "8312");
-                if ((nosList.contains(hist1) && getNoSvsSpecificMap().containsKey(hist1) && getNoSvsSpecificMap().get(hist1).contains(hist2)) || (nosList.contains(hist2) && getNoSvsSpecificMap().containsKey(
-                        hist2) && getNoSvsSpecificMap().get(hist2).contains(hist1)))
+                if ((nosList.contains(hist1) && getNosVsSpecificMap().containsKey(hist1) && getNosVsSpecificMap().get(hist1).contains(hist2)) || (nosList.contains(hist2) && getNosVsSpecificMap().containsKey(
+                        hist2) && getNosVsSpecificMap().get(hist2).contains(hist1)))
                     result.setResult(RuleResult.TRUE);
                 else
                     result.setResult(RuleResult.FALSE);

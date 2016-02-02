@@ -7,7 +7,7 @@ public class MPInput {
 
     private String _primarySite;
 
-    private String _histologIcdO3;
+    private String _histologyIcdO3;
 
     private String _behaviorIcdO3;
 
@@ -27,12 +27,12 @@ public class MPInput {
         _primarySite = primarySite;
     }
 
-    public String getHistologIcdO3() {
-        return _histologIcdO3;
+    public String getHistologyIcdO3() {
+        return _histologyIcdO3;
     }
 
-    public void setHistologIcdO3(String histologIcdO3) {
-        _histologIcdO3 = histologIcdO3;
+    public void setHistologyIcdO3(String histologyIcdO3) {
+        _histologyIcdO3 = histologyIcdO3;
     }
 
     public String getBehaviorIcdO3() {

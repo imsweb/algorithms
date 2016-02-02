@@ -20,6 +20,7 @@ public class MPGroupMalignantBrain extends MPGroup {
     private static final Map<String, String> _CHART1_MAP = new HashMap<>();
 
     static {
+        _CHART1_MAP.put("9503", "Neuroepithelial"); //This is included in all branches
         _CHART1_MAP.put("9508", "Embryonal tumors"); //Atypical tetratoid/rhabdoid tumor
         _CHART1_MAP.put("9392", "Embryonal tumors"); //Ependymoblastoma
         _CHART1_MAP.put("9501", "Embryonal tumors"); //Medulloepithelioma
@@ -40,21 +41,21 @@ public class MPGroupMalignantBrain extends MPGroup {
         _CHART1_MAP.put("9522", "Neuroblastic tumors"); //Olfactory neuroblastoma
         _CHART1_MAP.put("9521", "Neuroblastic tumors"); //Olfactory neurocytoma
         _CHART1_MAP.put("9523", "Neuroblastic tumors"); //Olfactory neuroepithlioma
-        _CHART1_MAP.put("9380", "Gilal tumors"); //Glioma, NOS
-        _CHART1_MAP.put("9430", "Gilal tumors"); //Astroblastoma
-        _CHART1_MAP.put("9381", "Gilal tumors"); //Gliomatosis cerebri
-        _CHART1_MAP.put("9423", "Gilal tumors"); //Polar spongioblastoma
-        _CHART1_MAP.put("9382", "Gilal tumors"); //Mixed glioma
-        _CHART1_MAP.put("9400", "Gilal tumors"); //Astrocytoma, NOS
-        _CHART1_MAP.put("9401", "Gilal tumors"); //Anaplastic astrocytoma
-        _CHART1_MAP.put("9420", "Gilal tumors"); //Fibrillary astrocytoma
-        _CHART1_MAP.put("9411", "Gilal tumors"); //Gemistocytic astrocytoma
-        _CHART1_MAP.put("9410", "Gilal tumors"); //Protoplasmic astromytoma
-        _CHART1_MAP.put("9421", "Gilal tumors"); //Pilocytic astrocytoma
-        _CHART1_MAP.put("9424", "Gilal tumors"); //Pleomorphic xanthoastrocytoma
-        _CHART1_MAP.put("9440", "Gilal tumors"); //Glioblastoma, NOS and Glioblastoma multiforme
-        _CHART1_MAP.put("9441", "Gilal tumors"); //Giant cell glioblastoma
-        _CHART1_MAP.put("9442", "Gilal tumors"); //Gliosarcoma
+        _CHART1_MAP.put("9380", "Glial tumors"); //Glioma, NOS
+        _CHART1_MAP.put("9430", "Glial tumors"); //Astroblastoma
+        _CHART1_MAP.put("9381", "Glial tumors"); //Gliomatosis cerebri
+        _CHART1_MAP.put("9423", "Glial tumors"); //Polar spongioblastoma
+        _CHART1_MAP.put("9382", "Glial tumors"); //Mixed glioma
+        _CHART1_MAP.put("9400", "Glial tumors"); //Astrocytoma, NOS
+        _CHART1_MAP.put("9401", "Glial tumors"); //Anaplastic astrocytoma
+        _CHART1_MAP.put("9420", "Glial tumors"); //Fibrillary astrocytoma
+        _CHART1_MAP.put("9411", "Glial tumors"); //Gemistocytic astrocytoma
+        _CHART1_MAP.put("9410", "Glial tumors"); //Protoplasmic astromytoma
+        _CHART1_MAP.put("9421", "Glial tumors"); //Pilocytic astrocytoma
+        _CHART1_MAP.put("9424", "Glial tumors"); //Pleomorphic xanthoastrocytoma
+        _CHART1_MAP.put("9440", "Glial tumors"); //Glioblastoma, NOS and Glioblastoma multiforme
+        _CHART1_MAP.put("9441", "Glial tumors"); //Giant cell glioblastoma
+        _CHART1_MAP.put("9442", "Glial tumors"); //Gliosarcoma
         _CHART1_MAP.put("9450", "Oligodendroglial tumors"); //Oligodendroglioma NOS
         _CHART1_MAP.put("9451", "Oligodendroglial tumors"); //Oligodendroglioma anaplastic
         _CHART1_MAP.put("9460", "Oligodendroglial tumors"); //Oligodendroblastoma
@@ -81,7 +82,7 @@ public class MPGroupMalignantBrain extends MPGroup {
     public MPGroupMalignantBrain() {
         super("malignant-brain", "Malignant Brain", "C700-C701,C709-C725,C728-C729,C751-C753", null, null, "9590-9989,9140", Arrays.asList("3"));
 
-        // M4 - An invasive brain tumor (/3) and either a benign brain tumor (/0) or an uncertain/borderline brain tumor (/1) are always multiple primaries.        
+        // M4 - An invasive brain tumor (/3) and either a benign brain tumor (/0) or an uncertain/borderline brain tumor (/1) are always multiple primaries.
         MPRule rule = new MPRule("malignant-brain", "M4", MPResult.MULTIPLE_PRIMARIES) {
             @Override
             public MPRuleResult apply(MPInput i1, MPInput i2) {
@@ -99,13 +100,23 @@ public class MPGroupMalignantBrain extends MPGroup {
         rule = new MPRulePrimarySiteCode("malignant-brain", "M5");
         _rules.add(rule);
 
-        // M6 - A glioblastoma or glioblastoma multiforme (9440) following a glial tumor is a single primary.   
+        // M6 - A glioblastoma or glioblastoma multiforme (9440) following a glial tumor is a single primary.
         rule = new MPRule("malignant-brain", "M6", MPResult.SINGLE_PRIMARY) {
             @Override
             public MPRuleResult apply(MPInput i1, MPInput i2) {
                 MPRuleResult result = new MPRuleResult();
-                List<String> gilal = Arrays.asList("9380", "9430", "9381", "9423", "9382", "9400", "9401", "9420", "9411", "9410", "9421", "9424", "9441", "9442");
-                result.setResult(differentCategory(i1.getHistologIcdO3(), i2.getHistologIcdO3(), Arrays.asList("9440"), gilal) ? RuleResult.TRUE : RuleResult.FALSE);
+                List<String> glial = Arrays.asList("9380", "9430", "9381", "9423", "9382", "9400", "9401", "9420", "9411", "9410", "9421", "9424", "9440", "9441", "9442");
+                int laterDiagnosedTumor = MPGroup.compareDxDate(i1, i2);
+                if (-1 == laterDiagnosedTumor) { //If impossible to decide which tumor is diagnosed later
+                    result.setResult(RuleResult.UNKNOWN);
+                    result.setMessage("Unable to apply Rule" + this.getStep() + " of " + this.getGroupId() + ". Known diagnosis date should be provided.");
+                }
+                else if (1 == laterDiagnosedTumor && "9440".equals(i1.getHistologyIcdO3()) && glial.contains(i2.getHistologyIcdO3()))
+                    result.setResult(RuleResult.TRUE);
+                else if (2 == laterDiagnosedTumor && "9440".equals(i2.getHistologyIcdO3()) && glial.contains(i1.getHistologyIcdO3()))
+                    result.setResult(RuleResult.TRUE);
+                else
+                    result.setResult(RuleResult.FALSE);
                 return result;
             }
         };
@@ -113,23 +124,18 @@ public class MPGroupMalignantBrain extends MPGroup {
         rule.setReason("A glioblastoma or glioblastoma multiforme (9440) following a glial tumor is a single primary.");
         _rules.add(rule);
 
-        // M7 - Tumors with ICD-O-3 histology codes on the same branch in Chart 1 or Chart 2 are a single primary.    
+        // M7 - Tumors with ICD-O-3 histology codes on the same branch in Chart 1 or Chart 2 are a single primary.
         rule = new MPRule("malignant-brain", "M7", MPResult.SINGLE_PRIMARY) {
             @Override
             public MPRuleResult apply(MPInput i1, MPInput i2) {
                 MPRuleResult result = new MPRuleResult();
-                //see example of M10, same histology should be caught there.
-                if (i1.getHistologIcdO3().equals(i2.getHistologIcdO3())) {
-                    result.setResult(RuleResult.FALSE);
-                    return result;
-                }
-                String branch1 = _CHART1_MAP.get(i1.getHistologIcdO3()), branch2 = _CHART1_MAP.get(i2.getHistologIcdO3());
-                if (branch1 != null && branch1.equals(branch2)) {
+                String branch1 = _CHART1_MAP.get(i1.getHistologyIcdO3()), branch2 = _CHART1_MAP.get(i2.getHistologyIcdO3());
+                if (branch1 != null && branch2 != null && (branch1.equals(branch2) || "Neuroepithelial".equals(branch1) || "Neuroepithelial".equals(branch2))) {
                     result.setResult(RuleResult.TRUE);
                     return result;
                 }
-                branch1 = _CHART2_MAP.get(i1.getHistologIcdO3());
-                branch2 = _CHART2_MAP.get(i2.getHistologIcdO3());
+                branch1 = _CHART2_MAP.get(i1.getHistologyIcdO3());
+                branch2 = _CHART2_MAP.get(i2.getHistologyIcdO3());
                 result.setResult((branch1 != null && branch1.equals(branch2)) ? RuleResult.TRUE : RuleResult.FALSE);
                 return result;
             }
@@ -140,23 +146,18 @@ public class MPGroupMalignantBrain extends MPGroup {
         rule.getExamples().add("Patient has an astrocytoma. Ten years later the patient is diagnosed with glioblastoma multiforme. This is a progression or recurrence of the earlier astrocytoma.");
         _rules.add(rule);
 
-        // M8 - Tumors with ICD-O-3 histology codes on different branches in Chart 1 or Chart 2 are multiple primaries.    
+        // M8 - Tumors with ICD-O-3 histology codes on different branches in Chart 1 or Chart 2 are multiple primaries.
         rule = new MPRule("malignant-brain", "M8", MPResult.MULTIPLE_PRIMARIES) {
             @Override
             public MPRuleResult apply(MPInput i1, MPInput i2) {
                 MPRuleResult result = new MPRuleResult();
-                //see example of M10, same histology should be caught there.
-                if (i1.getHistologIcdO3().equals(i2.getHistologIcdO3())) {
-                    result.setResult(RuleResult.FALSE);
-                    return result;
-                }
-                String branch1 = _CHART1_MAP.get(i1.getHistologIcdO3()), branch2 = _CHART1_MAP.get(i2.getHistologIcdO3());
-                if (branch1 != null && branch2 != null && !branch1.equals(branch2)) {
+                String branch1 = _CHART1_MAP.get(i1.getHistologyIcdO3()), branch2 = _CHART1_MAP.get(i2.getHistologyIcdO3());
+                if (branch1 != null && branch2 != null && !branch1.equals(branch2) && !"Neuroepithelial".equals(branch1) && !"Neuroepithelial".equals(branch2)) {
                     result.setResult(RuleResult.TRUE);
                     return result;
                 }
-                branch1 = _CHART2_MAP.get(i1.getHistologIcdO3());
-                branch2 = _CHART2_MAP.get(i2.getHistologIcdO3());
+                branch1 = _CHART2_MAP.get(i1.getHistologyIcdO3());
+                branch2 = _CHART2_MAP.get(i2.getHistologyIcdO3());
                 result.setResult((branch1 != null && branch2 != null && !branch1.equals(branch2)) ? RuleResult.TRUE : RuleResult.FALSE);
                 return result;
             }

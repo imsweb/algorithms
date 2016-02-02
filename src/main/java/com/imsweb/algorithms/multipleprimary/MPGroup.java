@@ -4,7 +4,6 @@
 package com.imsweb.algorithms.multipleprimary;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -23,15 +22,15 @@ import com.imsweb.algorithms.multipleprimary.MPUtils.RuleResult;
 public abstract class MPGroup {
 
     // List of specific histologies for a given NOS, this list is used in few of the groups
-    private static final Map<String, String> _NOSVSSPECIFIC_MAP = new HashMap<>();
+    private static final Map<String, String> _NOS_VS_SPECIFIC_MAP = new HashMap<>();
     static {
-        _NOSVSSPECIFIC_MAP.put("8000", "8001, 8002, 8003, 8004, 8005"); //Cancer/malignant neoplasm, NOS
-        _NOSVSSPECIFIC_MAP.put("8010", "8011, 8012, 8013, 8014, 8015"); //Carcinoma, NOS
-        _NOSVSSPECIFIC_MAP.put("8140 ", "8141, 8142, 8143, 8144, 8145, 8147, 8148"); //Adenocarcinoma, NOS
-        _NOSVSSPECIFIC_MAP.put("8070", "8071, 8072, 8073, 8074, 8075, 8076, 8077, 8078, 8080, 8081, 8082, 8083, 8084, 8094, 8323"); //Squamous cell carcinoma, NOS
-        _NOSVSSPECIFIC_MAP.put("8720", "8721, 8722, 8723, 8726, 8728, 8730, 8740, 8741, 8742, 8743, 8744, 9745, 8746, 8761, 8770, 8771, 8772, 8773, 8774, 8780"); //Melanoma, NOS
-        _NOSVSSPECIFIC_MAP.put("8800", "8801. 8802, 8803, 8804, 8805, 8806"); //Sarcoma, NOS
-        _NOSVSSPECIFIC_MAP.put("8312", "8313, 8314, 8315, 8316, 8317, 8318, 8319, 8320"); //Renal cell carcinoma, NOS
+        _NOS_VS_SPECIFIC_MAP.put("8000", "8001, 8002, 8003, 8004, 8005"); //Cancer/malignant neoplasm, NOS
+        _NOS_VS_SPECIFIC_MAP.put("8010", "8011, 8012, 8013, 8014, 8015"); //Carcinoma, NOS
+        _NOS_VS_SPECIFIC_MAP.put("8140", "8141, 8142, 8143, 8144, 8145, 8147, 8148"); //Adenocarcinoma, NOS
+        _NOS_VS_SPECIFIC_MAP.put("8070", "8071, 8072, 8073, 8074, 8075, 8076, 8077, 8078, 8080, 8081, 8082, 8083, 8084, 8094, 8323"); //Squamous cell carcinoma, NOS
+        _NOS_VS_SPECIFIC_MAP.put("8720", "8721, 8722, 8723, 8726, 8728, 8730, 8740, 8741, 8742, 8743, 8744, 9745, 8746, 8761, 8770, 8771, 8772, 8773, 8774, 8780"); //Melanoma, NOS
+        _NOS_VS_SPECIFIC_MAP.put("8800", "8801. 8802, 8803, 8804, 8805, 8806"); //Sarcoma, NOS
+        _NOS_VS_SPECIFIC_MAP.put("8312", "8313, 8314, 8315, 8316, 8317, 8318, 8319, 8320"); //Renal cell carcinoma, NOS
     }
 
     protected String _id;
@@ -164,8 +163,31 @@ public abstract class MPGroup {
         return result;
     }
 
-    protected Map<String, String> getNoSvsSpecificMap() {
-        return Collections.unmodifiableMap(_NOSVSSPECIFIC_MAP);
+    //This method is to expand lists with range. Invalid ranges will cause exception
+    public static List<String> expandList(List<String> list) {
+        List<String> result = new ArrayList<>();
+        if (list == null || list.isEmpty())
+            return null;
+        for (String item : list) {
+            String [] ranges = StringUtils.split(item.trim(), ',');
+            for (String range : ranges) {
+                String[] parts = StringUtils.split(range.trim(), '-');
+                if (parts.length <= 1)
+                    result.add(range);
+                else {
+                    int start = Integer.valueOf(parts[0]);
+                    int end = Integer.valueOf(parts[1]);
+                    while (start <= end) {
+                        result.add(String.valueOf(start++));
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    protected Map<String, String> getNosVsSpecificMap() {
+        return Collections.unmodifiableMap(_NOS_VS_SPECIFIC_MAP);
     }
 
     @Override
@@ -202,9 +224,8 @@ public abstract class MPGroup {
         @Override
         public MPRuleResult apply(MPInput i1, MPInput i2) {
             MPRuleResult result = new MPRuleResult();
-            String hist1 = i1.getHistologIcdO3(), hist2 = i2.getHistologIcdO3();
-            result.setResult(((hist1.charAt(0) != hist2.charAt(0)) || (hist1.charAt(1) != hist2.charAt(1)) || (hist1.charAt(2) != hist2.charAt(
-                    2))) ? RuleResult.TRUE : RuleResult.FALSE);
+            String hist1 = i1.getHistologyIcdO3(), hist2 = i2.getHistologyIcdO3();
+            result.setResult((!hist1.substring(0, 3).equals(hist2.substring(0, 3))) ? RuleResult.TRUE : RuleResult.FALSE);
             return result;
         }
 
@@ -221,8 +242,7 @@ public abstract class MPGroup {
         @Override
         public MPRuleResult apply(MPInput i1, MPInput i2) {
             MPRuleResult result = new MPRuleResult();
-            result.setResult(((i1.getPrimarySite().charAt(1) != i2.getPrimarySite().charAt(1)) || (i1.getPrimarySite().charAt(2) != i2.getPrimarySite().charAt(
-                    2))) ? RuleResult.TRUE : RuleResult.FALSE);
+            result.setResult((!i1.getPrimarySite().substring(1, 3).equals(i2.getPrimarySite().substring(1, 3))) ? RuleResult.TRUE : RuleResult.FALSE);
             return result;
         }
     }
@@ -241,7 +261,7 @@ public abstract class MPGroup {
         public MPRuleResult apply(MPInput i1, MPInput i2) {
             MPRuleResult result = new MPRuleResult();
             String beh1 = i1.getBehaviorIcdO3(), beh2 = i2.getBehaviorIcdO3();
-            if (!differentCategory(beh1, beh2, Arrays.asList("2"), Arrays.asList("3"))) {
+            if (!differentCategory(beh1, beh2, Collections.singletonList("2"), Collections.singletonList("3"))) {
                 result.setResult(RuleResult.FALSE);
                 return result;
             }
@@ -298,7 +318,7 @@ public abstract class MPGroup {
             return result;
         }
     }
-    
+
     /* *********************************************************************************************************************
      * ***************************   HELPER METHODS USED IN MOST OF THE GROUPS      ****************************************
      * *********************************************************************************************************************/
@@ -363,7 +383,7 @@ public abstract class MPGroup {
         }
     }
 
-    //helper method, checks whether there are 60 *days* between diagnosis date of the two tumors. It returns 1 (if tumor 1 is diagnosed after 60 days of tumor 2), 
+    //helper method, checks whether there are 60 *days* between diagnosis date of the two tumors. It returns 1 (if tumor 1 is diagnosed after 60 days of tumor 2),
     //2 (if tumor 2 is diagnosed 60 days after tumor 1), 0 (if the days between two diagnosis is less than 60 days) or -1 (if there is insufficient information);
     // If checkBehavior is true, it also checks if invasive is after in situ tumor
 
@@ -447,7 +467,7 @@ public abstract class MPGroup {
         }
     }
 
-    //This method is called with valid years 
+    //This method is called with valid years
     private static int verify60DaysApart(int startYr, int startMon, int startDay, int endYr, int endMon, int endDay) {
 
         LocalDate startDateMin, startDateMax, endDateMin, endDateMax;
@@ -493,4 +513,62 @@ public abstract class MPGroup {
             return -1;
     }
 
+    //helper method, checks which tumor is diagnosed later. It returns 1 (if tumor 1 is diagnosed after tumor 2),
+    //2 (if tumor 2 is diagnosed after tumor 1), 0 (if the diagnosis takes at the same day) or -1 (if there is insufficient information e.g if both year is 2007, but month and day is unknown);
+
+    public static int compareDxDate(MPInput input1, MPInput input2) {
+        int tumor1 = 1, tumor2 = 2, sameDay = 0, unknown = -1;
+        int year1 = NumberUtils.isDigits(input1.getDateOfDiagnosisYear()) ? Integer.parseInt(input1.getDateOfDiagnosisYear()) : 9999;
+        int year2 = NumberUtils.isDigits(input2.getDateOfDiagnosisYear()) ? Integer.parseInt(input2.getDateOfDiagnosisYear()) : 9999;
+        int month1 = NumberUtils.isDigits(input1.getDateOfDiagnosisMonth()) ? Integer.parseInt(input1.getDateOfDiagnosisMonth()) : 99;
+        int month2 = NumberUtils.isDigits(input2.getDateOfDiagnosisMonth()) ? Integer.parseInt(input2.getDateOfDiagnosisMonth()) : 99;
+        int day1 = NumberUtils.isDigits(input1.getDateOfDiagnosisDay()) ? Integer.parseInt(input1.getDateOfDiagnosisDay()) : 99;
+        int day2 = NumberUtils.isDigits(input2.getDateOfDiagnosisDay()) ? Integer.parseInt(input2.getDateOfDiagnosisDay()) : 99;
+        //If year is missing or in the future, return unknown
+        int currYear = LocalDate.now().getYear();
+        if (year1 == 9999 || year2 == 9999 || year1 > currYear || year2 > currYear)
+            return unknown;
+        else if (year1 > year2)
+            return tumor1;
+        else if (year2 > year1)
+            return tumor2;
+
+        if (month1 == 99)
+            day1 = 99;
+        if (month2 == 99)
+            day2 = 99;
+        //if month and day are invalid set them to 99 (Example: if month is 13 or day is 35)
+        try {
+            new LocalDate(year1, month1 == 99 ? 1 : month1, day1 == 99 ? 1 : day1);
+        }
+        catch (Exception e) {
+            day1 = 99;
+            if (month1 < 1 || month1 > 12)
+                month1 = 99;
+        }
+
+        try {
+            new LocalDate(year2, month2 == 99 ? 1 : month2, day2 == 99 ? 1 : day2);
+        }
+        catch (Exception e) {
+            day2 = 99;
+            if (month2 < 1 || month2 > 12)
+                month2 = 99;
+        }
+
+        if (month1 == 99 || month2 == 99)
+            return unknown;
+        else if (month1 > month2)
+            return tumor1;
+        else if (month2 > month1)
+            return tumor2;
+        else if (day1 == 99 || day2 == 99)
+            return unknown;
+        else if (day1 > day2)
+            return tumor1;
+        else if (day2 > day1)
+            return tumor2;
+        else
+            return sameDay;
+    }
 }

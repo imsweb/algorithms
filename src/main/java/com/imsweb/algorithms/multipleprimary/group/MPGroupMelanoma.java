@@ -74,10 +74,10 @@ public class MPGroupMelanoma extends MPGroup {
                 if (-1 == diff){
                     result.setResult(RuleResult.UNKNOWN);
                     result.setMessage("Unable to apply Rule " + this.getStep() + " of " + this.getGroupId() + ". There is no enough diagnosis date information.");
-                }                   
+                }
                 else
                     result.setResult(0 != diff ? RuleResult.TRUE : RuleResult.FALSE);
-                
+
                 return result;
             }
         };

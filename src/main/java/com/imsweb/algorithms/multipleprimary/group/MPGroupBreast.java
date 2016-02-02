@@ -4,6 +4,7 @@
 package com.imsweb.algorithms.multipleprimary.group;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import com.imsweb.algorithms.multipleprimary.MPGroup;
@@ -15,7 +16,7 @@ import com.imsweb.algorithms.multipleprimary.MPUtils.RuleResult;
 
 public class MPGroupBreast extends MPGroup {
 
-    private static final List<String> _INTRADUCTALORDUCT = Arrays.asList("8201/2", "8230/2", "8401/2", "8500/2", "8501/2", "8503/2", "8504/2", "8507/2", "8022/3", "8035/3", "8500/3", "8501/3", "8502/3", "8503/3", "8508/3");
+    private static final List<String> _INTRADUCTAL_OR_DUCT = Arrays.asList("8022", "8035", "8201", "8230", "8401", "8500", "8501", "8502", "8503", "8504", "8507", "8508");
 
     public MPGroupBreast() {
         super("breast", "Breast", "C500-C509", null, null, "9590-9989,9140", Arrays.asList("2", "3", "6"));
@@ -33,7 +34,7 @@ public class MPGroupBreast extends MPGroup {
             @Override
             public MPRuleResult apply(MPInput i1, MPInput i2) {
                 MPRuleResult result = new MPRuleResult();
-                if ("3".equals(i1.getBehaviorIcdO3()) && "3".equals(i2.getBehaviorIcdO3()) && "8530".equals(i1.getHistologIcdO3()) && "8530".equals(i2.getHistologIcdO3()))
+                if ("3".equals(i1.getBehaviorIcdO3()) && "3".equals(i2.getBehaviorIcdO3()) && "8530".equals(i1.getHistologyIcdO3()) && "8530".equals(i2.getHistologyIcdO3()))
                     result.setResult(RuleResult.TRUE);
                 else
                     result.setResult(RuleResult.FALSE);
@@ -72,10 +73,9 @@ public class MPGroupBreast extends MPGroup {
         rule = new MPRule("breast", "M9", MPResult.SINGLE_PRIMARY) {
             @Override
             public MPRuleResult apply(MPInput i1, MPInput i2) {
-                List<String> paget = Arrays.asList("8540/2", "8541/2", "8542/2", "8543/2", "8540/3", "8541/3", "8542/3", "8543/3");
-                String icd1 = i1.getHistologIcdO3() + "/" + i1.getBehaviorIcdO3(), icd2 = i2.getHistologIcdO3() + "/" + i2.getBehaviorIcdO3();
+                List<String> paget = Arrays.asList("8540", "8541", "8542", "8543");
                 MPRuleResult result = new MPRuleResult();
-                result.setResult(differentCategory(icd1, icd2, paget, _INTRADUCTALORDUCT) ? RuleResult.TRUE : RuleResult.FALSE);
+                result.setResult(differentCategory(i1.getHistologyIcdO3(), i2.getHistologyIcdO3(), paget, _INTRADUCTAL_OR_DUCT) ? RuleResult.TRUE : RuleResult.FALSE);
                 return result;
             }
         };
@@ -88,10 +88,9 @@ public class MPGroupBreast extends MPGroup {
         rule = new MPRule("breast", "M10", MPResult.SINGLE_PRIMARY) {
             @Override
             public MPRuleResult apply(MPInput i1, MPInput i2) {
-                List<String> lobular = Arrays.asList("8520/2", "8520/3");
-                String icd1 = i1.getHistologIcdO3() + "/" + i1.getBehaviorIcdO3(), icd2 = i2.getHistologIcdO3() + "/" + i2.getBehaviorIcdO3();
+                List<String> lobular = Collections.singletonList("8520");
                 MPRuleResult result = new MPRuleResult();
-                result.setResult(differentCategory(icd1, icd2, lobular, _INTRADUCTALORDUCT) ? RuleResult.TRUE : RuleResult.FALSE);
+                result.setResult(differentCategory(i1.getHistologyIcdO3(), i2.getHistologyIcdO3(), lobular, _INTRADUCTAL_OR_DUCT) ? RuleResult.TRUE : RuleResult.FALSE);
                 return result;
             }
         };
@@ -104,9 +103,8 @@ public class MPGroupBreast extends MPGroup {
         rule = new MPRule("breast", "M11", MPResult.SINGLE_PRIMARY) {
             @Override
             public MPRuleResult apply(MPInput i1, MPInput i2) {
-                String icd1 = i1.getHistologIcdO3() + "/" + i1.getBehaviorIcdO3(), icd2 = i2.getHistologIcdO3() + "/" + i2.getBehaviorIcdO3();
                 MPRuleResult result = new MPRuleResult();
-                if (!icd1.equals(icd2) && _INTRADUCTALORDUCT.contains(icd1) && _INTRADUCTALORDUCT.contains(icd2))
+                if ( _INTRADUCTAL_OR_DUCT.containsAll(Arrays.asList(i1.getHistologyIcdO3(), i2.getHistologyIcdO3())))
                     result.setResult(RuleResult.TRUE);
                 else
                     result.setResult(RuleResult.FALSE);

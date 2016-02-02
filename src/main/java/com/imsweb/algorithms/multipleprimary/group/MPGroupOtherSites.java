@@ -5,6 +5,7 @@ package com.imsweb.algorithms.multipleprimary.group;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import com.imsweb.algorithms.multipleprimary.MPGroup;
@@ -17,6 +18,8 @@ import com.imsweb.algorithms.multipleprimary.MPUtils.RuleResult;
 
 public class MPGroupOtherSites extends MPGroup {
 
+    private static final List<String> _POLYP = MPGroup.expandList(Collections.singletonList("8210-8211,8213,8220-8221,8261-8263"));
+
     //Excludes Head and Neck, Colon, Lung, Melanoma of Skin, Breast, Kidney, Renal Pelvis, Ureter, Bladder, Brain, Lymphoma and Leukemia
     public MPGroupOtherSites() {
         super("other-sites", "Other Sites", null, null, null, "9590-9989", Arrays.asList("2", "3", "6"));
@@ -26,7 +29,7 @@ public class MPGroupOtherSites extends MPGroup {
             @Override
             public MPRuleResult apply(MPInput i1, MPInput i2) {
                 MPRuleResult result = new MPRuleResult();
-                if ("C619".equalsIgnoreCase(i1.getPrimarySite()) && "C619".equalsIgnoreCase(i2.getPrimarySite()) && "8140".equals(i1.getHistologIcdO3()) && "8140".equals(i2.getHistologIcdO3()))
+                if ("C619".equalsIgnoreCase(i1.getPrimarySite()) && "C619".equalsIgnoreCase(i2.getPrimarySite()) && "8140".equals(i1.getHistologyIcdO3()) && "8140".equals(i2.getHistologyIcdO3()))
                     result.setResult(RuleResult.TRUE);
                 else
                     result.setResult(RuleResult.FALSE);
@@ -46,7 +49,7 @@ public class MPGroupOtherSites extends MPGroup {
             public MPRuleResult apply(MPInput i1, MPInput i2) {
                 List<String> retinoBlastoma = Arrays.asList("9510", "9511", "9512", "9513");
                 MPRuleResult result = new MPRuleResult();
-                if (retinoBlastoma.containsAll(Arrays.asList(i1.getHistologIcdO3(), i2.getHistologIcdO3())))
+                if (retinoBlastoma.containsAll(Arrays.asList(i1.getHistologyIcdO3(), i2.getHistologyIcdO3())))
                     result.setResult(RuleResult.TRUE);
                 else
                     result.setResult(RuleResult.FALSE);
@@ -62,7 +65,7 @@ public class MPGroupOtherSites extends MPGroup {
             @Override
             public MPRuleResult apply(MPInput i1, MPInput i2) {
                 MPRuleResult result = new MPRuleResult();
-                result.setResult((i1.getHistologIcdO3().equals("9140") && i2.getHistologIcdO3().equals("9140")) ? RuleResult.TRUE : RuleResult.FALSE);
+                result.setResult((i1.getHistologyIcdO3().equals("9140") && i2.getHistologyIcdO3().equals("9140")) ? RuleResult.TRUE : RuleResult.FALSE);
                 return result;
             }
         };
@@ -76,7 +79,7 @@ public class MPGroupOtherSites extends MPGroup {
             public MPRuleResult apply(MPInput i1, MPInput i2) {
                 MPRuleResult result = new MPRuleResult();
                 //If not thyroid follicular and papillary
-                String site1 = i1.getPrimarySite().toUpperCase(), site2 = i2.getPrimarySite().toUpperCase(), hist1 = i1.getHistologIcdO3(), hist2 = i2.getHistologIcdO3();
+                String site1 = i1.getPrimarySite().toUpperCase(), site2 = i2.getPrimarySite().toUpperCase(), hist1 = i1.getHistologyIcdO3(), hist2 = i2.getHistologyIcdO3();
                 if (!("C739".equals(site1) && "C739".equals(site2) && "8340".equals(hist1) && "8340".equals(hist2))) {
                     result.setResult(RuleResult.FALSE);
                     return result;
@@ -100,7 +103,7 @@ public class MPGroupOtherSites extends MPGroup {
             @Override
             public MPRuleResult apply(MPInput i1, MPInput i2) {
                 MPRuleResult result = new MPRuleResult();
-                String site1 = i1.getPrimarySite().toUpperCase(), site2 = i2.getPrimarySite().toUpperCase(), hist1 = i1.getHistologIcdO3(), hist2 = i2.getHistologIcdO3();
+                String site1 = i1.getPrimarySite().toUpperCase(), site2 = i2.getPrimarySite().toUpperCase(), hist1 = i1.getHistologyIcdO3(), hist2 = i2.getHistologyIcdO3();
                 if (!("C569".equals(site1) && "C569".equals(site2) && Integer.parseInt(hist1) <= 8799 && Integer.parseInt(hist2) <= 8799)) {
                     result.setResult(RuleResult.FALSE);
                     return result;
@@ -124,10 +127,12 @@ public class MPGroupOtherSites extends MPGroup {
             @Override
             public MPRuleResult apply(MPInput i1, MPInput i2) {
                 MPRuleResult result = new MPRuleResult();
-                List<String> pairedSites = Arrays.asList("C384", "C400", "C401", "C402", "C403", "C413", "C414", "C441", "C442", "C443", "C445", "C446", "C447", "C471", "C472", "C491", "C492", "C569", "C570", "C620-C629", "C630", "C631", "C690-C699", "C740-C749", "C754");
+                List<String> pairedSites = Arrays.asList("C384", "C400", "C401", "C402", "C403", "C413", "C414", "C441", "C442", "C443", "C445", "C446", "C447", "C471", "C472", "C491", "C492", "C569",
+                        "C570", "C620-C629", "C630", "C631", "C690-C699", "C740-C749", "C754");
                 boolean isPairedSite = false;
                 for (String pairedSite : pairedSites) {
-                    if (isContained(computeRange(pairedSite, true), Integer.parseInt(i1.getPrimarySite().substring(1))) &&  isContained(computeRange(pairedSite, true), Integer.parseInt(i2.getPrimarySite().substring(1)))) {
+                    if (isContained(computeRange(pairedSite, true), Integer.parseInt(i1.getPrimarySite().substring(1))) && isContained(computeRange(pairedSite, true),
+                            Integer.parseInt(i2.getPrimarySite().substring(1)))) {
                         isPairedSite = true;
                         break;
                     }
@@ -149,12 +154,18 @@ public class MPGroupOtherSites extends MPGroup {
         rule.getNotes().add("Table 1 – Paired Organs and Sites with Laterality.");
         _rules.add(rule);
 
-        //M9 - Adenocarcinoma in adenomatous polyposis coli (familial polyposis) with one or more in situ or malignant polyps is a single primary. //TODO 
+        //M9 - Adenocarcinoma in adenomatous polyposis coli (familial polyposis) with one or more in situ or malignant polyps is a single primary.
         rule = new MPRule("other-sites", "M9", MPResult.SINGLE_PRIMARY) {
             @Override
             public MPRuleResult apply(MPInput i1, MPInput i2) {
+                List<String> sites = Arrays.asList("C180", "C181", "C182", "C183", "C184", "C185", "C186", "C187", "C188", "C189", "C199", "C209");
+                List<String> adenocarcinomaInAdenomatous = Collections.singletonList("8220");
                 MPRuleResult result = new MPRuleResult();
-                result.setResult(RuleResult.FALSE);
+                if (sites.containsAll(Arrays.asList(i1.getPrimarySite(), i2.getPrimarySite())) && ("3".equals(i1.getBehaviorIcdO3()) || "3".equals(i2.getBehaviorIcdO3())) &&
+                        MPGroup.differentCategory(i1.getHistologyIcdO3(), i2.getHistologyIcdO3(), adenocarcinomaInAdenomatous, _POLYP))
+                    result.setResult(RuleResult.TRUE);
+                else
+                    result.setResult(RuleResult.FALSE);
                 return result;
             }
         };
@@ -213,12 +224,20 @@ public class MPGroupOtherSites extends MPGroup {
                 "Skin (C44_)");
         _rules.add(rule);
 
-        //M13 - A frank in situ or malignant adenocarcinoma and an in situ or malignant tumor in a polyp are a single primary. //TODO 
+        //M13 - A frank in situ or malignant adenocarcinoma and an in situ or malignant tumor in a polyp are a single primary.
         rule = new MPRule("other-sites", "M13", MPResult.SINGLE_PRIMARY) {
             @Override
             public MPRuleResult apply(MPInput i1, MPInput i2) {
                 MPRuleResult result = new MPRuleResult();
-                result.setResult(RuleResult.FALSE);
+                List<String> insituOrMalignant = Arrays.asList("2", "3");
+                List<String> adenocarcinoma = MPGroup.expandList(Collections.singletonList(
+                        "8140,8000-8005,8010-8011,8020-8022,8046,8141-8148,8154,8160-8162,8190,8200-8201,8210-8211,8214-8215,8220-8221,8230-8231,8244-8245,8250-8255,8260-8263,8270-8272,8280-8281,8290,8300,8310,8312-8320,8322-8323,8330-8333,8335,8337,8350,8370,8380-8384,8390,8400-8403,8407-8409,8410,8413,8420,8440-8442,8450-8453,8460-8462,8470-8473,8480-8482,8490,8500-8504,8507-8508,8510,8512-8514,8520-8525,8530,8540-8543,8550-8551,8561-8562,8570-8576"));
+                if (insituOrMalignant.containsAll(Arrays.asList(i1.getBehaviorIcdO3(), i2.getBehaviorIcdO3())) &&
+                        !_POLYP.containsAll(Arrays.asList(i1.getHistologyIcdO3(), i2.getHistologyIcdO3()))
+                        && MPGroup.differentCategory(i1.getHistologyIcdO3(), i2.getHistologyIcdO3(), adenocarcinoma, _POLYP))
+                    result.setResult(RuleResult.TRUE);
+                else
+                    result.setResult(RuleResult.FALSE);
                 return result;
             }
         };
@@ -226,12 +245,16 @@ public class MPGroupOtherSites extends MPGroup {
         rule.setReason("A frank in situ or malignant adenocarcinoma and an in situ or malignant tumor in a polyp are a single primary.");
         _rules.add(rule);
 
-        //M14 - Multiple in situ and/or malignant polyps are a single primary. //TODO 
+        //M14 - Multiple in situ and/or malignant polyps are a single primary.
         rule = new MPRule("other-sites", "M14", MPResult.SINGLE_PRIMARY) {
             @Override
             public MPRuleResult apply(MPInput i1, MPInput i2) {
                 MPRuleResult result = new MPRuleResult();
-                result.setResult(RuleResult.FALSE);
+                List<String> insituOrMalignant = Arrays.asList("2", "3");
+                if (insituOrMalignant.containsAll(Arrays.asList(i1.getBehaviorIcdO3(), i2.getBehaviorIcdO3())) && _POLYP.containsAll(Arrays.asList(i1.getHistologyIcdO3(), i2.getHistologyIcdO3())))
+                    result.setResult(RuleResult.TRUE);
+                else
+                    result.setResult(RuleResult.FALSE);
                 return result;
             }
         };
@@ -244,12 +267,18 @@ public class MPGroupOtherSites extends MPGroup {
         rule = new MPRuleBehavior("other-sites", "M15");
         _rules.add(rule);
 
-        //M16 - //TODO
+        //M16 -
         rule = new MPRule("other-sites", "M16", MPResult.SINGLE_PRIMARY) {
             @Override
             public MPRuleResult apply(MPInput i1, MPInput i2) {
                 MPRuleResult result = new MPRuleResult();
-                result.setResult(RuleResult.FALSE);
+                String hist1 = i1.getHistologyIcdO3(), hist2 = i2.getHistologyIcdO3();
+                List<String> nosList = Arrays.asList("8000", "8010", "8070", "8140", "8720", "8800");
+                if ((nosList.contains(hist1) && getNosVsSpecificMap().containsKey(hist1) && getNosVsSpecificMap().get(hist1).contains(hist2)) || (nosList.contains(hist2) && getNosVsSpecificMap()
+                        .containsKey(hist2) && getNosVsSpecificMap().get(hist2).contains(hist1)))
+                    result.setResult(RuleResult.TRUE);
+                else
+                    result.setResult(RuleResult.FALSE);
                 return result;
             }
         };

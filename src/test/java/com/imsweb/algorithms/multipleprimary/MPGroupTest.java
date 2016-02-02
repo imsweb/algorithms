@@ -1,13 +1,26 @@
 /*
- * Copyright (C) 2013 Information Management Services, Inc.
+ * Copyright (C) 2003 Information Management Services, Inc.
  */
 package com.imsweb.algorithms.multipleprimary;
+
+import java.util.Arrays;
+import java.util.Collections;
 
 import org.joda.time.LocalDate;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class MPGroupTest {
+
+    @Test
+    public void testExpandList() {
+        Assert.assertNull(MPGroup.expandList(null));
+        Assert.assertEquals(Arrays.asList("8100", "8250"), MPGroup.expandList(Arrays.asList("8100", "8250")));
+        Assert.assertEquals(Arrays.asList("8100", "8250"), MPGroup.expandList(Collections.singletonList("8100,8250")));
+        Assert.assertEquals(Arrays.asList("8100", "8250", "8251", "8252", "8255"), MPGroup.expandList(Arrays.asList("8100", "8250-8252", "8255")));
+        Assert.assertEquals(Arrays.asList("8100", "8250", "8251", "8252", "8255"), MPGroup.expandList(Arrays.asList("8100,8250-8252", "8255")));
+        Assert.assertEquals(Arrays.asList("8100", "8250", "8251", "8252", "8255"), MPGroup.expandList(Collections.singletonList("8100,8250-8252,8255")));
+    }
 
     @Test
     public void testVerify60DaysApart() {
@@ -156,5 +169,67 @@ public class MPGroupTest {
         Assert.assertEquals(no, MPGroup.verifyYearsApart(i1, i2, 3));
         i2.setDateOfDiagnosisDay("1");
         Assert.assertEquals(yes, MPGroup.verifyYearsApart(i1, i2, 3));
+    }
+
+    @Test
+    public void testCompareDxDate() {
+        int tumor1 = 1, tumor2 = 2, sameDay = 0, unknown = -1;
+        MPInput i1 = new MPInput(), i2 = new MPInput();
+        i1.setDateOfDiagnosisYear("2006");
+        i1.setDateOfDiagnosisMonth("01");
+        i1.setDateOfDiagnosisDay("01");
+        i2.setDateOfDiagnosisYear("2006");
+        i2.setDateOfDiagnosisMonth("01");
+        i2.setDateOfDiagnosisDay("01");
+        Assert.assertEquals(sameDay, MPGroup.compareDxDate(i1, i2));
+        i1.setDateOfDiagnosisDay("02");
+        Assert.assertEquals(tumor1, MPGroup.compareDxDate(i1, i2));
+        i2.setDateOfDiagnosisMonth("02");
+        Assert.assertEquals(tumor2, MPGroup.compareDxDate(i1, i2));
+        i1.setDateOfDiagnosisYear("2007");
+        Assert.assertEquals(tumor1, MPGroup.compareDxDate(i1, i2));
+        i1.setDateOfDiagnosisYear("2007");
+        i2.setDateOfDiagnosisYear("2006");
+        i1.setDateOfDiagnosisMonth("xx");
+        i1.setDateOfDiagnosisDay("33");
+        i2.setDateOfDiagnosisMonth("18");
+        i2.setDateOfDiagnosisDay("01");
+        Assert.assertEquals(tumor1, MPGroup.compareDxDate(i1, i2));
+        i1.setDateOfDiagnosisYear("2006");
+        i2.setDateOfDiagnosisYear("2006");
+        i1.setDateOfDiagnosisMonth("01");
+        i1.setDateOfDiagnosisDay("xx");
+        i2.setDateOfDiagnosisMonth("02");
+        i2.setDateOfDiagnosisDay("30");
+        Assert.assertEquals(tumor2, MPGroup.compareDxDate(i1, i2));
+        i1.setDateOfDiagnosisYear("2006");
+        i2.setDateOfDiagnosisYear("2006");
+        i1.setDateOfDiagnosisMonth("02");
+        i1.setDateOfDiagnosisDay("01");
+        i2.setDateOfDiagnosisMonth("02");
+        i2.setDateOfDiagnosisDay("30"); //invalid day for February
+        Assert.assertEquals(unknown, MPGroup.compareDxDate(i1, i2));
+        i1.setDateOfDiagnosisYear("2006");
+        i2.setDateOfDiagnosisYear("2006");
+        i1.setDateOfDiagnosisMonth("13"); //invalid month
+        i1.setDateOfDiagnosisDay("01");
+        i2.setDateOfDiagnosisMonth("12");
+        i2.setDateOfDiagnosisDay("01");
+        Assert.assertEquals(unknown, MPGroup.compareDxDate(i1, i2));
+        i1.setDateOfDiagnosisYear("2006");
+        i2.setDateOfDiagnosisYear("2006");
+        i1.setDateOfDiagnosisMonth("xx"); //invalid month
+        i1.setDateOfDiagnosisDay("cc");
+        i2.setDateOfDiagnosisMonth("99");
+        i2.setDateOfDiagnosisDay("01");
+        Assert.assertEquals(unknown, MPGroup.compareDxDate(i1, i2));
+        //one is future year, return unknown
+        i1.setDateOfDiagnosisYear(String.valueOf(LocalDate.now().getYear()));
+        i2.setDateOfDiagnosisYear(String.valueOf(LocalDate.now().getYear() + 1));
+        i1.setDateOfDiagnosisMonth("01");
+        i1.setDateOfDiagnosisDay("01");
+        i2.setDateOfDiagnosisMonth("01");
+        i2.setDateOfDiagnosisDay("01");
+        Assert.assertEquals(unknown, MPGroup.compareDxDate(i1, i2));
     }
 }
