@@ -79,7 +79,7 @@ public class MPGroupUrinary extends MPGroup {
                     result.setResult(RuleResult.FALSE);
                 }
                 else
-                    result.setResult(carcinomaHist.containsAll(Arrays.asList(i1.getHistologIcdO3(), i2.getHistologIcdO3())) ? RuleResult.TRUE : RuleResult.FALSE);
+                    result.setResult(carcinomaHist.containsAll(Arrays.asList(i1.getHistologyIcdO3(), i2.getHistologyIcdO3())) ? RuleResult.TRUE : RuleResult.FALSE);
 
                 return result;
             }
@@ -92,7 +92,7 @@ public class MPGroupUrinary extends MPGroup {
                 "Bladder tumors with any combination of the following histologies: papillary carcinoma (8050), transitional cell carcinoma (8120-8124), or papillary transitional cell carcinoma (8130-8131), are a single primary.");
         _rules.add(rule);
 
-        // M7 - Tumors diagnosed more than three (3) years apart are multiple primaries. 
+        // M7 - Tumors diagnosed more than three (3) years apart are multiple primaries.
         rule = new MPRule("urinary", "M7", MPResult.MULTIPLE_PRIMARIES) {
             @Override
             public MPRuleResult apply(MPInput i1, MPInput i2) {
@@ -112,8 +112,8 @@ public class MPGroupUrinary extends MPGroup {
         rule.setReason("Tumors diagnosed more than three (3) years apart are multiple primaries.");
         _rules.add(rule);
 
-        // M8 - Urothelial tumors in two or more of the following sites are a single primary* (See Table 1 of pdf) 
-        // Renal pelvis (C659), Ureter(C669), Bladder (C670-C679), Urethra /prostatic urethra (C680)       
+        // M8 - Urothelial tumors in two or more of the following sites are a single primary* (See Table 1 of pdf)
+        // Renal pelvis (C659), Ureter(C669), Bladder (C670-C679), Urethra /prostatic urethra (C680)
         rule = new MPRule("urinary", "M8", MPResult.SINGLE_PRIMARY) {
             @Override
             public MPRuleResult apply(MPInput i1, MPInput i2) {
@@ -124,7 +124,7 @@ public class MPGroupUrinary extends MPGroup {
                         .getPrimarySite().toLowerCase().equals("c680"))
                     result.setResult(RuleResult.FALSE);
                 else
-                    result.setResult(urothelialTumors.containsAll(Arrays.asList(i1.getHistologIcdO3(), i2.getHistologIcdO3())) ? RuleResult.TRUE : RuleResult.FALSE);
+                    result.setResult(urothelialTumors.containsAll(Arrays.asList(i1.getHistologyIcdO3(), i2.getHistologyIcdO3())) ? RuleResult.TRUE : RuleResult.FALSE);
                 return result;
             }
         };

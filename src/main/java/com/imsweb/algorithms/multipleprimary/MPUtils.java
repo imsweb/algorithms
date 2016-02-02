@@ -87,7 +87,7 @@ public class MPUtils {
     public static MPOutput computePrimaries(Map<String, String> record1, Map<String, String> record2) {
         MPInput input1 = new MPInput();
         input1.setPrimarySite(record1.get(PROP_PRIMARY_SITE));
-        input1.setHistologIcdO3(record1.get(PROP_HISTOLOGY_ICDO3));
+        input1.setHistologyIcdO3(record1.get(PROP_HISTOLOGY_ICDO3));
         input1.setBehaviorIcdO3(record1.get(PROP_BEHAVIOR_ICDO3));
         input1.setLaterality(record1.get(PROP_LATERALITY));
         input1.setDateOfDiagnosisYear(record1.get(PROP_DX_YEAR));
@@ -96,7 +96,7 @@ public class MPUtils {
 
         MPInput input2 = new MPInput();
         input2.setPrimarySite(record2.get(PROP_PRIMARY_SITE));
-        input2.setHistologIcdO3(record2.get(PROP_HISTOLOGY_ICDO3));
+        input2.setHistologyIcdO3(record2.get(PROP_HISTOLOGY_ICDO3));
         input2.setBehaviorIcdO3(record2.get(PROP_BEHAVIOR_ICDO3));
         input2.setLaterality(record2.get(PROP_LATERALITY));
         input2.setDateOfDiagnosisYear(record2.get(PROP_DX_YEAR));
@@ -138,14 +138,14 @@ public class MPUtils {
             return output;
         }
 
-        MPGroup group1 = findCancerGroup(input1.getPrimarySite(), input1.getHistologIcdO3(), input1.getBehaviorIcdO3());
-        MPGroup group2 = findCancerGroup(input2.getPrimarySite(), input2.getHistologIcdO3(), input2.getBehaviorIcdO3());
+        MPGroup group1 = findCancerGroup(input1.getPrimarySite(), input1.getHistologyIcdO3(), input1.getBehaviorIcdO3());
+        MPGroup group2 = findCancerGroup(input2.getPrimarySite(), input2.getHistologyIcdO3(), input2.getBehaviorIcdO3());
 
-        if (!validateProperties(input1.getPrimarySite(), input1.getHistologIcdO3(), input1.getBehaviorIcdO3())) {
+        if (!validateProperties(input1.getPrimarySite(), input1.getHistologyIcdO3(), input1.getBehaviorIcdO3())) {
             output.setResult(MPResult.QUESTIONABLE);
             output.setReason("Unable to identify cancer group for first set of parameters. Valid primary site (C000-C999 excluding C809), histology (8000-9999) and behavior (0-3, 6) are required.");
         }
-        else if (!validateProperties(input2.getPrimarySite(), input2.getHistologIcdO3(), input2.getBehaviorIcdO3())) {
+        else if (!validateProperties(input2.getPrimarySite(), input2.getHistologyIcdO3(), input2.getBehaviorIcdO3())) {
             output.setResult(MPResult.QUESTIONABLE);
             output.setReason("Unable to identify cancer group for second set of parameters. Valid primary site (C000-C999 excluding C809), histology (8000-9999) and behavior (0-3, 6) are required.");
         }

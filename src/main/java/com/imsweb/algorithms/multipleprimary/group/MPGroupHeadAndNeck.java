@@ -106,10 +106,10 @@ public class MPGroupHeadAndNeck extends MPGroup {
             @Override
             public MPRuleResult apply(MPInput i1, MPInput i2) {
                 MPRuleResult result = new MPRuleResult();
-                String hist1 = i1.getHistologIcdO3(), hist2 = i2.getHistologIcdO3();
+                String hist1 = i1.getHistologyIcdO3(), hist2 = i2.getHistologyIcdO3();
                 List<String> nosList = Arrays.asList("8000", "8010", "8140", "8070", "8720", "8800");
-                if ((nosList.contains(hist1) && getNoSvsSpecificMap().containsKey(hist1) && getNoSvsSpecificMap().get(hist1).contains(hist2)) || (nosList.contains(hist2) && getNoSvsSpecificMap().containsKey(
-                        hist2) && getNoSvsSpecificMap().get(hist2).contains(hist1)))
+                if ((nosList.contains(hist1) && getNosVsSpecificMap().containsKey(hist1) && getNosVsSpecificMap().get(hist1).contains(hist2)) || (nosList.contains(hist2) && getNosVsSpecificMap().containsKey(
+                        hist2) && getNosVsSpecificMap().get(hist2).contains(hist1)))
                     result.setResult(RuleResult.TRUE);
                 else
                     result.setResult(RuleResult.FALSE);
