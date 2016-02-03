@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 1.4.1**
+
+- Improved MPH rules.
+
 **Changes in version 1.4**
 
  - Replaced JAXB by XStream for all internal XML operations.
