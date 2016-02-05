@@ -120,7 +120,7 @@ public class SurvivalTimeUtilsTest {
         records.clear();
         //complete info some survival, flag 1
         records.add(createRecord(2009, 11, 10, 2009, 11, 11, 2008, 3, 4, 1, 1, 1));
-        //complate info no survival, flag 0, complete info some survival presumed alive falg 1
+        //complete info no survival, flag 0, complete info some survival presumed alive falg 1
         records.add(createRecord(2009, 11, 11, 2009, 11, 11, 2008, 3, 4, 2, 1, 1));
         results = SurvivalTimeUtils.calculateSurvivalTime(records, 2010);
         assertResults(results.getSurvivalTimeOutputPatientDtoList().get(0), "0", "1", "13", "1");
