@@ -116,6 +116,7 @@ public class SurvivalTimeUtils {
             return patientResultsDto;
 
         List<SurvivalTimeInputRecordDto> allRecords = input.getSurvivalTimeInputPatientDtoList();
+        setSortedIndex(allRecords);
         List<SurvivalTimeOutputRecordDto> patientResultsList = new ArrayList<>();
 
         try {
@@ -145,6 +146,7 @@ public class SurvivalTimeUtils {
                         recordResult.setSurvivalMonthsFlag(SURVIVAL_FLAG_UNKNOWN);
                         recordResult.setSurvivalMonthsPresumedAlive(UNKNOWN_SURVIVAL);
                         recordResult.setSurvivalMonthsFlagPresumedAlive(SURVIVAL_FLAG_UNKNOWN);
+                        recordResult.setSortedIndex(orgRecord.getSortedIndex());
                         patientResultsList.add(recordResult);
                     }
                     patientResultsDto.setSurvivalTimeOutputPatientDtoList(patientResultsList);
@@ -193,6 +195,7 @@ public class SurvivalTimeUtils {
                 recordResult.setSurvivalTimeDolcYearPresumedAlive(orgRecord.getDateOfLastContactYear());
                 recordResult.setSurvivalTimeDolcMonthPresumedAlive(orgRecord.getDateOfLastContactMonth());
                 recordResult.setSurvivalTimeDolcDayPresumedAlive(orgRecord.getDateOfLastContactDay());
+                recordResult.setSortedIndex(orgRecord.getSortedIndex());
                 patientResultsList.add(recordResult);
                 InternalRecDto tempRec = new InternalRecDto(orgRecord, recordResult);
 
@@ -293,6 +296,7 @@ public class SurvivalTimeUtils {
                 recordResult.setSurvivalTimeDolcYearPresumedAlive(orgRecord.getDateOfLastContactYear());
                 recordResult.setSurvivalTimeDolcMonthPresumedAlive(orgRecord.getDateOfLastContactMonth());
                 recordResult.setSurvivalTimeDolcDayPresumedAlive(orgRecord.getDateOfLastContactDay());
+                recordResult.setSortedIndex(orgRecord.getSortedIndex());
                 patientResultsList.add(recordResult);
             }
         }
@@ -303,7 +307,7 @@ public class SurvivalTimeUtils {
 
     private static void calculateSurvivalTime(List<InternalRecDto> records, List<SurvivalTimeOutputRecordDto> patientResultsList, int dolcYear, int dolcMonth, int dolcDay, int birthYear, int birthMonth, int birthDay, int vs, int endYear, int endMonth, int endDay, boolean presumeAlive) {
 
-        //check validity of DOLC        
+        //check validity of DOLC
         //if the month is invalid, set both day and month to 99, if the day is invalid set it as missing.
         try {
             new LocalDate(dolcYear == 9999 ? 1900 : dolcYear, dolcMonth == 99 ? 1 : dolcMonth, dolcDay == 99 ? 1 : dolcDay);
@@ -324,7 +328,7 @@ public class SurvivalTimeUtils {
 
         // STEP 2 - fill in unknown parts
         //lets use the birthdate to fix the missing dx and dolc (#192)
-        //check validity of month and day and set them as missing if they are invalid   
+        //check validity of month and day and set them as missing if they are invalid
         if (birthYear == 9999)
             birthMonth = birthDay = 99;
         if (birthMonth == 99)
@@ -540,6 +544,26 @@ public class SurvivalTimeUtils {
 
             if (SURVIVAL_FLAG_MISSING_INFO_NO_SURVIVAL_POSSIBLE.equals(flagPA) && survivalGreaterThanZeroPA)
                 rec.setSurvivalMonthsFlagPresumedAlive(SURVIVAL_FLAG_MISSING_INFO_SOME_SURVIVAL);
+        }
+    }
+
+    //The sorting method is not as same as SAS, SAS doesn't deal with unknown years.
+    //We put the invalid years at the end of the list keeping their order.
+    private static void setSortedIndex(List<SurvivalTimeInputRecordDto> records) {
+        for (int i = 0; i < records.size(); i++) {
+            int index = 0;
+            //if year is 9999, put it after all valid data
+            int year = NumberUtils.isDigits(records.get(i).getDateOfDiagnosisYear()) ? Integer.parseInt(records.get(i).getDateOfDiagnosisYear()) : 9999;
+            for (int j = 0; j < records.size(); j++) {
+                int otherYear = NumberUtils.isDigits(records.get(j).getDateOfDiagnosisYear()) ? Integer.parseInt(records.get(j).getDateOfDiagnosisYear()) : 9999;
+                if (year != 9999 && otherYear == 9999)
+                    continue;
+                else if (year == 9999 && otherYear != 9999)
+                    index++;
+                else if (records.get(j).compareTo(records.get(i)) < 0 || (records.get(j).compareTo(records.get(i)) == 0 && j < i))
+                    index++;
+            }
+            records.get(i).setSortedIndex(index);
         }
     }
 

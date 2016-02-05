@@ -4,6 +4,8 @@
 
 - Improved MPH rules.
 
+- Added sorting mechanism for survival time calculation results.
+
 **Changes in version 1.4**
 
  - Replaced JAXB by XStream for all internal XML operations.
