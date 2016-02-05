@@ -2,9 +2,8 @@
 
 **Changes in version 1.4.1**
 
-- Improved MPH rules.
-
-- Added sorting mechanism for survival time calculation results.
+ - Added new variable to the output of the survival time calculation that contains the calculated order of the input record objects.
+ - Improved some MPH rules.
 
 **Changes in version 1.4**
 
