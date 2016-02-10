@@ -2,6 +2,7 @@
 
 **Changes in version 1.4.1**
 
+ - Fixed a bug in surgery tables where all row levels would be null; introduced in version 1.4.
  - Added new variable to the output of the survival time calculation that contains the calculated order of the input record objects.
  - Improved some MPH rules.
 

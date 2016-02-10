@@ -35,6 +35,15 @@ public class SiteSpecificSurgeryUtilsTest {
             if (table.getHistExclusion() != null)
                 for (String s : table.getHistExclusion().split(","))
                     Assert.assertTrue(table.getTitle() + " - wrong hist exclusion format: " + table.getHistExclusion(), s.matches("\\d\\d\\d\\d(\\-\\d\\d\\d\\d)?"));
+
+            for (SurgeryRowDto row : table.getRow()) {
+                Assert.assertNotNull(row.isLineBreak());
+                Assert.assertNotNull(row.getLevel());
+                if (row.isLineBreak()) {
+                    Assert.assertNull(row.getCode());
+                    Assert.assertNull(row.getDescription());
+                }
+            }
         }
 
         // test a few common searches
@@ -48,7 +57,8 @@ public class SiteSpecificSurgeryUtilsTest {
         Assert.assertNull(SiteSpecificSurgeryUtils.getInstance().getTable("?", "8000"));
         Assert.assertNull(SiteSpecificSurgeryUtils.getInstance().getTable("C000", "whatever"));
 
-        Assert.assertEquals("Oral Cavity", SiteSpecificSurgeryUtils.getInstance().getTable("C000", "8000").getTitle());
-        Assert.assertEquals("Hematopoietic/Reticuloendothelial/Immunoproliferative/Myeloproliferative Disease", SiteSpecificSurgeryUtils.getInstance().getTable("C000", "9727").getTitle());
+        SurgeryTableDto table = SiteSpecificSurgeryUtils.getInstance().getTable("C000", "8000");
+        Assert.assertEquals("Oral Cavity", table.getTitle());
+        Assert.assertEquals(37, table.getRow().size());
     }
 }

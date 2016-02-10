@@ -8,9 +8,11 @@ import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 public class SurgeryRowXmlDto {
 
     @XStreamAsAttribute
+    @XStreamAlias("level")
     private Integer _level;
 
     @XStreamAsAttribute
+    @XStreamAlias("break")
     private Boolean _break;
 
     @XStreamAlias("code")
