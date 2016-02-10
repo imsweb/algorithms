@@ -161,7 +161,7 @@ public final class SiteSpecificSurgeryUtils {
 
                 rowDto.setCode(row.getCode());
                 rowDto.setDescription(row.getDescription());
-                rowDto.setLevel(row.getLevel() == null ? 0 : row.getLevel());
+                rowDto.setLevel(row.getLevel() == null ? Integer.valueOf(0) : row.getLevel());
                 rowDto.setLineBreak(row.isBreak() == null ? Boolean.FALSE : row.isBreak());
 
                 rows.add(rowDto);
