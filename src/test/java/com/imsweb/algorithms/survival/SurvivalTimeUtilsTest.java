@@ -161,42 +161,43 @@ public class SurvivalTimeUtilsTest {
         results = SurvivalTimeUtils.calculateSurvivalTime(records, 2010);
         assertResults(results.getSurvivalTimeOutputPatientDtoList().get(0), "0", "0", "9", "1", 0);
 
-        //different dolc, this one is just to test all corner cases of the sortedIndex (#359)
+        //test all corner cases of the sortedIndex (#359)
         records.clear();
-        records.add(createRecord(9999, 1, 1, 2010, 10, 11, 1956, 3, 4, 61, 4, 1));
-        records.add(createRecord(2013, 1, 2, 2010, 10, 11, 1956, 3, 4, 2, 4, 1));
-        records.add(createRecord(2013, 1, 2, 2010, 10, 11, 1956, 3, 4, 2, 4, 1)); // same record as above
-        records.add(createRecord(2010, 3, 1, 2010, 10, 11, 1956, 3, 4, 3, 4, 1));
-        records.add(createRecord(2010, 3, 1, 2010, 10, 11, 1956, 3, 4, 6, 4, 1));
-        records.add(createRecord(9999, 1, 1, 2010, 10, 11, 1956, 3, 4, 99, 4, 1));
-        records.add(createRecord(2009, 11, 11, 2010, 10, 11, 1956, 3, 4, 1, 4, 1));
-        records.add(createRecord(9999, 11, 11, 2010, 10, 11, 1956, 3, 4, 4, 4, 1));
-        records.add(createRecord(9999, 12, 12, 2010, 10, 11, 1956, 3, 4, 0, 4, 1));
-        records.add(createRecord(2008, 3, 1, 2010, 10, 11, 1956, 3, 4, 5, 4, 1));
-        records.add(createRecord(2010, 1, 1, 2010, 10, 11, 1956, 3, 4, 7, 4, 1));
+        records.add(createRecord(9999, 1, 1, 2012, 12, 31, 1956, 3, 4, 0, 4, 1));
+        records.add(createRecord(2013, 1, 2, 2012, 12, 31, 1956, 3, 4, 1, 4, 1));
+        records.add(createRecord(2013, 1, 2, 2012, 12, 31, 1956, 3, 4, 2, 4, 1));
+        records.add(createRecord(2010, 3, 1, 2012, 12, 31, 1956, 3, 4,61, 4, 1)); //non-federal
+        records.add(createRecord(2010,99, 99, 2012, 12, 31, 1956, 3, 4, 99, 4, 1)); // federal should be before non-federal
+        records.add(createRecord(9999, 1, 1, 2012, 12, 31, 1956, 3, 4, 3, 4, 1));
+        records.add(createRecord(2009, 11, 11, 2012, 12, 31, 1956, 3, 4, 4, 4, 1));
+        records.add(createRecord(9999, 11, 11, 2012, 12, 31, 1956, 3, 4, 5, 4, 1));
+        records.add(createRecord(9999, 12, 12, 2012, 12, 31, 1956, 3, 4, 6, 4, 1));
+        records.add(createRecord(2008, 3, 1, 2012, 12, 31, 1956, 3, 4, 7, 4, 1));
+        records.add(createRecord(2010, 1, 1, 2012, 12, 31, 1956, 3, 4, 9, 4, 1));
+        records.add(createRecord(2011, 1, 2, 2012, 12, 31, 1956, 3, 4, 8, 4, 1));
         results = SurvivalTimeUtils.calculateSurvivalTime(records, 2010);
         assertResults(results.getSurvivalTimeOutputPatientDtoList().get(0), "9999", "9", "9999", "9", 5);
-        assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(0), "    ", "  ", "  ", "    ", "  ", "  ", "    ", "  ", "  ");
-        assertResults(results.getSurvivalTimeOutputPatientDtoList().get(1), "9999", "9", "9999", "9", 5);
-        assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(1), "    ", "  ", "  ", "    ", "  ", "  ", "    ", "  ", "  ");
-        assertResults(results.getSurvivalTimeOutputPatientDtoList().get(2), "9999", "9", "9999", "9", 6);
-        assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(2), "    ", "  ", "  ", "    ", "  ", "  ", "    ", "  ", "  ");
-        assertResults(results.getSurvivalTimeOutputPatientDtoList().get(3), "9999", "9", "9999", "9", 3);
-        assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(3), "    ", "  ", "  ", "    ", "  ", "  ", "    ", "  ", "  ");
-        assertResults(results.getSurvivalTimeOutputPatientDtoList().get(4), "9999", "9", "9999", "9", 4);
-        assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(4), "    ", "  ", "  ", "    ", "  ", "  ", "    ", "  ", "  ");
-        assertResults(results.getSurvivalTimeOutputPatientDtoList().get(5), "9999", "9", "9999", "9", 9);
-        assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(5), "    ", "  ", "  ", "    ", "  ", "  ", "    ", "  ", "  ");
-        assertResults(results.getSurvivalTimeOutputPatientDtoList().get(6), "9999", "9", "9999", "9", 1);
-        assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(6), "    ", "  ", "  ", "    ", "  ", "  ", "    ", "  ", "  ");
-        assertResults(results.getSurvivalTimeOutputPatientDtoList().get(7), "9999", "9", "9999", "9", 8);
-        assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(7), "    ", "  ", "  ", "    ", "  ", "  ", "    ", "  ", "  ");
-        assertResults(results.getSurvivalTimeOutputPatientDtoList().get(8), "9999", "9", "9999", "9", 7);
-        assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(8), "    ", "  ", "  ", "    ", "  ", "  ", "    ", "  ", "  ");
-        assertResults(results.getSurvivalTimeOutputPatientDtoList().get(9), "9999", "9", "9999", "9", 0);
-        assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(9), "    ", "  ", "  ", "    ", "  ", "  ", "    ", "  ", "  ");
-        assertResults(results.getSurvivalTimeOutputPatientDtoList().get(10), "9999", "9", "9999", "9", 2);
-        assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(10), "    ", "  ", "  ", "    ", "  ", "  ", "    ", "  ", "  ");
+        assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(0), "    ", "  ", "  ", "2010", "12", "31", "2010", "12", "31");
+        assertResults(results.getSurvivalTimeOutputPatientDtoList().get(1), "9999", "9", "9999", "9", 6);
+        assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(1), "    ", "  ", "  ", "2010", "12", "31", "2010", "12", "31");
+        assertResults(results.getSurvivalTimeOutputPatientDtoList().get(2), "9999", "9", "9999", "9", 7);
+        assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(2), "    ", "  ", "  ", "2010", "12", "31", "2010", "12", "31");
+        assertResults(results.getSurvivalTimeOutputPatientDtoList().get(3), "0010", "1", "0010", "1", 4);
+        assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(3), "2010", "03", "01", "2010", "12", "31", "2010", "12", "31");
+        assertResults(results.getSurvivalTimeOutputPatientDtoList().get(4), "0011", "3", "0011", "3", 3);
+        assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(4), "2010", "01", "30", "2010", "12", "31", "2010", "12", "31");
+        assertResults(results.getSurvivalTimeOutputPatientDtoList().get(5), "9999", "9", "9999", "9", 8);
+        assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(5), "    ", "  ", "  ", "2010", "12", "31", "2010", "12", "31");
+        assertResults(results.getSurvivalTimeOutputPatientDtoList().get(6), "0013", "1", "0013", "1", 1);
+        assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(6), "2009", "11", "11", "2010", "12", "31", "2010", "12", "31");
+        assertResults(results.getSurvivalTimeOutputPatientDtoList().get(7), "9999", "9", "9999", "9", 9);
+        assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(7), "    ", "  ", "  ", "2010", "12", "31", "2010", "12", "31");
+        assertResults(results.getSurvivalTimeOutputPatientDtoList().get(8), "9999", "9", "9999", "9", 10);
+        assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(8), "    ", "  ", "  ", "2010", "12", "31", "2010", "12", "31");
+        assertResults(results.getSurvivalTimeOutputPatientDtoList().get(9), "0034", "1", "0034", "1", 0);
+        assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(9), "2008", "03", "01", "2010", "12", "31", "2010", "12", "31");
+        assertResults(results.getSurvivalTimeOutputPatientDtoList().get(10), "0011", "1", "0011", "1", 2);
+        assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(10), "2010", "01", "01", "2010", "12", "31", "2010", "12", "31");
     }
 
     private Map<String, String> createRecord(int year, int month, int day, int dolcYear, int dolcMonth, int dolcDay, int birthYear, int birthMonth, int birthDay, int seq, int vs, int source) {
