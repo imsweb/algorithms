@@ -16,6 +16,13 @@ import org.junit.Test;
 public class SurvivalTimeUtilsTest {
 
     @Test
+    public void assertAlgInfo() {
+        Assert.assertNotNull(SurvivalTimeUtils.VERSION);
+        Assert.assertNotNull(SurvivalTimeUtils.ALG_NAME);
+        Assert.assertNotNull(SurvivalTimeUtils.ALG_INFO);
+    }
+
+    @Test
     public void testLogic() {
 
         List<Map<String, String>> records = new ArrayList<>();
@@ -159,16 +166,16 @@ public class SurvivalTimeUtilsTest {
         records.add(createRecord(9999, 1, 1, 2010, 10, 11, 1956, 3, 4, 61, 4, 1));
         records.add(createRecord(2013, 1, 2, 2010, 10, 11, 1956, 3, 4, 2, 4, 1));
         records.add(createRecord(2013, 1, 2, 2010, 10, 11, 1956, 3, 4, 2, 4, 1)); // same record as above
-        records.add(createRecord(2010, 3, 1, 2010, 10, 21, 1956, 3, 4, 3, 4, 1));
-        records.add(createRecord(2010, 3, 1, 2010, 10, 21, 1956, 3, 4, 6, 4, 1));
+        records.add(createRecord(2010, 3, 1, 2010, 10, 11, 1956, 3, 4, 3, 4, 1));
+        records.add(createRecord(2010, 3, 1, 2010, 10, 11, 1956, 3, 4, 6, 4, 1));
         records.add(createRecord(9999, 1, 1, 2010, 10, 11, 1956, 3, 4, 99, 4, 1));
         records.add(createRecord(2009, 11, 11, 2010, 10, 11, 1956, 3, 4, 1, 4, 1));
         records.add(createRecord(9999, 11, 11, 2010, 10, 11, 1956, 3, 4, 4, 4, 1));
         records.add(createRecord(9999, 12, 12, 2010, 10, 11, 1956, 3, 4, 0, 4, 1));
-        records.add(createRecord(2008, 3, 1, 2010, 10, 21, 1956, 3, 4, 5, 4, 1));
-        records.add(createRecord(2010, 1, 1, 2010, 10, 21, 1956, 3, 4, 7, 4, 1));
+        records.add(createRecord(2008, 3, 1, 2010, 10, 11, 1956, 3, 4, 5, 4, 1));
+        records.add(createRecord(2010, 1, 1, 2010, 10, 11, 1956, 3, 4, 7, 4, 1));
         results = SurvivalTimeUtils.calculateSurvivalTime(records, 2010);
-        assertResults(results.getSurvivalTimeOutputPatientDtoList().get(0), "9999", "9", "9999", "9", 10);
+        assertResults(results.getSurvivalTimeOutputPatientDtoList().get(0), "9999", "9", "9999", "9", 5);
         assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(0), "    ", "  ", "  ", "    ", "  ", "  ", "    ", "  ", "  ");
         assertResults(results.getSurvivalTimeOutputPatientDtoList().get(1), "9999", "9", "9999", "9", 5);
         assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(1), "    ", "  ", "  ", "    ", "  ", "  ", "    ", "  ", "  ");
@@ -211,7 +218,7 @@ public class SurvivalTimeUtilsTest {
         return rec;
     }
 
-    private void assertResults(SurvivalTimeOutputRecordDto rec, String survival, String flag, String surivalPresumedAlive, String flagPrsumedAlive, int sortedIndex) {
+    private void assertResults(SurvivalTimeOutputRecordDto rec, String survival, String flag, String surivalPresumedAlive, String flagPrsumedAlive, Integer sortedIndex) {
         Assert.assertEquals(StringUtils.leftPad(survival, 4, "0"), rec.getSurvivalMonths());
         Assert.assertEquals(flag, rec.getSurvivalMonthsFlag());
         Assert.assertEquals(StringUtils.leftPad(surivalPresumedAlive, 4, "0"), rec.getSurvivalMonthsPresumedAlive());

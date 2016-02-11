@@ -31,7 +31,7 @@ public class SurvivalTimeOutputRecordDto {
 
     private String _survivalMonthsFlagPresumedAlive;
 
-    private int _sortedIndex;
+    private Integer _sortedIndex;
 
     public String getSurvivalTimeDxYear() {
         return _survivalTimeDxYear;
@@ -137,11 +137,11 @@ public class SurvivalTimeOutputRecordDto {
         _survivalMonthsFlagPresumedAlive = survivalMonthsFlagPresumedAlive;
     }
 
-    public int getSortedIndex() {
+    public Integer getSortedIndex() {
         return _sortedIndex;
     }
 
-    public void setSortedIndex(int sortedIndex) {
+    public void setSortedIndex(Integer sortedIndex) {
         _sortedIndex = sortedIndex;
     }
 }
