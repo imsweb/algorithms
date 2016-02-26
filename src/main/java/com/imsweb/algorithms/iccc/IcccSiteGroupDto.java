@@ -36,6 +36,8 @@ public class IcccSiteGroupDto {
     /** Recode */
     private String _recode;
 
+    private String _recodeExtended;
+
     /** Children codes */
     private List<String> _childrenRecodes;
 
@@ -73,6 +75,10 @@ public class IcccSiteGroupDto {
 
     public String getRecode() {
         return _recode;
+    }
+
+    public String getRecodeExtended() {
+        return _recodeExtended;
     }
 
     public List<String> getChildrenRecodes() {
@@ -113,6 +119,10 @@ public class IcccSiteGroupDto {
 
     public void setRecode(String recode) {
         _recode = recode;
+    }
+
+    public void setRecodeExtended(String recodeExtended) {
+        _recodeExtended = recodeExtended;
     }
 
     public void setChildrenRecodes(List<String> childrenRecodes) {
