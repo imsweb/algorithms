@@ -127,6 +127,19 @@ public final class IcccRecodeUtils {
      * @return the calculated site recode for the provided parameters, unknown if it can't be calculated
      */
     public static String calculateSiteRecode(String version, String site, String histology, String behavior) {
+        return calculateSiteRecode(version, site, histology, behavior, false);
+    }
+
+    /**
+     * Returns the calculated site recode for the provided parameters, unknown if it can't be calculated.
+     * @param version data version
+     * @param site site
+     * @param histology histology
+     * @param behavior behavior
+     * @param recodeExtended if true, extended recode value otherwise main recode classification will be calculated
+     * @return the calculated site recode/ recode extended for the provided parameters, unknown if it can't be calculated
+     */
+    public static String calculateSiteRecode(String version, String site, String histology, String behavior, boolean recodeExtended) {
         String result = "999";
 
         if (StringUtils.isBlank(site) || !site.matches("C\\d+") || StringUtils.isBlank(histology) || !histology.matches("\\d+"))
@@ -139,13 +152,13 @@ public final class IcccRecodeUtils {
         ensureVersion(version);
 
         Integer s = Integer.valueOf(site.substring(1)), h = Integer.valueOf(histology), b = -1;
-        
+
         if (!StringUtils.isBlank(behavior))
             b = Integer.valueOf(behavior);
 
         for (IcccExecutableSiteGroupDto dto : _INTERNAL_DATA.get(version)) {
             if (dto.matches(s, h, b)) {
-                result = dto.getRecode();
+                result = recodeExtended ? (StringUtils.isEmpty(dto.getRecodeExtended()) ? "999" : dto.getRecodeExtended()): dto.getRecode();
                 break;
             }
         }
@@ -194,10 +207,12 @@ public final class IcccRecodeUtils {
                 String histOut = data[6];
                 String recode = data[7];
                 String children = data[8];
-
-                String behavior = "";
-                if (data.length > 9)
-                    behavior = data[9];
+                String recodeExtended = "";
+                String behaviorInclusions = "";
+                if (VERSION_WHO_2008.equals(version)) {
+                    recodeExtended = data[9];
+                    behaviorInclusions = data[10];
+                }
 
                 IcccSiteGroupDto group = new IcccSiteGroupDto();
                 group.setId(id);
@@ -207,8 +222,9 @@ public final class IcccRecodeUtils {
                 group.setSiteExclusions(siteOut);
                 group.setHistologyInclusions(histIn);
                 group.setHistologyExclusions(histOut);
-                group.setBehaviorInclusions(behavior);
+                group.setBehaviorInclusions(behaviorInclusions);
                 group.setRecode(recode);
+                group.setRecodeExtended(recodeExtended);
                 if (!StringUtils.isBlank(children))
                     group.setChildrenRecodes(Arrays.asList(children.split(",")));
 
@@ -218,6 +234,8 @@ public final class IcccRecodeUtils {
                 if (!StringUtils.isBlank(recode)) {
                     if (!recode.matches("\\d{3}"))
                         throw new RuntimeException("Invalid recode: " + recode + " for id " + id);
+                    if (VERSION_WHO_2008.equals(version) && !recodeExtended.matches("\\d{3}"))
+                        throw new RuntimeException("Invalid recode extended: " + recodeExtended + " for id " + id);
                     
                     IcccExecutableSiteGroupDto executable = new IcccExecutableSiteGroupDto();
                     executable.setId(id);
@@ -225,8 +243,9 @@ public final class IcccRecodeUtils {
                     executable.setSiteExclusions(AlgorithmsUtils.expandSitesAsIntegers(siteOut));
                     executable.setHistologyInclusions(AlgorithmsUtils.expandHistologiesAsIntegers(histIn));
                     executable.setHistologyExclusions(AlgorithmsUtils.expandHistologiesAsIntegers(histOut));
-                    executable.setBehaviorInclusions(AlgorithmsUtils.expandBehaviorsAsIntegers(behavior));
+                    executable.setBehaviorInclusions(AlgorithmsUtils.expandBehaviorsAsIntegers(behaviorInclusions));
                     executable.setRecode(recode);
+                    executable.setRecodeExtended(recodeExtended);
 
                     executables.add(executable);
                 }

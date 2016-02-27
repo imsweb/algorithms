@@ -51,6 +51,8 @@ public class IcccExecutableSiteGroupDto {
      */
     private String _recode;
 
+    private String _recodeExtended;
+
     public String getId() {
         return _id;
     }
@@ -83,6 +85,10 @@ public class IcccExecutableSiteGroupDto {
         return _recode;
     }
 
+    public String getRecodeExtended() {
+        return _recodeExtended;
+    }
+
     public void setId(String id) {
         _id = id;
     }
@@ -113,6 +119,10 @@ public class IcccExecutableSiteGroupDto {
 
     public void setRecode(String recode) {
         _recode = recode;
+    }
+
+    public void setRecodeExtended(String recodeExtended) {
+        _recodeExtended = recodeExtended;
     }
 
     @Override
