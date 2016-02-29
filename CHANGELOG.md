@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 1.4.2**
+
+ - Added support for calculating the extended ICCC recode.
+
 **Changes in version 1.4.1**
 
  - Fixed a bug in surgery tables where all row levels would be null; introduced in version 1.4.
