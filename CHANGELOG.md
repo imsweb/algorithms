@@ -3,7 +3,7 @@
 **Changes in version 1.4.2**
 
  - Added support for calculating the extended ICCC recode.
- - Added support for calculating seer behavior recode for analysis.
+ - Added support for calculating SEER behavior recode for analysis.
 
 **Changes in version 1.4.1**
 

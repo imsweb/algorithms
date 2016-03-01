@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2016 Information Management Services, Inc.
  */
-package com.imsweb.algorithms.behaviorRecode;
+package com.imsweb.algorithms.behavrecode;
 
 import java.util.HashMap;
 import java.util.Map;

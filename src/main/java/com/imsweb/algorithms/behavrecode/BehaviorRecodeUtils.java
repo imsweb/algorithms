@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2016 Information Management Services, Inc.
  */
-package com.imsweb.algorithms.behaviorRecode;
+package com.imsweb.algorithms.behavrecode;
 
 import java.util.Map;
 
@@ -17,7 +17,7 @@ public class BehaviorRecodeUtils {
     //Algorithm info
     public static final String ALG_NAME = "SEER Behavior Recode for Analysis - 1973-2004 SEER Research Data (November 2006 submission) and Later Releases";
     public static final String ALG_VERSION = "2006+";
-    public static final String ALG_INFO = "Calculates seer behavior recode for November 2006 submission and later releases.";
+    public static final String ALG_INFO = "Calculates SEER behavior recode for November 2006 submission and later releases.";
 
     //Behavior recode for analysis values
     public static final String BENIGN = "0";
@@ -46,11 +46,11 @@ public class BehaviorRecodeUtils {
 
     public static String computeBehaviorRecode(String site, String hist, String behavior, String dxYear) {
         String behaviorRecode = UNKNOWN;
-        Integer iSite = site != null && site.toUpperCase().startsWith("C") && site.length() == 4 && NumberUtils.isDigits(site.substring(1)) ? Integer.parseInt(site.substring(1)) : null;
-        Integer iHist = hist != null && hist.length() == 4 && NumberUtils.isDigits(hist) ? Integer.parseInt(hist) : null;
-        Integer iBehavior = behavior != null && behavior.length() == 1 && NumberUtils.isDigits(behavior) ? Integer.parseInt(behavior) : null;
-        Integer iDxYear = dxYear != null && dxYear.length() == 4 && NumberUtils.isDigits(dxYear) ? Integer.parseInt(dxYear) : 9999;
-        if (iSite == null || iHist == null || iBehavior == null || iDxYear == 9999)
+        int iSite = site != null && site.toUpperCase().startsWith("C") && site.length() == 4 && NumberUtils.isDigits(site.substring(1)) ? Integer.parseInt(site.substring(1)) : -1;
+        int iHist = hist != null && hist.length() == 4 && NumberUtils.isDigits(hist) ? Integer.parseInt(hist) : -1;
+        int iBehavior = behavior != null && behavior.length() == 1 && NumberUtils.isDigits(behavior) ? Integer.parseInt(behavior) : -1;
+        int iDxYear = dxYear != null && dxYear.length() == 4 && NumberUtils.isDigits(dxYear) ? Integer.parseInt(dxYear) : 9999;
+        if (iSite == -1 || iHist == -1 || iBehavior == -1 || iDxYear == 9999)
             return behaviorRecode;
 
         //Step 1, If your data only has ICD-O-2 histology codes for data before 2001, please use the ICD Conversion Program to convert these codes to ICD-O-3.
