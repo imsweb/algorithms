@@ -6,7 +6,6 @@ package com.imsweb.algorithms.surgery;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.Writer;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,9 +13,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
-import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;
-import com.thoughtworks.xstream.io.xml.StaxDriver;
+import com.thoughtworks.xstream.io.xml.XppDriver;
 
 import com.imsweb.algorithms.surgery.xml.SurgeryRowXmlDto;
 import com.imsweb.algorithms.surgery.xml.SurgeryTableXmlDto;
@@ -123,12 +120,7 @@ public final class SiteSpecificSurgeryUtils {
     }
 
     private static XStream createSiteSpecificSurgeryDataXstream() {
-        XStream xstream = new XStream(new StaxDriver() {
-            @Override
-            public HierarchicalStreamWriter createWriter(Writer out) {
-                return new PrettyPrintWriter(out, "    ");
-            }
-        });
+        XStream xstream = new XStream(new XppDriver());
         xstream.autodetectAnnotations(true);
         xstream.alias("surgery-tables", SurgeryTablesXmlDto.class);
         return xstream;
