@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 1.4.3**
+
+ - Changed the parser used by XStreams to read XML files, was causing some fields in the site-specific surgery XML files to be ignored.
+
 **Changes in version 1.4.2**
 
  - Added support for calculating the extended ICCC recode.
