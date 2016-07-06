@@ -13,7 +13,6 @@ The following algorithms are available:
  * Census Tract Poverty Indicator ([CensusTractPovertyIndicatorUtils](https://github.com/imsweb/algorithms/tree/master/src/main/java/com/imsweb/algorithms/censustractpovertyindicator/CensusTractPovertyIndicatorUtils.java))
  * Historic Stage ([HistoricStageUtils](https://github.com/imsweb/algorithms/tree/master/src/main/java/com/imsweb/algorithms/historicstage/HistoricStageUtils.java))
  * ICCC Site Recode ([IcccRecodeUtils](https://github.com/imsweb/algorithms/tree/master/src/main/java/com/imsweb/algorithms/iccc/IcccRecodeUtils.java))
- * MPH rules ([MPUtils](https://github.com/imsweb/algorithms/tree/master/src/main/java/com/imsweb/algorithms/multipleprimary/MPUtils.java))
  * NAPIIA ([NapiiaUtils](https://github.com/imsweb/algorithms/tree/master/src/main/java/com/imsweb/algorithms/napiia/NapiiaUtils.java))
  * NHIA ([NhiaUtils](https://github.com/imsweb/algorithms/tree/master/src/main/java/com/imsweb/algorithms/nhia/NhiaUtils.java))
  * Rural Urban ([RuralUrbanUtils](https://github.com/imsweb/algorithms/tree/master/src/main/java/com/imsweb/algorithms/ruralurban/RuralUrbanUtils.java))
