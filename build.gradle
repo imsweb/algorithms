@@ -18,12 +18,11 @@ repositories {
 }
 
 dependencies {
-    compile 'org.apache.commons:commons-lang3:3.3.2'
-    compile 'joda-time:joda-time:2.6'
+    compile 'org.apache.commons:commons-lang3:3.4'
     compile 'au.com.bytecode:opencsv:2.4'
-    compile 'com.thoughtworks.xstream:xstream:1.4.7'
+    compile 'com.thoughtworks.xstream:xstream:1.4.9'
     testCompile 'junit:junit:4.12'
-    testCompile 'com.imsweb:layout:1.3'
+    testCompile 'com.imsweb:layout:1.4'
 }
 
 // enforce UTF-8 for all compilation tasks
@@ -45,6 +44,11 @@ jar {
                 'Built-JDK': System.getProperty('java.version'),
         )
     }
+}
+
+// this sucks, but they made the Javadoc way too stritct in Java 8 and it's not worth my time fixing it!
+tasks.withType(Javadoc) {
+    options.addStringOption('Xdoclint:none', '-quiet')
 }
 
 // checkstyle plugin settings

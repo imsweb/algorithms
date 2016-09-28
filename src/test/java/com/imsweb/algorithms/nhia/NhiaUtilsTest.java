@@ -285,7 +285,7 @@ public class NhiaUtilsTest {
         rec3.setStateAtDx("AL");
         rec3.setCountyAtDx("007");
         //one record with low hispanic county at DX
-        patient2.setNhiaInputPatientDtoList(new ArrayList<NhiaInputRecordDto>());
+        patient2.setNhiaInputPatientDtoList(new ArrayList<>());
         patient2.getNhiaInputPatientDtoList().add(rec3);
         //name option doesn't run.
         Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, NhiaUtils.computeNhia(patient2, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
@@ -305,7 +305,6 @@ public class NhiaUtilsTest {
 
     @Test
     public void testCsvFile() throws IOException {
-        int count = 0;
         for (String[] row : new CSVReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("nhia/testNHIA.csv"), "US-ASCII"), ',', '\"', 1).readAll()) {
             Map<String, String> rec = new HashMap<>();
             rec.put(NhiaUtils.PROP_SPANISH_HISPANIC_ORIGIN, row[0]);
@@ -323,9 +322,7 @@ public class NhiaUtilsTest {
 
             if (!nhia.equals(NhiaUtils.computeNhia(rec, option).getNhia()))
                 Assert.fail("Unexpected result in CSV data file for row " + Arrays.asList(row));
-            count++;
         }
-        System.out.println(count + " cases tested!");
     }
 
     @Test

@@ -860,6 +860,6 @@ public class NapiiaUtilsTest {
             if (results.getReasonForReview() == null ? reason != null : !results.getReasonForReview().equals(reason))
                 Assert.fail("Unexpected reason for review result in CSV data file for row #" + line + " " + Arrays.asList(row) + "  " + results.getReasonForReview());
         }
-        System.out.println(line + " cases tested!");
+        //System.out.println(line + " cases tested!");
     }
 }

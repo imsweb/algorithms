@@ -14,7 +14,6 @@ import org.junit.Test;
 
 import au.com.bytecode.opencsv.CSVReader;
 
-import com.imsweb.algorithms.seersiterecode.SeerSiteRecodeUtils;
 import com.imsweb.layout.Field;
 import com.imsweb.layout.Layout;
 import com.imsweb.layout.LayoutFactory;
@@ -86,12 +85,11 @@ public class CauseSpecificUtilsTest {
             String causeOtherCalculated = CauseSpecificUtils.computeCauseSpecific(rec).getCauseOtherDeathClassification();
             count++;
             if (!causeSpecificExpected.equals(causeSpecificCalculated) || !causeOtherExpected.equals(causeOtherCalculated)) {
-                System.out.println(SeerSiteRecodeUtils.calculateSiteRecode(row[3], row[4]));
+                //System.out.println(SeerSiteRecodeUtils.calculateSiteRecode(row[3], row[4]));
                 Assert.fail("Unexpected result for row number " + (count + 1) + " " + Arrays.asList(row) + "\nExpected results: " + causeSpecificExpected + ", " +
                         "" + causeOtherExpected + " But found: " + causeSpecificCalculated + ", " + causeOtherCalculated);
             }
         }
-        System.out.println(count + " cases tested!");
     }
 
     //     The following methods are used to compare the results against sas.

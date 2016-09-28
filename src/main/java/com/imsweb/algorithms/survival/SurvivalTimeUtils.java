@@ -3,6 +3,10 @@
  */
 package com.imsweb.algorithms.survival;
 
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -10,9 +14,6 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
-import org.joda.time.Days;
-import org.joda.time.IllegalFieldValueException;
-import org.joda.time.LocalDate;
 
 /**
  * This class is used to calculate the survival time in months for a give patient (a list of records).
@@ -161,13 +162,13 @@ public class SurvivalTimeUtils {
             //if dolc year is invalid or if dolc date is future date, set it as missing, and if Dolc year is missing set the month and date as missing.
             boolean isDolcValid = true;
             try {
-                new LocalDate(dolcYear, dolcMonth, dolcDay);
+                LocalDate.of(dolcYear, dolcMonth, dolcDay);
             }
-            catch (IllegalFieldValueException e) {
+            catch (DateTimeException e) {
                 isDolcValid = false;
             }
             LocalDate now = LocalDate.now();
-            if (dolcYear < 1900 || dolcYear > now.getYear() || (dolcYear == now.getYear() && ((dolcMonth <= 12 && dolcMonth > now.getMonthOfYear()) || (dolcMonth == now.getMonthOfYear() && isDolcValid
+            if (dolcYear < 1900 || dolcYear > now.getYear() || (dolcYear == now.getYear() && ((dolcMonth <= 12 && dolcMonth > now.getMonthValue()) || (dolcMonth == now.getMonthValue() && isDolcValid
                     && dolcDay > now.getDayOfMonth()))))
                 dolcYear = 9999;
             if (dolcYear == 9999)
@@ -201,9 +202,9 @@ public class SurvivalTimeUtils {
                 boolean valid = tempRec._year != 9999 && tempRec._year >= 1900 && tempRec._year <= endPointYear;
                 if (valid) {
                     try {
-                        new LocalDate(tempRec._year, tempRec._month == 99 ? 1 : tempRec._month, tempRec._day == 99 ? 1 : tempRec._day);
+                        LocalDate.of(tempRec._year, tempRec._month == 99 ? 1 : tempRec._month, tempRec._day == 99 ? 1 : tempRec._day);
                     }
-                    catch (IllegalFieldValueException e) {
+                    catch (DateTimeException e) {
                         if (tempRec._month >= 1 && tempRec._month <= 12)
                             tempRec._daySafe = tempRec._day = 99;
                         else
@@ -283,7 +284,7 @@ public class SurvivalTimeUtils {
                 if (outputRec.getSortedIndex() == null)
                     outputRec.setSortedIndex(sortedIdx++);
         }
-        catch (IllegalFieldValueException e) {
+        catch (DateTimeException e) {
             // final safety net, if anything goes wrong, just assign 9's
             patientResultsList.clear();
             int sortedIdx = 0;
@@ -316,10 +317,9 @@ public class SurvivalTimeUtils {
         //check validity of DOLC
         //if the month is invalid, set both day and month to 99, if the day is invalid set it as missing.
         try {
-            new LocalDate(dolcYear == 9999 ? 1900 : dolcYear, dolcMonth == 99 ? 1 : dolcMonth, dolcDay == 99 ? 1 : dolcDay);
+            LocalDate.of(dolcYear == 9999 ? 1900 : dolcYear, dolcMonth == 99 ? 1 : dolcMonth, dolcDay == 99 ? 1 : dolcDay);
         }
-        catch (IllegalFieldValueException e) {
-
+        catch (DateTimeException e) {
             if (dolcMonth >= 1 && dolcMonth <= 12)
                 dolcDay = 99;
             else
@@ -340,9 +340,9 @@ public class SurvivalTimeUtils {
         if (birthMonth == 99)
             birthDay = 99;
         try {
-            new LocalDate(birthYear, birthMonth == 99 ? 1 : birthMonth, birthDay == 99 ? 1 : birthDay);
+            LocalDate.of(birthYear, birthMonth == 99 ? 1 : birthMonth, birthDay == 99 ? 1 : birthDay);
         }
-        catch (IllegalFieldValueException e) {
+        catch (DateTimeException e) {
             if (birthMonth >= 1 && birthMonth <= 12)
                 birthDay = 99;
             else
@@ -378,10 +378,8 @@ public class SurvivalTimeUtils {
                         break;
                     }
                 }
-                if (latestDayPossible == 0) {
-                    LocalDate date = new LocalDate(rec._yearSafe, rec._monthSafe, 1).dayOfMonth().withMaximumValue();
-                    latestDayPossible = date.getDayOfMonth();
-                }
+                if (latestDayPossible == 0)
+                    latestDayPossible = YearMonth.of(rec._yearSafe, rec._monthSafe).lengthOfMonth();
                 // take the middle point between earliest and latest
                 rec._daySafe = (int)Math.floor((double)(earliestDayPossible + latestDayPossible) / (double)2);
 
@@ -435,10 +433,10 @@ public class SurvivalTimeUtils {
                     latestDayPossible = 31;
                 }
                 // take the middle point between earliest and latest
-                LocalDate earliestDate = new LocalDate(rec._yearSafe, earliestMonthPossible, earliestDayPossible);
-                int diffInDays = Days.daysBetween(earliestDate, new LocalDate(rec._yearSafe, latestMonthPossible, latestDayPossible)).getDays();
+                LocalDate earliestDate = LocalDate.of(rec._yearSafe, earliestMonthPossible, earliestDayPossible);
+                int diffInDays = (int)ChronoUnit.DAYS.between(earliestDate, LocalDate.of(rec._yearSafe, latestMonthPossible, latestDayPossible));
                 earliestDate = earliestDate.plusDays((int)Math.floor(diffInDays / 2.0));
-                rec._monthSafe = earliestDate.getMonthOfYear();
+                rec._monthSafe = earliestDate.getMonthValue();
                 rec._daySafe = earliestDate.getDayOfMonth();
 
                 /* SP_CHANGE - SAS--Overwrite the dates with the new dates.
@@ -489,7 +487,7 @@ public class SurvivalTimeUtils {
 
         // STEP 3 - calculate variables for each record
         for (InternalRecDto rec : records) {
-            int diffInDays = Days.daysBetween(new LocalDate(rec._yearSafe, rec._monthSafe, rec._daySafe), new LocalDate(dolc._yearSafe, dolc._monthSafe, dolc._daySafe)).getDays();
+            int diffInDays = (int)ChronoUnit.DAYS.between(LocalDate.of(rec._yearSafe, rec._monthSafe, rec._daySafe), LocalDate.of(dolc._yearSafe, dolc._monthSafe, dolc._daySafe));
             if (presumeAlive)
                 rec._diffInDaysPA = diffInDays;
             else

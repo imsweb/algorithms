@@ -3,10 +3,10 @@
  */
 package com.imsweb.algorithms.censustractpovertyindicator;
 
+import java.time.LocalDate;
 import java.util.Map;
 
 import org.apache.commons.lang3.math.NumberUtils;
-import org.joda.time.LocalDate;
 
 /**
  * This class can be used to calculate census tract poverty indicator.

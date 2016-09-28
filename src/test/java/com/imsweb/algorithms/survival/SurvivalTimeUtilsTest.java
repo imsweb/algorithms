@@ -3,13 +3,13 @@
  */
 package com.imsweb.algorithms.survival;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
-import org.joda.time.LocalDate;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -81,7 +81,7 @@ public class SurvivalTimeUtilsTest {
         //Dolc is in the future (tomorrow) and patient is alive
         LocalDate tomorrow = LocalDate.now().plusDays(1);
         records.clear();
-        records.add(createRecord(2010, 9, 15, tomorrow.getYear(), tomorrow.getMonthOfYear(), tomorrow.getDayOfMonth(), 9999, 99, 99, -1, 1, 1));
+        records.add(createRecord(2010, 9, 15, tomorrow.getYear(), tomorrow.getMonthValue(), tomorrow.getDayOfMonth(), 9999, 99, 99, -1, 1, 1));
         results = SurvivalTimeUtils.calculateSurvivalTime(records, 2010);
         assertResults(results.getSurvivalTimeOutputPatientDtoList().get(0), "9999", "9", "0003", "1", 0);
         assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(0), "2010", "9", "15", "    ", "  ", "  ", "2010", "12", "31");
@@ -166,8 +166,8 @@ public class SurvivalTimeUtilsTest {
         records.add(createRecord(9999, 1, 1, 2012, 12, 31, 1956, 3, 4, 0, 4, 1));
         records.add(createRecord(2013, 1, 2, 2012, 12, 31, 1956, 3, 4, 1, 4, 1));
         records.add(createRecord(2013, 1, 2, 2012, 12, 31, 1956, 3, 4, 2, 4, 1));
-        records.add(createRecord(2010, 3, 1, 2012, 12, 31, 1956, 3, 4,61, 4, 1)); //non-federal
-        records.add(createRecord(2010,99, 99, 2012, 12, 31, 1956, 3, 4, 99, 4, 1)); // federal should be before non-federal
+        records.add(createRecord(2010, 3, 1, 2012, 12, 31, 1956, 3, 4, 61, 4, 1)); //non-federal
+        records.add(createRecord(2010, 99, 99, 2012, 12, 31, 1956, 3, 4, 99, 4, 1)); // federal should be before non-federal
         records.add(createRecord(9999, 1, 1, 2012, 12, 31, 1956, 3, 4, 3, 4, 1));
         records.add(createRecord(2009, 11, 11, 2012, 12, 31, 1956, 3, 4, 4, 4, 1));
         records.add(createRecord(9999, 11, 11, 2012, 12, 31, 1956, 3, 4, 5, 4, 1));

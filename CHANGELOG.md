@@ -1,5 +1,12 @@
 ## Algorithms Version History
 
+**Changes in version 1.5**
+
+ - Removed Joda library dependency, replaced by new Java 8 date framework.
+ - Updated Commons Lang library from version 3.3.2 to version 3.4.
+ - Updated XStream library from version 1.4.7 to version 1.4.9.
+ - This library now requires Java 8 at minimum.
+
 **Changes in version 1.4.4**
 
  - Removed the MPH module; it has been moved into its own project (https://github.com/imsweb/mph)
@@ -22,7 +29,7 @@
 **Changes in version 1.4**
 
  - Replaced JAXB by XStream for all internal XML operations.
- - This library now requires Java 7.
+ - This library now requires Java 7 at minimum.
 
 **Changes in version 1.3.5**
 
