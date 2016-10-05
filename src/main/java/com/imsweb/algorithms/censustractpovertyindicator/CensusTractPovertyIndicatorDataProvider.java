@@ -11,11 +11,14 @@ package com.imsweb.algorithms.censustractpovertyindicator;
  * @author bekeles
  */
 public interface CensusTractPovertyIndicatorDataProvider {
-    
+
     String YEAR_CATEGORY_1 = "1";
     String YEAR_CATEGORY_2 = "2";
     String YEAR_CATEGORY_3 = "3";
     String YEAR_CATEGORY_4 = "4";
+    String YEAR_CATEGORY_5 = "5";
+    String YEAR_CATEGORY_6 = "6";
+    String YEAR_CATEGORY_7 = "7";
 
     /**
      * Returns census tract poverty indicator for provided year category, state of dx, county of dx, and census tract.

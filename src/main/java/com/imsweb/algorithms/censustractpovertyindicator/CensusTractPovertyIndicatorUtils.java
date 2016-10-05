@@ -179,8 +179,20 @@ public final class CensusTractPovertyIndicatorUtils {
             yearCategory = CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_3;
             censusTract = input.getCensusTract2010();
         }
-        else if (year >= 2009 && (year <= 2011 || (includeRecentYears && year <= LocalDate.now().getYear()))) {
+        else if (year == 2009) {
             yearCategory = CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_4;
+            censusTract = input.getCensusTract2010();
+        }
+        else if (year == 2010) {
+            yearCategory = CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_5;
+            censusTract = input.getCensusTract2010();
+        }
+        else if (year == 2011) {
+            yearCategory = CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_6;
+            censusTract = input.getCensusTract2010();
+        }
+        else if (year >= 2012 && (year <= 2014 || (includeRecentYears && year <= LocalDate.now().getYear()))) {
+            yearCategory = CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_7;
             censusTract = input.getCensusTract2010();
         }
         else
