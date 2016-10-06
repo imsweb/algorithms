@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 1.6**
+
+ - Changed calculated census poverty indicator for recent years.
+
 **Changes in version 1.5**
 
  - Removed Joda library dependency, replaced by new Java 8 date framework.

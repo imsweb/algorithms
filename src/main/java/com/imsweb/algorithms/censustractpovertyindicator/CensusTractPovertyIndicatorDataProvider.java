@@ -24,12 +24,12 @@ public interface CensusTractPovertyIndicatorDataProvider {
      * Returns census tract poverty indicator for provided year category, state of dx, county of dx, and census tract.
      * <p/>
      * Created Oct 18, 2013 by bekeles
-     * @param yearCatagory year category
+     * @param yearCategory year category
      * @param state state at DX
      * @param county county at DX
      * @param censusTract census tract (2000 or 2010)
      * @return the corresponding census tract poverty indicator
      */
-    String getPovertyIndicator(String yearCatagory, String state, String county, String censusTract);
+    String getPovertyIndicator(String yearCategory, String state, String county, String censusTract);
 
 }

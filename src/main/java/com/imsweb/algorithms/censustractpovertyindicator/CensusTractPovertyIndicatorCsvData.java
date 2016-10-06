@@ -25,10 +25,10 @@ public class CensusTractPovertyIndicatorCsvData implements CensusTractPovertyInd
     private static Map<String, Integer> _POVERTY_INDICATOR_LOOK_UP = new HashMap<>();
 
     @Override
-    public String getPovertyIndicator(String yearCatagory, String state, String county, String census) {
+    public String getPovertyIndicator(String yearCategory, String state, String county, String census) {
         String povertyIndicator = CensusTractPovertyIndicatorUtils.POVERTY_INDICATOR_UNKNOWN;
 
-        if (yearCatagory == null || state == null || county == null || census == null)
+        if (yearCategory == null || state == null || county == null || census == null)
             return povertyIndicator;
 
         if (_POVERTY_INDICATOR_LOOK_UP.isEmpty())
@@ -37,19 +37,19 @@ public class CensusTractPovertyIndicatorCsvData implements CensusTractPovertyInd
         Integer povertyIndicatorValue = _POVERTY_INDICATOR_LOOK_UP.get(state + county + census);
 
         if (povertyIndicatorValue != null) {
-            if (CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_1.equals(yearCatagory))
+            if (CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_1.equals(yearCategory))
                 povertyIndicator = String.valueOf(povertyIndicatorValue / 1000000);
-            else if (CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_2.equals(yearCatagory))
+            else if (CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_2.equals(yearCategory))
                 povertyIndicator = String.valueOf((povertyIndicatorValue / 100000) % 10);
-            else if (CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_3.equals(yearCatagory))
+            else if (CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_3.equals(yearCategory))
                 povertyIndicator = String.valueOf((povertyIndicatorValue / 10000) % 10);
-            else if (CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_4.equals(yearCatagory))
+            else if (CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_4.equals(yearCategory))
                 povertyIndicator = String.valueOf(povertyIndicatorValue / 1000 % 10);
-            else if (CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_5.equals(yearCatagory))
+            else if (CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_5.equals(yearCategory))
                 povertyIndicator = String.valueOf(povertyIndicatorValue / 100 % 10);
-            else if (CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_6.equals(yearCatagory))
+            else if (CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_6.equals(yearCategory))
                 povertyIndicator = String.valueOf(povertyIndicatorValue / 10 % 10);
-            else if (CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_7.equals(yearCatagory))
+            else if (CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_7.equals(yearCategory))
                 povertyIndicator = String.valueOf(povertyIndicatorValue % 10);
         }
 
@@ -153,7 +153,7 @@ public class CensusTractPovertyIndicatorCsvData implements CensusTractPovertyInd
 
         for (Entry<String, byte[]> entry : tmp.entrySet()) {
             byte[] values = entry.getValue();
-            int result = (int)(values[yearRange1] * 1000000 + values[yearRange2] * 100000 + values[yearRange3] * 10000 + values[yearRange4] * 1000 + values[yearRange5] * 100 + values[yearRange6] * 10 + values[yearRange7]);
+            int result = values[yearRange1] * 1000000 + values[yearRange2] * 100000 + values[yearRange3] * 10000 + values[yearRange4] * 1000 + values[yearRange5] * 100 + values[yearRange6] * 10 + values[yearRange7];
             _POVERTY_INDICATOR_LOOK_UP.put(entry.getKey(), result);
         }
     }

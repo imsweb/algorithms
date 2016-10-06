@@ -52,7 +52,7 @@ public final class CensusTractPovertyIndicatorUtils {
      * 9 = Unknown
      * <br/><br/>
      * @param record a map of properties representing a NAACCR line
-     * @return the computed poverty indiactor value
+     * @return the computed poverty indicator value
      */
     public static CensusTractPovertyIndicatorOutputDto computePovertyIndicator(Map<String, String> record) {
 
@@ -68,7 +68,7 @@ public final class CensusTractPovertyIndicatorUtils {
 
     /**
      * Calculates the census tract poverty indicator for the provided record.
-     * If the boolean icludeRecentYears is set to true, The algorithm uses 2009-2011 data for 2012+ diagnosis years.
+     * If the boolean includeRecentYears is set to true, The algorithm uses 2009-2011 data for 2012+ diagnosis years.
      * <br/><br/>
      * The provided record doesn't need to contain all the input variables, but the algorithm will use the following ones:
      * <ul>
@@ -89,7 +89,7 @@ public final class CensusTractPovertyIndicatorUtils {
      * <br/><br/>
      * @param record a map of properties representing a NAACCR line
      * @param includeRecentYears if true, the years 2012+ will be calculated using the year category 4 logic, otherwise they will be set to 9
-     * @return the computed poverty indiactor value
+     * @return the computed poverty indicator value
      */
     public static CensusTractPovertyIndicatorOutputDto computePovertyIndicator(Map<String, String> record, boolean includeRecentYears) {
 
@@ -124,7 +124,7 @@ public final class CensusTractPovertyIndicatorUtils {
      * 9 = Unknown
      * <br/><br/>
      * @param input a <code>CensusTractPovertyIndicatorInputDto</code> input object
-     * @return the computed poverty indiactor value
+     * @return the computed poverty indicator value
      */
     public static CensusTractPovertyIndicatorOutputDto computePovertyIndicator(CensusTractPovertyIndicatorInputDto input) {
         return computePovertyIndicator(input, true);
@@ -132,7 +132,7 @@ public final class CensusTractPovertyIndicatorUtils {
 
     /**
      * Calculates the census tract poverty indicator for the provided census tract poverty indicator input dto
-     * If the boolean icludeRecentYears is set to true, The algorithm uses 2009-2011 data for 2012+ diagnosis years.
+     * If the boolean includeRecentYears is set to true, The algorithm uses 2009-2011 data for 2012+ diagnosis years.
      * <br/><br/>
      * The provided input dto has the following parameters used in the calculation:
      * <ul>
@@ -153,7 +153,7 @@ public final class CensusTractPovertyIndicatorUtils {
      * <br/><br/>
      * @param input a <code>CensusTractPovertyIndicatorInputDto</code> input object
      * @param includeRecentYears if true, the years 2012+ will be calculated using the year category 4 logic, otherwise they will be set to 9
-     * @return the computed poverty indiactor value
+     * @return the computed poverty indicator value
      */
     public static CensusTractPovertyIndicatorOutputDto computePovertyIndicator(CensusTractPovertyIndicatorInputDto input, boolean includeRecentYears) {
         CensusTractPovertyIndicatorOutputDto result = new CensusTractPovertyIndicatorOutputDto();
@@ -204,7 +204,7 @@ public final class CensusTractPovertyIndicatorUtils {
             result.setCensusTractPovertyIndicator(_PROVIDER.getPovertyIndicator(yearCategory, input.getAddressAtDxState(), input.getAddressAtDxCounty(), censusTract));
         }
 
-        // getPovertyIndicator method never returns null, but lets make sure we dont return null value anyways
+        // getPovertyIndicator method never returns null, but lets make sure we don't return null value anyways
         if (result.getCensusTractPovertyIndicator() == null)
             result.setCensusTractPovertyIndicator(POVERTY_INDICATOR_UNKNOWN);
 
