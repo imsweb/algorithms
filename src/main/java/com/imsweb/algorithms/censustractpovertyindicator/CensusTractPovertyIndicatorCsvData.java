@@ -22,7 +22,7 @@ import au.com.bytecode.opencsv.CSVReader;
  */
 public class CensusTractPovertyIndicatorCsvData implements CensusTractPovertyIndicatorDataProvider {
 
-    private static Map<String, Short> _POVERTY_INDICATOR_LOOK_UP = new HashMap<>();
+    private static Map<String, Integer> _POVERTY_INDICATOR_LOOK_UP = new HashMap<>();
 
     @Override
     public String getPovertyIndicator(String yearCatagory, String state, String county, String census) {
@@ -34,16 +34,22 @@ public class CensusTractPovertyIndicatorCsvData implements CensusTractPovertyInd
         if (_POVERTY_INDICATOR_LOOK_UP.isEmpty())
             initializeLookup();
 
-        Short povertyIndicatorValue = _POVERTY_INDICATOR_LOOK_UP.get(state + county + census);
+        Integer povertyIndicatorValue = _POVERTY_INDICATOR_LOOK_UP.get(state + county + census);
 
         if (povertyIndicatorValue != null) {
             if (CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_1.equals(yearCatagory))
-                povertyIndicator = String.valueOf(povertyIndicatorValue / 1000);
+                povertyIndicator = String.valueOf(povertyIndicatorValue / 1000000);
             else if (CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_2.equals(yearCatagory))
-                povertyIndicator = String.valueOf((povertyIndicatorValue / 100) % 10);
+                povertyIndicator = String.valueOf((povertyIndicatorValue / 100000) % 10);
             else if (CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_3.equals(yearCatagory))
-                povertyIndicator = String.valueOf((povertyIndicatorValue / 10) % 10);
+                povertyIndicator = String.valueOf((povertyIndicatorValue / 10000) % 10);
             else if (CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_4.equals(yearCatagory))
+                povertyIndicator = String.valueOf(povertyIndicatorValue / 1000 % 10);
+            else if (CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_5.equals(yearCatagory))
+                povertyIndicator = String.valueOf(povertyIndicatorValue / 100 % 10);
+            else if (CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_6.equals(yearCatagory))
+                povertyIndicator = String.valueOf(povertyIndicatorValue / 10 % 10);
+            else if (CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_7.equals(yearCatagory))
                 povertyIndicator = String.valueOf(povertyIndicatorValue % 10);
         }
 
@@ -51,7 +57,7 @@ public class CensusTractPovertyIndicatorCsvData implements CensusTractPovertyInd
     }
 
     private static synchronized void initializeLookup() {
-        int yearRange1 = 0, yearRange2 = 1, yearRange3 = 2, yearRange4 = 3;
+        int yearRange1 = 0, yearRange2 = 1, yearRange3 = 2, yearRange4 = 3, yearRange5 = 4, yearRange6 = 5, yearRange7 = 6;
 
         Map<String, byte[]> tmp = new HashMap<>();
 
@@ -61,8 +67,8 @@ public class CensusTractPovertyIndicatorCsvData implements CensusTractPovertyInd
                 String state = row[0], county = row[1], census = row[2], val = row[3];
                 byte[] values = tmp.get(state + county + census);
                 if (values == null) {
-                    values = new byte[4];
-                    values[0] = values[1] = values[2] = values[3] = (byte)9;
+                    values = new byte[7];
+                    values[0] = values[1] = values[2] = values[3] = values[4] = values[5] = values[6] = (byte)9;
                     tmp.put(state + county + census, values);
                 }
                 values[yearRange1] = Byte.valueOf(val);
@@ -73,35 +79,71 @@ public class CensusTractPovertyIndicatorCsvData implements CensusTractPovertyInd
                 String state = row[0], county = row[1], census = row[2], val = row[3];
                 byte[] values = tmp.get(state + county + census);
                 if (values == null) {
-                    values = new byte[4];
-                    values[0] = values[1] = values[2] = values[3] = (byte)9;
+                    values = new byte[7];
+                    values[0] = values[1] = values[2] = values[3] = values[4] = values[5] = values[6] = (byte)9;
                     tmp.put(state + county + census, values);
                 }
                 values[yearRange2] = Byte.valueOf(val);
             }
             reader.close();
-            reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("censustractpovertyindicator/poverty-indicator-2008.csv"), "US-ASCII");
+            reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("censustractpovertyindicator/poverty-indicator-2006-2010.csv"), "US-ASCII");
             for (String[] row : new CSVReader(reader, ',', '\"', 1).readAll()) {
                 String state = row[0], county = row[1], census = row[2], val = row[3];
                 byte[] values = tmp.get(state + county + census);
                 if (values == null) {
-                    values = new byte[4];
-                    values[0] = values[1] = values[2] = values[3] = (byte)9;
+                    values = new byte[7];
+                    values[0] = values[1] = values[2] = values[3] = values[4] = values[5] = values[6] = (byte)9;
                     tmp.put(state + county + census, values);
                 }
                 values[yearRange3] = Byte.valueOf(val);
             }
             reader.close();
-            reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("censustractpovertyindicator/poverty-indicator-2009-2011.csv"), "US-ASCII");
+            reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("censustractpovertyindicator/poverty-indicator-2007-2011.csv"), "US-ASCII");
             for (String[] row : new CSVReader(reader, ',', '\"', 1).readAll()) {
                 String state = row[0], county = row[1], census = row[2], val = row[3];
                 byte[] values = tmp.get(state + county + census);
                 if (values == null) {
-                    values = new byte[4];
-                    values[0] = values[1] = values[2] = values[3] = (byte)9;
+                    values = new byte[7];
+                    values[0] = values[1] = values[2] = values[3] = values[4] = values[5] = values[6] = (byte)9;
                     tmp.put(state + county + census, values);
                 }
                 values[yearRange4] = Byte.valueOf(val);
+            }
+            reader.close();
+            reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("censustractpovertyindicator/poverty-indicator-2008-2012.csv"), "US-ASCII");
+            for (String[] row : new CSVReader(reader, ',', '\"', 1).readAll()) {
+                String state = row[0], county = row[1], census = row[2], val = row[3];
+                byte[] values = tmp.get(state + county + census);
+                if (values == null) {
+                    values = new byte[7];
+                    values[0] = values[1] = values[2] = values[3] = values[4] = values[5] = values[6] = (byte)9;
+                    tmp.put(state + county + census, values);
+                }
+                values[yearRange5] = Byte.valueOf(val);
+            }
+            reader.close();
+            reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("censustractpovertyindicator/poverty-indicator-2009-2013.csv"), "US-ASCII");
+            for (String[] row : new CSVReader(reader, ',', '\"', 1).readAll()) {
+                String state = row[0], county = row[1], census = row[2], val = row[3];
+                byte[] values = tmp.get(state + county + census);
+                if (values == null) {
+                    values = new byte[7];
+                    values[0] = values[1] = values[2] = values[3] = values[4] = values[5] = values[6] = (byte)9;
+                    tmp.put(state + county + census, values);
+                }
+                values[yearRange6] = Byte.valueOf(val);
+            }
+            reader.close();
+            reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("censustractpovertyindicator/poverty-indicator-2010-2014.csv"), "US-ASCII");
+            for (String[] row : new CSVReader(reader, ',', '\"', 1).readAll()) {
+                String state = row[0], county = row[1], census = row[2], val = row[3];
+                byte[] values = tmp.get(state + county + census);
+                if (values == null) {
+                    values = new byte[7];
+                    values[0] = values[1] = values[2] = values[3] = values[4] = values[5] = values[6] = (byte)9;
+                    tmp.put(state + county + census, values);
+                }
+                values[yearRange7] = Byte.valueOf(val);
             }
             reader.close();
         }
@@ -111,7 +153,7 @@ public class CensusTractPovertyIndicatorCsvData implements CensusTractPovertyInd
 
         for (Entry<String, byte[]> entry : tmp.entrySet()) {
             byte[] values = entry.getValue();
-            short result = (short)(values[yearRange1] * 1000 + values[yearRange2] * 100 + values[yearRange3] * 10 + values[yearRange4]);
+            int result = (int)(values[yearRange1] * 1000000 + values[yearRange2] * 100000 + values[yearRange3] * 10000 + values[yearRange4] * 1000 + values[yearRange5] * 100 + values[yearRange6] * 10 + values[yearRange7]);
             _POVERTY_INDICATOR_LOOK_UP.put(entry.getKey(), result);
         }
     }
