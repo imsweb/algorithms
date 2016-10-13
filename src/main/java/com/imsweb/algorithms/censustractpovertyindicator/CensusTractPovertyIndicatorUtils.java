@@ -16,8 +16,8 @@ import org.apache.commons.lang3.math.NumberUtils;
 public final class CensusTractPovertyIndicatorUtils {
 
     public static final String ALG_NAME = "NAACCR Poverty Linkage Program";
-    public static final String ALG_VERSION = "4.0";
-    public static final String ALG_INFO = "NAACCR Poverty Linkage Program version 4.0, released in October 2013";
+    public static final String ALG_VERSION = "6.0";
+    public static final String ALG_INFO = "NAACCR Poverty Linkage Program version 6.0, released in October 2016";
 
     //Naaccr Items Used for calculation
     public static final String PROP_STATE_DX = "addressAtDxState";
