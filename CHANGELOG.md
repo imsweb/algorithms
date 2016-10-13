@@ -3,6 +3,7 @@
 **Changes in version 1.6.1**
 
  - Change census tract poverty indicator version to 6.0, released in October 2016.
+
 **Changes in version 1.6**
 
  - Changed calculated census poverty indicator for recent years.
