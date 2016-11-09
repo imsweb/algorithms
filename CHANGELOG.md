@@ -1,6 +1,6 @@
 ## Algorithms Version History
 
-**Changes in version 1.6.1**
+**Changes in version 1.6.2**
 
  - Exposed methods isHeavilyHispanic() and isRarelyHispanic() in NhiaUtils.
  
