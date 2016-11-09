@@ -2,6 +2,10 @@
 
 **Changes in version 1.6.1**
 
+ - Exposed methods isHeavilyHispanic() and isRarelyHispanic() in NhiaUtils.
+ 
+**Changes in version 1.6.1**
+
  - Change census tract poverty indicator version to 6.0, released in October 2016.
 
 **Changes in version 1.6**

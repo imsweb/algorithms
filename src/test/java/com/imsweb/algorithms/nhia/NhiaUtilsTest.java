@@ -19,6 +19,13 @@ import au.com.bytecode.opencsv.CSVReader;
 public class NhiaUtilsTest {
 
     @Test
+    public void assertInfo() {
+        Assert.assertNotNull(NhiaUtils.ALG_VERSION);
+        Assert.assertNotNull(NhiaUtils.ALG_NAME);
+        Assert.assertNotNull(NhiaUtils.ALG_INFO);
+    }
+
+    @Test
     public void testComputeNhia() {
 
         //test empty values for different flavors of the method       

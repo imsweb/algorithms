@@ -19,6 +19,13 @@ import au.com.bytecode.opencsv.CSVReader;
 public class NapiiaUtilsTest {
 
     @Test
+    public void assertInfo() {
+        Assert.assertNotNull(NapiiaUtils.ALG_VERSION);
+        Assert.assertNotNull(NapiiaUtils.ALG_NAME);
+        Assert.assertNotNull(NapiiaUtils.ALG_INFO);
+    }
+
+    @Test
     public void testComputeNapiia() {
 
         //test different flavor of methods for special cases

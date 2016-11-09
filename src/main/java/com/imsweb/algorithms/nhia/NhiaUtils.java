@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 import au.com.bytecode.opencsv.CSVReader;
 
@@ -80,23 +81,23 @@ public final class NhiaUtils {
             "ITA", "SMR", "VAT", "ROU", "XSL", "POL", "CSK", "CZE", "SWK", "YUG", "BIH", "HRV", "MKD", "MNE", "SRB", "SVN", "BGR", "RUS", "XUM", "UKR", "MDA", "BLR", "EST", "LVA", "LTU", "GRC", "HUN",
             "ALB", "GIB", "MLT", "CYP", "ZZE", "PHL");
 
-    // Birthplace countries corresonding to NHIA of MEXICAN (under the High Probability of Hispanic Ethnicity in documentation)
-    private static final List<String> _BPC_MEXICAN = Arrays.asList("MEX");
+    // Birthplace countries corresponding to NHIA of MEXICAN (under the High Probability of Hispanic Ethnicity in documentation)
+    private static final List<String> _BPC_MEXICAN = Collections.singletonList("MEX");
 
-    // birthplace countries corresonding to NHIA of PERTO-RICAN (under the High Probability of Hispanic Ethnicity in documentation)
-    private static final List<String> _BPC_PUERTO_RICAN = Arrays.asList("PRI");
+    // birthplace countries corresponding to NHIA of PERTO-RICAN (under the High Probability of Hispanic Ethnicity in documentation)
+    private static final List<String> _BPC_PUERTO_RICAN = Collections.singletonList("PRI");
 
-    // birthplace countries corresonding to NHIA of CUBAN (under the High Probability of Hispanic Ethnicity in documentation)
-    private static final List<String> _BPC_CUBAN = Arrays.asList("CUB");
+    // birthplace countries corresponding to NHIA of CUBAN (under the High Probability of Hispanic Ethnicity in documentation)
+    private static final List<String> _BPC_CUBAN = Collections.singletonList("CUB");
 
-    // birthplace countries corresonding to NHIA of SOUTH-CENTRAL-AMERICAN (under the High Probability of Hispanic Ethnicity in documentation)
+    // birthplace countries corresponding to NHIA of SOUTH-CENTRAL-AMERICAN (under the High Probability of Hispanic Ethnicity in documentation)
     private static final List<String> _BPC_SOUTH_CENTRAL_AMER = Arrays.asList("ZZC", "GTM", "HND", "SLV", "NIC", "CRI", "PAN", "ZZS", "COL", "VEN", "ECU", "PER", "BOL", "CHL", "ARG", "PRY", "URY");
 
-    // birthplace countries corresonding to NHIA of OTHER-SPANISH (under the High Probability of Hispanic Ethnicity in documentation)
+    // birthplace countries corresponding to NHIA of OTHER-SPANISH (under the High Probability of Hispanic Ethnicity in documentation)
     private static final List<String> _BPC_OTHER_SPANISH = Arrays.asList("ESP", "AND");
 
-    // birthplace countries corresonding to NHIA of DOMINICAN-REPUBLIC (under the High Probability of Hispanic Ethnicity in documentation)
-    private static final List<String> _BPC_DOMINICAN_REP = Arrays.asList("DOM");
+    // birthplace countries corresponding to NHIA of DOMINICAN-REPUBLIC (under the High Probability of Hispanic Ethnicity in documentation)
+    private static final List<String> _BPC_DOMINICAN_REP = Collections.singletonList("DOM");
 
     // race being excluded from Indirect Identification
     private static final List<String> _RACE_EXCLUDED = Arrays.asList("03", "06", "07");
@@ -206,7 +207,7 @@ public final class NhiaUtils {
             boolean lowHispanicCounty = true;
             //Then lets go through all records and see if there are counties with hispanic percentage greater than 5%, if we get one consider the countyDx of the patient as high hispanic
             for (Map<String, String> record : patient)
-                if(!isLowHispanicEthnicityCounty(record.get(PROP_COUNTY_DX), record.get(PROP_STATE_DX))){
+                if (!isLowHispanicEthnicityCounty(record.get(PROP_COUNTY_DX), record.get(PROP_STATE_DX))) {
                     lowHispanicCounty = false;
                     //Lets use that county which is more than 5%
                     input.setStateAtDx(record.get(PROP_STATE_DX));
@@ -270,7 +271,7 @@ public final class NhiaUtils {
             boolean lowHispanicCounty = true;
             //Then lets go through all records and see if there are counties with hispanic percentage greater than 5%, if we get one consider the countyDx of the patient as high hispanic
             for (NhiaInputRecordDto record : patient.getNhiaInputPatientDtoList())
-                if(!isLowHispanicEthnicityCounty(record.getCountyAtDx(), record.getStateAtDx())){
+                if (!isLowHispanicEthnicityCounty(record.getCountyAtDx(), record.getStateAtDx())) {
                     lowHispanicCounty = false;
                     //Lets use that county which is more than 5%
                     input.setStateAtDx(record.getStateAtDx());
@@ -453,8 +454,7 @@ public final class NhiaUtils {
             try {
                 Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("nhia/nhia-low-hisp-ethn-counties.csv"), "US-ASCII");
                 List<String[]> rows = new CSVReader(reader).readAll();
-                for (String[] row : rows)
-                    _LOW_HISP_ETHN_COUNTIES.add(row[0]);
+                _LOW_HISP_ETHN_COUNTIES.addAll(rows.stream().map(row -> row[0]).collect(Collectors.toList()));
             }
             catch (IOException e) {
                 throw new RuntimeException(e);
@@ -463,42 +463,48 @@ public final class NhiaUtils {
         return _LOW_HISP_ETHN_COUNTIES.contains(state + county);
     }
 
-    private static synchronized boolean isHeavilyHispanic(String name) {
+    public static boolean isHeavilyHispanic(String name) {
         if (name == null || name.isEmpty())
             return false;
-
-        if (_HEAVILY_HISPANIC_NAMES == null) {
-            _HEAVILY_HISPANIC_NAMES = new HashSet<>();
-            try {
-                Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("nhia/nhia-heavily-hisp-names.csv"), "US-ASCII");
-                List<String[]> rows = new CSVReader(reader).readAll();
-                for (String[] row : rows)
-                    _HEAVILY_HISPANIC_NAMES.add(row[0].toUpperCase());
-            }
-            catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
+        if (_HEAVILY_HISPANIC_NAMES == null)
+            initializeHeavyHispanicLookup();
         return _HEAVILY_HISPANIC_NAMES.contains(name.toUpperCase());
     }
 
-    private static synchronized boolean isRarelyHispanic(String name) {
+    private static synchronized void initializeHeavyHispanicLookup() {
+        if (_HEAVILY_HISPANIC_NAMES != null)
+            return;
+        _HEAVILY_HISPANIC_NAMES = new HashSet<>();
+        try {
+            Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("nhia/nhia-heavily-hisp-names.csv"), "US-ASCII");
+            List<String[]> rows = new CSVReader(reader).readAll();
+            _HEAVILY_HISPANIC_NAMES.addAll(rows.stream().map(row -> row[0].toUpperCase()).collect(Collectors.toList()));
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static boolean isRarelyHispanic(String name) {
         if (name == null || name.isEmpty())
             return false;
-
-        if (_RARELY_HISPANIC_NAMES == null) {
-            _RARELY_HISPANIC_NAMES = new HashSet<>();
-            try {
-                Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("nhia/nhia-rarely-hisp-names.csv"), "US-ASCII");
-                List<String[]> rows = new CSVReader(reader).readAll();
-                for (String[] row : rows)
-                    _RARELY_HISPANIC_NAMES.add(row[0].toUpperCase());
-            }
-            catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
+        if (_RARELY_HISPANIC_NAMES == null)
+            initializeRarelyHispanicLookup();
         return _RARELY_HISPANIC_NAMES.contains(name.toUpperCase());
+    }
+
+    private static synchronized void initializeRarelyHispanicLookup() {
+        if (_RARELY_HISPANIC_NAMES != null)
+            return;
+        _RARELY_HISPANIC_NAMES = new HashSet<>();
+        try {
+            Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("nhia/nhia-rarely-hisp-names.csv"), "US-ASCII");
+            List<String[]> rows = new CSVReader(reader).readAll();
+            _RARELY_HISPANIC_NAMES.addAll(rows.stream().map(row -> row[0].toUpperCase()).collect(Collectors.toList()));
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -521,8 +527,7 @@ public final class NhiaUtils {
             counties.add(county);
         }
 
-        for (List<String> counties : result.values())
-            Collections.sort(counties);
+        result.values().forEach(Collections::sort);
 
         return result;
     }
