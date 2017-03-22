@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 1.7**
+
+ - Fixed bad code range in ICCC third edition data; group 106 was missing a "C" in its range.
+
 **Changes in version 1.6.2**
 
  - Exposed methods isHeavilyHispanic() and isRarelyHispanic() in NhiaUtils.
