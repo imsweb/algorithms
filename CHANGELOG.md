@@ -2,6 +2,7 @@
 
 **Changes in version 1.7**
 
+ - Change internal implementation of census tract poverty indicator, should be no change in the behavior of the algorithm.
  - Fixed bad code range in ICCC third edition data; group 106 was missing a "C" in its range.
 
 **Changes in version 1.6.2**
