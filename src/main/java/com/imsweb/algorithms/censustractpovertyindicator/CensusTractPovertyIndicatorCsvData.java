@@ -36,6 +36,7 @@ public class CensusTractPovertyIndicatorCsvData implements CensusTractPovertyInd
 
         // lazily initialize the data (it's not 100% tread-safe, but the worst that can happen is that we read the same data twice)
         if (_POVERTY_INDICATOR_LOOKUP.isEmpty()) {
+            // note that the year range in the filename is not always the same as the year range represented by the category...
             readCsvData("poverty-indicator-1995-2004.csv", YEAR_CATEGORY_1, _POVERTY_INDICATOR_LOOKUP);
             readCsvData("poverty-indicator-2005-2007.csv", YEAR_CATEGORY_2, _POVERTY_INDICATOR_LOOKUP);
             readCsvData("poverty-indicator-2006-2010.csv", YEAR_CATEGORY_3, _POVERTY_INDICATOR_LOOKUP);
