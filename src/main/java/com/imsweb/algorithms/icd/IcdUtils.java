@@ -503,7 +503,7 @@ public class IcdUtils {
         if (result == null && !allowNullResult) {
             result = new IcdConversionEntry();
             result.setSourceCode(code);
-            result.setTargetCode(_ICD_O3_SITE_LOOKUP.computeIfAbsent(code, k -> "C809"));
+            result.setTargetCode(_ICD_O3_SITE_LOOKUP.containsKey(code) ? code : "C809");
             result.setHistology("8000");
             result.setBehavior(icd10Code != null && icd10Code.startsWith("C") ? "3" : icd10Code != null && icd10Code.startsWith("D") ? "2" : null);
             result.setGrade("9");
