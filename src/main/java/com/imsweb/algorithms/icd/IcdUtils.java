@@ -493,11 +493,8 @@ public class IcdUtils {
     public static IcdConversionEntry getIcdo3FromIcd10(String icd10Code, boolean allowNullResult) {
         initalize();
 
-        if (icd10Code == null)
-            return null;
-
-        String code = icd10Code.toUpperCase();
-        if (code.length() == 3)
+        String code = icd10Code == null ? null : icd10Code.toUpperCase();
+        if (code != null && code.length() == 3)
             code = code + "9";
 
         IcdConversionEntry result = _ICD_10_TO_O3_CONVERSION.get(code);
@@ -508,7 +505,7 @@ public class IcdUtils {
             result.setSourceCode(code);
             result.setTargetCode(_ICD_O3_SITE_LOOKUP.computeIfAbsent(code, k -> "C809"));
             result.setHistology("8000");
-            result.setBehavior(icd10Code.startsWith("C") ? "3" : icd10Code.startsWith("D") ? "2" : null);
+            result.setBehavior(icd10Code != null && icd10Code.startsWith("C") ? "3" : icd10Code != null && icd10Code.startsWith("D") ? "2" : null);
             result.setGrade("9");
             result.setLaterality(null);
             result.setReportable(null);
