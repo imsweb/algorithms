@@ -5,6 +5,7 @@ package com.imsweb.algorithms.icd;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -372,7 +373,7 @@ public class IcdUtils {
     }
 
     private static void loadDataFile(String file, Map<String, IcdConversionEntry> result) {
-        try (CSVReader reader = new CSVReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("icd/" + file)), ',', '"', '\\', 1)) {
+        try (CSVReader reader = new CSVReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("icd/" + file), StandardCharsets.US_ASCII), ',', '"', '\\', 1)) {
             for (String[] row : reader.readAll()) {
                 if (row.length != 8)
                     throw new RuntimeException("Was expecting 8 values, got " + row.length + " - " + Arrays.toString(row));
