@@ -19,6 +19,13 @@ import au.com.bytecode.opencsv.CSVReader;
 /**
  * The purpose of this class is to get the rural urban continuum for the provided year category, state of dx, and county of dx
  * from the csv file lookup.  This implementation is memory consumer. If there is a database, it is better to use another implementation.
+ * <br/><br/>
+ * The data used by this provider comes from the official census website. See the following SEER website for more information:
+ *    https://seer.cancer.gov/seerstat/variables/countyattribs/
+ * In particular, the rural/urban percentage comes from these sections:
+ *    2010: https://seer.cancer.gov/seerstat/variables/countyattribs/#10
+ *    2000: https://seer.cancer.gov/seerstat/variables/countyattribs/#ca2000
+ * <br/><br/>
  * Created on Aug 12, 2014 by HoweW
  * @author howew
  */
