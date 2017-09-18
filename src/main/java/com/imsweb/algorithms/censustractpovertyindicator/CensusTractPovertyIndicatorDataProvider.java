@@ -19,6 +19,7 @@ public interface CensusTractPovertyIndicatorDataProvider {
     String YEAR_CATEGORY_5 = "5";
     String YEAR_CATEGORY_6 = "6";
     String YEAR_CATEGORY_7 = "7";
+    String YEAR_CATEGORY_8 = "8";
 
     /**
      * Returns census tract poverty indicator for provided year category, state of dx, county of dx, and census tract.
