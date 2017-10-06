@@ -63,13 +63,17 @@ public class CensusTractPovertyIndicatorUtilsTest {
         record.put(CensusTractPovertyIndicatorUtils.PROP_CENSUS_TRACT_2010, "020900");
         record.put(CensusTractPovertyIndicatorUtils.PROP_DIAGNOSIS_YEAR, "2012");
         Assert.assertEquals("3", CensusTractPovertyIndicatorUtils.computePovertyIndicator(record).getCensusTractPovertyIndicator());
+        //test year category 8 with a combination of state, county and census 2010  in the lookup
+        record.put(CensusTractPovertyIndicatorUtils.PROP_CENSUS_TRACT_2010, "020700");
+        record.put(CensusTractPovertyIndicatorUtils.PROP_DIAGNOSIS_YEAR, "2013");
+        Assert.assertEquals("4", CensusTractPovertyIndicatorUtils.computePovertyIndicator(record).getCensusTractPovertyIndicator());
 
-        //test 2015+ years
+        //test 2016+ years
         record.clear();
         record.put(CensusTractPovertyIndicatorUtils.PROP_STATE_DX, "WY");
         record.put(CensusTractPovertyIndicatorUtils.PROP_COUNTY_DX, "039");
         record.put(CensusTractPovertyIndicatorUtils.PROP_CENSUS_TRACT_2010, "967702");
-        record.put(CensusTractPovertyIndicatorUtils.PROP_DIAGNOSIS_YEAR, "2015");
+        record.put(CensusTractPovertyIndicatorUtils.PROP_DIAGNOSIS_YEAR, "2016");
         Assert.assertEquals("9", CensusTractPovertyIndicatorUtils.computePovertyIndicator(record, false).getCensusTractPovertyIndicator());
         Assert.assertEquals("3", CensusTractPovertyIndicatorUtils.computePovertyIndicator(record, true).getCensusTractPovertyIndicator());
 

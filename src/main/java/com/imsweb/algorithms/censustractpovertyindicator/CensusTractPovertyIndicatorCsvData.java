@@ -44,6 +44,7 @@ public class CensusTractPovertyIndicatorCsvData implements CensusTractPovertyInd
             readCsvData("poverty-indicator-2008-2012.csv", YEAR_CATEGORY_5, _POVERTY_INDICATOR_LOOKUP);
             readCsvData("poverty-indicator-2009-2013.csv", YEAR_CATEGORY_6, _POVERTY_INDICATOR_LOOKUP);
             readCsvData("poverty-indicator-2010-2014.csv", YEAR_CATEGORY_7, _POVERTY_INDICATOR_LOOKUP);
+            readCsvData("poverty-indicator-2011-2015.csv", YEAR_CATEGORY_8, _POVERTY_INDICATOR_LOOKUP);
         }
 
         // lookup and return the resulting value

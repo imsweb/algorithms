@@ -28,8 +28,8 @@ import au.com.bytecode.opencsv.CSVReader;
 public final class NhiaUtils {
 
     public static final String ALG_NAME = "NAACCR Hispanic Identification Algorithm";
-    public static final String ALG_VERSION = "15";
-    public static final String ALG_INFO = "NHAPIIA v15 released in September 2015";
+    public static final String ALG_VERSION = "17";
+    public static final String ALG_INFO = "NHAPIIA v17 released in April 2017";
 
     public static final String PROP_SPANISH_HISPANIC_ORIGIN = "spanishHispanicOrigin";
     public static final String PROP_NAME_LAST = "nameLast";
