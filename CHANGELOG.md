@@ -1,6 +1,6 @@
 ## Algorithms Version History
 
-**Changes in version 1.7**
+**Changes in version 1.8**
 
 - Updated list of heavily and rarely Hispanic names for NHIA algorithm; updated the version for both NHIA and NAPIIA (since they go together).
 
