@@ -2,6 +2,10 @@
 
 **Changes in version 1.7**
 
+- Updated list of heavily and rarely Hispanic names for NHIA algorithm; updated the version for both NHIA and NAPIIA (since they go together).
+
+**Changes in version 1.7**
+
  - Added support for ICD-9CM, ICD-10CM and ICD-10 conversions to ICD-O-3 (see IcdUtils); conversions are based on spreadsheet provided by NCI.
  - Change internal implementation of census tract poverty indicator, should be no change in the behavior of the algorithm.
  - Fixed bad code range in ICCC third edition data; group 106 was missing a "C" in its range.
