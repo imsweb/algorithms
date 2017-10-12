@@ -14,8 +14,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static com.imsweb.algorithms.censustractpovertyindicator.CensusTractPovertyIndicatorUtils.POVERTY_INDICATOR_UNKNOWN;
-
 /**
  * The purpose of this class is to get the ACS Data for the provided year range, state of dx, county of dx, and census tract
  * from the csv file lookup.  This implementation is memory consumer. If there is a database, it is better to use another implementation.
@@ -42,7 +40,7 @@ public class ACSLinkageCsvData implements ACSLinkageDataProvider {
         }
 
         // lookup and return the resulting value
-        return _ACS_DATA_LOOKUP.computeIfAbsent(new DataKey(state, county, census), k -> new HashMap<>()).computeIfAbsent(range, k -> POVERTY_INDICATOR_UNKNOWN);
+        return _ACS_DATA_LOOKUP.computeIfAbsent(new DataKey(state, county, census), k -> new HashMap<>()).computeIfAbsent(range, k -> ACSLinkageDataProvider.getUnknownValueForRange(range));
     }
 
     // helper to handle a single CSV data file

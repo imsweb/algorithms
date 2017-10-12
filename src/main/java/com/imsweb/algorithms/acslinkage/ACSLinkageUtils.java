@@ -10,8 +10,8 @@ import java.util.Map;
 
 /**
  * This class can be used to calculate census tract poverty indicator.
- * Created on Oct 17, 2013 by BekeleS
- * @author bekeles
+ * Created on Oct 17, 2013 by howew
+ * @author howew
  */
 public final class ACSLinkageUtils {
 
