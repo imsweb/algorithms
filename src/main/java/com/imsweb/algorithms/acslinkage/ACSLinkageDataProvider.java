@@ -14,7 +14,10 @@ import org.apache.commons.lang3.StringUtils;
  */
 public interface ACSLinkageDataProvider {
 
-    enum Range { ACS_2007_2011, ACS_2011_2015 }
+    enum Range {
+        ACS_2007_2011,
+        ACS_2011_2015
+    }
 
     /**
      * Returns ACS data for provided range, state of dx, county of dx, and census tract.
@@ -36,8 +39,11 @@ public interface ACSLinkageDataProvider {
      * @return the unknown value for the range
      */
     static String getUnknownValueForRange(Range range) {
-        if (range == Range.ACS_2007_2011) { return StringUtils.leftPad("",350); }
-        else if (range == Range.ACS_2011_2015) { return StringUtils.leftPad("",440); }
+        if (range == Range.ACS_2007_2011) {
+            return StringUtils.leftPad("",350);
+        } else if (range == Range.ACS_2011_2015) {
+            return StringUtils.leftPad("",440);
+        }
         return "";
     }
 

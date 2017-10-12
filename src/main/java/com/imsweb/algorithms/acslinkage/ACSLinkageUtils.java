@@ -84,7 +84,7 @@ public final class ACSLinkageUtils {
     }
 
     /**
-     * Calculates the census tract poverty indicator for the provided census tract poverty indicator input dto
+     * Calculates the ACS data for the provided ACS data input dto
      * If the boolean includeRecentYears is set to true, the algorithm will link cases diagnosed after 2015.
      * <br/><br/>
      * The provided input dto has the following parameters used in the calculation:
@@ -105,7 +105,7 @@ public final class ACSLinkageUtils {
     public static ACSLinkageOutputDto computeACSData(ACSLinkageInputDto input, ACSLinkageDataProvider.Range range, boolean includeRecentYears) {
         ACSLinkageOutputDto result = new ACSLinkageOutputDto();
 
-        // if poverty indicator can not be calculated set it to unknown
+        // if ACS data can not be calculated set it to unknown
         result.setACSData(ACSLinkageDataProvider.getUnknownValueForRange(range));
 
         String dxYear = input.getDateOfDiagnosisYear();

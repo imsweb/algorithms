@@ -13,7 +13,8 @@ public class ACSLinkageInputDto {
 
     private String _censusTract2010;
 
-    public ACSLinkageInputDto() { }
+    public ACSLinkageInputDto() {
+    }
 
     public String getAddressAtDxState() {
         return _addressAtDxState;
