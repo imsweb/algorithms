@@ -12,7 +12,7 @@ import org.apache.commons.lang3.StringUtils;
  * Created on Oct 12, 2017 by howew
  * @author howew
  */
-public interface ACSLinkageDataProvider {
+public interface AcsLinkageDataProvider {
 
     enum Range {
         ACS_2007_2011,

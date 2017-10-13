@@ -3,11 +3,11 @@
  */
 package com.imsweb.algorithms.acslinkage;
 
-public class ACSLinkageOutputDto {
+public class AcsLinkageOutputDto {
 
     private String _acsData;
 
-    public ACSLinkageOutputDto() { }
+    public AcsLinkageOutputDto() { }
 
     public String getACSData() {
         return _acsData;

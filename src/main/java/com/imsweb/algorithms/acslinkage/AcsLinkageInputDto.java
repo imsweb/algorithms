@@ -3,7 +3,7 @@
  */
 package com.imsweb.algorithms.acslinkage;
 
-public class ACSLinkageInputDto {
+public class AcsLinkageInputDto {
 
     private String _addressAtDxState;
 
@@ -13,7 +13,7 @@ public class ACSLinkageInputDto {
 
     private String _censusTract2010;
 
-    public ACSLinkageInputDto() {
+    public AcsLinkageInputDto() {
     }
 
     public String getAddressAtDxState() {

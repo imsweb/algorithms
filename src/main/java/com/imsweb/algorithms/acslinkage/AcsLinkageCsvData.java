@@ -20,7 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Created on Oct 12, 2017 by howew
  * @author howew
  */
-public class ACSLinkageCsvData implements ACSLinkageDataProvider {
+public class AcsLinkageCsvData implements AcsLinkageDataProvider {
 
     // keys are combination of state/county/census; values are maps where keys are the year range categories and the values are the resulting indicator
     private static Map<DataKey, Map<Range, String>> _ACS_DATA_LOOKUP = new ConcurrentHashMap<>();
@@ -30,7 +30,7 @@ public class ACSLinkageCsvData implements ACSLinkageDataProvider {
 
         // make sure we have enough information to lookup the value
         if (state == null || county == null || census == null)
-            return ACSLinkageDataProvider.getUnknownValueForRange(range);
+            return AcsLinkageDataProvider.getUnknownValueForRange(range);
 
         // lazily initialize the data (it's not 100% tread-safe, but the worst that can happen is that we read the same data twice)
         if (_ACS_DATA_LOOKUP.isEmpty()) {
@@ -40,7 +40,7 @@ public class ACSLinkageCsvData implements ACSLinkageDataProvider {
         }
 
         // lookup and return the resulting value
-        return _ACS_DATA_LOOKUP.computeIfAbsent(new DataKey(state, county, census), k -> new HashMap<>()).computeIfAbsent(range, k -> ACSLinkageDataProvider.getUnknownValueForRange(range));
+        return _ACS_DATA_LOOKUP.computeIfAbsent(new DataKey(state, county, census), k -> new HashMap<>()).computeIfAbsent(range, k -> AcsLinkageDataProvider.getUnknownValueForRange(range));
     }
 
     // helper to handle a single CSV data file

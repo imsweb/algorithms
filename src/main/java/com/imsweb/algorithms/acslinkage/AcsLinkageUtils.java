@@ -13,7 +13,7 @@ import java.util.Map;
  * Created on Oct 17, 2013 by howew
  * @author howew
  */
-public final class ACSLinkageUtils {
+public final class AcsLinkageUtils {
 
     public static final String ALG_NAME = "NAACCR ACS Linkage Program";
     public static final String ALG_VERSION = "1.0";
@@ -25,7 +25,7 @@ public final class ACSLinkageUtils {
     public static final String PROP_DIAGNOSIS_YEAR = "dateOfDiagnosisYear";
     public static final String PROP_CENSUS_TRACT_2010 = "censusTract2010";
 
-    private static ACSLinkageDataProvider _PROVIDER;
+    private static AcsLinkageDataProvider _PROVIDER;
 
     /**
      * Calculates the ACS Data for the provided record
@@ -44,9 +44,9 @@ public final class ACSLinkageUtils {
      * @param record a map of properties representing a NAACCR line
      * @return the computed poverty indicator value
      */
-    public static ACSLinkageOutputDto computeACSData(Map<String, String> record, ACSLinkageDataProvider.Range range) {
+    public static AcsLinkageOutputDto computeACSData(Map<String, String> record, AcsLinkageDataProvider.Range range) {
 
-        ACSLinkageInputDto input = new ACSLinkageInputDto();
+        AcsLinkageInputDto input = new AcsLinkageInputDto();
         input.setAddressAtDxState(record.get(PROP_STATE_DX));
         input.setAddressAtDxCounty(record.get(PROP_COUNTY_DX));
         input.setDateOfDiagnosisYear(record.get(PROP_DIAGNOSIS_YEAR));
@@ -72,9 +72,9 @@ public final class ACSLinkageUtils {
      * @param record a map of properties representing a NAACCR line
      * @return the computed poverty indicator value
      */
-    public static ACSLinkageOutputDto computeACSData(Map<String, String> record, ACSLinkageDataProvider.Range range, boolean includeRecentYears) {
+    public static AcsLinkageOutputDto computeACSData(Map<String, String> record, AcsLinkageDataProvider.Range range, boolean includeRecentYears) {
 
-        ACSLinkageInputDto input = new ACSLinkageInputDto();
+        AcsLinkageInputDto input = new AcsLinkageInputDto();
         input.setAddressAtDxState(record.get(PROP_STATE_DX));
         input.setAddressAtDxCounty(record.get(PROP_COUNTY_DX));
         input.setDateOfDiagnosisYear(record.get(PROP_DIAGNOSIS_YEAR));
@@ -102,11 +102,11 @@ public final class ACSLinkageUtils {
      * @param includeRecentYears if true, the linkage will be performed on cases diagnosed after 2015
      * @return the computed ACS data
      */
-    public static ACSLinkageOutputDto computeACSData(ACSLinkageInputDto input, ACSLinkageDataProvider.Range range, boolean includeRecentYears) {
-        ACSLinkageOutputDto result = new ACSLinkageOutputDto();
+    public static AcsLinkageOutputDto computeACSData(AcsLinkageInputDto input, AcsLinkageDataProvider.Range range, boolean includeRecentYears) {
+        AcsLinkageOutputDto result = new AcsLinkageOutputDto();
 
         // if ACS data can not be calculated set it to unknown
-        result.setACSData(ACSLinkageDataProvider.getUnknownValueForRange(range));
+        result.setACSData(AcsLinkageDataProvider.getUnknownValueForRange(range));
 
         String dxYear = input.getDateOfDiagnosisYear();
         if (dxYear == null || !NumberUtils.isDigits(dxYear) || input.getAddressAtDxState() == null || input.getAddressAtDxCounty() == null)
@@ -128,7 +128,7 @@ public final class ACSLinkageUtils {
 
         // getACSData method never returns null, but lets make sure we don't return null value anyways
         if (result.getACSData() == null)
-            result.setACSData(ACSLinkageDataProvider.getUnknownValueForRange(range));
+            result.setACSData(AcsLinkageDataProvider.getUnknownValueForRange(range));
 
         return result;
     }
@@ -141,7 +141,7 @@ public final class ACSLinkageUtils {
      * Once a provider has been set, this method cannot be called (it will throw an exception).
      * @param provider the <code>ACSLinkageDataProvider</code> to set
      */
-    public static synchronized void setDataProvider(ACSLinkageDataProvider provider) {
+    public static synchronized void setDataProvider(AcsLinkageDataProvider provider) {
         if (_PROVIDER != null)
             throw new RuntimeException("The data provider has already been set!");
         _PROVIDER = provider;
@@ -150,6 +150,6 @@ public final class ACSLinkageUtils {
     private static synchronized void initializeInternalDataProvider() {
         if (_PROVIDER != null)
             return;
-        _PROVIDER = new ACSLinkageCsvData();
+        _PROVIDER = new AcsLinkageCsvData();
     }
 }
