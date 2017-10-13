@@ -1,6 +1,6 @@
 ## Algorithms Version History
 
-**Changes in version 1.8**
+**Changes in version 1.9**
 
 - Added new algorithm for ACS Linkage.
 
