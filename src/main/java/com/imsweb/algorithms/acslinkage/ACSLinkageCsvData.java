@@ -73,8 +73,8 @@ public class ACSLinkageCsvData implements ACSLinkageDataProvider {
             if (o == null || getClass() != o.getClass()) return false;
             DataKey that = (DataKey)o;
             return Objects.equals(_state, that._state) &&
-                    Objects.equals(_county, that._county) &&
-                    Objects.equals(_census, that._census);
+                   Objects.equals(_county, that._county) &&
+                   Objects.equals(_census, that._census);
         }
 
         @Override

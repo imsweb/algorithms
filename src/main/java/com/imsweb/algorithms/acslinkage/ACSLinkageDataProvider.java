@@ -41,7 +41,8 @@ public interface ACSLinkageDataProvider {
     static String getUnknownValueForRange(Range range) {
         if (range == Range.ACS_2007_2011) {
             return StringUtils.leftPad("",350);
-        } else if (range == Range.ACS_2011_2015) {
+        }
+        else if (range == Range.ACS_2011_2015) {
             return StringUtils.leftPad("",440);
         }
         return "";
