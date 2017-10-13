@@ -2,6 +2,10 @@
 
 **Changes in version 1.8**
 
+- Added new algorithm for ACS Linkage.
+
+**Changes in version 1.8**
+
 - Updated list of heavily and rarely Hispanic names for NHIA algorithm; updated the version for both NHIA and NAPIIA (since they go together).
 - Added new census tract poverty indicator calculation for 2011-2015 years.
 

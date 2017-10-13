@@ -3,14 +3,14 @@
  */
 package com.imsweb.algorithms.acslinkage;
 
-import org.apache.commons.lang3.math.NumberUtils;
-
 import java.time.LocalDate;
 import java.util.Map;
 
+import org.apache.commons.lang3.math.NumberUtils;
+
 /**
- * This class can be used to calculate census tract poverty indicator.
- * Created on Oct 17, 2013 by howew
+ * This class can be used to calculate ACS Linkage variables.
+ * Created on Oct 13, 2017 by howew
  * @author howew
  */
 public final class AcsLinkageUtils {
