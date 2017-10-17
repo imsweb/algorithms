@@ -40,10 +40,10 @@ public interface AcsLinkageDataProvider {
      */
     static String getUnknownValueForRange(Range range) {
         if (range == Range.ACS_2007_2011) {
-            return StringUtils.leftPad("",350);
+            return StringUtils.leftPad("",352);
         }
         else if (range == Range.ACS_2011_2015) {
-            return StringUtils.leftPad("",440);
+            return StringUtils.leftPad("",442);
         }
         return "";
     }
