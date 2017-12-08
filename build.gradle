@@ -19,11 +19,11 @@ repositories {
 }
 
 dependencies {
-    compile 'org.apache.commons:commons-lang3:3.4'
+    compile 'org.apache.commons:commons-lang3:3.6'
     compile 'au.com.bytecode:opencsv:2.4'
-    compile 'com.thoughtworks.xstream:xstream:1.4.9'
+    compile 'com.thoughtworks.xstream:xstream:1.4.10'
     testCompile 'junit:junit:4.12'
-    testCompile 'com.imsweb:layout:1.4'
+    testCompile 'com.imsweb:layout:1.6'
 }
 
 // enforce UTF-8 for all compilation tasks

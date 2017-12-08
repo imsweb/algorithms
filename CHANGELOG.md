@@ -1,5 +1,11 @@
 ## Algorithms Version History
 
+**Changes in version 1.10**
+
+- Added a proper security environment to XStream by limiting the classes that it can create when loading XML files.
+- Updated XStream library from version 1.4.9 to 1.4.10.
+- Updated Apache commons-lang library from version 3.4 to version 3.6.
+
 **Changes in version 1.9.1**
 
 - Fixed minor issue in ACS Linkage data.

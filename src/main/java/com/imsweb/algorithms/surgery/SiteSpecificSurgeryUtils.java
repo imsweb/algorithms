@@ -14,6 +14,8 @@ import java.util.List;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.XppDriver;
+import com.thoughtworks.xstream.security.NoTypePermission;
+import com.thoughtworks.xstream.security.WildcardTypePermission;
 
 import com.imsweb.algorithms.surgery.xml.SurgeryRowXmlDto;
 import com.imsweb.algorithms.surgery.xml.SurgeryTableXmlDto;
@@ -120,10 +122,15 @@ public final class SiteSpecificSurgeryUtils {
     }
 
     private static XStream createSiteSpecificSurgeryDataXstream() {
-        XStream xstream = new XStream(new XppDriver());
-        xstream.autodetectAnnotations(true);
-        xstream.alias("surgery-tables", SurgeryTablesXmlDto.class);
-        return xstream;
+        XStream xStream = new XStream(new XppDriver());
+        xStream.autodetectAnnotations(true);
+        xStream.alias("surgery-tables", SurgeryTablesXmlDto.class);
+
+        // setup proper security by limiting what classes can be loaded by XStream (#79515)
+        xStream.addPermission(NoTypePermission.NONE);
+        xStream.addPermission(new WildcardTypePermission(new String[] {"com.imsweb.algorithms.surgery.xml.**"}));
+
+        return xStream;
     }
 
     /**
