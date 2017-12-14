@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 1.11**
+
+- Changed survival algorithm so the record recode is 1-based instead of 0-based.
+
 **Changes in version 1.10**
 
 - Added a proper security environment to XStream by limiting the classes that it can create when loading XML files.

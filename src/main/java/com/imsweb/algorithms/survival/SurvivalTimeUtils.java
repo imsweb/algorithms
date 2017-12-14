@@ -131,7 +131,7 @@ public class SurvivalTimeUtils {
                 boolean sameDay = dolcDayStr == null ? record.getDateOfLastContactDay() == null : dolcDayStr.equals(record.getDateOfLastContactDay());
                 boolean sameVs = vsStr == null ? record.getVitalStatus() == null : vsStr.equals(record.getVitalStatus());
                 if (!sameYear || !sameMonth || !sameDay || !sameVs) {
-                    for (int sortedIdx = 0; sortedIdx < allRecords.size(); sortedIdx++) {
+                    for (int sortedIdx = 1; sortedIdx <= allRecords.size(); sortedIdx++) { // output sort index should be 1-based
                         SurvivalTimeOutputRecordDto recordResult = new SurvivalTimeOutputRecordDto();
                         recordResult.setSurvivalTimeDxYear(BLANK_YEAR);
                         recordResult.setSurvivalTimeDxMonth(BLANK_MONTH);
@@ -278,8 +278,8 @@ public class SurvivalTimeUtils {
 
             // assign the sorted index on every output record: based on sorted tmp records for valid ones, based on input order for invalid ones
             int sortedIdx;
-            for (sortedIdx = 0; sortedIdx < tempRecords.size(); sortedIdx++)
-                tempRecords.get(sortedIdx)._recordResult.setSortedIndex(sortedIdx);
+            for (sortedIdx = 1; sortedIdx <= tempRecords.size(); sortedIdx++) // output sort index should be 1-based
+                tempRecords.get(sortedIdx - 1)._recordResult.setSortedIndex(sortedIdx);
             for (SurvivalTimeOutputRecordDto outputRec : patientResultsList)
                 if (outputRec.getSortedIndex() == null)
                     outputRec.setSortedIndex(sortedIdx++);
@@ -287,7 +287,7 @@ public class SurvivalTimeUtils {
         catch (DateTimeException e) {
             // final safety net, if anything goes wrong, just assign 9's
             patientResultsList.clear();
-            int sortedIdx = 0;
+            int sortedIdx = 1; // output sort index should be 1-based
             for (SurvivalTimeInputRecordDto orgRecord : allRecords) {
                 SurvivalTimeOutputRecordDto recordResult = new SurvivalTimeOutputRecordDto();
                 recordResult.setSurvivalMonths(UNKNOWN_SURVIVAL);
