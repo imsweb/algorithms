@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 1.12**
+
+- Fixed a mistake in ICD-10-CM to ICD-O-3 conversion for code D044.
+
 **Changes in version 1.11**
 
 - Changed survival algorithm so the record recode is 1-based instead of 0-based.
