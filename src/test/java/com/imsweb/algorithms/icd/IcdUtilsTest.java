@@ -166,4 +166,83 @@ public class IcdUtilsTest {
         Assert.assertNull(icd.getLaterality());
         Assert.assertNull(icd.getReportable());
     }
+
+    @Test
+    public void testGetIcdo2FromIcdo3() {
+
+        // C343 9699 3 9680 3 1000
+        IcdConversionEntry icd = IcdUtils.getIcdo2FromIcdo3("C343", "9699", "3", false);
+        Assert.assertEquals("C343", icd.getTargetCode());
+        Assert.assertEquals("9680", icd.getHistology());
+        Assert.assertEquals("3", icd.getBehavior());
+        Assert.assertNull(icd.getGrade());
+        Assert.assertNull(icd.getLaterality());
+        Assert.assertNull(icd.getReportable());
+
+        // C900 8900 9 9999 9 0100
+        icd = IcdUtils.getIcdo2FromIcdo3("C900", "8900", "9", false);
+        Assert.assertEquals("C900", icd.getTargetCode());
+        Assert.assertEquals("9999", icd.getHistology());
+        Assert.assertEquals("9", icd.getBehavior());
+        Assert.assertNull(icd.getGrade());
+        Assert.assertNull(icd.getLaterality());
+        Assert.assertNull(icd.getReportable());
+
+        // C503 7777 3 9999 9 0010
+        icd = IcdUtils.getIcdo2FromIcdo3("C503", "7777", "3", false);
+        Assert.assertEquals("C503", icd.getTargetCode());
+        Assert.assertEquals("9999", icd.getHistology());
+        Assert.assertEquals("9", icd.getBehavior());
+        Assert.assertNull(icd.getGrade());
+        Assert.assertNull(icd.getLaterality());
+        Assert.assertNull(icd.getReportable());
+
+        // C503 8480 8 9999 9 0001
+        icd = IcdUtils.getIcdo2FromIcdo3("C503", "8480", "8", false);
+        Assert.assertEquals("C503", icd.getTargetCode());
+        Assert.assertEquals("9999", icd.getHistology());
+        Assert.assertEquals("9", icd.getBehavior());
+        Assert.assertNull(icd.getGrade());
+        Assert.assertNull(icd.getLaterality());
+        Assert.assertNull(icd.getReportable());
+
+        // C300 8300 3 8300 3 0000
+        icd = IcdUtils.getIcdo2FromIcdo3("C300", "8300", "3", false);
+        Assert.assertEquals("C300", icd.getTargetCode());
+        Assert.assertEquals("8300", icd.getHistology());
+        Assert.assertEquals("3", icd.getBehavior());
+        Assert.assertNull(icd.getGrade());
+        Assert.assertNull(icd.getLaterality());
+        Assert.assertNull(icd.getReportable());
+
+
+        // C343 9699 3 9680 3 1000
+        icd = IcdUtils.getIcdo2FromIcdo3("C343", "9699", "3", true);
+        Assert.assertNotNull(icd);
+        // C900 8900 9 9999 9 0100
+        icd = IcdUtils.getIcdo2FromIcdo3("C900", "8900", "9", true);
+        Assert.assertNull(icd);
+        // C503 7777 3 9999 9 0010
+        icd = IcdUtils.getIcdo2FromIcdo3("C503", "7777", "3", true);
+        Assert.assertNull(icd);
+        // C503 8480 8 9999 9 0001
+        icd = IcdUtils.getIcdo2FromIcdo3("C503", "8480", "8", true);
+        Assert.assertNull(icd);
+        // C300 8300 3 8300 3 0000
+        icd = IcdUtils.getIcdo2FromIcdo3("C300", "8300", "3", true);
+        Assert.assertNotNull(icd);
+    }
+
+    @Test
+    public void testFileCompareIcdo2FromIcdo3() {
+        /*
+        String icdo3Code = "";
+        String icdo3Hist = "";
+        String icdo3Beh = "";
+        boolean allowNullResult = true;
+
+        IcdConversionEntry icd = IcdUtils.getIcdo2FromIcdo3(icdo3Code, icdo3Hist, icdo3Beh, allowNullResult)
+        */
+    }
+
 }
