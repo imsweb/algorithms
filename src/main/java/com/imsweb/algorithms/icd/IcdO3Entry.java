@@ -3,10 +3,10 @@
  */
 package com.imsweb.algorithms.icd;
 
-public class IcdConversionEntry {
+public class IcdO3Entry {
 
     private String _sourceCode;
-    private String _targetCode;
+    private String _site;
     private String _histology;
     private String _behavior;
     private String _grade;
@@ -22,12 +22,12 @@ public class IcdConversionEntry {
         _sourceCode = sourceCode;
     }
 
-    public String getTargetCode() {
-        return _targetCode;
+    public String getSite() {
+        return _site;
     }
 
-    public void setTargetCode(String targetCode) {
-        _targetCode = targetCode;
+    public void setSite(String site) {
+        _site = site;
     }
 
     public String getHistology() {

@@ -26,9 +26,9 @@ public class IcdUtils {
     public static final String REPORTABILITY_YES = "Y";
     public static final String REPORTABILITY_OPTIONAL = "O";
 
-    private static final Map<String, IcdConversionEntry> _ICD_9_CM_TO_O3_CONVERSION = new HashMap<>();
-    private static final Map<String, IcdConversionEntry> _ICD_10_CM_TO_O3_CONVERSION = new HashMap<>();
-    private static final Map<String, IcdConversionEntry> _ICD_10_TO_O3_CONVERSION = new HashMap<>();
+    private static final Map<String, IcdO3Entry> _ICD_9_CM_TO_O3_CONVERSION = new HashMap<>();
+    private static final Map<String, IcdO3Entry> _ICD_10_CM_TO_O3_CONVERSION = new HashMap<>();
+    private static final Map<String, IcdO3Entry> _ICD_10_TO_O3_CONVERSION = new HashMap<>();
 
     private static final Map<String, String> _ICD_O3_SITE_LOOKUP = new HashMap<>();
 
@@ -376,8 +376,8 @@ public class IcdUtils {
      */
     public static synchronized void initalize() {
 
-        loadIcdo3to2DataFile("morph.special.txt", _ICDO3_TO_ICDO2_LOOKUP_SPECIAL);
-        loadIcdo3to2DataFile("morph.txt", _ICDO3_TO_ICDO2_LOOKUP);
+        loadIcdo3to2DataFile("icdo3.to.icdo2.morphology.special.txt", _ICDO3_TO_ICDO2_LOOKUP_SPECIAL);
+        loadIcdo3to2DataFile("icdo3.to.icdo2.morphology.txt", _ICDO3_TO_ICDO2_LOOKUP);
 
 
         if (!_ICD_9_CM_TO_O3_CONVERSION.isEmpty())
@@ -389,15 +389,15 @@ public class IcdUtils {
 
     }
 
-    private static void loadDataFile(String file, Map<String, IcdConversionEntry> result) {
+    private static void loadDataFile(String file, Map<String, IcdO3Entry> result) {
         try (CSVReader reader = new CSVReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("icd/" + file), StandardCharsets.US_ASCII), ',', '"', '\\', 1)) {
             for (String[] row : reader.readAll()) {
                 if (row.length != 8)
                     throw new RuntimeException("Was expecting 8 values, got " + row.length + " - " + Arrays.toString(row));
 
-                IcdConversionEntry entry = new IcdConversionEntry();
+                IcdO3Entry entry = new IcdO3Entry();
                 entry.setSourceCode(row[0]);
-                entry.setTargetCode(row[1]);
+                entry.setSite(row[1]);
                 entry.setHistology(row[2].isEmpty() ? null : row[2]);
                 entry.setBehavior(row[3].isEmpty() ? null : row[3]);
                 entry.setGrade(row[4].isEmpty() ? null : row[4]);
@@ -421,7 +421,7 @@ public class IcdUtils {
      * Returns the internal conversions from ICD-9CM to ICD-O-3.
      * @return internal conversions as a map
      */
-    public static Map<String, IcdConversionEntry> getIcd9CmToO3Conversions() {
+    public static Map<String, IcdO3Entry> getIcd9CmToO3Conversions() {
         initalize();
 
         return Collections.unmodifiableMap(_ICD_9_CM_TO_O3_CONVERSION);
@@ -431,7 +431,7 @@ public class IcdUtils {
      * Returns the internal conversions from ICD-10CM to ICD-O-3.
      * @return internal conversions as a map
      */
-    public static Map<String, IcdConversionEntry> getIcd10CmToO3Conversions() {
+    public static Map<String, IcdO3Entry> getIcd10CmToO3Conversions() {
         initalize();
 
         return Collections.unmodifiableMap(_ICD_10_CM_TO_O3_CONVERSION);
@@ -441,7 +441,7 @@ public class IcdUtils {
      * Returns the internal conversions from ICD-10 to ICD-O-3.
      * @return internal conversions as a map
      */
-    public static Map<String, IcdConversionEntry> getIcd10ToO3Conversions() {
+    public static Map<String, IcdO3Entry> getIcd10ToO3Conversions() {
         initalize();
 
         return Collections.unmodifiableMap(_ICD_10_TO_O3_CONVERSION);
@@ -460,10 +460,10 @@ public class IcdUtils {
      * @param sex sex value, optional. If provided, needs to be "1" (MALE) or "2" (FEMALE), otherwise it will be ignored.
      * @return corresponding ICD-O-3 conversion entry, maybe null
      */
-    public static IcdConversionEntry getIcdo3FromIcd9Cm(String icd9CmCode, String sex) {
+    public static IcdO3Entry getIcdo3FromIcd9Cm(String icd9CmCode, String sex) {
         initalize();
 
-        IcdConversionEntry result = null;
+        IcdO3Entry result = null;
 
         // if we have a value for the sex, try to use it
         if (sex != null && (SEX_MALE.equals(sex) || SEX_FEMALE.equals(sex)))
@@ -486,7 +486,7 @@ public class IcdUtils {
      * @param icd10CmCode ICD10-CM code (required)
      * @return corresponding ICD-O-3 conversion entry, maybe null
      */
-    public static IcdConversionEntry getIcdo3FromIcd10Cm(String icd10CmCode) {
+    public static IcdO3Entry getIcdo3FromIcd10Cm(String icd10CmCode) {
         initalize();
 
         return _ICD_10_CM_TO_O3_CONVERSION.get(icd10CmCode);
@@ -497,7 +497,7 @@ public class IcdUtils {
      * @param icd10Code ICD10 code (required)
      * @return corresponding ICD-O-3 conversion entry, maybe null
      */
-    public static IcdConversionEntry getIcdo3FromIcd10(String icd10Code) {
+    public static IcdO3Entry getIcdo3FromIcd10(String icd10Code) {
         return getIcdo3FromIcd10(icd10Code, true);
     }
 
@@ -507,20 +507,20 @@ public class IcdUtils {
      * @param allowNullResult if set to false, then a fake result will be returned if the internal data doesn't contain the requested code.
      * @return corresponding ICD-O-3 conversion entry, maybe null (depending on allowNullResult)
      */
-    public static IcdConversionEntry getIcdo3FromIcd10(String icd10Code, boolean allowNullResult) {
+    public static IcdO3Entry getIcdo3FromIcd10(String icd10Code, boolean allowNullResult) {
         initalize();
 
         String code = icd10Code == null ? null : icd10Code.toUpperCase();
         if (code != null && code.length() == 3)
             code = code + "9";
 
-        IcdConversionEntry result = _ICD_10_TO_O3_CONVERSION.get(code);
+        IcdO3Entry result = _ICD_10_TO_O3_CONVERSION.get(code);
 
         // if the data doesn't contain the code, build a fake one if we have to
         if (result == null && !allowNullResult) {
-            result = new IcdConversionEntry();
+            result = new IcdO3Entry();
             result.setSourceCode(code);
-            result.setTargetCode(_ICD_O3_SITE_LOOKUP.containsKey(code) ? code : "C809");
+            result.setSite(_ICD_O3_SITE_LOOKUP.containsKey(code) ? code : "C809");
             result.setHistology("8000");
             result.setBehavior(icd10Code != null && icd10Code.startsWith("C") ? "3" : icd10Code != null && icd10Code.startsWith("D") ? "2" : null);
             result.setGrade("9");
@@ -538,15 +538,6 @@ public class IcdUtils {
 
 
 
-    private static final int MORPH_SPECIAL_LINES   = 82;
-
-    private static final int FLAG_NONE             = 0;
-    private static final int FLAG_INVALID          = 1;
-    private static final int FLAG_HAND_REVIEW      = 2;
-    private static final int FLAG_INVALID_SITE     = 3;
-    private static final int FLAG_INVALID_HIST     = 4;
-    private static final int FLAG_INVALID_BEH      = 5;
-
 
     /**
      * Loads a lookup data file for use in getIcdo2FromIcdo3().
@@ -559,7 +550,9 @@ public class IcdUtils {
             String line;
             while ((line = reader.readLine()) != null) {
                 // process the line.
-                result.add(line.trim());
+                line = line.trim();
+                if (line.length() > 0)
+                    result.add(line);
             }
         }
         catch (IOException e) {
@@ -570,20 +563,23 @@ public class IcdUtils {
 
     /**
      * Returns the ICD-O-2 conversion entry for the provided ICD-O-3 code.
-     * @param icdo3Code ICD-O-3 code (site)(required)
-     * @param icdo3Hist ICD-O-3 histology (required)
-     * @param icdo3Beh ICD-O-3 behavior (required)
+     * @param icdo3Site ICD-O-3 site(required)
+     * @param icdo3Histology ICD-O-3 histology (required)
+     * @param icdo3Behavior ICD-O-3 behavior (required)
      * @param allowNullResult if set to false, then a fake result will be returned if the internal data doesn't contain the requested code.
      * @return corresponding ICD-O-2 conversion entry, maybe null (depending on allowNullResult)
      */
-    public static IcdConversionEntry getIcdo2FromIcdo3(String icdo3Code, String icdo3Hist, String icdo3Beh, boolean allowNullResult) {
+    public static IcdO2Entry getIcdo2FromIcdo3(String icdo3Site, String icdo3Histology, String icdo3Behavior, boolean allowNullResult) {
         initalize();
 
-        IcdConversionEntry result = null;
+        IcdO2Entry result = new IcdO2Entry();
+        result.setSite(icdo3Site);
+        result.setHistology("9999");
+        result.setBehavior("9");
+        result.setConversionResult(IcdO2Entry.ConversionResultType.CONVERSION_SUCCESSFUL);
 
-        int iFlags = CheckInvalid(icdo3Code, icdo3Hist, icdo3Beh);
-        if (iFlags == FLAG_NONE)
-        {
+        checkForInvalidIcdo3Codes(icdo3Site, icdo3Histology, icdo3Behavior, result);
+        if (result.getConversionResult() == IcdO2Entry.ConversionResultType.CONVERSION_SUCCESSFUL) {
             /////////////////////////////////////////////////////////////////////////
             // Conversion function calls:
             //   ConvertMorph:      Search by Hist.  Provides base ICD-O-2 Histology.
@@ -597,74 +593,63 @@ public class IcdUtils {
             //
             /////////////////////////////////////////////////////////////////////////
 
-            int iHist = Integer.parseInt(icdo3Hist);
-            result = new IcdConversionEntry();
-            result.setSourceCode(icdo3Code);
-            result.setTargetCode(icdo3Code);
+            int histologyValue = Integer.parseInt(icdo3Histology);
+            result.setSite(icdo3Site);
 
-            iFlags = ConvertMorph(icdo3Code, iHist, icdo3Beh, result);
-            if ((iFlags != FLAG_NONE) && (iFlags != FLAG_HAND_REVIEW))
-            {
-                result = null;
-            }
+            convertIcdo3Morphology(icdo3Site, histologyValue, icdo3Behavior, result);
         }
 
-        // if the data doesn't contain the code, build a fake one if we have to
-        if (result == null && !allowNullResult) {
-            result = new IcdConversionEntry();
-            result.setSourceCode(icdo3Code);
-            result.setTargetCode(icdo3Code);
-            result.setHistology("9999");
-            result.setBehavior("9");
-            result.setGrade(null);
-            result.setLaterality(null);
-            result.setReportable(null);
-            result.setSex(null);
+        if (((result.getConversionResult() == IcdO2Entry.ConversionResultType.CONVERSION_FAILED_INVALID_SITE) ||
+             (result.getConversionResult() == IcdO2Entry.ConversionResultType.CONVERSION_FAILED_INVALID_HISTOLOGY) ||
+             (result.getConversionResult() == IcdO2Entry.ConversionResultType.CONVERSION_FAILED_INVALID_BEHAVIOR)) &&
+            (allowNullResult)) {
+            result = null;
         }
+
         return result;
     }
 
     /**
      * Checks the incoming ICD-O-3 codes for values which are out of range. Sets appropriate flags and returns 1 if any of the flags have been turned on.
-     * @param sSite ICD-O-3 code (site)
-     * @param sHist ICD-O-3 histology
-     * @param sBeh ICD-O-3 behavior
-     * @return new iFlags value.
+     * @param icdo3Site ICD-O-3 site
+     * @param icdo3Histology ICD-O-3 histology
+     * @param icdo3Behavior ICD-O-3 behavior
+     * @param result gets set with possible invalid flag.
      */
-    private static int CheckInvalid(String sSite, String sHist, String sBeh)
+    private static void checkForInvalidIcdo3Codes(String icdo3Site, String icdo3Histology, String icdo3Behavior, IcdO2Entry result)
     {
-        int iFlagsSet = FLAG_NONE;
+        result.setConversionResult(IcdO2Entry.ConversionResultType.CONVERSION_SUCCESSFUL);
 
         // Check for invalid data being entered (Out of range, not specific codes)
         // Site out of range
-        if (sSite == null)
-            iFlagsSet = FLAG_INVALID_SITE;
-        else if (sSite.length() != 4)
-            iFlagsSet = FLAG_INVALID_SITE;
-        else if ((!sSite.startsWith("C") && !sSite.startsWith("c")) || (!NumberUtils.isDigits(sSite.substring(1, 4).trim())))
-            iFlagsSet = FLAG_INVALID_SITE;
+        if (icdo3Site == null)
+            result.setConversionResult(IcdO2Entry.ConversionResultType.CONVERSION_FAILED_INVALID_SITE);
+        else if (icdo3Site.length() != 4)
+            result.setConversionResult(IcdO2Entry.ConversionResultType.CONVERSION_FAILED_INVALID_SITE);
+        else if ((!icdo3Site.startsWith("C") && !icdo3Site.startsWith("c")) || (!NumberUtils.isDigits(icdo3Site.substring(1, 4).trim())))
+            result.setConversionResult(IcdO2Entry.ConversionResultType.CONVERSION_FAILED_INVALID_SITE);
         else
         {
-           int iSite = Integer.parseInt(sSite.substring(1, 4).trim());
-           if (iSite < 000 || iSite > 809)
-               iFlagsSet = FLAG_INVALID_SITE;
+           int siteValue = Integer.parseInt(icdo3Site.substring(1, 4).trim());
+           if (siteValue < 000 || siteValue > 809)
+                result.setConversionResult(IcdO2Entry.ConversionResultType.CONVERSION_FAILED_INVALID_SITE);
         }
 
-        // Hist out of range
-        if (!NumberUtils.isDigits(sHist.trim()))
-            iFlagsSet = FLAG_INVALID_HIST;
+        // Histology out of range
+        if (!NumberUtils.isDigits(icdo3Histology.trim()))
+            result.setConversionResult(IcdO2Entry.ConversionResultType.CONVERSION_FAILED_INVALID_HISTOLOGY);
         else
         {
-            int iHist = Integer.parseInt(sHist.trim());
-            if (iHist < 8000 || iHist > 9999)
-                iFlagsSet = FLAG_INVALID_HIST;
+            int histologyValue = Integer.parseInt(icdo3Histology.trim());
+            if (histologyValue < 8000 || histologyValue > 9999)
+                result.setConversionResult(IcdO2Entry.ConversionResultType.CONVERSION_FAILED_INVALID_HISTOLOGY);
         }
 
         // Behavior invalid
-        if ((!sBeh.equals("0")) && (!sBeh.equals("1")) && (!sBeh.equals("2")) && (!sBeh.equals("3")) && (!sBeh.equals("6")) && (!sBeh.equals("9")))
-            iFlagsSet = FLAG_INVALID_BEH;
+        if ((!icdo3Behavior.equals("0")) && (!icdo3Behavior.equals("1")) && (!icdo3Behavior.equals("2")) &&
+            (!icdo3Behavior.equals("3")) && (!icdo3Behavior.equals("6")) && (!icdo3Behavior.equals("9")))
+            result.setConversionResult(IcdO2Entry.ConversionResultType.CONVERSION_FAILED_INVALID_BEHAVIOR);
 
-        return iFlagsSet;
     }
 
     /**
@@ -674,494 +659,133 @@ public class IcdUtils {
      *    0-3, 6, 9 -> this behavior is sent to next function
      *    A         -> all behaviors have flag set
      *    X         -> Invalid morph, not in ICD-O-3     * @param sSite ICD-O-3 code (site)
-     * @param iHist ICD-O-3 histology number
-     * @param sBeh ICD-O-3 behavior
+     * @param icdo3Site ICD-O-3 site
+     * @param icdo3HistologyValue ICD-O-3 histology number
+     * @param icdo3Behavior ICD-O-3 behavior
      * @param result corresponding ICD-O-2 conversion entry.
-     * @return new iFlags value.
      */
-    private static int ConvertMorph(String sSite, int iHist, String sBeh, IcdConversionEntry result)
+    private static void convertIcdo3Morphology(String icdo3Site, int icdo3HistologyValue, String icdo3Behavior, IcdO2Entry result)
     {
-        int iFlagsSet = FLAG_NONE;
-        final int HAND_FLAG_POS = 4;
-        final int BEH_FLAG_POS = 5;
-        final int SITE_FLAG_POS = 6;
+        result.setConversionResult(IcdO2Entry.ConversionResultType.CONVERSION_SUCCESSFUL);
 
-        String sMorphEntry = _ICDO3_TO_ICDO2_LOOKUP.get(iHist-8000);
+        final int FLAG_HAND_POS = 4;
+        final int FLAG_BEH_POS = 5;
+        final int FLAG_SITE_POS = 6;
+
+        String lookupEntry = _ICDO3_TO_ICDO2_LOOKUP.get(icdo3HistologyValue-8000);
 
         //is this an invalid Histology?
-        if (sMorphEntry.equals("9999XXX"))
-            iFlagsSet = FLAG_INVALID_HIST;
-        else
-        {
+        if (lookupEntry.equals("9999XXX")) {
+            result.setConversionResult(IcdO2Entry.ConversionResultType.CONVERSION_FAILED_INVALID_HISTOLOGY);
+        }
+        else {
             //Get standard ICD-O-2 hist and beh
-            result.setHistology(sMorphEntry.substring(0, 4));
-            result.setBehavior(sBeh);
+            result.setHistology(lookupEntry.substring(0, 4));
+            result.setBehavior(icdo3Behavior);
 
             //Set hand review flag if needed
-            String sHandFlag = sMorphEntry.substring(HAND_FLAG_POS, HAND_FLAG_POS + 1);
-            if (sHandFlag.equals("A") || sHandFlag.equals(sBeh))
-                iFlagsSet = FLAG_HAND_REVIEW;
-            else if (iHist == 8402 && sBeh.equals("3"))
-                iFlagsSet = FLAG_HAND_REVIEW;
+            String handFlag = lookupEntry.substring(FLAG_HAND_POS, FLAG_HAND_POS + 1);
+            if (handFlag.equals("A") || handFlag.equals(icdo3Behavior))
+                result.setConversionResult(IcdO2Entry.ConversionResultType.CONVERSION_SUCCESSFUL_NEEDS_HAND_REVIEW);
+            else if (icdo3HistologyValue == 8402 && icdo3Behavior.equals("3"))
+                result.setConversionResult(IcdO2Entry.ConversionResultType.CONVERSION_SUCCESSFUL_NEEDS_HAND_REVIEW);
 
             //Is there a special behavior based conversion?
-            String sBehFlag = sMorphEntry.substring(BEH_FLAG_POS, BEH_FLAG_POS + 1);
-            if (sBehFlag.equals(sBeh) || sBehFlag.equals("A"))
-                iFlagsSet = ConvertMorphSpec(iHist, sBeh, result);
+            String behaviorFlag = lookupEntry.substring(FLAG_BEH_POS, FLAG_BEH_POS + 1);
+            if (behaviorFlag.equals(icdo3Behavior) || behaviorFlag.equals("A"))
+                convertIcdo3MorphologySpecial(icdo3HistologyValue, icdo3Behavior, result);
 
             //Is there a special site based conversion?
-            String sSiteFlag = sMorphEntry.substring(SITE_FLAG_POS, SITE_FLAG_POS + 1);
-            if (sSiteFlag.equals(sBeh))
-                iFlagsSet = ConvertSite(sSite, iHist, sBeh, result);
+            String siteFlag = lookupEntry.substring(FLAG_SITE_POS, FLAG_SITE_POS + 1);
+            if (siteFlag.equals(icdo3Behavior))
+                convertIcdo3Site(icdo3Site, icdo3HistologyValue, icdo3Behavior, result);
         }
-
-        return iFlagsSet;
     }
 
     /**
      * Takes an ICD-O-3 Hist & Behavior and retrieves the ICD-O-2 Hist and Behavior.
-     * @param iHist ICD-O-3 histology number
-     * @param sBeh ICD-O-3 behavior
+     * @param icdo3HistologyValue ICD-O-3 histology number
+     * @param icdo3Behavior ICD-O-3 behavior
      * @param result corresponding ICD-O-2 conversion entry.
-     * @return new iFlags value.
      */
-    private static int ConvertMorphSpec(int iHist, String sBeh, IcdConversionEntry result)
+    private static void convertIcdo3MorphologySpecial(int icdo3HistologyValue, String icdo3Behavior, IcdO2Entry result)
     {
-        final int HIST_FLAG_POS = 0;
-        final int BEH3_FLAG_POS = 4;
-        final int HIST2_FLAG_POS = 5;
-        final int BEH2_FLAG_POS = 9;
+        final int FLAG_HIST3_POS = 0;
+        final int FLAG_BEH3_POS = 4;
+        final int FLAG_HIST2_POS = 5;
+        final int FLAG_BEH2_POS = 9;
 
-        String  sSpecEntry, sHist;
-        boolean bIsFound = false;
-        String sHistFlag;
-        String sBeh3Flag;
+        boolean isFound = false;
+        String lookupSpecialEntry;
+        String histology3Flag;
+        String behavior3Flag;
 
-        sHist = Integer.toString(iHist);
+        String icdo3histology = Integer.toString(icdo3HistologyValue);
 
-        for (int i=0; i < MORPH_SPECIAL_LINES && !bIsFound; i++)
-        {
-            sSpecEntry = _ICDO3_TO_ICDO2_LOOKUP_SPECIAL.get(i);
+        for (int i=0; i < _ICDO3_TO_ICDO2_LOOKUP_SPECIAL.size() && !isFound; i++) {
+            lookupSpecialEntry = _ICDO3_TO_ICDO2_LOOKUP_SPECIAL.get(i);
 
-            sHistFlag = sSpecEntry.substring(HIST_FLAG_POS, HIST_FLAG_POS + 4);
-            sBeh3Flag = sSpecEntry.substring(BEH3_FLAG_POS, BEH3_FLAG_POS + 1);
+            histology3Flag = lookupSpecialEntry.substring(FLAG_HIST3_POS, FLAG_HIST3_POS + 4);
+            behavior3Flag = lookupSpecialEntry.substring(FLAG_BEH3_POS, FLAG_BEH3_POS + 1);
 
-            if ((sHistFlag.equals(sHist)) && (sBeh3Flag.equals(sBeh)))
-            {
-                bIsFound = true;
-                result.setHistology(sSpecEntry.substring(HIST2_FLAG_POS, HIST2_FLAG_POS + 4));
-                result.setBehavior(sSpecEntry.substring(BEH2_FLAG_POS, BEH2_FLAG_POS + 1));
+            if ((histology3Flag.equals(icdo3histology)) && (behavior3Flag.equals(icdo3Behavior))) {
+                isFound = true;
+                result.setHistology(lookupSpecialEntry.substring(FLAG_HIST2_POS, FLAG_HIST2_POS + 4));
+                result.setBehavior(lookupSpecialEntry.substring(FLAG_BEH2_POS, FLAG_BEH2_POS + 1));
             }
         }
-
-        return 0;
     }
 
 
     /**
      * For ICD-O-3 histology & behavior with Site flag turned on, checks site and returns the ICD-O-2 histology and behavior.
-     * @param sSite ICD-O-3 site number
-     * @param iHist ICD-O-3 histology number
-     * @param sBeh ICD-O-3 behavior
+     * @param icdo3Site ICD-O-3 site number
+     * @param icdo3HistologyValue ICD-O-3 histology number
+     * @param icdo3Behavior ICD-O-3 behavior
      * @param result corresponding ICD-O-2 conversion entry.
      */
-    private static int ConvertSite(String sSite, int iHist, String sBeh, IcdConversionEntry result)
+    private static void convertIcdo3Site(String icdo3Site, int icdo3HistologyValue, String icdo3Behavior, IcdO2Entry result)
     {
-        int iFlagsSet = FLAG_NONE;
-        int iSite = Integer.parseInt(sSite.substring(1, 3).trim());
+        int siteValue = Integer.parseInt(icdo3Site.substring(1, 3).trim());
 
         //Since there are so few cases, these are hard coded.
-        String sBehFirstDigit = sBeh.substring(0, 0);
-        if (iHist == 8240 && sBehFirstDigit.equals("1"))
-        {
-            if (iSite != 181)
+        String behaviorFirstDigit = icdo3Behavior.substring(0, 0);
+        if (icdo3HistologyValue == 8240 && behaviorFirstDigit.equals("1")) {
+            if (siteValue != 181)
                 result.setHistology("8241");
             else
-                iFlagsSet = FLAG_HAND_REVIEW;
+                result.setConversionResult(IcdO2Entry.ConversionResultType.CONVERSION_SUCCESSFUL_NEEDS_HAND_REVIEW);
         }
 
-        if (iHist == 8245 && sBehFirstDigit.equals("1"))
-        {
+        if (icdo3HistologyValue == 8245 && behaviorFirstDigit.equals("1")) {
             result.setHistology("8240");
-            iFlagsSet = FLAG_HAND_REVIEW;
-            if (iSite == 181)
+            result.setConversionResult(IcdO2Entry.ConversionResultType.CONVERSION_SUCCESSFUL_NEEDS_HAND_REVIEW);
+            if (siteValue == 181)
                 result.setBehavior("1");
             else
                 result.setBehavior("3");
         }
 
-        if (iHist == 8249 && sBehFirstDigit.equals("3") && iSite == 181)
+        if (icdo3HistologyValue == 8249 && behaviorFirstDigit.equals("3") && siteValue == 181)
             result.setBehavior("1");
 
-        if (iHist == 9133 && sBehFirstDigit.equals("3") && (iSite >= 340 && iSite <= 349))
-        {
+        if (icdo3HistologyValue == 9133 && behaviorFirstDigit.equals("3") && (siteValue >= 340 && siteValue <= 349)) {
             result.setHistology("9134");
             result.setBehavior("1");
-            iFlagsSet = FLAG_HAND_REVIEW;
+            result.setConversionResult(IcdO2Entry.ConversionResultType.CONVERSION_SUCCESSFUL_NEEDS_HAND_REVIEW);
         }
 
-        if (iHist == 9160 && sBehFirstDigit.equals("0"))
-        {
-            iFlagsSet = FLAG_HAND_REVIEW;
-            if (iSite >= 440 && iSite <= 449)
+        if (icdo3HistologyValue == 9160 && behaviorFirstDigit.equals("0")) {
+            result.setConversionResult(IcdO2Entry.ConversionResultType.CONVERSION_SUCCESSFUL_NEEDS_HAND_REVIEW);
+            if (siteValue >= 440 && siteValue <= 449)
                 result.setHistology("8724");
         }
 
-        if (iHist == 9590 && sBehFirstDigit.equals("3") && (iSite >= 710 && iSite <= 719))
-        {
+        if (icdo3HistologyValue == 9590 && behaviorFirstDigit.equals("3") && (siteValue >= 710 && siteValue <= 719)) {
             result.setHistology("9594");
-            iFlagsSet = FLAG_HAND_REVIEW;
+            result.setConversionResult(IcdO2Entry.ConversionResultType.CONVERSION_SUCCESSFUL_NEEDS_HAND_REVIEW);
         }
-        return iFlagsSet;
     }
-
-
-    /*
-        //Number of lines to search in each table. Taken from 'char MorphTable[2000][8] ='
-        //  where the first [x] is the number of lines and the 2nd [y] is the line length with null.
-        //static const int MORPH_LINES       = 2000;    //index based, not searched
-        static const int MORPH_SPECIAL_LINES = 82;
-
-        //Other constants and bookkeeping variables.
-        static const char FLAG_ON     = '1';
-        static const int  NO_FLAGS    = 0;
-        static const int  FLAG_SET    = 1;
-        static const int  HAND_REVIEW = 2;
-        static const int  iTRUE       = 0;
-        static const int  iFALSE      = 1;
-
-        enum eFlags {HandReview, InvalidSite, InvalidHist, InvalidBeh};
-
-
-        //----------------------------------------------------------------------------------------
-        //  This set of functions is called thru Convert() by an external source,
-        //  Information required from the user is
-        //     ICD-O-3 Site (length 4 char string)
-        //     ICD-O-3 Histology (length 4 char string)
-        //     ICD-O-3 Behavior (length 1 char string)
-        //  Using these data, the function retrieves the corresponding ICD-O-2 Histology and
-        //  Behavior.  It also generates a hand review needed flag and 3 Invalid Flags (to
-        //  note that an invalid code was provided). For Site, this is an 'Out of range' flag.
-        //  Codes that are between C000 and C810 are considered 'valid' even if they are not
-        //  specifically listed in the ICD-O-3 book.  These data are sent back to the user in
-        //  the referenced strings passed into Convert.  Therefore, the user also needs to send
-        //      ICD-O-2 Histology (length 4 char string - modified by Convert() )
-        //      ICD-O-2 Behavior  (length 1 char string - modified by Convert() )
-        //      Flags             (length 4 char string - modified by Convert() )
-        //          Hand Review Needed, Invalid Site, Invalid Histology, Invalid Behavior
-        //  This function also returns an integer to signify the level of confidence of
-        //  the conversion.
-        //      0 - Conversion completed, no invalid flags, no need for hand review.
-        //      1 - Conversion had at least 1 invalid flag turned on.
-        //      2 - Conversion completed, no invalid flag, but suggests hand review.
-        //
-        //  The main function accesses the other conversion functions as needed.  These
-        //  functions should NOT be accessed separately.
-        //
-        //  Nicki Schussler    2/13/2001
-        //----------------------------------------------------------------------------------------
-
-
-        //---------------------------------------------------------
-        //Convert - given the ICD-O-3 information, retrieves the converted ICD-O-2 hist & beh
-        //  and sets the appropriate flags.  It places these data into the provided strings.
-        int Convert(char *sSite, char *sHist, char *sBeh,
-                    char *sICDO2Hist, char *sICDO2Beh, char *sFlags)
-        {
-           int iFlagsSet = NO_FLAGS, iHist;
-
-           try
-           {
-              //Initialize return strings.
-              if (strlen(sICDO2Hist) == 4)
-                 strcpy(sICDO2Hist, "9999");
-              else
-                 ICDGenerateException("ICD-O-2 Histology string is not length 4", "TConvert");
-
-              if (strlen(sICDO2Beh) == 1)
-                 strcpy(sICDO2Beh, "9");
-              else
-                 ICDGenerateException("ICD-O-2 Behavior string is not length 1", "TConvert");
-
-              if (strlen(sFlags) == 4)
-                 strcpy(sFlags, "0000");
-              else
-                 ICDGenerateException("Flags string is not length 4", "TConvert");
-
-              if (CheckInvalid(sSite, sHist, sBeh, sFlags) == 0)
-                 {
-                 /////////////////////////////////////////////////////////////////////////
-                 // Conversion function calls:
-                 //   ConvertMorph:      Search by Hist.  Provides base ICD-O-2 Histology.
-                 //                      Assumes behavior is unchanged.  If hand review flag
-                 //                      is not 'X', set Hand Review='1'.  If Beh flag is not
-                 //                      'X', calls ConvertMorphSpec.  If site flag is not
-                 //                      'X', calls ConvertSite.
-                 //   ConvertMorphSpec:  Search by Hist/Beh. Called if Beh flag is not 'X'.
-                 //   ConvertSite:       Site specific conversions. Hard coded.  Called if
-                 //                      Site flag is not 'X'.
-                 //
-                 /////////////////////////////////////////////////////////////////////////
-
-                 iHist = atoi(sHist);
-                 ConvertMorph(sSite, iHist, sBeh, sICDO2Hist, sICDO2Beh, sFlags);
-                 }
-
-                // based on flags, set return value. Are there invalid flags,
-                // if not, is there a hand review flag, if not, return 0.
-                if (!StrEqual(&sFlags[1], "000"))
-                    iFlagsSet = FLAG_SET;
-                else if (sFlags[HandReview] == FLAG_ON)
-                    iFlagsSet = HAND_REVIEW;
-                else
-                    iFlagsSet = NO_FLAGS;     //no invalid codes & does not need hand review
-           }
-           catch (ICDException & x)
-           {
-               x.AddCallpath("Convert()","TConvert");
-               throw;
-           }
-
-           return iFlagsSet;
-       }
-       //---------------------------------------------------------
-
-       //CheckInvalid - checks the incoming ICD-O-3 codes for values which are out of range.
-       //  Sets appropriate flags and returns 1 if any of the flags have been turned on.
-       int CheckInvalid(char *sSite, char *sHist, char *sBeh, char *sFlags)
-       {
-           int iFlagsSet = NO_FLAGS;
-           int iSite, iHist;
-
-           try
-           {
-               // Check for invalid data being entered (Out of range, not specific codes)
-               //Site out of range
-               if ((sSite[0] != 'C' && sSite[0] != 'c') || (IsNumeric(&sSite[1], 3) == iFALSE))
-                   sFlags[InvalidSite] = FLAG_ON;
-               else
-               {
-                   iSite = atoi(&sSite[1]);
-                   if (iSite < 000 || iSite > 809)
-                        sFlags[InvalidSite] = FLAG_ON;
-               }
-
-               //Hist out of range
-               if (IsNumeric(sHist, 4) == iFALSE)
-                   sFlags[InvalidHist] = FLAG_ON;
-               else
-               {
-               iHist = atoi(sHist);
-               if (iHist < 8000 || iHist > 9999)
-                    sFlags[InvalidHist] = FLAG_ON;
-               }
-
-                //Behavior invalid
-                if (!memchr("012369", sBeh[0], strlen("012369")))
-                    sFlags[InvalidBeh] = FLAG_ON;
-
-                // set value of return to 1 if any flags were set
-                if (!StrEqual(&sFlags[1], "000"))
-                    iFlagsSet = FLAG_SET;
-            }
-            catch (ICDException & x)
-            {
-                x.AddCallpath("CheckInvalid()","TConvert");
-                throw;
-            }
-
-            return iFlagsSet;
-        }
-
-
-        //ConvertMorph - takes ICD-O-3 Hist code and retrieves the most common ICD-O-2 Hist
-        //  code.  Assumes that Beh remains the same.  Also retrieves the hand review flag,
-        //  the behavior specific conversion flag (which may cause ConvertMorphSpec to be called)
-        //  and the site specific conversion flag (which may cause ConvertSite to be called)
-        //    FLAG values:
-        //    0-3, 6, 9 -> this behavior is sent to next function
-        //    A         -> all behaviors have flag set
-        //    X         -> Invalid morph, not in ICD-O-3
-        void ConvertMorph(char *sSite, int iHist, char *sBeh, char *sICDO2Hist, char *sICDO2Beh, char *sFlags)
-        {
-            try
-            {
-                char sMorphEntry[8];
-                enum eStart {HistO2, HandFlag=4, BehFlag, SiteFlag};
-
-                strcpy(sMorphEntry, MorphTable[iHist-8000]);
-
-                //is this an invalid Histology?
-                if (StrEqual(sMorphEntry, "9999XXX"))
-                    sFlags[InvalidHist] = FLAG_ON;
-                else
-                {
-                  //Get standard ICD-O-2 hist and beh
-                  strncpy(sICDO2Hist, &sMorphEntry[HistO2], 4);       sICDO2Hist[4] = '\0';
-                  sICDO2Beh[0] = sBeh[0];
-
-                  //Set hand review flag if needed
-                  if (sMorphEntry[HandFlag] == 'A' || sMorphEntry[HandFlag] == sBeh[0])
-                  sFlags[HandReview] = FLAG_ON;
-                  if (iHist == 8402 && sBeh[0] == '3')
-                  sFlags[HandReview] = FLAG_ON;
-
-                  //Is there a special behavior based conversion?
-                  if (sMorphEntry[BehFlag] == sBeh[0] || sMorphEntry[BehFlag] == 'A')
-                  ConvertMorphSpec(iHist, sBeh, sICDO2Hist, sICDO2Beh);
-
-                  //Is there a special site based conversion?
-                  if (sMorphEntry[SiteFlag] == sBeh[0])
-                  ConvertSite(sSite, iHist, sBeh, sICDO2Hist, sICDO2Beh, sFlags);
-              }
-          }
-          catch (ICDException & x)
-          {
-              x.AddCallpath("ConvertMorph()","TConvert");
-              throw;
-          }
-        }
-
-
-        //ConvertMorphSpec - takes an ICD-O-3 Hist & Behavior and retrieves the
-        //  ICD-O-2 Hist and Behavior.
-        int  ConvertMorphSpec(int iHist, char *sBeh, char *sICDO2Hist, char *sICDO2Beh)
-        {
-            int     iIsFound = iFALSE;
-
-            try
-            {
-                int     i;
-                char *  sSpecEntry, sHist[5];
-                enum    eStart {Hist3, Beh3=4, Hist2, Beh2=9};
-
-                //itoa(iHist, sHist, 10);
-                sprintf(sHist,"%d",iHist);
-
-                for (i=0; i < MORPH_SPECIAL_LINES && iIsFound == iFALSE; i++)
-                {
-                    sSpecEntry = MorphSpecialTable[i];
-                    if (strncmp(&sSpecEntry[Hist3], sHist, 4) == 0 &&
-                        strncmp(&sSpecEntry[Beh3], sBeh, 1) == 0)
-                    {
-                        iIsFound = iTRUE;
-                        strncpy(sICDO2Hist, &sSpecEntry[Hist2], 4);
-                        strncpy(sICDO2Beh,  &sSpecEntry[Beh2], 1);
-                        sICDO2Hist[4] = '\0';
-                        sICDO2Beh[1] = '\0';
-                    }
-                }
-            }
-            catch (ICDException & x)
-            {
-                x.AddCallpath("ConvertMorphSpec()","TConvert");
-                throw;
-            }
-
-            return iIsFound;
-        }
-
-
-        //ConvertSite - for ICD-O-3 histology & behavior with Site flag turned on, checks site
-        //  and returns the ICD-O-2 histology and behavior.
-        void ConvertSite(char *sSite, int iHist, char *sBeh, char *sICDO2Hist, char *sICDO2Beh, char *sFlags)
-        {
-            int iSite;
-
-            try
-            {
-                iSite = atoi(&sSite[1]);
-
-                //Since there are so few cases, these are hard coded.
-                if (iHist == 8240 && sBeh[0] == '1')
-                {
-                    if (iSite != 181)
-                        strcpy(sICDO2Hist, "8241");
-                    else
-                        sFlags[HandReview] = FLAG_ON;
-                }
-
-                if (iHist == 8245 && sBeh[0] == '1')
-                {
-                    strcpy(sICDO2Hist, "8240");
-                    sFlags[HandReview] = FLAG_ON;
-                    if (iSite == 181)
-                    sICDO2Beh[0] = '1';
-                    else
-                    sICDO2Beh[0] = '3';
-                }
-
-                if (iHist == 8249 && sBeh[0] == '3' && iSite == 181)
-                    sICDO2Beh[0] = '1';
-
-                if (iHist == 9133 && sBeh[0] == '3' && (iSite >= 340 && iSite <= 349))
-                {
-                    strcpy(sICDO2Hist, "9134");
-                    sICDO2Beh[0] = '1';
-                    sFlags[HandReview] = FLAG_ON;
-                }
-
-                if (iHist == 9160 && sBeh[0] == '0')
-                {
-                    sFlags[HandReview] = FLAG_ON;
-                    if (iSite >= 440 && iSite <= 449)
-                    strcpy(sICDO2Hist, "8724");
-                }
-
-                if (iHist == 9590 && sBeh[0] == '3' && (iSite >= 710 && iSite <= 719))
-                {
-                    strcpy(sICDO2Hist, "9594");
-                    sFlags[HandReview] = FLAG_ON;
-                }
-            }
-            catch (ICDException & x)
-            {
-                x.AddCallpath("ConvertSite()","TConvert");
-                throw;
-            }
-        }
-
-
-        //UTILITY FUNCTION
-        //IsNumeric - is sString a string of numeric characters of length
-        //            iLength (does not include null terminater)?
-        int  IsNumeric(char *sString, int iLength)
-        {
-            int iIsNumeric = iTRUE, i;
-
-            if ((signed) strlen(sString) != iLength)
-                iIsNumeric = iFALSE;
-
-            for (i=0; i < iLength && iIsNumeric == iTRUE; i++)
-            {
-                if (isdigit(sString[i]) == 0)
-                iIsNumeric = iFALSE;
-            }
-
-            return iIsNumeric;
-        }
-
-        */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }
