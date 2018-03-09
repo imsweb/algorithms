@@ -383,15 +383,15 @@ public class IcdUtils {
      */
     public static synchronized void initalize() {
 
-        loadIcdo3to2DataFile("icdo3.to.icdo2.morphology.special.txt", _ICDO3_TO_ICDO2_LOOKUP_SPECIAL);
-        loadIcdo3to2DataFile("icdo3.to.icdo2.morphology.txt", _ICDO3_TO_ICDO2_LOOKUP);
-
         if (!_ICD_9_CM_TO_O3_CONVERSION.isEmpty())
             return;
 
         loadDataFile("icd-9-cm-to-icd-o-3.csv", _ICD_9_CM_TO_O3_CONVERSION);
         loadDataFile("icd-10-cm-to-icd-o-3.csv", _ICD_10_CM_TO_O3_CONVERSION);
         loadDataFile("icd-10-to-icd-o-3.csv", _ICD_10_TO_O3_CONVERSION);
+
+        loadIcdo3to2DataFile("icdo3.to.icdo2.morphology.special.txt", _ICDO3_TO_ICDO2_LOOKUP_SPECIAL);
+        loadIcdo3to2DataFile("icdo3.to.icdo2.morphology.txt", _ICDO3_TO_ICDO2_LOOKUP);
 
     }
 
@@ -543,6 +543,8 @@ public class IcdUtils {
      * @param result The list of strings which will contain the strings from the file.
      */
     private static void loadIcdo3to2DataFile(String file, List<String> result) {
+
+        result.clear();
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("icd/" + file), StandardCharsets.US_ASCII))) {
             String line;
@@ -729,10 +731,10 @@ public class IcdUtils {
      * @param result corresponding ICD-O-2 conversion entry.
      */
     private static void convertIcdo3Site(String icdo3Site, int icdo3HistologyValue, String icdo3Behavior, IcdO2Entry result) {
-        int siteValue = Integer.parseInt(icdo3Site.substring(1, 3).trim());
+        int siteValue = Integer.parseInt(icdo3Site.substring(1, 4).trim());
 
         //Since there are so few cases, these are hard coded.
-        String behaviorFirstDigit = icdo3Behavior.substring(0, 0);
+        String behaviorFirstDigit = icdo3Behavior.substring(0, 1);
         if (icdo3HistologyValue == 8240 && behaviorFirstDigit.equals("1")) {
             if (siteValue != 181)
                 result.setHistology("8241");

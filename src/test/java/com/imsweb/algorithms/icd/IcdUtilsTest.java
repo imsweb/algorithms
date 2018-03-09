@@ -3,10 +3,10 @@
  */
 package com.imsweb.algorithms.icd;
 
+// For testFileCompareIcdo2FromIcdo3()
 //import java.io.BufferedReader;
 //import java.io.IOException;
 //import java.io.FileReader;
-//import java.nio.charset.StandardCharsets;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -232,23 +232,23 @@ public class IcdUtilsTest {
     @Test
     public void testFileCompareIcdo2FromIcdo3() {
 
-        String sInputFile = "C:\\ICDO3_ICDO2\\Examples\\Example1\\rg170301.icdo2.txt";
-        final int ICDO3_SITE_POS = 539;
-        final int ICDO3_HIST_POS = 549;
-        final int ICDO3_BEH_POS = 553;
-        final int ICDO2_HIST_POS = 544;
-        final int ICDO2_BEH_POS = 548;
-        final int ICDO2_FLAGS_POS = 1918;
+        String sInputFile = "C:\\ICDO3_ICDO2\\Examples\\AllCases\\ICDO3Codes.out.txt";
+        final int ICDO3_SITE_POS = 0;
+        final int ICDO3_HIST_POS = 5;
+        final int ICDO3_BEH_POS = 10;
+        final int ICDO2_HIST_POS = 12;
+        final int ICDO2_BEH_POS = 17;
+        final int ICDO2_FLAGS_POS = 19;
         final int SITE_LENGTH = 4;
         final int HIST_LENGTH = 4;
         final int BEH_LENGTH = 1;
-        final int FLAGS_LENGTH = 1;
+        final int FLAGS_LENGTH = 4;
 
         IcdO2Entry icd;
         IcdO2Entry.ConversionResultType flagsResult;
         String icdo3Site, icdo3Histology, icdo3Behavior;
         String icdo2Histology, icdo2Behavior, icdo2Flags;
-        //boolean hasUnknownFlag;
+        boolean hasUnknownFlag;
         boolean hasDifference;
         String differentValuesNames;
         int lineProcessedCount = 0;
@@ -263,23 +263,23 @@ public class IcdUtilsTest {
                 lineTotalCount++;
                 sLine = sLine.trim();
 
-                icdo3Site = sLine.substring(ICDO3_SITE_POS, ICDO3_SITE_POS + SITE_LENGTH);
-                icdo3Histology = sLine.substring(ICDO3_HIST_POS, ICDO3_HIST_POS + HIST_LENGTH);
-                icdo3Behavior = sLine.substring(ICDO3_BEH_POS, ICDO3_BEH_POS + BEH_LENGTH);
-                icdo2Histology = sLine.substring(ICDO2_HIST_POS, ICDO2_HIST_POS + HIST_LENGTH);
-                icdo2Behavior = sLine.substring(ICDO2_BEH_POS, ICDO2_BEH_POS + BEH_LENGTH);
-                icdo2Flags = sLine.substring(ICDO2_FLAGS_POS, ICDO2_FLAGS_POS + FLAGS_LENGTH);
+                if (sLine.length() > 0) {
 
-                if (icdo2Flags.equals("5")) {
+                    icdo3Site = sLine.substring(ICDO3_SITE_POS, ICDO3_SITE_POS + SITE_LENGTH);
+                    icdo3Histology = sLine.substring(ICDO3_HIST_POS, ICDO3_HIST_POS + HIST_LENGTH);
+                    icdo3Behavior = sLine.substring(ICDO3_BEH_POS, ICDO3_BEH_POS + BEH_LENGTH);
+                    icdo2Histology = sLine.substring(ICDO2_HIST_POS, ICDO2_HIST_POS + HIST_LENGTH);
+                    icdo2Behavior = sLine.substring(ICDO2_BEH_POS, ICDO2_BEH_POS + BEH_LENGTH);
+                    icdo2Flags = sLine.substring(ICDO2_FLAGS_POS, ICDO2_FLAGS_POS + FLAGS_LENGTH);
 
-                    //hasUnknownFlag = false;
-                    //flagsResult = IcdO2Entry.ConversionResultType.CONVERSION_FAILED_INVALID_BEHAVIOR;
-                    //if (icdo2Flags.equals("0000")) flagsResult = IcdO2Entry.ConversionResultType.CONVERSION_SUCCESSFUL;
-                    //else if (icdo2Flags.equals("1000")) flagsResult = IcdO2Entry.ConversionResultType.CONVERSION_SUCCESSFUL_NEEDS_HAND_REVIEW;
-                    //else if (icdo2Flags.equals("0100")) flagsResult = IcdO2Entry.ConversionResultType.CONVERSION_FAILED_INVALID_SITE;
-                    //else if (icdo2Flags.equals("0010")) flagsResult = IcdO2Entry.ConversionResultType.CONVERSION_FAILED_INVALID_HISTOLOGY;
-                    //else if (icdo2Flags.equals("0001")) flagsResult = IcdO2Entry.ConversionResultType.CONVERSION_FAILED_INVALID_BEHAVIOR;
-                    //else hasUnknownFlag = true;
+                    hasUnknownFlag = false;
+                    flagsResult = IcdO2Entry.ConversionResultType.CONVERSION_FAILED_INVALID_BEHAVIOR;
+                    if (icdo2Flags.equals("0000")) flagsResult = IcdO2Entry.ConversionResultType.CONVERSION_SUCCESSFUL;
+                    else if (icdo2Flags.equals("1000")) flagsResult = IcdO2Entry.ConversionResultType.CONVERSION_SUCCESSFUL_NEEDS_HAND_REVIEW;
+                    else if (icdo2Flags.equals("0100")) flagsResult = IcdO2Entry.ConversionResultType.CONVERSION_FAILED_INVALID_SITE;
+                    else if (icdo2Flags.equals("0010")) flagsResult = IcdO2Entry.ConversionResultType.CONVERSION_FAILED_INVALID_HISTOLOGY;
+                    else if (icdo2Flags.equals("0001")) flagsResult = IcdO2Entry.ConversionResultType.CONVERSION_FAILED_INVALID_BEHAVIOR;
+                    else hasUnknownFlag = true;
 
                     icd = IcdUtils.getIcdo2FromIcdo3(icdo3Site, icdo3Histology, icdo3Behavior, false);
 
@@ -294,17 +294,16 @@ public class IcdUtilsTest {
                         if (differentValuesNames.length() > 0) differentValuesNames += ", ";
                         differentValuesNames += "Behavior";
                     }
-
-                    //if (!icd.getConversionResult().equals(flagsResult)) {
-                    //    hasDifference = true;
-                    //    if (differentValuesNames.length() > 0) differentValuesNames += ", ";
-                    //    differentValuesNames += "Conversion Result";
-                    //}
-                    //if (hasUnknownFlag) {
-                    //    hasDifference = true;
-                    //    if (differentValuesNames.length() > 0) differentValuesNames += ", ";
-                    //    differentValuesNames += "Unknown Flag";
-                    //}
+                    if (!icd.getConversionResult().equals(flagsResult)) {
+                        hasDifference = true;
+                        if (differentValuesNames.length() > 0) differentValuesNames += ", ";
+                        differentValuesNames += "Conversion Result";
+                    }
+                    if (hasUnknownFlag) {
+                        hasDifference = true;
+                        if (differentValuesNames.length() > 0) differentValuesNames += ", ";
+                        differentValuesNames += "Unknown Flag";
+                    }
 
 
                     if (hasDifference) {
@@ -318,7 +317,7 @@ public class IcdUtilsTest {
                         System.out.println("  icd.Hist:      " + icd.getHistology());
                         System.out.println("  icd.Beh:       " + icd.getBehavior());
                         System.out.println("  icd.ConvRes:   " + icd.getConversionResult());
-                        //System.out.println("  Unknown Flag:  " + (hasUnknownFlag ? "TRUE" : "FALSE"));
+                        System.out.println("  Unknown Flag:  " + (hasUnknownFlag ? "TRUE" : "FALSE"));
                         System.out.println("  Differences:   " + differentValuesNames);
                         nonMatchesCount++;
                     }
@@ -341,7 +340,7 @@ public class IcdUtilsTest {
         catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
     */
+
 }
