@@ -3,10 +3,10 @@
  */
 package com.imsweb.algorithms.icd;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.FileReader;
-import java.nio.charset.StandardCharsets;
+//import java.io.BufferedReader;
+//import java.io.IOException;
+//import java.io.FileReader;
+//import java.nio.charset.StandardCharsets;
 
 import org.junit.Assert;
 import org.junit.Test;

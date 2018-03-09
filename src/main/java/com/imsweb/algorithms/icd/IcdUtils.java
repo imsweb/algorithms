@@ -32,9 +32,16 @@ public class IcdUtils {
 
     private static final Map<String, String> _ICD_O3_SITE_LOOKUP = new HashMap<>();
 
-
     private static final List<String> _ICDO3_TO_ICDO2_LOOKUP_SPECIAL = new ArrayList<>();
     private static final List<String> _ICDO3_TO_ICDO2_LOOKUP = new ArrayList<>();
+
+    private static final int _ICDO3_TO_ICDO2_LOOKUP_FLAG_HAND_POS = 4;
+    private static final int _ICDO3_TO_ICDO2_LOOKUP_FLAG_BEH_POS = 5;
+    private static final int _ICDO3_TO_ICDO2_LOOKUP_FLAG_SITE_POS = 6;
+    private static final int _ICDO3_TO_ICDO2_LOOKUP_SPECIAL_FLAG_HIST3_POS = 0;
+    private static final int _ICDO3_TO_ICDO2_LOOKUP_SPECIAL_FLAG_BEH3_POS = 4;
+    private static final int _ICDO3_TO_ICDO2_LOOKUP_SPECIAL_FLAG_HIST2_POS = 5;
+    private static final int _ICDO3_TO_ICDO2_LOOKUP_SPECIAL_FLAG_BEH2_POS = 9;
 
 
 
@@ -379,7 +386,6 @@ public class IcdUtils {
         loadIcdo3to2DataFile("icdo3.to.icdo2.morphology.special.txt", _ICDO3_TO_ICDO2_LOOKUP_SPECIAL);
         loadIcdo3to2DataFile("icdo3.to.icdo2.morphology.txt", _ICDO3_TO_ICDO2_LOOKUP);
 
-
         if (!_ICD_9_CM_TO_O3_CONVERSION.isEmpty())
             return;
 
@@ -531,14 +537,6 @@ public class IcdUtils {
         return result;
     }
 
-
-
-
-
-
-
-
-
     /**
      * Loads a lookup data file for use in getIcdo2FromIcdo3().
      * @param file The name of the test file to load.
@@ -559,7 +557,6 @@ public class IcdUtils {
             throw new RuntimeException(e);
         }
     }
-
 
     /**
      * Returns the ICD-O-2 conversion entry for the provided ICD-O-3 code.
@@ -600,9 +597,9 @@ public class IcdUtils {
         }
 
         if (((result.getConversionResult() == IcdO2Entry.ConversionResultType.CONVERSION_FAILED_INVALID_SITE) ||
-             (result.getConversionResult() == IcdO2Entry.ConversionResultType.CONVERSION_FAILED_INVALID_HISTOLOGY) ||
-             (result.getConversionResult() == IcdO2Entry.ConversionResultType.CONVERSION_FAILED_INVALID_BEHAVIOR)) &&
-            (allowNullResult)) {
+                (result.getConversionResult() == IcdO2Entry.ConversionResultType.CONVERSION_FAILED_INVALID_HISTOLOGY) ||
+                (result.getConversionResult() == IcdO2Entry.ConversionResultType.CONVERSION_FAILED_INVALID_BEHAVIOR)) &&
+                (allowNullResult)) {
             result = null;
         }
 
@@ -616,8 +613,7 @@ public class IcdUtils {
      * @param icdo3Behavior ICD-O-3 behavior
      * @param result gets set with possible invalid flag.
      */
-    private static void checkForInvalidIcdo3Codes(String icdo3Site, String icdo3Histology, String icdo3Behavior, IcdO2Entry result)
-    {
+    private static void checkForInvalidIcdo3Codes(String icdo3Site, String icdo3Histology, String icdo3Behavior, IcdO2Entry result) {
         result.setConversionResult(IcdO2Entry.ConversionResultType.CONVERSION_SUCCESSFUL);
 
         // Check for invalid data being entered (Out of range, not specific codes)
@@ -628,18 +624,16 @@ public class IcdUtils {
             result.setConversionResult(IcdO2Entry.ConversionResultType.CONVERSION_FAILED_INVALID_SITE);
         else if ((!icdo3Site.startsWith("C") && !icdo3Site.startsWith("c")) || (!NumberUtils.isDigits(icdo3Site.substring(1, 4).trim())))
             result.setConversionResult(IcdO2Entry.ConversionResultType.CONVERSION_FAILED_INVALID_SITE);
-        else
-        {
-           int siteValue = Integer.parseInt(icdo3Site.substring(1, 4).trim());
-           if (siteValue < 000 || siteValue > 809)
+        else {
+            int siteValue = Integer.parseInt(icdo3Site.substring(1, 4).trim());
+            if (siteValue < 000 || siteValue > 809)
                 result.setConversionResult(IcdO2Entry.ConversionResultType.CONVERSION_FAILED_INVALID_SITE);
         }
 
         // Histology out of range
         if (!NumberUtils.isDigits(icdo3Histology.trim()))
             result.setConversionResult(IcdO2Entry.ConversionResultType.CONVERSION_FAILED_INVALID_HISTOLOGY);
-        else
-        {
+        else {
             int histologyValue = Integer.parseInt(icdo3Histology.trim());
             if (histologyValue < 8000 || histologyValue > 9999)
                 result.setConversionResult(IcdO2Entry.ConversionResultType.CONVERSION_FAILED_INVALID_HISTOLOGY);
@@ -647,7 +641,7 @@ public class IcdUtils {
 
         // Behavior invalid
         if ((!icdo3Behavior.equals("0")) && (!icdo3Behavior.equals("1")) && (!icdo3Behavior.equals("2")) &&
-            (!icdo3Behavior.equals("3")) && (!icdo3Behavior.equals("6")) && (!icdo3Behavior.equals("9")))
+                (!icdo3Behavior.equals("3")) && (!icdo3Behavior.equals("6")) && (!icdo3Behavior.equals("9")))
             result.setConversionResult(IcdO2Entry.ConversionResultType.CONVERSION_FAILED_INVALID_BEHAVIOR);
 
     }
@@ -655,24 +649,20 @@ public class IcdUtils {
     /**
      * Takes ICD-O-3 Hist code and retrieves the most common ICD-O-2 Hist code.  Assumes that Beh remains the same.  Also retrieves the hand review flag,
      * the behavior specific conversion flag (which may cause ConvertMorphSpec to be called) and the site specific conversion flag (which may cause ConvertSite to be called).
-     *    FLAG values:
-     *    0-3, 6, 9 -> this behavior is sent to next function
-     *    A         -> all behaviors have flag set
-     *    X         -> Invalid morph, not in ICD-O-3     * @param sSite ICD-O-3 code (site)
+     * FLAG values:
+     * 0-3, 6, 9 -> this behavior is sent to next function
+     * A         -> all behaviors have flag set
+     * X         -> Invalid morph, not in ICD-O-3     * @param sSite ICD-O-3 code (site)
      * @param icdo3Site ICD-O-3 site
      * @param icdo3HistologyValue ICD-O-3 histology number
      * @param icdo3Behavior ICD-O-3 behavior
      * @param result corresponding ICD-O-2 conversion entry.
      */
-    private static void convertIcdo3Morphology(String icdo3Site, int icdo3HistologyValue, String icdo3Behavior, IcdO2Entry result)
-    {
+    private static void convertIcdo3Morphology(String icdo3Site, int icdo3HistologyValue, String icdo3Behavior, IcdO2Entry result) {
+
         result.setConversionResult(IcdO2Entry.ConversionResultType.CONVERSION_SUCCESSFUL);
 
-        final int FLAG_HAND_POS = 4;
-        final int FLAG_BEH_POS = 5;
-        final int FLAG_SITE_POS = 6;
-
-        String lookupEntry = _ICDO3_TO_ICDO2_LOOKUP.get(icdo3HistologyValue-8000);
+        String lookupEntry = _ICDO3_TO_ICDO2_LOOKUP.get(icdo3HistologyValue - 8000);
 
         //is this an invalid Histology?
         if (lookupEntry.equals("9999XXX")) {
@@ -684,19 +674,19 @@ public class IcdUtils {
             result.setBehavior(icdo3Behavior);
 
             //Set hand review flag if needed
-            String handFlag = lookupEntry.substring(FLAG_HAND_POS, FLAG_HAND_POS + 1);
+            String handFlag = lookupEntry.substring(_ICDO3_TO_ICDO2_LOOKUP_FLAG_HAND_POS, _ICDO3_TO_ICDO2_LOOKUP_FLAG_HAND_POS + 1);
             if (handFlag.equals("A") || handFlag.equals(icdo3Behavior))
                 result.setConversionResult(IcdO2Entry.ConversionResultType.CONVERSION_SUCCESSFUL_NEEDS_HAND_REVIEW);
             else if (icdo3HistologyValue == 8402 && icdo3Behavior.equals("3"))
                 result.setConversionResult(IcdO2Entry.ConversionResultType.CONVERSION_SUCCESSFUL_NEEDS_HAND_REVIEW);
 
             //Is there a special behavior based conversion?
-            String behaviorFlag = lookupEntry.substring(FLAG_BEH_POS, FLAG_BEH_POS + 1);
+            String behaviorFlag = lookupEntry.substring(_ICDO3_TO_ICDO2_LOOKUP_FLAG_BEH_POS, _ICDO3_TO_ICDO2_LOOKUP_FLAG_BEH_POS + 1);
             if (behaviorFlag.equals(icdo3Behavior) || behaviorFlag.equals("A"))
                 convertIcdo3MorphologySpecial(icdo3HistologyValue, icdo3Behavior, result);
 
             //Is there a special site based conversion?
-            String siteFlag = lookupEntry.substring(FLAG_SITE_POS, FLAG_SITE_POS + 1);
+            String siteFlag = lookupEntry.substring(_ICDO3_TO_ICDO2_LOOKUP_FLAG_SITE_POS, _ICDO3_TO_ICDO2_LOOKUP_FLAG_SITE_POS + 1);
             if (siteFlag.equals(icdo3Behavior))
                 convertIcdo3Site(icdo3Site, icdo3HistologyValue, icdo3Behavior, result);
         }
@@ -708,12 +698,7 @@ public class IcdUtils {
      * @param icdo3Behavior ICD-O-3 behavior
      * @param result corresponding ICD-O-2 conversion entry.
      */
-    private static void convertIcdo3MorphologySpecial(int icdo3HistologyValue, String icdo3Behavior, IcdO2Entry result)
-    {
-        final int FLAG_HIST3_POS = 0;
-        final int FLAG_BEH3_POS = 4;
-        final int FLAG_HIST2_POS = 5;
-        final int FLAG_BEH2_POS = 9;
+    private static void convertIcdo3MorphologySpecial(int icdo3HistologyValue, String icdo3Behavior, IcdO2Entry result) {
 
         boolean isFound = false;
         String lookupSpecialEntry;
@@ -722,20 +707,19 @@ public class IcdUtils {
 
         String icdo3histology = Integer.toString(icdo3HistologyValue);
 
-        for (int i=0; i < _ICDO3_TO_ICDO2_LOOKUP_SPECIAL.size() && !isFound; i++) {
+        for (int i = 0; i < _ICDO3_TO_ICDO2_LOOKUP_SPECIAL.size() && !isFound; i++) {
             lookupSpecialEntry = _ICDO3_TO_ICDO2_LOOKUP_SPECIAL.get(i);
 
-            histology3Flag = lookupSpecialEntry.substring(FLAG_HIST3_POS, FLAG_HIST3_POS + 4);
-            behavior3Flag = lookupSpecialEntry.substring(FLAG_BEH3_POS, FLAG_BEH3_POS + 1);
+            histology3Flag = lookupSpecialEntry.substring(_ICDO3_TO_ICDO2_LOOKUP_SPECIAL_FLAG_HIST3_POS, _ICDO3_TO_ICDO2_LOOKUP_SPECIAL_FLAG_HIST3_POS + 4);
+            behavior3Flag = lookupSpecialEntry.substring(_ICDO3_TO_ICDO2_LOOKUP_SPECIAL_FLAG_BEH3_POS, _ICDO3_TO_ICDO2_LOOKUP_SPECIAL_FLAG_BEH3_POS + 1);
 
             if ((histology3Flag.equals(icdo3histology)) && (behavior3Flag.equals(icdo3Behavior))) {
                 isFound = true;
-                result.setHistology(lookupSpecialEntry.substring(FLAG_HIST2_POS, FLAG_HIST2_POS + 4));
-                result.setBehavior(lookupSpecialEntry.substring(FLAG_BEH2_POS, FLAG_BEH2_POS + 1));
+                result.setHistology(lookupSpecialEntry.substring(_ICDO3_TO_ICDO2_LOOKUP_SPECIAL_FLAG_HIST2_POS, _ICDO3_TO_ICDO2_LOOKUP_SPECIAL_FLAG_HIST2_POS + 4));
+                result.setBehavior(lookupSpecialEntry.substring(_ICDO3_TO_ICDO2_LOOKUP_SPECIAL_FLAG_BEH2_POS, _ICDO3_TO_ICDO2_LOOKUP_SPECIAL_FLAG_BEH2_POS + 1));
             }
         }
     }
-
 
     /**
      * For ICD-O-3 histology & behavior with Site flag turned on, checks site and returns the ICD-O-2 histology and behavior.
@@ -744,8 +728,7 @@ public class IcdUtils {
      * @param icdo3Behavior ICD-O-3 behavior
      * @param result corresponding ICD-O-2 conversion entry.
      */
-    private static void convertIcdo3Site(String icdo3Site, int icdo3HistologyValue, String icdo3Behavior, IcdO2Entry result)
-    {
+    private static void convertIcdo3Site(String icdo3Site, int icdo3HistologyValue, String icdo3Behavior, IcdO2Entry result) {
         int siteValue = Integer.parseInt(icdo3Site.substring(1, 3).trim());
 
         //Since there are so few cases, these are hard coded.
@@ -786,6 +769,5 @@ public class IcdUtils {
             result.setConversionResult(IcdO2Entry.ConversionResultType.CONVERSION_SUCCESSFUL_NEEDS_HAND_REVIEW);
         }
     }
-
 
 }
