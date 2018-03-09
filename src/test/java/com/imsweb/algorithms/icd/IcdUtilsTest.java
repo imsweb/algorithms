@@ -3,11 +3,6 @@
  */
 package com.imsweb.algorithms.icd;
 
-// For testFileCompareIcdo2FromIcdo3()
-//import java.io.BufferedReader;
-//import java.io.IOException;
-//import java.io.FileReader;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -34,13 +29,13 @@ public class IcdUtilsTest {
     }
 
     @Test
-    public void testGetIcdo3SiteLookup() {
-        Assert.assertTrue(IcdUtils.getIcdo3SiteLookup().containsKey("C000"));
+    public void testGetIcdO3SiteLookup() {
+        Assert.assertTrue(IcdUtils.getIcdO3SiteLookup().containsKey("C000"));
     }
 
     @Test
-    public void testGetIcdo3FromIcd9Cm() {
-        IcdO3Entry icd = IcdUtils.getIcdo3FromIcd9Cm("1400", SEX_MALE);
+    public void testGetIcdO3FromIcd9Cm() {
+        IcdO3Entry icd = IcdUtils.getIcdO3FromIcd9Cm("1400", SEX_MALE);
         Assert.assertEquals("C000", icd.getSite());
         Assert.assertEquals("8000", icd.getHistology());
         Assert.assertEquals("3", icd.getBehavior());
@@ -48,7 +43,7 @@ public class IcdUtilsTest {
         Assert.assertEquals("0", icd.getLaterality());
         Assert.assertEquals(REPORTABILITY_YES, icd.getReportable());
 
-        icd = IcdUtils.getIcdo3FromIcd9Cm("1734", SEX_FEMALE);
+        icd = IcdUtils.getIcdO3FromIcd9Cm("1734", SEX_FEMALE);
         Assert.assertEquals("C444", icd.getSite());
         Assert.assertEquals("8000", icd.getHistology());
         Assert.assertEquals("3", icd.getBehavior());
@@ -56,7 +51,7 @@ public class IcdUtilsTest {
         Assert.assertEquals("0", icd.getLaterality());
         Assert.assertEquals(REPORTABILITY_OPTIONAL, icd.getReportable());
 
-        icd = IcdUtils.getIcdo3FromIcd9Cm("2396", null);
+        icd = IcdUtils.getIcdO3FromIcd9Cm("2396", null);
         Assert.assertEquals("C719", icd.getSite());
         Assert.assertEquals("8000", icd.getHistology());
         Assert.assertEquals("1", icd.getBehavior());
@@ -65,7 +60,7 @@ public class IcdUtilsTest {
         Assert.assertEquals(REPORTABILITY_YES, icd.getReportable());
 
         //testing codes where gender matters
-        icd = IcdUtils.getIcdo3FromIcd9Cm("2320", SEX_MALE);
+        icd = IcdUtils.getIcdO3FromIcd9Cm("2320", SEX_MALE);
         Assert.assertEquals("C440", icd.getSite());
         Assert.assertEquals("8000", icd.getHistology());
         Assert.assertEquals("2", icd.getBehavior());
@@ -73,7 +68,7 @@ public class IcdUtilsTest {
         Assert.assertEquals("0", icd.getLaterality());
         Assert.assertEquals(REPORTABILITY_YES, icd.getReportable());
 
-        icd = IcdUtils.getIcdo3FromIcd9Cm("2320", null);
+        icd = IcdUtils.getIcdO3FromIcd9Cm("2320", null);
         Assert.assertEquals("C440", icd.getSite());
         Assert.assertEquals("8000", icd.getHistology());
         Assert.assertEquals("2", icd.getBehavior());
@@ -81,7 +76,7 @@ public class IcdUtilsTest {
         Assert.assertEquals("0", icd.getLaterality());
         Assert.assertEquals(REPORTABILITY_YES, icd.getReportable());
 
-        icd = IcdUtils.getIcdo3FromIcd9Cm("2320", SEX_FEMALE);
+        icd = IcdUtils.getIcdO3FromIcd9Cm("2320", SEX_FEMALE);
         Assert.assertEquals("C440", icd.getSite());
         Assert.assertEquals("8720", icd.getHistology());
         Assert.assertEquals("2", icd.getBehavior());
@@ -89,14 +84,14 @@ public class IcdUtilsTest {
         Assert.assertEquals("0", icd.getLaterality());
         Assert.assertEquals(REPORTABILITY_YES, icd.getReportable());
 
-        Assert.assertNull(IcdUtils.getIcdo3FromIcd9Cm(null, null));
+        Assert.assertNull(IcdUtils.getIcdO3FromIcd9Cm(null, null));
 
-        Assert.assertNull(IcdUtils.getIcdo3FromIcd9Cm("NOTACODE", ""));
+        Assert.assertNull(IcdUtils.getIcdO3FromIcd9Cm("NOTACODE", ""));
     }
 
     @Test
-    public void testGetIcdo3FromIcd10Cm() {
-        IcdO3Entry icd = IcdUtils.getIcdo3FromIcd10Cm("C00");
+    public void testGetIcdO3FromIcd10Cm() {
+        IcdO3Entry icd = IcdUtils.getIcdO3FromIcd10Cm("C00");
         Assert.assertEquals("C009", icd.getSite());
         Assert.assertEquals("8000", icd.getHistology());
         Assert.assertEquals("3", icd.getBehavior());
@@ -104,7 +99,7 @@ public class IcdUtilsTest {
         Assert.assertEquals("0", icd.getLaterality());
         Assert.assertEquals(REPORTABILITY_YES, icd.getReportable());
 
-        icd = IcdUtils.getIcdo3FromIcd10Cm("C6312");
+        icd = IcdUtils.getIcdO3FromIcd10Cm("C6312");
         Assert.assertEquals("C631", icd.getSite());
         Assert.assertEquals("8000", icd.getHistology());
         Assert.assertEquals("3", icd.getBehavior());
@@ -112,7 +107,7 @@ public class IcdUtilsTest {
         Assert.assertEquals("2", icd.getLaterality());
         Assert.assertEquals(REPORTABILITY_YES, icd.getReportable());
 
-        icd = IcdUtils.getIcdo3FromIcd10Cm("Z5112");
+        icd = IcdUtils.getIcdO3FromIcd10Cm("Z5112");
         Assert.assertEquals("C809", icd.getSite());
         Assert.assertEquals("8000", icd.getHistology());
         Assert.assertEquals("3", icd.getBehavior());
@@ -120,7 +115,7 @@ public class IcdUtilsTest {
         Assert.assertEquals("0", icd.getLaterality());
         Assert.assertEquals(REPORTABILITY_YES, icd.getReportable());
 
-        icd = IcdUtils.getIcdo3FromIcd10Cm("C4A52");
+        icd = IcdUtils.getIcdO3FromIcd10Cm("C4A52");
         Assert.assertEquals("C445", icd.getSite());
         Assert.assertEquals("8247", icd.getHistology());
         Assert.assertEquals("3", icd.getBehavior());
@@ -128,7 +123,7 @@ public class IcdUtilsTest {
         Assert.assertEquals("9", icd.getLaterality());
         Assert.assertEquals(REPORTABILITY_YES, icd.getReportable());
 
-        icd = IcdUtils.getIcdo3FromIcd10Cm("C8308");
+        icd = IcdUtils.getIcdO3FromIcd10Cm("C8308");
         Assert.assertEquals("C778", icd.getSite());
         Assert.assertEquals("9823", icd.getHistology());
         Assert.assertEquals("3", icd.getBehavior());
@@ -136,15 +131,15 @@ public class IcdUtilsTest {
         Assert.assertEquals("0", icd.getLaterality());
         Assert.assertEquals(REPORTABILITY_YES, icd.getReportable());
 
-        Assert.assertNull(IcdUtils.getIcdo3FromIcd10Cm(null));
+        Assert.assertNull(IcdUtils.getIcdO3FromIcd10Cm(null));
 
-        Assert.assertNull(IcdUtils.getIcdo3FromIcd10Cm("NOTACODE"));
+        Assert.assertNull(IcdUtils.getIcdO3FromIcd10Cm("NOTACODE"));
     }
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    public void testGetIcdo3FromIcd10() {
-        IcdO3Entry icd = IcdUtils.getIcdo3FromIcd10("C000");
+    public void testGetIcdO3FromIcd10() {
+        IcdO3Entry icd = IcdUtils.getIcdO3FromIcd10("C000");
         Assert.assertEquals("C000", icd.getSite());
         Assert.assertEquals("8000", icd.getHistology());
         Assert.assertEquals("3", icd.getBehavior());
@@ -152,7 +147,7 @@ public class IcdUtilsTest {
         Assert.assertNull(icd.getLaterality());
         Assert.assertNull(icd.getReportable());
 
-        icd = IcdUtils.getIcdo3FromIcd10("C00");
+        icd = IcdUtils.getIcdO3FromIcd10("C00");
         Assert.assertEquals("C009", icd.getSite());
         Assert.assertEquals("8000", icd.getHistology());
         Assert.assertEquals("3", icd.getBehavior());
@@ -160,10 +155,10 @@ public class IcdUtilsTest {
         Assert.assertNull(icd.getLaterality());
         Assert.assertNull(icd.getReportable());
 
-        icd = IcdUtils.getIcdo3FromIcd10("C999", true);
+        icd = IcdUtils.getIcdO3FromIcd10("C999", true);
         Assert.assertNull(icd);
 
-        icd = IcdUtils.getIcdo3FromIcd10("C999", false);
+        icd = IcdUtils.getIcdO3FromIcd10("C999", false);
         Assert.assertEquals("C809", icd.getSite());
         Assert.assertEquals("8000", icd.getHistology());
         Assert.assertEquals("3", icd.getBehavior());
@@ -173,60 +168,61 @@ public class IcdUtilsTest {
     }
 
     @Test
-    public void testGetIcdo2FromIcdo3() {
+    public void testGetIcdO2FromIcdO3() {
 
         // C343 9699 3 9680 3 1000
-        IcdO2Entry icd = IcdUtils.getIcdo2FromIcdo3("C343", "9699", "3", false);
+        IcdO2Entry icd = IcdUtils.getIcdO2FromIcdO3("C343", "9699", "3", false);
         Assert.assertEquals("C343", icd.getSite());
         Assert.assertEquals("9680", icd.getHistology());
         Assert.assertEquals("3", icd.getBehavior());
         Assert.assertEquals(IcdO2Entry.ConversionResultType.CONVERSION_SUCCESSFUL_NEEDS_HAND_REVIEW, icd.getConversionResult());
 
         // C900 8900 9 9999 9 0100
-        icd = IcdUtils.getIcdo2FromIcdo3("C900", "8900", "9", false);
+        icd = IcdUtils.getIcdO2FromIcdO3("C900", "8900", "9", false);
         Assert.assertEquals("C900", icd.getSite());
         Assert.assertEquals("9999", icd.getHistology());
         Assert.assertEquals("9", icd.getBehavior());
         Assert.assertEquals(IcdO2Entry.ConversionResultType.CONVERSION_FAILED_INVALID_SITE, icd.getConversionResult());
 
         // C503 7777 3 9999 9 0010
-        icd = IcdUtils.getIcdo2FromIcdo3("C503", "7777", "3", false);
+        icd = IcdUtils.getIcdO2FromIcdO3("C503", "7777", "3", false);
         Assert.assertEquals("C503", icd.getSite());
         Assert.assertEquals("9999", icd.getHistology());
         Assert.assertEquals("9", icd.getBehavior());
         Assert.assertEquals(IcdO2Entry.ConversionResultType.CONVERSION_FAILED_INVALID_HISTOLOGY, icd.getConversionResult());
 
         // C503 8480 8 9999 9 0001
-        icd = IcdUtils.getIcdo2FromIcdo3("C503", "8480", "8", false);
+        icd = IcdUtils.getIcdO2FromIcdO3("C503", "8480", "8", false);
         Assert.assertEquals("C503", icd.getSite());
         Assert.assertEquals("9999", icd.getHistology());
         Assert.assertEquals("9", icd.getBehavior());
         Assert.assertEquals(IcdO2Entry.ConversionResultType.CONVERSION_FAILED_INVALID_BEHAVIOR, icd.getConversionResult());
 
         // C300 8300 3 8300 3 0000
-        icd = IcdUtils.getIcdo2FromIcdo3("C300", "8300", "3", false);
+        icd = IcdUtils.getIcdO2FromIcdO3("C300", "8300", "3", false);
         Assert.assertEquals("C300", icd.getSite());
         Assert.assertEquals("8300", icd.getHistology());
         Assert.assertEquals("3", icd.getBehavior());
         Assert.assertEquals(IcdO2Entry.ConversionResultType.CONVERSION_SUCCESSFUL, icd.getConversionResult());
 
-
         // C343 9699 3 9680 3 1000
-        icd = IcdUtils.getIcdo2FromIcdo3("C343", "9699", "3", true);
+        icd = IcdUtils.getIcdO2FromIcdO3("C343", "9699", "3", true);
         Assert.assertNotNull(icd);
         // C900 8900 9 9999 9 0100
-        icd = IcdUtils.getIcdo2FromIcdo3("C900", "8900", "9", true);
+        icd = IcdUtils.getIcdO2FromIcdO3("C900", "8900", "9", true);
         Assert.assertNull(icd);
         // C503 7777 3 9999 9 0010
-        icd = IcdUtils.getIcdo2FromIcdo3("C503", "7777", "3", true);
+        icd = IcdUtils.getIcdO2FromIcdO3("C503", "7777", "3", true);
         Assert.assertNull(icd);
         // C503 8480 8 9999 9 0001
-        icd = IcdUtils.getIcdo2FromIcdo3("C503", "8480", "8", true);
+        icd = IcdUtils.getIcdO2FromIcdO3("C503", "8480", "8", true);
         Assert.assertNull(icd);
         // C300 8300 3 8300 3 0000
-        icd = IcdUtils.getIcdo2FromIcdo3("C300", "8300", "3", true);
+        icd = IcdUtils.getIcdO2FromIcdO3("C300", "8300", "3", true);
         Assert.assertNotNull(icd);
     }
+
+    // this is a one-time test using a giant file; we are leaving it here in case we need it later
 
     /*
     @Test
@@ -281,7 +277,7 @@ public class IcdUtilsTest {
                     else if (icdo2Flags.equals("0001")) flagsResult = IcdO2Entry.ConversionResultType.CONVERSION_FAILED_INVALID_BEHAVIOR;
                     else hasUnknownFlag = true;
 
-                    icd = IcdUtils.getIcdo2FromIcdo3(icdo3Site, icdo3Histology, icdo3Behavior, false);
+                    icd = IcdUtils.getIcdO2FromIcdO3(icdo3Site, icdo3Histology, icdo3Behavior, false);
 
                     hasDifference = false;
                     differentValuesNames = "";
