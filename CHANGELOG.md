@@ -1,6 +1,6 @@
 ## Algorithms Version History
 
-**Changes in version 1.12**
+**Changes in version 1.13**
 
  - Added support for ICD-O-3 to ICD-O-2 conversion in IcdUtils class; renamed a few methods and classes in that module.
 
