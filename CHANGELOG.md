@@ -2,6 +2,10 @@
 
 **Changes in version 1.12**
 
+ - Added support for ICD-O-3 to ICD-O-2 conversion in IcdUtils class; renamed a few methods and classes in that module.
+
+**Changes in version 1.12**
+
 - Fixed a mistake in ICD-10-CM to ICD-O-3 conversion for code D044.
 
 **Changes in version 1.11**
