@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 1.13**
+
+- Fixed vitalStatus property so that value of "0" or "4" is now considered Dead.
+
 **Changes in version 1.12**
 
 - Fixed a mistake in ICD-10-CM to ICD-O-3 conversion for code D044.
