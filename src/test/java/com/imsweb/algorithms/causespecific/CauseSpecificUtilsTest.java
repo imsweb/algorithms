@@ -63,6 +63,19 @@ public class CauseSpecificUtilsTest {
         Assert.assertEquals("0", CauseSpecificUtils.computeCauseSpecific(input, 2012).getCauseSpecificDeathClassification());
         Assert.assertEquals("0", CauseSpecificUtils.computeCauseSpecific(input, 2012).getCauseOtherDeathClassification());
 
+        // Test Vital Status of 0 or 4 results in Death.
+        record.put(CauseSpecificUtils.PROP_SEQ_NUM_CENTRAL, "00");
+        record.put(CauseSpecificUtils.PROP_ICD_REVISION_NUM, "1");
+        record.put(CauseSpecificUtils.PROP_DOLC_YEAR, "2013");
+        record.put(CauseSpecificUtils.PROP_COD, "99");
+        record.put(CauseSpecificUtils.PROP_VITAL_STATUS, "0");
+        Assert.assertEquals("1", CauseSpecificUtils.computeCauseSpecific(record).getCauseOtherDeathClassification());
+        record.put(CauseSpecificUtils.PROP_VITAL_STATUS, "4");
+        Assert.assertEquals("1", CauseSpecificUtils.computeCauseSpecific(record).getCauseOtherDeathClassification());
+        record.put(CauseSpecificUtils.PROP_VITAL_STATUS, "2");
+        Assert.assertEquals("0", CauseSpecificUtils.computeCauseSpecific(record).getCauseOtherDeathClassification());
+
+
         //All other cases are covered in the testCsvFile() method.
     }
 
