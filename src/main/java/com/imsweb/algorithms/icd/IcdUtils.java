@@ -3,15 +3,22 @@
  */
 package com.imsweb.algorithms.icd;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.math.NumberUtils;
+
 import au.com.bytecode.opencsv.CSVReader;
+
+import com.imsweb.algorithms.icd.IcdO2Entry.ConversionResultType;
 
 public class IcdUtils {
 
@@ -21,11 +28,22 @@ public class IcdUtils {
     public static final String REPORTABILITY_YES = "Y";
     public static final String REPORTABILITY_OPTIONAL = "O";
 
-    private static final Map<String, IcdConversionEntry> _ICD_9_CM_TO_O3_CONVERSION = new HashMap<>();
-    private static final Map<String, IcdConversionEntry> _ICD_10_CM_TO_O3_CONVERSION = new HashMap<>();
-    private static final Map<String, IcdConversionEntry> _ICD_10_TO_O3_CONVERSION = new HashMap<>();
+    private static final Map<String, IcdO3Entry> _ICD_9_CM_TO_O3_CONVERSION = new HashMap<>();
+    private static final Map<String, IcdO3Entry> _ICD_10_CM_TO_O3_CONVERSION = new HashMap<>();
+    private static final Map<String, IcdO3Entry> _ICD_10_TO_O3_CONVERSION = new HashMap<>();
 
     private static final Map<String, String> _ICD_O3_SITE_LOOKUP = new HashMap<>();
+
+    private static final List<String> _ICDO3_TO_ICDO2_LOOKUP_SPECIAL = new ArrayList<>();
+    private static final List<String> _ICDO3_TO_ICDO2_LOOKUP = new ArrayList<>();
+
+    private static final int _ICDO3_TO_ICDO2_LOOKUP_FLAG_HAND_POS = 4;
+    private static final int _ICDO3_TO_ICDO2_LOOKUP_FLAG_BEH_POS = 5;
+    private static final int _ICDO3_TO_ICDO2_LOOKUP_FLAG_SITE_POS = 6;
+    private static final int _ICDO3_TO_ICDO2_LOOKUP_SPECIAL_FLAG_HIST3_POS = 0;
+    private static final int _ICDO3_TO_ICDO2_LOOKUP_SPECIAL_FLAG_BEH3_POS = 4;
+    private static final int _ICDO3_TO_ICDO2_LOOKUP_SPECIAL_FLAG_HIST2_POS = 5;
+    private static final int _ICDO3_TO_ICDO2_LOOKUP_SPECIAL_FLAG_BEH2_POS = 9;
 
     static {
         _ICD_O3_SITE_LOOKUP.put("C000", "External upper lip");
@@ -364,47 +382,24 @@ public class IcdUtils {
      * Initializes the ICD data (this method is called lazily if needed).
      */
     public static synchronized void initalize() {
+
         if (!_ICD_9_CM_TO_O3_CONVERSION.isEmpty())
             return;
 
         loadDataFile("icd-9-cm-to-icd-o-3.csv", _ICD_9_CM_TO_O3_CONVERSION);
         loadDataFile("icd-10-cm-to-icd-o-3.csv", _ICD_10_CM_TO_O3_CONVERSION);
         loadDataFile("icd-10-to-icd-o-3.csv", _ICD_10_TO_O3_CONVERSION);
-    }
 
-    private static void loadDataFile(String file, Map<String, IcdConversionEntry> result) {
-        try (CSVReader reader = new CSVReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("icd/" + file), StandardCharsets.US_ASCII), ',', '"', '\\', 1)) {
-            for (String[] row : reader.readAll()) {
-                if (row.length != 8)
-                    throw new RuntimeException("Was expecting 8 values, got " + row.length + " - " + Arrays.toString(row));
+        loadIcdO3toIcdO2DataFile("icdo3.to.icdo2.morphology.special.txt", _ICDO3_TO_ICDO2_LOOKUP_SPECIAL);
+        loadIcdO3toIcdO2DataFile("icdo3.to.icdo2.morphology.txt", _ICDO3_TO_ICDO2_LOOKUP);
 
-                IcdConversionEntry entry = new IcdConversionEntry();
-                entry.setSourceCode(row[0]);
-                entry.setTargetCode(row[1]);
-                entry.setHistology(row[2].isEmpty() ? null : row[2]);
-                entry.setBehavior(row[3].isEmpty() ? null : row[3]);
-                entry.setGrade(row[4].isEmpty() ? null : row[4]);
-                entry.setLaterality(row[5].isEmpty() ? null : row[5]);
-                entry.setReportable(row[6].isEmpty() ? null : row[6]);
-                entry.setSex(row[7].isEmpty() ? null : row[7]);
-
-                // the key will contain the sex if it's not blank in the data files (blank means the value applies for any sex value)
-                if (entry.getSex() != null)
-                    result.put(entry.getSourceCode() + entry.getSex(), entry);
-                else
-                    result.put(entry.getSourceCode(), entry);
-            }
-        }
-        catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     /**
      * Returns the internal conversions from ICD-9CM to ICD-O-3.
      * @return internal conversions as a map
      */
-    public static Map<String, IcdConversionEntry> getIcd9CmToO3Conversions() {
+    public static Map<String, IcdO3Entry> getIcd9CmToO3Conversions() {
         initalize();
 
         return Collections.unmodifiableMap(_ICD_9_CM_TO_O3_CONVERSION);
@@ -414,7 +409,7 @@ public class IcdUtils {
      * Returns the internal conversions from ICD-10CM to ICD-O-3.
      * @return internal conversions as a map
      */
-    public static Map<String, IcdConversionEntry> getIcd10CmToO3Conversions() {
+    public static Map<String, IcdO3Entry> getIcd10CmToO3Conversions() {
         initalize();
 
         return Collections.unmodifiableMap(_ICD_10_CM_TO_O3_CONVERSION);
@@ -424,7 +419,7 @@ public class IcdUtils {
      * Returns the internal conversions from ICD-10 to ICD-O-3.
      * @return internal conversions as a map
      */
-    public static Map<String, IcdConversionEntry> getIcd10ToO3Conversions() {
+    public static Map<String, IcdO3Entry> getIcd10ToO3Conversions() {
         initalize();
 
         return Collections.unmodifiableMap(_ICD_10_TO_O3_CONVERSION);
@@ -433,7 +428,7 @@ public class IcdUtils {
     /**
      * Return the ICD-O-3 site lookup (codes and labels).
      */
-    public static Map<String, String> getIcdo3SiteLookup() {
+    public static Map<String, String> getIcdO3SiteLookup() {
         return Collections.unmodifiableMap(_ICD_O3_SITE_LOOKUP);
     }
 
@@ -443,10 +438,10 @@ public class IcdUtils {
      * @param sex sex value, optional. If provided, needs to be "1" (MALE) or "2" (FEMALE), otherwise it will be ignored.
      * @return corresponding ICD-O-3 conversion entry, maybe null
      */
-    public static IcdConversionEntry getIcdo3FromIcd9Cm(String icd9CmCode, String sex) {
+    public static IcdO3Entry getIcdO3FromIcd9Cm(String icd9CmCode, String sex) {
         initalize();
 
-        IcdConversionEntry result = null;
+        IcdO3Entry result = null;
 
         // if we have a value for the sex, try to use it
         if (sex != null && (SEX_MALE.equals(sex) || SEX_FEMALE.equals(sex)))
@@ -469,7 +464,7 @@ public class IcdUtils {
      * @param icd10CmCode ICD10-CM code (required)
      * @return corresponding ICD-O-3 conversion entry, maybe null
      */
-    public static IcdConversionEntry getIcdo3FromIcd10Cm(String icd10CmCode) {
+    public static IcdO3Entry getIcdO3FromIcd10Cm(String icd10CmCode) {
         initalize();
 
         return _ICD_10_CM_TO_O3_CONVERSION.get(icd10CmCode);
@@ -480,8 +475,8 @@ public class IcdUtils {
      * @param icd10Code ICD10 code (required)
      * @return corresponding ICD-O-3 conversion entry, maybe null
      */
-    public static IcdConversionEntry getIcdo3FromIcd10(String icd10Code) {
-        return getIcdo3FromIcd10(icd10Code, true);
+    public static IcdO3Entry getIcdO3FromIcd10(String icd10Code) {
+        return getIcdO3FromIcd10(icd10Code, true);
     }
 
     /**
@@ -490,20 +485,20 @@ public class IcdUtils {
      * @param allowNullResult if set to false, then a fake result will be returned if the internal data doesn't contain the requested code.
      * @return corresponding ICD-O-3 conversion entry, maybe null (depending on allowNullResult)
      */
-    public static IcdConversionEntry getIcdo3FromIcd10(String icd10Code, boolean allowNullResult) {
+    public static IcdO3Entry getIcdO3FromIcd10(String icd10Code, boolean allowNullResult) {
         initalize();
 
         String code = icd10Code == null ? null : icd10Code.toUpperCase();
         if (code != null && code.length() == 3)
             code = code + "9";
 
-        IcdConversionEntry result = _ICD_10_TO_O3_CONVERSION.get(code);
+        IcdO3Entry result = _ICD_10_TO_O3_CONVERSION.get(code);
 
         // if the data doesn't contain the code, build a fake one if we have to
         if (result == null && !allowNullResult) {
-            result = new IcdConversionEntry();
+            result = new IcdO3Entry();
             result.setSourceCode(code);
-            result.setTargetCode(_ICD_O3_SITE_LOOKUP.containsKey(code) ? code : "C809");
+            result.setSite(_ICD_O3_SITE_LOOKUP.containsKey(code) ? code : "C809");
             result.setHistology("8000");
             result.setBehavior(icd10Code != null && icd10Code.startsWith("C") ? "3" : icd10Code != null && icd10Code.startsWith("D") ? "2" : null);
             result.setGrade("9");
@@ -512,5 +507,266 @@ public class IcdUtils {
             result.setSex(null);
         }
         return result;
+    }
+
+    /**
+     * Returns the ICD-O-2 conversion entry for the provided ICD-O-3 code.
+     * @param icdO3Site ICD-O-3 site(required)
+     * @param icdO3Histology ICD-O-3 histology (required)
+     * @param icdO3Behavior ICD-O-3 behavior (required)
+     * @param allowNullResult if set to false, then a fake result will be returned if the internal data doesn't contain the requested code.
+     * @return corresponding ICD-O-2 conversion entry, maybe null (depending on allowNullResult)
+     */
+    public static IcdO2Entry getIcdO2FromIcdO3(String icdO3Site, String icdO3Histology, String icdO3Behavior, boolean allowNullResult) {
+        initalize();
+
+        IcdO2Entry result = new IcdO2Entry();
+        result.setSite(icdO3Site);
+        result.setHistology("9999");
+        result.setBehavior("9");
+        result.setConversionResult(ConversionResultType.CONVERSION_SUCCESSFUL);
+
+        checkForInvalidIcdO3Codes(icdO3Site, icdO3Histology, icdO3Behavior, result);
+        if (result.getConversionResult() == ConversionResultType.CONVERSION_SUCCESSFUL) {
+            /////////////////////////////////////////////////////////////////////////
+            // Conversion function calls:
+            //   ConvertMorph:      Search by Hist.  Provides base ICD-O-2 Histology.
+            //                      Assumes behavior is unchanged.  If hand review flag
+            //                      is not 'X', set Hand Review='1'.  If Beh flag is not
+            //                      'X', calls ConvertMorphSpec.  If site flag is not
+            //                      'X', calls ConvertSite.
+            //   ConvertMorphSpec:  Search by Hist/Beh. Called if Beh flag is not 'X'.
+            //   ConvertSite:       Site specific conversions. Hard coded.  Called if
+            //                      Site flag is not 'X'.
+            //
+            /////////////////////////////////////////////////////////////////////////
+
+            result.setSite(icdO3Site);
+
+            int histologyValue = Integer.parseInt(icdO3Histology);
+            convertIcdO3Morphology(icdO3Site, histologyValue, icdO3Behavior, result);
+        }
+
+        ConversionResultType res = result.getConversionResult();
+        boolean invalid = res == ConversionResultType.CONVERSION_FAILED_INVALID_SITE || res == ConversionResultType.CONVERSION_FAILED_INVALID_HISTOLOGY || res ==
+                ConversionResultType.CONVERSION_FAILED_INVALID_BEHAVIOR;
+        if (invalid && allowNullResult)
+            result = null;
+
+        return result;
+    }
+
+    /**
+     * Checks the incoming ICD-O-3 codes for values which are out of range. Sets appropriate flags and returns 1 if any of the flags have been turned on.
+     * @param icdO3Site ICD-O-3 site
+     * @param icdO3Histology ICD-O-3 histology
+     * @param icdO3Behavior ICD-O-3 behavior
+     * @param result gets set with possible invalid flag.
+     */
+    static void checkForInvalidIcdO3Codes(String icdO3Site, String icdO3Histology, String icdO3Behavior, IcdO2Entry result) {
+        result.setConversionResult(ConversionResultType.CONVERSION_SUCCESSFUL);
+
+        // Check for invalid data being entered (Out of range, not specific codes)
+        // Site out of range
+        if (icdO3Site == null)
+            result.setConversionResult(ConversionResultType.CONVERSION_FAILED_INVALID_SITE);
+        else if (icdO3Site.length() != 4)
+            result.setConversionResult(ConversionResultType.CONVERSION_FAILED_INVALID_SITE);
+        else if ((!icdO3Site.startsWith("C") && !icdO3Site.startsWith("c")) || (!NumberUtils.isDigits(icdO3Site.substring(1, 4).trim())))
+            result.setConversionResult(ConversionResultType.CONVERSION_FAILED_INVALID_SITE);
+        else {
+            int siteValue = Integer.parseInt(icdO3Site.substring(1, 4).trim());
+            if (siteValue < 0 || siteValue > 809)
+                result.setConversionResult(ConversionResultType.CONVERSION_FAILED_INVALID_SITE);
+        }
+
+        // Histology out of range
+        if (icdO3Histology == null)
+            result.setConversionResult(ConversionResultType.CONVERSION_FAILED_INVALID_HISTOLOGY);
+        else if (!NumberUtils.isDigits(icdO3Histology.trim()))
+            result.setConversionResult(ConversionResultType.CONVERSION_FAILED_INVALID_HISTOLOGY);
+        else {
+            int histologyValue = Integer.parseInt(icdO3Histology.trim());
+            if (histologyValue < 8000 || histologyValue > 9999)
+                result.setConversionResult(ConversionResultType.CONVERSION_FAILED_INVALID_HISTOLOGY);
+        }
+
+        // Behavior invalid
+        if (icdO3Behavior == null)
+            result.setConversionResult(ConversionResultType.CONVERSION_FAILED_INVALID_BEHAVIOR);
+        else if ((!icdO3Behavior.equals("0")) && (!icdO3Behavior.equals("1")) && (!icdO3Behavior.equals("2")) &&
+                (!icdO3Behavior.equals("3")) && (!icdO3Behavior.equals("6")) && (!icdO3Behavior.equals("9")))
+            result.setConversionResult(ConversionResultType.CONVERSION_FAILED_INVALID_BEHAVIOR);
+
+    }
+
+    /**
+     * Takes ICD-O-3 Hist code and retrieves the most common ICD-O-2 Hist code.  Assumes that Beh remains the same.  Also retrieves the hand review flag,
+     * the behavior specific conversion flag (which may cause ConvertMorphSpec to be called) and the site specific conversion flag (which may cause ConvertSite to be called).
+     * FLAG values:
+     * 0-3, 6, 9 -> this behavior is sent to next function
+     * A         -> all behaviors have flag set
+     * X         -> Invalid morph, not in ICD-O-3
+     * @param icdO3Site ICD-O-3 site
+     * @param icdO3HistologyValue ICD-O-3 histology number
+     * @param icdO3Behavior ICD-O-3 behavior
+     * @param result corresponding ICD-O-2 conversion entry.
+     */
+    static void convertIcdO3Morphology(String icdO3Site, int icdO3HistologyValue, String icdO3Behavior, IcdO2Entry result) {
+
+        result.setConversionResult(ConversionResultType.CONVERSION_SUCCESSFUL);
+
+        String lookupEntry = _ICDO3_TO_ICDO2_LOOKUP.get(icdO3HistologyValue - 8000);
+
+        //is this an invalid Histology?
+        if (lookupEntry.equals("9999XXX"))
+            result.setConversionResult(ConversionResultType.CONVERSION_FAILED_INVALID_HISTOLOGY);
+        else {
+            //Get standard ICD-O-2 hist and beh
+            result.setHistology(lookupEntry.substring(0, 4));
+            result.setBehavior(icdO3Behavior);
+
+            //Set hand review flag if needed
+            String handFlag = lookupEntry.substring(_ICDO3_TO_ICDO2_LOOKUP_FLAG_HAND_POS, _ICDO3_TO_ICDO2_LOOKUP_FLAG_HAND_POS + 1);
+            if (handFlag.equals("A") || handFlag.equals(icdO3Behavior))
+                result.setConversionResult(ConversionResultType.CONVERSION_SUCCESSFUL_NEEDS_HAND_REVIEW);
+            else if (icdO3HistologyValue == 8402 && icdO3Behavior.equals("3"))
+                result.setConversionResult(ConversionResultType.CONVERSION_SUCCESSFUL_NEEDS_HAND_REVIEW);
+
+            //Is there a special behavior based conversion?
+            String behaviorFlag = lookupEntry.substring(_ICDO3_TO_ICDO2_LOOKUP_FLAG_BEH_POS, _ICDO3_TO_ICDO2_LOOKUP_FLAG_BEH_POS + 1);
+            if (behaviorFlag.equals(icdO3Behavior) || behaviorFlag.equals("A"))
+                convertIcdO3MorphologySpecial(icdO3HistologyValue, icdO3Behavior, result);
+
+            //Is there a special site based conversion?
+            String siteFlag = lookupEntry.substring(_ICDO3_TO_ICDO2_LOOKUP_FLAG_SITE_POS, _ICDO3_TO_ICDO2_LOOKUP_FLAG_SITE_POS + 1);
+            if (siteFlag.equals(icdO3Behavior))
+                convertIcdO3Site(icdO3Site, icdO3HistologyValue, icdO3Behavior, result);
+        }
+    }
+
+    /**
+     * Takes an ICD-O-3 Hist & Behavior and retrieves the ICD-O-2 Hist and Behavior.
+     * @param icdO3HistologyValue ICD-O-3 histology number
+     * @param icdO3Behavior ICD-O-3 behavior
+     * @param result corresponding ICD-O-2 conversion entry.
+     */
+    static void convertIcdO3MorphologySpecial(int icdO3HistologyValue, String icdO3Behavior, IcdO2Entry result) {
+
+        boolean isFound = false;
+
+        String icdO3histology = Integer.toString(icdO3HistologyValue);
+
+        for (int i = 0; i < _ICDO3_TO_ICDO2_LOOKUP_SPECIAL.size() && !isFound; i++) {
+            String lookupSpecialEntry = _ICDO3_TO_ICDO2_LOOKUP_SPECIAL.get(i);
+
+            String histology3Flag = lookupSpecialEntry.substring(_ICDO3_TO_ICDO2_LOOKUP_SPECIAL_FLAG_HIST3_POS, _ICDO3_TO_ICDO2_LOOKUP_SPECIAL_FLAG_HIST3_POS + 4);
+            String behavior3Flag = lookupSpecialEntry.substring(_ICDO3_TO_ICDO2_LOOKUP_SPECIAL_FLAG_BEH3_POS, _ICDO3_TO_ICDO2_LOOKUP_SPECIAL_FLAG_BEH3_POS + 1);
+
+            if ((histology3Flag.equals(icdO3histology)) && (behavior3Flag.equals(icdO3Behavior))) {
+                isFound = true;
+                result.setHistology(lookupSpecialEntry.substring(_ICDO3_TO_ICDO2_LOOKUP_SPECIAL_FLAG_HIST2_POS, _ICDO3_TO_ICDO2_LOOKUP_SPECIAL_FLAG_HIST2_POS + 4));
+                result.setBehavior(lookupSpecialEntry.substring(_ICDO3_TO_ICDO2_LOOKUP_SPECIAL_FLAG_BEH2_POS, _ICDO3_TO_ICDO2_LOOKUP_SPECIAL_FLAG_BEH2_POS + 1));
+            }
+        }
+    }
+
+    /**
+     * For ICD-O-3 histology & behavior with Site flag turned on, checks site and returns the ICD-O-2 histology and behavior.
+     * @param icdO3Site ICD-O-3 site number
+     * @param icdO3HistologyValue ICD-O-3 histology number
+     * @param icdO3Behavior ICD-O-3 behavior
+     * @param result corresponding ICD-O-2 conversion entry.
+     */
+    static void convertIcdO3Site(String icdO3Site, int icdO3HistologyValue, String icdO3Behavior, IcdO2Entry result) {
+        int siteValue = Integer.parseInt(icdO3Site.substring(1, 4).trim());
+
+        //Since there are so few cases, these are hard coded.
+        String behaviorFirstDigit = icdO3Behavior.substring(0, 1);
+        if (icdO3HistologyValue == 8240 && behaviorFirstDigit.equals("1")) {
+            if (siteValue != 181)
+                result.setHistology("8241");
+            else
+                result.setConversionResult(ConversionResultType.CONVERSION_SUCCESSFUL_NEEDS_HAND_REVIEW);
+        }
+
+        if (icdO3HistologyValue == 8245 && behaviorFirstDigit.equals("1")) {
+            result.setHistology("8240");
+            result.setConversionResult(ConversionResultType.CONVERSION_SUCCESSFUL_NEEDS_HAND_REVIEW);
+            if (siteValue == 181)
+                result.setBehavior("1");
+            else
+                result.setBehavior("3");
+        }
+
+        if (icdO3HistologyValue == 8249 && behaviorFirstDigit.equals("3") && siteValue == 181)
+            result.setBehavior("1");
+
+        if (icdO3HistologyValue == 9133 && behaviorFirstDigit.equals("3") && (siteValue >= 340 && siteValue <= 349)) {
+            result.setHistology("9134");
+            result.setBehavior("1");
+            result.setConversionResult(ConversionResultType.CONVERSION_SUCCESSFUL_NEEDS_HAND_REVIEW);
+        }
+
+        if (icdO3HistologyValue == 9160 && behaviorFirstDigit.equals("0")) {
+            result.setConversionResult(ConversionResultType.CONVERSION_SUCCESSFUL_NEEDS_HAND_REVIEW);
+            if (siteValue >= 440 && siteValue <= 449)
+                result.setHistology("8724");
+        }
+
+        if (icdO3HistologyValue == 9590 && behaviorFirstDigit.equals("3") && (siteValue >= 710 && siteValue <= 719)) {
+            result.setHistology("9594");
+            result.setConversionResult(ConversionResultType.CONVERSION_SUCCESSFUL_NEEDS_HAND_REVIEW);
+        }
+    }
+
+    /**
+     * Loads a lookup data file for use in getIcdO2FromIcdO3().
+     * @param file The name of the test file to load.
+     * @param result The list of strings which will contain the strings from the file.
+     */
+    private static void loadIcdO3toIcdO2DataFile(String file, List<String> result) {
+        result.clear();
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("icd/" + file), StandardCharsets.US_ASCII))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                // process the line.
+                line = line.trim();
+                if (line.length() > 0)
+                    result.add(line);
+            }
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static void loadDataFile(String file, Map<String, IcdO3Entry> result) {
+        try (CSVReader reader = new CSVReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("icd/" + file), StandardCharsets.US_ASCII), ',', '"', '\\', 1)) {
+            for (String[] row : reader.readAll()) {
+                if (row.length != 8)
+                    throw new RuntimeException("Was expecting 8 values, got " + row.length + " - " + Arrays.toString(row));
+
+                IcdO3Entry entry = new IcdO3Entry();
+                entry.setSourceCode(row[0]);
+                entry.setSite(row[1]);
+                entry.setHistology(row[2].isEmpty() ? null : row[2]);
+                entry.setBehavior(row[3].isEmpty() ? null : row[3]);
+                entry.setGrade(row[4].isEmpty() ? null : row[4]);
+                entry.setLaterality(row[5].isEmpty() ? null : row[5]);
+                entry.setReportable(row[6].isEmpty() ? null : row[6]);
+                entry.setSex(row[7].isEmpty() ? null : row[7]);
+
+                // the key will contain the sex if it's not blank in the data files (blank means the value applies for any sex value)
+                if (entry.getSex() != null)
+                    result.put(entry.getSourceCode() + entry.getSex(), entry);
+                else
+                    result.put(entry.getSourceCode(), entry);
+            }
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
