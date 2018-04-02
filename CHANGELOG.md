@@ -2,7 +2,8 @@
 
 **Changes in version 1.13**
 
- - Added support for ICD-O-3 to ICD-O-2 conversion in IcdUtils class; renamed a few methods and classes in that module.
+- Changed Death Classification algorithm to allow 0 or 4 as the value "dead" for vital status.
+- Added support for ICD-O-3 to ICD-O-2 conversion in IcdUtils class; renamed a few methods and classes in that module.
 
 **Changes in version 1.12**
 

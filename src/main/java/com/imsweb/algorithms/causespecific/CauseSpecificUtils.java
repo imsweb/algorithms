@@ -178,7 +178,7 @@ public final class CauseSpecificUtils {
         if (input.getCauseOfDeath() == null || input.getCauseOfDeath().length() < 3) {
             result.setCauseSpecificDeathClassification(ALIVE_OR_DEAD_OF_OTHER_CAUSES);
             //if dead
-            if ("4".equals(input.getVitalStatus()))
+            if (("4".equals(input.getVitalStatus())) || ("0".equals(input.getVitalStatus())))
                 result.setCauseOtherDeathClassification(DEAD);
             else
                 result.setCauseOtherDeathClassification(ALIVE_OR_DEAD_OF_OTHER_CAUSES);
