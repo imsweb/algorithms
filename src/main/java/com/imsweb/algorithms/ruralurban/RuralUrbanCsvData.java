@@ -7,7 +7,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -28,7 +31,6 @@ import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.RURAL_URBAN_CONTI
  * 2000: https://seer.cancer.gov/seerstat/variables/countyattribs/#ca2000
  * <br/><br/>
  * Created on Aug 12, 2014 by HoweW
- *
  * @author howew
  */
 public class RuralUrbanCsvData implements RuralUrbanDataProvider {
@@ -100,7 +102,8 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
                     dto.setUrbanPercentage2000(Float.valueOf(percent));
                 dto.setUrbanCensus2000(StringUtils.leftPad(census, 2, '0'));
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new RuntimeException(e);
         }
 
@@ -114,7 +117,8 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
                     dto.setUrbanPercentage2010(Float.valueOf(percent));
                 dto.setUrbanCensus2010(StringUtils.leftPad(census, 2, '0'));
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -164,7 +168,8 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
                 else
                     dto.setUrbanCommuting2000("02");
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new RuntimeException(e);
         }
 
@@ -181,7 +186,8 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
                 else
                     dto.setUrbanCommuting2010("02");
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -238,7 +244,8 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
                 CountyDataDto dto = _lookup.computeIfAbsent(state + county, k -> new CountyDataDto());
                 dto.setUrbanContinuum1993(StringUtils.leftPad(val, 2, '0'));
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new RuntimeException(e);
         }
 
@@ -250,7 +257,8 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
                 CountyDataDto dto = _lookup.computeIfAbsent(state + county, k -> new CountyDataDto());
                 dto.setUrbanContinuum2003(StringUtils.leftPad(val, 2, '0'));
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new RuntimeException(e);
         }
 
@@ -262,7 +270,8 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
                 CountyDataDto dto = _lookup.computeIfAbsent(state + county, k -> new CountyDataDto());
                 dto.setUrbanContinuum2013(StringUtils.leftPad(val, 2, '0'));
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
