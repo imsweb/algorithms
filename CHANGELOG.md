@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 1.15**
+
+- Restructured the rural/urban CSV data providers.
+
 **Changes in version 1.14**
 
 - Removed ACS Linkage algorithm.
