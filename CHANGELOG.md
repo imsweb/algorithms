@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 1.16**
+
+- Added several values to ICD-10 to ICD-O-3 conversions spreadsheet.
+
 **Changes in version 1.15**
 
 - Restructured the rural/urban CSV data providers.
