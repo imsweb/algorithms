@@ -124,5 +124,16 @@ public final class AlgorithmsUtils {
         //The logic for expanding histologies is the same for behaviors
         return expandHistologiesAsIntegers(toExpand);
     }
+
+
+    @SuppressWarnings("unchecked")
+    public static boolean isContained(List<Object> list, Integer value) {
+        if (list == null)
+            return false;
+        for (Object obj : list)
+            if ((obj instanceof Range && ((Range)obj).contains(value)) || (obj.equals(value)))
+                return true;
+        return false;
+    }
     
 }
