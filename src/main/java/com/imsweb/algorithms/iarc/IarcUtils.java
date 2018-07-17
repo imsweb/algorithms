@@ -66,7 +66,7 @@ public class IarcUtils {
             }
 
             if (record.getHistology() != null && NumberUtils.isDigits(record.getHistology())) {
-                int hist = Integer.valueOf(record.getHistology());
+                int hist = NumberUtils.toInt(record.getHistology());
                 record.setHistGroup(hist);
                 if (AlgorithmsUtils.isContained(AlgorithmsUtils.expandHistologiesAsIntegers("8051-8084,8120-8131"), hist))
                     record.setHistGroup(1);
