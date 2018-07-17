@@ -2,8 +2,6 @@ package com.imsweb.algorithms.iccc;
 
 import java.util.List;
 
-import org.apache.commons.lang3.Range;
-
 import com.imsweb.algorithms.AlgorithmsUtils;
 
 /**
@@ -165,7 +163,7 @@ public class IcccExecutableSiteGroupDto {
             else
                 histOk = true;
         }
-        
+
         //Check the behavior
         if (siteOk && histOk) {
             if (_behaviorInclusions != null)
