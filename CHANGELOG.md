@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 1.17**
+
+- Updated Survival Time algorithm to calculate vital status recode.
+
 **Changes in version 1.16**
 
 - Added several values to ICD-10 to ICD-O-3 conversions spreadsheet.

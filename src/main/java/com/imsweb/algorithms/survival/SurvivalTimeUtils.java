@@ -17,6 +17,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 
 /**
  * This class is used to calculate the survival time in months for a give patient (a list of records).
+ * It also calculates the vital status of the patient at the study cutoff date.
  * <br/><br/>
  * See <a href="http://seer.cancer.gov/survivaltime/">http://seer.cancer.gov/survivaltime/</a>.
  */
@@ -56,6 +57,7 @@ public class SurvivalTimeUtils {
 
     /**
      * Calculates the survival time for the provided list of records representing a patient.
+     * It also calculates the vital status of the patient at the study cutoff date.
      * <br/><br/>
      * See <a href="http://seer.cancer.gov/survivaltime/">http://seer.cancer.gov/survivaltime/</a>
      * <br/><br/>
@@ -103,6 +105,7 @@ public class SurvivalTimeUtils {
 
     /**
      * Calculates the survival time for the provided list of records representing a patient.
+     * It also calculates the vital status of the patient at the study cutoff date.
      * <br/><br/>
      * See <a href="http://seer.cancer.gov/survivaltime/">http://seer.cancer.gov/survivaltime/</a>
      * @param input input object representing a patient
@@ -125,6 +128,7 @@ public class SurvivalTimeUtils {
             String dolcMonthStr = allRecords.get(0).getDateOfLastContactMonth();
             String dolcDayStr = allRecords.get(0).getDateOfLastContactDay();
             String vsStr = allRecords.get(0).getVitalStatus();
+            patientResultsDto.setVitalStatusRecode(vsStr);
             for (SurvivalTimeInputRecordDto record : allRecords) {
                 boolean sameYear = dolcYearStr == null ? record.getDateOfLastContactYear() == null : dolcYearStr.equals(record.getDateOfLastContactYear());
                 boolean sameMonth = dolcMonthStr == null ? record.getDateOfLastContactMonth() == null : dolcMonthStr.equals(record.getDateOfLastContactMonth());
@@ -150,6 +154,8 @@ public class SurvivalTimeUtils {
                         patientResultsList.add(recordResult);
                     }
                     patientResultsDto.setSurvivalTimeOutputPatientDtoList(patientResultsList);
+                    if (!sameVs)
+                        patientResultsDto.setVitalStatusRecode(null);
                     return patientResultsDto;
                 }
             }
@@ -173,6 +179,11 @@ public class SurvivalTimeUtils {
                 dolcYear = 9999;
             if (dolcYear == 9999)
                 dolcMonth = dolcDay = 99;
+
+            //Vital status recode is vital status at the study cutoff date.
+            if (dolcYear != 9999 && dolcYear > endPointYear)
+                patientResultsDto.setVitalStatusRecode("1");
+
 
             // we are also going to need the birth date for filling the missing diagnosis and dolc dates. (#192)
             String birthYearStr = allRecords.isEmpty() ? "" : allRecords.get(0).getBirthYear();
