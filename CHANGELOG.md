@@ -1,5 +1,10 @@
 ## Algorithms Version History
 
+**Changes in version 1.16**
+
+- Updated Apache commons-lang library from version 3.6 to version 3.7.
+- Updated CSV library from version 2.4 to version 4.2.
+
 **Changes in version 1.15**
 
 - Updated Survival Time algorithm to calculate vital status recode.

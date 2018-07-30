@@ -16,7 +16,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
-import au.com.bytecode.opencsv.CSVReader;
+import com.opencsv.CSVReader;
 
 /**
  * This class is used to calculate the NHIA variable. More information can be found here:
@@ -517,15 +517,8 @@ public final class NhiaUtils {
         // force initialization
         isLowHispanicEthnicityCounty("?", "?");
 
-        for (String s : _LOW_HISP_ETHN_COUNTIES) {
-            String state = s.substring(0, 2), county = s.substring(2);
-            List<String> counties = result.get(state);
-            if (counties == null) {
-                counties = new ArrayList<>();
-                result.put(state, counties);
-            }
-            counties.add(county);
-        }
+        for (String s : _LOW_HISP_ETHN_COUNTIES)
+            result.computeIfAbsent(s.substring(0, 2), k -> new ArrayList<>()).add(s.substring(2));
 
         result.values().forEach(Collections::sort);
 

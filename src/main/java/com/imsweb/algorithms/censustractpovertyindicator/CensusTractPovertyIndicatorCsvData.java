@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
-import au.com.bytecode.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
 
 import static com.imsweb.algorithms.censustractpovertyindicator.CensusTractPovertyIndicatorUtils.POVERTY_INDICATOR_UNKNOWN;
 
@@ -54,7 +54,7 @@ public class CensusTractPovertyIndicatorCsvData implements CensusTractPovertyInd
     // helper to handle a single CSV data file
     private static void readCsvData(String datafile, String yearRangeCategory, Map<DataKey, Map<String, String>> lookup) {
         try (Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("censustractpovertyindicator/" + datafile), StandardCharsets.US_ASCII)) {
-            for (String[] row : new CSVReader(reader, ',', '\"', 1).readAll())
+            for (String[] row : new CSVReaderBuilder(reader).withSkipLines(1).build().readAll())
                 lookup.computeIfAbsent(new DataKey(row[0], row[1], row[2]), k -> new HashMap<>()).put(yearRangeCategory, row[3]);
         }
         catch (IOException e) {

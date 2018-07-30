@@ -12,6 +12,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.XppDriver;
 import com.thoughtworks.xstream.security.NoTypePermission;
@@ -92,7 +94,6 @@ public final class SiteSpecificSurgeryUtils {
      * Created on Jul 18, 2012 by depryf
      * @param stream <code>InputStream</code> to the data file, cannot be null
      * @return a <code>SurgeryTablesXmlDto</code>, never null
-     * @throws IOException
      */
     @SuppressWarnings("unchecked")
     public static SurgeryTablesXmlDto readSiteSpecificSurgeryData(InputStream stream) throws IOException {
@@ -110,7 +111,6 @@ public final class SiteSpecificSurgeryUtils {
      * Created on Jul 18, 2012 by depryf
      * @param stream <code>OutputStream</code> to the data file, cannot be null
      * @param data the <code>SurgeryTablesXmlDto</code> to write, cannot be null
-     * @throws IOException
      */
     public static void writeSiteSpecificSurgeryData(OutputStream stream, SurgeryTablesXmlDto data) throws IOException {
         try {
@@ -253,10 +253,10 @@ public final class SiteSpecificSurgeryUtils {
             boolean includeHist = false;
             String histInc = table.getHistInclusion();
             if (histInc != null) {
-                for (String s : histInc.split(",")) {
+                for (String s : StringUtils.split(histInc, ',')) {
                     s = s.trim();
                     if (s.contains("-")) {
-                        String[] parts = s.split("\\-");
+                        String[] parts = StringUtils.split(s, '-');
                         if (parts[0].compareTo(histology) <= 0 && parts[1].compareTo(histology) >= 0) {
                             includeHist = true;
                             break;
@@ -278,10 +278,10 @@ public final class SiteSpecificSurgeryUtils {
             // check the site inclusion
             boolean includeSite = false;
             if (table.getSiteInclusion() != null) {
-                for (String s : table.getSiteInclusion().split(",")) {
+                for (String s : StringUtils.split(table.getSiteInclusion(), ',')) {
                     s = s.trim();
                     if (s.contains("-")) {
-                        String[] parts = s.split("\\-");
+                        String[] parts = StringUtils.split(s, '-');
                         if (parts[0].compareTo(site) <= 0 && parts[1].compareTo(site) >= 0) {
                             includeSite = true;
                             break;
@@ -301,10 +301,10 @@ public final class SiteSpecificSurgeryUtils {
                 boolean excludeHist = false;
                 String histExc = table.getHistExclusion();
                 if (histExc != null) {
-                    for (String s : histExc.split(",")) {
+                    for (String s : StringUtils.split(histExc, ',')) {
                         s = s.trim();
                         if (s.contains("-")) {
-                            String[] parts = s.split("\\-");
+                            String[] parts = StringUtils.split(s, '-');
                             if (parts[0].compareTo(histology) <= 0 && parts[1].compareTo(histology) >= 0) {
                                 excludeHist = true;
                                 break;

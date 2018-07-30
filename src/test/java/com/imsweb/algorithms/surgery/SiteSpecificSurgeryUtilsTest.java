@@ -4,6 +4,7 @@
 package com.imsweb.algorithms.surgery;
 
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -19,6 +20,9 @@ public class SiteSpecificSurgeryUtilsTest {
         // make sure that are some tables
         Assert.assertFalse(SiteSpecificSurgeryUtils.getInstance().getAllTableTitles().isEmpty());
         Assert.assertNotNull(SiteSpecificSurgeryUtils.getInstance().getTable(SiteSpecificSurgeryUtils.getInstance().getAllTableTitles().get(0)));
+        Assert.assertNotNull(SiteSpecificSurgeryUtils.getInstance().getVersion());
+
+        Pattern sitePattern = Pattern.compile("C\\d\\d\\d(-C\\d\\d\\d)?"), histPattern = Pattern.compile("\\d\\d\\d\\d(-\\d\\d\\d\\d)?");
 
         // test data validity
         for (SurgeryTableDto table : SiteSpecificSurgeryUtils.getInstance().getAllTables()) {
@@ -26,15 +30,15 @@ public class SiteSpecificSurgeryUtilsTest {
 
             if (table.getSiteInclusion() != null)
                 for (String s : table.getSiteInclusion().split(","))
-                    Assert.assertTrue(table.getTitle() + " - wrong site inclusion format: " + table.getSiteInclusion(), s.matches("C\\d\\d\\d(\\-C\\d\\d\\d)?"));
+                    Assert.assertTrue(table.getTitle() + " - wrong site inclusion format: " + table.getSiteInclusion(), sitePattern.matcher(s).matches());
 
             if (table.getHistInclusion() != null)
                 for (String s : table.getHistInclusion().split(","))
-                    Assert.assertTrue(table.getTitle() + " - wrong hist inclusion format: " + table.getHistInclusion(), s.matches("\\d\\d\\d\\d(\\-\\d\\d\\d\\d)?"));
+                    Assert.assertTrue(table.getTitle() + " - wrong hist inclusion format: " + table.getHistInclusion(), histPattern.matcher(s).matches());
 
             if (table.getHistExclusion() != null)
                 for (String s : table.getHistExclusion().split(","))
-                    Assert.assertTrue(table.getTitle() + " - wrong hist exclusion format: " + table.getHistExclusion(), s.matches("\\d\\d\\d\\d(\\-\\d\\d\\d\\d)?"));
+                    Assert.assertTrue(table.getTitle() + " - wrong hist exclusion format: " + table.getHistExclusion(), histPattern.matcher(s).matches());
 
             for (SurgeryRowDto row : table.getRow()) {
                 Assert.assertNotNull(row.isLineBreak());

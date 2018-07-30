@@ -13,7 +13,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
-import au.com.bytecode.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
 
 import com.imsweb.algorithms.historicstage.internal.HistStageDataCsExtDto;
 import com.imsweb.algorithms.historicstage.internal.HistStageDataCsMetsDto;
@@ -175,7 +175,7 @@ public final class HistoricStageUtils {
         int currentYear = LocalDate.now().getYear();
 
         //check for valid values of diagnosis year
-        if (diagnosisYear != null && NumberUtils.isDigits(diagnosisYear) && Integer.parseInt(diagnosisYear) <= currentYear && Integer.parseInt(diagnosisYear) > 1900) {
+        if (NumberUtils.isDigits(diagnosisYear) && Integer.parseInt(diagnosisYear) <= currentYear && Integer.parseInt(diagnosisYear) > 1900) {
             //2004+ coding
             if (Integer.parseInt(diagnosisYear) >= 2004) {
                 String primarySite = input.getPrimarySite();
@@ -263,7 +263,7 @@ public final class HistoricStageUtils {
                 //Otherwise run EOD10 tables for valid eod10 extension and eod 10 lymph node values
                 String eod10Ext = input.getEodExtension();
                 String eod10Node = input.getEodLymphNodeInvolv();
-                if (eod10Ext != null && eod10Node != null && NumberUtils.isDigits(eod10Ext) && NumberUtils.isDigits(eod10Node))
+                if (NumberUtils.isDigits(eod10Ext) && NumberUtils.isDigits(eod10Node))
                     historicStage.setResult(runEod10Tables(input));
 
                 //- Bladder cases (primary site: 670-679) staged to IS (0) get changed to Local (1)
@@ -723,7 +723,7 @@ public final class HistoricStageUtils {
     }
 
 
-     /* *********************************************************************************************************************
+    /* *********************************************************************************************************************
      * ***************************   INITIALIZE LOOKUPS FROM TABLES      *****************************************************
      * *********************************************************************************************************************/
 
@@ -731,7 +731,7 @@ public final class HistoricStageUtils {
         if (_DATA_LEUKEMIA.isEmpty()) {
             try {
                 Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Leuk.csv"), "US-ASCII");
-                for (String[] row : new CSVReader(reader, ',', '\"', 1).readAll())
+                for (String[] row : new CSVReaderBuilder(reader).withSkipLines(1).build().readAll())
                     _DATA_LEUKEMIA.add(new HistStageDataLeukemiaDto(row));
             }
             catch (IOException e) {
@@ -744,7 +744,7 @@ public final class HistoricStageUtils {
         if (_DATA_HISTORIC_STAGE_SCHEMA.isEmpty()) {
             try {
                 Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-SchemaFor2004+.csv"), "US-ASCII");
-                List<String[]> rows = new CSVReader(reader, ',', '\"', 1).readAll();
+                List<String[]> rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
                 for (String[] row : rows)
                     _DATA_HISTORIC_STAGE_SCHEMA.add(new HistStageDataSchemaDto(row));
             }
@@ -758,19 +758,19 @@ public final class HistoricStageUtils {
         if (_DATA_CS_EXT.isEmpty() || _DATA_CS_NODE.isEmpty() || _DATA_CS_METS.isEmpty() || _DATA_CS_STAGE.isEmpty()) {
             try {
                 Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-csExt.csv"), "US-ASCII");
-                List<String[]> rows = new CSVReader(reader, ',', '\"', 1).readAll();
+                List<String[]> rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
                 for (String[] row : rows)
                     _DATA_CS_EXT.add(new HistStageDataCsExtDto(row));
                 reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-csNode.csv"), "US-ASCII");
-                rows = new CSVReader(reader, ',', '\"', 1).readAll();
+                rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
                 for (String[] row : rows)
                     _DATA_CS_NODE.add(new HistStageDataCsNodeDto(row));
                 reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-csMets.csv"), "US-ASCII");
-                rows = new CSVReader(reader, ',', '\"', 1).readAll();
+                rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
                 for (String[] row : rows)
                     _DATA_CS_METS.add(new HistStageDataCsMetsDto(row));
                 reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-csStage.csv"), "US-ASCII");
-                rows = new CSVReader(reader, ',', '\"', 1).readAll();
+                rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
                 for (String[] row : rows)
                     _DATA_CS_STAGE.add(new HistStageDataCsStageDto(row));
             }
@@ -784,15 +784,15 @@ public final class HistoricStageUtils {
         if (_DATA_EOD10_EXT.isEmpty() || _DATA_EOD10_NODE.isEmpty() || _DATA_EOD10_STAGE.isEmpty()) {
             try {
                 Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod10Ext.csv"), "US-ASCII");
-                List<String[]> rows = new CSVReader(reader, ',', '\"', 1).readAll();
+                List<String[]> rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
                 for (String[] row : rows)
                     _DATA_EOD10_EXT.add(new HistStageDataEod10ExtDto(row));
                 reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod10Node.csv"), "US-ASCII");
-                rows = new CSVReader(reader, ',', '\"', 1).readAll();
+                rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
                 for (String[] row : rows)
                     _DATA_EOD10_NODE.add(new HistStageDataEod10NodeDto(row));
                 reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod10Stage.csv"), "US-ASCII");
-                rows = new CSVReader(reader, ',', '\"', 1).readAll();
+                rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
                 for (String[] row : rows)
                     _DATA_EOD10_STAGE.add(new HistStageDataEod10StageDto(row));
             }
@@ -806,7 +806,7 @@ public final class HistoricStageUtils {
         if (_DATA_EOD_PATCH.isEmpty()) {
             try {
                 Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-EodPatch.csv"), "US-ASCII");
-                for (String[] row : new CSVReader(reader, ',', '\"', 1).readAll())
+                for (String[] row : new CSVReaderBuilder(reader).withSkipLines(1).build().readAll())
                     _DATA_EOD_PATCH.add(new HistStageDataEodPatchDto(row));
             }
             catch (IOException e) {
@@ -819,7 +819,7 @@ public final class HistoricStageUtils {
         if (_DATA_EOD_4DIG_STAGE.isEmpty()) {
             try {
                 Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod4digStage.csv"), "US-ASCII");
-                for (String[] row : new CSVReader(reader, ',', '\"', 1).readAll())
+                for (String[] row : new CSVReaderBuilder(reader).withSkipLines(1).build().readAll())
                     _DATA_EOD_4DIG_STAGE.add(new HistStageDataEod4digStageDto(row));
             }
             catch (IOException e) {
@@ -834,27 +834,27 @@ public final class HistoricStageUtils {
 
             try {
                 Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod13digNodes.csv"), "US-ASCII");
-                List<String[]> rows = new CSVReader(reader, ',', '\"', 1).readAll();
+                List<String[]> rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
                 for (String[] row : rows)
                     _DATA_EOD_13DIG_NODE.add(new HistStageDataEod13digNodeDto(row));
                 reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod13digExt.csv"), "US-ASCII");
-                rows = new CSVReader(reader, ',', '\"', 1).readAll();
+                rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
                 for (String[] row : rows)
                     _DATA_EOD_13DIG_EXT.add(new HistStageDataEod13digExtDto(row));
                 reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod13digLung.csv"), "US-ASCII");
-                rows = new CSVReader(reader, ',', '\"', 1).readAll();
+                rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
                 for (String[] row : rows)
                     _DATA_EOD_13DIG_LUNG.add(new HistStageDataEod13digLungDto(row));
                 reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod13digMelanoma.csv"), "US-ASCII");
-                rows = new CSVReader(reader, ',', '\"', 1).readAll();
+                rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
                 for (String[] row : rows)
                     _DATA_EOD_13DIG_MELANOMA.add(new HistStageDataEod13digMelanomaDto(row));
                 reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod13digBladder.csv"), "US-ASCII");
-                rows = new CSVReader(reader, ',', '\"', 1).readAll();
+                rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
                 for (String[] row : rows)
                     _DATA_EOD_13DIG_BLADDER.add(new HistStageDataEod13digBladderDto(row));
                 reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod13digGeneralStage.csv"), "US-ASCII");
-                rows = new CSVReader(reader, ',', '\"', 1).readAll();
+                rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
                 for (String[] row : rows)
                     _DATA_EOD_13DIG_GENERAL_STAGE.add(new HistStageDataEod13digGeneralStageDto(row));
             }
@@ -868,20 +868,20 @@ public final class HistoricStageUtils {
         if (_DATA_EOD_2DIG_EXT.isEmpty() || _DATA_EOD_2DIG_NODE.isEmpty() || _DATA_EOD_2DIG_DIRECT_STAGE.isEmpty() || _DATA_EOD_2DIG_EXTENSION_NODE_STAGE.isEmpty()) {
             try {
                 Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod2digExt.csv"), "US-ASCII");
-                List<String[]> rows = new CSVReader(reader, ',', '\"', 1).readAll();
+                List<String[]> rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
                 for (String[] row : rows)
                     _DATA_EOD_2DIG_EXT.add(new HistStageDataEod2digExtDto(row));
 
                 reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod2digNode.csv"), "US-ASCII");
-                rows = new CSVReader(reader, ',', '\"', 1).readAll();
+                rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
                 for (String[] row : rows)
                     _DATA_EOD_2DIG_NODE.add(new HistStageDataEod2digNodeDto(row));
                 reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod2digDirectStage.csv"), "US-ASCII");
-                rows = new CSVReader(reader, ',', '\"', 1).readAll();
+                rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
                 for (String[] row : rows)
                     _DATA_EOD_2DIG_DIRECT_STAGE.add(new HistStageDataEod2digDirectStageDto(row));
                 reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod2digExtNodeStage.csv"), "US-ASCII");
-                rows = new CSVReader(reader, ',', '\"', 1).readAll();
+                rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
                 for (String[] row : rows)
                     _DATA_EOD_2DIG_EXTENSION_NODE_STAGE.add(new HistStageDataEod2digExtNodeStageDto(row));
             }
@@ -895,7 +895,7 @@ public final class HistoricStageUtils {
         if (_DATA_EOD0_STAGE.isEmpty()) {
             try {
                 Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod0Stage.csv"), "US-ASCII");
-                for (String[] row : new CSVReader(reader, ',', '\"', 1).readAll())
+                for (String[] row : new CSVReaderBuilder(reader).withSkipLines(1).build().readAll())
                     _DATA_EOD0_STAGE.add(new HistStageDataEod0StageDto(row));
             }
             catch (IOException e) {
