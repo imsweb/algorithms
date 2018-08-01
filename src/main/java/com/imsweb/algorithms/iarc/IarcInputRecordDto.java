@@ -19,15 +19,24 @@ public class IarcInputRecordDto {
 
     private String _behavior;
 
-    private String _grade;
-
     private String _siteGroup;
 
     private Integer _histGroup;
 
     private Integer _internationalPrimaryIndicator;
 
-    private Integer _sasInternationalPrimaryIndicator;
+    public IarcInputRecordDto() {
+    }
+
+    public IarcInputRecordDto(String dateOfDiagnosisYear, String dateOfDiagnosisMonth, String dateOfDiagnosisDay, Integer sequenceNumber, String site, String histology, String behavior) {
+        _dateOfDiagnosisYear = dateOfDiagnosisYear;
+        _dateOfDiagnosisMonth = dateOfDiagnosisMonth;
+        _dateOfDiagnosisDay = dateOfDiagnosisDay;
+        _sequenceNumber = sequenceNumber;
+        _site = site;
+        _histology = histology;
+        _behavior = behavior;
+    }
 
     public String getDateOfDiagnosisYear() {
         return _dateOfDiagnosisYear;
@@ -85,14 +94,6 @@ public class IarcInputRecordDto {
         _behavior = behavior;
     }
 
-    public String getGrade() {
-        return _grade;
-    }
-
-    public void setGrade(String grade) {
-        _grade = grade;
-    }
-
     public String getSiteGroup() {
         return _siteGroup;
     }
@@ -115,13 +116,5 @@ public class IarcInputRecordDto {
 
     public void setInternationalPrimaryIndicator(Integer internationalPrimaryIndicator) {
         _internationalPrimaryIndicator = internationalPrimaryIndicator;
-    }
-
-    public Integer getSasInternationalPrimaryIndicator() {
-        return _sasInternationalPrimaryIndicator;
-    }
-
-    public void setSasInternationalPrimaryIndicator(Integer sasInternationalPrimaryIndicator) {
-        _sasInternationalPrimaryIndicator = sasInternationalPrimaryIndicator;
     }
 }
