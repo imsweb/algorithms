@@ -2,7 +2,7 @@
 
 **Changes in version 1.17**
 
-- Added support to IARC Multiple Primary Algorithm
+- Added support to IARC Multiple Primary Algorithm.
 
 **Changes in version 1.16**
 
