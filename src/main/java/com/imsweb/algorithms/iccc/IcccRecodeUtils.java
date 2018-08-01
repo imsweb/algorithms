@@ -12,7 +12,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
-import au.com.bytecode.opencsv.CSVReader;
+import com.opencsv.CSVReader;
 
 import com.imsweb.algorithms.AlgorithmsUtils;
 
@@ -158,7 +158,7 @@ public final class IcccRecodeUtils {
 
         for (IcccExecutableSiteGroupDto dto : _INTERNAL_DATA.get(version)) {
             if (dto.matches(s, h, b)) {
-                result = recodeExtended ? (StringUtils.isEmpty(dto.getRecodeExtended()) ? "999" : dto.getRecodeExtended()): dto.getRecode();
+                result = recodeExtended ? (StringUtils.isEmpty(dto.getRecodeExtended()) ? "999" : dto.getRecodeExtended()) : dto.getRecode();
                 break;
             }
         }
@@ -236,7 +236,7 @@ public final class IcccRecodeUtils {
                         throw new RuntimeException("Invalid recode: " + recode + " for id " + id);
                     if (VERSION_WHO_2008.equals(version) && !recodeExtended.matches("\\d{3}"))
                         throw new RuntimeException("Invalid recode extended: " + recodeExtended + " for id " + id);
-                    
+
                     IcccExecutableSiteGroupDto executable = new IcccExecutableSiteGroupDto();
                     executable.setId(id);
                     executable.setSiteInclusions(AlgorithmsUtils.expandSitesAsIntegers(siteIn));

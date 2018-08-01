@@ -1,9 +1,9 @@
 import org.gradle.internal.jvm.Jvm
 
 plugins {
-    id 'java'
+    id 'java-library'
     id 'checkstyle'
-    id 'findbugs'
+    id 'net.ltgt.errorprone' version '0.0.16'
     id 'com.bmuschko.nexus' version '2.3.1'
     id 'io.codearte.nexus-staging' version '0.8.0'
 }
@@ -11,6 +11,7 @@ plugins {
 group = 'com.imsweb'
 version = file('VERSION').text
 description = 'Java implementation of cancer-related algorithms (NHIA, NAPIIA, Survival Time, etc...)'
+sourceCompatibility = JavaVersion.VERSION_1_8
 
 println "Starting build using ${Jvm.current()}"
 
@@ -19,19 +20,26 @@ repositories {
 }
 
 dependencies {
-    compile 'org.apache.commons:commons-lang3:3.6'
-    compile 'au.com.bytecode:opencsv:2.4'
-    compile 'com.thoughtworks.xstream:xstream:1.4.10'
-    testCompile 'junit:junit:4.12'
-    testCompile 'com.imsweb:layout:1.6'
+    implementation 'org.apache.commons:commons-lang3:3.7'
+    implementation 'com.opencsv:opencsv:4.2'
+    implementation 'com.thoughtworks.xstream:xstream:1.4.10'
+
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'com.imsweb:layout:1.11'
+
+    errorprone 'com.google.errorprone:error_prone_core:2.3.1'
 }
 
-// enforce UTF-8 for all compilation tasks
-[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+// enforce UTF-8, display the compilation warnings
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+    options.compilerArgs << '-Xlint:unchecked' << '-Xlint:deprecation'
+}
 
-// display the compilation warnings
-compileJava.options.compilerArgs << '-Xlint:unchecked' << '-Xlint:deprecation'
-compileTestJava.options.compilerArgs << '-Xlint:unchecked' << '-Xlint:deprecation'
+// the Javadoc was made way too strict in Java 8 and it's not worth the time fixing everything!
+tasks.withType(Javadoc) {
+    options.addStringOption('Xdoclint:none', '-quiet')
+}
 
 // customize the manifest
 jar {
@@ -43,26 +51,15 @@ jar {
                 'Built-By': System.getProperty('user.name'),
                 'Built-Date': new Date(),
                 'Built-JDK': System.getProperty('java.version'),
+                'Automatic-Module-Name': 'com.imsweb.algorithms'
         )
     }
-}
-
-// this sucks, but they made the Javadoc way too stritct in Java 8 and it's not worth my time fixing it!
-tasks.withType(Javadoc) {
-    options.addStringOption('Xdoclint:none', '-quiet')
 }
 
 // checkstyle plugin settings
 checkstyle {
     ignoreFailures = true
     configFile = file('config/checkstyle/checkstyle.xml')
-}
-
-// findbugs plugin settings
-findbugs {
-    ignoreFailures = true
-    effort = 'max'
-    excludeFilter = file('config/findbugs/findbugs-exclude.xml')
 }
 
 // needed to deploy to Maven Central
@@ -102,8 +99,8 @@ if (version.endsWith('-SNAPSHOT'))
     gradle.startParameter.excludedTaskNames += 'closeAndReleaseRepository'
 
 // Gradle wrapper, this allows to build the project without having to install Gradle!
-task wrapper(type: Wrapper) {
-    gradleVersion = '4.2'
+wrapper {
+    gradleVersion = '4.9'
 }
 
 

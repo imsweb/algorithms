@@ -2,10 +2,13 @@
 
 **Changes in version 1.16**
 
-- Added several values to ICD-10 to ICD-O-3 conversions spreadsheet.
+- Updated Apache commons-lang library from version 3.6 to version 3.7.
+- Updated CSV library from version 2.4 to version 4.2.
 
 **Changes in version 1.15**
 
+- Updated Survival Time algorithm to calculate vital status recode.
+- Added several values to ICD-10 to ICD-O-3 conversions spreadsheet.
 - Restructured the rural/urban CSV data providers.
 
 **Changes in version 1.14**

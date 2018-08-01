@@ -14,7 +14,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
-import au.com.bytecode.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
 
 import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.RURAL_URBAN_CENSUS_UNKNOWN;
 import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.RURAL_URBAN_COMMUTING_AREA_UNKNOWN;
@@ -94,7 +94,7 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
 
         // load 2000 data
         try (Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("ruralurban/rural-urban-census-2000.csv"), StandardCharsets.US_ASCII)) {
-            for (String[] row : new CSVReader(reader, ',', '\"', 1).readAll()) {
+            for (String[] row : new CSVReaderBuilder(reader).withSkipLines(1).build().readAll()) {
                 String state = row[0], county = row[1], tract = row[2], percent = row[3], census = row[4];
 
                 CensusDataDto dto = _lookup.computeIfAbsent(state + county, k -> new CountyDataDto()).getCensusData().computeIfAbsent(tract, k -> new CensusDataDto());
@@ -109,7 +109,7 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
 
         // load 2010 data
         try (Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("ruralurban/rural-urban-census-2010.csv"), StandardCharsets.US_ASCII)) {
-            for (String[] row : new CSVReader(reader, ',', '\"', 1).readAll()) {
+            for (String[] row : new CSVReaderBuilder(reader).withSkipLines(1).build().readAll()) {
                 String state = row[0], county = row[1], tract = row[2], percent = row[3], census = row[4];
 
                 CensusDataDto dto = _lookup.computeIfAbsent(state + county, k -> new CountyDataDto()).getCensusData().computeIfAbsent(tract, k -> new CensusDataDto());
@@ -157,7 +157,7 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
 
         // load 2000 data
         try (Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("ruralurban/rural-urban-commuting-area-2000.csv"), StandardCharsets.US_ASCII)) {
-            for (String[] row : new CSVReader(reader, ',', '\"', 1).readAll()) {
+            for (String[] row : new CSVReaderBuilder(reader).withSkipLines(1).build().readAll()) {
                 String state = row[0], county = row[1], tract = row[2], primary = row[3], secondary = row[4];
 
                 CensusDataDto dto = _lookup.computeIfAbsent(state + county, k -> new CountyDataDto()).getCensusData().computeIfAbsent(tract, k -> new CensusDataDto());
@@ -175,7 +175,7 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
 
         // load 2010 data
         try (Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("ruralurban/rural-urban-commuting-area-2010.csv"), StandardCharsets.US_ASCII)) {
-            for (String[] row : new CSVReader(reader, ',', '\"', 1).readAll()) {
+            for (String[] row : new CSVReaderBuilder(reader).withSkipLines(1).build().readAll()) {
                 String state = row[0], county = row[1], tract = row[2], primary = row[3], secondary = row[4];
 
                 CensusDataDto dto = _lookup.computeIfAbsent(state + county, k -> new CountyDataDto()).getCensusData().computeIfAbsent(tract, k -> new CensusDataDto());
@@ -238,7 +238,7 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
 
         // load 1993 data
         try (Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("ruralurban/rural-urban-continuum-1993.csv"), StandardCharsets.US_ASCII)) {
-            for (String[] row : new CSVReader(reader, ',', '\"', 1).readAll()) {
+            for (String[] row : new CSVReaderBuilder(reader).withSkipLines(1).build().readAll()) {
                 String state = row[0], county = row[1], val = row[2];
 
                 CountyDataDto dto = _lookup.computeIfAbsent(state + county, k -> new CountyDataDto());
@@ -251,7 +251,7 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
 
         // load 2003 data
         try (Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("ruralurban/rural-urban-continuum-2003.csv"), StandardCharsets.US_ASCII)) {
-            for (String[] row : new CSVReader(reader, ',', '\"', 1).readAll()) {
+            for (String[] row : new CSVReaderBuilder(reader).withSkipLines(1).build().readAll()) {
                 String state = row[0], county = row[1], val = row[2];
 
                 CountyDataDto dto = _lookup.computeIfAbsent(state + county, k -> new CountyDataDto());
@@ -264,7 +264,7 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
 
         // load 2013 data
         try (Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("ruralurban/rural-urban-continuum-2013.csv"), StandardCharsets.US_ASCII)) {
-            for (String[] row : new CSVReader(reader, ',', '\"', 1).readAll()) {
+            for (String[] row : new CSVReaderBuilder(reader).withSkipLines(1).build().readAll()) {
                 String state = row[0], county = row[1], val = row[2];
 
                 CountyDataDto dto = _lookup.computeIfAbsent(state + county, k -> new CountyDataDto());

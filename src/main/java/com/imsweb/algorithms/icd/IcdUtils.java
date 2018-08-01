@@ -5,6 +5,7 @@ package com.imsweb.algorithms.icd;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -16,7 +17,8 @@ import java.util.Map;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
-import au.com.bytecode.opencsv.CSVReader;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
 
 import com.imsweb.algorithms.icd.IcdO2Entry.ConversionResultType;
 
@@ -444,7 +446,7 @@ public class IcdUtils {
         IcdO3Entry result = null;
 
         // if we have a value for the sex, try to use it
-        if (sex != null && (SEX_MALE.equals(sex) || SEX_FEMALE.equals(sex)))
+        if (SEX_MALE.equals(sex) || SEX_FEMALE.equals(sex))
             result = _ICD_9_CM_TO_O3_CONVERSION.get(icd9CmCode + sex);
 
         // if we didn't find any result, try without the sex
@@ -743,7 +745,8 @@ public class IcdUtils {
     }
 
     private static void loadDataFile(String file, Map<String, IcdO3Entry> result) {
-        try (CSVReader reader = new CSVReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("icd/" + file), StandardCharsets.US_ASCII), ',', '"', '\\', 1)) {
+        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("icd/" + file);
+             CSVReader reader = new CSVReaderBuilder(new InputStreamReader(is, StandardCharsets.US_ASCII)).withSkipLines(1).build()) {
             for (String[] row : reader.readAll()) {
                 if (row.length != 8)
                     throw new RuntimeException("Was expecting 8 values, got " + row.length + " - " + Arrays.toString(row));

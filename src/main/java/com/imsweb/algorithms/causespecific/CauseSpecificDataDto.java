@@ -30,18 +30,18 @@ public class CauseSpecificDataDto {
         _seq = row[1];
         _recode = row[2];
         _deathCode3Dig = parse(row[3]);
-        _deathCode4Dig = parse(row[4]);     
+        _deathCode4Dig = parse(row[4]);
     }
 
     //The row in the text file represents a combination of icd revision number, sequence group, site recode and cause of death which is considered as dead ("1").
     //Anything not in the table is considered as alive or dead of other causes ("0").
     public boolean doesMatchThisRow(String icdVersion, String seq, String recode, String cod) {
         if (!(_icdVersion.equals(icdVersion) && _seq.equals(seq) && _recode.equals(recode)) || cod == null || cod.length() < 3)
-            return false;     
-       
-        for (Object obj : _deathCode3Dig) {            
+            return false;
+
+        for (Object obj : _deathCode3Dig) {
             if (obj instanceof CodRange) {
-                CodRange range = (CodRange)obj;                
+                CodRange range = (CodRange)obj;
                 if (cod.substring(0, 3).compareToIgnoreCase(range.getStart()) >= 0 && cod.substring(0, 3).compareToIgnoreCase(range.getEnd()) <= 0)
                     return true;
             }
@@ -50,7 +50,7 @@ public class CauseSpecificDataDto {
                     return true;
             }
         }
-        
+
         for (Object obj : _deathCode4Dig) {
             if (obj instanceof CodRange) {
                 CodRange range = (CodRange)obj;
@@ -74,9 +74,9 @@ public class CauseSpecificDataDto {
         for (String token : StringUtils.split(str, ',')) {
             token = token.trim();
             if (token.contains("-"))
-                result.add(new CodRange(token.split("-")[0], token.split("-")[1]));
+                result.add(new CodRange(StringUtils.split(token, '-')[0], StringUtils.split(token, '-')[1]));
             else
-                result.add(token);            
+                result.add(token);
         }
 
         return result;
