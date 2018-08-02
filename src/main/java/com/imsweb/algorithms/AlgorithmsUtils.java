@@ -127,4 +127,14 @@ public final class AlgorithmsUtils {
         return expandHistologiesAsIntegers(toExpand);
     }
 
+    @SuppressWarnings("unchecked")
+    public static boolean isContained(List<Object> list, Integer value) {
+        if (list == null)
+            return false;
+        for (Object obj : list)
+            if ((obj instanceof Range && ((Range)obj).contains(value)) || (obj.equals(value)))
+                return true;
+        return false;
+    }
+
 }

@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 1.17**
+
+- Added support to IARC Multiple Primary Algorithm.
+
 **Changes in version 1.16**
 
 - Updated Apache commons-lang library from version 3.6 to version 3.7.

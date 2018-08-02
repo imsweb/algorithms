@@ -2,7 +2,7 @@ package com.imsweb.algorithms.iccc;
 
 import java.util.List;
 
-import org.apache.commons.lang3.Range;
+import com.imsweb.algorithms.AlgorithmsUtils;
 
 /**
  * Internal site group DTO used to calculate the recode, this class should not be used outside of SEER*Utils...
@@ -148,40 +148,30 @@ public class IcccExecutableSiteGroupDto {
 
         // check site
         if (_siteInclusions != null)
-            siteOk = isContained(_siteInclusions, site);
+            siteOk = AlgorithmsUtils.isContained(_siteInclusions, site);
         else if (_siteExclusions != null)
-            siteOk = !isContained(_siteExclusions, site);
+            siteOk = !AlgorithmsUtils.isContained(_siteExclusions, site);
         else
             siteOk = true;
 
         // check histology (only if site matched)
         if (siteOk) {
             if (_histologyInclusions != null)
-                histOk = isContained(_histologyInclusions, histology);
+                histOk = AlgorithmsUtils.isContained(_histologyInclusions, histology);
             else if (_histologyExclusions != null)
-                histOk = !isContained(_histologyExclusions, histology);
+                histOk = !AlgorithmsUtils.isContained(_histologyExclusions, histology);
             else
                 histOk = true;
         }
-        
+
         //Check the behavior
         if (siteOk && histOk) {
             if (_behaviorInclusions != null)
-                behavOk = isContained(_behaviorInclusions, behavior);
+                behavOk = AlgorithmsUtils.isContained(_behaviorInclusions, behavior);
             else
                 behavOk = true;
         }
 
         return siteOk && histOk && behavOk;
-    }
-
-    @SuppressWarnings("unchecked")
-    private boolean isContained(List<Object> list, Integer value) {
-        if (list == null)
-            return false;
-        for (Object obj : list)
-            if ((obj instanceof Range && ((Range)obj).contains(value)) || (obj.equals(value)))
-                return true;
-        return false;
     }
 }
