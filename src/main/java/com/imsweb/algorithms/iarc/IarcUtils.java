@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang3.math.NumberUtils;
+
 import com.imsweb.algorithms.AlgorithmsUtils;
 
 /**
@@ -26,7 +27,7 @@ public class IarcUtils {
     public static final Integer PRIMARY = 1;
     public static final Integer INSITU = 9;
 
-    public static List<IarcInputRecordDto> calculateIarc(List<IarcInputRecordDto> records) {
+    public static List<IarcMpInputRecordDto> calculateIarcMp(List<IarcMpInputRecordDto> records) {
         //No records
         if (records == null || records.isEmpty())
             return null;
@@ -43,7 +44,7 @@ public class IarcUtils {
         //Calculate the site group and hist group
         //let's also use a different list so we don't change the order of the original records
         List<InternalRecDto> internalRecords = new ArrayList<>();
-        for (IarcInputRecordDto record : records) {
+        for (IarcMpInputRecordDto record : records) {
             //Set iarc as primary by default
             record.setInternationalPrimaryIndicator(PRIMARY);
             record.setSiteGroup(calculateSiteGroup(record.getSite()));
@@ -53,9 +54,9 @@ public class IarcUtils {
 
         Collections.sort(internalRecords);
 
-        //Calculate IARC
+        //Calculate IARC MP variable
         for (int i = 0; i < internalRecords.size(); i++) {
-            IarcInputRecordDto r1 = internalRecords.get(i).getOriginalRecord();
+            IarcMpInputRecordDto r1 = internalRecords.get(i).getOriginalRecord();
             if (DUPLICATE.equals(r1.getInternationalPrimaryIndicator()) || INSITU.equals(r1.getInternationalPrimaryIndicator()))
                 continue;
             //Insitu cases are ignored except bladder
@@ -64,7 +65,7 @@ public class IarcUtils {
                 continue;
             }
             for (int j = i + 1; j < internalRecords.size(); j++) {
-                IarcInputRecordDto r2 = internalRecords.get(j).getOriginalRecord();
+                IarcMpInputRecordDto r2 = internalRecords.get(j).getOriginalRecord();
                 //Insitu cases are ignored except bladder
                 if (isInsitu(r2)) {
                     r2.setInternationalPrimaryIndicator(INSITU);
@@ -112,7 +113,7 @@ public class IarcUtils {
     }
 
     private static Integer calculateHistGroup(String histology) {
-        if (histology != null && NumberUtils.isDigits(histology)) {
+        if (NumberUtils.isDigits(histology)) {
             int hist = NumberUtils.toInt(histology);
             if (AlgorithmsUtils.isHistologyContained("8051-8084,8120-8131", hist))
                 hist = 1;
@@ -154,28 +155,28 @@ public class IarcUtils {
         return null;
     }
 
-    private static boolean isInsitu(IarcInputRecordDto record) {
+    private static boolean isInsitu(IarcMpInputRecordDto record) {
         return !"3".equals(record.getBehavior()) && !(record.getSite() != null && record.getSite().toUpperCase().startsWith("C67"));
     }
 
-    private static boolean isKaposiSarcoma(IarcInputRecordDto rec1, IarcInputRecordDto rec2) {
+    private static boolean isKaposiSarcoma(IarcMpInputRecordDto rec1, IarcMpInputRecordDto rec2) {
         return rec1.getHistGroup() == 15 && rec2.getHistGroup() == 15;
     }
 
-    private static boolean isHemato(IarcInputRecordDto rec1, IarcInputRecordDto rec2) {
+    private static boolean isHemato(IarcMpInputRecordDto rec1, IarcMpInputRecordDto rec2) {
         return rec1.getHistGroup() >= 8 && rec1.getHistGroup() <= 14 && rec2.getHistGroup() >= 8 && rec2.getHistGroup() <= 14 && (rec1.getHistGroup() == 14 || rec2.getHistGroup() == 14 || rec1
                 .getHistGroup().equals(rec2.getHistGroup()));
     }
 
-    private static boolean isSameSiteGroup(IarcInputRecordDto rec1, IarcInputRecordDto rec2) {
+    private static boolean isSameSiteGroup(IarcMpInputRecordDto rec1, IarcMpInputRecordDto rec2) {
         return rec1.getSiteGroup().equals(rec2.getSiteGroup());
     }
 
-    private static boolean isSameHistGroup(IarcInputRecordDto rec1, IarcInputRecordDto rec2) {
+    private static boolean isSameHistGroup(IarcMpInputRecordDto rec1, IarcMpInputRecordDto rec2) {
         return rec1.getHistGroup().equals(rec2.getHistGroup());
     }
 
-    private static boolean isNosVsSpecific(IarcInputRecordDto rec1, IarcInputRecordDto rec2) {
+    private static boolean isNosVsSpecific(IarcMpInputRecordDto rec1, IarcMpInputRecordDto rec2) {
         //17 is NOS for 1-7, 15 and 16
         //14 is NOS for 8-13
         //5 is NOS for 1-4
@@ -188,7 +189,7 @@ public class IarcUtils {
                 (rec2.getHistGroup() == 14 && rec1.getHistGroup() >= 8 && rec1.getHistGroup() < 14);
     }
 
-    private static boolean needToUpdateHistology(IarcInputRecordDto primaryRec, IarcInputRecordDto dupRecord) {
+    private static boolean needToUpdateHistology(IarcMpInputRecordDto primaryRec, IarcMpInputRecordDto dupRecord) {
         return (primaryRec.getHistGroup() == 17 && ((dupRecord.getHistGroup() >= 1 && dupRecord.getHistGroup() < 8) || dupRecord.getHistGroup() == 15 || dupRecord.getHistGroup() == 16)) ||
                 (primaryRec.getHistGroup() == 5 && dupRecord.getHistGroup() >= 1 && dupRecord.getHistGroup() < 5) ||
                 (primaryRec.getHistGroup() == 14 && dupRecord.getHistGroup() >= 8 && dupRecord.getHistGroup() < 14) ||
@@ -197,10 +198,10 @@ public class IarcUtils {
 
     private static class InternalRecDto implements Comparable<InternalRecDto> {
 
-        IarcInputRecordDto _originalRecord;
+        IarcMpInputRecordDto _originalRecord;
         int _year, _month, _day, _seqNum;
 
-        public InternalRecDto(IarcInputRecordDto record) {
+        public InternalRecDto(IarcMpInputRecordDto record) {
             _originalRecord = record;
 
             String yearStr = record.getDateOfDiagnosisYear();
@@ -218,7 +219,7 @@ public class IarcUtils {
                 _seqNum += 100;
         }
 
-        public IarcInputRecordDto getOriginalRecord() {
+        public IarcMpInputRecordDto getOriginalRecord() {
             return _originalRecord;
         }
 

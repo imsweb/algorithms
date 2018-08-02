@@ -3,7 +3,7 @@
  */
 package com.imsweb.algorithms.iarc;
 
-public class IarcInputRecordDto {
+public class IarcMpInputRecordDto {
 
     private String _dateOfDiagnosisYear;
 
@@ -25,10 +25,10 @@ public class IarcInputRecordDto {
 
     private Integer _internationalPrimaryIndicator;
 
-    public IarcInputRecordDto() {
+    public IarcMpInputRecordDto() {
     }
 
-    public IarcInputRecordDto(String dateOfDiagnosisYear, String dateOfDiagnosisMonth, String dateOfDiagnosisDay, Integer sequenceNumber, String site, String histology, String behavior) {
+    public IarcMpInputRecordDto(String dateOfDiagnosisYear, String dateOfDiagnosisMonth, String dateOfDiagnosisDay, Integer sequenceNumber, String site, String histology, String behavior) {
         _dateOfDiagnosisYear = dateOfDiagnosisYear;
         _dateOfDiagnosisMonth = dateOfDiagnosisMonth;
         _dateOfDiagnosisDay = dateOfDiagnosisDay;
