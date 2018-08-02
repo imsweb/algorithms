@@ -128,7 +128,7 @@ public final class AlgorithmsUtils {
     }
 
     @SuppressWarnings("unchecked")
-    public static boolean isContained(List<Object> list, Integer value) {
+    public static boolean isContained(List<?> list, Integer value) {
         if (list == null)
             return false;
         for (Object obj : list)
@@ -137,4 +137,7 @@ public final class AlgorithmsUtils {
         return false;
     }
 
+    public static boolean isHistologyContained(String list, Integer value) {
+        return isContained(expandHistologiesAsIntegers(list), value);
+    }
 }
