@@ -3,13 +3,10 @@
  */
 package com.imsweb.algorithms.iarc;
 
-import java.io.InputStreamReader;
-import java.io.LineNumberReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.lang3.math.NumberUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -126,50 +123,5 @@ public class IarcUtilsTest {
         results = IarcUtils.calculateIarc(patient);
         Assert.assertEquals(IarcUtils.PRIMARY, results.get(0).getInternationalPrimaryIndicator());
         Assert.assertEquals(IarcUtils.PRIMARY, results.get(1).getInternationalPrimaryIndicator());
-    }
-
-    @Test
-    public void compareWithSas() throws Exception {
-        String dataFile = "iarc/iarc.txt";
-        LineNumberReader reader = new LineNumberReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream(dataFile)));
-        String currentPatIdNum = null;
-        List<IarcInputRecordDto> patient = new ArrayList<>();
-        List<Integer> sasResults = new ArrayList<>();
-        String rec = reader.readLine();
-        while (rec != null) {
-            IarcInputRecordDto dto = new IarcInputRecordDto();
-            dto.setSequenceNumber(NumberUtils.toInt(rec.substring(10, 12)));
-            dto.setDateOfDiagnosisMonth(rec.substring(16, 18));
-            dto.setDateOfDiagnosisDay(rec.substring(18, 20));
-            dto.setDateOfDiagnosisYear(rec.substring(20, 24));
-            dto.setSite(rec.substring(24, 28));
-            dto.setHistology(rec.substring(28, 32));
-            dto.setBehavior(rec.substring(32, 33));
-
-            String patIdNum = rec.substring(2, 10);
-            if (currentPatIdNum == null || !currentPatIdNum.equals(patIdNum)) {
-                if (!patient.isEmpty())
-                    checkPatient(patient, sasResults, currentPatIdNum);
-                patient.clear();
-                sasResults.clear();
-                currentPatIdNum = patIdNum;
-            }
-            patient.add(dto);
-            sasResults.add(NumberUtils.toInt(rec.substring(52, 53)));
-            rec = reader.readLine();
-        }
-        if (!patient.isEmpty())
-            checkPatient(patient, sasResults, currentPatIdNum);
-        reader.close();
-    }
-
-    private void checkPatient(List<IarcInputRecordDto> patient, List<Integer> sasResults, String patId) {
-        List<IarcInputRecordDto> results = IarcUtils.calculateIarc(patient);
-        boolean same = true;
-        for (int i = 0; i < results.size(); i++) {
-            same &= results.get(i).getInternationalPrimaryIndicator().equals(sasResults.get(i));
-        }
-        if (!same)
-            Assert.fail("Different result from SAS for patient Id: " + patId);
     }
 }
