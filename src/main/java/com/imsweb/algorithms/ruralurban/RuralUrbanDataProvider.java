@@ -5,9 +5,11 @@ package com.imsweb.algorithms.ruralurban;
 
 /**
  * The purpose of the <code>RuralUrbanContinuumDataProvider</code> is to:
- * <ul><li>get the rural urban continuum code for the provided year category, state of dx, and county of dx</li>
+ * <ul>
+ * <li>get the rural urban continuum code for the provided year category, state of dx, and county of dx</li>
  * <li>get the rural urban commuting area code for the provided year category, state of dx, county of dx, and census tract</li>
- * <li>get the rural urban census code for the provided year category, state of dx, county of dx, and census tract</li></ul>
+ * <li>get the rural urban census code for the provided year category, state of dx, county of dx, and census tract</li>
+ * </ul>
  * either from the database or csv lookup based on the implementation.
  * <p/>
  * Created on Aug 11, 2014 by HoweW
@@ -23,7 +25,7 @@ public interface RuralUrbanDataProvider {
     String TRACT_CATEGORY_2 = "2010";
 
     /**
-     * Returns rural urban census code for provided year category, state of dx, county of dx, and census tract.
+     * Returns urban rural indicator code (URIC) for provided year category, state of dx, county of dx, and census tract.
      * <p/>
      * Created Aug 11, 2014 by HoweW
      * @param state state at DX
@@ -31,10 +33,10 @@ public interface RuralUrbanDataProvider {
      * @param tractCategory census tract
      * @return the corresponding rural urban census code
      */
-    String getRuralUrbanCensus(String tractCategory, String state, String county, String censusTract);
+    String getUrbanRuralIndicatorCode(String tractCategory, String state, String county, String censusTract);
 
     /**
-     * Returns rural urban census code for provided year category, state of dx, county of dx, and census tract.
+     * Returns urban rural indicator code (URIC) percentage for provided year category, state of dx, county of dx, and census tract.
      * <p/>
      * Created Feb 28, 2015 by depryf
      * @param state state at DX
@@ -45,7 +47,7 @@ public interface RuralUrbanDataProvider {
     Float getRuralUrbanCensusPercentage(String tractCategory, String state, String county, String censusTract);
 
     /**
-     * Returns rural urban commuting area code for provided year category, state of dx, county of dx, and census tract.
+     * Returns rural urban commuting area (RUCA) code for provided year category, state of dx, county of dx, and census tract.
      * <p/>
      * Created Aug 11, 2014 by HoweW
      * @param state state at DX

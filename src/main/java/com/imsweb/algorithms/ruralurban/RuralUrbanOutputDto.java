@@ -5,12 +5,12 @@ package com.imsweb.algorithms.ruralurban;
 
 public class RuralUrbanOutputDto {
 
-    private String _ruralUrbanCensus2000;
-    private String _ruralUrbanCensus2010;
+    private String _urbanRuralIndicatorCode2000;
+    private String _urbanRuralIndicatorCode2010;
     
     // null means no percentage available...
-    private Float _ruralUrbanCensus2000Percentage;
-    private Float _ruralUrbanCensus2010Percentage;
+    private Float _urbanRuralIndicatorCode2000Percentage;
+    private Float _urbanRuralIndicatorCode2010Percentage;
 
     private String _ruralUrbanCommutingArea2000;
     private String _ruralUrbanCommutingArea2010;
@@ -22,20 +22,20 @@ public class RuralUrbanOutputDto {
     public RuralUrbanOutputDto() {
     }
 
-    public String getRuralUrbanCensus2000() {
-        return _ruralUrbanCensus2000;
+    public String getUrbanRuralIndicatorCode2000() {
+        return _urbanRuralIndicatorCode2000;
     }
 
-    public Float getRuralUrbanCensus2000Percentage() {
-        return _ruralUrbanCensus2000Percentage;
+    public Float getUrbanRuralIndicatorCode2000Percentage() {
+        return _urbanRuralIndicatorCode2000Percentage;
     }
 
-    public String getRuralUrbanCensus2010() {
-        return _ruralUrbanCensus2010;
+    public String getUrbanRuralIndicatorCode2010() {
+        return _urbanRuralIndicatorCode2010;
     }
 
-    public Float getRuralUrbanCensus2010Percentage() {
-        return _ruralUrbanCensus2010Percentage;
+    public Float getUrbanRuralIndicatorCode2010Percentage() {
+        return _urbanRuralIndicatorCode2010Percentage;
     }
 
     public String getRuralUrbanCommutingArea2000() {
@@ -58,20 +58,20 @@ public class RuralUrbanOutputDto {
         return _ruralUrbanContinuum2013;
     }
 
-    public void setRuralUrbanCensus2000(String ruralUrbanCensus2000) {
-        _ruralUrbanCensus2000 = ruralUrbanCensus2000;
+    public void setUrbanRuralIndicatorCode2000(String urbanRuralIndicatorCode2000) {
+        _urbanRuralIndicatorCode2000 = urbanRuralIndicatorCode2000;
     }
 
-    public void setRuralUrbanCensus2000Percentage(Float ruralUrbanCensus2000Percentage) {
-        _ruralUrbanCensus2000Percentage = ruralUrbanCensus2000Percentage;
+    public void setUrbanRuralIndicatorCode2000Percentage(Float urbanRuralIndicatorCode2000Percentage) {
+        _urbanRuralIndicatorCode2000Percentage = urbanRuralIndicatorCode2000Percentage;
     }
 
-    public void setRuralUrbanCensus2010(String ruralUrbanCensus2010) {
-        _ruralUrbanCensus2010 = ruralUrbanCensus2010;
+    public void setUrbanRuralIndicatorCode2010(String urbanRuralIndicatorCode2010) {
+        _urbanRuralIndicatorCode2010 = urbanRuralIndicatorCode2010;
     }
 
-    public void setRuralUrbanCensus2010Percentage(Float ruralUrbanCensus2010Percentage) {
-        _ruralUrbanCensus2010Percentage = ruralUrbanCensus2010Percentage;
+    public void setUrbanRuralIndicatorCode2010Percentage(Float urbanRuralIndicatorCode2010Percentage) {
+        _urbanRuralIndicatorCode2010Percentage = urbanRuralIndicatorCode2010Percentage;
     }
 
     public void setRuralUrbanCommutingArea2000(String ruralUrbanCommutingArea2000) {

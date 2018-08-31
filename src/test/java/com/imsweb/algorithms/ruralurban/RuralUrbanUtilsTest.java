@@ -11,7 +11,14 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class RuralUrbanUtilsTest{
+public class RuralUrbanUtilsTest {
+
+    @Test
+    public void assertInfo() {
+        Assert.assertNotNull(RuralUrbanUtils.ALG_VERSION);
+        Assert.assertNotNull(RuralUrbanUtils.ALG_NAME);
+        Assert.assertNotNull(RuralUrbanUtils.ALG_INFO);
+    }
 
     @Test
     public void testGetRuralUrbanCensusPercentage() {
@@ -20,18 +27,18 @@ public class RuralUrbanUtilsTest{
         input.setAddressAtDxCounty("001");
         input.setCensusTract2010("020200");
         // only provided the 2010 census, so there should be no result for the 2000 percentage...
-        Assert.assertNull(RuralUrbanUtils.computeRuralUrbanCensus(input).getRuralUrbanCensus2000Percentage());
-        Assert.assertNotNull(RuralUrbanUtils.computeRuralUrbanCensus(input).getRuralUrbanCensus2010Percentage());
+        Assert.assertNull(RuralUrbanUtils.computeUrbanRuralIndicatorCode(input).getUrbanRuralIndicatorCode2000Percentage());
+        Assert.assertNotNull(RuralUrbanUtils.computeUrbanRuralIndicatorCode(input).getUrbanRuralIndicatorCode2010Percentage());
         input.setAddressAtDxState("PR");
         input.setAddressAtDxCounty("151");
         input.setCensusTract2000("000000");
         input.setCensusTract2010("000000");
         // PR 151 000000 is in the 2000 excel file, but the percentage is missing --- only the indicator value is given
-        Assert.assertNull(RuralUrbanUtils.computeRuralUrbanCensus(input).getRuralUrbanCensus2000Percentage());
+        Assert.assertNull(RuralUrbanUtils.computeUrbanRuralIndicatorCode(input).getUrbanRuralIndicatorCode2000Percentage());
         // PR 151 000000 is not in the 2010 excel file
-        Assert.assertNull(RuralUrbanUtils.computeRuralUrbanCensus(input).getRuralUrbanCensus2010Percentage());
+        Assert.assertNull(RuralUrbanUtils.computeUrbanRuralIndicatorCode(input).getUrbanRuralIndicatorCode2010Percentage());
     }
-    
+
     @Test
     public void testComputeRuralUrbanContinuum() {
 
@@ -77,37 +84,38 @@ public class RuralUrbanUtilsTest{
                     record.put(RuralUrbanUtils.PROP_CENSUS_TRACT_2010, tract);
 
                     if ("--".equals(state) || "---".equals(county) || "000001".equals(tract)) {
-                        Assert.assertEquals("96", RuralUrbanUtils.computeRuralUrbanCensus(record).getRuralUrbanCensus2000());
-                        Assert.assertEquals("96", RuralUrbanUtils.computeRuralUrbanCensus(record).getRuralUrbanCensus2010());
-                        Assert.assertEquals("96", RuralUrbanUtils.computeRuralUrbanCommutingArea(record).getRuralUrbanCommutingArea2000());
-                        Assert.assertEquals("96", RuralUrbanUtils.computeRuralUrbanCommutingArea(record).getRuralUrbanCommutingArea2010());
+                        Assert.assertEquals("A", RuralUrbanUtils.computeUrbanRuralIndicatorCode(record).getUrbanRuralIndicatorCode2000());
+                        Assert.assertEquals("A", RuralUrbanUtils.computeUrbanRuralIndicatorCode(record).getUrbanRuralIndicatorCode2010());
+                        Assert.assertEquals("A", RuralUrbanUtils.computeRuralUrbanCommutingArea(record).getRuralUrbanCommutingArea2000());
+                        Assert.assertEquals("A", RuralUrbanUtils.computeRuralUrbanCommutingArea(record).getRuralUrbanCommutingArea2010());
                     }
-                    else if (state == null || state.isEmpty() || state.equals("ZZ") || county == null || county.isEmpty() || county.equals("999") || tract == null || tract.isEmpty() || tract.equals("999999")) {
-                        Assert.assertEquals("99", RuralUrbanUtils.computeRuralUrbanCensus(record).getRuralUrbanCensus2000());
-                        Assert.assertEquals("99", RuralUrbanUtils.computeRuralUrbanCensus(record).getRuralUrbanCensus2010());
-                        Assert.assertEquals("99", RuralUrbanUtils.computeRuralUrbanCommutingArea(record).getRuralUrbanCommutingArea2000());
-                        Assert.assertEquals("99", RuralUrbanUtils.computeRuralUrbanCommutingArea(record).getRuralUrbanCommutingArea2010());
+                    else if (state == null || state.isEmpty() || state.equals("ZZ") || county == null || county.isEmpty() || county.equals("999") || tract == null || tract.isEmpty() || tract.equals(
+                            "999999")) {
+                        Assert.assertEquals("D", RuralUrbanUtils.computeUrbanRuralIndicatorCode(record).getUrbanRuralIndicatorCode2000());
+                        Assert.assertEquals("D", RuralUrbanUtils.computeUrbanRuralIndicatorCode(record).getUrbanRuralIndicatorCode2010());
+                        Assert.assertEquals("D", RuralUrbanUtils.computeRuralUrbanCommutingArea(record).getRuralUrbanCommutingArea2000());
+                        Assert.assertEquals("D", RuralUrbanUtils.computeRuralUrbanCommutingArea(record).getRuralUrbanCommutingArea2010());
                     }
                     else if (county.equals("000")) {
-                        Assert.assertEquals("97", RuralUrbanUtils.computeRuralUrbanCensus(record).getRuralUrbanCensus2000());
-                        Assert.assertEquals("97", RuralUrbanUtils.computeRuralUrbanCensus(record).getRuralUrbanCensus2010());
-                        Assert.assertEquals("97", RuralUrbanUtils.computeRuralUrbanCommutingArea(record).getRuralUrbanCommutingArea2000());
-                        Assert.assertEquals("97", RuralUrbanUtils.computeRuralUrbanCommutingArea(record).getRuralUrbanCommutingArea2010());
+                        Assert.assertEquals("B", RuralUrbanUtils.computeUrbanRuralIndicatorCode(record).getUrbanRuralIndicatorCode2000());
+                        Assert.assertEquals("B", RuralUrbanUtils.computeUrbanRuralIndicatorCode(record).getUrbanRuralIndicatorCode2010());
+                        Assert.assertEquals("B", RuralUrbanUtils.computeRuralUrbanCommutingArea(record).getRuralUrbanCommutingArea2000());
+                        Assert.assertEquals("B", RuralUrbanUtils.computeRuralUrbanCommutingArea(record).getRuralUrbanCommutingArea2010());
                     }
                     else if (state.equals("MP") || county.equals("777") || tract.equals("123456")) {
-                        Assert.assertEquals("98", RuralUrbanUtils.computeRuralUrbanCensus(record).getRuralUrbanCensus2000());
-                        Assert.assertEquals("98", RuralUrbanUtils.computeRuralUrbanCensus(record).getRuralUrbanCensus2010());
-                        Assert.assertEquals("98", RuralUrbanUtils.computeRuralUrbanCommutingArea(record).getRuralUrbanCommutingArea2000());
-                        Assert.assertEquals("98", RuralUrbanUtils.computeRuralUrbanCommutingArea(record).getRuralUrbanCommutingArea2010());
+                        Assert.assertEquals("C", RuralUrbanUtils.computeUrbanRuralIndicatorCode(record).getUrbanRuralIndicatorCode2000());
+                        Assert.assertEquals("C", RuralUrbanUtils.computeUrbanRuralIndicatorCode(record).getUrbanRuralIndicatorCode2010());
+                        Assert.assertEquals("C", RuralUrbanUtils.computeRuralUrbanCommutingArea(record).getRuralUrbanCommutingArea2000());
+                        Assert.assertEquals("C", RuralUrbanUtils.computeRuralUrbanCommutingArea(record).getRuralUrbanCommutingArea2010());
                     }
                     else {
                         record.put(RuralUrbanUtils.PROP_COUNTY_DX, "001");
                         record.put(RuralUrbanUtils.PROP_CENSUS_TRACT_2000, "020800");
-                        Assert.assertEquals("03", RuralUrbanUtils.computeRuralUrbanCensus(record).getRuralUrbanCensus2000());
+                        Assert.assertEquals("3", RuralUrbanUtils.computeUrbanRuralIndicatorCode(record).getUrbanRuralIndicatorCode2000());
                         record.put(RuralUrbanUtils.PROP_CENSUS_TRACT_2000, tract);
-                        Assert.assertEquals("04", RuralUrbanUtils.computeRuralUrbanCensus(record).getRuralUrbanCensus2010());
-                        Assert.assertEquals("02", RuralUrbanUtils.computeRuralUrbanCommutingArea(record).getRuralUrbanCommutingArea2000());
-                        Assert.assertEquals("01", RuralUrbanUtils.computeRuralUrbanCommutingArea(record).getRuralUrbanCommutingArea2010());
+                        Assert.assertEquals("4", RuralUrbanUtils.computeUrbanRuralIndicatorCode(record).getUrbanRuralIndicatorCode2010());
+                        Assert.assertEquals("2", RuralUrbanUtils.computeRuralUrbanCommutingArea(record).getRuralUrbanCommutingArea2000());
+                        Assert.assertEquals("1", RuralUrbanUtils.computeRuralUrbanCommutingArea(record).getRuralUrbanCommutingArea2010());
                     }
                 }
             }

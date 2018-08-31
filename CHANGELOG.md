@@ -2,6 +2,7 @@
 
 **Changes in version 1.17**
 
+- Changed computation of RUCA/URIC variables in RuralUrbanUtils; renamed some methods.
 - Added support to IARC Multiple Primary Algorithm.
 
 **Changes in version 1.16**
