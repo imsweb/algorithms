@@ -59,6 +59,7 @@ jar {
 // checkstyle plugin settings
 checkstyle {
     ignoreFailures = true
+    toolVersion '8.12'
     configFile = file('config/checkstyle/checkstyle.xml')
 }
 
@@ -100,7 +101,7 @@ if (version.endsWith('-SNAPSHOT'))
 
 // Gradle wrapper, this allows to build the project without having to install Gradle!
 wrapper {
-    gradleVersion = '4.9'
+    gradleVersion = '4.10'
 }
 
 
