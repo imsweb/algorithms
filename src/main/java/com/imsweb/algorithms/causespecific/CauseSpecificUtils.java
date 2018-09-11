@@ -31,11 +31,11 @@ public final class CauseSpecificUtils {
     public static final String PROP_DOLC_YEAR = "dateOfLastContactYear";
     public static final String PROP_COD = "causeOfDeath";
     public static final String PROP_ICD_REVISION_NUM = "icdRevisionNumber";
-    public static final String PROP_VITAL_STATUS = "vitalStatus";
 
     //values for cause specific and cause others
     public static final String ALIVE_OR_DEAD_OF_OTHER_CAUSES = "0";
     public static final String DEAD = "1";
+    public static final String MISSING_UNKNOWN_DEATH_OF_CODE = "8";
     public static final String NA_NOT_FIRST_TUMOR = "9";
     //lookup for tables
     private static List<CauseSpecificDataDto> _DATA_SITE_SPECIFIC = new ArrayList<>();
@@ -51,7 +51,6 @@ public final class CauseSpecificUtils {
      * <li>primarySite (#400)</li>
      * <li>behaviorIcdO3 (#523)</li>
      * <li>dateOfLastContactYear (#1750)</li>
-     * <li>vitalStatus (#1760)</li>
      * </ul>
      * All those properties are defined as constants in this class.
      * <br/><br/>
@@ -78,7 +77,6 @@ public final class CauseSpecificUtils {
      * <li>_primarySite</li>
      * <li>_behaviorIcdO3</li>
      * <li>_dateOfLastContactYear</li>
-     * <li>_vitalStatus</li>
      * </ul>
      * <br/><br/>
      * @param input an input dto which has the fields used to compute cause specific values as parameter.
@@ -105,7 +103,6 @@ public final class CauseSpecificUtils {
      * <li>primarySite (#400)</li>
      * <li>behaviorIcdO3 (#523)</li>
      * <li>dateOfLastContactYear (#1750)</li>
-     * <li>vitalStatus (#1760)</li>
      * </ul>
      * All those properties are defined as constants in this class.
      * <br/><br/>
@@ -126,7 +123,6 @@ public final class CauseSpecificUtils {
         input.setDateOfLastContactYear(record.get(PROP_DOLC_YEAR));
         input.setCauseOfDeath(record.get(PROP_COD));
         input.setIcdRevisionNumber(record.get(PROP_ICD_REVISION_NUM));
-        input.setVitalStatus(record.get(PROP_VITAL_STATUS));
         return computeCauseSpecific(input, cutOffYear);
     }
 
@@ -141,7 +137,6 @@ public final class CauseSpecificUtils {
      * <li>_primarySite</li>
      * <li>_behaviorIcdO3</li>
      * <li>_dateOfLastContactYear</li>
-     * <li>_vitalStatus</li>
      * </ul>
      * <br/><br/>
      * @param input an input dto which has the fields used to compute cause specific values as parameter.
@@ -175,13 +170,9 @@ public final class CauseSpecificUtils {
             return result;
         }
 
-        if (input.getCauseOfDeath() == null || input.getCauseOfDeath().length() < 3) {
-            result.setCauseSpecificDeathClassification(ALIVE_OR_DEAD_OF_OTHER_CAUSES);
-            //if dead
-            if (("4".equals(input.getVitalStatus())) || ("0".equals(input.getVitalStatus())))
-                result.setCauseOtherDeathClassification(DEAD);
-            else
-                result.setCauseOtherDeathClassification(ALIVE_OR_DEAD_OF_OTHER_CAUSES);
+        if (input.getCauseOfDeath() == null || input.getCauseOfDeath().length() < 3 || "7777".equals(input.getCauseOfDeath()) || "7797".equals(input.getCauseOfDeath())) {
+            result.setCauseSpecificDeathClassification(MISSING_UNKNOWN_DEATH_OF_CODE);
+            result.setCauseOtherDeathClassification(MISSING_UNKNOWN_DEATH_OF_CODE);
             return result;
         }
 

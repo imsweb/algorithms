@@ -17,8 +17,6 @@ public class CauseSpecificInputDto {
 
     private String _dateOfLastContactYear;
 
-    private String _vitalStatus;
-
     public CauseSpecificInputDto() {
     }
 
@@ -68,13 +66,5 @@ public class CauseSpecificInputDto {
 
     public void setDateOfLastContactYear(String dateOfLastContactYear) {
         _dateOfLastContactYear = dateOfLastContactYear;
-    }
-
-    public String getVitalStatus() {
-        return _vitalStatus;
-    }
-
-    public void setVitalStatus(String vitalStatus) {
-        _vitalStatus = vitalStatus;
     }
 }
