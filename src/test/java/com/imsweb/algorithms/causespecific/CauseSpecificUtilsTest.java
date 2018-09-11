@@ -36,8 +36,6 @@ public class CauseSpecificUtilsTest {
         Assert.assertEquals(CauseSpecificUtils.PROP_COD, field.getName());
         field = layout.getFieldByName(CauseSpecificUtils.PROP_ICD_REVISION_NUM);
         Assert.assertEquals(CauseSpecificUtils.PROP_ICD_REVISION_NUM, field.getName());
-        field = layout.getFieldByName(CauseSpecificUtils.PROP_VITAL_STATUS);
-        Assert.assertEquals(CauseSpecificUtils.PROP_VITAL_STATUS, field.getName());
     }
 
     @Test
@@ -63,19 +61,6 @@ public class CauseSpecificUtilsTest {
         Assert.assertEquals("0", CauseSpecificUtils.computeCauseSpecific(input, 2012).getCauseSpecificDeathClassification());
         Assert.assertEquals("0", CauseSpecificUtils.computeCauseSpecific(input, 2012).getCauseOtherDeathClassification());
 
-        // Test Vital Status of 0 or 4 results in Death.
-        record.put(CauseSpecificUtils.PROP_SEQ_NUM_CENTRAL, "00");
-        record.put(CauseSpecificUtils.PROP_ICD_REVISION_NUM, "1");
-        record.put(CauseSpecificUtils.PROP_DOLC_YEAR, "2013");
-        record.put(CauseSpecificUtils.PROP_COD, "99");
-        record.put(CauseSpecificUtils.PROP_VITAL_STATUS, "0");
-        Assert.assertEquals("1", CauseSpecificUtils.computeCauseSpecific(record).getCauseOtherDeathClassification());
-        record.put(CauseSpecificUtils.PROP_VITAL_STATUS, "4");
-        Assert.assertEquals("1", CauseSpecificUtils.computeCauseSpecific(record).getCauseOtherDeathClassification());
-        record.put(CauseSpecificUtils.PROP_VITAL_STATUS, "2");
-        Assert.assertEquals("0", CauseSpecificUtils.computeCauseSpecific(record).getCauseOtherDeathClassification());
-
-
         //All other cases are covered in the testCsvFile() method.
     }
 
@@ -91,7 +76,6 @@ public class CauseSpecificUtilsTest {
             rec.put(CauseSpecificUtils.PROP_PRIMARY_SITE, row[3]);
             rec.put(CauseSpecificUtils.PROP_HISTOLOGY_ICDO3, row[4]);
             rec.put(CauseSpecificUtils.PROP_DOLC_YEAR, row[5]);
-            rec.put(CauseSpecificUtils.PROP_VITAL_STATUS, row[6]);
             String causeSpecificExpected = row[7];
             String causeOtherExpected = row[8];
             String causeSpecificCalculated = CauseSpecificUtils.computeCauseSpecific(rec).getCauseSpecificDeathClassification();

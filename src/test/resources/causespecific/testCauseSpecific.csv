@@ -8,10 +8,12 @@ AA,1,C798,C400,8000,2012,,9,9,invalid sequence number
 00,,C798,C400,8000,2012,,0,1,null icd revision
 00,0,C798,C400,8000,2012,,0,0,patient is alive
 00,0,,,,,,0,0,patient is alive
-00,1,,C809,8100,2012,4,0,1,cod blank patient dead
-00,1,,C809,8100,2012,0,0,1,cod blank patient dead
-00,1,,C809,8100,2012,1,0,0,cod blank patient alive
-00,1,,C809,8100,2012,,0,0,cod blank 
+00,1,,C809,8100,2012,4,8,8,cod blank patient dead
+00,1,,C809,8100,2012,0,8,8,cod blank patient dead
+00,1,,C809,8100,2012,1,8,8,cod blank patient alive
+00,1,,C809,8100,2012,,8,8,cod blank
+00,8,7777,,,,,8,8,unknown cod
+00,8,7797,,,,,8,8,unknown cod
 00,8,140 ,,,,,1,0,icd-8 sequence 00 any cancer (140-239)
 00,8,1407,C809,8000,2012,,1,0,icd-8 sequence 00 any cancer (140-239)
 00,8,161 ,,8000,2012,,1,0,icd-8 sequence 00 any cancer (140-239)

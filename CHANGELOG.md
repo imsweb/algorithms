@@ -4,6 +4,7 @@
 
 - Changed computation of RUCA/URIC variables in RuralUrbanUtils; renamed some methods.
 - Added support to IARC Multiple Primary Algorithm.
+- Changed Cause Specific algorithm to support missing or unknown cause of death values.
 
 **Changes in version 1.16**
 
