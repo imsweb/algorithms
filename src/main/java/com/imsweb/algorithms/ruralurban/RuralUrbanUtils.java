@@ -16,7 +16,7 @@ public final class RuralUrbanUtils {
 
     public static final String ALG_NAME = "NAACCR Rural Urban Program";
     public static final String ALG_VERSION = "2018";
-    public static final String ALG_INFO = "NAACCR Rural Urban Program released in August 2018";
+    public static final String ALG_INFO = "NAACCR Rural Urban Program released in September 2018";
 
     //NAACCR Items Used for calculation
     public static final String PROP_STATE_DX = "addressAtDxState";
@@ -50,10 +50,10 @@ public final class RuralUrbanUtils {
      * <li>3 = Mostly rural - the percentage of the population in an urban area is between >0% and <50%</li>
      * <li>4 = All rural - the percentage of the population in an urban area is 0%</li>
      * <li>9 = The percentage of the population in an urban or rural area is unknown</li>
-     * <li>A = Invalid state, county code, or census tract</li>
-     * <li>B = Insufficient population data for county to determine census code</li>
-     * <li>C = Valid state/county/tract combination but census code not found</li>
-     * <li>D = Missing or unknown state, county, or census tract</li>
+     * <li>A = State, county, or tract are invalid</li>
+     * <li>B = State and tract are valid, but county was not reported</li>
+     * <li>C = State + county + tract combination was not found</li>
+     * <li>D = State, county, or tract are blank or unknown</li>
      * </ul>
      * <br/><br/>
      * @param record a map of properties representing a NAACCR line
@@ -87,10 +87,10 @@ public final class RuralUrbanUtils {
      * <li>3 = Mostly rural - the percentage of the population in an urban area is between >0% and <50%</li>
      * <li>4 = All rural - the percentage of the population in an urban area is 0%</li>
      * <li>9 = The percentage of the population in an urban or rural area is unknown</li>
-     * <li>A = Invalid state, county code, or census tract</li>
-     * <li>B = Insufficient population data for county to determine census code</li>
-     * <li>C = Valid state/county/tract combination but census code not found</li>
-     * <li>D = Missing or unknown state, county, or census tract</li>
+     * <li>A = State, county, or tract are invalid</li>
+     * <li>B = State and tract are valid, but county was not reported</li>
+     * <li>C = State + county + tract combination was not found</li>
+     * <li>D = State, county, or tract are blank or unknown/li>
      * </ul>
      * <br/><br/>
      * @param input a <code>RuralUrbanContinuumInputDto</code> input object
@@ -153,10 +153,10 @@ public final class RuralUrbanUtils {
      * <li>1 = Urban commuting area - RUCA codes 1.0, 1.1, 2.0, 2.1, 3.0, 4.1, 5.1, 7.1, 8.1, and 10.1</li>
      * <li>2 = Not an urban commuting area - all other RUCA codes except 99</li>
      * <li>9 = RUCA code is 99</li>
-     * <li>A = Invalid state, county, or census tract</li>
-     * <li>B = Insufficient population data for county to determine RUCA code</li>
-     * <li>C = Valid state/county/tract combination but RUCA code not found</li>
-     * <li>D = Missing or unknown state, county, or census tract</li>
+     * <li>A = State, county, or tract are invalid</li>
+     * <li>B = State and tract are valid, but county was not reported</li>
+     * <li>C = State + county + tract combination was not found</li>
+     * <li>D = State, county, or tract are blank or unknown</li>
      * </ul>
      * <br/><br/>
      * @param record a map of properties representing a NAACCR line
@@ -189,10 +189,10 @@ public final class RuralUrbanUtils {
      * <li>1 = Urban commuting area - RUCA codes 1.0, 1.1, 2.0, 2.1, 3.0, 4.1, 5.1, 7.1, 8.1, and 10.1</li>
      * <li>2 = Not an urban commuting area - all other RUCA codes except 99</li>
      * <li>9 = RUCA code is 99</li>
-     * <li>A = Invalid state, county, or census tract</li>
-     * <li>B = Insufficient population data for county to determine RUCA code</li>
-     * <li>C = Valid state/county/tract combination but RUCA code not found</li>
-     * <li>D = Missing or unknown state, county, or census tract</li>
+     * <li>A = State, county, or tract are invalid</li>
+     * <li>B = State and tract are valid, but county was not reported</li>
+     * <li>C = State + county + tract combination was not found</li>
+     * <li>D = State, county, or tract are blank or unknown</li>
      * </ul>
      * <br/><br/>
      * @param input a <code>RuralUrbanContinuumInputDto</code> input object
