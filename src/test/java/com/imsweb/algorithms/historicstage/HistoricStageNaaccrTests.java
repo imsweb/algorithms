@@ -22,7 +22,7 @@ public class HistoricStageNaaccrTests {
 
     public static void main(String[] args) throws IOException {
 
-        NaaccrLayout layout = (NaaccrLayout)LayoutFactory.getLayout(LayoutFactory.LAYOUT_ID_NAACCR_16_INCIDENCE);
+        NaaccrLayout layout = (NaaccrLayout) LayoutFactory.getLayout(LayoutFactory.LAYOUT_ID_NAACCR_16_INCIDENCE);
         CSVWriter writer = new CSVWriter(new FileWriter(new File("C:\\Users\\flynng\\Desktop\\tmpTest\\algorithms.histstage.csv")));
         File dataDir = new File("C:\\Users\\flynng\\Desktop\\tmpTest\\");
 
