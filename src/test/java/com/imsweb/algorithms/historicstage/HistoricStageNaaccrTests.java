@@ -22,23 +22,32 @@ public class HistoricStageNaaccrTests {
 
     public static void main(String[] args) throws IOException {
 
-        NaaccrLayout layout = (NaaccrLayout)LayoutFactory.getLayout(LayoutFactory.LAYOUT_ID_NAACCR_14_INCIDENCE);
-        CSVWriter writer = new CSVWriter(new FileWriter(new File("C:\\Users\\keelg\\Desktop\\tmpTest\\ut.csv")));
+        NaaccrLayout layout = (NaaccrLayout) LayoutFactory.getLayout(LayoutFactory.LAYOUT_ID_NAACCR_16_INCIDENCE);
+        CSVWriter writer = new CSVWriter(new FileWriter(new File("C:\\Users\\flynng\\Desktop\\tmpTest\\algorithms.histstage.csv")));
+        File dataDir = new File("C:\\Users\\flynng\\Desktop\\tmpTest\\");
 
-        LineNumberReader reader = new LineNumberReader(new InputStreamReader(new GZIPInputStream(new FileInputStream(new File("C:\\Users\\keelg\\Desktop\\tmpTest\\ut141204.nov14.txd.gz")))));
-        Map<String, String> record = layout.readNextRecord(reader);
-        while (record != null) {
-            // process record...
-            String[] line = new String[5];
-            line[0] = record.get(layout.getFieldByNaaccrItemNumber(40).getName()); //Regsitry
-            line[1] = record.get(layout.getFieldByNaaccrItemNumber(20).getName()); //Pat ID
-            line[2] = record.get(layout.getFieldByNaaccrItemNumber(380).getName()); //Sequence number
-            line[3] = record.get(layout.getFieldByNaaccrItemNumber(390).getName()); //Yeardx
-            line[4] = HistoricStageUtils.computeHistoricStage(record).getResult();
-            writer.writeNext(line);
-            record = layout.readNextRecord(reader);
+        File[] files = dataDir.listFiles();
+        if (files != null) {
+            for (File dataFile : files) {
+                if (!dataFile.getName().endsWith(".txd.gz")) continue;
+
+                //LineNumberReader reader = new LineNumberReader(new InputStreamReader(new GZIPInputStream(new FileInputStream(new File("C:\\Users\\flynng\\Desktop\\tmpTest\\se171120.nov17.txd.gz")))));
+                LineNumberReader reader = new LineNumberReader(new InputStreamReader(new GZIPInputStream(new FileInputStream(dataFile))));
+                Map<String, String> record = layout.readNextRecord(reader);
+                while (record != null) {
+                    // process record...
+                    String[] line = new String[5];
+                    line[0] = record.get(layout.getFieldByNaaccrItemNumber(40).getName()); //Regsitry
+                    line[1] = record.get(layout.getFieldByNaaccrItemNumber(20).getName()); //Pat ID
+                    line[2] = record.get(layout.getFieldByNaaccrItemNumber(380).getName()); //Sequence number
+                    line[3] = record.get(layout.getFieldByNaaccrItemNumber(390).getName()); //Yeardx
+                    line[4] = HistoricStageUtils.computeHistoricStage(record).getResult();
+                    writer.writeNext(line);
+                    record = layout.readNextRecord(reader);
+                }
+                reader.close();
+            }
         }
-        reader.close();
         writer.close();
     }
 }

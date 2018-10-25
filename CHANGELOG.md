@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 1.18**
+
+- Updated the SEER Historic Stage algorithm to reflect the algorithm used for the current SEER research data.
+
 **Changes in version 1.17**
 
 - Changed computation of RUCA/URIC variables in RuralUrbanUtils; renamed some methods.
