@@ -3,7 +3,7 @@ import org.gradle.internal.jvm.Jvm
 plugins {
     id 'java-library'
     id 'checkstyle'
-    id 'net.ltgt.errorprone' version '0.0.16'
+    id 'com.github.spotbugs' version '1.6.5'
     id 'com.bmuschko.nexus' version '2.3.1'
     id 'io.codearte.nexus-staging' version '0.8.0'
 }
@@ -12,6 +12,7 @@ group = 'com.imsweb'
 version = file('VERSION').text
 description = 'Java implementation of cancer-related algorithms (NHIA, NAPIIA, Survival Time, etc...)'
 sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
 
 println "Starting build using ${Jvm.current()}"
 
@@ -26,8 +27,6 @@ dependencies {
 
     testImplementation 'junit:junit:4.12'
     testImplementation 'com.imsweb:layout:1.11'
-
-    errorprone 'com.google.errorprone:error_prone_core:2.3.1'
 }
 
 // enforce UTF-8, display the compilation warnings
@@ -59,8 +58,13 @@ jar {
 // checkstyle plugin settings
 checkstyle {
     ignoreFailures = true
-    toolVersion '8.12'
     configFile = file('config/checkstyle/checkstyle.xml')
+}
+
+// spotbugs plugin settings
+spotbugs {
+    ignoreFailures = true
+    excludeFilter = file('config/spotbugs/spotbugs-exclude.xml')
 }
 
 // needed to deploy to Maven Central
@@ -101,7 +105,7 @@ if (version.endsWith('-SNAPSHOT'))
 
 // Gradle wrapper, this allows to build the project without having to install Gradle!
 wrapper {
-    gradleVersion = '4.10'
+    gradleVersion = '4.10.2'
 }
 
 
