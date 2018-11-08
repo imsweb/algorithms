@@ -25,7 +25,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
-import au.com.bytecode.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
 
 import com.imsweb.algorithms.nhia.NhiaUtils;
 import com.imsweb.layout.LayoutFactory;
@@ -45,7 +45,8 @@ public class NhiaLab {
     private static void createTestingData() throws Exception {
 
         List<Map<String, String>> opt0List = new ArrayList<>(), opt1List = new ArrayList<>(), opt2List = new ArrayList<>();
-        for (String[] row : new CSVReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("tools-test-data/testNHIA.csv")), ',', '\"', 1).readAll()) {
+        for (String[] row : new CSVReaderBuilder(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("tools-test-data/testNHIA.csv"))).withSkipLines(1).build()
+                .readAll()) {
             if (row.length < 2)
                 continue;
 

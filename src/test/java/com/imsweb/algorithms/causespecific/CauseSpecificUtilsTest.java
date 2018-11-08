@@ -5,6 +5,7 @@ package com.imsweb.algorithms.causespecific;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +13,8 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
-import au.com.bytecode.opencsv.CSVReader;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
 
 import com.imsweb.layout.Field;
 import com.imsweb.layout.Layout;
@@ -67,24 +69,26 @@ public class CauseSpecificUtilsTest {
     @Test
     public void testCsvFile() throws IOException {
         int count = 0;
-        for (String[] row : new CSVReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("causespecific/testCauseSpecific.csv"), "US-ASCII"), ',', '\"', 1)
-                .readAll()) {
-            Map<String, String> rec = new HashMap<>();
-            rec.put(CauseSpecificUtils.PROP_SEQ_NUM_CENTRAL, row[0]);
-            rec.put(CauseSpecificUtils.PROP_ICD_REVISION_NUM, row[1]);
-            rec.put(CauseSpecificUtils.PROP_COD, row[2]);
-            rec.put(CauseSpecificUtils.PROP_PRIMARY_SITE, row[3]);
-            rec.put(CauseSpecificUtils.PROP_HISTOLOGY_ICDO3, row[4]);
-            rec.put(CauseSpecificUtils.PROP_DOLC_YEAR, row[5]);
-            String causeSpecificExpected = row[7];
-            String causeOtherExpected = row[8];
-            String causeSpecificCalculated = CauseSpecificUtils.computeCauseSpecific(rec).getCauseSpecificDeathClassification();
-            String causeOtherCalculated = CauseSpecificUtils.computeCauseSpecific(rec).getCauseOtherDeathClassification();
-            count++;
-            if (!causeSpecificExpected.equals(causeSpecificCalculated) || !causeOtherExpected.equals(causeOtherCalculated)) {
-                //System.out.println(SeerSiteRecodeUtils.calculateSiteRecode(row[3], row[4]));
-                Assert.fail("Unexpected result for row number " + (count + 1) + " " + Arrays.asList(row) + "\nExpected results: " + causeSpecificExpected + ", " +
-                        "" + causeOtherExpected + " But found: " + causeSpecificCalculated + ", " + causeOtherCalculated);
+        try (CSVReader reader = new CSVReaderBuilder(
+                new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("causespecific/testCauseSpecific.csv"), StandardCharsets.US_ASCII)).withSkipLines(1).build()) {
+            for (String[] row : reader.readAll()) {
+                Map<String, String> rec = new HashMap<>();
+                rec.put(CauseSpecificUtils.PROP_SEQ_NUM_CENTRAL, row[0]);
+                rec.put(CauseSpecificUtils.PROP_ICD_REVISION_NUM, row[1]);
+                rec.put(CauseSpecificUtils.PROP_COD, row[2]);
+                rec.put(CauseSpecificUtils.PROP_PRIMARY_SITE, row[3]);
+                rec.put(CauseSpecificUtils.PROP_HISTOLOGY_ICDO3, row[4]);
+                rec.put(CauseSpecificUtils.PROP_DOLC_YEAR, row[5]);
+                String causeSpecificExpected = row[7];
+                String causeOtherExpected = row[8];
+                String causeSpecificCalculated = CauseSpecificUtils.computeCauseSpecific(rec).getCauseSpecificDeathClassification();
+                String causeOtherCalculated = CauseSpecificUtils.computeCauseSpecific(rec).getCauseOtherDeathClassification();
+                count++;
+                if (!causeSpecificExpected.equals(causeSpecificCalculated) || !causeOtherExpected.equals(causeOtherCalculated)) {
+                    //System.out.println(SeerSiteRecodeUtils.calculateSiteRecode(row[3], row[4]));
+                    Assert.fail("Unexpected result for row number " + (count + 1) + " " + Arrays.asList(row) + "\nExpected results: " + causeSpecificExpected + ", " +
+                            "" + causeOtherExpected + " But found: " + causeSpecificCalculated + ", " + causeOtherCalculated);
+                }
             }
         }
     }

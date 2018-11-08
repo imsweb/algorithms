@@ -5,6 +5,7 @@ package com.imsweb.algorithms.nhia;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -14,7 +15,8 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
-import au.com.bytecode.opencsv.CSVReader;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
 
 public class NhiaUtilsTest {
 
@@ -312,23 +314,26 @@ public class NhiaUtilsTest {
 
     @Test
     public void testCsvFile() throws IOException {
-        for (String[] row : new CSVReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("nhia/testNHIA.csv"), "US-ASCII"), ',', '\"', 1).readAll()) {
-            Map<String, String> rec = new HashMap<>();
-            rec.put(NhiaUtils.PROP_SPANISH_HISPANIC_ORIGIN, row[0]);
-            rec.put(NhiaUtils.PROP_BIRTH_PLACE_COUNTRY, row[1]);
-            rec.put(NhiaUtils.PROP_RACE1, row[2]);
-            rec.put(NhiaUtils.PROP_IHS, row[3]);
-            rec.put(NhiaUtils.PROP_STATE_DX, row[4]);
-            rec.put(NhiaUtils.PROP_COUNTY_DX, row[5]);
-            rec.put(NhiaUtils.PROP_SEX, row[6]);
-            rec.put(NhiaUtils.PROP_NAME_LAST, row[7]);
-            rec.put(NhiaUtils.PROP_NAME_MAIDEN, row[8]);
+        try (CSVReader reader = new CSVReaderBuilder(
+                new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("nhia/testNHIA.csv"), StandardCharsets.US_ASCII)).withSkipLines(1).build()) {
+            for (String[] row : reader.readAll()) {
+                Map<String, String> rec = new HashMap<>();
+                rec.put(NhiaUtils.PROP_SPANISH_HISPANIC_ORIGIN, row[0]);
+                rec.put(NhiaUtils.PROP_BIRTH_PLACE_COUNTRY, row[1]);
+                rec.put(NhiaUtils.PROP_RACE1, row[2]);
+                rec.put(NhiaUtils.PROP_IHS, row[3]);
+                rec.put(NhiaUtils.PROP_STATE_DX, row[4]);
+                rec.put(NhiaUtils.PROP_COUNTY_DX, row[5]);
+                rec.put(NhiaUtils.PROP_SEX, row[6]);
+                rec.put(NhiaUtils.PROP_NAME_LAST, row[7]);
+                rec.put(NhiaUtils.PROP_NAME_MAIDEN, row[8]);
 
-            String option = row[9];
-            String nhia = row[10];
+                String option = row[9];
+                String nhia = row[10];
 
-            if (!nhia.equals(NhiaUtils.computeNhia(rec, option).getNhia()))
-                Assert.fail("Unexpected result in CSV data file for row " + Arrays.asList(row));
+                if (!nhia.equals(NhiaUtils.computeNhia(rec, option).getNhia()))
+                    Assert.fail("Unexpected result in CSV data file for row " + Arrays.asList(row));
+            }
         }
     }
 

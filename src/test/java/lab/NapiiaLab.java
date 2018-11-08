@@ -28,8 +28,8 @@ import java.util.zip.ZipOutputStream;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
-import au.com.bytecode.opencsv.CSVReader;
-import au.com.bytecode.opencsv.CSVWriter;
+import com.opencsv.CSVReaderBuilder;
+import com.opencsv.CSVWriter;
 
 import com.imsweb.algorithms.napiia.NapiiaResultsDto;
 import com.imsweb.algorithms.napiia.NapiiaUtils;
@@ -50,7 +50,8 @@ public class NapiiaLab {
 
     private static void createTestingData() throws IOException {
         List<Map<String, String>> list = new ArrayList<>();
-        for (String[] row : new CSVReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("tools-test-data/testNAPIIA.csv")), ',', '\"', 1).readAll()) {
+        for (String[] row : new CSVReaderBuilder(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("tools-test-data/testNAPIIA.csv"))).withSkipLines(1).build()
+                .readAll()) {
             Map<String, String> rec = new HashMap<>();
             rec.put(NapiiaUtils.PROP_RACE1, row[0]);
             rec.put(NapiiaUtils.PROP_RACE2, row[1]);

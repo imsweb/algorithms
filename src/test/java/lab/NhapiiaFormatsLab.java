@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import au.com.bytecode.opencsv.CSVWriter;
+import com.opencsv.CSVWriter;
 
 // use this class to translate an xpt SAS format file into an lst file, which is also SAS but is a human-readable file (ASCII)...
 public class NhapiiaFormatsLab {
