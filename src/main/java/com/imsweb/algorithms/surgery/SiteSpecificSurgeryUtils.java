@@ -15,6 +15,18 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.converters.basic.BooleanConverter;
+import com.thoughtworks.xstream.converters.basic.ByteConverter;
+import com.thoughtworks.xstream.converters.basic.DateConverter;
+import com.thoughtworks.xstream.converters.basic.DoubleConverter;
+import com.thoughtworks.xstream.converters.basic.FloatConverter;
+import com.thoughtworks.xstream.converters.basic.IntConverter;
+import com.thoughtworks.xstream.converters.basic.LongConverter;
+import com.thoughtworks.xstream.converters.basic.NullConverter;
+import com.thoughtworks.xstream.converters.basic.ShortConverter;
+import com.thoughtworks.xstream.converters.basic.StringConverter;
+import com.thoughtworks.xstream.converters.collections.CollectionConverter;
+import com.thoughtworks.xstream.converters.reflection.ReflectionConverter;
 import com.thoughtworks.xstream.io.xml.XppDriver;
 import com.thoughtworks.xstream.security.NoTypePermission;
 import com.thoughtworks.xstream.security.WildcardTypePermission;
@@ -98,7 +110,7 @@ public final class SiteSpecificSurgeryUtils {
     @SuppressWarnings("unchecked")
     public static SurgeryTablesXmlDto readSiteSpecificSurgeryData(InputStream stream) throws IOException {
         try {
-            return (SurgeryTablesXmlDto)createSiteSpecificSurgeryDataXstream().fromXML(stream);
+            return (SurgeryTablesXmlDto)createSiteSpecificSurgeryDataXStream().fromXML(stream);
         }
         finally {
             stream.close();
@@ -114,15 +126,32 @@ public final class SiteSpecificSurgeryUtils {
      */
     public static void writeSiteSpecificSurgeryData(OutputStream stream, SurgeryTablesXmlDto data) throws IOException {
         try {
-            createSiteSpecificSurgeryDataXstream().toXML(data, stream);
+            createSiteSpecificSurgeryDataXStream().toXML(data, stream);
         }
         finally {
             stream.close();
         }
     }
 
-    private static XStream createSiteSpecificSurgeryDataXstream() {
-        XStream xStream = new XStream(new XppDriver());
+    private static XStream createSiteSpecificSurgeryDataXStream() {
+        XStream xStream = new XStream(new XppDriver()) {
+            // only register the converters we need; other converters generate a private access warning in the console on Java9+...
+            @Override
+            protected void setupConverters() {
+                registerConverter(new NullConverter(), PRIORITY_VERY_HIGH);
+                registerConverter(new IntConverter(), PRIORITY_NORMAL);
+                registerConverter(new FloatConverter(), PRIORITY_NORMAL);
+                registerConverter(new DoubleConverter(), PRIORITY_NORMAL);
+                registerConverter(new LongConverter(), PRIORITY_NORMAL);
+                registerConverter(new ShortConverter(), PRIORITY_NORMAL);
+                registerConverter(new BooleanConverter(), PRIORITY_NORMAL);
+                registerConverter(new ByteConverter(), PRIORITY_NORMAL);
+                registerConverter(new StringConverter(), PRIORITY_NORMAL);
+                registerConverter(new DateConverter(), PRIORITY_NORMAL);
+                registerConverter(new CollectionConverter(getMapper()), PRIORITY_NORMAL);
+                registerConverter(new ReflectionConverter(getMapper(), getReflectionProvider()), PRIORITY_VERY_LOW);
+            }
+        };
         xStream.autodetectAnnotations(true);
         xStream.alias("surgery-tables", SurgeryTablesXmlDto.class);
 

@@ -2,6 +2,10 @@
 
 **Changes in version 1.18**
 
+- Fixed warnings in the console about unsafe access to private fields.
+
+**Changes in version 1.18**
+
 - Changed Survival Time algorithm so it returns null values for no-value year/month/day instead of spaces.
 - Updated the SEER Historic Stage algorithm to reflect the algorithm used for the current SEER research data.
 - Updated NAACCR XML library from version 1.4.10 to version 1.4.11.1
