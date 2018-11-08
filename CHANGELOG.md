@@ -1,6 +1,6 @@
 ## Algorithms Version History
 
-**Changes in version 1.18**
+**Changes in version 1.19**
 
 - Fixed warnings in the console about unsafe access to private fields.
 
