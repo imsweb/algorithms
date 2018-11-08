@@ -51,9 +51,9 @@ public class SurvivalTimeUtils {
     private static final double _DAYS_IN_MONTH = 365.24 / (double)12;
 
     public static final String UNKNOWN_SURVIVAL = "9999";
-    public static final String BLANK_YEAR = "    ";
-    public static final String BLANK_MONTH = "  ";
-    public static final String BLANK_DAY = "  ";
+    public static final String BLANK_YEAR = null;
+    public static final String BLANK_MONTH = null;
+    public static final String BLANK_DAY = null;
 
     /**
      * Calculates the survival time for the provided list of records representing a patient.
