@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FindBugsFilter>
-<Match>
-  <Class name="~.*\.*Test.*"/>
-</Match>
-<Match>
-  <Package name="lab"/>
-</Match>
+    <Match>
+        <Class name="~.*\.*Test.*"/>
+    </Match>
+    <Match>
+        <Package name="lab"/>
+    </Match>
+    <Match>
+        <Bug pattern="RCN_REDUNDANT_NULLCHECK_WOULD_HAVE_BEEN_A_NPE"/>
+    </Match>
 </FindBugsFilter>
