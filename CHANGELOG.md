@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 1.20**
+
+- Fixed synchronization issues in the initialization of the RUCA/URIC and Poverty Indicator algorithms.
+
 **Changes in version 1.19**
 
 - Fixed warnings in the console about unsafe access to private fields.

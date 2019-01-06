@@ -18,6 +18,8 @@ The following algorithms are available:
  * SEER Site Recode ([SeerSiteRecodeUtils](https://github.com/imsweb/algorithms/tree/master/src/main/java/com/imsweb/algorithms/seersiterecode/SeerSiteRecodeUtils.java))
  * Site-specific Surgery tables ([SiteSpecificSurgeryUtils](https://github.com/imsweb/algorithms/tree/master/src/main/java/com/imsweb/algorithms/surgery/SiteSpecificSurgeryUtils.java))
  * Survival Time ([SurvivalTimeUtils](https://github.com/imsweb/algorithms/tree/master/src/main/java/com/imsweb/algorithms/survival/SurvivalTimeUtils.java))
+ * ICD Codes ([IcdUtils](https://github.com/imsweb/algorithms/tree/master/src/main/java/com/imsweb/algorithms/icd/IcdUtils.java))
+ * Behavior recode ([BehaviorRecodeUtils](https://github.com/imsweb/algorithms/tree/master/src/main/java/com/imsweb/algorithms/behavrecode/BehaviorRecodeUtils.java))
  * IARC Multiple Primary Algorithm ([IarcUtils](https://github.com/imsweb/algorithms/tree/master/src/main/java/com/imsweb/algorithms/iarc/IarcUtils.java))
 
 ## Download
