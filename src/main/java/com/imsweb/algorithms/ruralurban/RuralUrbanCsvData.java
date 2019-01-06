@@ -3,6 +3,13 @@
  */
 package com.imsweb.algorithms.ruralurban;
 
+import com.imsweb.algorithms.internal.CensusData;
+import com.imsweb.algorithms.internal.CountryData;
+import com.imsweb.algorithms.internal.CountyData;
+import com.imsweb.algorithms.internal.StateData;
+import com.opencsv.CSVReaderBuilder;
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -11,10 +18,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.lang3.StringUtils;
-
-import com.opencsv.CSVReaderBuilder;
 
 import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.RURAL_URBAN_COMMUTING_AREA_UNKNOWN;
 import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.RURAL_URBAN_CONTINUUM_UNKNOWN;
@@ -31,25 +34,39 @@ import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.URBAN_RURAL_INDIC
  * 2000: https://seer.cancer.gov/seerstat/variables/countyattribs/#ca2000
  * <br/><br/>
  * Created on Aug 12, 2014 by HoweW
+ *
  * @author howew
  */
 public class RuralUrbanCsvData implements RuralUrbanDataProvider {
 
-    // main (and unique) cached data
-    private Map<String, CountyDataDto> _lookup = new HashMap<>();
+    // main (and unique) cached data (keys is concatenated state/county)
+    private Map<String, CountyDataDto> _lookup;
+
+    // all the data is initialized at once; if we need a more fine-grain initialization, we will need more variables to keep track of which data has been initialized...
+    private synchronized void checkLookupInitialized() {
+        if (_lookup == null) {
+            _lookup = new HashMap<>();
+            //initializeUrbanRuralIndicatorCodeLookup();
+            //initializeRuralUrbanCommutingAreaLookup();
+            initializeRuralUrbanContinuumLookup();
+        }
+    }
 
     @Override
     public String getUrbanRuralIndicatorCode(String tractCategory, String state, String county, String censusTract) {
         if (tractCategory == null || state == null || county == null || censusTract == null)
             return URBAN_RURAL_INDICATOR_CODE_UNKNOWN;
 
-        if (_lookup.isEmpty())
-            initializeAllLookups();
+        if (!CountryData.getInstance().isUricDataInitialized())
+            CountryData.getInstance().initializeUricData(loadUrbanRuralIndicatorCodeData());
 
-        CountyDataDto countyData = _lookup.get(state + county);
+        StateData stateData = CountryData.getInstance().getRucaStateData(state);
+        if (stateData == null)
+            return URBAN_RURAL_INDICATOR_CODE_UNKNOWN;
+        CountyData countyData = stateData.getCountyData(county);
         if (countyData == null)
             return URBAN_RURAL_INDICATOR_CODE_UNKNOWN;
-        CensusDataDto censusData = countyData.getCensusData().get(censusTract);
+        CensusData censusData = countyData.getCensusData(censusTract);
         if (censusData == null)
             return URBAN_RURAL_INDICATOR_CODE_UNKNOWN;
 
@@ -72,25 +89,31 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
         if (tractCategory == null || state == null || county == null || censusTract == null)
             return null;
 
-        if (_lookup.isEmpty())
-            initializeAllLookups();
+        if (!CountryData.getInstance().isUricDataInitialized())
+            CountryData.getInstance().initializeUricData(loadUrbanRuralIndicatorCodeData());
 
-        CountyDataDto countyData = _lookup.get(state + county);
+        StateData stateData = CountryData.getInstance().getRucaStateData(state);
+        if (stateData == null)
+            return null;
+        CountyData countyData = stateData.getCountyData(county);
         if (countyData == null)
             return null;
-        CensusDataDto censusData = countyData.getCensusData().get(censusTract);
+        CensusData censusData = countyData.getCensusData(censusTract);
         if (censusData == null)
             return null;
 
-        if (tractCategory.equals(RuralUrbanDataProvider.TRACT_CATEGORY_1))
-            return censusData.getIndicatorCodePercentage2000();
-        if (tractCategory.equals(RuralUrbanDataProvider.TRACT_CATEGORY_2))
-            return censusData.getIndicatorCodePercentage2010();
-
-        return null;
+        switch (tractCategory) {
+            case RuralUrbanDataProvider.TRACT_CATEGORY_1:
+                return censusData.getIndicatorCodePercentage2000();
+            case RuralUrbanDataProvider.TRACT_CATEGORY_2:
+                return censusData.getIndicatorCodePercentage2010();
+            default:
+                return null;
+        }
     }
 
-    private void initializeUrbanRuralIndicatorCodeLookup() {
+    private Map<String, Map<String, Map<String, CensusData>>> loadUrbanRuralIndicatorCodeData() {
+        Map<String, Map<String, Map<String, CensusData>>> result = new HashMap<>();
 
         // load 2000 data
         try (Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("ruralurban/urban-rural-indicator-code-2000.csv"), StandardCharsets.US_ASCII)) {
@@ -100,13 +123,12 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
                 if (indicator.length() != 1)
                     throw new RuntimeException("Found unexpected format for URIC value: " + indicator);
 
-                CensusDataDto dto = _lookup.computeIfAbsent(state + county, k -> new CountyDataDto()).getCensusData().computeIfAbsent(tract, k -> new CensusDataDto());
+                CensusData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new HashMap<>()).computeIfAbsent(tract, k -> new CensusData());
                 dto.setIndicatorCode2000(indicator);
                 if (!".".equals(percent))
                     dto.setIndicatorCodePercentage2000(Float.valueOf(percent));
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
@@ -118,15 +140,16 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
                 if (indicator.length() != 1)
                     throw new RuntimeException("Found unexpected format for URIC value: " + indicator);
 
-                CensusDataDto dto = _lookup.computeIfAbsent(state + county, k -> new CountyDataDto()).getCensusData().computeIfAbsent(tract, k -> new CensusDataDto());
+                CensusData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new HashMap<>()).computeIfAbsent(tract, k -> new CensusData());
                 dto.setIndicatorCode2010(indicator);
                 if (!".".equals(percent))
                     dto.setIndicatorCodePercentage2010(Float.valueOf(percent));
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        return result;
     }
 
     @Override
@@ -134,13 +157,16 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
         if (tractCategory == null || state == null || county == null || censusTract == null)
             return RURAL_URBAN_COMMUTING_AREA_UNKNOWN;
 
-        if (_lookup.isEmpty())
-            initializeAllLookups();
+        if (!CountryData.getInstance().isRucaDataInitialized())
+            CountryData.getInstance().initializeRucaData(loadRuralUrbanCommutingAreaData());
 
-        CountyDataDto countyData = _lookup.get(state + county);
+        StateData stateData = CountryData.getInstance().getRucaStateData(state);
+        if (stateData == null)
+            return RURAL_URBAN_COMMUTING_AREA_UNKNOWN;
+        CountyData countyData = stateData.getCountyData(county);
         if (countyData == null)
             return RURAL_URBAN_COMMUTING_AREA_UNKNOWN;
-        CensusDataDto censusData = countyData.getCensusData().get(censusTract);
+        CensusData censusData = countyData.getCensusData(censusTract);
         if (censusData == null)
             return RURAL_URBAN_COMMUTING_AREA_UNKNOWN;
 
@@ -158,7 +184,9 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
         return result == null ? RURAL_URBAN_COMMUTING_AREA_UNKNOWN : result;
     }
 
-    private void initializeRuralUrbanCommutingAreaLookup() {
+    private Map<String, Map<String, Map<String, CensusData>>> loadRuralUrbanCommutingAreaData() {
+        Map<String, Map<String, Map<String, CensusData>>> result = new HashMap<>();
+
         List<String> urbanCommutingAreas = Arrays.asList("1.0", "1.1", "2.0", "2.1", "3.0", "4.1", "5.1", "7.1", "8.1", "10.1");
 
         // load 2000 data
@@ -166,7 +194,7 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
             for (String[] row : new CSVReaderBuilder(reader).withSkipLines(1).build().readAll()) {
                 String state = row[0], county = row[1], tract = row[2], primary = row[3], secondary = row[4];
 
-                CensusDataDto dto = _lookup.computeIfAbsent(state + county, k -> new CountyDataDto()).getCensusData().computeIfAbsent(tract, k -> new CensusDataDto());
+                CensusData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new HashMap<>()).computeIfAbsent(tract, k -> new CensusData());
                 if (primary.equals("99"))
                     dto.setCommutingArea2000("9");
                 else if (urbanCommutingAreas.contains(secondary))
@@ -174,8 +202,7 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
                 else
                     dto.setCommutingArea2000("2");
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
@@ -184,7 +211,7 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
             for (String[] row : new CSVReaderBuilder(reader).withSkipLines(1).build().readAll()) {
                 String state = row[0], county = row[1], tract = row[2], primary = row[3], secondary = row[4];
 
-                CensusDataDto dto = _lookup.computeIfAbsent(state + county, k -> new CountyDataDto()).getCensusData().computeIfAbsent(tract, k -> new CensusDataDto());
+                CensusData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new HashMap<>()).computeIfAbsent(tract, k -> new CensusData());
                 if (primary.equals("99"))
                     dto.setCommutingArea2010("9");
                 else if (urbanCommutingAreas.contains(secondary))
@@ -192,10 +219,11 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
                 else
                     dto.setCommutingArea2010("2");
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        return result;
     }
 
     @Override
@@ -203,8 +231,7 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
         if (bealeCategory == null || state == null || county == null)
             return RURAL_URBAN_CONTINUUM_UNKNOWN;
 
-        if (_lookup.isEmpty())
-            initializeAllLookups();
+        checkLookupInitialized();
 
         CountyDataDto countyData = _lookup.get(state + county);
         if (countyData == null)
@@ -250,8 +277,7 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
                 CountyDataDto dto = _lookup.computeIfAbsent(state + county, k -> new CountyDataDto());
                 dto.setUrbanContinuum1993(StringUtils.leftPad(val, 2, '0'));
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
@@ -263,8 +289,7 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
                 CountyDataDto dto = _lookup.computeIfAbsent(state + county, k -> new CountyDataDto());
                 dto.setUrbanContinuum2003(StringUtils.leftPad(val, 2, '0'));
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
@@ -276,17 +301,9 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
                 CountyDataDto dto = _lookup.computeIfAbsent(state + county, k -> new CountyDataDto());
                 dto.setUrbanContinuum2013(StringUtils.leftPad(val, 2, '0'));
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    // all the data is initialized at once; if we need a more fine-grain initialization, we will need more variables to keep track of which data has been initialized...
-    private synchronized void initializeAllLookups() {
-        initializeUrbanRuralIndicatorCodeLookup();
-        initializeRuralUrbanCommutingAreaLookup();
-        initializeRuralUrbanContinuumLookup();
     }
 
     // data structure for the values keyed by state+county only
