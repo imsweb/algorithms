@@ -3,13 +3,6 @@
  */
 package com.imsweb.algorithms.ruralurban;
 
-import com.imsweb.algorithms.internal.CensusData;
-import com.imsweb.algorithms.internal.CountryData;
-import com.imsweb.algorithms.internal.CountyData;
-import com.imsweb.algorithms.internal.StateData;
-import com.opencsv.CSVReaderBuilder;
-import org.apache.commons.lang3.StringUtils;
-
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -18,6 +11,15 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.opencsv.CSVReaderBuilder;
+
+import com.imsweb.algorithms.internal.CensusData;
+import com.imsweb.algorithms.internal.CountryData;
+import com.imsweb.algorithms.internal.CountyData;
+import com.imsweb.algorithms.internal.StateData;
 
 import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.RURAL_URBAN_COMMUTING_AREA_UNKNOWN;
 import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.RURAL_URBAN_CONTINUUM_UNKNOWN;
@@ -34,23 +36,9 @@ import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.URBAN_RURAL_INDIC
  * 2000: https://seer.cancer.gov/seerstat/variables/countyattribs/#ca2000
  * <br/><br/>
  * Created on Aug 12, 2014 by HoweW
- *
  * @author howew
  */
 public class RuralUrbanCsvData implements RuralUrbanDataProvider {
-
-    // main (and unique) cached data (keys is concatenated state/county)
-    private Map<String, CountyDataDto> _lookup;
-
-    // all the data is initialized at once; if we need a more fine-grain initialization, we will need more variables to keep track of which data has been initialized...
-    private synchronized void checkLookupInitialized() {
-        if (_lookup == null) {
-            _lookup = new HashMap<>();
-            //initializeUrbanRuralIndicatorCodeLookup();
-            //initializeRuralUrbanCommutingAreaLookup();
-            initializeRuralUrbanContinuumLookup();
-        }
-    }
 
     @Override
     public String getUrbanRuralIndicatorCode(String tractCategory, String state, String county, String censusTract) {
@@ -60,7 +48,7 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
         if (!CountryData.getInstance().isUricDataInitialized())
             CountryData.getInstance().initializeUricData(loadUrbanRuralIndicatorCodeData());
 
-        StateData stateData = CountryData.getInstance().getRucaStateData(state);
+        StateData stateData = CountryData.getInstance().getUricStateData(state);
         if (stateData == null)
             return URBAN_RURAL_INDICATOR_CODE_UNKNOWN;
         CountyData countyData = stateData.getCountyData(county);
@@ -92,7 +80,7 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
         if (!CountryData.getInstance().isUricDataInitialized())
             CountryData.getInstance().initializeUricData(loadUrbanRuralIndicatorCodeData());
 
-        StateData stateData = CountryData.getInstance().getRucaStateData(state);
+        StateData stateData = CountryData.getInstance().getUricStateData(state);
         if (stateData == null)
             return null;
         CountyData countyData = stateData.getCountyData(county);
@@ -112,6 +100,7 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
         }
     }
 
+    @SuppressWarnings("ConstantConditions")
     private Map<String, Map<String, Map<String, CensusData>>> loadUrbanRuralIndicatorCodeData() {
         Map<String, Map<String, Map<String, CensusData>>> result = new HashMap<>();
 
@@ -128,7 +117,8 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
                 if (!".".equals(percent))
                     dto.setIndicatorCodePercentage2000(Float.valueOf(percent));
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new RuntimeException(e);
         }
 
@@ -145,7 +135,8 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
                 if (!".".equals(percent))
                     dto.setIndicatorCodePercentage2010(Float.valueOf(percent));
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new RuntimeException(e);
         }
 
@@ -184,6 +175,7 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
         return result == null ? RURAL_URBAN_COMMUTING_AREA_UNKNOWN : result;
     }
 
+    @SuppressWarnings("ConstantConditions")
     private Map<String, Map<String, Map<String, CensusData>>> loadRuralUrbanCommutingAreaData() {
         Map<String, Map<String, Map<String, CensusData>>> result = new HashMap<>();
 
@@ -202,7 +194,8 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
                 else
                     dto.setCommutingArea2000("2");
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new RuntimeException(e);
         }
 
@@ -219,7 +212,8 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
                 else
                     dto.setCommutingArea2010("2");
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new RuntimeException(e);
         }
 
@@ -231,9 +225,13 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
         if (bealeCategory == null || state == null || county == null)
             return RURAL_URBAN_CONTINUUM_UNKNOWN;
 
-        checkLookupInitialized();
+        if (!CountryData.getInstance().isContinuumDataInitialized())
+            CountryData.getInstance().initializeContinuumData(loadRuralUrbanContinuumData());
 
-        CountyDataDto countyData = _lookup.get(state + county);
+        StateData stateData = CountryData.getInstance().getContinuumStateData(state);
+        if (stateData == null)
+            return RURAL_URBAN_CONTINUUM_UNKNOWN;
+        CountyData countyData = stateData.getCountyData(county);
         if (countyData == null)
             return RURAL_URBAN_CONTINUUM_UNKNOWN;
 
@@ -267,17 +265,20 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
         return result == null ? RURAL_URBAN_CONTINUUM_UNKNOWN : result;
     }
 
-    private void initializeRuralUrbanContinuumLookup() {
+    @SuppressWarnings("ConstantConditions")
+    private Map<String, Map<String, CountyData>> loadRuralUrbanContinuumData() {
+        Map<String, Map<String, CountyData>> result = new HashMap<>();
 
         // load 1993 data
         try (Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("ruralurban/rural-urban-continuum-1993.csv"), StandardCharsets.US_ASCII)) {
             for (String[] row : new CSVReaderBuilder(reader).withSkipLines(1).build().readAll()) {
                 String state = row[0], county = row[1], val = row[2];
 
-                CountyDataDto dto = _lookup.computeIfAbsent(state + county, k -> new CountyDataDto());
+                CountyData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new CountyData());
                 dto.setUrbanContinuum1993(StringUtils.leftPad(val, 2, '0'));
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new RuntimeException(e);
         }
 
@@ -286,10 +287,11 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
             for (String[] row : new CSVReaderBuilder(reader).withSkipLines(1).build().readAll()) {
                 String state = row[0], county = row[1], val = row[2];
 
-                CountyDataDto dto = _lookup.computeIfAbsent(state + county, k -> new CountyDataDto());
+                CountyData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new CountyData());
                 dto.setUrbanContinuum2003(StringUtils.leftPad(val, 2, '0'));
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new RuntimeException(e);
         }
 
@@ -298,111 +300,14 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
             for (String[] row : new CSVReaderBuilder(reader).withSkipLines(1).build().readAll()) {
                 String state = row[0], county = row[1], val = row[2];
 
-                CountyDataDto dto = _lookup.computeIfAbsent(state + county, k -> new CountyDataDto());
+                CountyData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new CountyData());
                 dto.setUrbanContinuum2013(StringUtils.leftPad(val, 2, '0'));
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        return result;
     }
-
-    // data structure for the values keyed by state+county only
-    private static class CountyDataDto {
-
-        private String _urbanContinuum1993;
-        private String _urbanContinuum2003;
-        private String _urbanContinuum2013;
-        private Map<String, CensusDataDto> _censusData;
-
-        public String getUrbanContinuum1993() {
-            return _urbanContinuum1993;
-        }
-
-        public void setUrbanContinuum1993(String urbanContinuum1993) {
-            _urbanContinuum1993 = urbanContinuum1993;
-        }
-
-        public String getUrbanContinuum2003() {
-            return _urbanContinuum2003;
-        }
-
-        public void setUrbanContinuum2003(String urbanContinuum2003) {
-            _urbanContinuum2003 = urbanContinuum2003;
-        }
-
-        public String getUrbanContinuum2013() {
-            return _urbanContinuum2013;
-        }
-
-        public void setUrbanContinuum2013(String urbanContinuum2013) {
-            _urbanContinuum2013 = urbanContinuum2013;
-        }
-
-        public Map<String, CensusDataDto> getCensusData() {
-            if (_censusData == null)
-                _censusData = new HashMap<>();
-            return _censusData;
-        }
-    }
-
-    // data structure for the values keyed by state+county+census
-    private static class CensusDataDto {
-
-        private String _indicatorCode2000;
-        private Float _indicatorCodePercentage2000;
-        private String _commutingArea2000;
-
-        private String _indicatorCode2010;
-        private Float _indicatorCodePercentage2010;
-        private String _commutingArea2010;
-
-        public String getIndicatorCode2000() {
-            return _indicatorCode2000;
-        }
-
-        public void setIndicatorCode2000(String indicatorCode2000) {
-            _indicatorCode2000 = indicatorCode2000;
-        }
-
-        public String getCommutingArea2000() {
-            return _commutingArea2000;
-        }
-
-        public void setCommutingArea2000(String commutingArea2000) {
-            _commutingArea2000 = commutingArea2000;
-        }
-
-        public Float getIndicatorCodePercentage2000() {
-            return _indicatorCodePercentage2000;
-        }
-
-        public void setIndicatorCodePercentage2000(Float indicatorCodePercentage2000) {
-            _indicatorCodePercentage2000 = indicatorCodePercentage2000;
-        }
-
-        public String getIndicatorCode2010() {
-            return _indicatorCode2010;
-        }
-
-        public void setIndicatorCode2010(String indicatorCode2010) {
-            _indicatorCode2010 = indicatorCode2010;
-        }
-
-        public String getCommutingArea2010() {
-            return _commutingArea2010;
-        }
-
-        public void setCommutingArea2010(String commutingArea2010) {
-            _commutingArea2010 = commutingArea2010;
-        }
-
-        public Float getIndicatorCodePercentage2010() {
-            return _indicatorCodePercentage2010;
-        }
-
-        public void setIndicatorCodePercentage2010(Float indicatorCodePercentage2010) {
-            _indicatorCodePercentage2010 = indicatorCodePercentage2010;
-        }
-    }
-
 }

@@ -1,3 +1,6 @@
+/*
+ * Copyright (C) 2018 Information Management Services, Inc.
+ */
 package com.imsweb.algorithms.internal;
 
 import java.util.HashMap;

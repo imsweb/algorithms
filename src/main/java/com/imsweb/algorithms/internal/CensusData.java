@@ -1,4 +1,9 @@
+/*
+ * Copyright (C) 2018 Information Management Services, Inc.
+ */
 package com.imsweb.algorithms.internal;
+
+import java.util.Map;
 
 public class CensusData {
 
@@ -9,6 +14,8 @@ public class CensusData {
     private String _indicatorCode2010;
     private Float _indicatorCodePercentage2010;
     private String _commutingArea2010;
+
+    private Map<String, String> _povertyIndicators;
 
     public String getIndicatorCode2000() {
         return _indicatorCode2000;
@@ -56,5 +63,13 @@ public class CensusData {
 
     public void setIndicatorCodePercentage2010(Float indicatorCodePercentage2010) {
         _indicatorCodePercentage2010 = indicatorCodePercentage2010;
+    }
+
+    public Map<String, String> getPovertyIndicators() {
+        return _povertyIndicators;
+    }
+
+    public void setPovertyIndicators(Map<String, String> povertyIndicators) {
+        _povertyIndicators = povertyIndicators;
     }
 }

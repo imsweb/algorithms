@@ -9,10 +9,13 @@ import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
 
 import com.opencsv.CSVReaderBuilder;
+
+import com.imsweb.algorithms.internal.CensusData;
+import com.imsweb.algorithms.internal.CountryData;
+import com.imsweb.algorithms.internal.CountyData;
+import com.imsweb.algorithms.internal.StateData;
 
 import static com.imsweb.algorithms.censustractpovertyindicator.CensusTractPovertyIndicatorUtils.POVERTY_INDICATOR_UNKNOWN;
 
@@ -24,9 +27,6 @@ import static com.imsweb.algorithms.censustractpovertyindicator.CensusTractPover
  */
 public class CensusTractPovertyIndicatorCsvData implements CensusTractPovertyIndicatorDataProvider {
 
-    // keys are combination of state/county/census; values are maps where keys are the year range categories and the values are the resulting indicator
-    private static Map<DataKey, Map<String, String>> _POVERTY_INDICATOR_LOOKUP = new ConcurrentHashMap<>();
-
     @Override
     public String getPovertyIndicator(String yearCategory, String state, String county, String census) {
 
@@ -34,61 +34,52 @@ public class CensusTractPovertyIndicatorCsvData implements CensusTractPovertyInd
         if (yearCategory == null || state == null || county == null || census == null)
             return POVERTY_INDICATOR_UNKNOWN;
 
-        // lazily initialize the data (it's not 100% tread-safe, but the worst that can happen is that we read the same data twice)
-        if (_POVERTY_INDICATOR_LOOKUP.isEmpty()) {
+        // lazily initialize the data
+        if (!CountryData.getInstance().isPovertyDataInitialized()) {
+            Map<String, Map<String, Map<String, CensusData>>> data = new HashMap<>();
             // note that the year range in the filename is not always the same as the year range represented by the category...
-            readCsvData("poverty-indicator-1995-2004.csv", YEAR_CATEGORY_1, _POVERTY_INDICATOR_LOOKUP);
-            readCsvData("poverty-indicator-2005-2007.csv", YEAR_CATEGORY_2, _POVERTY_INDICATOR_LOOKUP);
-            readCsvData("poverty-indicator-2006-2010.csv", YEAR_CATEGORY_3, _POVERTY_INDICATOR_LOOKUP);
-            readCsvData("poverty-indicator-2007-2011.csv", YEAR_CATEGORY_4, _POVERTY_INDICATOR_LOOKUP);
-            readCsvData("poverty-indicator-2008-2012.csv", YEAR_CATEGORY_5, _POVERTY_INDICATOR_LOOKUP);
-            readCsvData("poverty-indicator-2009-2013.csv", YEAR_CATEGORY_6, _POVERTY_INDICATOR_LOOKUP);
-            readCsvData("poverty-indicator-2010-2014.csv", YEAR_CATEGORY_7, _POVERTY_INDICATOR_LOOKUP);
-            readCsvData("poverty-indicator-2011-2015.csv", YEAR_CATEGORY_8, _POVERTY_INDICATOR_LOOKUP);
-            readCsvData("poverty-indicator-2012-2016.csv", YEAR_CATEGORY_9, _POVERTY_INDICATOR_LOOKUP);
+            readCsvData("poverty-indicator-1995-2004.csv", YEAR_CATEGORY_1, data);
+            readCsvData("poverty-indicator-2005-2007.csv", YEAR_CATEGORY_2, data);
+            readCsvData("poverty-indicator-2006-2010.csv", YEAR_CATEGORY_3, data);
+            readCsvData("poverty-indicator-2007-2011.csv", YEAR_CATEGORY_4, data);
+            readCsvData("poverty-indicator-2008-2012.csv", YEAR_CATEGORY_5, data);
+            readCsvData("poverty-indicator-2009-2013.csv", YEAR_CATEGORY_6, data);
+            readCsvData("poverty-indicator-2010-2014.csv", YEAR_CATEGORY_7, data);
+            readCsvData("poverty-indicator-2011-2015.csv", YEAR_CATEGORY_8, data);
+            readCsvData("poverty-indicator-2012-2016.csv", YEAR_CATEGORY_9, data);
+            CountryData.getInstance().initializePovertyData(data);
         }
 
-        // lookup and return the resulting value
-        return _POVERTY_INDICATOR_LOOKUP.computeIfAbsent(new DataKey(state, county, census), k -> new HashMap<>()).computeIfAbsent(yearCategory, k -> POVERTY_INDICATOR_UNKNOWN);
+        StateData stateData = CountryData.getInstance().getPovertyData(state);
+        if (stateData == null)
+            return POVERTY_INDICATOR_UNKNOWN;
+        CountyData countyData = stateData.getCountyData(county);
+        if (countyData == null)
+            return POVERTY_INDICATOR_UNKNOWN;
+        CensusData censusData = countyData.getCensusData(census);
+        if (censusData == null)
+            return POVERTY_INDICATOR_UNKNOWN;
+        Map<String, String> povertyData = censusData.getPovertyIndicators();
+        if (povertyData == null)
+            return POVERTY_INDICATOR_UNKNOWN;
+
+        return povertyData.getOrDefault(yearCategory, POVERTY_INDICATOR_UNKNOWN);
     }
 
     // helper to handle a single CSV data file
-    private static void readCsvData(String datafile, String yearRangeCategory, Map<DataKey, Map<String, String>> lookup) {
+    @SuppressWarnings("ConstantConditions")
+    private static void readCsvData(String datafile, String yearRangeCategory, Map<String, Map<String, Map<String, CensusData>>> data) {
         try (Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("censustractpovertyindicator/" + datafile), StandardCharsets.US_ASCII)) {
-            for (String[] row : new CSVReaderBuilder(reader).withSkipLines(1).build().readAll())
-                lookup.computeIfAbsent(new DataKey(row[0], row[1], row[2]), k -> new HashMap<>()).put(yearRangeCategory, row[3]);
+            for (String[] row : new CSVReaderBuilder(reader).withSkipLines(1).build().readAll()) {
+                String state = row[0], county = row[1], tract = row[2], indicator = row[3];
+                CensusData dto = data.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new HashMap<>()).computeIfAbsent(tract, k -> new CensusData());
+                if (dto.getPovertyIndicators() == null)
+                    dto.setPovertyIndicators(new HashMap<>());
+                dto.getPovertyIndicators().putIfAbsent(yearRangeCategory, indicator);
+            }
         }
         catch (IOException e) {
             throw new RuntimeException(e);
-        }
-    }
-
-    // helper to wrap a csv data key (all the files use the same key structure)
-    private static class DataKey {
-
-        private String _state;
-        private String _county;
-        private String _census;
-
-        public DataKey(String state, String county, String census) {
-            _state = state;
-            _county = county;
-            _census = census;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            DataKey that = (DataKey)o;
-            return Objects.equals(_state, that._state) &&
-                    Objects.equals(_county, that._county) &&
-                    Objects.equals(_census, that._census);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(_state, _county, _census);
         }
     }
 }

@@ -1,3 +1,6 @@
+/*
+ * Copyright (C) 2018 Information Management Services, Inc.
+ */
 package com.imsweb.algorithms.internal;
 
 import java.util.HashMap;
@@ -31,7 +34,8 @@ public class CountryData {
             if (!_rucaInitialized)
                 throw new RuntimeException("RUCA data cannot be access before it has been initialized!");
             return _stateData.get(state);
-        } finally {
+        }
+        finally {
             _lock.readLock().unlock();
         }
     }
@@ -40,7 +44,8 @@ public class CountryData {
         _lock.readLock().lock();
         try {
             return _rucaInitialized;
-        } finally {
+        }
+        finally {
             _lock.readLock().unlock();
         }
     }
@@ -48,20 +53,22 @@ public class CountryData {
     public void initializeRucaData(Map<String, Map<String, Map<String, CensusData>>> data) {
         _lock.writeLock().lock();
         try {
-            for (Map.Entry<String, Map<String, Map<String, CensusData>>> stateEntry : data.entrySet()) {
-                StateData stateData = _stateData.computeIfAbsent(stateEntry.getKey(), k -> new StateData());
-                for (Map.Entry<String, Map<String, CensusData>> countyEntry : stateEntry.getValue().entrySet()) {
-                    CountyData countyData = stateData.getData().computeIfAbsent(countyEntry.getKey(), k -> new CountyData());
-                    for (Map.Entry<String, CensusData> censusEntry : countyEntry.getValue().entrySet()) {
-                        CensusData censusData = countyData.getData().computeIfAbsent(censusEntry.getKey(), k -> new CensusData());
-                        censusData.setCommutingArea2000(censusEntry.getValue().getCommutingArea2000());
-                        censusData.setCommutingArea2010(censusEntry.getValue().getCommutingArea2010());
+            if (!_rucaInitialized) {
+                for (Map.Entry<String, Map<String, Map<String, CensusData>>> stateEntry : data.entrySet()) {
+                    StateData stateData = _stateData.computeIfAbsent(stateEntry.getKey(), k -> new StateData());
+                    for (Map.Entry<String, Map<String, CensusData>> countyEntry : stateEntry.getValue().entrySet()) {
+                        CountyData countyData = stateData.getData().computeIfAbsent(countyEntry.getKey(), k -> new CountyData());
+                        for (Map.Entry<String, CensusData> censusEntry : countyEntry.getValue().entrySet()) {
+                            CensusData censusData = countyData.getData().computeIfAbsent(censusEntry.getKey(), k -> new CensusData());
+                            censusData.setCommutingArea2000(censusEntry.getValue().getCommutingArea2000());
+                            censusData.setCommutingArea2010(censusEntry.getValue().getCommutingArea2010());
+                        }
                     }
                 }
             }
-
             _rucaInitialized = true;
-        } finally {
+        }
+        finally {
             _lock.writeLock().unlock();
         }
     }
@@ -72,7 +79,8 @@ public class CountryData {
             if (!_uricInitialized)
                 throw new RuntimeException("URIC data cannot be access before it has been initialized!");
             return _stateData.get(state);
-        } finally {
+        }
+        finally {
             _lock.readLock().unlock();
         }
     }
@@ -81,7 +89,8 @@ public class CountryData {
         _lock.readLock().lock();
         try {
             return _uricInitialized;
-        } finally {
+        }
+        finally {
             _lock.readLock().unlock();
         }
     }
@@ -89,22 +98,24 @@ public class CountryData {
     public void initializeUricData(Map<String, Map<String, Map<String, CensusData>>> data) {
         _lock.writeLock().lock();
         try {
-            for (Map.Entry<String, Map<String, Map<String, CensusData>>> stateEntry : data.entrySet()) {
-                StateData stateData = _stateData.computeIfAbsent(stateEntry.getKey(), k -> new StateData());
-                for (Map.Entry<String, Map<String, CensusData>> countyEntry : stateEntry.getValue().entrySet()) {
-                    CountyData countyData = stateData.getData().computeIfAbsent(countyEntry.getKey(), k -> new CountyData());
-                    for (Map.Entry<String, CensusData> censusEntry : countyEntry.getValue().entrySet()) {
-                        CensusData censusData = countyData.getData().computeIfAbsent(censusEntry.getKey(), k -> new CensusData());
-                        censusData.setIndicatorCode2000(censusEntry.getValue().getIndicatorCode2000());
-                        censusData.setIndicatorCodePercentage2000(censusEntry.getValue().getIndicatorCodePercentage2000());
-                        censusData.setIndicatorCode2010(censusEntry.getValue().getIndicatorCode2010());
-                        censusData.setIndicatorCodePercentage2010(censusEntry.getValue().getIndicatorCodePercentage2010());
+            if (!_uricInitialized) {
+                for (Map.Entry<String, Map<String, Map<String, CensusData>>> stateEntry : data.entrySet()) {
+                    StateData stateData = _stateData.computeIfAbsent(stateEntry.getKey(), k -> new StateData());
+                    for (Map.Entry<String, Map<String, CensusData>> countyEntry : stateEntry.getValue().entrySet()) {
+                        CountyData countyData = stateData.getData().computeIfAbsent(countyEntry.getKey(), k -> new CountyData());
+                        for (Map.Entry<String, CensusData> censusEntry : countyEntry.getValue().entrySet()) {
+                            CensusData censusData = countyData.getData().computeIfAbsent(censusEntry.getKey(), k -> new CensusData());
+                            censusData.setIndicatorCode2000(censusEntry.getValue().getIndicatorCode2000());
+                            censusData.setIndicatorCodePercentage2000(censusEntry.getValue().getIndicatorCodePercentage2000());
+                            censusData.setIndicatorCode2010(censusEntry.getValue().getIndicatorCode2010());
+                            censusData.setIndicatorCodePercentage2010(censusEntry.getValue().getIndicatorCodePercentage2010());
+                        }
                     }
                 }
             }
-
             _uricInitialized = true;
-        } finally {
+        }
+        finally {
             _lock.writeLock().unlock();
         }
     }
@@ -115,7 +126,8 @@ public class CountryData {
             if (!_continuumInitialized)
                 throw new RuntimeException("Continuum data cannot be access before it has been initialized!");
             return _stateData.get(state);
-        } finally {
+        }
+        finally {
             _lock.readLock().unlock();
         }
     }
@@ -124,7 +136,8 @@ public class CountryData {
         _lock.readLock().lock();
         try {
             return _continuumInitialized;
-        } finally {
+        }
+        finally {
             _lock.readLock().unlock();
         }
     }
@@ -132,18 +145,64 @@ public class CountryData {
     public void initializeContinuumData(Map<String, Map<String, CountyData>> data) {
         _lock.writeLock().lock();
         try {
-            for (Map.Entry<String, Map<String, CountyData>> stateEntry : data.entrySet()) {
-                StateData stateData = _stateData.computeIfAbsent(stateEntry.getKey(), k -> new StateData());
-                for (Map.Entry<String, CountyData> countyEntry : stateEntry.getValue().entrySet()) {
-                    CountyData countyData = stateData.getData().computeIfAbsent(countyEntry.getKey(), k -> new CountyData());
-                    countyData.setUrbanContinuum1993(countyEntry.getValue().getUrbanContinuum1993());
-                    countyData.setUrbanContinuum2003(countyEntry.getValue().getUrbanContinuum2003());
-                    countyData.setUrbanContinuum2013(countyEntry.getValue().getUrbanContinuum2013());
+            if (!_continuumInitialized) {
+                for (Map.Entry<String, Map<String, CountyData>> stateEntry : data.entrySet()) {
+                    StateData stateData = _stateData.computeIfAbsent(stateEntry.getKey(), k -> new StateData());
+                    for (Map.Entry<String, CountyData> countyEntry : stateEntry.getValue().entrySet()) {
+                        CountyData countyData = stateData.getData().computeIfAbsent(countyEntry.getKey(), k -> new CountyData());
+                        countyData.setUrbanContinuum1993(countyEntry.getValue().getUrbanContinuum1993());
+                        countyData.setUrbanContinuum2003(countyEntry.getValue().getUrbanContinuum2003());
+                        countyData.setUrbanContinuum2013(countyEntry.getValue().getUrbanContinuum2013());
+                    }
                 }
             }
-
             _continuumInitialized = true;
-        } finally {
+        }
+        finally {
+            _lock.writeLock().unlock();
+        }
+    }
+
+    public StateData getPovertyData(String state) {
+        _lock.readLock().lock();
+        try {
+            if (!_povertyInitialied)
+                throw new RuntimeException("Poverty indicator data cannot be access before it has been initialized!");
+            return _stateData.get(state);
+        }
+        finally {
+            _lock.readLock().unlock();
+        }
+    }
+
+    public boolean isPovertyDataInitialized() {
+        _lock.readLock().lock();
+        try {
+            return _povertyInitialied;
+        }
+        finally {
+            _lock.readLock().unlock();
+        }
+    }
+
+    public void initializePovertyData(Map<String, Map<String, Map<String, CensusData>>> data) {
+        _lock.writeLock().lock();
+        try {
+            if (!_povertyInitialied) {
+                for (Map.Entry<String, Map<String, Map<String, CensusData>>> stateEntry : data.entrySet()) {
+                    StateData stateData = _stateData.computeIfAbsent(stateEntry.getKey(), k -> new StateData());
+                    for (Map.Entry<String, Map<String, CensusData>> countyEntry : stateEntry.getValue().entrySet()) {
+                        CountyData countyData = stateData.getData().computeIfAbsent(countyEntry.getKey(), k -> new CountyData());
+                        for (Map.Entry<String, CensusData> censusEntry : countyEntry.getValue().entrySet()) {
+                            CensusData censusData = countyData.getData().computeIfAbsent(censusEntry.getKey(), k -> new CensusData());
+                            censusData.setPovertyIndicators(censusEntry.getValue().getPovertyIndicators());
+                        }
+                    }
+                }
+            }
+            _povertyInitialied = true;
+        }
+        finally {
             _lock.writeLock().unlock();
         }
     }
