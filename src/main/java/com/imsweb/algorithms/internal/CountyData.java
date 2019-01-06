@@ -6,12 +6,17 @@ package com.imsweb.algorithms.internal;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * County-related data.
+ */
 public class CountyData {
 
+    // urban continuum data
     private String _urbanContinuum1993;
     private String _urbanContinuum2003;
     private String _urbanContinuum2013;
 
+    // census data keyed by census tract code
     private Map<String, CensusData> _censusData = new HashMap<>();
 
     public String getUrbanContinuum1993() {
@@ -38,10 +43,16 @@ public class CountyData {
         _urbanContinuum2013 = urbanContinuum2013;
     }
 
+    /**
+     * Returns the census data for a given census tract code, null if not found.
+     */
     public CensusData getCensusData(String census) {
         return _censusData.get(census);
     }
 
+    /**
+     * Returns all the data; package private so it's only used during initialization.
+     */
     Map<String, CensusData> getData() {
         return _censusData;
     }

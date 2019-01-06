@@ -7,14 +7,17 @@ import java.util.Map;
 
 public class CensusData {
 
-    private String _indicatorCode2000;
-    private Float _indicatorCodePercentage2000;
+    // RUCA data
     private String _commutingArea2000;
-
-    private String _indicatorCode2010;
-    private Float _indicatorCodePercentage2010;
     private String _commutingArea2010;
 
+    // URIC data
+    private String _indicatorCode2000;
+    private Float _indicatorCodePercentage2000;
+    private String _indicatorCode2010;
+    private Float _indicatorCodePercentage2010;
+
+    // poverty indicator data
     private Map<String, String> _povertyIndicators;
 
     public String getIndicatorCode2000() {
