@@ -25,6 +25,7 @@ dependencies {
 
     testImplementation 'junit:junit:4.12'
     testImplementation 'com.imsweb:layout:1.14'
+    testImplementation 'com.imsweb:seerutils-gui:1.13'
 }
 
 // enforce UTF-8, display the compilation warnings

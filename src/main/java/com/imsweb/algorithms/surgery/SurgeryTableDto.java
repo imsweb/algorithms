@@ -71,4 +71,8 @@ public class SurgeryTableDto {
         this._title = title;
     }
 
+    @Override
+    public String toString() {
+        return _title;
+    }
 }
