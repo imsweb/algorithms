@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -43,22 +44,11 @@ public final class SiteSpecificSurgeryUtils {
     /**
      * Unique instance of this class
      */
-    private static SiteSpecificSurgeryUtils _INSTANCE;
+    private static final List<YearSpecificSiteSpecificSurgeryUtils> _INSTANCES = new ArrayList<>();
 
-    /**
-     * Version for the surgery tables
-     */
-    private String _version;
-
-    /**
-     * Version name for the surgery tables
-     */
-    private String _versionName;
-
-    /**
-     * Cached surgery tables
-     */
-    private List<SurgeryTableDto> _tables;
+    static {
+        _INSTANCES.add(new YearSpecificSiteSpecificSurgeryUtils(2014));
+    }
 
     /**
      * Returns the unique instance of the site-specific surgery tables utility class.
@@ -66,12 +56,30 @@ public final class SiteSpecificSurgeryUtils {
      * Created on Jul 18, 2012 by depryf
      * @return the unique instance of the site-specific surgery tables utility class
      */
-    public static synchronized SiteSpecificSurgeryUtils getInstance() {
-        try {
-            if (_INSTANCE == null)
-                _INSTANCE = new SiteSpecificSurgeryUtils(readSiteSpecificSurgeryData(getInternalSiteSpecificSurgeryDataUrl().openStream()));
+    public static SiteSpecificSurgeryUtils getInstance() {
+        return getInstance(LocalDate.now().getYear());
+    }
 
-            return _INSTANCE;
+    /**
+     * Returns the unique instance of the site-specific surgery tables utility class.
+     * <p/>
+     * @param dxYear DX year
+     * Created on Jul 18, 2012 by depryf
+     * @return the unique instance of the site-specific surgery tables utility class
+     */
+    public static SiteSpecificSurgeryUtils getInstance(int dxYear) {
+        try {
+            for (YearSpecificSiteSpecificSurgeryUtils instance : _INSTANCES) {
+                if (instance.matches(dxYear)) {
+                    if (instance.getData() == null) {
+                        URL url = getInternalSiteSpecificSurgeryDataUrl(dxYear);
+                        if (url != null) // TODO deal with no URL available
+                            instance.setData(new SiteSpecificSurgeryUtils(readSiteSpecificSurgeryData(url.openStream())));
+                    }
+                }
+            }
+
+            return null; // TODO should return default empty instance
         }
         catch (IOException e) {
             throw new RuntimeException("Unable to read internal data", e);
@@ -79,23 +87,16 @@ public final class SiteSpecificSurgeryUtils {
     }
 
     /**
-     * Registers an instance of the data.
-     * <p/>
-     * Created on Jul 18, 2012 by depryf
-     * @param data the data to initialize from
-     */
-    public static void registerInstance(SurgeryTablesXmlDto data) {
-        _INSTANCE = new SiteSpecificSurgeryUtils(data);
-    }
-
-    /**
      * Returns the URL to the internal site-specific surgery tables XML file.
      * <p/>
      * Created on Jul 18, 2012 by depryf
+     * @param dxYear DX year
      * @return the URL to the internal site-specific surgery tables XML file
      */
-    public static URL getInternalSiteSpecificSurgeryDataUrl() {
-        return Thread.currentThread().getContextClassLoader().getResource("surgery/site-specific-surgery-tables.xml");
+    public static URL getInternalSiteSpecificSurgeryDataUrl(int dxYear) {
+        if (dxYear == 2014)
+            return Thread.currentThread().getContextClassLoader().getResource("surgery/site-specific-surgery-tables-2014.xml");
+        return null;
     }
 
     /**
@@ -107,7 +108,6 @@ public final class SiteSpecificSurgeryUtils {
      * @param stream <code>InputStream</code> to the data file, cannot be null
      * @return a <code>SurgeryTablesXmlDto</code>, never null
      */
-    @SuppressWarnings("unchecked")
     public static SurgeryTablesXmlDto readSiteSpecificSurgeryData(InputStream stream) throws IOException {
         try {
             return (SurgeryTablesXmlDto)createSiteSpecificSurgeryDataXStream().fromXML(stream);
@@ -163,12 +163,27 @@ public final class SiteSpecificSurgeryUtils {
     }
 
     /**
+     * Version for the surgery tables
+     */
+    private String _version;
+
+    /**
+     * Version name for the surgery tables
+     */
+    private String _versionName;
+
+    /**
+     * Cached surgery tables
+     */
+    private List<SurgeryTableDto> _tables;
+
+    /**
      * Constructor.
      * <p/>
      * Created on Jul 18, 2012 by depryf
      * @param data a <code>SurgeryTablesXmlDto</code>, cannot be null
      */
-    SiteSpecificSurgeryUtils(SurgeryTablesXmlDto data) {
+    public SiteSpecificSurgeryUtils(SurgeryTablesXmlDto data) {
         _version = data.getVersion();
         _versionName = data.getVersionName();
         _tables = new ArrayList<>();
@@ -355,5 +370,34 @@ public final class SiteSpecificSurgeryUtils {
         }
 
         return result;
+    }
+
+    private static final class YearSpecificSiteSpecificSurgeryUtils {
+
+        private int _startYear;
+        private int _endYear;
+        private SiteSpecificSurgeryUtils _data;
+
+        public YearSpecificSiteSpecificSurgeryUtils(int start, int end) {
+            _startYear = start;
+            _endYear = end;
+        }
+
+        public YearSpecificSiteSpecificSurgeryUtils(int year) {
+            _startYear = year;
+            _endYear = year;
+        }
+
+        public boolean matches(int year) {
+            return year >= _startYear && year <= _endYear;
+        }
+
+        public SiteSpecificSurgeryUtils getData() {
+            return _data;
+        }
+
+        public void setData(SiteSpecificSurgeryUtils data) {
+            _data = data;
+        }
     }
 }

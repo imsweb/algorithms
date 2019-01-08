@@ -60,8 +60,8 @@ public class SurgeryTablesViewerLab extends JFrame {
     public SurgeryTablesViewerLab() throws IOException {
         JPanel contentPnl = SeerGuiUtils.createContentPanel(this, 5);
 
-        SiteSpecificSurgeryUtils.registerInstance(
-                SiteSpecificSurgeryUtils.readSiteSpecificSurgeryData(Thread.currentThread().getContextClassLoader().getResourceAsStream("surgery/site-specific-surgery-tables.xml")));
+        SiteSpecificSurgeryUtils instance = new SiteSpecificSurgeryUtils(
+                SiteSpecificSurgeryUtils.readSiteSpecificSurgeryData(SiteSpecificSurgeryUtils.getInternalSiteSpecificSurgeryDataUrl(2014).openStream()));
 
         // WEST - list of tables
         JPanel westPnl = SeerGuiUtils.createPanel();
@@ -79,7 +79,7 @@ public class SurgeryTablesViewerLab extends JFrame {
         filterPnl.add(filterField, BorderLayout.CENTER);
         westPnl.add(filterPnl, BorderLayout.NORTH);
 
-        List<SurgeryTableDto> tables = new ArrayList<>(SiteSpecificSurgeryUtils.getInstance().getAllTables());
+        List<SurgeryTableDto> tables = new ArrayList<>(instance.getAllTables());
         _tablesList = new SeerList<>(tables, SeerList.DISPLAY_MODE_DOTTED_LINES, SeerList.FILTERING_MODE_STARTS_WITH, false, null);
         _tablesList.setBorder(new LineBorder(SeerGuiUtils.COLOR_COMP_FOCUS_OUT));
         _tablesList.setPreferredSize(new Dimension(250, _tablesList.getPreferredSize().height));
