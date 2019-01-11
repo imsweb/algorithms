@@ -95,7 +95,7 @@ public final class SiteSpecificSurgeryUtils {
      */
     public static URL getInternalSiteSpecificSurgeryDataUrl(int dxYear) {
         if (dxYear == 2014)
-            return Thread.currentThread().getContextClassLoader().getResource("surgery/site-specific-surgery-tables-2014.xml");
+            return Thread.currentThread().getContextClassLoader().getResource("surgery/site-specific-surgery-tables-2018.xml");
         return null;
     }
 
