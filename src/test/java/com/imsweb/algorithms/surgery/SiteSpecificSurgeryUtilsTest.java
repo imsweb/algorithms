@@ -3,67 +3,85 @@
  */
 package com.imsweb.algorithms.surgery;
 
-import java.io.IOException;
-
+import com.imsweb.seerutils.SeerUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.junit.Assert;
 import org.junit.Test;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.util.regex.Pattern;
 
 public class SiteSpecificSurgeryUtilsTest {
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    public void testData() throws IOException {
+    public void testData() {
+        Pattern sitePattern = Pattern.compile("C\\d\\d\\d(-C\\d\\d\\d)?"), histPattern = Pattern.compile("\\d\\d\\d\\d(-\\d\\d\\d\\d)?");
 
-        // TODO clean this up
+        for (int year = 2010; year <= LocalDate.now().getYear(); year++) {
 
-        //        // register the instance we want
-        //        SurgeryTablesXmlDto data = SiteSpecificSurgeryUtils.readSiteSpecificSurgeryData(SiteSpecificSurgeryUtils.getInternalSiteSpecificSurgeryDataUrl(2014).openStream());
-        //
-        //        // make sure that are some tables
-        //        Assert.assertFalse(SiteSpecificSurgeryUtils.getInstance().getAllTableTitles().isEmpty());
-        //        Assert.assertNotNull(SiteSpecificSurgeryUtils.getInstance().getTable(SiteSpecificSurgeryUtils.getInstance().getAllTableTitles().get(0)));
-        //        Assert.assertNotNull(SiteSpecificSurgeryUtils.getInstance().getVersion());
-        //
-        //        Pattern sitePattern = Pattern.compile("C\\d\\d\\d(-C\\d\\d\\d)?"), histPattern = Pattern.compile("\\d\\d\\d\\d(-\\d\\d\\d\\d)?");
-        //
-        //        // test data validity
-        //        for (SurgeryTableDto table : SiteSpecificSurgeryUtils.getInstance().getAllTables()) {
-        //            Assert.assertNotNull(table.getTitle());
-        //
-        //            if (table.getSiteInclusion() != null)
-        //                for (String s : table.getSiteInclusion().split(","))
-        //                    Assert.assertTrue(table.getTitle() + " - wrong site inclusion format: " + table.getSiteInclusion(), sitePattern.matcher(s).matches());
-        //
-        //            if (table.getHistInclusion() != null)
-        //                for (String s : table.getHistInclusion().split(","))
-        //                    Assert.assertTrue(table.getTitle() + " - wrong hist inclusion format: " + table.getHistInclusion(), histPattern.matcher(s).matches());
-        //
-        //            if (table.getHistExclusion() != null)
-        //                for (String s : table.getHistExclusion().split(","))
-        //                    Assert.assertTrue(table.getTitle() + " - wrong hist exclusion format: " + table.getHistExclusion(), histPattern.matcher(s).matches());
-        //
-        //            for (SurgeryRowDto row : table.getRow()) {
-        //                Assert.assertNotNull(row.isLineBreak());
-        //                Assert.assertNotNull(row.getLevel());
-        //                if (row.isLineBreak()) {
-        //                    Assert.assertNull(row.getCode());
-        //                    Assert.assertNull(row.getDescription());
-        //                }
-        //            }
-        //        }
-        //
-        //        // test a few common searches
-        //        Assert.assertNull(SiteSpecificSurgeryUtils.getInstance().getTable(null, null));
-        //        Assert.assertNull(SiteSpecificSurgeryUtils.getInstance().getTable(null, "8000"));
-        //        Assert.assertNull(SiteSpecificSurgeryUtils.getInstance().getTable("C000", null));
-        //        Assert.assertNull(SiteSpecificSurgeryUtils.getInstance().getTable("", ""));
-        //        Assert.assertNull(SiteSpecificSurgeryUtils.getInstance().getTable("", "8000"));
-        //        Assert.assertNull(SiteSpecificSurgeryUtils.getInstance().getTable("C000", ""));
-        //        Assert.assertNull(SiteSpecificSurgeryUtils.getInstance().getTable("?", "?"));
-        //        Assert.assertNull(SiteSpecificSurgeryUtils.getInstance().getTable("?", "8000"));
-        //        Assert.assertNull(SiteSpecificSurgeryUtils.getInstance().getTable("C000", "whatever"));
-        //
-        //        SurgeryTableDto table = SiteSpecificSurgeryUtils.getInstance().getTable("C000", "8000");
-        //        Assert.assertEquals("Oral Cavity", table.getTitle());
-        //        Assert.assertEquals(37, table.getRow().size());
+            // make sure the content of the XML only uses ASCII characters
+            try {
+                String file = "surgery/site-specific-surgery-tables-" + year + ".xml";
+                String xml = SeerUtils.readUrl(Thread.currentThread().getContextClassLoader().getResource(file), StandardCharsets.US_ASCII.name());
+                if (!SeerUtils.isPureAscii(xml))
+                    Assert.fail(file + " contains non-ASCII characters");
+            }
+            catch (IOException e) {
+                // ignored, just means the XML file doesn't exist for that year...
+            }
+
+
+            // register the instance we want
+            SurgeryTablesDto data = SiteSpecificSurgeryUtils.getInstance().getTables(year);
+
+            // make sure that are some tables
+            Assert.assertNotNull(data.getVersion());
+            Assert.assertNotNull(data.getVersionName());
+            Assert.assertFalse(data.getTables().isEmpty());
+
+            // test data validity
+            for (SurgeryTableDto table : data.getTables()) {
+                Assert.assertNotNull(table.getTitle());
+
+                if (table.getSiteInclusion() != null)
+                    for (String s : StringUtils.split(table.getSiteInclusion(), ','))
+                        Assert.assertTrue(year + " - " + table.getTitle() + " - wrong site inclusion format: " + table.getSiteInclusion(), sitePattern.matcher(s).matches());
+
+                if (table.getHistInclusion() != null)
+                    for (String s : StringUtils.split(table.getHistInclusion(), ','))
+                        Assert.assertTrue(year + " - " + table.getTitle() + " - wrong hist inclusion format: " + table.getHistInclusion(), histPattern.matcher(s).matches());
+
+                if (table.getHistExclusion() != null)
+                    for (String s : StringUtils.split(table.getHistExclusion(), ','))
+                        Assert.assertTrue(year + " - " + table.getTitle() + " - wrong hist exclusion format: " + table.getHistExclusion(), histPattern.matcher(s).matches());
+
+                for (SurgeryRowDto row : table.getRow()) {
+                    Assert.assertNotNull(row.isLineBreak());
+                    Assert.assertNotNull(row.getLevel());
+                    if (row.isLineBreak()) {
+                        Assert.assertNull(row.getCode());
+                        Assert.assertNull(row.getDescription());
+                    }
+                }
+            }
+        }
+
+        // test a few common searches
+        Assert.assertNull(SiteSpecificSurgeryUtils.getInstance().getTable(2014, null, null));
+        Assert.assertNull(SiteSpecificSurgeryUtils.getInstance().getTable(2014, null, "8000"));
+        Assert.assertNull(SiteSpecificSurgeryUtils.getInstance().getTable(2014, "C000", null));
+        Assert.assertNull(SiteSpecificSurgeryUtils.getInstance().getTable(2014, "", ""));
+        Assert.assertNull(SiteSpecificSurgeryUtils.getInstance().getTable(2014, "", "8000"));
+        Assert.assertNull(SiteSpecificSurgeryUtils.getInstance().getTable(2014, "C000", ""));
+        Assert.assertNull(SiteSpecificSurgeryUtils.getInstance().getTable(2014, "?", "?"));
+        Assert.assertNull(SiteSpecificSurgeryUtils.getInstance().getTable(2014, "?", "8000"));
+        Assert.assertNull(SiteSpecificSurgeryUtils.getInstance().getTable(2014, "C000", "whatever"));
+
+        SurgeryTableDto table = SiteSpecificSurgeryUtils.getInstance().getTable(2014, "C000", "8000");
+        Assert.assertEquals("Oral Cavity", table.getTitle());
+        Assert.assertEquals(37, table.getRow().size());
     }
 }

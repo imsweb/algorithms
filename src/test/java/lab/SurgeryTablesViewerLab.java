@@ -3,24 +3,14 @@
  */
 package lab;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
+import com.imsweb.algorithms.surgery.SiteSpecificSurgeryUtils;
+import com.imsweb.algorithms.surgery.SurgeryRowDto;
+import com.imsweb.algorithms.surgery.SurgeryTableDto;
+import com.imsweb.algorithms.surgery.SurgeryTablesDto;
+import com.imsweb.seerutilsgui.SeerGuiUtils;
+import com.imsweb.seerutilsgui.SeerList;
+import com.imsweb.seerutilsgui.table.SeerColumn;
+import com.imsweb.seerutilsgui.table.SeerTable;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -42,14 +32,24 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.text.View;
 import javax.swing.text.html.HTMLEditorKit;
-
-import com.imsweb.algorithms.surgery.SiteSpecificSurgeryUtils;
-import com.imsweb.algorithms.surgery.SurgeryRowDto;
-import com.imsweb.algorithms.surgery.SurgeryTableDto;
-import com.imsweb.seerutilsgui.SeerGuiUtils;
-import com.imsweb.seerutilsgui.SeerList;
-import com.imsweb.seerutilsgui.table.SeerColumn;
-import com.imsweb.seerutilsgui.table.SeerTable;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
 
 @SuppressWarnings("ConstantConditions")
 public class SurgeryTablesViewerLab extends JFrame {
@@ -57,11 +57,10 @@ public class SurgeryTablesViewerLab extends JFrame {
     private SeerList<SurgeryTableDto> _tablesList;
     private JSplitPane _pane;
 
-    public SurgeryTablesViewerLab() throws IOException {
+    public SurgeryTablesViewerLab() {
         JPanel contentPnl = SeerGuiUtils.createContentPanel(this, 5);
 
-        SiteSpecificSurgeryUtils instance = new SiteSpecificSurgeryUtils(
-                SiteSpecificSurgeryUtils.readSiteSpecificSurgeryData(SiteSpecificSurgeryUtils.getInternalSiteSpecificSurgeryDataUrl(2014).openStream()));
+        SurgeryTablesDto data = SiteSpecificSurgeryUtils.getInstance().getTables(2018);
 
         // WEST - list of tables
         JPanel westPnl = SeerGuiUtils.createPanel();
@@ -79,8 +78,7 @@ public class SurgeryTablesViewerLab extends JFrame {
         filterPnl.add(filterField, BorderLayout.CENTER);
         westPnl.add(filterPnl, BorderLayout.NORTH);
 
-        List<SurgeryTableDto> tables = new ArrayList<>(instance.getAllTables());
-        _tablesList = new SeerList<>(tables, SeerList.DISPLAY_MODE_DOTTED_LINES, SeerList.FILTERING_MODE_STARTS_WITH, false, null);
+        _tablesList = new SeerList<>(data.getTables(), SeerList.DISPLAY_MODE_DOTTED_LINES, SeerList.FILTERING_MODE_STARTS_WITH, false, null);
         _tablesList.setBorder(new LineBorder(SeerGuiUtils.COLOR_COMP_FOCUS_OUT));
         _tablesList.setPreferredSize(new Dimension(250, _tablesList.getPreferredSize().height));
         _tablesList.addListSelectionListener(e -> {
