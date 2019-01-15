@@ -4,6 +4,7 @@
 package com.imsweb.algorithms.surgery;
 
 import com.imsweb.seerutils.SeerUtils;
+
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.junit.Test;
@@ -18,7 +19,7 @@ public class SiteSpecificSurgeryUtilsTest {
     @Test
     @SuppressWarnings("ConstantConditions")
     public void testData() {
-        Pattern sitePattern = Pattern.compile("C\\d\\d\\d(-C\\d\\d\\d)?"), histPattern = Pattern.compile("\\d\\d\\d\\d(-\\d\\d\\d\\d)?");
+        Pattern sitePattern = Pattern.compile("C\\d\\d.?\\d(-C\\d\\d\\d)?"), histPattern = Pattern.compile("\\d\\d\\d\\d(-\\d\\d\\d\\d)?");
 
         for (int year = 2010; year <= LocalDate.now().getYear(); year++) {
 
@@ -32,7 +33,6 @@ public class SiteSpecificSurgeryUtilsTest {
             catch (IOException e) {
                 // ignored, just means the XML file doesn't exist for that year...
             }
-
 
             // register the instance we want
             SurgeryTablesDto data = SiteSpecificSurgeryUtils.getInstance().getTables(year);

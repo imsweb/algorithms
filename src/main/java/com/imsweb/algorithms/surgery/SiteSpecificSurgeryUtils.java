@@ -4,6 +4,7 @@
 package com.imsweb.algorithms.surgery;
 
 import com.imsweb.algorithms.surgery.xml.SurgeryTablesXmlDto;
+
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.basic.BooleanConverter;
 import com.thoughtworks.xstream.converters.basic.ByteConverter;
@@ -20,6 +21,7 @@ import com.thoughtworks.xstream.converters.reflection.ReflectionConverter;
 import com.thoughtworks.xstream.io.xml.XppDriver;
 import com.thoughtworks.xstream.security.NoTypePermission;
 import com.thoughtworks.xstream.security.WildcardTypePermission;
+
 import org.apache.commons.lang3.StringUtils;
 
 import java.net.URL;
@@ -115,7 +117,7 @@ public final class SiteSpecificSurgeryUtils {
             return null;
 
         // optimization: some years share the same data, so let's adjust the DX year so its XML data actually exists
-        int year = dxYear == 2011 || dxYear == 2017 ? dxYear - 1 : dxYear;
+        int year = dxYear == 2011 || dxYear == 2017 || dxYear == 2019 ? dxYear - 1 : dxYear;
 
         _lock.readLock().lock();
         if (!_data.containsKey(year)) {

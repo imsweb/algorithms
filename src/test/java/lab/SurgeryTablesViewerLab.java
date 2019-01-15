@@ -32,6 +32,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.text.View;
 import javax.swing.text.html.HTMLEditorKit;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
