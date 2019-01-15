@@ -4128,9 +4128,9 @@ Do not code laminectomies for spinal cord primaries
         </row>
     </surgery-table>
     <surgery-table title="Spleen">
-        <site-inclusion>C42.2</site-inclusion>
+        <site-inclusion>C422</site-inclusion>
         <hist-exclusion>9727,9732,9741-9742,9762-9809,9832,9840-9931,9945-9946,9950-9967,9975-9992</hist-exclusion>
-        <pre-note><![CDATA[Spleen<br/>C42.2
+        <pre-note><![CDATA[Spleen<br/>C422
 <br/>
 (Except for M9727, 9732, 9741-9742, 9762-9809, 9832, 9840-9931, 9945-9946, 9950-9967, 9975-9992)
 ]]></pre-note>
