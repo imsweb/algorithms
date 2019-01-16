@@ -2016,11 +2016,11 @@ Code removal/surgical ablation of single or multiple liver metastases under the 
     </surgery-table>
     <surgery-table title="Bones, Joints, And Articular Cartilage">
         <site-inclusion>C400-C419,C470-C479,C490-C499</site-inclusion>
-        <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
+        <hist-exclusion>9727,9733,9741-9742,9764-9809,9832,9840-9931,9945-9946,9950-9967,9975-9992</hist-exclusion>
         <pre-note><![CDATA[Bones, Joints, And Articular Cartilage<br/>C400-C419 Peripheral Nerves And Autonomic Nervous System C470-C479
 Connective, Subcutaneous, And Other Soft Tissues C490-C499
 <br/>
-(Except for M9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
+(Except for M9727, 9733, 9741-9742, 9764-9809, 9832, 9840-9931, 9945-9946, 9950-9967, 9975-9992)
 
 ]]></pre-note>
         <row level="0">
@@ -2034,7 +2034,7 @@ Connective, Subcutaneous, And Other Soft Tissues C490-C499
         </row>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>Unknown whether a specimen was sent to pathology for surgical events coded 19 (Principally for cases diagnosed prior to January 1, 2003)</b>]]></description>
+            <description><![CDATA[<b>Unknown whether a specimen was sent to pathology for surgical events coded 19 (principally for cases diagnosed prior to January 1, 2003)</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -2054,10 +2054,6 @@ Connective, Subcutaneous, And Other Soft Tissues C490-C499
         <row level="0">
             <code>26</code>
             <description><![CDATA[Partial resection]]></description>
-        </row>
-        <row level="0">
-            <code/>
-            <description><![CDATA[<b>Specimen sent to pathology from surgical events 25-26</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -2097,6 +2093,11 @@ Connective, Subcutaneous, And Other Soft Tissues C490-C499
         <row level="1">
             <code>54</code>
             <description><![CDATA[Internal hemipelvectomy]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code/>
+            <description><![CDATA[<b>Specimen sent to pathology from surgical events 25-54</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
