@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 1.21**
+
+- Site-specific surgery tables are not year-specific.
+
 **Changes in version 1.20**
 
 - Fixed synchronization issues in the initialization of the RUCA/URIC and Poverty Indicator algorithms.
