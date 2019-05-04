@@ -91,6 +91,7 @@ public class Algorithms {
         _LOCK.writeLock().lock();
         try {
             addAlgorithm(_CACHED_ALGORITHMS, createAlgorithmNhia());
+            addAlgorithm(_CACHED_ALGORITHMS, createAlgorithmNaiia());
         }
         finally {
             _LOCK.writeLock().unlock();
@@ -143,6 +144,7 @@ public class Algorithms {
         return input.getPatient() == null ? Collections.emptyMap() : input.getPatient();
     }
 
+    @SuppressWarnings("unused")
     private static List<Map<String, Object>> extractTumors(Map<String, Object> patient) {
         return extractTumors(patient, false);
     }
