@@ -3,6 +3,8 @@
  */
 package com.imsweb.algorithms;
 
+import java.util.List;
+
 public interface Algorithm {
 
     String getId();
@@ -11,5 +13,11 @@ public interface Algorithm {
 
     String getVersion();
 
-    //AlgorithmOutput execute(AlgorithmInput input);
+    List<AlgorithmParam> getParameters();
+
+    List<AlgorithmField> getInputFields();
+
+    List<AlgorithmField> getOutputFields();
+
+    AlgorithmOutput execute(AlgorithmInput input);
 }

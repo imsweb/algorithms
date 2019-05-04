@@ -4,12 +4,23 @@
 package com.imsweb.algorithms;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import com.imsweb.algorithms.nhia.NhiaUtils;
 
 public class Algorithms {
+
+    private static Map<String, AlgorithmField> _CACHED_FIELDS = new HashMap<>();
+
+    static {
+        addField(_CACHED_FIELDS, AlgorithmField.of("spanishHispanicOrigin", 190, "Spanish/Hispanic Origin", 1));
+    }
+
+    private static void addField(Map<String, AlgorithmField> cache, AlgorithmField field) {
+        cache.put(field.getId(), field);
+    }
 
     private static Map<String, Algorithm> _CACHED_ALGORITHMS = new HashMap<>();
 
@@ -40,6 +51,7 @@ public class Algorithms {
 
     private static Algorithm createAlgorithmNhia() {
         return new Algorithm() {
+
             @Override
             public String getId() {
                 return NhiaUtils.ALG_INFO;
@@ -53,6 +65,26 @@ public class Algorithms {
             @Override
             public String getVersion() {
                 return NhiaUtils.ALG_VERSION;
+            }
+
+            @Override
+            public List<AlgorithmParam> getParameters() {
+                return null;
+            }
+
+            @Override
+            public List<AlgorithmField> getInputFields() {
+                return null;
+            }
+
+            @Override
+            public List<AlgorithmField> getOutputFields() {
+                return null;
+            }
+
+            @Override
+            public AlgorithmOutput execute(AlgorithmInput input) {
+                return null;
             }
         };
     }

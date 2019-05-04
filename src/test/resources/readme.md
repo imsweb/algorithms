@@ -4,36 +4,36 @@ NHIA
 option 0, 7 or 9 (no default, it has to be provided)
 patient-level algorithm, but it does use 2 DX fields; can run on a single tumor using parent fields, or computes the best DX if patient is provided...
 input fields:
-- spanishHispanicOrigin (Patient)
-- nameLast (Patient)
-- nameMaiden (Patient)
-- birthplaceCountry (Patient)
-- race1 (Patient)
-- sex (Patient)
-- ihs (Patient)
-- countyAtDx (Tumor)
-- stateAtDx (Tumor)
+- spanishHispanicOrigin (Patient) [spanishHispanicOrigin/190]
+- nameLast (Patient) [nameLast/2230]
+- nameMaiden (Patient) [nameMaiden/2390]
+- birthplaceCountry (Patient) [birthplaceCountry/254]
+- race1 (Patient) [race1/160]
+- sex (Patient) [sex/220]
+- ihs (Patient) [ihsLink/192]
+- countyAtDx (Tumor) [countyAtDx/90]
+- stateAtDx (Tumor) [addrAtDxState/80]
 output fields:
-- nhia (Patient)
+- nhia (Patient) [nhiaDerivedHispOrigin/191]
 
 NAPIIA
 no option
 input fields:
-- race1 (Patient)
-- race2 (Patient)
-- race3 (Patient)
-- race4 (Patient)
-- race5 (Patient)
-- spanishHispanicOrigin (Patient)
-- birthplaceCountry (Patient)
-- sex (Patient)
-- nameLast (Patient)
-- nameMaiden (Patient)
-- nameFirst (Patient)
+- race1 (Patient) [race1/160]
+- race2 (Patient) [race2/161]
+- race3 (Patient) [race3/162]
+- race4 (Patient) [race4/163]
+- race5 (Patient) [race5/164]
+- spanishHispanicOrigin (Patient) [spanishHispanicOrigin/190]
+- birthplaceCountry (Patient) [birthplaceCountry/254]
+- sex (Patient) [sex/220]
+- nameLast (Patient) [nameLast/2230]
+- nameMaiden (Patient) [nameMaiden/2390]
+- nameFirst (Patient) [nameFirst/2240]
 output fields:
-- napiiaValue (Patient)
-- needsHumanReview (Non standard)
-- reasonForReview (Non standard)
+- napiiaValue (Patient) [raceNapiia/193]
+- needsHumanReview (Patient, Non standard)
+- reasonForReview (Patient, Non standard)
 
 Death Classification
 no option
@@ -71,8 +71,8 @@ input fields:
 output fields:
 - urbanRuralIndicatorCode2000 (Tumor)
 - urbanRuralIndicatorCode2010 (Tumor)
-- urbanRuralIndicatorCode2000Percentage (Non standard)
-- urbanRuralIndicatorCode2010Percentage (Non standard)
+- urbanRuralIndicatorCode2000Percentage (Tumor, Non standard)
+- urbanRuralIndicatorCode2010Percentage (Tumor, Non standard)
 - ruralUrbanCommutingArea2000 (Tumor)
 - ruralUrbanCommutingArea2010 (Tumor)
 - ruralUrbanContinuum1993 (Tumor)
@@ -97,21 +97,21 @@ input fields:
 - sequenceNumberCentral (Tumor)
 - typeOfReportingSource (Tumor)
 output fields:
-- vitalStatusRecode (Patient)
-- survivalTimeDxYear (Tumor)
-- survivalTimeDxMonth (Tumor)
-- survivalTimeDxDay (Tumor)
-- survivalTimeDolcYear (Tumor)
-- survivalTimeDolcMonth (Tumor)
-- survivalTimeDolcDay (Tumor)
-- survivalTimeDolcYearPresumedAlive (Tumor)
-- survivalTimeDolcMonthPresumedAlive (Tumor)
-- survivalTimeDolcDayPresumedAlive (Tumor)
-- survivalMonths (Tumor)
-- survivalMonthsFlag (Tumor)
-- survivalMonthsPresumedAlive (Tumor)
-- survivalMonthsFlagPresumedAlive (Tumor)
-- sortedIndex (Tumor) - this is actually a standard field as of NAACCR 18 (different name obviously)
+- vitalStatusRecode (Patient) [vitalStatusRecode/1762]
+- survivalTimeDxYear (Tumor) [survDateDxRecode/1788]
+- survivalTimeDxMonth (Tumor) [survDateDxRecode/1788]
+- survivalTimeDxDay (Tumor) [survDateDxRecode/1788]
+- survivalTimeDolcYear (Tumor) [survDateActiveFollowup/1782]
+- survivalTimeDolcMonth (Tumor) [survDateActiveFollowup/1782]
+- survivalTimeDolcDay (Tumor) [survDateActiveFollowup/1782]
+- survivalTimeDolcYearPresumedAlive (Tumor) [survDatePresumedAlive/1785]
+- survivalTimeDolcMonthPresumedAlive (Tumor) [survDatePresumedAlive/1785]
+- survivalTimeDolcDayPresumedAlive (Tumor) [survDatePresumedAlive/1785]
+- survivalMonths (Tumor) [survMosActiveFollowup/1784]
+- survivalMonthsFlag (Tumor) [survFlagActiveFollowup/1783]
+- survivalMonthsPresumedAlive (Tumor) [survMosPresumedAlive/1787]
+- survivalMonthsFlagPresumedAlive (Tumor) [survFlagPresumedAlive/1786]
+- sortedIndex (Tumor) [recordNumberRecode/1775]
 
 SEER Site Recode
 no option
@@ -168,3 +168,23 @@ This module is just meant to translate one coding scheme to another for a specif
 Site Surgery Tables
 Not applicable
 This module is not really an algorithm, just a data provider for a specific data item...
+
+
+Properties of a NAACCR XML dictionary:
+- dictionaryUri (required)
+- naaccrVersion (optional)
+- specificationVersion (optional)
+- description (optional)
+
+Properties of a NAACCR XML item:
+- naaccrId (required)
+- naaccrNum (required)
+- parentXmlElement (required)
+- length (required)
+- dataType (optional)
+- recordTypes  (optional)
+- padding (optional)
+- trim (optional)
+- startColumn (optional)
+- allowUnlimitedText (optional)
+- sourceOfStandard (optional)
