@@ -144,10 +144,9 @@ public class Algorithms {
         return input.getPatient() == null ? Collections.emptyMap() : input.getPatient();
     }
 
-    @SuppressWarnings("unused")
-    private static List<Map<String, Object>> extractTumors(Map<String, Object> patient) {
-        return extractTumors(patient, false);
-    }
+//    private static List<Map<String, Object>> extractTumors(Map<String, Object> patient) {
+//        return extractTumors(patient, false);
+//    }
 
     @SuppressWarnings("unchecked")
     private static List<Map<String, Object>> extractTumors(Map<String, Object> patient, boolean createTumorIfEmpty) {
