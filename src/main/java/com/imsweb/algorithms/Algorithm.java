@@ -13,6 +13,8 @@ public interface Algorithm {
 
     String getVersion();
 
+    String getInfo();
+
     List<AlgorithmParam> getParameters();
 
     List<AlgorithmField> getInputFields();

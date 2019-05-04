@@ -1,6 +1,7 @@
-package com.imsweb.algorithms;/*
+/*
  * Copyright (C) 2019 Information Management Services, Inc.
  */
+package com.imsweb.algorithms;
 
 import java.util.Map;
 
