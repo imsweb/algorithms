@@ -29,11 +29,15 @@ public class Algorithms {
     public static void initialize() {
         _LOCK.writeLock().lock();
         try {
-            _CACHED_ALGORITHMS.put(NhiaUtils.ALG_INFO, createAlgorithmNhia());
+            addAlgorithm(_CACHED_ALGORITHMS, createAlgorithmNhia());
         }
         finally {
             _LOCK.writeLock().unlock();
         }
+    }
+
+    private static void addAlgorithm(Map<String, Algorithm> cache, Algorithm algorithm) {
+        cache.put(algorithm.getId(), algorithm);
     }
 
     public static void registerAlgorithm(Algorithm algorithm) {
