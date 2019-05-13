@@ -25,6 +25,8 @@ import static com.imsweb.algorithms.nhia.NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE;
 import static com.imsweb.algorithms.nhia.NhiaUtils.NHIA_OPTION_SEVEN_ONLY;
 
 // TODO FD move the static creation of the algorithms to each individual utility class...
+
+// TODO survival alg needs to expose only 8-characters standard dates
 public class Algorithms {
 
     public static final String ALG_NHIA = "nhia";
@@ -47,13 +49,15 @@ public class Algorithms {
     public static final String FIELD_COUNTY_DX = "countyAtDx";
     public static final String FIELD_STATE_DX = "addrAtDxState";
     public static final String FIELD_NHIA = "nhiaDerivedHispOrigin";
-    public static final String FIELD_NAPIIA = "napiiaValue";
+    public static final String FIELD_NAPIIA = "raceNapiia";
     public static final String FIELD_NAPIIA_NEEDS_REVIEW = "napiiaNeedsHumanReview";
     public static final String FIELD_NAPIIA_REVIEW_REASON = "napiiaReasonForReview";
 
     public static final String PARAM_NHIA_OPTION = "nhiaOption";
 
     private static Map<String, AlgorithmField> _CACHED_FIELDS = new HashMap<>();
+
+    // TODO remove nice names for now, not useful.
 
     static {
         // standard fields
