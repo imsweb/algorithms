@@ -3,7 +3,9 @@
  */
 package com.imsweb.algorithms;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public interface Algorithm {
 
@@ -20,6 +22,10 @@ public interface Algorithm {
     List<AlgorithmField> getInputFields();
 
     List<AlgorithmField> getOutputFields();
+
+    default Map<String, List<String>> getUnknownValues() {
+        return Collections.emptyMap();
+    }
 
     AlgorithmOutput execute(AlgorithmInput input);
 }

@@ -49,7 +49,7 @@ public final class CauseSpecificUtils {
      * <li>icdRevisionNumber (#1920)</li>
      * <li>causeOfDeath (#1910)</li>
      * <li>primarySite (#400)</li>
-     * <li>behaviorIcdO3 (#523)</li>
+     * <li>histologyIcdO3 (#522)</li>
      * <li>dateOfLastContactYear (#1750)</li>
      * </ul>
      * All those properties are defined as constants in this class.
@@ -71,12 +71,12 @@ public final class CauseSpecificUtils {
      * <br/><br/>
      * The input dto may have the following parameters:
      * <ul>
-     * <li>_sequenceNumberCentral</li>
-     * <li>_icdRevisionNumber</li>
-     * <li>_causeOfDeath</li>
-     * <li>_primarySite</li>
-     * <li>_behaviorIcdO3</li>
-     * <li>_dateOfLastContactYear</li>
+     * <li>sequenceNumberCentral</li>
+     * <li>icdRevisionNumber</li>
+     * <li>causeOfDeath</li>
+     * <li>primarySite</li>
+     * <li>histologyIcdO3</li>
+     * <li>dateOfLastContactYear</li>
      * </ul>
      * <br/><br/>
      * @param input an input dto which has the fields used to compute cause specific values as parameter.
@@ -101,7 +101,7 @@ public final class CauseSpecificUtils {
      * <li>icdRevisionNumber (#1920)</li>
      * <li>causeOfDeath (#1910)</li>
      * <li>primarySite (#400)</li>
-     * <li>behaviorIcdO3 (#523)</li>
+     * <li>histologyIcdO3 (#523)</li>
      * <li>dateOfLastContactYear (#1750)</li>
      * </ul>
      * All those properties are defined as constants in this class.
@@ -131,12 +131,12 @@ public final class CauseSpecificUtils {
      * <br/><br/>
      * The input dto may have the following parameters:
      * <ul>
-     * <li>_sequenceNumberCentral</li>
-     * <li>_icdRevisionNumber</li>
-     * <li>_causeOfDeath</li>
-     * <li>_primarySite</li>
-     * <li>_behaviorIcdO3</li>
-     * <li>_dateOfLastContactYear</li>
+     * <li>sequenceNumberCentral</li>
+     * <li>icdRevisionNumber</li>
+     * <li>causeOfDeath</li>
+     * <li>primarySite</li>
+     * <li>histologyIcdO3</li>
+     * <li>dateOfLastContactYear</li>
      * </ul>
      * <br/><br/>
      * @param input an input dto which has the fields used to compute cause specific values as parameter.

@@ -32,70 +32,70 @@ input fields:
 - nameFirst (Patient) [nameFirst/2240]
 output fields:
 - napiiaValue (Patient) [raceNapiia/193]
-- needsHumanReview (Patient, Non standard)
-- reasonForReview (Patient, Non standard)
+- needsHumanReview (Patient, Non standard) - use napiiaNeedsHumanReview
+- reasonForReview (Patient, Non standard) - napiiaReasonForReview
 
 Death Classification
-no option
-2 computations so that could be 2 alg, or just 2 output fields, not sure yet
+option cutoffYear
+2 computations (2 fields, 1 alg)
 input fields:
-- primarySite (Tumor)
-- histologyIcdO3 (Tumor)
-- sequenceNumberCentral (Tumor)
-- icdRevisionNumber (Patient)
-- causeOfDeath (Patient)
-- dateOfLastContactYear (Patient)
+- primarySite (Tumor) [primarySite/400]
+- histologyIcdO3 (Tumor) [histologicTypeIcdO3/522]
+- sequenceNumberCentral (Tumor) [sequenceNumberCentral/380]
+- icdRevisionNumber (Patient) [icdRevisionNumber/1920]
+- causeOfDeath (Patient) [causeOfDeath/1910]
+- dateOfLastContactYear (Patient) [dateOfLastContact/1750]
 output fields:
-- causeSpecificDeathClassification (Patient)
-- causeOtherDeathClassification (Patient)
+- causeSpecificDeathClassification (Patient) [seerCauseSpecificCod/1914]
+- causeOtherDeathClassification (Patient) [seerOtherCod/1915]
 
 Census Tract Poverty
 option includeRecentYears (defaults to true)
 input fields:
-- addressAtDxState (Tumor)
-- addressAtDxCounty (Tumor)
-- dateOfDiagnosisYear (Tumor)
-- censusTract2000 (Tumor)
-- censusTract2010 (Tumor)
+- addressAtDxState (Tumor) [addrAtDxState/80]
+- addressAtDxCounty (Tumor) [countyAtDx/90]
+- dateOfDiagnosisYear (Tumor) [dateOfDiagnosis/390]
+- censusTract2000 (Tumor) [censusTract2000/130]
+- censusTract2010 (Tumor) [censusTract2010/135]
 output fields:
-- censusTractPovertyIndicator (Tumor)
+- censusTractPovertyIndicator (Tumor) [censusTrPovertyIndictr/145]
 
 Rural/Urban
 no option
 3 computations; I think this one has to be 3 algorithms because of the lazy initialization of the data
 input fields:
-- addressAtDxCounty (Tumor)
-- addressAtDxState (Tumor)
-- censusTract2000 (Tumor)
-- censusTract2010 (Tumor)
+- addressAtDxCounty (Tumor) [countyAtDx/90]
+- addressAtDxState (Tumor) [addrAtDxState/80]
+- censusTract2000 (Tumor) [censusTract2000/130]
+- censusTract2010 (Tumor) [censusTract2010/135]
 output fields:
-- urbanRuralIndicatorCode2000 (Tumor)
-- urbanRuralIndicatorCode2010 (Tumor)
-- urbanRuralIndicatorCode2000Percentage (Tumor, Non standard)
-- urbanRuralIndicatorCode2010Percentage (Tumor, Non standard)
-- ruralUrbanCommutingArea2000 (Tumor)
-- ruralUrbanCommutingArea2010 (Tumor)
-- ruralUrbanContinuum1993 (Tumor)
-- ruralUrbanContinuum2003 (Tumor)
-- ruralUrbanContinuum2013 (Tumor)
+- urbanRuralIndicatorCode2000 (Tumor) [uric2000/345]
+- urbanRuralIndicatorCode2010 (Tumor) [uric2010/346]
+- urbanRuralIndicatorCode2000Percentage (Tumor, Non standard) - use uric2000Percentage
+- urbanRuralIndicatorCode2010Percentage (Tumor, Non standard) - use uric2010Percentage
+- ruralUrbanCommutingArea2000 (Tumor) [ruca2000/339]
+- ruralUrbanCommutingArea2010 (Tumor) [ruca2010/341]
+- ruralUrbanContinuum1993 (Tumor) [ruralurbanContinuum1993/3300]
+- ruralUrbanContinuum2003 (Tumor) [ruralurbanContinuum2003/3310]
+- ruralUrbanContinuum2013 (Tumor) [ruralurbanContinuum2013/3312]
 
 Survival Time
 option endPointYear (also called study-cutoff); no default, it has to be provided
 this algorithm is a patient-level algorithm but it needs all tumors
 input fields:
-- patientIdNumber (Patient)
-- dateOfDiagnosisYear (Tumor)
-- dateOfDiagnosisMonth (Tumor)
-- dateOfDiagnosisDay (Tumor)
-- dateOfLastContactYear (Patient)
-- dateOfLastContactMonth (Patient)
-- dateOfLastContactDay (Patient)
-- birthYear (Patient)
-- birthMonth (Patient)
-- birthDay (Patient)
-- vitalStatus (Patient)
-- sequenceNumberCentral (Tumor)
-- typeOfReportingSource (Tumor)
+- patientIdNumber (Patient) [patientIdNumber/20]
+- dateOfDiagnosisYear (Tumor) [dateOfDiagnosis/390]
+- dateOfDiagnosisMonth (Tumor) [dateOfDiagnosis/390]
+- dateOfDiagnosisDay (Tumor) [dateOfDiagnosis/390]
+- dateOfLastContactYear (Patient) [dateOfLastContact/1750]
+- dateOfLastContactMonth (Patient) [dateOfLastContact/1750]
+- dateOfLastContactDay (Patient) [dateOfLastContact/1750]
+- birthYear (Patient) [dateOfBirth/240]
+- birthMonth (Patient) [dateOfBirth/240]
+- birthDay (Patient) [dateOfBirth/240]
+- vitalStatus (Patient) [vitalStatus/1760]
+- sequenceNumberCentral (Tumor) (Tumor) [sequenceNumberCentral/380]
+- typeOfReportingSource (Tumor) [typeOfReportingSource/500]
 output fields:
 - vitalStatusRecode (Patient) [vitalStatusRecode/1762]
 - survivalTimeDxYear (Tumor) [survDateDxRecode/1788]
@@ -117,45 +117,45 @@ SEER Site Recode
 no option
 3 versions so that would be 3 alg
 input fields:
-- primarySite (Tumor)
-- histologyIcdO3 (Tumor)
+- primarySite (Tumor) [primarySite/400]
+- histologyIcdO3 (Tumor) [histologicTypeIcdO3/522]
 output fields:
-- seerSiteRecode (Tumor) - I can't remember if this is a standard field or not
+- seerSiteRecode (Tumor, not standard) - use seerSiteRecode
 
 ICCC
 no option
 normal vs extended so that would be 2 alg
 input fields:
-- primarySite (Tumor)
-- histologyIcdO3 (Tumor)
-- behaviorIcdO3 (Tumor)
+- primarySite (Tumor) (Tumor) [primarySite/400]
+- histologyIcdO3 (Tumor) [histologicTypeIcdO3/522]
+- behaviorIcdO3 (Tumor) [behaviorCodeIcdO3/523]
 output fields:
-- iccc (Tumor) - I can't remember if this is a standard field or not
+- iccc (Tumor, not standard) - use iccc
 
 IARC
 no option
 input fields:
-- dateOfDiagnosisYear (Tumor)
-- dateOfDiagnosisMonth (Tumor)
-- dateOfDiagnosisDay (Tumor)
-- sequenceNumber (Tumor)
-- site (Tumor)
-- histology (Tumor)
-- behavior (Tumor)
+- dateOfDiagnosisYear (Tumor) [dateOfDiagnosis/390]
+- dateOfDiagnosisMonth (Tumor) [dateOfDiagnosis/390]
+- dateOfDiagnosisDay (Tumor) [dateOfDiagnosis/390]
+- sequenceNumber (Tumor) (Tumor) [sequenceNumberCentral/380]
+- site (Tumor) [primarySite/400]
+- histology (Tumor) [histologicTypeIcdO3/522]
+- behavior (Tumor) [behaviorCodeIcdO3/523]
 output fields:
-- internationalPrimaryIndicator (Tumor) - not standard
-- siteGroup (Tumor) - not standard
-- histGroup (Tumor) - not standard
+- internationalPrimaryIndicator (Tumor, not standard) - use iarc
+- siteGroup (Tumor, not standard) - use iarcSiteGroup
+- histGroup (Tumor, not standard) - not iarcHistGroup
 
 SEER Behavior Recode
 no option
 input fields:
-- dateOfDiagnosisYear (Tumor)
-- primarySite (Tumor)
-- histologyIcdO3 (Tumor)
-- behaviorIcdO3 (Tumor)
+- dateOfDiagnosisYear (Tumor) [dateOfDiagnosis/390]
+- primarySite (Tumor) [primarySite/400]
+- histologyIcdO3 (Tumor)) [histologicTypeIcdO3/522]
+- behaviorIcdO3 (Tumor) [behaviorCodeIcdO3/523]
 output fields:
-- behaviorRecode (Non standard)
+- behaviorRecode (Tumor, not standard) - use seerBehaviorRecode
 
 Historic Stage
 Not applicable

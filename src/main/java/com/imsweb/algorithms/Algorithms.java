@@ -29,11 +29,25 @@ import static com.imsweb.algorithms.nhia.NhiaUtils.NHIA_OPTION_SEVEN_ONLY;
 // TODO survival alg needs to expose only 8-characters standard dates
 public class Algorithms {
 
+    // algorithm IDs
     public static final String ALG_NHIA = "nhia";
     public static final String ALG_NAPIIA = "napiia";
+    public static final String ALG_DEATH_CLASSIFICATION = "death-classification";
+    public static final String ALG_CENSUS_POVERTY = "census-poverty";
+    public static final String ALG_URIC = "uric";
+    public static final String ALG_RUCA = "ruca";
+    public static final String ALG_URBAN_CONTINUUM = "urban-continuum";
+    public static final String ALG_SURVIVAL_TIME = "survival-time";
+    public static final String ALG_SEER_SITE_RECODE = "seer-site-recode";
+    public static final String ALG_SEER_BEHAVIOR_RECODE = "seer-behavior-recode";
+    public static final String ALG_ICCC = "iccc";
+    public static final String ALG_IARC = "iarc";
 
+    // special properties
     public static final String FIELD_TUMORS = "tumors";
 
+    // standard fields
+    public static final String FIELD_PAT_ID_NUMBER = "patientIdNumber";
     public static final String FIELD_SPAN_HISP_OR = "spanishHispanicOrigin";
     public static final String FIELD_NAME_LAST = "nameLast";
     public static final String FIELD_NAME_FIRST = "nameFirst";
@@ -50,11 +64,56 @@ public class Algorithms {
     public static final String FIELD_STATE_DX = "addrAtDxState";
     public static final String FIELD_NHIA = "nhiaDerivedHispOrigin";
     public static final String FIELD_NAPIIA = "raceNapiia";
+    public static final String FIELD_DOLC = "dateOfLastContact";
+    public static final String FIELD_VS = "vitalStatus";
+    public static final String FIELD_TYPE_RPT_SRC = "typeOfReportingSource";
+    public static final String FIELD_COD = "causeOfDeath";
+    public static final String FIELD_SEER_COD_CLASS = "seerCauseSpecificCod";
+    public static final String FIELD_SEER_COD_OTHER = "seerOtherCod";
+    public static final String FIELD_ICD_REV_NUM = "icdRevisionNumber";
+    public static final String FIELD_SEQ_NUM_CTRL = "sequenceNumberCentral";
+    public static final String FIELD_PRIMARY_SITE = "primarySite";
+    public static final String FIELD_HIST_O3 = "histologicTypeIcdO3";
+    public static final String FIELD_BEHAV_O3 = "behaviorCodeIcdO3";
+    public static final String FIELD_DX_DATE = "dateOfDiagnosis";
+    public static final String FIELD_CENSUS_2000 = "censusTract2000";
+    public static final String FIELD_CENSUS_2010 = "censusTract2010";
+    public static final String FIELD_CENSUS_POVERTY_INDICTR = "censusTrPovertyIndictr";
+    public static final String FIELD_URIC_2000 = "uric2000";
+    public static final String FIELD_URIC_2010 = "uric2010";
+    public static final String FIELD_RUCA_2000 = "ruca2000";
+    public static final String FIELD_RUCA_2010 = "ruca2010";
+    public static final String FIELD_RURAL_CONT_1993 = "ruralurbanContinuum1993";
+    public static final String FIELD_RURAL_CONT_2003 = "ruralurbanContinuum2003";
+    public static final String FIELD_RURAL_CONT_2013 = "ruralurbanContinuum2013";
+    public static final String FIELD_SURV_VS_RECODE = "vitalStatusRecode";
+    public static final String FIELD_SURV_DX_DATE_RECODE = "survDateDxRecode";
+    public static final String FIELD_SURV_DATE_ACTIVE_FUP = "survDateActiveFollowup";
+    public static final String FIELD_SURV_DATE_PRESUMED_ALIVE = "survDatePresumedAlive";
+    public static final String FIELD_SURV_MONTH_ACTIVE_FUP = "survMosActiveFollowup";
+    public static final String FIELD_SURV_FLAG_ACTIVE_FUP = "survFlagActiveFollowup";
+    public static final String FIELD_SURV_MONTH_PRESUMED_ALIVE = "survMosPresumedAlive";
+    public static final String FIELD_SURV_FLAG_PRESUMED_ALIVE = "survFlagPresumedAlive";
+    public static final String FIELD_SURV_REC_NUM_RECODE = "recordNumberRecode";
+
+    // non-standard fields
     public static final String FIELD_NAPIIA_NEEDS_REVIEW = "napiiaNeedsHumanReview";
     public static final String FIELD_NAPIIA_REVIEW_REASON = "napiiaReasonForReview";
+    public static final String FIELD_URIC_2000_PERCENTAGE = "uric2000Percentage";
+    public static final String FIELD_URIC_201_PERCENTAGE = "uric2010Percentage";
+    public static final String FIELD_SEER_SITE_RECODE = "seerSiteRecode";
+    public static final String FIELD_SEER_BEHAV_RECODE = "seerBehaviorRecode";
+    public static final String FIELD_ICCC = "iccc";
+    public static final String FIELD_IARC = "iarc";
+    public static final String FIELD_IARC_SITE_GROUP = "iarcSiteGroup";
+    public static final String FIELD_IARC_HIST_GROUP = "iarcHistGroup";
 
+    // options
     public static final String PARAM_NHIA_OPTION = "nhiaOption";
+    public static final String PARAM_SEER_COD_CLASS_CUTOFF_YEAR = "seerCodClassCutoffYear";
+    public static final String PARAM_SURV_CUTOFF_YEAR = "survivalCutoffYear";
 
+    // cached fields
     private static Map<String, AlgorithmField> _CACHED_FIELDS = new HashMap<>();
 
     // TODO remove nice names for now, not useful.
@@ -71,7 +130,7 @@ public class Algorithms {
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_RACE3, 162, "TODO", 2));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_RACE4, 163, "TODO", 2));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_RACE5, 164, "TODO", 2));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SPAN_HISP_OR, 190, "Spanish/Hispanic Origin", 1));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SPAN_HISP_OR, 190, "TODO", 1));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_IHS, 192, "TODO", 1));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_NHIA, 191, "TODO", 1));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_NAPIIA, 193, "TODO", 2));
@@ -95,7 +154,7 @@ public class Algorithms {
         _LOCK.writeLock().lock();
         try {
             addAlgorithm(_CACHED_ALGORITHMS, createAlgorithmNhia());
-            addAlgorithm(_CACHED_ALGORITHMS, createAlgorithmNaiia());
+            addAlgorithm(_CACHED_ALGORITHMS, createAlgorithmNapiia());
         }
         finally {
             _LOCK.writeLock().unlock();
@@ -250,7 +309,7 @@ public class Algorithms {
         };
     }
 
-    private static Algorithm createAlgorithmNaiia() {
+    private static Algorithm createAlgorithmNapiia() {
         return new Algorithm() {
 
             @Override
