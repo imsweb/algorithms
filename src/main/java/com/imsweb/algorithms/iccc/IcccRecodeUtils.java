@@ -3,6 +3,7 @@ package com.imsweb.algorithms.iccc;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -194,7 +195,7 @@ public final class IcccRecodeUtils {
         _INTERNAL_DATA.put(version, executables);
 
         try {
-            List<String[]> allData = new CSVReader(new InputStreamReader(url.openStream(), "US-ASCII")).readAll();
+            List<String[]> allData = new CSVReader(new InputStreamReader(url.openStream(), StandardCharsets.US_ASCII)).readAll();
             for (int i = 1; i < allData.size(); i++) {
                 String[] data = allData.get(i);
 

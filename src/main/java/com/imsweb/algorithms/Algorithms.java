@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import com.imsweb.algorithms.censustractpovertyindicator.CensusTractPovertyIndicatorInputDto;
+import com.imsweb.algorithms.censustractpovertyindicator.CensusTractPovertyIndicatorOutputDto;
+import com.imsweb.algorithms.censustractpovertyindicator.CensusTractPovertyIndicatorUtils;
 import com.imsweb.algorithms.napiia.NapiiaInputPatientDto;
 import com.imsweb.algorithms.napiia.NapiiaInputRecordDto;
 import com.imsweb.algorithms.napiia.NapiiaResultsDto;
@@ -19,14 +22,19 @@ import com.imsweb.algorithms.nhia.NhiaInputPatientDto;
 import com.imsweb.algorithms.nhia.NhiaInputRecordDto;
 import com.imsweb.algorithms.nhia.NhiaResultsDto;
 import com.imsweb.algorithms.nhia.NhiaUtils;
+import com.imsweb.algorithms.survival.SurvivalTimeInputPatientDto;
+import com.imsweb.algorithms.survival.SurvivalTimeInputRecordDto;
+import com.imsweb.algorithms.survival.SurvivalTimeOutputPatientDto;
+import com.imsweb.algorithms.survival.SurvivalTimeOutputRecordDto;
+import com.imsweb.algorithms.survival.SurvivalTimeUtils;
 
 import static com.imsweb.algorithms.nhia.NhiaUtils.NHIA_OPTION_ALL_CASES;
 import static com.imsweb.algorithms.nhia.NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE;
 import static com.imsweb.algorithms.nhia.NhiaUtils.NHIA_OPTION_SEVEN_ONLY;
 
 // TODO FD move the static creation of the algorithms to each individual utility class...
-
-// TODO survival alg needs to expose only 8-characters standard dates
+// TODO FD survival alg needs to expose only 8-characters standard dates
+// TODO FD fill in unknown values for each algorithms
 public class Algorithms {
 
     // algorithm IDs
@@ -53,6 +61,7 @@ public class Algorithms {
     public static final String FIELD_NAME_FIRST = "nameFirst";
     public static final String FIELD_NAME_MAIDEN = "nameMaiden";
     public static final String FIELD_COUNTRY_BIRTH = "birthplaceCountry";
+    public static final String FIELD_DATE_OF_BIRTH = "dateOfBirth";
     public static final String FIELD_RACE1 = "race1";
     public static final String FIELD_RACE2 = "race2";
     public static final String FIELD_RACE3 = "race3";
@@ -100,7 +109,7 @@ public class Algorithms {
     public static final String FIELD_NAPIIA_NEEDS_REVIEW = "napiiaNeedsHumanReview";
     public static final String FIELD_NAPIIA_REVIEW_REASON = "napiiaReasonForReview";
     public static final String FIELD_URIC_2000_PERCENTAGE = "uric2000Percentage";
-    public static final String FIELD_URIC_201_PERCENTAGE = "uric2010Percentage";
+    public static final String FIELD_URIC_2010_PERCENTAGE = "uric2010Percentage";
     public static final String FIELD_SEER_SITE_RECODE = "seerSiteRecode";
     public static final String FIELD_SEER_BEHAV_RECODE = "seerBehaviorRecode";
     public static final String FIELD_ICCC = "iccc";
@@ -111,35 +120,75 @@ public class Algorithms {
     // options
     public static final String PARAM_NHIA_OPTION = "nhiaOption";
     public static final String PARAM_SEER_COD_CLASS_CUTOFF_YEAR = "seerCodClassCutoffYear";
+    public static final String PARAM_CENSUS_POVERTY_INC_RECENT_YEARS = "censusPovertyIncludeRecentYears";
     public static final String PARAM_SURV_CUTOFF_YEAR = "survivalCutoffYear";
 
     // cached fields
     private static Map<String, AlgorithmField> _CACHED_FIELDS = new HashMap<>();
 
-    // TODO remove nice names for now, not useful.
-
     static {
         // standard fields
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_NAME_LAST, 2230, "TODO", 50));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_NAME_FIRST, 2240, "TODO", 50));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_NAME_MAIDEN, 2390, "TODO", 50));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_COUNTRY_BIRTH, 254, "TODO", 3));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SEX, 220, "TODO", 1));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_RACE1, 160, "TODO", 2));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_RACE2, 161, "TODO", 2));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_RACE3, 162, "TODO", 2));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_RACE4, 163, "TODO", 2));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_RACE5, 164, "TODO", 2));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SPAN_HISP_OR, 190, "TODO", 1));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_IHS, 192, "TODO", 1));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_NHIA, 191, "TODO", 1));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_NAPIIA, 193, "TODO", 2));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_COUNTY_DX, 90, "TODO", 3));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_STATE_DX, 80, "TODO", 2));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_PAT_ID_NUMBER, 20, 8));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_NAME_LAST, 2230, 50));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_NAME_FIRST, 2240, 50));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_NAME_MAIDEN, 2390, 50));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_COUNTRY_BIRTH, 254, 3));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_DATE_OF_BIRTH, 240, 8));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SEX, 220, 1));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_RACE1, 160, 2));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_RACE2, 161, 2));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_RACE3, 162, 2));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_RACE4, 163, 2));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_RACE5, 164, 2));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SPAN_HISP_OR, 190, 1));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_IHS, 192, 1));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_NHIA, 191, 1));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_NAPIIA, 193, 2));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_COUNTY_DX, 90, 3));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_STATE_DX, 80, 2));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_DOLC, 1750, 8));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_VS, 1760, 1));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_TYPE_RPT_SRC, 500, 1));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_COD, 1910, 4));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SEER_COD_CLASS, 1914, 1));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SEER_COD_OTHER, 1915, 1));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_ICD_REV_NUM, 1920, 1));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SEQ_NUM_CTRL, 380, 2));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_PRIMARY_SITE, 400, 4));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_HIST_O3, 522, 4));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_BEHAV_O3, 523, 1));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_DX_DATE, 390, 8));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_CENSUS_2000, 130, 6));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_CENSUS_2010, 135, 6));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_CENSUS_POVERTY_INDICTR, 145, 1));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_URIC_2000, 345, 1));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_URIC_2010, 346, 1));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_RUCA_2000, 339, 1));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_RUCA_2010, 341, 1));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_RURAL_CONT_1993, 3300, 2));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_RURAL_CONT_2003, 3310, 2));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_RURAL_CONT_2013, 3312, 2));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SURV_VS_RECODE, 1762, 1));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SURV_DX_DATE_RECODE, 1788, 8));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SURV_DATE_ACTIVE_FUP, 1782, 8));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SURV_DATE_PRESUMED_ALIVE, 1785, 8));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SURV_MONTH_ACTIVE_FUP, 1784, 3));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SURV_FLAG_ACTIVE_FUP, 1783, 1));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SURV_MONTH_PRESUMED_ALIVE, 1787, 3));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SURV_FLAG_PRESUMED_ALIVE, 1786, 1));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SURV_REC_NUM_RECODE, 1775, 2));
 
         // non-standard fields
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_NAPIIA_NEEDS_REVIEW, 25001, "TODO", 1));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_NAPIIA_REVIEW_REASON, 25002, "TODO", 256));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_NAPIIA_NEEDS_REVIEW, null, 1));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_NAPIIA_REVIEW_REASON, null, 256));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_URIC_2000_PERCENTAGE, null, 10));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_URIC_2010_PERCENTAGE, null, 10));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SEER_SITE_RECODE, null, 5));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SEER_BEHAV_RECODE, null, 1));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_ICCC, null, 3));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_IARC, null, 1));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_IARC_SITE_GROUP, null, 4));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_IARC_HIST_GROUP, null, 4));
     }
 
     private static void addField(Map<String, AlgorithmField> cache, AlgorithmField field) {
@@ -155,6 +204,9 @@ public class Algorithms {
         try {
             addAlgorithm(_CACHED_ALGORITHMS, createAlgorithmNhia());
             addAlgorithm(_CACHED_ALGORITHMS, createAlgorithmNapiia());
+            addAlgorithm(_CACHED_ALGORITHMS, createAlgorithmDeathClassification());
+            addAlgorithm(_CACHED_ALGORITHMS, createAlgorithmCensusTractPoverty());
+            addAlgorithm(_CACHED_ALGORITHMS, createAlgorithmSurvivalTime());
         }
         finally {
             _LOCK.writeLock().unlock();
@@ -203,13 +255,34 @@ public class Algorithms {
         }
     }
 
-    private static Map<String, Object> extratPatient(AlgorithmInput input) {
+    private static Map<String, Object> extractPatient(AlgorithmInput input) {
         return input.getPatient() == null ? Collections.emptyMap() : input.getPatient();
     }
 
-//    private static List<Map<String, Object>> extractTumors(Map<String, Object> patient) {
-//        return extractTumors(patient, false);
-//    }
+    private static List<Map<String, Object>> extractTumors(Map<String, Object> patient) {
+        return extractTumors(patient, false);
+    }
+
+    private static String extractYear(String fullDate) {
+        if (fullDate == null || fullDate.length() < 4)
+            return null;
+
+        return fullDate.substring(0, 4);
+    }
+
+    private static String extractMonth(String fullDate) {
+        if (fullDate == null || fullDate.length() < 4)
+            return null;
+
+        return fullDate.substring(0, 4); // TODO FD
+    }
+
+    private static String extractDay(String fullDate) {
+        if (fullDate == null || fullDate.length() < 4)
+            return null;
+
+        return fullDate.substring(0, 4); // TODO FD
+    }
 
     @SuppressWarnings("unchecked")
     private static List<Map<String, Object>> extractTumors(Map<String, Object> patient, boolean createTumorIfEmpty) {
@@ -275,8 +348,7 @@ public class Algorithms {
 
             @Override
             public AlgorithmOutput execute(AlgorithmInput input) {
-
-                Map<String, Object> patientMap = extratPatient(input);
+                Map<String, Object> patientMap = extractPatient(input);
 
                 List<NhiaInputRecordDto> list = new ArrayList<>();
                 for (Map<String, Object> tumorMap : extractTumors(patientMap, true)) {
@@ -298,11 +370,11 @@ public class Algorithms {
 
                 NhiaResultsDto result = NhiaUtils.computeNhia(inputPatient, (String)input.getParameters().get(PARAM_NHIA_OPTION));
 
-                Map<String, Object> patientOutput = new HashMap<>();
-                patientOutput.put(FIELD_NHIA, result.getNhia());
+                Map<String, Object> outputPatient = new HashMap<>();
+                outputPatient.put(FIELD_NHIA, result.getNhia());
 
                 AlgorithmOutput output = new AlgorithmOutput();
-                output.setPatient(patientOutput);
+                output.setPatient(outputPatient);
 
                 return output;
             }
@@ -365,8 +437,7 @@ public class Algorithms {
 
             @Override
             public AlgorithmOutput execute(AlgorithmInput input) {
-
-                Map<String, Object> patientMap = extratPatient(input);
+                Map<String, Object> patientMap = extractPatient(input);
 
                 List<NapiiaInputRecordDto> list = new ArrayList<>();
                 for (Map<String, Object> ignored : extractTumors(patientMap, true)) {
@@ -385,20 +456,278 @@ public class Algorithms {
                     list.add(dto);
                 }
 
-                NapiiaInputPatientDto inputPatient = new NapiiaInputPatientDto();
-                inputPatient.setNapiiaInputPatientDtoList(list);
+                NapiiaInputPatientDto inputDto = new NapiiaInputPatientDto();
+                inputDto.setNapiiaInputPatientDtoList(list);
 
-                NapiiaResultsDto result = NapiiaUtils.computeNapiia(inputPatient);
+                NapiiaResultsDto result = NapiiaUtils.computeNapiia(inputDto);
 
-                Map<String, Object> patientOutput = new HashMap<>();
-                patientOutput.put(FIELD_NAPIIA, result.getNapiiaValue());
-                patientOutput.put(FIELD_NAPIIA_NEEDS_REVIEW, Boolean.TRUE.equals(result.getNeedsHumanReview()) ? "1" : "0");
-                patientOutput.put(FIELD_NAPIIA_REVIEW_REASON, result.getReasonForReview());
+                Map<String, Object> outputPatient = new HashMap<>();
+                outputPatient.put(FIELD_NAPIIA, result.getNapiiaValue());
+                outputPatient.put(FIELD_NAPIIA_NEEDS_REVIEW, Boolean.TRUE.equals(result.getNeedsHumanReview()) ? "1" : "0");
+                outputPatient.put(FIELD_NAPIIA_REVIEW_REASON, result.getReasonForReview());
 
                 AlgorithmOutput output = new AlgorithmOutput();
-                output.setPatient(patientOutput);
+                output.setPatient(outputPatient);
 
                 return output;
+            }
+        };
+    }
+
+    private static Algorithm createAlgorithmDeathClassification() {
+        return new Algorithm() {
+
+            @Override
+            public String getId() {
+                return ALG_DEATH_CLASSIFICATION;
+            }
+
+            @Override
+            public String getName() {
+                return "SEER Cause-specific Death Classification";
+            }
+
+            @Override
+            public String getVersion() {
+                return "N/A";
+            }
+
+            @Override
+            public String getInfo() {
+                return getName();
+            }
+
+            @Override
+            public List<AlgorithmParam> getParameters() {
+                List<AlgorithmParam> params = new ArrayList<>();
+                params.add(AlgorithmParam.of(PARAM_SEER_COD_CLASS_CUTOFF_YEAR, "Cutoff Year", Integer.class));
+                return params;
+            }
+
+            @Override
+            public List<AlgorithmField> getInputFields() {
+                List<AlgorithmField> fields = new ArrayList<>();
+                fields.add(_CACHED_FIELDS.get(FIELD_PRIMARY_SITE));
+                fields.add(_CACHED_FIELDS.get(FIELD_HIST_O3));
+                fields.add(_CACHED_FIELDS.get(FIELD_SEQ_NUM_CTRL));
+                fields.add(_CACHED_FIELDS.get(FIELD_ICD_REV_NUM));
+                fields.add(_CACHED_FIELDS.get(FIELD_COD));
+                fields.add(_CACHED_FIELDS.get(FIELD_DOLC));
+                return fields;
+            }
+
+            @Override
+            public List<AlgorithmField> getOutputFields() {
+                List<AlgorithmField> fields = new ArrayList<>();
+                fields.add(_CACHED_FIELDS.get(FIELD_SEER_COD_CLASS));
+                fields.add(_CACHED_FIELDS.get(FIELD_SEER_COD_OTHER));
+                return fields;
+            }
+
+            @Override
+            public AlgorithmOutput execute(AlgorithmInput input) {
+                return null;  // TODO FD I am not sure how to do this one; result is patient-level but alg uses tumor fields!
+            }
+        };
+    }
+
+    private static Algorithm createAlgorithmCensusTractPoverty() {
+        return new Algorithm() {
+
+            @Override
+            public String getId() {
+                return ALG_CENSUS_POVERTY;
+            }
+
+            @Override
+            public String getName() {
+                return CensusTractPovertyIndicatorUtils.ALG_NAME;
+            }
+
+            @Override
+            public String getVersion() {
+                return CensusTractPovertyIndicatorUtils.ALG_VERSION;
+            }
+
+            @Override
+            public String getInfo() {
+                return CensusTractPovertyIndicatorUtils.ALG_INFO;
+            }
+
+            @Override
+            public List<AlgorithmParam> getParameters() {
+                List<AlgorithmParam> params = new ArrayList<>();
+                params.add(AlgorithmParam.of(PARAM_CENSUS_POVERTY_INC_RECENT_YEARS, "Include Recent Years", Boolean.class));
+                return params;
+            }
+
+            @Override
+            public List<AlgorithmField> getInputFields() {
+                List<AlgorithmField> fields = new ArrayList<>();
+                fields.add(_CACHED_FIELDS.get(FIELD_STATE_DX));
+                fields.add(_CACHED_FIELDS.get(FIELD_COUNTY_DX));
+                fields.add(_CACHED_FIELDS.get(FIELD_DX_DATE));
+                fields.add(_CACHED_FIELDS.get(FIELD_CENSUS_2000));
+                fields.add(_CACHED_FIELDS.get(FIELD_CENSUS_2010));
+                return fields;
+            }
+
+            @Override
+            public List<AlgorithmField> getOutputFields() {
+                List<AlgorithmField> fields = new ArrayList<>();
+                fields.add(_CACHED_FIELDS.get(FIELD_CENSUS_POVERTY_INDICTR));
+                return fields;
+            }
+
+            @Override
+            public AlgorithmOutput execute(AlgorithmInput input) {
+
+                Boolean includeRecentYears = (Boolean)input.getParameters().get(PARAM_CENSUS_POVERTY_INC_RECENT_YEARS);
+                if (includeRecentYears == null)
+                    includeRecentYears = Boolean.TRUE;
+
+                List<Map<String, Object>> outputTumors = new ArrayList<>();
+                for (Map<String, Object> inputTumor : extractTumors(extractPatient(input))) {
+                    CensusTractPovertyIndicatorInputDto inputDto = new CensusTractPovertyIndicatorInputDto();
+                    inputDto.setAddressAtDxState((String)inputTumor.get(FIELD_STATE_DX));
+                    inputDto.setAddressAtDxCounty((String)inputTumor.get(FIELD_COUNTY_DX));
+                    inputDto.setDateOfDiagnosisYear(extractYear((String)inputTumor.get(FIELD_DX_DATE)));
+                    inputDto.setCensusTract2000((String)inputTumor.get(FIELD_CENSUS_2000));
+                    inputDto.setCensusTract2010((String)inputTumor.get(FIELD_CENSUS_2010));
+
+                    CensusTractPovertyIndicatorOutputDto outputDto = CensusTractPovertyIndicatorUtils.computePovertyIndicator(inputDto, includeRecentYears);
+                    outputTumors.add(Collections.singletonMap(FIELD_CENSUS_POVERTY_INDICTR, outputDto.getCensusTractPovertyIndicator()));
+                }
+
+                Map<String, Object> outputPatient = new HashMap<>();
+                outputPatient.put(FIELD_TUMORS, outputTumors);
+
+                AlgorithmOutput output = new AlgorithmOutput();
+                output.setPatient(outputPatient);
+
+                return output;
+
+            }
+        };
+    }
+
+    private static Algorithm createAlgorithmSurvivalTime() {
+        return new Algorithm() {
+
+            @Override
+            public String getId() {
+                return ALG_SURVIVAL_TIME;
+            }
+
+            @Override
+            public String getName() {
+                return SurvivalTimeUtils.ALG_NAME;
+            }
+
+            @Override
+            public String getVersion() {
+                return SurvivalTimeUtils.VERSION;
+            }
+
+            @Override
+            public String getInfo() {
+                return SurvivalTimeUtils.ALG_INFO;
+            }
+
+            @Override
+            public List<AlgorithmParam> getParameters() {
+                List<AlgorithmParam> params = new ArrayList<>();
+                params.add(AlgorithmParam.of(PARAM_SURV_CUTOFF_YEAR, "Cutoff Year", Integer.class));
+                return params;
+            }
+
+            @Override
+            public List<AlgorithmField> getInputFields() {
+                List<AlgorithmField> fields = new ArrayList<>();
+                fields.add(_CACHED_FIELDS.get(FIELD_PAT_ID_NUMBER));
+                fields.add(_CACHED_FIELDS.get(FIELD_DATE_OF_BIRTH));
+                fields.add(_CACHED_FIELDS.get(FIELD_DOLC));
+                fields.add(_CACHED_FIELDS.get(FIELD_VS));
+                fields.add(_CACHED_FIELDS.get(FIELD_DX_DATE));
+                fields.add(_CACHED_FIELDS.get(FIELD_SEQ_NUM_CTRL));
+                fields.add(_CACHED_FIELDS.get(FIELD_TYPE_RPT_SRC));
+                return fields;
+            }
+
+            @Override
+            public List<AlgorithmField> getOutputFields() {
+                List<AlgorithmField> fields = new ArrayList<>();
+                fields.add(_CACHED_FIELDS.get(FIELD_SURV_MONTH_ACTIVE_FUP));
+                fields.add(_CACHED_FIELDS.get(FIELD_SURV_FLAG_ACTIVE_FUP));
+                fields.add(_CACHED_FIELDS.get(FIELD_SURV_DATE_ACTIVE_FUP));
+                fields.add(_CACHED_FIELDS.get(FIELD_SURV_MONTH_PRESUMED_ALIVE));
+                fields.add(_CACHED_FIELDS.get(FIELD_SURV_FLAG_PRESUMED_ALIVE));
+                fields.add(_CACHED_FIELDS.get(FIELD_SURV_DATE_PRESUMED_ALIVE));
+                fields.add(_CACHED_FIELDS.get(FIELD_SURV_DX_DATE_RECODE));
+                fields.add(_CACHED_FIELDS.get(FIELD_SURV_VS_RECODE));
+                fields.add(_CACHED_FIELDS.get(FIELD_SURV_REC_NUM_RECODE));
+                return fields;
+            }
+
+            @Override
+            public AlgorithmOutput execute(AlgorithmInput input) {
+
+                Integer cutoffYear = (Integer)input.getParameters().get(PARAM_SURV_CUTOFF_YEAR);
+                if (cutoffYear == null)
+                    throw new RuntimeException("This algorithm requires a cutoff year!");
+
+                Map<String, Object> inputPatient = extractPatient(input);
+
+                List<SurvivalTimeInputRecordDto> recDtoList = new ArrayList<>();
+                for (Map<String, Object> inputTumor : extractTumors(inputPatient)) {
+                    SurvivalTimeInputRecordDto recDto = new SurvivalTimeInputRecordDto();
+                    recDto.setPatientIdNumber((String)inputTumor.get(FIELD_PAT_ID_NUMBER));
+                    recDto.setDateOfDiagnosisYear(extractYear((String)inputTumor.get(FIELD_DX_DATE)));
+                    recDto.setDateOfDiagnosisMonth(extractMonth((String)inputTumor.get(FIELD_DX_DATE)));
+                    recDto.setDateOfDiagnosisDay(extractDay((String)inputTumor.get(FIELD_DX_DATE)));
+                    recDto.setDateOfLastContactYear(extractYear((String)inputPatient.get(FIELD_DOLC)));
+                    recDto.setDateOfLastContactMonth(extractMonth((String)inputPatient.get(FIELD_DOLC)));
+                    recDto.setDateOfLastContactDay(extractDay((String)inputPatient.get(FIELD_DOLC)));
+                    recDto.setBirthYear(extractYear((String)inputPatient.get(FIELD_DATE_OF_BIRTH)));
+                    recDto.setBirthMonth(extractMonth((String)inputPatient.get(FIELD_DATE_OF_BIRTH)));
+                    recDto.setBirthDay(extractDay((String)inputPatient.get(FIELD_DATE_OF_BIRTH)));
+                    recDto.setVitalStatus((String)inputTumor.get(FIELD_VS));
+                    recDto.setSequenceNumberCentral((String)inputTumor.get(FIELD_SEQ_NUM_CTRL));
+                    recDto.setTypeOfReportingSource((String)inputTumor.get(FIELD_TYPE_RPT_SRC));
+                    recDtoList.add(recDto);
+                }
+
+                SurvivalTimeInputPatientDto patDto = new SurvivalTimeInputPatientDto();
+                patDto.setSurvivalTimeInputPatientDtoList(recDtoList);
+
+                SurvivalTimeOutputPatientDto patResultDto = SurvivalTimeUtils.calculateSurvivalTime(patDto, cutoffYear);
+
+                Map<String, Object> outputPatient = new HashMap<>();
+                outputPatient.put(FIELD_SURV_VS_RECODE, patResultDto.getVitalStatusRecode());
+
+                List<Map<String, Object>> outputTumorList = new ArrayList<>();
+                for (SurvivalTimeOutputRecordDto tumResultDto : patResultDto.getSurvivalTimeOutputPatientDtoList()) {
+                    Map<String, Object> outputTumor = new HashMap<>();
+
+                    // TODO FD be safer when re-combining the dates
+                    outputTumor.put(FIELD_SURV_MONTH_ACTIVE_FUP, tumResultDto.getSurvivalMonths());
+                    outputTumor.put(FIELD_SURV_FLAG_ACTIVE_FUP, tumResultDto.getSurvivalMonthsFlag());
+                    outputTumor.put(FIELD_SURV_DATE_ACTIVE_FUP, tumResultDto.getSurvivalTimeDolcYear() + tumResultDto.getSurvivalTimeDolcMonth() + tumResultDto.getSurvivalTimeDolcDay());
+                    outputTumor.put(FIELD_SURV_MONTH_PRESUMED_ALIVE, tumResultDto.getSurvivalMonthsPresumedAlive());
+                    outputTumor.put(FIELD_SURV_FLAG_PRESUMED_ALIVE, tumResultDto.getSurvivalMonthsFlagPresumedAlive());
+                    outputTumor.put(FIELD_SURV_DATE_PRESUMED_ALIVE,
+                            tumResultDto.getSurvivalTimeDolcYearPresumedAlive() + tumResultDto.getSurvivalTimeDolcMonthPresumedAlive() + tumResultDto.getSurvivalTimeDolcDayPresumedAlive());
+                    outputTumor.put(FIELD_SURV_DX_DATE_RECODE, tumResultDto.getSurvivalTimeDxYear() + tumResultDto.getSurvivalTimeDxMonth() + tumResultDto.getSurvivalTimeDxDay());
+                    outputTumor.put(FIELD_SURV_REC_NUM_RECODE, String.valueOf(tumResultDto.getSortedIndex()));
+                    outputTumorList.add(outputTumor);
+                }
+                outputPatient.put(FIELD_TUMORS, outputTumorList);
+
+                AlgorithmOutput output = new AlgorithmOutput();
+                output.setPatient(outputPatient);
+
+                return output;
+
             }
         };
     }

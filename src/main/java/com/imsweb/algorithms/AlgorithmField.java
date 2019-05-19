@@ -5,18 +5,16 @@ package com.imsweb.algorithms;
 
 public class AlgorithmField {
 
-    public static AlgorithmField of(String id, Integer number, String name, Integer length) {
+    public static AlgorithmField of(String id, Integer number, Integer length) {
         AlgorithmField field = new AlgorithmField();
         field.setId(id);
         field.setNumber(number);
-        field.setName(name);
         field.setLength(length);
         return field;
     }
 
     private String _id;
     private Integer _number;
-    private String _name;
     private Integer _length;
 
     public String getId() {
@@ -33,14 +31,6 @@ public class AlgorithmField {
 
     public void setNumber(Integer number) {
         _number = number;
-    }
-
-    public String getName() {
-        return _name;
-    }
-
-    public void setName(String name) {
-        _name = name;
     }
 
     public Integer getLength() {
