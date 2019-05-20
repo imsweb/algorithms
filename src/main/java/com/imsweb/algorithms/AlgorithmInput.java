@@ -15,6 +15,10 @@ public class AlgorithmInput {
         return _parameters;
     }
 
+    public Object getParameter(String paramId) {
+        return _parameters == null ? null : _parameters.get(paramId);
+    }
+
     public void setParameters(Map<String, Object> parameters) {
         _parameters = parameters;
     }

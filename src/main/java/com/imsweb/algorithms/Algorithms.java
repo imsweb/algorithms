@@ -5,12 +5,16 @@ package com.imsweb.algorithms;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import com.imsweb.algorithms.causespecific.CauseSpecificInputDto;
+import com.imsweb.algorithms.causespecific.CauseSpecificResultDto;
+import com.imsweb.algorithms.causespecific.CauseSpecificUtils;
 import com.imsweb.algorithms.censustractpovertyindicator.CensusTractPovertyIndicatorInputDto;
 import com.imsweb.algorithms.censustractpovertyindicator.CensusTractPovertyIndicatorOutputDto;
 import com.imsweb.algorithms.censustractpovertyindicator.CensusTractPovertyIndicatorUtils;
@@ -172,9 +176,9 @@ public class Algorithms {
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SURV_DX_DATE_RECODE, 1788, 8));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SURV_DATE_ACTIVE_FUP, 1782, 8));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SURV_DATE_PRESUMED_ALIVE, 1785, 8));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SURV_MONTH_ACTIVE_FUP, 1784, 3));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SURV_MONTH_ACTIVE_FUP, 1784, 4));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SURV_FLAG_ACTIVE_FUP, 1783, 1));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SURV_MONTH_PRESUMED_ALIVE, 1787, 3));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SURV_MONTH_PRESUMED_ALIVE, 1787, 4));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SURV_FLAG_PRESUMED_ALIVE, 1786, 1));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SURV_REC_NUM_RECODE, 1775, 2));
 
@@ -218,8 +222,8 @@ public class Algorithms {
     }
 
     public static void registerAlgorithm(Algorithm algorithm) {
-
-        // TODO validate what can be validated...
+        if (algorithm.getId() == null)
+            throw new RuntimeException("Algorithm ID is required!");
 
         _LOCK.writeLock().lock();
         try {
@@ -253,45 +257,6 @@ public class Algorithms {
         finally {
             _LOCK.readLock().unlock();
         }
-    }
-
-    private static Map<String, Object> extractPatient(AlgorithmInput input) {
-        return input.getPatient() == null ? Collections.emptyMap() : input.getPatient();
-    }
-
-    private static List<Map<String, Object>> extractTumors(Map<String, Object> patient) {
-        return extractTumors(patient, false);
-    }
-
-    private static String extractYear(String fullDate) {
-        if (fullDate == null || fullDate.length() < 4)
-            return null;
-
-        return fullDate.substring(0, 4);
-    }
-
-    private static String extractMonth(String fullDate) {
-        if (fullDate == null || fullDate.length() < 4)
-            return null;
-
-        return fullDate.substring(0, 4); // TODO FD
-    }
-
-    private static String extractDay(String fullDate) {
-        if (fullDate == null || fullDate.length() < 4)
-            return null;
-
-        return fullDate.substring(0, 4); // TODO FD
-    }
-
-    @SuppressWarnings("unchecked")
-    private static List<Map<String, Object>> extractTumors(Map<String, Object> patient, boolean createTumorIfEmpty) {
-        List<Map<String, Object>> tumors = (List<Map<String, Object>>)patient.get(Algorithms.FIELD_TUMORS);
-        if (tumors == null)
-            tumors = new ArrayList<>();
-        if (tumors.isEmpty() && createTumorIfEmpty)
-            tumors.add(new HashMap<>());
-        return tumors;
     }
 
     private static Algorithm createAlgorithmNhia() {
@@ -348,10 +313,10 @@ public class Algorithms {
 
             @Override
             public AlgorithmOutput execute(AlgorithmInput input) {
-                Map<String, Object> patientMap = extractPatient(input);
-
-                List<NhiaInputRecordDto> list = new ArrayList<>();
-                for (Map<String, Object> tumorMap : extractTumors(patientMap, true)) {
+                NhiaInputPatientDto inputPatient = new NhiaInputPatientDto();
+                inputPatient.setNhiaInputPatientDtoList(new ArrayList<>());
+                Map<String, Object> patientMap = AlgorithmsUtils.extractPatient(input);
+                for (Map<String, Object> tumorMap : AlgorithmsUtils.extractTumors(patientMap, true)) {
                     NhiaInputRecordDto dto = new NhiaInputRecordDto();
                     dto.setSpanishHispanicOrigin((String)patientMap.get(FIELD_SPAN_HISP_OR));
                     dto.setBirthplaceCountry((String)patientMap.get(FIELD_COUNTRY_BIRTH));
@@ -362,21 +327,15 @@ public class Algorithms {
                     dto.setNameMaiden((String)patientMap.get(FIELD_NAME_MAIDEN));
                     dto.setCountyAtDx((String)tumorMap.get(FIELD_COUNTY_DX));
                     dto.setStateAtDx((String)tumorMap.get(FIELD_STATE_DX));
-                    list.add(dto);
+                    inputPatient.getNhiaInputPatientDtoList().add(dto);
                 }
 
-                NhiaInputPatientDto inputPatient = new NhiaInputPatientDto();
-                inputPatient.setNhiaInputPatientDtoList(list);
-
-                NhiaResultsDto result = NhiaUtils.computeNhia(inputPatient, (String)input.getParameters().get(PARAM_NHIA_OPTION));
+                NhiaResultsDto result = NhiaUtils.computeNhia(inputPatient, (String)input.getParameter(PARAM_NHIA_OPTION));
 
                 Map<String, Object> outputPatient = new HashMap<>();
                 outputPatient.put(FIELD_NHIA, result.getNhia());
 
-                AlgorithmOutput output = new AlgorithmOutput();
-                output.setPatient(outputPatient);
-
-                return output;
+                return AlgorithmOutput.of(outputPatient);
             }
         };
     }
@@ -437,10 +396,11 @@ public class Algorithms {
 
             @Override
             public AlgorithmOutput execute(AlgorithmInput input) {
-                Map<String, Object> patientMap = extractPatient(input);
+                NapiiaInputPatientDto inputDto = new NapiiaInputPatientDto();
+                inputDto.setNapiiaInputPatientDtoList(new ArrayList<>());
 
-                List<NapiiaInputRecordDto> list = new ArrayList<>();
-                for (Map<String, Object> ignored : extractTumors(patientMap, true)) {
+                Map<String, Object> patientMap = AlgorithmsUtils.extractPatient(input);
+                for (Map<String, Object> ignored : AlgorithmsUtils.extractTumors(patientMap, true)) {
                     NapiiaInputRecordDto dto = new NapiiaInputRecordDto();
                     dto.setSpanishHispanicOrigin((String)patientMap.get(FIELD_SPAN_HISP_OR));
                     dto.setBirthplaceCountry((String)patientMap.get(FIELD_COUNTRY_BIRTH));
@@ -453,11 +413,8 @@ public class Algorithms {
                     dto.setNameLast((String)patientMap.get(FIELD_NAME_LAST));
                     dto.setNameMaiden((String)patientMap.get(FIELD_NAME_MAIDEN));
                     dto.setNameFirst((String)patientMap.get(FIELD_NAME_FIRST));
-                    list.add(dto);
+                    inputDto.getNapiiaInputPatientDtoList().add(dto);
                 }
-
-                NapiiaInputPatientDto inputDto = new NapiiaInputPatientDto();
-                inputDto.setNapiiaInputPatientDtoList(list);
 
                 NapiiaResultsDto result = NapiiaUtils.computeNapiia(inputDto);
 
@@ -466,10 +423,7 @@ public class Algorithms {
                 outputPatient.put(FIELD_NAPIIA_NEEDS_REVIEW, Boolean.TRUE.equals(result.getNeedsHumanReview()) ? "1" : "0");
                 outputPatient.put(FIELD_NAPIIA_REVIEW_REASON, result.getReasonForReview());
 
-                AlgorithmOutput output = new AlgorithmOutput();
-                output.setPatient(outputPatient);
-
-                return output;
+                return AlgorithmOutput.of(outputPatient);
             }
         };
     }
@@ -526,7 +480,33 @@ public class Algorithms {
 
             @Override
             public AlgorithmOutput execute(AlgorithmInput input) {
-                return null;  // TODO FD I am not sure how to do this one; result is patient-level but alg uses tumor fields!
+                Map<String, Object> outputPatient = new HashMap<>();
+                List<Map<String, Object>> outputTumors = new ArrayList<>();
+                outputPatient.put(FIELD_TUMORS, outputTumors);
+
+                Integer cutoffYear = (Integer)input.getParameter(PARAM_SEER_COD_CLASS_CUTOFF_YEAR);
+                if (cutoffYear == null)
+                    cutoffYear = Calendar.getInstance().get(Calendar.YEAR);
+
+                Map<String, Object> inputPatient = AlgorithmsUtils.extractPatient(input);
+                for (Map<String, Object> inputTumor : AlgorithmsUtils.extractTumors(inputPatient)) {
+                    CauseSpecificInputDto inputDto = new CauseSpecificInputDto();
+                    inputDto.setPrimarySite((String)inputTumor.get(FIELD_PRIMARY_SITE));
+                    inputDto.setHistologyIcdO3((String)inputTumor.get(FIELD_HIST_O3));
+                    inputDto.setSequenceNumberCentral((String)inputTumor.get(FIELD_SEQ_NUM_CTRL));
+                    inputDto.setIcdRevisionNumber((String)inputPatient.get(FIELD_ICD_REV_NUM));
+                    inputDto.setCauseOfDeath((String)inputPatient.get(FIELD_COD));
+                    inputDto.setDateOfLastContactYear(AlgorithmsUtils.extractYear((String)inputPatient.get(FIELD_DOLC)));
+
+                    CauseSpecificResultDto resultDto = CauseSpecificUtils.computeCauseSpecific(inputDto, cutoffYear);
+
+                    Map<String, Object> outputTumor = new HashMap<>();
+                    outputTumor.put(FIELD_SEER_COD_CLASS, resultDto.getCauseSpecificDeathClassification());
+                    outputTumor.put(FIELD_SEER_COD_OTHER, resultDto.getCauseOtherDeathClassification());
+                    outputTumors.add(outputTumor);
+                }
+
+                return AlgorithmOutput.of(outputPatient);
             }
         };
     }
@@ -582,16 +562,19 @@ public class Algorithms {
             @Override
             public AlgorithmOutput execute(AlgorithmInput input) {
 
-                Boolean includeRecentYears = (Boolean)input.getParameters().get(PARAM_CENSUS_POVERTY_INC_RECENT_YEARS);
+                Boolean includeRecentYears = (Boolean)input.getParameter(PARAM_CENSUS_POVERTY_INC_RECENT_YEARS);
                 if (includeRecentYears == null)
                     includeRecentYears = Boolean.TRUE;
 
+                Map<String, Object> outputPatient = new HashMap<>();
                 List<Map<String, Object>> outputTumors = new ArrayList<>();
-                for (Map<String, Object> inputTumor : extractTumors(extractPatient(input))) {
+                outputPatient.put(FIELD_TUMORS, outputTumors);
+
+                for (Map<String, Object> inputTumor : AlgorithmsUtils.extractTumors(AlgorithmsUtils.extractPatient(input))) {
                     CensusTractPovertyIndicatorInputDto inputDto = new CensusTractPovertyIndicatorInputDto();
                     inputDto.setAddressAtDxState((String)inputTumor.get(FIELD_STATE_DX));
                     inputDto.setAddressAtDxCounty((String)inputTumor.get(FIELD_COUNTY_DX));
-                    inputDto.setDateOfDiagnosisYear(extractYear((String)inputTumor.get(FIELD_DX_DATE)));
+                    inputDto.setDateOfDiagnosisYear(AlgorithmsUtils.extractYear((String)inputTumor.get(FIELD_DX_DATE)));
                     inputDto.setCensusTract2000((String)inputTumor.get(FIELD_CENSUS_2000));
                     inputDto.setCensusTract2010((String)inputTumor.get(FIELD_CENSUS_2010));
 
@@ -599,13 +582,7 @@ public class Algorithms {
                     outputTumors.add(Collections.singletonMap(FIELD_CENSUS_POVERTY_INDICTR, outputDto.getCensusTractPovertyIndicator()));
                 }
 
-                Map<String, Object> outputPatient = new HashMap<>();
-                outputPatient.put(FIELD_TUMORS, outputTumors);
-
-                AlgorithmOutput output = new AlgorithmOutput();
-                output.setPatient(outputPatient);
-
-                return output;
+                return AlgorithmOutput.of(outputPatient);
 
             }
         };
@@ -672,26 +649,26 @@ public class Algorithms {
             @Override
             public AlgorithmOutput execute(AlgorithmInput input) {
 
-                Integer cutoffYear = (Integer)input.getParameters().get(PARAM_SURV_CUTOFF_YEAR);
+                Integer cutoffYear = (Integer)input.getParameter(PARAM_SURV_CUTOFF_YEAR);
                 if (cutoffYear == null)
                     throw new RuntimeException("This algorithm requires a cutoff year!");
 
-                Map<String, Object> inputPatient = extractPatient(input);
+                Map<String, Object> inputPatient = AlgorithmsUtils.extractPatient(input);
 
                 List<SurvivalTimeInputRecordDto> recDtoList = new ArrayList<>();
-                for (Map<String, Object> inputTumor : extractTumors(inputPatient)) {
+                for (Map<String, Object> inputTumor : AlgorithmsUtils.extractTumors(inputPatient)) {
                     SurvivalTimeInputRecordDto recDto = new SurvivalTimeInputRecordDto();
-                    recDto.setPatientIdNumber((String)inputTumor.get(FIELD_PAT_ID_NUMBER));
-                    recDto.setDateOfDiagnosisYear(extractYear((String)inputTumor.get(FIELD_DX_DATE)));
-                    recDto.setDateOfDiagnosisMonth(extractMonth((String)inputTumor.get(FIELD_DX_DATE)));
-                    recDto.setDateOfDiagnosisDay(extractDay((String)inputTumor.get(FIELD_DX_DATE)));
-                    recDto.setDateOfLastContactYear(extractYear((String)inputPatient.get(FIELD_DOLC)));
-                    recDto.setDateOfLastContactMonth(extractMonth((String)inputPatient.get(FIELD_DOLC)));
-                    recDto.setDateOfLastContactDay(extractDay((String)inputPatient.get(FIELD_DOLC)));
-                    recDto.setBirthYear(extractYear((String)inputPatient.get(FIELD_DATE_OF_BIRTH)));
-                    recDto.setBirthMonth(extractMonth((String)inputPatient.get(FIELD_DATE_OF_BIRTH)));
-                    recDto.setBirthDay(extractDay((String)inputPatient.get(FIELD_DATE_OF_BIRTH)));
-                    recDto.setVitalStatus((String)inputTumor.get(FIELD_VS));
+                    recDto.setPatientIdNumber((String)inputPatient.get(FIELD_PAT_ID_NUMBER));
+                    recDto.setDateOfDiagnosisYear(AlgorithmsUtils.extractYear((String)inputTumor.get(FIELD_DX_DATE)));
+                    recDto.setDateOfDiagnosisMonth(AlgorithmsUtils.extractMonth((String)inputTumor.get(FIELD_DX_DATE)));
+                    recDto.setDateOfDiagnosisDay(AlgorithmsUtils.extractDay((String)inputTumor.get(FIELD_DX_DATE)));
+                    recDto.setDateOfLastContactYear(AlgorithmsUtils.extractYear((String)inputPatient.get(FIELD_DOLC)));
+                    recDto.setDateOfLastContactMonth(AlgorithmsUtils.extractMonth((String)inputPatient.get(FIELD_DOLC)));
+                    recDto.setDateOfLastContactDay(AlgorithmsUtils.extractDay((String)inputPatient.get(FIELD_DOLC)));
+                    recDto.setBirthYear(AlgorithmsUtils.extractYear((String)inputPatient.get(FIELD_DATE_OF_BIRTH)));
+                    recDto.setBirthMonth(AlgorithmsUtils.extractMonth((String)inputPatient.get(FIELD_DATE_OF_BIRTH)));
+                    recDto.setBirthDay(AlgorithmsUtils.extractDay((String)inputPatient.get(FIELD_DATE_OF_BIRTH)));
+                    recDto.setVitalStatus((String)inputPatient.get(FIELD_VS));
                     recDto.setSequenceNumberCentral((String)inputTumor.get(FIELD_SEQ_NUM_CTRL));
                     recDto.setTypeOfReportingSource((String)inputTumor.get(FIELD_TYPE_RPT_SRC));
                     recDtoList.add(recDto);
@@ -706,28 +683,24 @@ public class Algorithms {
                 outputPatient.put(FIELD_SURV_VS_RECODE, patResultDto.getVitalStatusRecode());
 
                 List<Map<String, Object>> outputTumorList = new ArrayList<>();
-                for (SurvivalTimeOutputRecordDto tumResultDto : patResultDto.getSurvivalTimeOutputPatientDtoList()) {
+                for (SurvivalTimeOutputRecordDto dto : patResultDto.getSurvivalTimeOutputPatientDtoList()) {
                     Map<String, Object> outputTumor = new HashMap<>();
 
-                    // TODO FD be safer when re-combining the dates
-                    outputTumor.put(FIELD_SURV_MONTH_ACTIVE_FUP, tumResultDto.getSurvivalMonths());
-                    outputTumor.put(FIELD_SURV_FLAG_ACTIVE_FUP, tumResultDto.getSurvivalMonthsFlag());
-                    outputTumor.put(FIELD_SURV_DATE_ACTIVE_FUP, tumResultDto.getSurvivalTimeDolcYear() + tumResultDto.getSurvivalTimeDolcMonth() + tumResultDto.getSurvivalTimeDolcDay());
-                    outputTumor.put(FIELD_SURV_MONTH_PRESUMED_ALIVE, tumResultDto.getSurvivalMonthsPresumedAlive());
-                    outputTumor.put(FIELD_SURV_FLAG_PRESUMED_ALIVE, tumResultDto.getSurvivalMonthsFlagPresumedAlive());
+                    outputTumor.put(FIELD_SURV_MONTH_ACTIVE_FUP, dto.getSurvivalMonths());
+                    outputTumor.put(FIELD_SURV_FLAG_ACTIVE_FUP, dto.getSurvivalMonthsFlag());
+                    outputTumor.put(FIELD_SURV_DATE_ACTIVE_FUP, AlgorithmsUtils.combineDate(dto.getSurvivalTimeDolcYear(), dto.getSurvivalTimeDolcMonth(), dto.getSurvivalTimeDolcDay()));
+                    outputTumor.put(FIELD_SURV_MONTH_PRESUMED_ALIVE, dto.getSurvivalMonthsPresumedAlive());
+                    outputTumor.put(FIELD_SURV_FLAG_PRESUMED_ALIVE, dto.getSurvivalMonthsFlagPresumedAlive());
                     outputTumor.put(FIELD_SURV_DATE_PRESUMED_ALIVE,
-                            tumResultDto.getSurvivalTimeDolcYearPresumedAlive() + tumResultDto.getSurvivalTimeDolcMonthPresumedAlive() + tumResultDto.getSurvivalTimeDolcDayPresumedAlive());
-                    outputTumor.put(FIELD_SURV_DX_DATE_RECODE, tumResultDto.getSurvivalTimeDxYear() + tumResultDto.getSurvivalTimeDxMonth() + tumResultDto.getSurvivalTimeDxDay());
-                    outputTumor.put(FIELD_SURV_REC_NUM_RECODE, String.valueOf(tumResultDto.getSortedIndex()));
+                            AlgorithmsUtils.combineDate(dto.getSurvivalTimeDolcYearPresumedAlive(), dto.getSurvivalTimeDolcMonthPresumedAlive(), dto.getSurvivalTimeDolcDayPresumedAlive()));
+                    outputTumor.put(FIELD_SURV_DX_DATE_RECODE, dto.getSurvivalTimeDxYear() + dto.getSurvivalTimeDxMonth() + dto.getSurvivalTimeDxDay());
+                    outputTumor.put(FIELD_SURV_REC_NUM_RECODE, String.valueOf(dto.getSortedIndex()));
+
                     outputTumorList.add(outputTumor);
                 }
                 outputPatient.put(FIELD_TUMORS, outputTumorList);
 
-                AlgorithmOutput output = new AlgorithmOutput();
-                output.setPatient(outputPatient);
-
-                return output;
-
+                return AlgorithmOutput.of(outputPatient);
             }
         };
     }

@@ -7,6 +7,12 @@ import java.util.Map;
 
 public class AlgorithmOutput {
 
+    public static AlgorithmOutput of(Map<String, Object> patient) {
+        AlgorithmOutput output = new AlgorithmOutput();
+        output.setPatient(patient);
+        return output;
+    }
+
     private Map<String, Object> _patient;
 
     public Map<String, Object> getPatient() {

@@ -46,8 +46,8 @@ input fields:
 - causeOfDeath (Patient) [causeOfDeath/1910]
 - dateOfLastContactYear (Patient) [dateOfLastContact/1750]
 output fields:
-- causeSpecificDeathClassification (Patient) [seerCauseSpecificCod/1914]
-- causeOtherDeathClassification (Patient) [seerOtherCod/1915]
+- causeSpecificDeathClassification (Tumor) [seerCauseSpecificCod/1914] // bug in N18 dictionary, these are Tumor and not Patient!
+- causeOtherDeathClassification (Tumor) [seerOtherCod/1915] // bug in N18 dictionary, these are Tumor and not Patient!
 
 Census Tract Poverty
 option includeRecentYears (defaults to true)
