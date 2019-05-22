@@ -10,14 +10,21 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import org.apache.commons.lang3.math.NumberUtils;
+
+import com.imsweb.algorithms.behavrecode.BehaviorRecodeUtils;
 import com.imsweb.algorithms.causespecific.CauseSpecificInputDto;
 import com.imsweb.algorithms.causespecific.CauseSpecificResultDto;
 import com.imsweb.algorithms.causespecific.CauseSpecificUtils;
 import com.imsweb.algorithms.censustractpovertyindicator.CensusTractPovertyIndicatorInputDto;
 import com.imsweb.algorithms.censustractpovertyindicator.CensusTractPovertyIndicatorOutputDto;
 import com.imsweb.algorithms.censustractpovertyindicator.CensusTractPovertyIndicatorUtils;
+import com.imsweb.algorithms.iarc.IarcMpInputRecordDto;
+import com.imsweb.algorithms.iarc.IarcUtils;
+import com.imsweb.algorithms.iccc.IcccRecodeUtils;
 import com.imsweb.algorithms.napiia.NapiiaInputPatientDto;
 import com.imsweb.algorithms.napiia.NapiiaInputRecordDto;
 import com.imsweb.algorithms.napiia.NapiiaResultsDto;
@@ -36,13 +43,21 @@ import com.imsweb.algorithms.survival.SurvivalTimeOutputPatientDto;
 import com.imsweb.algorithms.survival.SurvivalTimeOutputRecordDto;
 import com.imsweb.algorithms.survival.SurvivalTimeUtils;
 
+import static com.imsweb.algorithms.iccc.IcccRecodeUtils.VERSION_THIRD_EDITION;
+import static com.imsweb.algorithms.iccc.IcccRecodeUtils.VERSION_THIRD_EDITION_INFO;
+import static com.imsweb.algorithms.iccc.IcccRecodeUtils.VERSION_WHO_2008;
+import static com.imsweb.algorithms.iccc.IcccRecodeUtils.VERSION_WHO_2008_INFO;
 import static com.imsweb.algorithms.nhia.NhiaUtils.NHIA_OPTION_ALL_CASES;
 import static com.imsweb.algorithms.nhia.NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE;
 import static com.imsweb.algorithms.nhia.NhiaUtils.NHIA_OPTION_SEVEN_ONLY;
+import static com.imsweb.algorithms.seersiterecode.SeerSiteRecodeUtils.VERSION_2003;
+import static com.imsweb.algorithms.seersiterecode.SeerSiteRecodeUtils.VERSION_2003_INFO;
+import static com.imsweb.algorithms.seersiterecode.SeerSiteRecodeUtils.VERSION_2003_WITHOUT_KSM;
+import static com.imsweb.algorithms.seersiterecode.SeerSiteRecodeUtils.VERSION_2003_WITHOUT_KSM_INFO;
+import static com.imsweb.algorithms.seersiterecode.SeerSiteRecodeUtils.VERSION_2010;
+import static com.imsweb.algorithms.seersiterecode.SeerSiteRecodeUtils.VERSION_2010_INFO;
 
-// TODO FD move the static creation of the algorithms to each individual utility class...
-// TODO FD survival alg needs to expose only 8-characters standard dates
-// TODO FD fill in unknown values for each algorithms
+// TODO FD fill in unknown values for each algorithms and test the registering mechanism
 public class Algorithms {
 
     // algorithm IDs
@@ -58,7 +73,10 @@ public class Algorithms {
     public static final String ALG_SEER_SITE_RECODE_2003 = "seer-site-recode-2003";
     public static final String ALG_SEER_SITE_RECODE_2003_KSM = "seer-site-recode-2003-ksm";
     public static final String ALG_SEER_BEHAVIOR_RECODE = "seer-behavior-recode";
-    public static final String ALG_ICCC = "iccc";
+    public static final String ALG_ICCC_3RD_EDITION = "iccc-3rd-edition";
+    public static final String ALG_ICCC_3RD_EDITION_EXTENDED = "iccc-3rd-edition-extended";
+    public static final String ALG_ICCC_WHO_2008 = "iccc-who-2008";
+    public static final String ALG_ICCC_WHO_2008_EXTENDED = "iccc-who-2008-extended";
     public static final String ALG_IARC = "iarc";
 
     // special properties
@@ -220,10 +238,15 @@ public class Algorithms {
             addAlgorithm(_CACHED_ALGORITHMS, createUric());
             addAlgorithm(_CACHED_ALGORITHMS, createRuca());
             addAlgorithm(_CACHED_ALGORITHMS, createUrbanContinuum());
-            addAlgorithm(_CACHED_ALGORITHMS, createSeerSiteRecode(ALG_SEER_SITE_RECODE_2010, SeerSiteRecodeUtils.ALG_NAME, SeerSiteRecodeUtils.VERSION_2010, SeerSiteRecodeUtils.VERSION_2010_INFO));
-            addAlgorithm(_CACHED_ALGORITHMS, createSeerSiteRecode(ALG_SEER_SITE_RECODE_2003, SeerSiteRecodeUtils.ALG_NAME, SeerSiteRecodeUtils.VERSION_2003, SeerSiteRecodeUtils.VERSION_2003_INFO));
-            addAlgorithm(_CACHED_ALGORITHMS,
-                    createSeerSiteRecode(ALG_SEER_SITE_RECODE_2003_KSM, SeerSiteRecodeUtils.ALG_NAME, SeerSiteRecodeUtils.VERSION_2003_WITHOUT_KSM, SeerSiteRecodeUtils.VERSION_2003_WITHOUT_KSM_INFO));
+            addAlgorithm(_CACHED_ALGORITHMS, createSeerSiteRecode(ALG_SEER_SITE_RECODE_2010, VERSION_2010, VERSION_2010_INFO));
+            addAlgorithm(_CACHED_ALGORITHMS, createSeerSiteRecode(ALG_SEER_SITE_RECODE_2003, VERSION_2003, VERSION_2003_INFO));
+            addAlgorithm(_CACHED_ALGORITHMS, createSeerSiteRecode(ALG_SEER_SITE_RECODE_2003_KSM, VERSION_2003_WITHOUT_KSM, VERSION_2003_WITHOUT_KSM_INFO));
+            addAlgorithm(_CACHED_ALGORITHMS, createSeerBehaviorRecode());
+            addAlgorithm(_CACHED_ALGORITHMS, createIccc(ALG_ICCC_3RD_EDITION, VERSION_THIRD_EDITION, VERSION_THIRD_EDITION_INFO, false));
+            addAlgorithm(_CACHED_ALGORITHMS, createIccc(ALG_ICCC_3RD_EDITION_EXTENDED, VERSION_THIRD_EDITION, VERSION_THIRD_EDITION_INFO, true));
+            addAlgorithm(_CACHED_ALGORITHMS, createIccc(ALG_ICCC_WHO_2008, VERSION_WHO_2008, VERSION_WHO_2008_INFO, false));
+            addAlgorithm(_CACHED_ALGORITHMS, createIccc(ALG_ICCC_WHO_2008_EXTENDED, VERSION_WHO_2008, VERSION_WHO_2008_INFO, true));
+            addAlgorithm(_CACHED_ALGORITHMS, createIarc());
         }
         finally {
             _LOCK.writeLock().unlock();
@@ -857,10 +880,10 @@ public class Algorithms {
                     inputDto.setCensusTract2000((String)inputTumor.get(FIELD_CENSUS_2000));
                     inputDto.setCensusTract2010((String)inputTumor.get(FIELD_CENSUS_2010));
 
-                    RuralUrbanOutputDto outputDto = RuralUrbanUtils.computeUrbanRuralIndicatorCode(inputDto);
+                    RuralUrbanOutputDto outputDto = RuralUrbanUtils.computeRuralUrbanCommutingArea(inputDto);
 
                     Map<String, Object> outputTumor = new HashMap<>();
-                    outputTumor.put(FIELD_RUCA_2000, outputDto.getUrbanRuralIndicatorCode2000());
+                    outputTumor.put(FIELD_RUCA_2000, outputDto.getRuralUrbanCommutingArea2000());
                     outputTumor.put(FIELD_RUCA_2010, outputDto.getRuralUrbanCommutingArea2010());
 
                     outputTumors.add(outputTumor);
@@ -933,7 +956,7 @@ public class Algorithms {
                     inputDto.setCensusTract2000((String)inputTumor.get(FIELD_CENSUS_2000));
                     inputDto.setCensusTract2010((String)inputTumor.get(FIELD_CENSUS_2010));
 
-                    RuralUrbanOutputDto outputDto = RuralUrbanUtils.computeUrbanRuralIndicatorCode(inputDto);
+                    RuralUrbanOutputDto outputDto = RuralUrbanUtils.computeRuralUrbanContinuum(inputDto);
 
                     Map<String, Object> outputTumor = new HashMap<>();
                     outputTumor.put(FIELD_RURAL_CONT_1993, outputDto.getRuralUrbanContinuum1993());
@@ -949,7 +972,7 @@ public class Algorithms {
         };
     }
 
-    private static Algorithm createSeerSiteRecode(String id, String name, String version, String info) {
+    private static Algorithm createSeerSiteRecode(String id, String version, String info) {
         return new Algorithm() {
 
             @Override
@@ -959,7 +982,7 @@ public class Algorithms {
 
             @Override
             public String getName() {
-                return name + " " + version;
+                return SeerSiteRecodeUtils.ALG_NAME + " " + version;
             }
 
             @Override
@@ -1007,6 +1030,223 @@ public class Algorithms {
 
                 return AlgorithmOutput.of(outputPatient);
 
+            }
+        };
+    }
+
+    private static Algorithm createSeerBehaviorRecode() {
+        return new Algorithm() {
+
+            @Override
+            public String getId() {
+                return ALG_SEER_BEHAVIOR_RECODE;
+            }
+
+            @Override
+            public String getName() {
+                return BehaviorRecodeUtils.ALG_NAME;
+            }
+
+            @Override
+            public String getVersion() {
+                return BehaviorRecodeUtils.ALG_VERSION;
+            }
+
+            @Override
+            public String getInfo() {
+                return BehaviorRecodeUtils.ALG_INFO;
+            }
+
+            @Override
+            public List<AlgorithmParam> getParameters() {
+                return Collections.emptyList();
+            }
+
+            @Override
+            public List<AlgorithmField> getInputFields() {
+                List<AlgorithmField> fields = new ArrayList<>();
+                fields.add(_CACHED_FIELDS.get(FIELD_PRIMARY_SITE));
+                fields.add(_CACHED_FIELDS.get(FIELD_HIST_O3));
+                fields.add(_CACHED_FIELDS.get(FIELD_BEHAV_O3));
+                fields.add(_CACHED_FIELDS.get(FIELD_DX_DATE));
+                return fields;
+            }
+
+            @Override
+            public List<AlgorithmField> getOutputFields() {
+                List<AlgorithmField> fields = new ArrayList<>();
+                fields.add(_CACHED_FIELDS.get(FIELD_SEER_BEHAV_RECODE));
+                return fields;
+            }
+
+            @Override
+            public AlgorithmOutput execute(AlgorithmInput input) {
+
+                Map<String, Object> outputPatient = new HashMap<>();
+                List<Map<String, Object>> outputTumors = new ArrayList<>();
+                outputPatient.put(FIELD_TUMORS, outputTumors);
+
+                for (Map<String, Object> inputTumor : AlgorithmsUtils.extractTumors(AlgorithmsUtils.extractPatient(input))) {
+                    String site = (String)inputTumor.get(FIELD_PRIMARY_SITE);
+                    String hist = (String)inputTumor.get(FIELD_HIST_O3);
+                    String beh = (String)inputTumor.get(FIELD_BEHAV_O3);
+                    String dxYear = AlgorithmsUtils.extractYear((String)inputTumor.get(FIELD_DX_DATE));
+                    outputTumors.add(Collections.singletonMap(FIELD_SEER_BEHAV_RECODE, BehaviorRecodeUtils.computeBehaviorRecode(site, hist, beh, dxYear)));
+                }
+
+                return AlgorithmOutput.of(outputPatient);
+
+            }
+        };
+    }
+
+    private static Algorithm createIccc(String id, String version, String info, boolean extended) {
+        return new Algorithm() {
+
+            @Override
+            public String getId() {
+                return id;
+            }
+
+            @Override
+            public String getName() {
+                return IcccRecodeUtils.ALG_NAME + " " + version + (extended ? " (Extended)" : "");
+            }
+
+            @Override
+            public String getVersion() {
+                return version;
+            }
+
+            @Override
+            public String getInfo() {
+                return info + " " + (extended ? " (Extended)" : "");
+            }
+
+            @Override
+            public List<AlgorithmParam> getParameters() {
+                return Collections.emptyList();
+            }
+
+            @Override
+            public List<AlgorithmField> getInputFields() {
+                List<AlgorithmField> fields = new ArrayList<>();
+                fields.add(_CACHED_FIELDS.get(FIELD_PRIMARY_SITE));
+                fields.add(_CACHED_FIELDS.get(FIELD_HIST_O3));
+                fields.add(_CACHED_FIELDS.get(FIELD_BEHAV_O3));
+                return fields;
+            }
+
+            @Override
+            public List<AlgorithmField> getOutputFields() {
+                List<AlgorithmField> fields = new ArrayList<>();
+                fields.add(_CACHED_FIELDS.get(FIELD_ICCC));
+                return fields;
+            }
+
+            @Override
+            public AlgorithmOutput execute(AlgorithmInput input) {
+
+                Map<String, Object> outputPatient = new HashMap<>();
+                List<Map<String, Object>> outputTumors = new ArrayList<>();
+                outputPatient.put(FIELD_TUMORS, outputTumors);
+
+                for (Map<String, Object> inputTumor : AlgorithmsUtils.extractTumors(AlgorithmsUtils.extractPatient(input))) {
+                    String site = (String)inputTumor.get(FIELD_PRIMARY_SITE);
+                    String hist = (String)inputTumor.get(FIELD_HIST_O3);
+                    String beh = (String)inputTumor.get(FIELD_BEHAV_O3);
+                    outputTumors.add(Collections.singletonMap(FIELD_ICCC, IcccRecodeUtils.calculateSiteRecode(getVersion(), site, hist, beh, extended)));
+                }
+
+                return AlgorithmOutput.of(outputPatient);
+
+            }
+        };
+    }
+
+    private static Algorithm createIarc() {
+        return new Algorithm() {
+
+            @Override
+            public String getId() {
+                return ALG_IARC;
+            }
+
+            @Override
+            public String getName() {
+                return IarcUtils.ALG_NAME;
+            }
+
+            @Override
+            public String getVersion() {
+                return IarcUtils.VERSION;
+            }
+
+            @Override
+            public String getInfo() {
+                return IarcUtils.ALG_INFO;
+            }
+
+            @Override
+            public List<AlgorithmParam> getParameters() {
+                return Collections.emptyList();
+            }
+
+            @Override
+            public List<AlgorithmField> getInputFields() {
+                List<AlgorithmField> fields = new ArrayList<>();
+                fields.add(_CACHED_FIELDS.get(FIELD_PRIMARY_SITE));
+                fields.add(_CACHED_FIELDS.get(FIELD_HIST_O3));
+                fields.add(_CACHED_FIELDS.get(FIELD_BEHAV_O3));
+                fields.add(_CACHED_FIELDS.get(FIELD_DX_DATE));
+                fields.add(_CACHED_FIELDS.get(FIELD_SEQ_NUM_CTRL));
+                return fields;
+            }
+
+            @Override
+            public List<AlgorithmField> getOutputFields() {
+                List<AlgorithmField> fields = new ArrayList<>();
+                fields.add(_CACHED_FIELDS.get(FIELD_IARC));
+                fields.add(_CACHED_FIELDS.get(FIELD_IARC_SITE_GROUP));
+                fields.add(_CACHED_FIELDS.get(FIELD_IARC_HIST_GROUP));
+                return fields;
+            }
+
+            @Override
+            public AlgorithmOutput execute(AlgorithmInput input) {
+
+                List<IarcMpInputRecordDto> inputRecordDtoList = new ArrayList<>();
+                for (Map<String, Object> inputTumor : AlgorithmsUtils.extractTumors(AlgorithmsUtils.extractPatient(input))) {
+                    IarcMpInputRecordDto inputRecordDto = new IarcMpInputRecordDto();
+
+                    inputRecordDto.setSite((String)inputTumor.get(FIELD_PRIMARY_SITE));
+                    inputRecordDto.setHistology((String)inputTumor.get(FIELD_HIST_O3));
+                    inputRecordDto.setBehavior((String)inputTumor.get(FIELD_BEHAV_O3));
+                    inputRecordDto.setDateOfDiagnosisYear(AlgorithmsUtils.extractYear((String)inputTumor.get(FIELD_DX_DATE)));
+                    inputRecordDto.setDateOfDiagnosisMonth(AlgorithmsUtils.extractMonth((String)inputTumor.get(FIELD_DX_DATE)));
+                    inputRecordDto.setDateOfDiagnosisDay(AlgorithmsUtils.extractDay((String)inputTumor.get(FIELD_DX_DATE)));
+                    String seqNum = (String)inputTumor.get(FIELD_SEQ_NUM_CTRL);
+                    inputRecordDto.setSequenceNumber(NumberUtils.isDigits(seqNum) ? Integer.valueOf(seqNum) : null);
+
+                    inputRecordDtoList.add(inputRecordDto);
+                }
+
+                IarcUtils.calculateIarcMp(inputRecordDtoList);
+
+                Map<String, Object> outputPatient = new HashMap<>();
+                List<Map<String, Object>> outputTumors = new ArrayList<>();
+                outputPatient.put(FIELD_TUMORS, outputTumors);
+                for (IarcMpInputRecordDto dto : inputRecordDtoList) {
+                    Map<String, Object> outputTumor = new HashMap<>();
+
+                    outputTumor.put(FIELD_IARC, Objects.toString(dto.getInternationalPrimaryIndicator(), null));
+                    outputTumor.put(FIELD_IARC_SITE_GROUP, dto.getSiteGroup());
+                    outputTumor.put(FIELD_IARC_HIST_GROUP, dto.getHistGroup());
+
+                    outputTumors.add(outputTumor);
+                }
+
+                return AlgorithmOutput.of(outputPatient);
             }
         };
     }
