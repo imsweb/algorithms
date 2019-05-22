@@ -26,6 +26,10 @@ import com.imsweb.algorithms.nhia.NhiaInputPatientDto;
 import com.imsweb.algorithms.nhia.NhiaInputRecordDto;
 import com.imsweb.algorithms.nhia.NhiaResultsDto;
 import com.imsweb.algorithms.nhia.NhiaUtils;
+import com.imsweb.algorithms.ruralurban.RuralUrbanInputDto;
+import com.imsweb.algorithms.ruralurban.RuralUrbanOutputDto;
+import com.imsweb.algorithms.ruralurban.RuralUrbanUtils;
+import com.imsweb.algorithms.seersiterecode.SeerSiteRecodeUtils;
 import com.imsweb.algorithms.survival.SurvivalTimeInputPatientDto;
 import com.imsweb.algorithms.survival.SurvivalTimeInputRecordDto;
 import com.imsweb.algorithms.survival.SurvivalTimeOutputPatientDto;
@@ -50,7 +54,9 @@ public class Algorithms {
     public static final String ALG_RUCA = "ruca";
     public static final String ALG_URBAN_CONTINUUM = "urban-continuum";
     public static final String ALG_SURVIVAL_TIME = "survival-time";
-    public static final String ALG_SEER_SITE_RECODE = "seer-site-recode";
+    public static final String ALG_SEER_SITE_RECODE_2010 = "seer-site-recode-2010";
+    public static final String ALG_SEER_SITE_RECODE_2003 = "seer-site-recode-2003";
+    public static final String ALG_SEER_SITE_RECODE_2003_KSM = "seer-site-recode-2003-ksm";
     public static final String ALG_SEER_BEHAVIOR_RECODE = "seer-behavior-recode";
     public static final String ALG_ICCC = "iccc";
     public static final String ALG_IARC = "iarc";
@@ -206,11 +212,18 @@ public class Algorithms {
     public static void initialize() {
         _LOCK.writeLock().lock();
         try {
-            addAlgorithm(_CACHED_ALGORITHMS, createAlgorithmNhia());
-            addAlgorithm(_CACHED_ALGORITHMS, createAlgorithmNapiia());
-            addAlgorithm(_CACHED_ALGORITHMS, createAlgorithmDeathClassification());
-            addAlgorithm(_CACHED_ALGORITHMS, createAlgorithmCensusTractPoverty());
-            addAlgorithm(_CACHED_ALGORITHMS, createAlgorithmSurvivalTime());
+            addAlgorithm(_CACHED_ALGORITHMS, createNhia());
+            addAlgorithm(_CACHED_ALGORITHMS, createNapiia());
+            addAlgorithm(_CACHED_ALGORITHMS, createDeathClassification());
+            addAlgorithm(_CACHED_ALGORITHMS, createCensusTractPoverty());
+            addAlgorithm(_CACHED_ALGORITHMS, createSurvivalTime());
+            addAlgorithm(_CACHED_ALGORITHMS, createUric());
+            addAlgorithm(_CACHED_ALGORITHMS, createRuca());
+            addAlgorithm(_CACHED_ALGORITHMS, createUrbanContinuum());
+            addAlgorithm(_CACHED_ALGORITHMS, createSeerSiteRecode(ALG_SEER_SITE_RECODE_2010, SeerSiteRecodeUtils.ALG_NAME, SeerSiteRecodeUtils.VERSION_2010, SeerSiteRecodeUtils.VERSION_2010_INFO));
+            addAlgorithm(_CACHED_ALGORITHMS, createSeerSiteRecode(ALG_SEER_SITE_RECODE_2003, SeerSiteRecodeUtils.ALG_NAME, SeerSiteRecodeUtils.VERSION_2003, SeerSiteRecodeUtils.VERSION_2003_INFO));
+            addAlgorithm(_CACHED_ALGORITHMS,
+                    createSeerSiteRecode(ALG_SEER_SITE_RECODE_2003_KSM, SeerSiteRecodeUtils.ALG_NAME, SeerSiteRecodeUtils.VERSION_2003_WITHOUT_KSM, SeerSiteRecodeUtils.VERSION_2003_WITHOUT_KSM_INFO));
         }
         finally {
             _LOCK.writeLock().unlock();
@@ -259,7 +272,7 @@ public class Algorithms {
         }
     }
 
-    private static Algorithm createAlgorithmNhia() {
+    private static Algorithm createNhia() {
         return new Algorithm() {
 
             @Override
@@ -340,7 +353,7 @@ public class Algorithms {
         };
     }
 
-    private static Algorithm createAlgorithmNapiia() {
+    private static Algorithm createNapiia() {
         return new Algorithm() {
 
             @Override
@@ -428,7 +441,7 @@ public class Algorithms {
         };
     }
 
-    private static Algorithm createAlgorithmDeathClassification() {
+    private static Algorithm createDeathClassification() {
         return new Algorithm() {
 
             @Override
@@ -511,7 +524,7 @@ public class Algorithms {
         };
     }
 
-    private static Algorithm createAlgorithmCensusTractPoverty() {
+    private static Algorithm createCensusTractPoverty() {
         return new Algorithm() {
 
             @Override
@@ -588,7 +601,7 @@ public class Algorithms {
         };
     }
 
-    private static Algorithm createAlgorithmSurvivalTime() {
+    private static Algorithm createSurvivalTime() {
         return new Algorithm() {
 
             @Override
@@ -701,6 +714,299 @@ public class Algorithms {
                 outputPatient.put(FIELD_TUMORS, outputTumorList);
 
                 return AlgorithmOutput.of(outputPatient);
+            }
+        };
+    }
+
+    private static Algorithm createUric() {
+        return new Algorithm() {
+
+            @Override
+            public String getId() {
+                return ALG_URIC;
+            }
+
+            @Override
+            public String getName() {
+                return RuralUrbanUtils.ALG_NAME + " - URIC";
+            }
+
+            @Override
+            public String getVersion() {
+                return RuralUrbanUtils.ALG_VERSION;
+            }
+
+            @Override
+            public String getInfo() {
+                return RuralUrbanUtils.ALG_INFO;
+            }
+
+            @Override
+            public List<AlgorithmParam> getParameters() {
+                return Collections.emptyList();
+            }
+
+            @Override
+            public List<AlgorithmField> getInputFields() {
+                List<AlgorithmField> fields = new ArrayList<>();
+                fields.add(_CACHED_FIELDS.get(FIELD_STATE_DX));
+                fields.add(_CACHED_FIELDS.get(FIELD_COUNTY_DX));
+                fields.add(_CACHED_FIELDS.get(FIELD_CENSUS_2000));
+                fields.add(_CACHED_FIELDS.get(FIELD_CENSUS_2010));
+                return fields;
+            }
+
+            @Override
+            public List<AlgorithmField> getOutputFields() {
+                List<AlgorithmField> fields = new ArrayList<>();
+                fields.add(_CACHED_FIELDS.get(FIELD_URIC_2000));
+                fields.add(_CACHED_FIELDS.get(FIELD_URIC_2000_PERCENTAGE));
+                fields.add(_CACHED_FIELDS.get(FIELD_URIC_2010));
+                fields.add(_CACHED_FIELDS.get(FIELD_URIC_2010_PERCENTAGE));
+                return fields;
+            }
+
+            @Override
+            public AlgorithmOutput execute(AlgorithmInput input) {
+
+                Map<String, Object> outputPatient = new HashMap<>();
+                List<Map<String, Object>> outputTumors = new ArrayList<>();
+                outputPatient.put(FIELD_TUMORS, outputTumors);
+
+                for (Map<String, Object> inputTumor : AlgorithmsUtils.extractTumors(AlgorithmsUtils.extractPatient(input))) {
+                    RuralUrbanInputDto inputDto = new RuralUrbanInputDto();
+                    inputDto.setAddressAtDxState((String)inputTumor.get(FIELD_STATE_DX));
+                    inputDto.setAddressAtDxCounty((String)inputTumor.get(FIELD_COUNTY_DX));
+                    inputDto.setCensusTract2000((String)inputTumor.get(FIELD_CENSUS_2000));
+                    inputDto.setCensusTract2010((String)inputTumor.get(FIELD_CENSUS_2010));
+
+                    RuralUrbanOutputDto outputDto = RuralUrbanUtils.computeUrbanRuralIndicatorCode(inputDto);
+
+                    Map<String, Object> outputTumor = new HashMap<>();
+                    outputTumor.put(FIELD_URIC_2000, outputDto.getUrbanRuralIndicatorCode2000());
+                    outputTumor.put(FIELD_URIC_2000_PERCENTAGE, String.valueOf(outputDto.getUrbanRuralIndicatorCode2000Percentage()));
+                    outputTumor.put(FIELD_URIC_2010, outputDto.getUrbanRuralIndicatorCode2010());
+                    outputTumor.put(FIELD_URIC_2010_PERCENTAGE, String.valueOf(outputDto.getUrbanRuralIndicatorCode2010Percentage()));
+
+                    outputTumors.add(outputTumor);
+                }
+
+                return AlgorithmOutput.of(outputPatient);
+
+            }
+        };
+    }
+
+    private static Algorithm createRuca() {
+        return new Algorithm() {
+
+            @Override
+            public String getId() {
+                return ALG_RUCA;
+            }
+
+            @Override
+            public String getName() {
+                return RuralUrbanUtils.ALG_NAME + " - RUCA";
+            }
+
+            @Override
+            public String getVersion() {
+                return RuralUrbanUtils.ALG_VERSION;
+            }
+
+            @Override
+            public String getInfo() {
+                return RuralUrbanUtils.ALG_INFO;
+            }
+
+            @Override
+            public List<AlgorithmParam> getParameters() {
+                return Collections.emptyList();
+            }
+
+            @Override
+            public List<AlgorithmField> getInputFields() {
+                List<AlgorithmField> fields = new ArrayList<>();
+                fields.add(_CACHED_FIELDS.get(FIELD_STATE_DX));
+                fields.add(_CACHED_FIELDS.get(FIELD_COUNTY_DX));
+                fields.add(_CACHED_FIELDS.get(FIELD_CENSUS_2000));
+                fields.add(_CACHED_FIELDS.get(FIELD_CENSUS_2010));
+                return fields;
+            }
+
+            @Override
+            public List<AlgorithmField> getOutputFields() {
+                List<AlgorithmField> fields = new ArrayList<>();
+                fields.add(_CACHED_FIELDS.get(FIELD_RUCA_2000));
+                fields.add(_CACHED_FIELDS.get(FIELD_RUCA_2010));
+                return fields;
+            }
+
+            @Override
+            public AlgorithmOutput execute(AlgorithmInput input) {
+
+                Map<String, Object> outputPatient = new HashMap<>();
+                List<Map<String, Object>> outputTumors = new ArrayList<>();
+                outputPatient.put(FIELD_TUMORS, outputTumors);
+
+                for (Map<String, Object> inputTumor : AlgorithmsUtils.extractTumors(AlgorithmsUtils.extractPatient(input))) {
+                    RuralUrbanInputDto inputDto = new RuralUrbanInputDto();
+                    inputDto.setAddressAtDxState((String)inputTumor.get(FIELD_STATE_DX));
+                    inputDto.setAddressAtDxCounty((String)inputTumor.get(FIELD_COUNTY_DX));
+                    inputDto.setCensusTract2000((String)inputTumor.get(FIELD_CENSUS_2000));
+                    inputDto.setCensusTract2010((String)inputTumor.get(FIELD_CENSUS_2010));
+
+                    RuralUrbanOutputDto outputDto = RuralUrbanUtils.computeUrbanRuralIndicatorCode(inputDto);
+
+                    Map<String, Object> outputTumor = new HashMap<>();
+                    outputTumor.put(FIELD_RUCA_2000, outputDto.getUrbanRuralIndicatorCode2000());
+                    outputTumor.put(FIELD_RUCA_2010, outputDto.getRuralUrbanCommutingArea2010());
+
+                    outputTumors.add(outputTumor);
+                }
+
+                return AlgorithmOutput.of(outputPatient);
+
+            }
+        };
+    }
+
+    private static Algorithm createUrbanContinuum() {
+        return new Algorithm() {
+
+            @Override
+            public String getId() {
+                return ALG_URBAN_CONTINUUM;
+            }
+
+            @Override
+            public String getName() {
+                return RuralUrbanUtils.ALG_NAME + " - Urban Continuum";
+            }
+
+            @Override
+            public String getVersion() {
+                return RuralUrbanUtils.ALG_VERSION;
+            }
+
+            @Override
+            public String getInfo() {
+                return RuralUrbanUtils.ALG_INFO;
+            }
+
+            @Override
+            public List<AlgorithmParam> getParameters() {
+                return Collections.emptyList();
+            }
+
+            @Override
+            public List<AlgorithmField> getInputFields() {
+                List<AlgorithmField> fields = new ArrayList<>();
+                fields.add(_CACHED_FIELDS.get(FIELD_STATE_DX));
+                fields.add(_CACHED_FIELDS.get(FIELD_COUNTY_DX));
+                fields.add(_CACHED_FIELDS.get(FIELD_CENSUS_2000));
+                fields.add(_CACHED_FIELDS.get(FIELD_CENSUS_2010));
+                return fields;
+            }
+
+            @Override
+            public List<AlgorithmField> getOutputFields() {
+                List<AlgorithmField> fields = new ArrayList<>();
+                fields.add(_CACHED_FIELDS.get(FIELD_RURAL_CONT_1993));
+                fields.add(_CACHED_FIELDS.get(FIELD_RURAL_CONT_2003));
+                fields.add(_CACHED_FIELDS.get(FIELD_RURAL_CONT_2013));
+                return fields;
+            }
+
+            @Override
+            public AlgorithmOutput execute(AlgorithmInput input) {
+
+                Map<String, Object> outputPatient = new HashMap<>();
+                List<Map<String, Object>> outputTumors = new ArrayList<>();
+                outputPatient.put(FIELD_TUMORS, outputTumors);
+
+                for (Map<String, Object> inputTumor : AlgorithmsUtils.extractTumors(AlgorithmsUtils.extractPatient(input))) {
+                    RuralUrbanInputDto inputDto = new RuralUrbanInputDto();
+                    inputDto.setAddressAtDxState((String)inputTumor.get(FIELD_STATE_DX));
+                    inputDto.setAddressAtDxCounty((String)inputTumor.get(FIELD_COUNTY_DX));
+                    inputDto.setCensusTract2000((String)inputTumor.get(FIELD_CENSUS_2000));
+                    inputDto.setCensusTract2010((String)inputTumor.get(FIELD_CENSUS_2010));
+
+                    RuralUrbanOutputDto outputDto = RuralUrbanUtils.computeUrbanRuralIndicatorCode(inputDto);
+
+                    Map<String, Object> outputTumor = new HashMap<>();
+                    outputTumor.put(FIELD_RURAL_CONT_1993, outputDto.getRuralUrbanContinuum1993());
+                    outputTumor.put(FIELD_RURAL_CONT_2003, outputDto.getRuralUrbanContinuum2003());
+                    outputTumor.put(FIELD_RURAL_CONT_2013, outputDto.getRuralUrbanContinuum2013());
+
+                    outputTumors.add(outputTumor);
+                }
+
+                return AlgorithmOutput.of(outputPatient);
+
+            }
+        };
+    }
+
+    private static Algorithm createSeerSiteRecode(String id, String name, String version, String info) {
+        return new Algorithm() {
+
+            @Override
+            public String getId() {
+                return id;
+            }
+
+            @Override
+            public String getName() {
+                return name + " " + version;
+            }
+
+            @Override
+            public String getVersion() {
+                return version;
+            }
+
+            @Override
+            public String getInfo() {
+                return info;
+            }
+
+            @Override
+            public List<AlgorithmParam> getParameters() {
+                return Collections.emptyList();
+            }
+
+            @Override
+            public List<AlgorithmField> getInputFields() {
+                List<AlgorithmField> fields = new ArrayList<>();
+                fields.add(_CACHED_FIELDS.get(FIELD_PRIMARY_SITE));
+                fields.add(_CACHED_FIELDS.get(FIELD_HIST_O3));
+                return fields;
+            }
+
+            @Override
+            public List<AlgorithmField> getOutputFields() {
+                List<AlgorithmField> fields = new ArrayList<>();
+                fields.add(_CACHED_FIELDS.get(FIELD_SEER_SITE_RECODE));
+                return fields;
+            }
+
+            @Override
+            public AlgorithmOutput execute(AlgorithmInput input) {
+
+                Map<String, Object> outputPatient = new HashMap<>();
+                List<Map<String, Object>> outputTumors = new ArrayList<>();
+                outputPatient.put(FIELD_TUMORS, outputTumors);
+
+                for (Map<String, Object> inputTumor : AlgorithmsUtils.extractTumors(AlgorithmsUtils.extractPatient(input))) {
+                    String site = (String)inputTumor.get(FIELD_PRIMARY_SITE);
+                    String hist = (String)inputTumor.get(FIELD_HIST_O3);
+                    outputTumors.add(Collections.singletonMap(FIELD_SEER_SITE_RECODE, SeerSiteRecodeUtils.calculateSiteRecode(getVersion(), site, hist)));
+                }
+
+                return AlgorithmOutput.of(outputPatient);
+
             }
         };
     }

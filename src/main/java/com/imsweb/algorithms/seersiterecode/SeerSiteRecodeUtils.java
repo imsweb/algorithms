@@ -27,6 +27,8 @@ import com.imsweb.algorithms.AlgorithmsUtils;
  */
 public final class SeerSiteRecodeUtils {
 
+    public static final String ALG_NAME = "SEER Site Recode";
+
     /**
      * Properties used to calculate Site Recode **
      */
@@ -37,16 +39,19 @@ public final class SeerSiteRecodeUtils {
      * Version for the 2010+ data (http://seer.cancer.gov/siterecode/icdo3_dwhoheme/index.html)
      */
     public static final String VERSION_2010 = "2010+";
+    public static final String VERSION_2010_INFO = "SEER Site Recode ICD-O-3 2010+ Cases WHO Heme Definition";
 
     /**
      * Version for the 2003 data (http://seer.cancer.gov/siterecode/icdo3_d01272003/)
      */
     public static final String VERSION_2003 = "2003-27-01";
+    public static final String VERSION_2003_INFO = "SEER Site Recode ICD-O-3 (1/27/2003) Definition";
 
     /**
      * Version for the 2003 data without Mesothelioma (9050-9055) and Kaposi Sarcoma (9140) as separate groupings
      */
     public static final String VERSION_2003_WITHOUT_KSM = "2003-27-01 (no Meso and Kapo)";
+    public static final String VERSION_2003_WITHOUT_KSM_INFO = "SEER Site Recode ICD-O-3 (1/27/2003) Definition without Mesothelioma (9050-9055) and Kaposi Sarcoma (9140)";
 
     /**
      * Default version
@@ -64,9 +69,9 @@ public final class SeerSiteRecodeUtils {
     private static final Map<String, String> _VERSIONS = new HashMap<>();
 
     static {
-        _VERSIONS.put(VERSION_2010, "SEER Site Recode ICD-O-3 2010+ Cases WHO Heme Definition");
-        _VERSIONS.put(VERSION_2003, "SEER Site Recode ICD-O-3 (1/27/2003) Definition");
-        _VERSIONS.put(VERSION_2003_WITHOUT_KSM, "SEER Site Recode ICD-O-3 (1/27/2003) Definition without Mesothelioma (9050-9055) and Kaposi Sarcoma (9140) as separate groupings");
+        _VERSIONS.put(VERSION_2010, VERSION_2010_INFO);
+        _VERSIONS.put(VERSION_2003, VERSION_2003_INFO);
+        _VERSIONS.put(VERSION_2003_WITHOUT_KSM, VERSION_2003_WITHOUT_KSM_INFO);
     }
 
     // nice data for the different versions, this is what is exposed to the outside world (lazy)
