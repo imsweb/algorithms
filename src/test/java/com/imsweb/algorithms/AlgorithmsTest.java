@@ -138,8 +138,6 @@ public class AlgorithmsTest {
         tumMap = new HashMap<>();
         tumMap.put(Algorithms.FIELD_STATE_DX, "AL");
         tumMap.put(Algorithms.FIELD_COUNTY_DX, "001");
-        tumMap.put(Algorithms.FIELD_CENSUS_2000, "020200");
-        tumMap.put(Algorithms.FIELD_CENSUS_2010, "020200");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
         Assert.assertEquals("02", AlgorithmsUtils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_RURAL_CONT_1993));
         Assert.assertEquals("02", AlgorithmsUtils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_RURAL_CONT_2003));

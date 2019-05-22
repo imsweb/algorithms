@@ -928,8 +928,6 @@ public class Algorithms {
                 List<AlgorithmField> fields = new ArrayList<>();
                 fields.add(_CACHED_FIELDS.get(FIELD_STATE_DX));
                 fields.add(_CACHED_FIELDS.get(FIELD_COUNTY_DX));
-                fields.add(_CACHED_FIELDS.get(FIELD_CENSUS_2000));
-                fields.add(_CACHED_FIELDS.get(FIELD_CENSUS_2010));
                 return fields;
             }
 
@@ -953,8 +951,6 @@ public class Algorithms {
                     RuralUrbanInputDto inputDto = new RuralUrbanInputDto();
                     inputDto.setAddressAtDxState((String)inputTumor.get(FIELD_STATE_DX));
                     inputDto.setAddressAtDxCounty((String)inputTumor.get(FIELD_COUNTY_DX));
-                    inputDto.setCensusTract2000((String)inputTumor.get(FIELD_CENSUS_2000));
-                    inputDto.setCensusTract2010((String)inputTumor.get(FIELD_CENSUS_2010));
 
                     RuralUrbanOutputDto outputDto = RuralUrbanUtils.computeRuralUrbanContinuum(inputDto);
 
