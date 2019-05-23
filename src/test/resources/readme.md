@@ -209,6 +209,8 @@ RUCA:
     public static final String RURAL_URBAN_COMMUTING_AREA_UNKNOWN = "C";
 Continuum:
     public static final String RURAL_URBAN_CONTINUUM_UNKNOWN = "98";
+IARC:
+    no unknown
 SEER Site Recode (all 3 algorithms):
     public static final String UNKNOWN_RECODE = "99999";
 SEER Behavior recode:

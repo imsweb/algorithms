@@ -57,7 +57,6 @@ import static com.imsweb.algorithms.seersiterecode.SeerSiteRecodeUtils.VERSION_2
 import static com.imsweb.algorithms.seersiterecode.SeerSiteRecodeUtils.VERSION_2010;
 import static com.imsweb.algorithms.seersiterecode.SeerSiteRecodeUtils.VERSION_2010_INFO;
 
-// TODO FD fill in unknown values for each algorithms and test the registering mechanism
 public class Algorithms {
 
     // algorithm IDs
@@ -533,6 +532,14 @@ public class Algorithms {
             }
 
             @Override
+            public Map<String, List<String>> getUnknownValues() {
+                Map<String, List<String>> result = new HashMap<>();
+                result.put(FIELD_SEER_COD_CLASS, Arrays.asList(CauseSpecificUtils.MISSING_UNKNOWN_DEATH_OF_CODE, CauseSpecificUtils.NA_NOT_FIRST_TUMOR));
+                result.put(FIELD_SEER_COD_OTHER, Arrays.asList(CauseSpecificUtils.MISSING_UNKNOWN_DEATH_OF_CODE, CauseSpecificUtils.NA_NOT_FIRST_TUMOR));
+                return result;
+            }
+
+            @Override
             public AlgorithmOutput execute(AlgorithmInput input) {
                 Map<String, Object> outputPatient = new HashMap<>();
                 List<Map<String, Object>> outputTumors = new ArrayList<>();
@@ -611,6 +618,11 @@ public class Algorithms {
                 List<AlgorithmField> fields = new ArrayList<>();
                 fields.add(_CACHED_FIELDS.get(FIELD_CENSUS_POVERTY_INDICTR));
                 return fields;
+            }
+
+            @Override
+            public Map<String, List<String>> getUnknownValues() {
+                return Collections.singletonMap(FIELD_CENSUS_POVERTY_INDICTR, Collections.singletonList(CensusTractPovertyIndicatorUtils.POVERTY_INDICATOR_UNKNOWN));
             }
 
             @Override
@@ -698,6 +710,16 @@ public class Algorithms {
                 fields.add(_CACHED_FIELDS.get(FIELD_SURV_VS_RECODE));
                 fields.add(_CACHED_FIELDS.get(FIELD_SURV_REC_NUM_RECODE));
                 return fields;
+            }
+
+            @Override
+            public Map<String, List<String>> getUnknownValues() {
+                Map<String, List<String>> result = new HashMap<>();
+                result.put(FIELD_SURV_MONTH_ACTIVE_FUP, Collections.singletonList(SurvivalTimeUtils.UNKNOWN_SURVIVAL));
+                result.put(FIELD_SURV_FLAG_ACTIVE_FUP, Collections.singletonList(SurvivalTimeUtils.SURVIVAL_FLAG_UNKNOWN));
+                result.put(FIELD_SURV_MONTH_PRESUMED_ALIVE, Collections.singletonList(SurvivalTimeUtils.UNKNOWN_SURVIVAL));
+                result.put(FIELD_SURV_FLAG_PRESUMED_ALIVE, Collections.singletonList(SurvivalTimeUtils.SURVIVAL_FLAG_UNKNOWN));
+                return result;
             }
 
             @Override
@@ -808,6 +830,14 @@ public class Algorithms {
             }
 
             @Override
+            public Map<String, List<String>> getUnknownValues() {
+                Map<String, List<String>> result = new HashMap<>();
+                result.put(FIELD_URIC_2000, Collections.singletonList(RuralUrbanUtils.URBAN_RURAL_INDICATOR_CODE_UNKNOWN));
+                result.put(FIELD_URIC_2010, Collections.singletonList(RuralUrbanUtils.URBAN_RURAL_INDICATOR_CODE_UNKNOWN));
+                return result;
+            }
+
+            @Override
             public AlgorithmOutput execute(AlgorithmInput input) {
 
                 Map<String, Object> outputPatient = new HashMap<>();
@@ -885,6 +915,14 @@ public class Algorithms {
             }
 
             @Override
+            public Map<String, List<String>> getUnknownValues() {
+                Map<String, List<String>> result = new HashMap<>();
+                result.put(FIELD_RUCA_2000, Collections.singletonList(RuralUrbanUtils.RURAL_URBAN_COMMUTING_AREA_UNKNOWN));
+                result.put(FIELD_RUCA_2010, Collections.singletonList(RuralUrbanUtils.RURAL_URBAN_COMMUTING_AREA_UNKNOWN));
+                return result;
+            }
+
+            @Override
             public AlgorithmOutput execute(AlgorithmInput input) {
 
                 Map<String, Object> outputPatient = new HashMap<>();
@@ -959,6 +997,15 @@ public class Algorithms {
             }
 
             @Override
+            public Map<String, List<String>> getUnknownValues() {
+                Map<String, List<String>> result = new HashMap<>();
+                result.put(FIELD_RURAL_CONT_1993, Collections.singletonList(RuralUrbanUtils.RURAL_URBAN_CONTINUUM_UNKNOWN));
+                result.put(FIELD_RURAL_CONT_2003, Collections.singletonList(RuralUrbanUtils.RURAL_URBAN_CONTINUUM_UNKNOWN));
+                result.put(FIELD_RURAL_CONT_2013, Collections.singletonList(RuralUrbanUtils.RURAL_URBAN_CONTINUUM_UNKNOWN));
+                return result;
+            }
+
+            @Override
             public AlgorithmOutput execute(AlgorithmInput input) {
 
                 Map<String, Object> outputPatient = new HashMap<>();
@@ -1030,6 +1077,11 @@ public class Algorithms {
             }
 
             @Override
+            public Map<String, List<String>> getUnknownValues() {
+                return Collections.singletonMap(FIELD_SEER_SITE_RECODE, Collections.singletonList(SeerSiteRecodeUtils.UNKNOWN_RECODE));
+            }
+
+            @Override
             public AlgorithmOutput execute(AlgorithmInput input) {
 
                 Map<String, Object> outputPatient = new HashMap<>();
@@ -1091,6 +1143,11 @@ public class Algorithms {
                 List<AlgorithmField> fields = new ArrayList<>();
                 fields.add(_CACHED_FIELDS.get(FIELD_SEER_BEHAV_RECODE));
                 return fields;
+            }
+
+            @Override
+            public Map<String, List<String>> getUnknownValues() {
+                return Collections.singletonMap(FIELD_SEER_BEHAV_RECODE, Collections.singletonList(BehaviorRecodeUtils.UNKNOWN));
             }
 
             @Override
@@ -1159,6 +1216,11 @@ public class Algorithms {
             }
 
             @Override
+            public Map<String, List<String>> getUnknownValues() {
+                return Collections.singletonMap(FIELD_ICCC, Collections.singletonList(IcccRecodeUtils.ICCC_UNKNOWN_RECODE));
+            }
+
+            @Override
             public AlgorithmOutput execute(AlgorithmInput input) {
 
                 Map<String, Object> outputPatient = new HashMap<>();
@@ -1224,6 +1286,11 @@ public class Algorithms {
                 fields.add(_CACHED_FIELDS.get(FIELD_IARC_SITE_GROUP));
                 fields.add(_CACHED_FIELDS.get(FIELD_IARC_HIST_GROUP));
                 return fields;
+            }
+
+            @Override
+            public Map<String, List<String>> getUnknownValues() {
+                return Collections.singletonMap(FIELD_CENSUS_POVERTY_INDICTR, Collections.singletonList(CensusTractPovertyIndicatorUtils.POVERTY_INDICATOR_UNKNOWN));
             }
 
             @Override
