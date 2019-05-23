@@ -5,6 +5,7 @@ package com.imsweb.algorithms;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -15,7 +16,7 @@ import com.imsweb.algorithms.nhia.NhiaUtils;
 public class AlgorithmsTest {
 
     @Test
-    public void testAlgorithms() {
+    public void testDefaultAlgorithms() {
         Assert.assertTrue(Algorithms.getAlgorithms().isEmpty());
         Algorithms.initialize();
         Assert.assertFalse(Algorithms.getAlgorithms().isEmpty());
@@ -23,6 +24,7 @@ public class AlgorithmsTest {
         // NHIA
         Algorithm alg = Algorithms.getAlgorithm(Algorithms.ALG_NHIA);
         Assert.assertEquals(1, alg.getParameters().size());
+        Assert.assertTrue(alg.getUnknownValues().isEmpty());
         AlgorithmParam nhiaOption = alg.getParameters().get(0);
         Assert.assertEquals(Algorithms.PARAM_NHIA_OPTION, nhiaOption.getId());
         Assert.assertNotNull(nhiaOption.getName());
@@ -41,6 +43,7 @@ public class AlgorithmsTest {
         // NAPIIA
         alg = Algorithms.getAlgorithm(Algorithms.ALG_NAPIIA);
         Assert.assertTrue(alg.getParameters().isEmpty());
+        Assert.assertTrue(alg.getUnknownValues().isEmpty());
         input = new AlgorithmInput();
         patMap = new HashMap<>();
         patMap.put(Algorithms.FIELD_RACE1, "96");
@@ -50,6 +53,7 @@ public class AlgorithmsTest {
         // SEER Death Classification
         alg = Algorithms.getAlgorithm(Algorithms.ALG_DEATH_CLASSIFICATION);
         Assert.assertFalse(alg.getParameters().isEmpty());
+        Assert.assertFalse(alg.getUnknownValues().isEmpty());
         input = new AlgorithmInput();
         patMap = new HashMap<>();
         patMap.put(Algorithms.FIELD_ICD_REV_NUM, "1");
@@ -68,6 +72,7 @@ public class AlgorithmsTest {
         // Census Tract Poverty
         alg = Algorithms.getAlgorithm(Algorithms.ALG_CENSUS_POVERTY);
         Assert.assertFalse(alg.getParameters().isEmpty());
+        Assert.assertFalse(alg.getUnknownValues().isEmpty());
         input = new AlgorithmInput();
         patMap = new HashMap<>();
         input.setPatient(patMap);
@@ -82,6 +87,7 @@ public class AlgorithmsTest {
         // Survival Time
         alg = Algorithms.getAlgorithm(Algorithms.ALG_SURVIVAL_TIME);
         Assert.assertFalse(alg.getParameters().isEmpty());
+        Assert.assertFalse(alg.getUnknownValues().isEmpty());
         input = new AlgorithmInput();
         input.setParameters(Collections.singletonMap(Algorithms.PARAM_SURV_CUTOFF_YEAR, 2018));
         patMap = new HashMap<>();
@@ -100,6 +106,7 @@ public class AlgorithmsTest {
         // URIC
         alg = Algorithms.getAlgorithm(Algorithms.ALG_URIC);
         Assert.assertTrue(alg.getParameters().isEmpty());
+        Assert.assertFalse(alg.getUnknownValues().isEmpty());
         input = new AlgorithmInput();
         patMap = new HashMap<>();
         input.setPatient(patMap);
@@ -117,6 +124,7 @@ public class AlgorithmsTest {
         // RUCA
         alg = Algorithms.getAlgorithm(Algorithms.ALG_RUCA);
         Assert.assertTrue(alg.getParameters().isEmpty());
+        Assert.assertFalse(alg.getUnknownValues().isEmpty());
         input = new AlgorithmInput();
         patMap = new HashMap<>();
         input.setPatient(patMap);
@@ -132,6 +140,7 @@ public class AlgorithmsTest {
         // Urban Continuum
         alg = Algorithms.getAlgorithm(Algorithms.ALG_URBAN_CONTINUUM);
         Assert.assertTrue(alg.getParameters().isEmpty());
+        Assert.assertFalse(alg.getUnknownValues().isEmpty());
         input = new AlgorithmInput();
         patMap = new HashMap<>();
         input.setPatient(patMap);
@@ -146,6 +155,7 @@ public class AlgorithmsTest {
         // SEER Site Recode 2010
         alg = Algorithms.getAlgorithm(Algorithms.ALG_SEER_SITE_RECODE_2010);
         Assert.assertTrue(alg.getParameters().isEmpty());
+        Assert.assertFalse(alg.getUnknownValues().isEmpty());
         input = new AlgorithmInput();
         patMap = new HashMap<>();
         input.setPatient(patMap);
@@ -158,6 +168,7 @@ public class AlgorithmsTest {
         // SEER Site Recode 2003
         alg = Algorithms.getAlgorithm(Algorithms.ALG_SEER_SITE_RECODE_2003);
         Assert.assertTrue(alg.getParameters().isEmpty());
+        Assert.assertFalse(alg.getUnknownValues().isEmpty());
         input = new AlgorithmInput();
         patMap = new HashMap<>();
         input.setPatient(patMap);
@@ -170,6 +181,7 @@ public class AlgorithmsTest {
         // SEER Site Recode 2003 KSM
         alg = Algorithms.getAlgorithm(Algorithms.ALG_SEER_SITE_RECODE_2003_KSM);
         Assert.assertTrue(alg.getParameters().isEmpty());
+        Assert.assertFalse(alg.getUnknownValues().isEmpty());
         input = new AlgorithmInput();
         patMap = new HashMap<>();
         input.setPatient(patMap);
@@ -182,6 +194,7 @@ public class AlgorithmsTest {
         // SEER Behavior Recode
         alg = Algorithms.getAlgorithm(Algorithms.ALG_SEER_BEHAVIOR_RECODE);
         Assert.assertTrue(alg.getParameters().isEmpty());
+        Assert.assertFalse(alg.getUnknownValues().isEmpty());
         input = new AlgorithmInput();
         patMap = new HashMap<>();
         input.setPatient(patMap);
@@ -196,6 +209,7 @@ public class AlgorithmsTest {
         // ICCC 3rd edition
         alg = Algorithms.getAlgorithm(Algorithms.ALG_ICCC_3RD_EDITION);
         Assert.assertTrue(alg.getParameters().isEmpty());
+        Assert.assertFalse(alg.getUnknownValues().isEmpty());
         input = new AlgorithmInput();
         patMap = new HashMap<>();
         input.setPatient(patMap);
@@ -209,6 +223,7 @@ public class AlgorithmsTest {
         // ICCC 3rd edition extended
         alg = Algorithms.getAlgorithm(Algorithms.ALG_ICCC_3RD_EDITION_EXTENDED);
         Assert.assertTrue(alg.getParameters().isEmpty());
+        Assert.assertFalse(alg.getUnknownValues().isEmpty());
         input = new AlgorithmInput();
         patMap = new HashMap<>();
         input.setPatient(patMap);
@@ -222,6 +237,7 @@ public class AlgorithmsTest {
         // ICCC who 2008
         alg = Algorithms.getAlgorithm(Algorithms.ALG_ICCC_WHO_2008);
         Assert.assertTrue(alg.getParameters().isEmpty());
+        Assert.assertFalse(alg.getUnknownValues().isEmpty());
         input = new AlgorithmInput();
         patMap = new HashMap<>();
         input.setPatient(patMap);
@@ -235,6 +251,7 @@ public class AlgorithmsTest {
         // ICCC who 2008 extended
         alg = Algorithms.getAlgorithm(Algorithms.ALG_ICCC_WHO_2008_EXTENDED);
         Assert.assertTrue(alg.getParameters().isEmpty());
+        Assert.assertFalse(alg.getUnknownValues().isEmpty());
         input = new AlgorithmInput();
         patMap = new HashMap<>();
         input.setPatient(patMap);
@@ -248,6 +265,7 @@ public class AlgorithmsTest {
         // IARC
         alg = Algorithms.getAlgorithm(Algorithms.ALG_IARC);
         Assert.assertTrue(alg.getParameters().isEmpty());
+        Assert.assertTrue(alg.getUnknownValues().isEmpty());
         input = new AlgorithmInput();
         patMap = new HashMap<>();
         input.setPatient(patMap);
@@ -259,5 +277,58 @@ public class AlgorithmsTest {
         tumMap.put(Algorithms.FIELD_SEQ_NUM_CTRL, "01");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
         Assert.assertEquals("9", AlgorithmsUtils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_IARC));
+    }
+
+    @Test
+    public void testAlgorithms() {
+
+        // test a fake algorithm
+        Algorithm fakeAlg = new Algorithm() {
+            @Override
+            public String getId() {
+                return "fake-id";
+            }
+
+            @Override
+            public String getName() {
+                return "Fake Name";
+            }
+
+            @Override
+            public String getVersion() {
+                return "1.0";
+            }
+
+            @Override
+            public String getInfo() {
+                return "Some fake algorithm...";
+            }
+
+            @Override
+            public List<AlgorithmParam> getParameters() {
+                return Collections.emptyList();
+            }
+
+            @Override
+            public List<AlgorithmField> getInputFields() {
+                return Collections.emptyList();
+            }
+
+            @Override
+            public List<AlgorithmField> getOutputFields() {
+                return Collections.emptyList();
+            }
+
+            @Override
+            public AlgorithmOutput execute(AlgorithmInput input) {
+                return null;
+            }
+        };
+
+        Assert.assertFalse(Algorithms.getAlgorithms().stream().anyMatch(alg -> "fake-id".equals(alg.getId())));
+        Algorithms.registerAlgorithm(fakeAlg);
+        Assert.assertTrue(Algorithms.getAlgorithms().stream().anyMatch(alg -> "fake-id".equals(alg.getId())));
+        Algorithms.unregisterAlgorithm(fakeAlg);
+        Assert.assertFalse(Algorithms.getAlgorithms().stream().anyMatch(alg -> "fake-id".equals(alg.getId())));
     }
 }

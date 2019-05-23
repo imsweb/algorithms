@@ -1289,11 +1289,6 @@ public class Algorithms {
             }
 
             @Override
-            public Map<String, List<String>> getUnknownValues() {
-                return Collections.singletonMap(FIELD_CENSUS_POVERTY_INDICTR, Collections.singletonList(CensusTractPovertyIndicatorUtils.POVERTY_INDICATOR_UNKNOWN));
-            }
-
-            @Override
             public AlgorithmOutput execute(AlgorithmInput input) {
 
                 List<IarcMpInputRecordDto> inputRecordDtoList = new ArrayList<>();
