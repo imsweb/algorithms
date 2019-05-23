@@ -38,6 +38,7 @@ public class BehaviorRecodeUtils {
     public BehaviorRecodeUtils() {
     }
 
+    @Deprecated
     public static String computeBehaviorRecode(Map<String, String> record) {
         if (record == null || record.isEmpty())
             return UNKNOWN;

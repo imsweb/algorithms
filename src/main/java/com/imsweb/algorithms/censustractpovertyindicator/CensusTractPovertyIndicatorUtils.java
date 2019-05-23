@@ -53,7 +53,9 @@ public final class CensusTractPovertyIndicatorUtils {
      * <br/><br/>
      * @param record a map of properties representing a NAACCR line
      * @return the computed poverty indicator value
+     * @deprecated use the method that takes a <code>CensusTractPovertyIndicatorInputDto</code> parameter
      */
+    @Deprecated
     public static CensusTractPovertyIndicatorOutputDto computePovertyIndicator(Map<String, String> record) {
 
         CensusTractPovertyIndicatorInputDto input = new CensusTractPovertyIndicatorInputDto();
@@ -90,7 +92,9 @@ public final class CensusTractPovertyIndicatorUtils {
      * @param record a map of properties representing a NAACCR line
      * @param includeRecentYears if true, the years 2012+ will be calculated using the year category 4 logic, otherwise they will be set to 9
      * @return the computed poverty indicator value
+     * @deprecated use the method that takes a <code>CensusTractPovertyIndicatorInputDto</code> parameter
      */
+    @Deprecated
     public static CensusTractPovertyIndicatorOutputDto computePovertyIndicator(Map<String, String> record, boolean includeRecentYears) {
 
         CensusTractPovertyIndicatorInputDto input = new CensusTractPovertyIndicatorInputDto();
@@ -162,7 +166,7 @@ public final class CensusTractPovertyIndicatorUtils {
         result.setCensusTractPovertyIndicator(POVERTY_INDICATOR_UNKNOWN);
 
         String dxYear = input.getDateOfDiagnosisYear();
-        if (dxYear == null || !NumberUtils.isDigits(dxYear) || input.getAddressAtDxState() == null || input.getAddressAtDxCounty() == null)
+        if (!NumberUtils.isDigits(dxYear) || input.getAddressAtDxState() == null || input.getAddressAtDxCounty() == null)
             return result;
 
         String censusTract, yearCategory;

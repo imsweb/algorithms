@@ -4,12 +4,14 @@
 package com.imsweb.algorithms.napiia;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import com.opencsv.CSVReader;
 
@@ -112,6 +114,9 @@ public final class NapiiaUtils {
     private static Map<String, Short> _LKUP_NAPIIA_SURNAME_NAACCR = new HashMap<>();
     private static Map<String, Short> _LKUP_NAPIIA_GIVEN_NAACCR = new HashMap<>();
 
+    // internal lock to control concurrency to the data
+    private static ReentrantReadWriteLock _LOCK = new ReentrantReadWriteLock();
+
     /**
      * Calculates the NAPIIA value for the provided record.
      * <br/><br/>
@@ -138,7 +143,9 @@ public final class NapiiaUtils {
      * a reason is also provided.
      * @param record a map of properties representing a NAACCR line
      * @return the computed NAPIIA Results Dto, which has a calculated napiia value, a boolean which indicates whether a human review is needed or not and a reason if human review is required
+     * @deprecated use the method that takes a <code>NapiiaInputRecordDto</code> object as parameter
      */
+    @Deprecated
     public static NapiiaResultsDto computeNapiia(Map<String, String> record) {
         NapiiaInputRecordDto input = new NapiiaInputRecordDto();
         input.setRace1(record.get(PROP_RACE1));
@@ -181,7 +188,9 @@ public final class NapiiaUtils {
      * a reason is also provided.
      * @param patient a list of map of properties representing a NAACCR line
      * @return the computed NAPIIA Results Dto, which has a calculated napiia value, a boolean which indicates whether a human review is needed or not and a reason if human review is required
+     * @deprecated use the method that takes a <code>NapiiaInputPatientDto</code> object as parameter
      */
+    @Deprecated
     public static NapiiaResultsDto computeNapiia(List<Map<String, String>> patient) {
         NapiiaInputRecordDto input = new NapiiaInputRecordDto();
         //Since the following properties are the same for all records lets use one of them and build a record input dto
@@ -255,6 +264,7 @@ public final class NapiiaUtils {
      * @param input the <code>NapiiaInputRecordDto</code> input DTO object
      * @return the computed NAPIIA Results Dto, which has a calculated napiia value, a boolean which indicates whether a human review is needed or not and a reason if human review is required
      */
+    @SuppressWarnings("ConstantConditions")
     public static NapiiaResultsDto computeNapiia(NapiiaInputRecordDto input) {
         NapiiaResultsDto napiiaResults = new NapiiaResultsDto();
 
@@ -572,46 +582,47 @@ public final class NapiiaUtils {
             return name.substring(0, 12);
     }
 
-    protected static synchronized Short codeName(String name, Map<String, Short> lkup) {
+    protected static Short codeName(String name, Map<String, Short> lkup) {
         if (name == null)
             return null;
 
-        if (lkup.isEmpty()) {
-            try {
-                Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("napiia/napiia-census-asian.csv"), "US-ASCII");
-                List<String[]> rows = new CSVReader(reader).readAll();
-                for (String[] row : rows)
-                    _LKUP_NAPIIA_SURNAME_CENSUS_ASIAN.put(row[0].toUpperCase(), Short.valueOf(row[1]));
-                reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("napiia/napiia-census-pi.csv"), "US-ASCII");
-                rows = new CSVReader(reader).readAll();
-                for (String[] row : rows)
-                    _LKUP_NAPIIA_SURNAME_CENSUS_PI.put(row[0].toUpperCase(), Short.valueOf(row[1]));
-                reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("napiia/napiia-laud-surname.csv"), "US-ASCII");
-                rows = new CSVReader(reader).readAll();
-                for (String[] row : rows)
-                    _LKUP_NAPIIA_SURNAME_LAUD.put(row[0].toUpperCase(), Short.valueOf(row[1]));
-                reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("napiia/napiia-laud-given-male.csv"), "US-ASCII");
-                rows = new CSVReader(reader).readAll();
-                for (String[] row : rows)
-                    _LKUP_NAPIIA_GIVEN_LAUD_MALE.put(row[0].toUpperCase(), Short.valueOf(row[1]));
-                reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("napiia/napiia-laud-given-female.csv"), "US-ASCII");
-                rows = new CSVReader(reader).readAll();
-                for (String[] row : rows)
-                    _LKUP_NAPIIA_GIVEN_LAUD_FEMALE.put(row[0].toUpperCase(), Short.valueOf(row[1]));
-                reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("napiia/napiia-naaccr-surname.csv"), "US-ASCII");
-                rows = new CSVReader(reader).readAll();
-                for (String[] row : rows)
-                    _LKUP_NAPIIA_SURNAME_NAACCR.put(row[0].toUpperCase(), Short.valueOf(row[1]));
-                reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("napiia/napiia-naaccr-given.csv"), "US-ASCII");
-                rows = new CSVReader(reader).readAll();
-                for (String[] row : rows)
-                    _LKUP_NAPIIA_GIVEN_NAACCR.put(row[0].toUpperCase(), Short.valueOf(row[1]));
+        _LOCK.readLock().lock();
+        try {
+            if (lkup.isEmpty()) {
+                _LOCK.readLock().unlock();
+                _LOCK.writeLock().lock();
+                try {
+                    readNameData("napiia-census-asian.csv", _LKUP_NAPIIA_SURNAME_CENSUS_ASIAN);
+                    readNameData("napiia-census-pi.csv", _LKUP_NAPIIA_SURNAME_CENSUS_PI);
+                    readNameData("napiia-laud-surname.csv", _LKUP_NAPIIA_SURNAME_LAUD);
+                    readNameData("napiia-laud-given-male.csv", _LKUP_NAPIIA_GIVEN_LAUD_MALE);
+                    readNameData("napiia-laud-given-female.csv", _LKUP_NAPIIA_GIVEN_LAUD_FEMALE);
+                    readNameData("napiia-naaccr-surname.csv", _LKUP_NAPIIA_SURNAME_NAACCR);
+                    readNameData("napiia-naaccr-given.csv", _LKUP_NAPIIA_GIVEN_NAACCR);
+                }
+                finally {
+                    _LOCK.writeLock().unlock();
+                    _LOCK.readLock().lock();
+                }
             }
-            catch (IOException e) {
-                throw new RuntimeException(e);
+            return lkup.get(name.toUpperCase());
+        }
+        finally {
+            _LOCK.readLock().unlock();
+        }
+    }
+
+    private static void readNameData(String file, Map<String, Short> map) {
+        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("napiia/" + file)) {
+            if (is == null)
+                throw new RuntimeException("Unable to read internal " + file);
+            try (CSVReader reader = new CSVReader(new InputStreamReader(is, StandardCharsets.US_ASCII))) {
+                for (String[] row : reader.readAll())
+                    map.put(row[0].toUpperCase(), Short.valueOf(row[1]));
             }
         }
-
-        return lkup.get(name.toUpperCase());
+        catch (IOException e) {
+            throw new RuntimeException("Unable to read internal " + file, e);
+        }
     }
 }

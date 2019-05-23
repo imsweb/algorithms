@@ -93,6 +93,7 @@ public final class SeerSiteRecodeUtils {
      * @return the calculated site recode for the provided record, unknown if it can't be calculated
      * @deprecated use the method that takes a version/site/hist
      */
+    @Deprecated
     public static String calculateSiteRecode(Map<String, String> record) {
         return calculateSiteRecode(VERSION_DEFAULT, record.get(PROP_PRIMARY_SITE), record.get(PROP_HISTOLOGY_3));
     }
@@ -104,6 +105,7 @@ public final class SeerSiteRecodeUtils {
      * @return the calculated site recode for the provided version and record, unknown if it can't be calculated
      * @deprecated use the method that takes a version/site/hist
      */
+    @Deprecated
     public static String calculateSiteRecode(String version, Map<String, String> record) {
         return calculateSiteRecode(version, record.get(PROP_PRIMARY_SITE), record.get(PROP_HISTOLOGY_3));
     }
@@ -115,6 +117,7 @@ public final class SeerSiteRecodeUtils {
      * @return the calculated site recode for the provided parameters, unknown if it can't be calculated
      * @deprecated use the method that takes a version/site/hist and pass the VERSION_DEFAULT constant
      */
+    @Deprecated
     public static String calculateSiteRecode(String site, String histology) {
         return calculateSiteRecode(VERSION_DEFAULT, site, histology);
     }

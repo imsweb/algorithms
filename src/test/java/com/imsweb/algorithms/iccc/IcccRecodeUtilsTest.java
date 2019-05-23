@@ -24,19 +24,19 @@ public class IcccRecodeUtilsTest {
     public void testData() {
 
         // third edition
-        Assert.assertEquals("999", IcccRecodeUtils.calculateSiteRecode(IcccRecodeUtils.VERSION_THIRD_EDITION, "", "8000"));
-        Assert.assertEquals("999", IcccRecodeUtils.calculateSiteRecode(IcccRecodeUtils.VERSION_THIRD_EDITION, "C182", ""));
+        Assert.assertEquals("999", IcccRecodeUtils.calculateSiteRecode(IcccRecodeUtils.VERSION_THIRD_EDITION, "", "8000", null));
+        Assert.assertEquals("999", IcccRecodeUtils.calculateSiteRecode(IcccRecodeUtils.VERSION_THIRD_EDITION, "C182", "", null));
         Assert.assertEquals("999", IcccRecodeUtils.calculateSiteRecode(IcccRecodeUtils.VERSION_THIRD_EDITION, null, null, null));
         Assert.assertEquals("114", IcccRecodeUtils.calculateSiteRecode(IcccRecodeUtils.VERSION_THIRD_EDITION, "C182", "8000", null));
-        Assert.assertEquals("114", IcccRecodeUtils.calculateSiteRecode(IcccRecodeUtils.VERSION_THIRD_EDITION, "C182", "8000"));
-        Assert.assertEquals("114", IcccRecodeUtils.calculateSiteRecode(IcccRecodeUtils.VERSION_THIRD_EDITION, "C239", "8000"));
-        Assert.assertEquals("011", IcccRecodeUtils.calculateSiteRecode(IcccRecodeUtils.VERSION_THIRD_EDITION, "C239", "9673"));
-        Assert.assertEquals("011", IcccRecodeUtils.calculateSiteRecode(IcccRecodeUtils.VERSION_THIRD_EDITION, "C098", "9673"));
-        Assert.assertEquals("058", IcccRecodeUtils.calculateSiteRecode(IcccRecodeUtils.VERSION_THIRD_EDITION, "C239", "9140"));
-        Assert.assertEquals("112", IcccRecodeUtils.calculateSiteRecode(IcccRecodeUtils.VERSION_THIRD_EDITION, "C239", "9055"));
-        Assert.assertEquals("114", IcccRecodeUtils.calculateSiteRecode(IcccRecodeUtils.VERSION_THIRD_EDITION, "C008", "8000"));
-        Assert.assertEquals("002", IcccRecodeUtils.calculateSiteRecode(IcccRecodeUtils.VERSION_THIRD_EDITION, "C424", "9823"));
-        Assert.assertEquals("114", IcccRecodeUtils.calculateSiteRecode(IcccRecodeUtils.VERSION_THIRD_EDITION, "C809", "8000"));
+        Assert.assertEquals("114", IcccRecodeUtils.calculateSiteRecode(IcccRecodeUtils.VERSION_THIRD_EDITION, "C182", "8000", null));
+        Assert.assertEquals("114", IcccRecodeUtils.calculateSiteRecode(IcccRecodeUtils.VERSION_THIRD_EDITION, "C239", "8000", null));
+        Assert.assertEquals("011", IcccRecodeUtils.calculateSiteRecode(IcccRecodeUtils.VERSION_THIRD_EDITION, "C239", "9673", null));
+        Assert.assertEquals("011", IcccRecodeUtils.calculateSiteRecode(IcccRecodeUtils.VERSION_THIRD_EDITION, "C098", "9673", null));
+        Assert.assertEquals("058", IcccRecodeUtils.calculateSiteRecode(IcccRecodeUtils.VERSION_THIRD_EDITION, "C239", "9140", null));
+        Assert.assertEquals("112", IcccRecodeUtils.calculateSiteRecode(IcccRecodeUtils.VERSION_THIRD_EDITION, "C239", "9055", null));
+        Assert.assertEquals("114", IcccRecodeUtils.calculateSiteRecode(IcccRecodeUtils.VERSION_THIRD_EDITION, "C008", "8000", null));
+        Assert.assertEquals("002", IcccRecodeUtils.calculateSiteRecode(IcccRecodeUtils.VERSION_THIRD_EDITION, "C424", "9823", null));
+        Assert.assertEquals("114", IcccRecodeUtils.calculateSiteRecode(IcccRecodeUtils.VERSION_THIRD_EDITION, "C809", "8000", null));
 
         //repeat the test for recode extended, all should return 999
         Assert.assertEquals("999", IcccRecodeUtils.calculateSiteRecode(IcccRecodeUtils.VERSION_THIRD_EDITION, "", "8000", null, true));
@@ -58,7 +58,7 @@ public class IcccRecodeUtilsTest {
         Assert.assertEquals("999", IcccRecodeUtils.calculateSiteRecode(IcccRecodeUtils.VERSION_WHO_2008, "C182", "", "1"));
         Assert.assertEquals("999", IcccRecodeUtils.calculateSiteRecode(IcccRecodeUtils.VERSION_WHO_2008, "C182", "8000", ""));
         Assert.assertEquals("999", IcccRecodeUtils.calculateSiteRecode(IcccRecodeUtils.VERSION_WHO_2008, null, null, null));
-        Assert.assertEquals("999", IcccRecodeUtils.calculateSiteRecode(IcccRecodeUtils.VERSION_WHO_2008, "C182", "8000"));
+        Assert.assertEquals("999", IcccRecodeUtils.calculateSiteRecode(IcccRecodeUtils.VERSION_WHO_2008, "C182", "8000", null));
         Assert.assertEquals("122", IcccRecodeUtils.calculateSiteRecode(IcccRecodeUtils.VERSION_WHO_2008, "C182", "8000", "3"));
         Assert.assertEquals("122", IcccRecodeUtils.calculateSiteRecode(IcccRecodeUtils.VERSION_WHO_2008, "C239", "8000", "3"));
         Assert.assertEquals("022", IcccRecodeUtils.calculateSiteRecode(IcccRecodeUtils.VERSION_WHO_2008, "C239", "9673", "3"));

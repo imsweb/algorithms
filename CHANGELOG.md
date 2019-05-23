@@ -1,8 +1,14 @@
 ## Algorithms Version History
 
+**Changes in version 1.22 (not released yet)**
+
+- Changed internal initialization of NHIA and NAPIIA algorithms to make them thread-safe.
+- Deprecated some methods using layout properties.
+- Added new framework to standardize the algorithms and allow them to be registered and executed via a factory.
+
 **Changes in version 1.21**
 
-- Site-specific surgery tables are not year-specific.
+- Site-specific surgery tables are now year-specific.
 
 **Changes in version 1.20**
 

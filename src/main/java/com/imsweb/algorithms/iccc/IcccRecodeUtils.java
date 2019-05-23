@@ -79,6 +79,7 @@ public final class IcccRecodeUtils {
      * @return the calculated site recode for the provided record, unknown if it can't be calculated
      * @deprecated use the methods that takes the explicit site/hist/behav parameters
      */
+    @Deprecated
     public static String calculateSiteRecode(Map<String, String> record) {
         return calculateSiteRecode(VERSION_DEFAULT, record.get(PROP_PRIMARY_SITE), record.get(PROP_HISTOLOGY_3), record.get(PROP_BEHAVIOR_3));
     }
@@ -90,6 +91,7 @@ public final class IcccRecodeUtils {
      * @return the calculated site recode for the provided version and record, unknown if it can't be calculated
      * @deprecated use the methods that takes the explicit site/hist/behav parameters
      */
+    @Deprecated
     public static String calculateSiteRecode(String version, Map<String, String> record) {
         return calculateSiteRecode(version, record.get(PROP_PRIMARY_SITE), record.get(PROP_HISTOLOGY_3), record.get(PROP_BEHAVIOR_3));
     }
@@ -101,6 +103,7 @@ public final class IcccRecodeUtils {
      * @return the calculated site recode for the provided parameters, unknown if it can't be calculated
      * @deprecated use the version that takes a version as first parameter along with the VERSION_DEFAULT constant.
      */
+    @Deprecated
     public static String calculateSiteRecode(String site, String histology) {
         return calculateSiteRecode(VERSION_DEFAULT, site, histology, null);
     }
@@ -113,6 +116,7 @@ public final class IcccRecodeUtils {
      * @return the calculated site recode for the provided parameters, unknown if it can't be calculated
      * @deprecated use the method that takes the bhavior and pass null for that parameter
      */
+    @Deprecated
     public static String calculateSiteRecode(String version, String site, String histology) {
         return calculateSiteRecode(version, site, histology, null);
     }

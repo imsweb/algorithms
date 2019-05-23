@@ -4,16 +4,17 @@
 package com.imsweb.algorithms.nhia;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.stream.Collectors;
 
 import com.opencsv.CSVReader;
@@ -110,6 +111,9 @@ public final class NhiaUtils {
     private static Set<String> _HEAVILY_HISPANIC_NAMES;
     private static Set<String> _RARELY_HISPANIC_NAMES;
 
+    // internal lock to control concurrency to the data
+    private static ReentrantReadWriteLock _LOCK = new ReentrantReadWriteLock();
+
     /**
      * Calculates the NHIA value for the provided record and option.
      * <br/><br/>
@@ -141,7 +145,9 @@ public final class NhiaUtils {
      * @param record a map of properties representing a NAACCR line
      * @param option option indicating when to apply the Indirect Identification based on names for spanish/hispanic original values of 0, 7 and 9
      * @return the computed NHIA value
+     * @deprecated use the method that takes a <code>NhiaInputPatientDto</code> or a <code>NhiaInputRecordDto</code> parameter.
      */
+    @Deprecated
     public static NhiaResultsDto computeNhia(Map<String, String> record, String option) {
         NhiaInputRecordDto input = new NhiaInputRecordDto();
         input.setSpanishHispanicOrigin(record.get(PROP_SPANISH_HISPANIC_ORIGIN));
@@ -187,7 +193,9 @@ public final class NhiaUtils {
      * @param patient a List of map of properties representing a NAACCR line
      * @param option option indicating when to apply the Indirect Identification based on names for spanish/hispanic original values of 0, 7 and 9
      * @return the computed NHIA value
+     * @deprecated use the method that takes a <code>NhiaInputPatientDto</code> or a <code>NhiaInputRecordDto</code> parameter.
      */
+    @Deprecated
     public static NhiaResultsDto computeNhia(List<Map<String, String>> patient, String option) {
         NhiaInputRecordDto input = new NhiaInputRecordDto();
         //since the following properties are the same for all records, lets get the first one
@@ -444,66 +452,88 @@ public final class NhiaUtils {
         return result;
     }
 
-    private static synchronized boolean isLowHispanicEthnicityCounty(String county, String state) {
+    private static boolean isLowHispanicEthnicityCounty(String county, String state) {
         if (county == null || "999".equals(county) || "998".equals(county))
             return true;
 
-        // lazy initialization...
-        if (_LOW_HISP_ETHN_COUNTIES == null) {
-            _LOW_HISP_ETHN_COUNTIES = new HashSet<>();
-            try {
-                Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("nhia/nhia-low-hisp-ethn-counties.csv"), "US-ASCII");
-                List<String[]> rows = new CSVReader(reader).readAll();
-                _LOW_HISP_ETHN_COUNTIES.addAll(rows.stream().map(row -> row[0]).collect(Collectors.toList()));
+        _LOCK.readLock().lock();
+        try {
+            if (_LOW_HISP_ETHN_COUNTIES == null) {
+                _LOCK.readLock().unlock();
+                _LOCK.writeLock().lock();
+                try {
+                    _LOW_HISP_ETHN_COUNTIES = readData("nhia-low-hisp-ethn-counties.csv");
+                }
+                finally {
+                    _LOCK.writeLock().unlock();
+                    _LOCK.readLock().lock();
+                }
             }
-            catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            return _LOW_HISP_ETHN_COUNTIES.contains(state + county);
         }
-        return _LOW_HISP_ETHN_COUNTIES.contains(state + county);
+        finally {
+            _LOCK.readLock().unlock();
+        }
     }
 
     public static boolean isHeavilyHispanic(String name) {
         if (name == null || name.isEmpty())
             return false;
-        if (_HEAVILY_HISPANIC_NAMES == null)
-            initializeHeavyHispanicLookup();
-        return _HEAVILY_HISPANIC_NAMES.contains(name.toUpperCase());
-    }
 
-    private static synchronized void initializeHeavyHispanicLookup() {
-        if (_HEAVILY_HISPANIC_NAMES != null)
-            return;
-        _HEAVILY_HISPANIC_NAMES = new HashSet<>();
+        _LOCK.readLock().lock();
         try {
-            Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("nhia/nhia-heavily-hisp-names.csv"), "US-ASCII");
-            List<String[]> rows = new CSVReader(reader).readAll();
-            _HEAVILY_HISPANIC_NAMES.addAll(rows.stream().map(row -> row[0].toUpperCase()).collect(Collectors.toList()));
+            if (_HEAVILY_HISPANIC_NAMES == null) {
+                _LOCK.readLock().unlock();
+                _LOCK.writeLock().lock();
+                try {
+                    _HEAVILY_HISPANIC_NAMES = readData("nhia-heavily-hisp-names.csv");
+                }
+                finally {
+                    _LOCK.writeLock().unlock();
+                    _LOCK.readLock().lock();
+                }
+            }
+            return _HEAVILY_HISPANIC_NAMES.contains(name.toUpperCase());
         }
-        catch (IOException e) {
-            throw new RuntimeException(e);
+        finally {
+            _LOCK.readLock().unlock();
         }
     }
 
     public static boolean isRarelyHispanic(String name) {
         if (name == null || name.isEmpty())
             return false;
-        if (_RARELY_HISPANIC_NAMES == null)
-            initializeRarelyHispanicLookup();
-        return _RARELY_HISPANIC_NAMES.contains(name.toUpperCase());
+
+        _LOCK.readLock().lock();
+        try {
+            if (_RARELY_HISPANIC_NAMES == null) {
+                _LOCK.readLock().unlock();
+                _LOCK.writeLock().lock();
+                try {
+                    _RARELY_HISPANIC_NAMES = readData("nhia-rarely-hisp-names.csv");
+                }
+                finally {
+                    _LOCK.writeLock().unlock();
+                    _LOCK.readLock().lock();
+                }
+            }
+            return _RARELY_HISPANIC_NAMES.contains(name.toUpperCase());
+        }
+        finally {
+            _LOCK.readLock().unlock();
+        }
     }
 
-    private static synchronized void initializeRarelyHispanicLookup() {
-        if (_RARELY_HISPANIC_NAMES != null)
-            return;
-        _RARELY_HISPANIC_NAMES = new HashSet<>();
-        try {
-            Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("nhia/nhia-rarely-hisp-names.csv"), "US-ASCII");
-            List<String[]> rows = new CSVReader(reader).readAll();
-            _RARELY_HISPANIC_NAMES.addAll(rows.stream().map(row -> row[0].toUpperCase()).collect(Collectors.toList()));
+    private static Set<String> readData(String file) {
+        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("nhia/" + file)) {
+            if (is == null)
+                throw new RuntimeException("Unable to read internal " + file);
+            try (CSVReader reader = new CSVReader(new InputStreamReader(is, StandardCharsets.US_ASCII))) {
+                return reader.readAll().stream().map(row -> row[0].toUpperCase()).collect(Collectors.toSet());
+            }
         }
         catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Unable to read internal " + file, e);
         }
     }
 

@@ -10,7 +10,7 @@ import org.junit.Test;
  * User: depryf
  * Date: 8/22/12
  */
-public class SiteRecodeUtilsTest {
+public class SeerSiteRecodeUtilsTest {
 
     @Test
     public void testAvailableVersions() {

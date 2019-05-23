@@ -37,6 +37,7 @@ public final class CauseSpecificUtils {
     public static final String DEAD = "1";
     public static final String MISSING_UNKNOWN_DEATH_OF_CODE = "8";
     public static final String NA_NOT_FIRST_TUMOR = "9";
+
     //lookup for tables
     private static List<CauseSpecificDataDto> _DATA_SITE_SPECIFIC = new ArrayList<>();
 
