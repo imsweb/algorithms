@@ -41,7 +41,11 @@ public class HistoricStageNaaccrTests {
                     line[1] = record.get(layout.getFieldByNaaccrItemNumber(20).getName()); //Pat ID
                     line[2] = record.get(layout.getFieldByNaaccrItemNumber(380).getName()); //Sequence number
                     line[3] = record.get(layout.getFieldByNaaccrItemNumber(390).getName()); //Yeardx
-                    line[4] = HistoricStageUtils.computeHistoricStage(record).getResult();
+
+                    HistoricStageInputDto inputDto = new HistoricStageInputDto();
+                    // TODO translate record into input DTO (method taking a record was deprecated)
+
+                    line[4] = HistoricStageUtils.computeHistoricStage(inputDto).getResult();
                     writer.writeNext(line);
                     record = layout.readNextRecord(reader);
                 }

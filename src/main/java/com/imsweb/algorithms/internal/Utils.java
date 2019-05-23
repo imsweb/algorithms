@@ -1,17 +1,23 @@
 /*
- * Copyright (C) 2014 Information Management Services, Inc.
+ * Copyright (C) 2019 Information Management Services, Inc.
  */
-package com.imsweb.algorithms;
+package com.imsweb.algorithms.internal;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.Range;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
-public final class AlgorithmsUtils {
+import com.imsweb.algorithms.AlgorithmInput;
+import com.imsweb.algorithms.Algorithms;
+
+public class Utils {
 
     private static final Pattern _SITE_PATTERN = Pattern.compile("[A-Z](\\d){0,3}");
 
@@ -25,9 +31,7 @@ public final class AlgorithmsUtils {
      * Created on Dec 19, 2011 by depryf
      * @param sites string of sites
      * @return the list of expanded sites, null if no site has been provided
-     * @deprecated there is no replacement for this method
      */
-    @Deprecated
     public static List<String> expandSites(String sites) {
         if (sites == null || sites.trim().isEmpty())
             return null;
@@ -84,9 +88,7 @@ public final class AlgorithmsUtils {
      * Expands the provided primary sites as either individual integer codes, or as ranges.
      * @param toExpand sites to expand
      * @return expanded sites
-     * @deprecated there is no replacement for this method
      */
-    @Deprecated
     public static List<Object> expandSitesAsIntegers(String toExpand) {
         if (StringUtils.isBlank(toExpand))
             return null;
@@ -106,9 +108,7 @@ public final class AlgorithmsUtils {
      * Expands the provided histologies as either individual integer codes, or as ranges.
      * @param toExpand sites to expand
      * @return expanded sites
-     * @deprecated there is no replacement for this method
      */
-    @Deprecated
     public static List<Object> expandHistologiesAsIntegers(String toExpand) {
         if (StringUtils.isBlank(toExpand))
             return null;
@@ -128,14 +128,11 @@ public final class AlgorithmsUtils {
      * Expands the provided behaviors as either individual integer codes, or as ranges.
      * @param toExpand behaviors to expand
      * @return expanded behaviors
-     * @deprecated there is no replacement for this method
      */
-    @Deprecated
     public static List<Object> expandBehaviorsAsIntegers(String toExpand) {
         return expandHistologiesAsIntegers(toExpand);
     }
 
-    @Deprecated
     @SuppressWarnings("unchecked")
     public static boolean isContained(List<?> list, Integer value) {
         if (list == null)
@@ -146,8 +143,68 @@ public final class AlgorithmsUtils {
         return false;
     }
 
-    @Deprecated
     public static boolean isHistologyContained(String list, Integer value) {
         return isContained(expandHistologiesAsIntegers(list), value);
     }
+
+    public static Map<String, Object> extractPatient(AlgorithmInput input) {
+        return input.getPatient() == null ? Collections.emptyMap() : input.getPatient();
+    }
+
+    public static List<Map<String, Object>> extractTumors(Map<String, Object> patient) {
+        return extractTumors(patient, false);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static List<Map<String, Object>> extractTumors(Map<String, Object> patient, boolean createTumorIfEmpty) {
+        List<Map<String, Object>> tumors = (List<Map<String, Object>>)patient.get(Algorithms.FIELD_TUMORS);
+        if (tumors == null)
+            tumors = new ArrayList<>();
+        if (tumors.isEmpty() && createTumorIfEmpty)
+            tumors.add(new HashMap<>());
+        return tumors;
+    }
+
+    public static String extractYear(String fullDate) {
+        if (fullDate == null || fullDate.length() < 4)
+            return null;
+
+        return fullDate.substring(0, 4);
+    }
+
+    public static String extractMonth(String fullDate) {
+        if (fullDate == null || fullDate.length() < 6)
+            return null;
+
+        return fullDate.substring(4, 6);
+    }
+
+    public static String extractDay(String fullDate) {
+        if (fullDate == null || fullDate.length() < 8)
+            return null;
+
+        return fullDate.substring(6, 8);
+    }
+
+    public static String combineDate(String year, String month, String day) {
+        String newValue = null;
+
+        if (!StringUtils.isBlank(year)) {
+            year = StringUtils.leftPad(year, 4, "0");
+            if (!StringUtils.isBlank(month)) {
+                month = StringUtils.leftPad(month, 2, "0");
+                if (!StringUtils.isBlank(day)) {
+                    day = StringUtils.leftPad(day, 2, "0");
+                    newValue = year + month + day;
+                }
+                else
+                    newValue = year + month;
+            }
+            else
+                newValue = year;
+        }
+
+        return newValue;
+    }
+
 }

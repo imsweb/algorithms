@@ -11,6 +11,7 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.imsweb.algorithms.internal.Utils;
 import com.imsweb.algorithms.nhia.NhiaUtils;
 
 public class AlgorithmsTest {
@@ -63,11 +64,11 @@ public class AlgorithmsTest {
         Map<String, Object> tumMap = new HashMap<>();
         tumMap.put(Algorithms.FIELD_SEQ_NUM_CTRL, "00");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
-        Assert.assertEquals("1", AlgorithmsUtils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_SEER_COD_CLASS));
-        Assert.assertEquals("0", AlgorithmsUtils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_SEER_COD_OTHER));
+        Assert.assertEquals("1", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_SEER_COD_CLASS));
+        Assert.assertEquals("0", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_SEER_COD_OTHER));
         input.setParameters(Collections.singletonMap(Algorithms.PARAM_SEER_COD_CLASS_CUTOFF_YEAR, 2012));
-        Assert.assertEquals("0", AlgorithmsUtils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_SEER_COD_CLASS));
-        Assert.assertEquals("0", AlgorithmsUtils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_SEER_COD_OTHER));
+        Assert.assertEquals("0", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_SEER_COD_CLASS));
+        Assert.assertEquals("0", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_SEER_COD_OTHER));
 
         // Census Tract Poverty
         alg = Algorithms.getAlgorithm(Algorithms.ALG_CENSUS_POVERTY);
@@ -82,7 +83,7 @@ public class AlgorithmsTest {
         tumMap.put(Algorithms.FIELD_CENSUS_2000, "003405");
         tumMap.put(Algorithms.FIELD_DX_DATE, "20070101");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
-        Assert.assertEquals("3", AlgorithmsUtils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_CENSUS_POVERTY_INDICTR));
+        Assert.assertEquals("3", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_CENSUS_POVERTY_INDICTR));
 
         // Survival Time
         alg = Algorithms.getAlgorithm(Algorithms.ALG_SURVIVAL_TIME);
@@ -101,7 +102,7 @@ public class AlgorithmsTest {
         tumMap.put(Algorithms.FIELD_SEQ_NUM_CTRL, "00");
         tumMap.put(Algorithms.FIELD_TYPE_RPT_SRC, "1");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
-        Assert.assertEquals("0120", AlgorithmsUtils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_SURV_MONTH_ACTIVE_FUP));
+        Assert.assertEquals("0120", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_SURV_MONTH_ACTIVE_FUP));
 
         // URIC
         alg = Algorithms.getAlgorithm(Algorithms.ALG_URIC);
@@ -116,10 +117,10 @@ public class AlgorithmsTest {
         tumMap.put(Algorithms.FIELD_CENSUS_2000, "020200");
         tumMap.put(Algorithms.FIELD_CENSUS_2010, "020200");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
-        Assert.assertEquals("1", AlgorithmsUtils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_URIC_2000));
-        Assert.assertEquals("100.0", AlgorithmsUtils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_URIC_2000_PERCENTAGE));
-        Assert.assertEquals("1", AlgorithmsUtils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_URIC_2010));
-        Assert.assertEquals("100.0", AlgorithmsUtils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_URIC_2010_PERCENTAGE));
+        Assert.assertEquals("1", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_URIC_2000));
+        Assert.assertEquals("100.0", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_URIC_2000_PERCENTAGE));
+        Assert.assertEquals("1", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_URIC_2010));
+        Assert.assertEquals("100.0", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_URIC_2010_PERCENTAGE));
 
         // RUCA
         alg = Algorithms.getAlgorithm(Algorithms.ALG_RUCA);
@@ -134,8 +135,8 @@ public class AlgorithmsTest {
         tumMap.put(Algorithms.FIELD_CENSUS_2000, "020200");
         tumMap.put(Algorithms.FIELD_CENSUS_2010, "020200");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
-        Assert.assertEquals("1", AlgorithmsUtils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_RUCA_2000));
-        Assert.assertEquals("1", AlgorithmsUtils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_RUCA_2010));
+        Assert.assertEquals("1", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_RUCA_2000));
+        Assert.assertEquals("1", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_RUCA_2010));
 
         // Urban Continuum
         alg = Algorithms.getAlgorithm(Algorithms.ALG_URBAN_CONTINUUM);
@@ -148,9 +149,9 @@ public class AlgorithmsTest {
         tumMap.put(Algorithms.FIELD_STATE_DX, "AL");
         tumMap.put(Algorithms.FIELD_COUNTY_DX, "001");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
-        Assert.assertEquals("02", AlgorithmsUtils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_RURAL_CONT_1993));
-        Assert.assertEquals("02", AlgorithmsUtils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_RURAL_CONT_2003));
-        Assert.assertEquals("02", AlgorithmsUtils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_RURAL_CONT_2013));
+        Assert.assertEquals("02", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_RURAL_CONT_1993));
+        Assert.assertEquals("02", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_RURAL_CONT_2003));
+        Assert.assertEquals("02", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_RURAL_CONT_2013));
 
         // SEER Site Recode 2010
         alg = Algorithms.getAlgorithm(Algorithms.ALG_SEER_SITE_RECODE_2010);
@@ -163,7 +164,7 @@ public class AlgorithmsTest {
         tumMap.put(Algorithms.FIELD_PRIMARY_SITE, "C340");
         tumMap.put(Algorithms.FIELD_HIST_O3, "8000");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
-        Assert.assertEquals("22030", AlgorithmsUtils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_SEER_SITE_RECODE));
+        Assert.assertEquals("22030", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_SEER_SITE_RECODE));
 
         // SEER Site Recode 2003
         alg = Algorithms.getAlgorithm(Algorithms.ALG_SEER_SITE_RECODE_2003);
@@ -176,7 +177,7 @@ public class AlgorithmsTest {
         tumMap.put(Algorithms.FIELD_PRIMARY_SITE, "C340");
         tumMap.put(Algorithms.FIELD_HIST_O3, "8000");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
-        Assert.assertEquals("22030", AlgorithmsUtils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_SEER_SITE_RECODE));
+        Assert.assertEquals("22030", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_SEER_SITE_RECODE));
 
         // SEER Site Recode 2003 KSM
         alg = Algorithms.getAlgorithm(Algorithms.ALG_SEER_SITE_RECODE_2003_KSM);
@@ -189,7 +190,7 @@ public class AlgorithmsTest {
         tumMap.put(Algorithms.FIELD_PRIMARY_SITE, "C340");
         tumMap.put(Algorithms.FIELD_HIST_O3, "8000");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
-        Assert.assertEquals("22030", AlgorithmsUtils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_SEER_SITE_RECODE));
+        Assert.assertEquals("22030", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_SEER_SITE_RECODE));
 
         // SEER Behavior Recode
         alg = Algorithms.getAlgorithm(Algorithms.ALG_SEER_BEHAVIOR_RECODE);
@@ -204,7 +205,7 @@ public class AlgorithmsTest {
         tumMap.put(Algorithms.FIELD_BEHAV_O3, "1");
         tumMap.put(Algorithms.FIELD_DX_DATE, "2005");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
-        Assert.assertEquals("3", AlgorithmsUtils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_SEER_BEHAV_RECODE));
+        Assert.assertEquals("3", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_SEER_BEHAV_RECODE));
 
         // ICCC 3rd edition
         alg = Algorithms.getAlgorithm(Algorithms.ALG_ICCC_3RD_EDITION);
@@ -218,7 +219,7 @@ public class AlgorithmsTest {
         tumMap.put(Algorithms.FIELD_HIST_O3, "8000");
         tumMap.put(Algorithms.FIELD_BEHAV_O3, "3");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
-        Assert.assertEquals("114", AlgorithmsUtils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_ICCC));
+        Assert.assertEquals("114", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_ICCC));
 
         // ICCC 3rd edition extended
         alg = Algorithms.getAlgorithm(Algorithms.ALG_ICCC_3RD_EDITION_EXTENDED);
@@ -232,7 +233,7 @@ public class AlgorithmsTest {
         tumMap.put(Algorithms.FIELD_HIST_O3, "8000");
         tumMap.put(Algorithms.FIELD_BEHAV_O3, "3");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
-        Assert.assertEquals("999", AlgorithmsUtils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_ICCC));
+        Assert.assertEquals("999", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_ICCC));
 
         // ICCC who 2008
         alg = Algorithms.getAlgorithm(Algorithms.ALG_ICCC_WHO_2008);
@@ -246,7 +247,7 @@ public class AlgorithmsTest {
         tumMap.put(Algorithms.FIELD_HIST_O3, "8000");
         tumMap.put(Algorithms.FIELD_BEHAV_O3, "3");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
-        Assert.assertEquals("122", AlgorithmsUtils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_ICCC));
+        Assert.assertEquals("122", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_ICCC));
 
         // ICCC who 2008 extended
         alg = Algorithms.getAlgorithm(Algorithms.ALG_ICCC_WHO_2008_EXTENDED);
@@ -260,7 +261,7 @@ public class AlgorithmsTest {
         tumMap.put(Algorithms.FIELD_HIST_O3, "8000");
         tumMap.put(Algorithms.FIELD_BEHAV_O3, "3");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
-        Assert.assertEquals("114", AlgorithmsUtils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_ICCC));
+        Assert.assertEquals("114", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_ICCC));
 
         // IARC
         alg = Algorithms.getAlgorithm(Algorithms.ALG_IARC);
@@ -276,7 +277,7 @@ public class AlgorithmsTest {
         tumMap.put(Algorithms.FIELD_DX_DATE, "20170101");
         tumMap.put(Algorithms.FIELD_SEQ_NUM_CTRL, "01");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
-        Assert.assertEquals("9", AlgorithmsUtils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_IARC));
+        Assert.assertEquals("9", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_IARC));
     }
 
     @Test

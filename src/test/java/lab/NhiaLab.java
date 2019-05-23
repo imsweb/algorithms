@@ -27,12 +27,14 @@ import java.util.zip.ZipOutputStream;
 
 import com.opencsv.CSVReaderBuilder;
 
+import com.imsweb.algorithms.nhia.NhiaInputPatientDto;
+import com.imsweb.algorithms.nhia.NhiaInputRecordDto;
 import com.imsweb.algorithms.nhia.NhiaUtils;
 import com.imsweb.layout.LayoutFactory;
 import com.imsweb.layout.record.fixed.naaccr.NaaccrLayout;
 
 // use this class to compare results from SAS and SEER*Utils...
-@SuppressWarnings("UnusedDeclaration")
+@SuppressWarnings({"UnusedDeclaration", "ConstantConditions"})
 public class NhiaLab {
 
     public static void main(String[] args) throws Exception {
@@ -61,11 +63,14 @@ public class NhiaLab {
             rec.put(NhiaUtils.PROP_NAME_LAST, row[7]);
             rec.put(NhiaUtils.PROP_NAME_MAIDEN, row[8]);
 
+            NhiaInputRecordDto input = new NhiaInputRecordDto();
+            // TODO set rec values into the DTO
+
             String option = row[9];
             String nhia = row[10];
 
             // just a little verification...
-            if (!nhia.equals(NhiaUtils.computeNhia(rec, option).getNhia()))
+            if (!nhia.equals(NhiaUtils.computeNhia(input, option).getNhia()))
                 System.out.println(Arrays.asList(row));
             //assertEquals(nhia, NhiaUtils.computeNhia(rec, option));
             rec.put("nhia", nhia);
@@ -115,11 +120,14 @@ public class NhiaLab {
 
         Map<String, String> rec = absLayout.readNextRecord(reader);
         while (rec != null) {
-            rec.put("nhia", NhiaUtils.computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+            NhiaInputRecordDto inputDto = new NhiaInputRecordDto();
+            // TODO translate record into input objects
+
+            rec.put("nhia", NhiaUtils.computeNhia(inputDto, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
             absLayout.writeRecord(writer0, rec);
-            rec.put("nhia", NhiaUtils.computeNhia(rec, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
+            rec.put("nhia", NhiaUtils.computeNhia(inputDto, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
             absLayout.writeRecord(writer1, rec);
-            rec.put("nhia", NhiaUtils.computeNhia(rec, NhiaUtils.NHIA_OPTION_SEVEN_ONLY).getNhia());
+            rec.put("nhia", NhiaUtils.computeNhia(inputDto, NhiaUtils.NHIA_OPTION_SEVEN_ONLY).getNhia());
             absLayout.writeRecord(writer2, rec);
             rec = absLayout.readNextRecord(reader);
         }
@@ -215,8 +223,12 @@ public class NhiaLab {
     }
 
     private static void handlePatient(List<Map<String, String>> patient, long lineNumber) {
+
+        NhiaInputPatientDto inputDto = new NhiaInputPatientDto();
+        // TODO translate maps into proper input DTO
+
         //dont forget to change the option based on the registry
-        String utilsNhia = NhiaUtils.computeNhia(patient, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia();
+        String utilsNhia = NhiaUtils.computeNhia(inputDto, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia();
         for (Map<String, String> record : patient) {
             if (record.get("nhia") == null ? utilsNhia != null : !record.get("nhia").equals(utilsNhia)) {
                 System.out.println("Line Number       " + lineNumber);
@@ -236,6 +248,7 @@ public class NhiaLab {
         }
     }
 
+    @SuppressWarnings("SameParameterValue")
     private static InputStream createInputStream(File file, String zipEntryToUse) throws IOException {
         if (file == null || !file.exists())
             throw new IOException("File does not exist.");

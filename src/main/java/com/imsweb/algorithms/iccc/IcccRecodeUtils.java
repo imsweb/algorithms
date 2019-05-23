@@ -15,7 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.opencsv.CSVReader;
 
-import com.imsweb.algorithms.AlgorithmsUtils;
+import com.imsweb.algorithms.internal.Utils;
 
 /**
  * This class can be used to calculate the ICCC Recode variable.
@@ -242,11 +242,11 @@ public final class IcccRecodeUtils {
 
                     IcccExecutableSiteGroupDto executable = new IcccExecutableSiteGroupDto();
                     executable.setId(id);
-                    executable.setSiteInclusions(AlgorithmsUtils.expandSitesAsIntegers(siteIn));
-                    executable.setSiteExclusions(AlgorithmsUtils.expandSitesAsIntegers(siteOut));
-                    executable.setHistologyInclusions(AlgorithmsUtils.expandHistologiesAsIntegers(histIn));
-                    executable.setHistologyExclusions(AlgorithmsUtils.expandHistologiesAsIntegers(histOut));
-                    executable.setBehaviorInclusions(AlgorithmsUtils.expandBehaviorsAsIntegers(behaviorInclusions));
+                    executable.setSiteInclusions(Utils.expandSitesAsIntegers(siteIn));
+                    executable.setSiteExclusions(Utils.expandSitesAsIntegers(siteOut));
+                    executable.setHistologyInclusions(Utils.expandHistologiesAsIntegers(histIn));
+                    executable.setHistologyExclusions(Utils.expandHistologiesAsIntegers(histOut));
+                    executable.setBehaviorInclusions(Utils.expandBehaviorsAsIntegers(behaviorInclusions));
                     executable.setRecode(recode);
                     executable.setRecodeExtended(recodeExtended);
 

@@ -31,13 +31,15 @@ import org.apache.commons.lang3.math.NumberUtils;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.CSVWriter;
 
+import com.imsweb.algorithms.napiia.NapiiaInputPatientDto;
+import com.imsweb.algorithms.napiia.NapiiaInputRecordDto;
 import com.imsweb.algorithms.napiia.NapiiaResultsDto;
 import com.imsweb.algorithms.napiia.NapiiaUtils;
 import com.imsweb.layout.LayoutFactory;
 import com.imsweb.layout.record.fixed.naaccr.NaaccrLayout;
 
 // use this class to compare results from SAS and SEER*Utils...
-@SuppressWarnings("UnusedDeclaration")
+@SuppressWarnings({"UnusedDeclaration", "ConstantConditions"})
 public class NapiiaLab {
 
     public static void main(String[] args) throws Exception {
@@ -69,7 +71,10 @@ public class NapiiaLab {
             Boolean review = Boolean.valueOf(row[12]);
             String reason = row[13];
 
-            NapiiaResultsDto results = NapiiaUtils.computeNapiia(rec);
+            NapiiaInputRecordDto inputDto = new NapiiaInputRecordDto();
+            // TODO translate record into input DTO
+
+            NapiiaResultsDto results = NapiiaUtils.computeNapiia(inputDto);
             if (!napiia.equals(results.getNapiiaValue())) {
                 System.out.println("Wrong Napiia Value for " + Arrays.asList(row) + " returned value is: '" + results.getNapiiaValue() + "'");
                 System.out.println("Versus expected value of: '" + napiia + "'");
@@ -111,12 +116,16 @@ public class NapiiaLab {
         String line = reader.readLine();
         while (line != null) {
             Map<String, String> rec = absLayout.createRecordFromLine(line);
-            rec.put("napiia", NapiiaUtils.computeNapiia(rec).getNapiiaValue());
+
+            NapiiaInputRecordDto inputDto = new NapiiaInputRecordDto();
+            // TODO translate record into input DTO
+
+            rec.put("napiia", NapiiaUtils.computeNapiia(inputDto).getNapiiaValue());
             absLayout.writeRecord(writer, rec);
             //if human review required
-            if (NapiiaUtils.computeNapiia(rec).getNeedsHumanReview()) {
+            if (NapiiaUtils.computeNapiia(inputDto).getNeedsHumanReview()) {
                 needsHumanReview.add(new String[] {rec.get("patientIdNumber"), rec.get("race1"), rec.get("race2"), rec.get("race3"), rec.get("race4"), rec.get("race5"), rec.get("nameLast"), rec.get(
-                        "nameFirst"), rec.get("nameMaiden"), NapiiaUtils.computeNapiia(rec).getReasonForReview()});
+                        "nameFirst"), rec.get("nameMaiden"), NapiiaUtils.computeNapiia(inputDto).getReasonForReview()});
             }
             line = reader.readLine();
         }
@@ -222,8 +231,12 @@ public class NapiiaLab {
     }
 
     private static void handlePatient(List<Map<String, String>> patient, long lineNumber) {
+
+        NapiiaInputPatientDto inputDto = new NapiiaInputPatientDto();
+        // TODO translate patient into input DTO
+
         //dont forget to change the option based on the registry
-        String utilsNapiia = NapiiaUtils.computeNapiia(patient).getNapiiaValue();
+        String utilsNapiia = NapiiaUtils.computeNapiia(inputDto).getNapiiaValue();
         for (Map<String, String> record : patient) {
             if (record.get("napiia") == null ? utilsNapiia != null : !record.get("napiia").equals(utilsNapiia)) {
                 System.out.println("Line Number       " + lineNumber);
@@ -259,6 +272,7 @@ public class NapiiaLab {
         System.out.println(count + " cases for testing!");
     }
 
+    @SuppressWarnings("SameParameterValue")
     private static InputStream createInputStream(File file, String zipEntryToUse) throws IOException {
         if (file == null || !file.exists())
             throw new IOException("File does not exist.");

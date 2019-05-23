@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
-import com.imsweb.algorithms.AlgorithmsUtils;
+import com.imsweb.algorithms.internal.Utils;
 
 /**
  * This class is used to calculate the International Primary indicator variable.
@@ -115,39 +115,39 @@ public class IarcUtils {
     private static Integer calculateHistGroup(String histology) {
         if (NumberUtils.isDigits(histology)) {
             int hist = NumberUtils.toInt(histology);
-            if (AlgorithmsUtils.isHistologyContained("8051-8084,8120-8131", hist))
+            if (Utils.isHistologyContained("8051-8084,8120-8131", hist))
                 hist = 1;
-            else if (AlgorithmsUtils.isHistologyContained("8090-8110", hist))
+            else if (Utils.isHistologyContained("8090-8110", hist))
                 hist = 2;
-            else if (AlgorithmsUtils.isHistologyContained("8140-8149,8160-8162,8190-8221,8260-8337,8350-8551,8570-8576,8940-8941", hist))
+            else if (Utils.isHistologyContained("8140-8149,8160-8162,8190-8221,8260-8337,8350-8551,8570-8576,8940-8941", hist))
                 hist = 3;
-            else if (AlgorithmsUtils.isHistologyContained("8030-8046,8150-8157,8170-8180,8230-8255,8340-8347,8560-8562,8580-8671", hist))
+            else if (Utils.isHistologyContained("8030-8046,8150-8157,8170-8180,8230-8255,8340-8347,8560-8562,8580-8671", hist))
                 hist = 4;
-            else if (AlgorithmsUtils.isHistologyContained("8010-8015,8020-8022,8050", hist))
+            else if (Utils.isHistologyContained("8010-8015,8020-8022,8050", hist))
                 hist = 5;
-            else if (AlgorithmsUtils.isHistologyContained("8680-8713,8800-8921,8990-8991,9040-9044,9120-9125,9130-9136,9141-9252,9370-9373,9540-9582", hist))
+            else if (Utils.isHistologyContained("8680-8713,8800-8921,8990-8991,9040-9044,9120-9125,9130-9136,9141-9252,9370-9373,9540-9582", hist))
                 hist = 6;
-            else if (AlgorithmsUtils.isHistologyContained("9050-9055", hist))
+            else if (Utils.isHistologyContained("9050-9055", hist))
                 hist = 7;
-            else if (AlgorithmsUtils.isHistologyContained("9840,9861-9931,9945-9946,9950,9961-9964,9980-9987,9991-9992", hist))
+            else if (Utils.isHistologyContained("9840,9861-9931,9945-9946,9950,9961-9964,9980-9987,9991-9992", hist))
                 hist = 8;
-            else if (AlgorithmsUtils.isHistologyContained("9597,9670-9699,9712,9728,9731-9738,9761-9767,9769,9811-9818,9823-9826,9833,9836,9940", hist))
+            else if (Utils.isHistologyContained("9597,9670-9699,9712,9728,9731-9738,9761-9767,9769,9811-9818,9823-9826,9833,9836,9940", hist))
                 hist = 9;
-            else if (AlgorithmsUtils.isHistologyContained("9700-9726,9729,9768,9827-9831,9834,9837,9948", hist))
+            else if (Utils.isHistologyContained("9700-9726,9729,9768,9827-9831,9834,9837,9948", hist))
                 hist = 10;
-            else if (AlgorithmsUtils.isHistologyContained("9650-9667", hist))
+            else if (Utils.isHistologyContained("9650-9667", hist))
                 hist = 11;
-            else if (AlgorithmsUtils.isHistologyContained("9740-9742", hist))
+            else if (Utils.isHistologyContained("9740-9742", hist))
                 hist = 12;
-            else if (AlgorithmsUtils.isHistologyContained("9750-9759", hist))
+            else if (Utils.isHistologyContained("9750-9759", hist))
                 hist = 13;
-            else if (AlgorithmsUtils.isHistologyContained("9590-9591,9596,9727,9760,9800-9809,9820,9832,9835,9860,9960,9965-9975,9989", hist))
+            else if (Utils.isHistologyContained("9590-9591,9596,9727,9760,9800-9809,9820,9832,9835,9860,9960,9965-9975,9989", hist))
                 hist = 14;
             else if (hist == 9140)
                 hist = 15;
-            else if (AlgorithmsUtils.isHistologyContained("8720-8790,8930-8936,8950-8983,9000-9030,9060-9110,9260-9365,9380-9539", hist))
+            else if (Utils.isHistologyContained("8720-8790,8930-8936,8950-8983,9000-9030,9060-9110,9260-9365,9380-9539", hist))
                 hist = 16;
-            else if (AlgorithmsUtils.isHistologyContained("8000-8005", hist))
+            else if (Utils.isHistologyContained("8000-8005", hist))
                 hist = 17;
 
             return hist;

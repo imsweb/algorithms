@@ -2,7 +2,7 @@ package com.imsweb.algorithms.iccc;
 
 import java.util.List;
 
-import com.imsweb.algorithms.AlgorithmsUtils;
+import com.imsweb.algorithms.internal.Utils;
 
 /**
  * Internal site group DTO used to calculate the recode, this class should not be used outside of SEER*Utils...
@@ -148,18 +148,18 @@ public class IcccExecutableSiteGroupDto {
 
         // check site
         if (_siteInclusions != null)
-            siteOk = AlgorithmsUtils.isContained(_siteInclusions, site);
+            siteOk = Utils.isContained(_siteInclusions, site);
         else if (_siteExclusions != null)
-            siteOk = !AlgorithmsUtils.isContained(_siteExclusions, site);
+            siteOk = !Utils.isContained(_siteExclusions, site);
         else
             siteOk = true;
 
         // check histology (only if site matched)
         if (siteOk) {
             if (_histologyInclusions != null)
-                histOk = AlgorithmsUtils.isContained(_histologyInclusions, histology);
+                histOk = Utils.isContained(_histologyInclusions, histology);
             else if (_histologyExclusions != null)
-                histOk = !AlgorithmsUtils.isContained(_histologyExclusions, histology);
+                histOk = !Utils.isContained(_histologyExclusions, histology);
             else
                 histOk = true;
         }
@@ -167,7 +167,7 @@ public class IcccExecutableSiteGroupDto {
         //Check the behavior
         if (siteOk && histOk) {
             if (_behaviorInclusions != null)
-                behavOk = AlgorithmsUtils.isContained(_behaviorInclusions, behavior);
+                behavOk = Utils.isContained(_behaviorInclusions, behavior);
             else
                 behavOk = true;
         }

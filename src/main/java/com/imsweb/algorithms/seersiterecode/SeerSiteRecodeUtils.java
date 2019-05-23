@@ -19,7 +19,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 
 import com.opencsv.CSVReader;
 
-import com.imsweb.algorithms.AlgorithmsUtils;
+import com.imsweb.algorithms.internal.Utils;
 
 /**
  * This class can be used to calculate the SEER Site Recode variable.
@@ -247,10 +247,10 @@ public final class SeerSiteRecodeUtils {
                     SeerExecutableSiteGroupDto executable = new SeerExecutableSiteGroupDto();
                     executable.setId(id);
                     executable.setName(name);
-                    executable.setSiteInclusions(AlgorithmsUtils.expandSitesAsIntegers(siteIn));
-                    executable.setSiteExclusions(AlgorithmsUtils.expandSitesAsIntegers(siteOut));
-                    executable.setHistologyInclusions(AlgorithmsUtils.expandHistologiesAsIntegers(histIn));
-                    executable.setHistologyExclusions(AlgorithmsUtils.expandHistologiesAsIntegers(histOut));
+                    executable.setSiteInclusions(Utils.expandSitesAsIntegers(siteIn));
+                    executable.setSiteExclusions(Utils.expandSitesAsIntegers(siteOut));
+                    executable.setHistologyInclusions(Utils.expandHistologiesAsIntegers(histIn));
+                    executable.setHistologyExclusions(Utils.expandHistologiesAsIntegers(histOut));
                     executable.setRecode(recode);
                     executables.add(executable);
                 }
