@@ -79,8 +79,8 @@ public final class NhiaUtils {
     // birthplace countries corresponding to NHIA of NON-HISPANIC (called Low Probability of Hispanic Ethnicity in documentation)
     private static final List<String> _BPC_NON_HISP = Arrays.asList("VIR", "ASM", "KIR", "FSM", "COK", "TUV", "GUM", "MNP", "MHL", "TKL", "UMI", "BRA", "GUY", "SUR", "GUF", "GBR", "XEN", "ENG", "GGY",
             "JEY", "IMN", "WLS", "SCT", "NIR", "IRL", "XSC", "ISL", "NOR", "SJM", "DNK", "FRO", "SWE", "FIN", "ALA", "XGR", "DEU", "NLD", "BEL", "LUX", "CHE", "AUT", "LIE", "FRA", "MCO", "PRT", "CPV",
-            "ITA", "SMR", "VAT", "ROU", "XSL", "POL", "CSK", "CZE", "SWK", "YUG", "BIH", "HRV", "MKD", "MNE", "SRB", "SVN", "BGR", "RUS", "XUM", "UKR", "MDA", "BLR", "EST", "LVA", "LTU", "GRC", "HUN",
-            "ALB", "GIB", "MLT", "CYP", "ZZE", "PHL");
+            "ITA", "SMR", "VAT", "ROU", "XSL", "POL", "XCZ", "CSK", "CZE", "SWK", "SVK", "XYG", "YUG", "BIH", "HRV", "MKD", "MNE", "SRB", "SVN", "BGR", "RUS", "XUM", "UKR", "MDA", "BLR", "EST", "LVA",
+            "LTU", "GRC", "HUN", "ALB", "GIB", "MLT", "CYP", "ZZE", "PHL");
 
     // Birthplace countries corresponding to NHIA of MEXICAN (under the High Probability of Hispanic Ethnicity in documentation)
     private static final List<String> _BPC_MEXICAN = Collections.singletonList("MEX");
