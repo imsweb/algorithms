@@ -24,50 +24,40 @@ import com.imsweb.algorithms.AlgorithmsUtils;
  */
 public final class IcccRecodeUtils {
 
+    // algorithm name
     public static final String ALG_NAME = "Main Classification from the International Classification of Childhood Cancer";
 
-    /**
-     * properties used to calculate Iccc Recode **
-     */
+    // properties used by the algorithm
     public static final String PROP_PRIMARY_SITE = "primarySite";
     public static final String PROP_HISTOLOGY_3 = "histologyIcdO3";
     public static final String PROP_BEHAVIOR_3 = "behaviorIcdO3";
 
-    /**
-     * Version for the 2010+ data (http://seer.cancer.gov/iccc/iccc3.html)
-     */
+    // version for the 2010+ data (http://seer.cancer.gov/iccc/iccc3.html)
     public static final String VERSION_THIRD_EDITION = "Third Edition";
     public static final String VERSION_THIRD_EDITION_INFO = "Main Classification from the International Classification of Childhood Cancer, Third edition (ICCC-3) based on ICD-O-3";
 
-    /**
-     * Version based on the WHO 2008 classification (http://seer.cancer.gov/iccc/iccc-who2008.html)
-     */
+    // version based on the WHO 2008 classification (http://seer.cancer.gov/iccc/iccc-who2008.html)
     public static final String VERSION_WHO_2008 = "ICD-O-3/WHO 2008";
     public static final String VERSION_WHO_2008_INFO = "Main Classification from the International Classification of Childhood Cancer based on ICD-O-3/WHO 2008";
 
-    /**
-     * Default version
-     */
-    public static final String VERSION_DEFAULT = VERSION_WHO_2008;
-
-    /**
-     * Map of available versions along with a description
-     */
+    // cached versions
     private static final Map<String, String> _VERSIONS = new HashMap<>();
+
+    // default version
+    public static final String VERSION_DEFAULT = VERSION_WHO_2008;
 
     static {
         _VERSIONS.put(VERSION_THIRD_EDITION, VERSION_THIRD_EDITION_INFO);
         _VERSIONS.put(VERSION_WHO_2008, VERSION_WHO_2008_INFO);
     }
 
-    /**
-     * Nice data for the different versions, this is what is exposed to the outside world (lazy)
-     */
+    // unknown value
+    public static final String ICCC_UNKNOWN_RECODE = "999";
+
+    // cached formatted data
     private static final Map<String, List<IcccSiteGroupDto>> _DATA = new HashMap<>();
 
-    /**
-     * Optimized data for the different versions, this is what is used for the calculation (lazy)
-     */
+    // cached runtime data
     private static final Map<String, List<IcccExecutableSiteGroupDto>> _INTERNAL_DATA = new HashMap<>();
 
     /**
@@ -87,6 +77,7 @@ public final class IcccRecodeUtils {
      * Returns the calculated site recode for the provided record, unknown if it can't be calculated.
      * @param record record
      * @return the calculated site recode for the provided record, unknown if it can't be calculated
+     * @deprecated use the methods that takes the explicit site/hist/behav parameters
      */
     public static String calculateSiteRecode(Map<String, String> record) {
         return calculateSiteRecode(VERSION_DEFAULT, record.get(PROP_PRIMARY_SITE), record.get(PROP_HISTOLOGY_3), record.get(PROP_BEHAVIOR_3));
@@ -97,6 +88,7 @@ public final class IcccRecodeUtils {
      * @param version data version
      * @param record record
      * @return the calculated site recode for the provided version and record, unknown if it can't be calculated
+     * @deprecated use the methods that takes the explicit site/hist/behav parameters
      */
     public static String calculateSiteRecode(String version, Map<String, String> record) {
         return calculateSiteRecode(version, record.get(PROP_PRIMARY_SITE), record.get(PROP_HISTOLOGY_3), record.get(PROP_BEHAVIOR_3));
@@ -107,6 +99,7 @@ public final class IcccRecodeUtils {
      * @param site site
      * @param histology histology
      * @return the calculated site recode for the provided parameters, unknown if it can't be calculated
+     * @deprecated use the version that takes a version as first parameter along with the VERSION_DEFAULT constant.
      */
     public static String calculateSiteRecode(String site, String histology) {
         return calculateSiteRecode(VERSION_DEFAULT, site, histology, null);
@@ -118,6 +111,7 @@ public final class IcccRecodeUtils {
      * @param site site
      * @param histology histology
      * @return the calculated site recode for the provided parameters, unknown if it can't be calculated
+     * @deprecated use the method that takes the bhavior and pass null for that parameter
      */
     public static String calculateSiteRecode(String version, String site, String histology) {
         return calculateSiteRecode(version, site, histology, null);
@@ -145,7 +139,7 @@ public final class IcccRecodeUtils {
      * @return the calculated site recode/ recode extended for the provided parameters, unknown if it can't be calculated
      */
     public static String calculateSiteRecode(String version, String site, String histology, String behavior, boolean recodeExtended) {
-        String result = "999";
+        String result = ICCC_UNKNOWN_RECODE;
 
         if (StringUtils.isBlank(site) || !site.matches("C\\d+") || StringUtils.isBlank(histology) || !histology.matches("\\d+"))
             return result;

@@ -3,6 +3,7 @@ package com.imsweb.algorithms.seersiterecode;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -27,45 +28,26 @@ import com.imsweb.algorithms.AlgorithmsUtils;
  */
 public final class SeerSiteRecodeUtils {
 
+    // algorithm name
     public static final String ALG_NAME = "SEER Site Recode";
 
-    /**
-     * Properties used to calculate Site Recode **
-     */
+    // properties used by the algorithm
     public static final String PROP_PRIMARY_SITE = "primarySite";
     public static final String PROP_HISTOLOGY_3 = "histologyIcdO3";
 
-    /**
-     * Version for the 2010+ data (http://seer.cancer.gov/siterecode/icdo3_dwhoheme/index.html)
-     */
+    // version for the 2010+ data (http://seer.cancer.gov/siterecode/icdo3_dwhoheme/index.html)
     public static final String VERSION_2010 = "2010+";
     public static final String VERSION_2010_INFO = "SEER Site Recode ICD-O-3 2010+ Cases WHO Heme Definition";
 
-    /**
-     * Version for the 2003 data (http://seer.cancer.gov/siterecode/icdo3_d01272003/)
-     */
+    // version for the 2003 data (http://seer.cancer.gov/siterecode/icdo3_d01272003/)
     public static final String VERSION_2003 = "2003-27-01";
     public static final String VERSION_2003_INFO = "SEER Site Recode ICD-O-3 (1/27/2003) Definition";
 
-    /**
-     * Version for the 2003 data without Mesothelioma (9050-9055) and Kaposi Sarcoma (9140) as separate groupings
-     */
+    // version for the 2003 data without Mesothelioma (9050-9055) and Kaposi Sarcoma (9140) as separate groupings
     public static final String VERSION_2003_WITHOUT_KSM = "2003-27-01 (no Meso and Kapo)";
     public static final String VERSION_2003_WITHOUT_KSM_INFO = "SEER Site Recode ICD-O-3 (1/27/2003) Definition without Mesothelioma (9050-9055) and Kaposi Sarcoma (9140)";
 
-    /**
-     * Default version
-     */
-    public static final String VERSION_DEFAULT = VERSION_2010;
-
-    /**
-     * Unknown label
-     */
-    public static final String UNKNOWN_LABEL = "Unknown";
-
-    /**
-     * Map of available versions along with a description
-     */
+    // cached versions
     private static final Map<String, String> _VERSIONS = new HashMap<>();
 
     static {
@@ -73,6 +55,15 @@ public final class SeerSiteRecodeUtils {
         _VERSIONS.put(VERSION_2003, VERSION_2003_INFO);
         _VERSIONS.put(VERSION_2003_WITHOUT_KSM, VERSION_2003_WITHOUT_KSM_INFO);
     }
+
+    // default version
+    public static final String VERSION_DEFAULT = VERSION_2010;
+
+    // unknown value
+    public static final String UNKNOWN_RECODE = "99999";
+
+    // unknown label
+    public static final String UNKNOWN_LABEL = "Unknown";
 
     // nice data for the different versions, this is what is exposed to the outside world (lazy)
     private static final Map<String, List<SeerSiteGroupDto>> _DATA = new HashMap<>();
@@ -100,6 +91,7 @@ public final class SeerSiteRecodeUtils {
      * Returns the calculated site recode for the provided record, unknown if it can't be calculated.
      * @param record record
      * @return the calculated site recode for the provided record, unknown if it can't be calculated
+     * @deprecated use the method that takes a version/site/hist
      */
     public static String calculateSiteRecode(Map<String, String> record) {
         return calculateSiteRecode(VERSION_DEFAULT, record.get(PROP_PRIMARY_SITE), record.get(PROP_HISTOLOGY_3));
@@ -110,6 +102,7 @@ public final class SeerSiteRecodeUtils {
      * @param version data version
      * @param record record
      * @return the calculated site recode for the provided version and record, unknown if it can't be calculated
+     * @deprecated use the method that takes a version/site/hist
      */
     public static String calculateSiteRecode(String version, Map<String, String> record) {
         return calculateSiteRecode(version, record.get(PROP_PRIMARY_SITE), record.get(PROP_HISTOLOGY_3));
@@ -120,6 +113,7 @@ public final class SeerSiteRecodeUtils {
      * @param site site
      * @param histology histology
      * @return the calculated site recode for the provided parameters, unknown if it can't be calculated
+     * @deprecated use the method that takes a version/site/hist and pass the VERSION_DEFAULT constant
      */
     public static String calculateSiteRecode(String site, String histology) {
         return calculateSiteRecode(VERSION_DEFAULT, site, histology);
@@ -133,7 +127,7 @@ public final class SeerSiteRecodeUtils {
      * @return the calculated site recode for the provided parameters, unknown if it can't be calculated
      */
     public static String calculateSiteRecode(String version, String site, String histology) {
-        String result = "99999";
+        String result = UNKNOWN_RECODE;
 
         if (StringUtils.isBlank(site) || !_SITE_PATTERN.matcher(site).matches() || StringUtils.isBlank(histology) || !NumberUtils.isDigits(histology))
             return result;
@@ -216,13 +210,13 @@ public final class SeerSiteRecodeUtils {
 
         try {
             Set<String> names = new HashSet<>();
-            List<String[]> allData = new CSVReader(new InputStreamReader(url.openStream(), "US-ASCII")).readAll();
+            List<String[]> allData = new CSVReader(new InputStreamReader(url.openStream(), StandardCharsets.US_ASCII)).readAll();
             for (int i = 1; i < allData.size(); i++) {
                 String[] data = allData.get(i);
 
                 String id = data[0].isEmpty() ? null : data[0];
                 String name = data[1].isEmpty() ? null : data[1];
-                String level = data[2].isEmpty() ? null : data[2];
+                String level = data[2].isEmpty() ? "0" : data[2];
                 String siteIn = data[3].isEmpty() ? null : data[3];
                 String siteOut = data[4].isEmpty() ? null : data[4];
                 String histIn = data[5].isEmpty() ? null : data[5];

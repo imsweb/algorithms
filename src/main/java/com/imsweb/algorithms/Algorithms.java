@@ -254,6 +254,11 @@ public class Algorithms {
     }
 
     private static void addAlgorithm(Map<String, Algorithm> cache, Algorithm algorithm) {
+        if (algorithm.getId() == null)
+            throw new RuntimeException("Algorithm ID is required!");
+        if (cache.containsKey(algorithm.getId()))
+            throw new RuntimeException("Algorithm ID '" + algorithm.getId() + "' has already been registered!");
+
         cache.put(algorithm.getId(), algorithm);
     }
 
@@ -264,6 +269,19 @@ public class Algorithms {
         _LOCK.writeLock().lock();
         try {
             _CACHED_ALGORITHMS.put(algorithm.getId(), algorithm);
+        }
+        finally {
+            _LOCK.writeLock().unlock();
+        }
+    }
+
+    public static void unregisterAlgorithm(Algorithm algorithm) {
+        if (algorithm.getId() == null)
+            throw new RuntimeException("Algorithm ID is required!");
+
+        _LOCK.writeLock().lock();
+        try {
+            _CACHED_ALGORITHMS.remove(algorithm.getId());
         }
         finally {
             _LOCK.writeLock().unlock();

@@ -179,7 +179,7 @@ public final class CauseSpecificUtils {
         int hist = NumberUtils.toInt(input.getHistologyIcdO3(), -1);
         String cod = input.getCauseOfDeath().toUpperCase();
         String cod3dig = cod.substring(0, 3);
-        String recode = SeerSiteRecodeUtils.calculateSiteRecode(input.getPrimarySite(), input.getHistologyIcdO3());
+        String recode = SeerSiteRecodeUtils.calculateSiteRecode(SeerSiteRecodeUtils.VERSION_DEFAULT, input.getPrimarySite(), input.getHistologyIcdO3());
 
         // first do all of the non-site-specific checks, some of the condition could be added to the text file which represents the tables. But I decided to use the same file and 
         // same structure of code as SAS.       
