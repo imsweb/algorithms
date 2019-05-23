@@ -29,6 +29,24 @@ public final class RuralUrbanUtils {
     public static final String RURAL_URBAN_COMMUTING_AREA_UNKNOWN = "C";
     public static final String RURAL_URBAN_CONTINUUM_UNKNOWN = "98";
 
+    // other unknown values (there is overlap with the previous block of code, but I don't want to remove those other constants)
+    // I know it's not great ot use the code in the constant name, but I just don't know how to abbreviate what they all mean!
+    public static final String URIC_VAL_UNK = "9";
+    public static final String URIC_VAL_UNK_A = "A";
+    public static final String URIC_VAL_UNK_B = "B";
+    public static final String URIC_VAL_UNK_C = "C";
+    public static final String URIC_VAL_UNK_D = "D";
+    public static final String RUCA_VAL_UNK = "9";
+    public static final String RUCA_VAL_UNK_A = "A";
+    public static final String RUCA_VAL_UNK_B = "B";
+    public static final String RUCA_VAL_UNK_C = "C";
+    public static final String RUCA_VAL_UNK_D = "D";
+    public static final String CONTINUUM_UNK_96 = "96";
+    public static final String CONTINUUM_UNK_97 = "97";
+    public static final String CONTINUUM_UNK_98 = "98";
+    public static final String CONTINUUM_UNK_99 = "99";
+
+    // data provider
     private static RuralUrbanDataProvider _PROVIDER;
 
     /**
@@ -114,7 +132,8 @@ public final class RuralUrbanUtils {
             if (_PROVIDER == null)
                 initializeInternalDataProvider();
             result.setUrbanRuralIndicatorCode2000(_PROVIDER.getUrbanRuralIndicatorCode(TRACT_CATEGORY_1, input.getAddressAtDxState(), input.getAddressAtDxCounty(), input.getCensusTract2000()));
-            result.setUrbanRuralIndicatorCode2000Percentage(_PROVIDER.getRuralUrbanCensusPercentage(TRACT_CATEGORY_1, input.getAddressAtDxState(), input.getAddressAtDxCounty(), input.getCensusTract2000()));
+            result.setUrbanRuralIndicatorCode2000Percentage(
+                    _PROVIDER.getRuralUrbanCensusPercentage(TRACT_CATEGORY_1, input.getAddressAtDxState(), input.getAddressAtDxCounty(), input.getCensusTract2000()));
         }
         if (result.getUrbanRuralIndicatorCode2000() == null)
             result.setUrbanRuralIndicatorCode2000(URBAN_RURAL_INDICATOR_CODE_UNKNOWN);
@@ -130,7 +149,8 @@ public final class RuralUrbanUtils {
             if (_PROVIDER == null)
                 initializeInternalDataProvider();
             result.setUrbanRuralIndicatorCode2010(_PROVIDER.getUrbanRuralIndicatorCode(TRACT_CATEGORY_2, input.getAddressAtDxState(), input.getAddressAtDxCounty(), input.getCensusTract2010()));
-            result.setUrbanRuralIndicatorCode2010Percentage(_PROVIDER.getRuralUrbanCensusPercentage(TRACT_CATEGORY_2, input.getAddressAtDxState(), input.getAddressAtDxCounty(), input.getCensusTract2010()));
+            result.setUrbanRuralIndicatorCode2010Percentage(
+                    _PROVIDER.getRuralUrbanCensusPercentage(TRACT_CATEGORY_2, input.getAddressAtDxState(), input.getAddressAtDxCounty(), input.getCensusTract2010()));
         }
         if (result.getUrbanRuralIndicatorCode2010() == null)
             result.setUrbanRuralIndicatorCode2010(URBAN_RURAL_INDICATOR_CODE_UNKNOWN);

@@ -50,6 +50,20 @@ import static com.imsweb.algorithms.iccc.IcccRecodeUtils.VERSION_WHO_2008_INFO;
 import static com.imsweb.algorithms.nhia.NhiaUtils.NHIA_OPTION_ALL_CASES;
 import static com.imsweb.algorithms.nhia.NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE;
 import static com.imsweb.algorithms.nhia.NhiaUtils.NHIA_OPTION_SEVEN_ONLY;
+import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.CONTINUUM_UNK_96;
+import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.CONTINUUM_UNK_97;
+import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.CONTINUUM_UNK_98;
+import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.CONTINUUM_UNK_99;
+import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.RUCA_VAL_UNK;
+import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.RUCA_VAL_UNK_A;
+import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.RUCA_VAL_UNK_B;
+import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.RUCA_VAL_UNK_C;
+import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.RUCA_VAL_UNK_D;
+import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.URIC_VAL_UNK;
+import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.URIC_VAL_UNK_A;
+import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.URIC_VAL_UNK_B;
+import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.URIC_VAL_UNK_C;
+import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.URIC_VAL_UNK_D;
 import static com.imsweb.algorithms.seersiterecode.SeerSiteRecodeUtils.VERSION_2003;
 import static com.imsweb.algorithms.seersiterecode.SeerSiteRecodeUtils.VERSION_2003_INFO;
 import static com.imsweb.algorithms.seersiterecode.SeerSiteRecodeUtils.VERSION_2003_WITHOUT_KSM;
@@ -832,8 +846,8 @@ public class Algorithms {
             @Override
             public Map<String, List<String>> getUnknownValues() {
                 Map<String, List<String>> result = new HashMap<>();
-                result.put(FIELD_URIC_2000, Collections.singletonList(RuralUrbanUtils.URBAN_RURAL_INDICATOR_CODE_UNKNOWN));
-                result.put(FIELD_URIC_2010, Collections.singletonList(RuralUrbanUtils.URBAN_RURAL_INDICATOR_CODE_UNKNOWN));
+                result.put(FIELD_URIC_2000, Arrays.asList(URIC_VAL_UNK, URIC_VAL_UNK_A, URIC_VAL_UNK_B, URIC_VAL_UNK_C, URIC_VAL_UNK_D));
+                result.put(FIELD_URIC_2010, Arrays.asList(URIC_VAL_UNK, URIC_VAL_UNK_A, URIC_VAL_UNK_B, URIC_VAL_UNK_C, URIC_VAL_UNK_D));
                 return result;
             }
 
@@ -917,8 +931,8 @@ public class Algorithms {
             @Override
             public Map<String, List<String>> getUnknownValues() {
                 Map<String, List<String>> result = new HashMap<>();
-                result.put(FIELD_RUCA_2000, Collections.singletonList(RuralUrbanUtils.RURAL_URBAN_COMMUTING_AREA_UNKNOWN));
-                result.put(FIELD_RUCA_2010, Collections.singletonList(RuralUrbanUtils.RURAL_URBAN_COMMUTING_AREA_UNKNOWN));
+                result.put(FIELD_RUCA_2000, Arrays.asList(RUCA_VAL_UNK, RUCA_VAL_UNK_A, RUCA_VAL_UNK_B, RUCA_VAL_UNK_C, RUCA_VAL_UNK_D));
+                result.put(FIELD_RUCA_2010, Arrays.asList(RUCA_VAL_UNK, RUCA_VAL_UNK_A, RUCA_VAL_UNK_B, RUCA_VAL_UNK_C, RUCA_VAL_UNK_D));
                 return result;
             }
 
@@ -999,9 +1013,9 @@ public class Algorithms {
             @Override
             public Map<String, List<String>> getUnknownValues() {
                 Map<String, List<String>> result = new HashMap<>();
-                result.put(FIELD_RURAL_CONT_1993, Collections.singletonList(RuralUrbanUtils.RURAL_URBAN_CONTINUUM_UNKNOWN));
-                result.put(FIELD_RURAL_CONT_2003, Collections.singletonList(RuralUrbanUtils.RURAL_URBAN_CONTINUUM_UNKNOWN));
-                result.put(FIELD_RURAL_CONT_2013, Collections.singletonList(RuralUrbanUtils.RURAL_URBAN_CONTINUUM_UNKNOWN));
+                result.put(FIELD_RURAL_CONT_1993, Arrays.asList(CONTINUUM_UNK_96, CONTINUUM_UNK_97, CONTINUUM_UNK_98, CONTINUUM_UNK_99));
+                result.put(FIELD_RURAL_CONT_2003, Arrays.asList(CONTINUUM_UNK_96, CONTINUUM_UNK_97, CONTINUUM_UNK_98, CONTINUUM_UNK_99));
+                result.put(FIELD_RURAL_CONT_2013, Arrays.asList(CONTINUUM_UNK_96, CONTINUUM_UNK_97, CONTINUUM_UNK_98, CONTINUUM_UNK_99));
                 return result;
             }
 
