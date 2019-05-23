@@ -4,8 +4,10 @@
 package com.imsweb.algorithms.historicstage;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -142,7 +144,9 @@ public final class HistoricStageUtils {
      * <li>NEED_REVIEW = "6"</li>
      * <li>NOT_APPLICABLE = "7"</li>
      * </ul>
+     * @deprecated use the method that takes a <code>HistoricStageInputDto</code> parameter
      */
+    @Deprecated
     public static HistoricStageResultsDto computeHistoricStage(Map<String, String> record) {
         HistoricStageInputDto input = new HistoricStageInputDto();
         input.setDateOfDiagnosisYear(record.get(PROP_DATE_OF_DIAGNOSIS_YEAR));
@@ -729,101 +733,166 @@ public final class HistoricStageUtils {
 
     protected static synchronized void initializeLeukemiaTable() {
         if (_DATA_LEUKEMIA.isEmpty()) {
-            try {
-                Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Leuk.csv"), "US-ASCII");
-                for (String[] row : new CSVReaderBuilder(reader).withSkipLines(1).build().readAll())
-                    _DATA_LEUKEMIA.add(new HistStageDataLeukemiaDto(row));
+            try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Leuk.csv")) {
+                if (is == null)
+                    throw new RuntimeException("Unable to read Historic-stage-Leuk.csv");
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII)) {
+                    for (String[] row : new CSVReaderBuilder(reader).withSkipLines(1).build().readAll())
+                        _DATA_LEUKEMIA.add(new HistStageDataLeukemiaDto(row));
+                }
             }
             catch (IOException e) {
-                throw new RuntimeException(e);
+                throw new RuntimeException("Unable to read Historic-stage-Leuk.csv", e);
             }
         }
     }
 
     protected static synchronized void initializeShemaTable() {
         if (_DATA_HISTORIC_STAGE_SCHEMA.isEmpty()) {
-            try {
-                Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-SchemaFor2004+.csv"), "US-ASCII");
-                List<String[]> rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
-                for (String[] row : rows)
-                    _DATA_HISTORIC_STAGE_SCHEMA.add(new HistStageDataSchemaDto(row));
+            try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-SchemaFor2004+.csv")) {
+                if (is == null)
+                    throw new RuntimeException("Unable to read Historic-stage-SchemaFor2004+.csv");
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII)) {
+                    List<String[]> rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
+                    for (String[] row : rows)
+                        _DATA_HISTORIC_STAGE_SCHEMA.add(new HistStageDataSchemaDto(row));
+                }
             }
             catch (IOException e) {
-                throw new RuntimeException(e);
+                throw new RuntimeException("Unable to read Historic-stage-SchemaFor2004+.csv", e);
             }
         }
     }
 
     protected static synchronized void initializeCsTables() {
         if (_DATA_CS_EXT.isEmpty() || _DATA_CS_NODE.isEmpty() || _DATA_CS_METS.isEmpty() || _DATA_CS_STAGE.isEmpty()) {
-            try {
-                Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-csExt.csv"), "US-ASCII");
-                List<String[]> rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
-                for (String[] row : rows)
-                    _DATA_CS_EXT.add(new HistStageDataCsExtDto(row));
-                reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-csNode.csv"), "US-ASCII");
-                rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
-                for (String[] row : rows)
-                    _DATA_CS_NODE.add(new HistStageDataCsNodeDto(row));
-                reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-csMets.csv"), "US-ASCII");
-                rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
-                for (String[] row : rows)
-                    _DATA_CS_METS.add(new HistStageDataCsMetsDto(row));
-                reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-csStage.csv"), "US-ASCII");
-                rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
-                for (String[] row : rows)
-                    _DATA_CS_STAGE.add(new HistStageDataCsStageDto(row));
+            try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-csExt.csv")) {
+                if (is == null)
+                    throw new RuntimeException("Unable to read Historic-stage-csExt.csv");
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII)) {
+                    List<String[]> rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
+                    for (String[] row : rows)
+                        _DATA_CS_EXT.add(new HistStageDataCsExtDto(row));
+                }
             }
             catch (IOException e) {
-                throw new RuntimeException(e);
+                throw new RuntimeException("Unable to read Historic-stage-csExt.csv", e);
+            }
+
+            try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-csNode.csv")) {
+                if (is == null)
+                    throw new RuntimeException("Unable to read Historic-stage-csNode.csv");
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII)) {
+                    List<String[]> rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
+                    for (String[] row : rows)
+                        _DATA_CS_NODE.add(new HistStageDataCsNodeDto(row));
+                }
+            }
+            catch (IOException e) {
+                throw new RuntimeException("Unable to read Historic-stage-csNode.csv", e);
+            }
+
+            try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-csMets.csv")) {
+                if (is == null)
+                    throw new RuntimeException("Unable to read Historic-stage-csMets.csv");
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII)) {
+                    List<String[]> rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
+                    for (String[] row : rows)
+                        _DATA_CS_METS.add(new HistStageDataCsMetsDto(row));
+                }
+            }
+            catch (IOException e) {
+                throw new RuntimeException("Unable to read Historic-stage-csMets.csv", e);
+            }
+
+            try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-csStage.csv")) {
+                if (is == null)
+                    throw new RuntimeException("Unable to read Historic-stage-csStage.csv");
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII)) {
+                    List<String[]> rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
+                    for (String[] row : rows)
+                        _DATA_CS_STAGE.add(new HistStageDataCsStageDto(row));
+                }
+            }
+            catch (IOException e) {
+                throw new RuntimeException("Unable to read Historic-stage-csStage.csv", e);
             }
         }
     }
 
     protected static synchronized void initializeEod10Tables() {
         if (_DATA_EOD10_EXT.isEmpty() || _DATA_EOD10_NODE.isEmpty() || _DATA_EOD10_STAGE.isEmpty()) {
-            try {
-                Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod10Ext.csv"), "US-ASCII");
-                List<String[]> rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
-                for (String[] row : rows)
-                    _DATA_EOD10_EXT.add(new HistStageDataEod10ExtDto(row));
-                reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod10Node.csv"), "US-ASCII");
-                rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
-                for (String[] row : rows)
-                    _DATA_EOD10_NODE.add(new HistStageDataEod10NodeDto(row));
-                reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod10Stage.csv"), "US-ASCII");
-                rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
-                for (String[] row : rows)
-                    _DATA_EOD10_STAGE.add(new HistStageDataEod10StageDto(row));
+            try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod10Ext.csv")) {
+                if (is == null)
+                    throw new RuntimeException("Unable to read Historic-stage-Eod10Ext.csv");
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII)) {
+                    List<String[]> rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
+                    for (String[] row : rows)
+                        _DATA_EOD10_EXT.add(new HistStageDataEod10ExtDto(row));
+                }
             }
             catch (IOException e) {
-                throw new RuntimeException(e);
+                throw new RuntimeException("Unable to read Historic-stage-Eod10Ext.csv", e);
+            }
+
+            try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod10Node.csv")) {
+                if (is == null)
+                    throw new RuntimeException("Unable to read Historic-stage-Eod10Node.csv");
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII)) {
+                    List<String[]> rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
+                    for (String[] row : rows)
+                        _DATA_EOD10_NODE.add(new HistStageDataEod10NodeDto(row));
+                }
+            }
+            catch (IOException e) {
+                throw new RuntimeException("Unable to read Historic-stage-Eod10Node.csv", e);
+            }
+
+            try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod10Stage.csv")) {
+                if (is == null)
+                    throw new RuntimeException("Unable to read Historic-stage-Eod10Stage.csv");
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII)) {
+                    List<String[]> rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
+                    for (String[] row : rows)
+                        _DATA_EOD10_STAGE.add(new HistStageDataEod10StageDto(row));
+                }
+            }
+            catch (IOException e) {
+                throw new RuntimeException("Unable to read Historic-stage-Eod10Stage.csv", e);
             }
         }
     }
 
     protected static synchronized void initializeEodPatchTable() {
         if (_DATA_EOD_PATCH.isEmpty()) {
-            try {
-                Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-EodPatch.csv"), "US-ASCII");
-                for (String[] row : new CSVReaderBuilder(reader).withSkipLines(1).build().readAll())
-                    _DATA_EOD_PATCH.add(new HistStageDataEodPatchDto(row));
+            try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-EodPatch.csv")) {
+                if (is == null)
+                    throw new RuntimeException("Unable to read Historic-stage-EodPatch.csv");
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII)) {
+                    List<String[]> rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
+                    for (String[] row : rows)
+                        _DATA_EOD_PATCH.add(new HistStageDataEodPatchDto(row));
+                }
             }
             catch (IOException e) {
-                throw new RuntimeException(e);
+                throw new RuntimeException("Unable to read Historic-stage-EodPatch.csv", e);
             }
         }
     }
 
     protected static synchronized void initializeEod4DigTable() {
         if (_DATA_EOD_4DIG_STAGE.isEmpty()) {
-            try {
-                Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod4digStage.csv"), "US-ASCII");
-                for (String[] row : new CSVReaderBuilder(reader).withSkipLines(1).build().readAll())
-                    _DATA_EOD_4DIG_STAGE.add(new HistStageDataEod4digStageDto(row));
+            try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod4digStage.csv")) {
+                if (is == null)
+                    throw new RuntimeException("Unable to read Historic-stage-Eod4digStage.csv");
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII)) {
+                    List<String[]> rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
+                    for (String[] row : rows)
+                        _DATA_EOD_4DIG_STAGE.add(new HistStageDataEod4digStageDto(row));
+                }
             }
             catch (IOException e) {
-                throw new RuntimeException(e);
+                throw new RuntimeException("Unable to read Historic-stage-Eod4digStage.csv", e);
             }
         }
     }
@@ -832,74 +901,155 @@ public final class HistoricStageUtils {
         if (_DATA_EOD_13DIG_EXT.isEmpty() || _DATA_EOD_13DIG_NODE.isEmpty() || _DATA_EOD_13DIG_BLADDER.isEmpty() ||
                 _DATA_EOD_13DIG_LUNG.isEmpty() || _DATA_EOD_13DIG_MELANOMA.isEmpty() || _DATA_EOD_13DIG_GENERAL_STAGE.isEmpty()) {
 
-            try {
-                Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod13digNodes.csv"), "US-ASCII");
-                List<String[]> rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
-                for (String[] row : rows)
-                    _DATA_EOD_13DIG_NODE.add(new HistStageDataEod13digNodeDto(row));
-                reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod13digExt.csv"), "US-ASCII");
-                rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
-                for (String[] row : rows)
-                    _DATA_EOD_13DIG_EXT.add(new HistStageDataEod13digExtDto(row));
-                reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod13digLung.csv"), "US-ASCII");
-                rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
-                for (String[] row : rows)
-                    _DATA_EOD_13DIG_LUNG.add(new HistStageDataEod13digLungDto(row));
-                reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod13digMelanoma.csv"), "US-ASCII");
-                rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
-                for (String[] row : rows)
-                    _DATA_EOD_13DIG_MELANOMA.add(new HistStageDataEod13digMelanomaDto(row));
-                reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod13digBladder.csv"), "US-ASCII");
-                rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
-                for (String[] row : rows)
-                    _DATA_EOD_13DIG_BLADDER.add(new HistStageDataEod13digBladderDto(row));
-                reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod13digGeneralStage.csv"), "US-ASCII");
-                rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
-                for (String[] row : rows)
-                    _DATA_EOD_13DIG_GENERAL_STAGE.add(new HistStageDataEod13digGeneralStageDto(row));
+            try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod13digNodes.csv")) {
+                if (is == null)
+                    throw new RuntimeException("Unable to read Historic-stage-Eod13digNodes.csv");
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII)) {
+                    List<String[]> rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
+                    for (String[] row : rows)
+                        _DATA_EOD_13DIG_NODE.add(new HistStageDataEod13digNodeDto(row));
+                }
             }
             catch (IOException e) {
-                throw new RuntimeException(e);
+                throw new RuntimeException("Unable to read Historic-stage-Eod13digNodes.csv", e);
+            }
+
+            try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod13digExt.csv")) {
+                if (is == null)
+                    throw new RuntimeException("Unable to read Historic-stage-Eod13digExt.csv");
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII)) {
+                    List<String[]> rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
+                    for (String[] row : rows)
+                        _DATA_EOD_13DIG_EXT.add(new HistStageDataEod13digExtDto(row));
+                }
+            }
+            catch (IOException e) {
+                throw new RuntimeException("Unable to read Historic-stage-Eod13digExt.csv", e);
+            }
+
+            try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod13digLung.csv")) {
+                if (is == null)
+                    throw new RuntimeException("Unable to read Historic-stage-Eod13digLung.csv");
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII)) {
+                    List<String[]> rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
+                    for (String[] row : rows)
+                        _DATA_EOD_13DIG_LUNG.add(new HistStageDataEod13digLungDto(row));
+                }
+            }
+            catch (IOException e) {
+                throw new RuntimeException("Unable to read Historic-stage-Eod13digLung.csv", e);
+            }
+
+            try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod13digMelanoma.csv")) {
+                if (is == null)
+                    throw new RuntimeException("Unable to read Historic-stage-Eod13digMelanoma.csv");
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII)) {
+                    List<String[]> rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
+                    for (String[] row : rows)
+                        _DATA_EOD_13DIG_MELANOMA.add(new HistStageDataEod13digMelanomaDto(row));
+                }
+            }
+            catch (IOException e) {
+                throw new RuntimeException("Unable to read Historic-stage-Eod13digMelanoma.csv", e);
+            }
+
+            try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod13digBladder.csv")) {
+                if (is == null)
+                    throw new RuntimeException("Unable to read Historic-stage-Eod13digBladder.csv");
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII)) {
+                    List<String[]> rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
+                    for (String[] row : rows)
+                        _DATA_EOD_13DIG_BLADDER.add(new HistStageDataEod13digBladderDto(row));
+                }
+            }
+            catch (IOException e) {
+                throw new RuntimeException("Unable to read Historic-stage-Eod13digBladder.csv", e);
+            }
+
+            try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod13digGeneralStage.csv")) {
+                if (is == null)
+                    throw new RuntimeException("Unable to read Historic-stage-Eod13digGeneralStage.csv");
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII)) {
+                    List<String[]> rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
+                    for (String[] row : rows)
+                        _DATA_EOD_13DIG_GENERAL_STAGE.add(new HistStageDataEod13digGeneralStageDto(row));
+                }
+            }
+            catch (IOException e) {
+                throw new RuntimeException("Unable to read Historic-stage-Eod13digGeneralStage.csv", e);
             }
         }
     }
 
     protected static synchronized void initializeEod2Tables() {
         if (_DATA_EOD_2DIG_EXT.isEmpty() || _DATA_EOD_2DIG_NODE.isEmpty() || _DATA_EOD_2DIG_DIRECT_STAGE.isEmpty() || _DATA_EOD_2DIG_EXTENSION_NODE_STAGE.isEmpty()) {
-            try {
-                Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod2digExt.csv"), "US-ASCII");
-                List<String[]> rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
-                for (String[] row : rows)
-                    _DATA_EOD_2DIG_EXT.add(new HistStageDataEod2digExtDto(row));
-
-                reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod2digNode.csv"), "US-ASCII");
-                rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
-                for (String[] row : rows)
-                    _DATA_EOD_2DIG_NODE.add(new HistStageDataEod2digNodeDto(row));
-                reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod2digDirectStage.csv"), "US-ASCII");
-                rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
-                for (String[] row : rows)
-                    _DATA_EOD_2DIG_DIRECT_STAGE.add(new HistStageDataEod2digDirectStageDto(row));
-                reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod2digExtNodeStage.csv"), "US-ASCII");
-                rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
-                for (String[] row : rows)
-                    _DATA_EOD_2DIG_EXTENSION_NODE_STAGE.add(new HistStageDataEod2digExtNodeStageDto(row));
+            try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod2digExt.csv")) {
+                if (is == null)
+                    throw new RuntimeException("Unable to read Historic-stage-Eod2digExt.csv");
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII)) {
+                    List<String[]> rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
+                    for (String[] row : rows)
+                        _DATA_EOD_2DIG_EXT.add(new HistStageDataEod2digExtDto(row));
+                }
             }
             catch (IOException e) {
-                throw new RuntimeException(e);
+                throw new RuntimeException("Unable to read Historic-stage-Eod2digExt.csv", e);
+            }
+
+            try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod2digNode.csv")) {
+                if (is == null)
+                    throw new RuntimeException("Unable to read Historic-stage-Eod2digNode.csv");
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII)) {
+                    List<String[]> rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
+                    for (String[] row : rows)
+                        _DATA_EOD_2DIG_NODE.add(new HistStageDataEod2digNodeDto(row));
+                }
+            }
+            catch (IOException e) {
+                throw new RuntimeException("Unable to read Historic-stage-Eod2digNode.csv", e);
+            }
+
+            try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod2digDirectStage.csv")) {
+                if (is == null)
+                    throw new RuntimeException("Unable to read Historic-stage-Eod2digDirectStage.csv");
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII)) {
+                    List<String[]> rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
+                    for (String[] row : rows)
+                        _DATA_EOD_2DIG_DIRECT_STAGE.add(new HistStageDataEod2digDirectStageDto(row));
+                }
+            }
+            catch (IOException e) {
+                throw new RuntimeException("Unable to read Historic-stage-Eod2digDirectStage.csv", e);
+            }
+
+            try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod2digExtNodeStage.csv")) {
+                if (is == null)
+                    throw new RuntimeException("Unable to read Historic-stage-Eod2digExtNodeStage.csv");
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII)) {
+                    List<String[]> rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
+                    for (String[] row : rows)
+                        _DATA_EOD_2DIG_EXTENSION_NODE_STAGE.add(new HistStageDataEod2digExtNodeStageDto(row));
+                }
+            }
+            catch (IOException e) {
+                throw new RuntimeException("Unable to read Historic-stage-Eod2digExtNodeStage.csv", e);
             }
         }
     }
 
     protected static synchronized void initializeEod0StageTable() {
         if (_DATA_EOD0_STAGE.isEmpty()) {
-            try {
-                Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod0Stage.csv"), "US-ASCII");
-                for (String[] row : new CSVReaderBuilder(reader).withSkipLines(1).build().readAll())
-                    _DATA_EOD0_STAGE.add(new HistStageDataEod0StageDto(row));
+            try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod0Stage.csv")) {
+                if (is == null)
+                    throw new RuntimeException("Unable to read Historic-stage-Eod0Stage.csv");
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII)) {
+                    List<String[]> rows = new CSVReaderBuilder(reader).withSkipLines(1).build().readAll();
+                    for (String[] row : rows)
+                        _DATA_EOD0_STAGE.add(new HistStageDataEod0StageDto(row));
+                }
             }
             catch (IOException e) {
-                throw new RuntimeException(e);
+                throw new RuntimeException("Unable to read Historic-stage-Eod0Stage.csv", e);
             }
         }
     }

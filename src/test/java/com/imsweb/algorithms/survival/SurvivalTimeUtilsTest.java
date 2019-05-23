@@ -5,9 +5,7 @@ package com.imsweb.algorithms.survival;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
@@ -25,14 +23,14 @@ public class SurvivalTimeUtilsTest {
     @Test
     public void testLogic() {
 
-        List<Map<String, String>> records = new ArrayList<>();
+        List<SurvivalTimeInputRecordDto> records = new ArrayList<>();
 
         //different dolc
         records.add(createRecord(2008, 1, 1, 2010, 10, 11, 1956, 3, 4, 1, 0, 1));
         records.add(createRecord(2010, 1, 2, 2010, 10, 11, 1956, 3, 4, 2, 0, 1));
         records.add(createRecord(2010, 3, 1, 2010, 10, 21, 1956, 3, 4, 3, 0, 1));
         records.add(createRecord(2010, 11, 11, 2010, 10, 11, 1956, 3, 4, 4, 0, 1));
-        SurvivalTimeOutputPatientDto results = SurvivalTimeUtils.calculateSurvivalTime(records, 2010);
+        SurvivalTimeOutputPatientDto results = calculateSurvivalTime(records, 2010);
         Assert.assertEquals("0", results.getVitalStatusRecode());
         assertResults(results.getSurvivalTimeOutputPatientDtoList().get(0), "9999", "9", "9999", "9", 1);
         assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(0), null, null, null, null, null, null, null, null, null);
@@ -47,7 +45,7 @@ public class SurvivalTimeUtilsTest {
         records.clear();
         records.add(createRecord(2008, 1, 1, 2010, 10, 11, 1956, 3, 4, 1, 0, 1));
         records.add(createRecord(2010, 1, 2, 2010, 7, 11, 1956, 3, 4, 2, 0, 1));
-        results = SurvivalTimeUtils.calculateSurvivalTime(records, 2010);
+        results = calculateSurvivalTime(records, 2010);
         Assert.assertEquals("0", results.getVitalStatusRecode());
         assertResults(results.getSurvivalTimeOutputPatientDtoList().get(0), "9999", "9", "9999", "9", 1);
         assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(0), null, null, null, null, null, null, null, null, null);
@@ -58,7 +56,7 @@ public class SurvivalTimeUtilsTest {
         records.clear();
         records.add(createRecord(2008, 1, 1, 2009, 10, 11, 1956, 3, 4, 1, 0, 1));
         records.add(createRecord(2010, 1, 2, 2010, 10, 11, 1956, 3, 4, 2, 0, 1));
-        results = SurvivalTimeUtils.calculateSurvivalTime(records, 2010);
+        results = calculateSurvivalTime(records, 2010);
         Assert.assertEquals("0", results.getVitalStatusRecode());
         assertResults(results.getSurvivalTimeOutputPatientDtoList().get(0), "9999", "9", "9999", "9", 1);
         assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(0), null, null, null, null, null, null, null, null, null);
@@ -69,7 +67,7 @@ public class SurvivalTimeUtilsTest {
         records.clear();
         records.add(createRecord(2008, 1, 1, 2010, 10, 11, 1956, 3, 4, 1, 1, 1));
         records.add(createRecord(2010, 1, 2, 2010, 10, 11, 1956, 3, 4, 2, 0, 1));
-        results = SurvivalTimeUtils.calculateSurvivalTime(records, 2010);
+        results = calculateSurvivalTime(records, 2010);
         Assert.assertNull(results.getVitalStatusRecode());
         assertResults(results.getSurvivalTimeOutputPatientDtoList().get(0), "9999", "9", "9999", "9", 1);
         assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(0), null, null, null, null, null, null, null, null, null);
@@ -79,7 +77,7 @@ public class SurvivalTimeUtilsTest {
         //Dolc is in the future (next year) and patient is dead
         records.clear();
         records.add(createRecord(2010, 9, 15, LocalDate.now().getYear() + 1, 1, 1, 9999, 99, 99, 1, 0, 1));
-        results = SurvivalTimeUtils.calculateSurvivalTime(records, 2010);
+        results = calculateSurvivalTime(records, 2010);
         Assert.assertEquals("0", results.getVitalStatusRecode());
         assertResults(results.getSurvivalTimeOutputPatientDtoList().get(0), "9999", "9", "9999", "9", 1);
         assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(0), "2010", "9", "15", null, null, null, null, null, null);
@@ -87,14 +85,14 @@ public class SurvivalTimeUtilsTest {
         LocalDate tomorrow = LocalDate.now().plusDays(1);
         records.clear();
         records.add(createRecord(2010, 9, 15, tomorrow.getYear(), tomorrow.getMonthValue(), tomorrow.getDayOfMonth(), 9999, 99, 99, -1, 1, 1));
-        results = SurvivalTimeUtils.calculateSurvivalTime(records, 2010);
+        results = calculateSurvivalTime(records, 2010);
         Assert.assertEquals("1", results.getVitalStatusRecode());
         assertResults(results.getSurvivalTimeOutputPatientDtoList().get(0), "9999", "9", "0003", "1", 1);
         assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(0), "2010", "9", "15", null, null, null, "2010", "12", "31");
         //Dx is after end point year (invalid), dolc year is valid
         records.clear();
         records.add(createRecord(2011, 9, 15, 2010, 99, 99, 9999, 99, 99, 1, 1, 1));
-        results = SurvivalTimeUtils.calculateSurvivalTime(records, 2010);
+        results = calculateSurvivalTime(records, 2010);
         Assert.assertEquals("1", results.getVitalStatusRecode());
         assertResults(results.getSurvivalTimeOutputPatientDtoList().get(0), "9999", "9", "9999", "9", 1);
         assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(0), null, null, null, "2010", "07", "02", "2010", "12", "31");
@@ -115,7 +113,7 @@ public class SurvivalTimeUtilsTest {
         records.add(createRecord(2008, 4, 5, 2009, 11, 99, 2008, 3, 4, 6, 1, 1));
         //missing info no survival, flag 2, missing info some survival presumed alive. flag 3
         records.add(createRecord(2009, 11, 99, 2009, 11, 99, 2008, 3, 4, 7, 1, 1));
-        results = SurvivalTimeUtils.calculateSurvivalTime(records, 2010);
+        results = calculateSurvivalTime(records, 2010);
         Assert.assertEquals("1", results.getVitalStatusRecode());
         assertResults(results.getSurvivalTimeOutputPatientDtoList().get(0), "2", "3", "15", "1", 4);
         assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(0), "2009", "9", "1", "2009", "11", "22", "2010", "12", "31");
@@ -137,7 +135,7 @@ public class SurvivalTimeUtilsTest {
         records.add(createRecord(2009, 11, 10, 2009, 11, 11, 2008, 3, 4, 1, 1, 1));
         //complete info no survival, flag 0, complete info some survival presumed alive flag 1
         records.add(createRecord(2009, 11, 11, 2009, 11, 11, 2008, 3, 4, 2, 1, 1));
-        results = SurvivalTimeUtils.calculateSurvivalTime(records, 2010);
+        results = calculateSurvivalTime(records, 2010);
         assertResults(results.getSurvivalTimeOutputPatientDtoList().get(0), "0", "1", "13", "1", 1);
         assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(0), "2009", "11", "10", "2009", "11", "11", "2010", "12", "31");
         assertResults(results.getSurvivalTimeOutputPatientDtoList().get(1), "0", "0", "13", "1", 2);
@@ -153,7 +151,7 @@ public class SurvivalTimeUtilsTest {
         records.add(createRecord(2010, 3, 99, 2010, 99, 99, 2008, 3, 4, 3, 0, 7));
         //not dco/autopsy
         records.add(createRecord(2010, 99, 99, 2010, 99, 99, 2008, 3, 4, 4, 0, 1));
-        results = SurvivalTimeUtils.calculateSurvivalTime(records, 2010);
+        results = calculateSurvivalTime(records, 2010);
         Assert.assertEquals("0", results.getVitalStatusRecode());
         assertResults(results.getSurvivalTimeOutputPatientDtoList().get(0), "26", "3", "26", "3", 1);
         assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(0), "2008", "8", "2", "2010", "10", "19", "2010", "10", "19");
@@ -164,13 +162,13 @@ public class SurvivalTimeUtilsTest {
         assertResults(results.getSurvivalTimeOutputPatientDtoList().get(3), "2", "2", "2", "2", 4);
         assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(3), "2010", "8", "8", "2010", "10", "19", "2010", "10", "19");
         //Vital status recode is vital status at the study cutoff date.
-        results = SurvivalTimeUtils.calculateSurvivalTime(records, 2008);
+        results = calculateSurvivalTime(records, 2008);
         Assert.assertEquals("1", results.getVitalStatusRecode());
 
         // special case: using a time that doesn't exist because of daylight saving gaps (#329); this used to fail...
         records.clear();
         records.add(createRecord(2010, 3, 14, 2010, 3, 14, 2008, 3, 4, 1, 1, 1));
-        results = SurvivalTimeUtils.calculateSurvivalTime(records, 2010);
+        results = calculateSurvivalTime(records, 2010);
         assertResults(results.getSurvivalTimeOutputPatientDtoList().get(0), "0", "0", "9", "1", 1);
 
         //test all corner cases of the sortedIndex (#359)
@@ -187,7 +185,7 @@ public class SurvivalTimeUtilsTest {
         records.add(createRecord(2008, 3, 1, 2012, 12, 31, 1956, 3, 4, 7, 0, 1));
         records.add(createRecord(2010, 1, 1, 2012, 12, 31, 1956, 3, 4, 9, 0, 1));
         records.add(createRecord(2011, 1, 2, 2012, 12, 31, 1956, 3, 4, 8, 0, 1));
-        results = SurvivalTimeUtils.calculateSurvivalTime(records, 2010);
+        results = calculateSurvivalTime(records, 2010);
         assertResults(results.getSurvivalTimeOutputPatientDtoList().get(0), "9999", "9", "9999", "9", 6);
         assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(0), null, null, null, "2010", "12", "31", "2010", "12", "31");
         assertResults(results.getSurvivalTimeOutputPatientDtoList().get(1), "9999", "9", "9999", "9", 7);
@@ -212,21 +210,27 @@ public class SurvivalTimeUtilsTest {
         assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(10), "2010", "01", "01", "2010", "12", "31", "2010", "12", "31");
     }
 
-    private Map<String, String> createRecord(int year, int month, int day, int dolcYear, int dolcMonth, int dolcDay, int birthYear, int birthMonth, int birthDay, int seq, int vs, int source) {
-        Map<String, String> rec = new HashMap<>();
+    private SurvivalTimeOutputPatientDto calculateSurvivalTime(List<SurvivalTimeInputRecordDto> records, int endPointYear) {
+        SurvivalTimeInputPatientDto input = new SurvivalTimeInputPatientDto();
+        input.setSurvivalTimeInputPatientDtoList(records);
+        return SurvivalTimeUtils.calculateSurvivalTime(input, endPointYear);
+    }
 
-        rec.put(SurvivalTimeUtils.PROP_DX_YEAR, String.valueOf(year));
-        rec.put(SurvivalTimeUtils.PROP_DX_MONTH, String.valueOf(month));
-        rec.put(SurvivalTimeUtils.PROP_DX_DAY, String.valueOf(day));
-        rec.put(SurvivalTimeUtils.PROP_SEQUENCE_NUMBER, String.valueOf(seq));
-        rec.put(SurvivalTimeUtils.PROP_DOLC_YEAR, String.valueOf(dolcYear));
-        rec.put(SurvivalTimeUtils.PROP_DOLC_MONTH, String.valueOf(dolcMonth));
-        rec.put(SurvivalTimeUtils.PROP_DOLC_DAY, String.valueOf(dolcDay));
-        rec.put(SurvivalTimeUtils.PROP_BIRTH_YEAR, String.valueOf(birthYear));
-        rec.put(SurvivalTimeUtils.PROP_BIRTH_MONTH, String.valueOf(birthMonth));
-        rec.put(SurvivalTimeUtils.PROP_BIRTH_DAY, String.valueOf(birthDay));
-        rec.put(SurvivalTimeUtils.PROP_VITAL_STATUS, String.valueOf(vs));
-        rec.put(SurvivalTimeUtils.PROP_REPORTING_SOURCE, String.valueOf(source));
+    private SurvivalTimeInputRecordDto createRecord(int year, int month, int day, int dolcYear, int dolcMonth, int dolcDay, int birthYear, int birthMonth, int birthDay, int seq, int vs, int source) {
+        SurvivalTimeInputRecordDto rec = new SurvivalTimeInputRecordDto();
+
+        rec.setDateOfDiagnosisYear(String.valueOf(year));
+        rec.setDateOfDiagnosisMonth(String.valueOf(month));
+        rec.setDateOfDiagnosisDay(String.valueOf(day));
+        rec.setSequenceNumberCentral(String.valueOf(seq));
+        rec.setDateOfLastContactYear(String.valueOf(dolcYear));
+        rec.setDateOfLastContactMonth(String.valueOf(dolcMonth));
+        rec.setDateOfLastContactDay(String.valueOf(dolcDay));
+        rec.setBirthYear(String.valueOf(birthYear));
+        rec.setBirthMonth(String.valueOf(birthMonth));
+        rec.setBirthDay(String.valueOf(birthDay));
+        rec.setVitalStatus(String.valueOf(vs));
+        rec.setTypeOfReportingSource(String.valueOf(source));
 
         return rec;
     }

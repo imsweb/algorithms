@@ -58,7 +58,9 @@ public final class RuralUrbanUtils {
      * <br/><br/>
      * @param record a map of properties representing a NAACCR line
      * @return the computed rural urban census value
+     * @deprecated use the method that takes a <code>RuralUrbanInputDto</code> object as parameter
      */
+    @Deprecated
     public static RuralUrbanOutputDto computeUrbanRuralIndicatorCode(Map<String, String> record) {
         RuralUrbanInputDto input = new RuralUrbanInputDto();
         input.setAddressAtDxState(record.get(PROP_STATE_DX));
@@ -161,7 +163,9 @@ public final class RuralUrbanUtils {
      * <br/><br/>
      * @param record a map of properties representing a NAACCR line
      * @return the computed rural urban commuting area value
+     * @deprecated use the method that takes a <code>RuralUrbanInputDto</code> object as parameter
      */
+    @Deprecated
     public static RuralUrbanOutputDto computeRuralUrbanCommutingArea(Map<String, String> record) {
         RuralUrbanInputDto input = new RuralUrbanInputDto();
         input.setAddressAtDxState(record.get(PROP_STATE_DX));
@@ -266,7 +270,9 @@ public final class RuralUrbanUtils {
      * <br/><br/>
      * @param record a map of properties representing a NAACCR line
      * @return the computed rural urban continuum value
+     * @deprecated use the method that takes a <code>RuralUrbanInputDto</code> object as parameter
      */
+    @Deprecated
     public static RuralUrbanOutputDto computeRuralUrbanContinuum(Map<String, String> record) {
         RuralUrbanInputDto input = new RuralUrbanInputDto();
         input.setAddressAtDxState(record.get(PROP_STATE_DX));

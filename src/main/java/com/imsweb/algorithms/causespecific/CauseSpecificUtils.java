@@ -4,8 +4,10 @@
 package com.imsweb.algorithms.causespecific;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -62,7 +64,9 @@ public final class CauseSpecificUtils {
      * <li>DEAD = "1"</li>
      * <li>N/A NOT FIRST TUMOR = "2"</li>
      * </ul>
+     * @deprecated use the method that takes a <code>CauseSpecificInputDto</code> object as parameter
      */
+    @Deprecated
     public static CauseSpecificResultDto computeCauseSpecific(Map<String, String> record) {
         return computeCauseSpecific(record, Calendar.getInstance().get(Calendar.YEAR));
     }
@@ -115,7 +119,9 @@ public final class CauseSpecificUtils {
      * <li>DEAD = "1"</li>
      * <li>N/A NOT FIRST TUMOR = "2"</li>
      * </ul>
+     * @deprecated use the method that takes a <code>CauseSpecificInputDto</code> object as parameter
      */
+    @Deprecated
     public static CauseSpecificResultDto computeCauseSpecific(Map<String, String> record, int cutOffYear) {
         CauseSpecificInputDto input = new CauseSpecificInputDto();
         input.setPrimarySite(record.get(PROP_PRIMARY_SITE));
@@ -260,27 +266,20 @@ public final class CauseSpecificUtils {
 
     protected static synchronized List<CauseSpecificDataDto> getData() {
         if (_DATA_SITE_SPECIFIC.isEmpty()) {
-            LineNumberReader reader = null;
-            try {
-                reader = new LineNumberReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("causespecific/data.txt"), "US-ASCII"));
-                reader.readLine(); //skip first line
-                String line = reader.readLine();
-                while (line != null) {
-                    _DATA_SITE_SPECIFIC.add(new CauseSpecificDataDto(StringUtils.split(line, ';')));
-                    line = reader.readLine();
+            try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("causespecific/data.txt")) {
+                if (is == null)
+                    throw new RuntimeException("Unable to read causespecific/data.txt");
+                try (LineNumberReader reader = new LineNumberReader(new InputStreamReader(is, StandardCharsets.US_ASCII))) {
+                    reader.readLine(); //skip first line
+                    String line = reader.readLine();
+                    while (line != null) {
+                        _DATA_SITE_SPECIFIC.add(new CauseSpecificDataDto(StringUtils.split(line, ';')));
+                        line = reader.readLine();
+                    }
                 }
             }
             catch (IOException e) {
                 throw new RuntimeException(e);
-            }
-            finally {
-                try {
-                    if (reader != null)
-                        reader.close();
-                }
-                catch (IOException e) {
-                    //ignored, we tried our best                   
-                }
             }
         }
         return _DATA_SITE_SPECIFIC;

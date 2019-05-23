@@ -221,14 +221,14 @@ ICCC (all 4 algorithms):
 
 Clean up using old layout properties in input maps:
 [DONE] behav-recode
-cause-specific
+[DONE] cause-specific
 [DONE] census-poverty
-history-stage
+[DONE] history-stage
 [DONE] iarc
 [DONE] iccc
 [DONE] icd
 [DONE] napiia
 [DONE] nhia
-rural-urban
+[DONE] rural-urban
 [DONE] site-recode
-survival
+[DONE] survival

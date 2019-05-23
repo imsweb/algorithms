@@ -21,7 +21,6 @@ import org.apache.commons.lang3.math.NumberUtils;
  * <br/><br/>
  * See <a href="http://seer.cancer.gov/survivaltime/">http://seer.cancer.gov/survivaltime/</a>.
  */
-@SuppressWarnings("MagicConstant")
 public class SurvivalTimeUtils {
 
     public static final String ALG_NAME = "Survival Time in Months";
@@ -74,7 +73,9 @@ public class SurvivalTimeUtils {
      * @param input list of records representing a patient
      * @param endPointYear end point year (also called end study year, or current reporting year)
      * @return SurvivalTimeOutputPatientDto
+     * @deprecated use the method that takes a <code>SurvivalTimeInputPatientDto</code> object as parameter
      */
+    @Deprecated
     public static SurvivalTimeOutputPatientDto calculateSurvivalTime(List<Map<String, String>> input, int endPointYear) {
         SurvivalTimeOutputPatientDto patientResultsDto = new SurvivalTimeOutputPatientDto();
         if (input == null || input.isEmpty())
@@ -183,7 +184,6 @@ public class SurvivalTimeUtils {
             //Vital status recode is vital status at the study cutoff date.
             if (dolcYear != 9999 && dolcYear > endPointYear)
                 patientResultsDto.setVitalStatusRecode("1");
-
 
             // we are also going to need the birth date for filling the missing diagnosis and dolc dates. (#192)
             String birthYearStr = allRecords.isEmpty() ? "" : allRecords.get(0).getBirthYear();
@@ -323,6 +323,7 @@ public class SurvivalTimeUtils {
         return patientResultsDto;
     }
 
+    @SuppressWarnings("SameParameterValue")
     private static void calculateSurvivalTime(List<InternalRecDto> records, List<SurvivalTimeOutputRecordDto> patientResultsList, int dolcYear, int dolcMonth, int dolcDay, int birthYear, int birthMonth, int birthDay, int vs, int endYear, int endMonth, int endDay, boolean presumeAlive) {
 
         //check validity of DOLC

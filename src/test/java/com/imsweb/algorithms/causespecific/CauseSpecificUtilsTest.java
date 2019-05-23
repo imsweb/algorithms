@@ -4,11 +4,10 @@
 package com.imsweb.algorithms.causespecific;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -16,43 +15,10 @@ import org.junit.Test;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 
-import com.imsweb.layout.Field;
-import com.imsweb.layout.Layout;
-import com.imsweb.layout.LayoutFactory;
-
 public class CauseSpecificUtilsTest {
-
-    //test for checking that every constant corresponds to an existing property in the default NAACCR layout
-    @Test
-    public void testPropertyConstants() {
-        Layout layout = LayoutFactory.getLayout(LayoutFactory.LAYOUT_ID_NAACCR_15);
-        Field field = layout.getFieldByName(CauseSpecificUtils.PROP_PRIMARY_SITE);
-        Assert.assertEquals(CauseSpecificUtils.PROP_PRIMARY_SITE, field.getName());
-        field = layout.getFieldByName(CauseSpecificUtils.PROP_SEQ_NUM_CENTRAL);
-        Assert.assertEquals(CauseSpecificUtils.PROP_SEQ_NUM_CENTRAL, field.getName());
-        field = layout.getFieldByName(CauseSpecificUtils.PROP_HISTOLOGY_ICDO3);
-        Assert.assertEquals(CauseSpecificUtils.PROP_HISTOLOGY_ICDO3, field.getName());
-        field = layout.getFieldByName(CauseSpecificUtils.PROP_DOLC_YEAR);
-        Assert.assertEquals(CauseSpecificUtils.PROP_DOLC_YEAR, field.getName());
-        field = layout.getFieldByName(CauseSpecificUtils.PROP_COD);
-        Assert.assertEquals(CauseSpecificUtils.PROP_COD, field.getName());
-        field = layout.getFieldByName(CauseSpecificUtils.PROP_ICD_REVISION_NUM);
-        Assert.assertEquals(CauseSpecificUtils.PROP_ICD_REVISION_NUM, field.getName());
-    }
 
     @Test
     public void testComputeCauseSpecific() {
-        //test all flavors of methods and dolc case (which is not supported on SAS)
-        Map<String, String> record = new HashMap<>();
-        record.put(CauseSpecificUtils.PROP_SEQ_NUM_CENTRAL, "00");
-        record.put(CauseSpecificUtils.PROP_ICD_REVISION_NUM, "1");
-        record.put(CauseSpecificUtils.PROP_DOLC_YEAR, "2013");
-        record.put(CauseSpecificUtils.PROP_COD, "C001");
-        Assert.assertEquals("1", CauseSpecificUtils.computeCauseSpecific(record).getCauseSpecificDeathClassification());
-        Assert.assertEquals("0", CauseSpecificUtils.computeCauseSpecific(record).getCauseOtherDeathClassification());
-        Assert.assertEquals("0", CauseSpecificUtils.computeCauseSpecific(record, 2012).getCauseSpecificDeathClassification());
-        Assert.assertEquals("0", CauseSpecificUtils.computeCauseSpecific(record, 2012).getCauseOtherDeathClassification());
-
         CauseSpecificInputDto input = new CauseSpecificInputDto();
         input.setSequenceNumberCentral("01");
         input.setIcdRevisionNumber("8");
@@ -67,22 +33,25 @@ public class CauseSpecificUtilsTest {
     }
 
     @Test
+    @SuppressWarnings("ConstantConditions")
     public void testCsvFile() throws IOException {
         int count = 0;
-        try (CSVReader reader = new CSVReaderBuilder(
-                new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("causespecific/testCauseSpecific.csv"), StandardCharsets.US_ASCII)).withSkipLines(1).build()) {
+        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("causespecific/testCauseSpecific.csv");
+             CSVReader reader = new CSVReaderBuilder(new InputStreamReader(is, StandardCharsets.US_ASCII)).withSkipLines(1).build()) {
             for (String[] row : reader.readAll()) {
-                Map<String, String> rec = new HashMap<>();
-                rec.put(CauseSpecificUtils.PROP_SEQ_NUM_CENTRAL, row[0]);
-                rec.put(CauseSpecificUtils.PROP_ICD_REVISION_NUM, row[1]);
-                rec.put(CauseSpecificUtils.PROP_COD, row[2]);
-                rec.put(CauseSpecificUtils.PROP_PRIMARY_SITE, row[3]);
-                rec.put(CauseSpecificUtils.PROP_HISTOLOGY_ICDO3, row[4]);
-                rec.put(CauseSpecificUtils.PROP_DOLC_YEAR, row[5]);
+                CauseSpecificInputDto input = new CauseSpecificInputDto();
+                input.setSequenceNumberCentral(row[0]);
+                input.setIcdRevisionNumber(row[1]);
+                input.setCauseOfDeath(row[2]);
+                input.setPrimarySite(row[3]);
+                input.setHistologyIcdO3(row[4]);
+                input.setDateOfLastContactYear(row[5]);
+
                 String causeSpecificExpected = row[7];
                 String causeOtherExpected = row[8];
-                String causeSpecificCalculated = CauseSpecificUtils.computeCauseSpecific(rec).getCauseSpecificDeathClassification();
-                String causeOtherCalculated = CauseSpecificUtils.computeCauseSpecific(rec).getCauseOtherDeathClassification();
+
+                String causeSpecificCalculated = CauseSpecificUtils.computeCauseSpecific(input).getCauseSpecificDeathClassification();
+                String causeOtherCalculated = CauseSpecificUtils.computeCauseSpecific(input).getCauseOtherDeathClassification();
                 count++;
                 if (!causeSpecificExpected.equals(causeSpecificCalculated) || !causeOtherExpected.equals(causeOtherCalculated)) {
                     //System.out.println(SeerSiteRecodeUtils.calculateSiteRecode(row[3], row[4]));
