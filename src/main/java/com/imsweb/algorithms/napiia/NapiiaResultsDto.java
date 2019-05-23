@@ -16,7 +16,7 @@ public class NapiiaResultsDto {
     private String _reasonForReview;
 
     public NapiiaResultsDto() {
-        _napiiaValue = "";
+        _napiiaValue = null;
         _needsHumanReview = Boolean.FALSE;
         _reasonForReview = null;
     }

@@ -192,12 +192,10 @@ Properties of a NAACCR XML item:
 
 Unknown values (I think null/empty string should always considered as not calculated):
 NHIA:
-    sets to 0 (non-hispanic) by default -> no unknown?
+    no unknown
 NAPIIA:
-    sets the main field (nappia) to a blank string (I think it's wrong and should be null, but whatever) -> no unknown?
+    no unknown
 Cause of Death Classification: not sure, maybe the value "8"?
-    public static final String ALIVE_OR_DEAD_OF_OTHER_CAUSES = "0";
-    public static final String DEAD = "1";
     public static final String MISSING_UNKNOWN_DEATH_OF_CODE = "8";
     public static final String NA_NOT_FIRST_TUMOR = "9";
 Census tract poverty:
@@ -212,11 +210,11 @@ RUCA:
 Continuum:
     public static final String RURAL_URBAN_CONTINUUM_UNKNOWN = "98";
 SEER Site Recode (all 3 algorithms):
-    99999 (I should add a constant for this)
+    public static final String UNKNOWN_RECODE = "99999";
 SEER Behavior recode:
     public static final String UNKNOWN = "9";
 ICCC (all 4 algorithms):
-    999 (I should add a constant for this)
+    public static final String ICCC_UNKNOWN_RECODE = "999";
 
 
 Clean up using old layout properties in input maps:
