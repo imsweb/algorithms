@@ -118,9 +118,7 @@ public class AlgorithmsTest {
         tumMap.put(Algorithms.FIELD_CENSUS_2010, "020200");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
         Assert.assertEquals("1", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_URIC_2000));
-        Assert.assertEquals("100.0", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_URIC_2000_PERCENTAGE));
         Assert.assertEquals("1", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_URIC_2010));
-        Assert.assertEquals("100.0", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_URIC_2010_PERCENTAGE));
 
         // RUCA
         alg = Algorithms.getAlgorithm(Algorithms.ALG_RUCA);
