@@ -139,8 +139,6 @@ public class Algorithms {
     // non-standard fields
     public static final String FIELD_NAPIIA_NEEDS_REVIEW = "napiiaNeedsHumanReview";
     public static final String FIELD_NAPIIA_REVIEW_REASON = "napiiaReasonForReview";
-    public static final String FIELD_URIC_2000_PERCENTAGE = "uric2000Percentage";
-    public static final String FIELD_URIC_2010_PERCENTAGE = "uric2010Percentage";
     public static final String FIELD_SEER_SITE_RECODE = "seerSiteRecode";
     public static final String FIELD_SEER_BEHAV_RECODE = "seerBehaviorRecode";
     public static final String FIELD_ICCC = "iccc";
@@ -212,8 +210,6 @@ public class Algorithms {
         // non-standard fields
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_NAPIIA_NEEDS_REVIEW, null, 1));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_NAPIIA_REVIEW_REASON, null, 256));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_URIC_2000_PERCENTAGE, null, 10));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_URIC_2010_PERCENTAGE, null, 10));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SEER_SITE_RECODE, null, 5));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SEER_BEHAV_RECODE, null, 1));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_ICCC, null, 3));
@@ -822,9 +818,7 @@ public class Algorithms {
             public List<AlgorithmField> getOutputFields() {
                 List<AlgorithmField> fields = new ArrayList<>();
                 fields.add(_CACHED_FIELDS.get(FIELD_URIC_2000));
-                fields.add(_CACHED_FIELDS.get(FIELD_URIC_2000_PERCENTAGE));
                 fields.add(_CACHED_FIELDS.get(FIELD_URIC_2010));
-                fields.add(_CACHED_FIELDS.get(FIELD_URIC_2010_PERCENTAGE));
                 return fields;
             }
 
@@ -854,9 +848,7 @@ public class Algorithms {
 
                     Map<String, Object> outputTumor = new HashMap<>();
                     outputTumor.put(FIELD_URIC_2000, outputDto.getUrbanRuralIndicatorCode2000());
-                    outputTumor.put(FIELD_URIC_2000_PERCENTAGE, String.valueOf(outputDto.getUrbanRuralIndicatorCode2000Percentage()));
                     outputTumor.put(FIELD_URIC_2010, outputDto.getUrbanRuralIndicatorCode2010());
-                    outputTumor.put(FIELD_URIC_2010_PERCENTAGE, String.valueOf(outputDto.getUrbanRuralIndicatorCode2010Percentage()));
 
                     outputTumors.add(outputTumor);
                 }
