@@ -44,8 +44,6 @@ import com.imsweb.algorithms.survival.SurvivalTimeOutputPatientDto;
 import com.imsweb.algorithms.survival.SurvivalTimeOutputRecordDto;
 import com.imsweb.algorithms.survival.SurvivalTimeUtils;
 
-import static com.imsweb.algorithms.iccc.IcccRecodeUtils.VERSION_THIRD_EDITION;
-import static com.imsweb.algorithms.iccc.IcccRecodeUtils.VERSION_THIRD_EDITION_INFO;
 import static com.imsweb.algorithms.iccc.IcccRecodeUtils.VERSION_WHO_2008;
 import static com.imsweb.algorithms.iccc.IcccRecodeUtils.VERSION_WHO_2008_INFO;
 import static com.imsweb.algorithms.nhia.NhiaUtils.NHIA_OPTION_ALL_CASES;
@@ -65,10 +63,6 @@ import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.URIC_VAL_UNK_A;
 import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.URIC_VAL_UNK_B;
 import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.URIC_VAL_UNK_C;
 import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.URIC_VAL_UNK_D;
-import static com.imsweb.algorithms.seersiterecode.SeerSiteRecodeUtils.VERSION_2003;
-import static com.imsweb.algorithms.seersiterecode.SeerSiteRecodeUtils.VERSION_2003_INFO;
-import static com.imsweb.algorithms.seersiterecode.SeerSiteRecodeUtils.VERSION_2003_WITHOUT_KSM;
-import static com.imsweb.algorithms.seersiterecode.SeerSiteRecodeUtils.VERSION_2003_WITHOUT_KSM_INFO;
 import static com.imsweb.algorithms.seersiterecode.SeerSiteRecodeUtils.VERSION_2010;
 import static com.imsweb.algorithms.seersiterecode.SeerSiteRecodeUtils.VERSION_2010_INFO;
 
@@ -83,14 +77,9 @@ public class Algorithms {
     public static final String ALG_RUCA = "ruca";
     public static final String ALG_URBAN_CONTINUUM = "urban-continuum";
     public static final String ALG_SURVIVAL_TIME = "survival-time";
-    public static final String ALG_SEER_SITE_RECODE_2010 = "seer-site-recode-2010";
-    public static final String ALG_SEER_SITE_RECODE_2003 = "seer-site-recode-2003";
-    public static final String ALG_SEER_SITE_RECODE_2003_KSM = "seer-site-recode-2003-ksm";
+    public static final String ALG_SEER_SITE_RECODE = "seer-site-recode";
     public static final String ALG_SEER_BEHAVIOR_RECODE = "seer-behavior-recode";
-    public static final String ALG_ICCC_3RD_EDITION = "iccc-3rd-edition";
-    public static final String ALG_ICCC_3RD_EDITION_EXTENDED = "iccc-3rd-edition-extended";
-    public static final String ALG_ICCC_WHO_2008 = "iccc-who-2008";
-    public static final String ALG_ICCC_WHO_2008_EXTENDED = "iccc-who-2008-extended";
+    public static final String ALG_ICCC = "iccc";
     public static final String ALG_IARC = "iarc";
 
     // special properties
@@ -252,14 +241,9 @@ public class Algorithms {
             addAlgorithm(_CACHED_ALGORITHMS, createUric());
             addAlgorithm(_CACHED_ALGORITHMS, createRuca());
             addAlgorithm(_CACHED_ALGORITHMS, createUrbanContinuum());
-            addAlgorithm(_CACHED_ALGORITHMS, createSeerSiteRecode(ALG_SEER_SITE_RECODE_2010, VERSION_2010, VERSION_2010_INFO));
-            addAlgorithm(_CACHED_ALGORITHMS, createSeerSiteRecode(ALG_SEER_SITE_RECODE_2003, VERSION_2003, VERSION_2003_INFO));
-            addAlgorithm(_CACHED_ALGORITHMS, createSeerSiteRecode(ALG_SEER_SITE_RECODE_2003_KSM, VERSION_2003_WITHOUT_KSM, VERSION_2003_WITHOUT_KSM_INFO));
+            addAlgorithm(_CACHED_ALGORITHMS, createSeerSiteRecode());
             addAlgorithm(_CACHED_ALGORITHMS, createSeerBehaviorRecode());
-            addAlgorithm(_CACHED_ALGORITHMS, createIccc(ALG_ICCC_3RD_EDITION, VERSION_THIRD_EDITION, VERSION_THIRD_EDITION_INFO, false));
-            addAlgorithm(_CACHED_ALGORITHMS, createIccc(ALG_ICCC_3RD_EDITION_EXTENDED, VERSION_THIRD_EDITION, VERSION_THIRD_EDITION_INFO, true));
-            addAlgorithm(_CACHED_ALGORITHMS, createIccc(ALG_ICCC_WHO_2008, VERSION_WHO_2008, VERSION_WHO_2008_INFO, false));
-            addAlgorithm(_CACHED_ALGORITHMS, createIccc(ALG_ICCC_WHO_2008_EXTENDED, VERSION_WHO_2008, VERSION_WHO_2008_INFO, true));
+            addAlgorithm(_CACHED_ALGORITHMS, createIccc());
             addAlgorithm(_CACHED_ALGORITHMS, createIarc());
         }
         finally {
@@ -1048,27 +1032,27 @@ public class Algorithms {
         };
     }
 
-    private static Algorithm createSeerSiteRecode(String id, String version, String info) {
+    private static Algorithm createSeerSiteRecode() {
         return new Algorithm() {
 
             @Override
             public String getId() {
-                return id;
+                return ALG_SEER_SITE_RECODE;
             }
 
             @Override
             public String getName() {
-                return SeerSiteRecodeUtils.ALG_NAME + " " + version;
+                return SeerSiteRecodeUtils.ALG_NAME + " " + VERSION_2010;
             }
 
             @Override
             public String getVersion() {
-                return version;
+                return VERSION_2010;
             }
 
             @Override
             public String getInfo() {
-                return info;
+                return VERSION_2010_INFO;
             }
 
             @Override
@@ -1186,27 +1170,27 @@ public class Algorithms {
         };
     }
 
-    private static Algorithm createIccc(String id, String version, String info, boolean extended) {
+    private static Algorithm createIccc() {
         return new Algorithm() {
 
             @Override
             public String getId() {
-                return id;
+                return ALG_ICCC;
             }
 
             @Override
             public String getName() {
-                return IcccRecodeUtils.ALG_NAME + " " + version + (extended ? " (Extended)" : "");
+                return IcccRecodeUtils.ALG_NAME + " " + VERSION_WHO_2008;
             }
 
             @Override
             public String getVersion() {
-                return version;
+                return VERSION_WHO_2008;
             }
 
             @Override
             public String getInfo() {
-                return info + " " + (extended ? " (Extended)" : "");
+                return VERSION_WHO_2008_INFO;
             }
 
             @Override
@@ -1246,7 +1230,7 @@ public class Algorithms {
                     String site = (String)inputTumor.get(FIELD_PRIMARY_SITE);
                     String hist = (String)inputTumor.get(FIELD_HIST_O3);
                     String beh = (String)inputTumor.get(FIELD_BEHAV_O3);
-                    outputTumors.add(Collections.singletonMap(FIELD_ICCC, IcccRecodeUtils.calculateSiteRecode(getVersion(), site, hist, beh, extended)));
+                    outputTumors.add(Collections.singletonMap(FIELD_ICCC, IcccRecodeUtils.calculateSiteRecode(getVersion(), site, hist, beh, false)));
                 }
 
                 return AlgorithmOutput.of(outputPatient);

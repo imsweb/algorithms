@@ -153,34 +153,8 @@ public class AlgorithmsTest {
         Assert.assertEquals("02", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_RURAL_CONT_2003));
         Assert.assertEquals("02", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_RURAL_CONT_2013));
 
-        // SEER Site Recode 2010
-        alg = Algorithms.getAlgorithm(Algorithms.ALG_SEER_SITE_RECODE_2010);
-        Assert.assertTrue(alg.getParameters().isEmpty());
-        Assert.assertFalse(alg.getUnknownValues().isEmpty());
-        input = new AlgorithmInput();
-        patMap = new HashMap<>();
-        input.setPatient(patMap);
-        tumMap = new HashMap<>();
-        tumMap.put(Algorithms.FIELD_PRIMARY_SITE, "C340");
-        tumMap.put(Algorithms.FIELD_HIST_O3, "8000");
-        patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
-        Assert.assertEquals("22030", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_SEER_SITE_RECODE));
-
-        // SEER Site Recode 2003
-        alg = Algorithms.getAlgorithm(Algorithms.ALG_SEER_SITE_RECODE_2003);
-        Assert.assertTrue(alg.getParameters().isEmpty());
-        Assert.assertFalse(alg.getUnknownValues().isEmpty());
-        input = new AlgorithmInput();
-        patMap = new HashMap<>();
-        input.setPatient(patMap);
-        tumMap = new HashMap<>();
-        tumMap.put(Algorithms.FIELD_PRIMARY_SITE, "C340");
-        tumMap.put(Algorithms.FIELD_HIST_O3, "8000");
-        patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
-        Assert.assertEquals("22030", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_SEER_SITE_RECODE));
-
-        // SEER Site Recode 2003 KSM
-        alg = Algorithms.getAlgorithm(Algorithms.ALG_SEER_SITE_RECODE_2003_KSM);
+        // SEER Site Recode
+        alg = Algorithms.getAlgorithm(Algorithms.ALG_SEER_SITE_RECODE);
         Assert.assertTrue(alg.getParameters().isEmpty());
         Assert.assertFalse(alg.getUnknownValues().isEmpty());
         input = new AlgorithmInput();
@@ -207,36 +181,8 @@ public class AlgorithmsTest {
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
         Assert.assertEquals("3", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_SEER_BEHAV_RECODE));
 
-        // ICCC 3rd edition
-        alg = Algorithms.getAlgorithm(Algorithms.ALG_ICCC_3RD_EDITION);
-        Assert.assertTrue(alg.getParameters().isEmpty());
-        Assert.assertFalse(alg.getUnknownValues().isEmpty());
-        input = new AlgorithmInput();
-        patMap = new HashMap<>();
-        input.setPatient(patMap);
-        tumMap = new HashMap<>();
-        tumMap.put(Algorithms.FIELD_PRIMARY_SITE, "C182");
-        tumMap.put(Algorithms.FIELD_HIST_O3, "8000");
-        tumMap.put(Algorithms.FIELD_BEHAV_O3, "3");
-        patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
-        Assert.assertEquals("114", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_ICCC));
-
-        // ICCC 3rd edition extended
-        alg = Algorithms.getAlgorithm(Algorithms.ALG_ICCC_3RD_EDITION_EXTENDED);
-        Assert.assertTrue(alg.getParameters().isEmpty());
-        Assert.assertFalse(alg.getUnknownValues().isEmpty());
-        input = new AlgorithmInput();
-        patMap = new HashMap<>();
-        input.setPatient(patMap);
-        tumMap = new HashMap<>();
-        tumMap.put(Algorithms.FIELD_PRIMARY_SITE, "C182");
-        tumMap.put(Algorithms.FIELD_HIST_O3, "8000");
-        tumMap.put(Algorithms.FIELD_BEHAV_O3, "3");
-        patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
-        Assert.assertEquals("999", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_ICCC));
-
-        // ICCC who 2008
-        alg = Algorithms.getAlgorithm(Algorithms.ALG_ICCC_WHO_2008);
+        // ICCC
+        alg = Algorithms.getAlgorithm(Algorithms.ALG_ICCC);
         Assert.assertTrue(alg.getParameters().isEmpty());
         Assert.assertFalse(alg.getUnknownValues().isEmpty());
         input = new AlgorithmInput();
@@ -248,20 +194,6 @@ public class AlgorithmsTest {
         tumMap.put(Algorithms.FIELD_BEHAV_O3, "3");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
         Assert.assertEquals("122", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_ICCC));
-
-        // ICCC who 2008 extended
-        alg = Algorithms.getAlgorithm(Algorithms.ALG_ICCC_WHO_2008_EXTENDED);
-        Assert.assertTrue(alg.getParameters().isEmpty());
-        Assert.assertFalse(alg.getUnknownValues().isEmpty());
-        input = new AlgorithmInput();
-        patMap = new HashMap<>();
-        input.setPatient(patMap);
-        tumMap = new HashMap<>();
-        tumMap.put(Algorithms.FIELD_PRIMARY_SITE, "C182");
-        tumMap.put(Algorithms.FIELD_HIST_O3, "8000");
-        tumMap.put(Algorithms.FIELD_BEHAV_O3, "3");
-        patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
-        Assert.assertEquals("114", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_ICCC));
 
         // IARC
         alg = Algorithms.getAlgorithm(Algorithms.ALG_IARC);
