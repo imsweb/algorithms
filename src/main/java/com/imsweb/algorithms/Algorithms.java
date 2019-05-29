@@ -80,7 +80,7 @@ public class Algorithms {
     public static final String ALG_SEER_SITE_RECODE = "seer-site-recode";
     public static final String ALG_SEER_BEHAVIOR_RECODE = "seer-behavior-recode";
     public static final String ALG_ICCC = "iccc";
-    public static final String ALG_IARC = "iarc";
+    public static final String ALG_IARC = "iarc-multiple-primary";
 
     // special properties
     public static final String FIELD_TUMORS = "tumors";
@@ -142,9 +142,10 @@ public class Algorithms {
     public static final String FIELD_SEER_SITE_RECODE = "seerSiteRecode";
     public static final String FIELD_SEER_BEHAV_RECODE = "seerBehaviorRecode";
     public static final String FIELD_ICCC = "iccc";
-    public static final String FIELD_IARC = "iarc";
-    public static final String FIELD_IARC_SITE_GROUP = "iarcSiteGroup";
-    public static final String FIELD_IARC_HIST_GROUP = "iarcHistGroup";
+    public static final String FIELD_IARC_MP_INDICATOR = "iarcMpIndicator";
+    public static final String FIELD_IARC_MP_SITE_GROUP = "iarcMpSiteGroup";
+    public static final String FIELD_IARC_MP_HIST_GROUP = "iarcMpHistGroup";
+    public static final String FIELD_IARC_MP_HISTOLOGY = "iarcMpHistologicTypeIcdO3";
 
     // options
     public static final String PARAM_NHIA_OPTION = "nhiaOption";
@@ -213,9 +214,10 @@ public class Algorithms {
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SEER_SITE_RECODE, null, 5));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SEER_BEHAV_RECODE, null, 1));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_ICCC, null, 3));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_IARC, null, 1));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_IARC_SITE_GROUP, null, 4));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_IARC_HIST_GROUP, null, 4));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_IARC_MP_INDICATOR, null, 1));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_IARC_MP_SITE_GROUP, null, 4));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_IARC_MP_HIST_GROUP, null, 2));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_IARC_MP_HISTOLOGY, null, 4));
     }
 
     private static void addField(Map<String, AlgorithmField> cache, AlgorithmField field) {
@@ -1273,9 +1275,10 @@ public class Algorithms {
             @Override
             public List<AlgorithmField> getOutputFields() {
                 List<AlgorithmField> fields = new ArrayList<>();
-                fields.add(_CACHED_FIELDS.get(FIELD_IARC));
-                fields.add(_CACHED_FIELDS.get(FIELD_IARC_SITE_GROUP));
-                fields.add(_CACHED_FIELDS.get(FIELD_IARC_HIST_GROUP));
+                fields.add(_CACHED_FIELDS.get(FIELD_IARC_MP_INDICATOR));
+                fields.add(_CACHED_FIELDS.get(FIELD_IARC_MP_SITE_GROUP));
+                fields.add(_CACHED_FIELDS.get(FIELD_IARC_MP_HIST_GROUP));
+                fields.add(_CACHED_FIELDS.get(FIELD_IARC_MP_HISTOLOGY));
                 return fields;
             }
 
@@ -1306,9 +1309,10 @@ public class Algorithms {
                 for (IarcMpInputRecordDto dto : inputRecordDtoList) {
                     Map<String, Object> outputTumor = new HashMap<>();
 
-                    outputTumor.put(FIELD_IARC, Objects.toString(dto.getInternationalPrimaryIndicator(), null));
-                    outputTumor.put(FIELD_IARC_SITE_GROUP, dto.getSiteGroup());
-                    outputTumor.put(FIELD_IARC_HIST_GROUP, dto.getHistGroup());
+                    outputTumor.put(FIELD_IARC_MP_INDICATOR, Objects.toString(dto.getInternationalPrimaryIndicator(), null));
+                    outputTumor.put(FIELD_IARC_MP_SITE_GROUP, dto.getSiteGroup());
+                    outputTumor.put(FIELD_IARC_MP_HIST_GROUP, Objects.toString(dto.getHistGroup(), null));
+                    outputTumor.put(FIELD_IARC_MP_HISTOLOGY, dto.getHistology()); // this is weird, but the algorithm can actually update the histology as a side effect!
 
                     outputTumors.add(outputTumor);
                 }
