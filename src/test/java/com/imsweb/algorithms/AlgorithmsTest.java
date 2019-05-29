@@ -207,7 +207,7 @@ public class AlgorithmsTest {
         tumMap.put(Algorithms.FIELD_DX_DATE, "20170101");
         tumMap.put(Algorithms.FIELD_SEQ_NUM_CTRL, "01");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
-        Assert.assertEquals("9", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_IARC));
+        Assert.assertEquals("9", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_IARC_MP_INDICATOR));
     }
 
     @Test
