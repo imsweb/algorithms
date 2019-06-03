@@ -53,15 +53,9 @@ import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.CONTINUUM_UNK_96;
 import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.CONTINUUM_UNK_97;
 import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.CONTINUUM_UNK_98;
 import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.CONTINUUM_UNK_99;
-import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.RUCA_VAL_UNK;
 import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.RUCA_VAL_UNK_A;
-import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.RUCA_VAL_UNK_B;
-import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.RUCA_VAL_UNK_C;
 import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.RUCA_VAL_UNK_D;
-import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.URIC_VAL_UNK;
 import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.URIC_VAL_UNK_A;
-import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.URIC_VAL_UNK_B;
-import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.URIC_VAL_UNK_C;
 import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.URIC_VAL_UNK_D;
 import static com.imsweb.algorithms.seersiterecode.SeerSiteRecodeUtils.VERSION_2010;
 import static com.imsweb.algorithms.seersiterecode.SeerSiteRecodeUtils.VERSION_2010_INFO;
@@ -827,8 +821,8 @@ public class Algorithms {
             @Override
             public Map<String, List<String>> getUnknownValues() {
                 Map<String, List<String>> result = new HashMap<>();
-                result.put(FIELD_URIC_2000, Arrays.asList(URIC_VAL_UNK, URIC_VAL_UNK_A, URIC_VAL_UNK_B, URIC_VAL_UNK_C, URIC_VAL_UNK_D));
-                result.put(FIELD_URIC_2010, Arrays.asList(URIC_VAL_UNK, URIC_VAL_UNK_A, URIC_VAL_UNK_B, URIC_VAL_UNK_C, URIC_VAL_UNK_D));
+                result.put(FIELD_URIC_2000, Arrays.asList(URIC_VAL_UNK_A, URIC_VAL_UNK_D));
+                result.put(FIELD_URIC_2010, Arrays.asList(URIC_VAL_UNK_A, URIC_VAL_UNK_D));
                 return result;
             }
 
@@ -910,8 +904,8 @@ public class Algorithms {
             @Override
             public Map<String, List<String>> getUnknownValues() {
                 Map<String, List<String>> result = new HashMap<>();
-                result.put(FIELD_RUCA_2000, Arrays.asList(RUCA_VAL_UNK, RUCA_VAL_UNK_A, RUCA_VAL_UNK_B, RUCA_VAL_UNK_C, RUCA_VAL_UNK_D));
-                result.put(FIELD_RUCA_2010, Arrays.asList(RUCA_VAL_UNK, RUCA_VAL_UNK_A, RUCA_VAL_UNK_B, RUCA_VAL_UNK_C, RUCA_VAL_UNK_D));
+                result.put(FIELD_RUCA_2000, Arrays.asList(RUCA_VAL_UNK_A, RUCA_VAL_UNK_D));
+                result.put(FIELD_RUCA_2010, Arrays.asList(RUCA_VAL_UNK_A, RUCA_VAL_UNK_D));
                 return result;
             }
 

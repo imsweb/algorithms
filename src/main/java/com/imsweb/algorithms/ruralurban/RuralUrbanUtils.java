@@ -31,15 +31,9 @@ public final class RuralUrbanUtils {
 
     // other unknown values (there is overlap with the previous block of code, but I don't want to remove those other constants)
     // I know it's not great ot use the code in the constant name, but I just don't know how to abbreviate what they all mean!
-    public static final String URIC_VAL_UNK = "9";
     public static final String URIC_VAL_UNK_A = "A";
-    public static final String URIC_VAL_UNK_B = "B";
-    public static final String URIC_VAL_UNK_C = "C";
     public static final String URIC_VAL_UNK_D = "D";
-    public static final String RUCA_VAL_UNK = "9";
     public static final String RUCA_VAL_UNK_A = "A";
-    public static final String RUCA_VAL_UNK_B = "B";
-    public static final String RUCA_VAL_UNK_C = "C";
     public static final String RUCA_VAL_UNK_D = "D";
     public static final String CONTINUUM_UNK_96 = "96";
     public static final String CONTINUUM_UNK_97 = "97";
