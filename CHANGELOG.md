@@ -2,6 +2,7 @@
 
 **Changes in version 1.22 (not released yet)**
 
+- Changed Survival Time Algorithm to calculate record number recode for all records even if the record is considered invalid.
 - Changed internal initialization of NHIA and NAPIIA algorithms to make them thread-safe.
 - Changed default value of NAPIIA from an empty string to null.
 - Added missing code SVK (for Slovakia) to the non-hispanic list based on birth place for NHIA.

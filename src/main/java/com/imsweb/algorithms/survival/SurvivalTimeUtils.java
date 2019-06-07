@@ -136,7 +136,9 @@ public class SurvivalTimeUtils {
                 boolean sameDay = dolcDayStr == null ? record.getDateOfLastContactDay() == null : dolcDayStr.equals(record.getDateOfLastContactDay());
                 boolean sameVs = vsStr == null ? record.getVitalStatus() == null : vsStr.equals(record.getVitalStatus());
                 if (!sameYear || !sameMonth || !sameDay || !sameVs) {
-                    for (int sortedIdx = 1; sortedIdx <= allRecords.size(); sortedIdx++) { // output sort index should be 1-based
+                    //We need to sort the records to calculated the sorted index
+                    List<InternalRecDto> tempInternalRecords = new ArrayList<>();
+                    for (SurvivalTimeInputRecordDto orgRecord : allRecords) {
                         SurvivalTimeOutputRecordDto recordResult = new SurvivalTimeOutputRecordDto();
                         recordResult.setSurvivalTimeDxYear(BLANK_YEAR);
                         recordResult.setSurvivalTimeDxMonth(BLANK_MONTH);
@@ -151,9 +153,13 @@ public class SurvivalTimeUtils {
                         recordResult.setSurvivalMonthsFlag(SURVIVAL_FLAG_UNKNOWN);
                         recordResult.setSurvivalMonthsPresumedAlive(UNKNOWN_SURVIVAL);
                         recordResult.setSurvivalMonthsFlagPresumedAlive(SURVIVAL_FLAG_UNKNOWN);
-                        recordResult.setSortedIndex(sortedIdx);
                         patientResultsList.add(recordResult);
+                        tempInternalRecords.add(new InternalRecDto(orgRecord, recordResult));
                     }
+                    //Let's sort the temp records list and assign back the sorted index to the output
+                    Collections.sort(tempInternalRecords);
+                    for (int sortedIdx = 1; sortedIdx <= tempInternalRecords.size(); sortedIdx++) // output sort index should be 1-based
+                        tempInternalRecords.get(sortedIdx - 1)._recordResult.setSortedIndex(sortedIdx);
                     patientResultsDto.setSurvivalTimeOutputPatientDtoList(patientResultsList);
                     if (!sameVs)
                         patientResultsDto.setVitalStatusRecode(null);
@@ -194,7 +200,8 @@ public class SurvivalTimeUtils {
             int birthDay = NumberUtils.isDigits(birthDayStr) ? Integer.parseInt(birthDayStr) : 99;
 
             // we are going to use DTO objects to make it easier, let's also use a different list so we don't change the order of the original records
-            List<InternalRecDto> tempRecords = new ArrayList<>();
+            List<InternalRecDto> validTempRecords = new ArrayList<>();
+            List<InternalRecDto> allTempRecords = new ArrayList<>();
             for (SurvivalTimeInputRecordDto orgRecord : allRecords) {
                 SurvivalTimeOutputRecordDto recordResult = new SurvivalTimeOutputRecordDto();
                 recordResult.setSurvivalTimeDxYear(orgRecord.getDateOfDiagnosisYear());
@@ -208,6 +215,7 @@ public class SurvivalTimeUtils {
                 recordResult.setSurvivalTimeDolcDayPresumedAlive(orgRecord.getDateOfLastContactDay());
                 patientResultsList.add(recordResult);
                 InternalRecDto tempRec = new InternalRecDto(orgRecord, recordResult);
+                allTempRecords.add(tempRec);
 
                 // check validity of the date
                 boolean valid = tempRec._year != 9999 && tempRec._year >= 1900 && tempRec._year <= endPointYear;
@@ -233,22 +241,22 @@ public class SurvivalTimeUtils {
                     recordResult.setSurvivalTimeDxDay(BLANK_DAY);
                 }
                 else
-                    tempRecords.add(tempRec);
+                    validTempRecords.add(tempRec);
             }
 
             // STEP 1 - sort the records by DX date (and/or sequence number)
             //    the sequence numbers might be used to determine the order; there are two families of sequences: federal (00-59, 98, 99) and non-federal (60-97);
             //    sine the non-federal need to always be after the federal, let's add 100 to all the non-federal (making them 160-197)
-            for (InternalRecDto rec : tempRecords)
+            for (InternalRecDto rec : validTempRecords)
                 if (rec._seqNum >= 60 && rec._seqNum <= 97)
                     rec._seqNum = rec._seqNum + 100;
-            Collections.sort(tempRecords);
+            Collections.sort(validTempRecords);
 
             // calculate the variables without presuming ALIVE (this one cannot handle an unknown DOLC)
             if (dolcYear != 9999)
-                calculateSurvivalTime(tempRecords, patientResultsList, dolcYear, dolcMonth, dolcDay, birthYear, birthMonth, birthDay, vs, endPointYear, 12, 31, false);
+                calculateSurvivalTime(validTempRecords, patientResultsList, dolcYear, dolcMonth, dolcDay, birthYear, birthMonth, birthDay, vs, endPointYear, 12, 31, false);
             else {
-                for (InternalRecDto rec : tempRecords) {
+                for (InternalRecDto rec : validTempRecords) {
                     rec._recordResult.setSurvivalMonths(UNKNOWN_SURVIVAL);
                     rec._recordResult.setSurvivalMonthsFlag(SURVIVAL_FLAG_UNKNOWN);
                     rec._recordResult.setSurvivalTimeDolcYear(BLANK_YEAR);
@@ -258,7 +266,7 @@ public class SurvivalTimeUtils {
             }
 
             // reset the computed dates
-            for (InternalRecDto rec : tempRecords) {
+            for (InternalRecDto rec : validTempRecords) {
                 rec._yearSafe = rec._year;
                 rec._monthSafe = rec._month;
                 rec._daySafe = rec._day;
@@ -266,9 +274,9 @@ public class SurvivalTimeUtils {
 
             // calculate the variables presuming ALIVE (this one can handle the unknown DOLC only if vital status is ALIVE)
             if (dolcYear != 9999 || vs == 1)
-                calculateSurvivalTime(tempRecords, patientResultsList, dolcYear, dolcMonth, dolcDay, birthYear, birthMonth, birthDay, vs, endPointYear, 12, 31, true);
+                calculateSurvivalTime(validTempRecords, patientResultsList, dolcYear, dolcMonth, dolcDay, birthYear, birthMonth, birthDay, vs, endPointYear, 12, 31, true);
             else {
-                for (InternalRecDto rec : tempRecords) {
+                for (InternalRecDto rec : validTempRecords) {
                     rec._recordResult.setSurvivalMonthsPresumedAlive(UNKNOWN_SURVIVAL);
                     rec._recordResult.setSurvivalMonthsFlagPresumedAlive(SURVIVAL_FLAG_UNKNOWN);
                     rec._recordResult.setSurvivalTimeDolcYearPresumedAlive(BLANK_YEAR);
@@ -278,7 +286,7 @@ public class SurvivalTimeUtils {
             }
 
             //Set the flags for DCO/Autopsy only cases (type of reporting source 6 and 7) to 8 and set the survival months fields to missing. (#192)
-            for (InternalRecDto rec : tempRecords) {
+            for (InternalRecDto rec : validTempRecords) {
                 if ("6".equals(rec._originalRecord.getTypeOfReportingSource()) || "7".equals(rec._originalRecord.getTypeOfReportingSource())) {
                     rec._recordResult.setSurvivalMonths(UNKNOWN_SURVIVAL);
                     rec._recordResult.setSurvivalMonthsFlag(SURVIVAL_FLAG_DCO_AUTOPSY_ONLY);
@@ -287,13 +295,11 @@ public class SurvivalTimeUtils {
                 }
             }
 
-            // assign the sorted index on every output record: based on sorted tmp records for valid ones, based on input order for invalid ones
-            int sortedIdx;
-            for (sortedIdx = 1; sortedIdx <= tempRecords.size(); sortedIdx++) // output sort index should be 1-based
-                tempRecords.get(sortedIdx - 1)._recordResult.setSortedIndex(sortedIdx);
-            for (SurvivalTimeOutputRecordDto outputRec : patientResultsList)
-                if (outputRec.getSortedIndex() == null)
-                    outputRec.setSortedIndex(sortedIdx++);
+            // assign the sorted index on every output record: based on sorted tmp records
+            Collections.sort(allTempRecords);
+            for (int sortedIdx = 1; sortedIdx <= allTempRecords.size(); sortedIdx++) // output sort index should be 1-based
+                allTempRecords.get(sortedIdx - 1)._recordResult.setSortedIndex(sortedIdx);
+
         }
         catch (DateTimeException e) {
             // final safety net, if anything goes wrong, just assign 9's
