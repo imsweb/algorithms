@@ -60,6 +60,15 @@ import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.URIC_VAL_UNK_D;
 import static com.imsweb.algorithms.seersiterecode.SeerSiteRecodeUtils.VERSION_2010;
 import static com.imsweb.algorithms.seersiterecode.SeerSiteRecodeUtils.VERSION_2010_INFO;
 
+/**
+ * Instructions for adding a new algorithm:
+ *  - add the constant for the algorithm ID (make sure to follow the naming convention, they all start with ALG_).
+ *  - add constants for any field that doesn't have a constant yet (there are two lists, standard fields, and non-standard fields).
+ *  - add the new fields (standard and non-standard) to the static fields cache (see _CACHED_FIELDS).
+ *  - if the new algorithm needs it, add constants for its options
+ *  - add a static method at the end of the class "createXxx" that returns an Algorithm, see how all the other ones are done.
+ *  - register the new algorithm (see initialize() method).
+ */
 public class Algorithms {
 
     // algorithm IDs

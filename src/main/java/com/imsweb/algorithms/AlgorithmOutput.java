@@ -5,6 +5,9 @@ package com.imsweb.algorithms;
 
 import java.util.Map;
 
+/**
+ * Abstraction of the "output" that an algorithm produces when executed.
+ */
 public class AlgorithmOutput {
 
     public static AlgorithmOutput of(Map<String, Object> patient) {

@@ -5,6 +5,9 @@ package com.imsweb.algorithms;
 
 import java.util.List;
 
+/**
+ * Abstraction of a "parameter" that an algorithm needs to be executed.
+ */
 public class AlgorithmParam<T> {
 
     public static <C> AlgorithmParam<C> of(String id, String name, Class<C> type) {
@@ -24,9 +27,16 @@ public class AlgorithmParam<T> {
         return param;
     }
 
+    // parameter ID
     private String _id;
+
+    // parameter name
     private String _name;
+
+    // parameter type
     private Class<T> _type;
+
+    // allowed values for this parameter (leave null for allowing any values)
     private List<T> _allowedValues;
 
     public String getId() {

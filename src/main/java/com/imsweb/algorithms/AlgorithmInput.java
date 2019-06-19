@@ -5,10 +5,15 @@ package com.imsweb.algorithms;
 
 import java.util.Map;
 
+/**
+ * Abstraction of the "input" that an algorithm needs to compute it's output.
+ */
 public class AlgorithmInput {
 
+    // parameters (keyed by parameter ID)
     private Map<String, Object> _parameters;
 
+    // input data (keyed by field IDs, there is a special field representing a list of tumors).
     private Map<String, Object> _patient;
 
     public Map<String, Object> getParameters() {

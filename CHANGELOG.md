@@ -1,6 +1,6 @@
 ## Algorithms Version History
 
-**Changes in version 1.22 (not released yet)**
+**Changes in version 2.0**
 
 - Changed Survival Time Algorithm to calculate record number recode for all records even if the record is considered invalid.
 - Changed internal initialization of NHIA and NAPIIA algorithms to make them thread-safe.
