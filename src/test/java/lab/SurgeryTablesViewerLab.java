@@ -52,6 +52,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import org.junit.Test;
+
 @SuppressWarnings("ConstantConditions")
 public class SurgeryTablesViewerLab extends JFrame {
 
@@ -61,7 +63,7 @@ public class SurgeryTablesViewerLab extends JFrame {
     public SurgeryTablesViewerLab() {
         JPanel contentPnl = SeerGuiUtils.createContentPanel(this, 5);
 
-        SurgeryTablesDto data = SiteSpecificSurgeryUtils.getInstance().getTables(2018);
+        SurgeryTablesDto data = SiteSpecificSurgeryUtils.getInstance().getTables(2003);
 
         // WEST - list of tables
         JPanel westPnl = SeerGuiUtils.createPanel();

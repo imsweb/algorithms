@@ -1,0 +1,4035 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<surgery-tables version="2003" version-name="2003 SEER Coding Manual">
+    <surgery-table title="Oral Cavity">
+        <site-inclusion>C00.0-C00.9,C01.9,C02.0-C02.9,C03.0-C03.9,C04.0-C04.9,C05.0-C05.9,C06.0-C06.9</site-inclusion>
+        <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
+        <pre-note><![CDATA[Oral Cavity<br/>Lip C00.0-C00.9, Base of Tongue C01.9, Other Parts of Tongue C02.0-C02.9,
+Gum C03.0-C03.9, Floor of Mouth C04.0-C04.9, Palate C05.0-C05.9,
+Other Parts of Mouth C06.0-C06.9
+<br/>
+(Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
+
+]]></pre-note>
+        <row level="0">
+            <code>00</code>
+            <description><![CDATA[None; no surgery of primary site; autopsy ONLY]]></description>
+        </row>
+        <row level="1">
+            <code>10</code>
+            <description><![CDATA[Local tumor destruction, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>11</code>
+            <description><![CDATA[Photodynamic therapy (PDT)]]></description>
+        </row>
+        <row level="1">
+            <code>12</code>
+            <description><![CDATA[Electrocautery; fulguration (includes use of hot forceps for tumor destruction)]]></description>
+        </row>
+        <row level="1">
+            <code>13</code>
+            <description><![CDATA[Cryosurgery]]></description>
+        </row>
+        <row level="1">
+            <code>14</code>
+            <description><![CDATA[Laser]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>No specimen sent to pathology from surgical events 10-14.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>20</code>
+            <description><![CDATA[Local tumor excision, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>26</code>
+            <description><![CDATA[Polypectomy]]></description>
+        </row>
+        <row level="1">
+            <code>27</code>
+            <description><![CDATA[Excisional biopsy]]></description>
+        </row>
+        <row break="true"/>
+        <row level="1">
+            <code/>
+            <description><![CDATA[Any combination of 20 or 26-27 WITH]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> the following codes INCLUDE local tumor excision, polypectomy or excisional biopsy]]]></description>
+        </row>
+        <row level="2">
+            <code>21</code>
+            <description><![CDATA[Photodynamic therapy (PDT)]]></description>
+        </row>
+        <row level="2">
+            <code>22</code>
+            <description><![CDATA[Electrocautery]]></description>
+        </row>
+        <row level="2">
+            <code>23</code>
+            <description><![CDATA[Cryosurgery]]></description>
+        </row>
+        <row level="2">
+            <code>24</code>
+            <description><![CDATA[Laser ablation]]></description>
+        </row>
+        <row level="2">
+            <code>25</code>
+            <description><![CDATA[Laser excision]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Specimen sent to pathology from surgical events 20-27.</i>]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> Codes 20-27 include shave and wedge resection]]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>30</code>
+            <description><![CDATA[Wide excision, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<b>Code 30 includes:</b>]]></description>
+        </row>
+        <row level="2">
+            <code/>
+            <description><![CDATA[Hemiglossectomy]]></description>
+        </row>
+        <row level="2">
+            <code/>
+            <description><![CDATA[Partial glossectomy]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>40</code>
+            <description><![CDATA[Radical excision of tumor, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>41</code>
+            <description><![CDATA[Radical excision of tumor ONLY]]></description>
+        </row>
+        <row level="1">
+            <code>42</code>
+            <description><![CDATA[Combination of 41 WITH resection in continuity with mandible (marginal, segmental, hemi-, or total resection)]]></description>
+        </row>
+        <row level="1">
+            <code>43</code>
+            <description><![CDATA[Combination of 41 WITH resection in continuity with maxilla (partial, subtotal, or total resection)]]></description>
+        </row>
+        <row break="true"/>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> in continuity with or "en bloc" means that all of the tissues were removed during the same procedure, but not necessarily in a single specimen]]]></description>
+        </row>
+        <row break="true"/>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Codes 40-43 include:</i>]]></description>
+        </row>
+        <row level="2">
+            <code/>
+            <description><![CDATA[<i>Total glossectomy</i>]]></description>
+        </row>
+        <row level="2">
+            <code/>
+            <description><![CDATA[<i>Radical glossectomy</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>90</code>
+            <description><![CDATA[Surgery, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>99</code>
+            <description><![CDATA[Unknown if surgery performed; death certificate ONLY ]]></description>
+        </row>
+    </surgery-table>
+    <surgery-table title="Parotid and Other Unspecified Glands">
+        <site-inclusion>C07.9,C08.0-C08.9</site-inclusion>
+        <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
+        <pre-note><![CDATA[Parotid and Other Unspecified Glands<br/>Parotid Gland C07.9, Major Salivary Glands C08.0-C08.9
+<br/>
+(Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
+
+]]></pre-note>
+        <row level="0">
+            <code>00</code>
+            <description><![CDATA[None; no surgery of primary site; autopsy ONLY]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>10</code>
+            <description><![CDATA[Local tumor destruction, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>11</code>
+            <description><![CDATA[Photodynamic therapy (PDT)]]></description>
+        </row>
+        <row level="1">
+            <code>12</code>
+            <description><![CDATA[Electrocautery; fulguration (includes use of hot forceps for tumor destruction)]]></description>
+        </row>
+        <row level="1">
+            <code>13</code>
+            <description><![CDATA[Cryosurgery]]></description>
+        </row>
+        <row level="1">
+            <code>14</code>
+            <description><![CDATA[Laser]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>No specimen sent to pathology from surgical events 10-14.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>20</code>
+            <description><![CDATA[Local tumor excision, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>26</code>
+            <description><![CDATA[Polypectomy]]></description>
+        </row>
+        <row level="1">
+            <code>27</code>
+            <description><![CDATA[Excisional biopsy]]></description>
+        </row>
+        <row break="true"/>
+        <row level="1">
+            <code/>
+            <description><![CDATA[Any combination of 20 or 26-27 WITH]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> the following codes INCLUDE local tumor excision, polypectomy or excisional biopsy]]]></description>
+        </row>
+        <row level="2">
+            <code>21</code>
+            <description><![CDATA[Photodynamic therapy (PDT)]]></description>
+        </row>
+        <row level="2">
+            <code>22</code>
+            <description><![CDATA[Electrocautery]]></description>
+        </row>
+        <row level="2">
+            <code>23</code>
+            <description><![CDATA[Cryosurgery]]></description>
+        </row>
+        <row level="2">
+            <code>24</code>
+            <description><![CDATA[Laser ablation]]></description>
+        </row>
+        <row level="2">
+            <code>25</code>
+            <description><![CDATA[Laser excision]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Specimen sent to pathology from surgical events 20-27.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="1">
+            <code>30</code>
+            <description><![CDATA[Less than total parotidectomy, NOS; less than total removal of major salivary gland, NOS]]></description>
+        </row>
+        <row level="2">
+            <code>31</code>
+            <description><![CDATA[Facial nerve spared]]></description>
+        </row>
+        <row level="2">
+            <code>32</code>
+            <description><![CDATA[Facial nerve sacrificed]]></description>
+        </row>
+        <row level="1">
+            <code>33</code>
+            <description><![CDATA[Superficial lobe ONLY]]></description>
+        </row>
+        <row level="2">
+            <code>34</code>
+            <description><![CDATA[Facial nerve spared]]></description>
+        </row>
+        <row level="2">
+            <code>35</code>
+            <description><![CDATA[Facial nerve sacrificed]]></description>
+        </row>
+        <row level="1">
+            <code>36</code>
+            <description><![CDATA[Deep lobe (Total)]]></description>
+        </row>
+        <row level="2">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> with or without superficial lobe]]]></description>
+        </row>
+        <row level="2">
+            <code>37</code>
+            <description><![CDATA[Facial nerve spared]]></description>
+        </row>
+        <row level="2">
+            <code>38</code>
+            <description><![CDATA[Facial nerve sacrificed]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>40</code>
+            <description><![CDATA[Total parotidectomy, NOS; total removal of major salivary gland, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>41</code>
+            <description><![CDATA[Facial nerve spared]]></description>
+        </row>
+        <row level="1">
+            <code>42</code>
+            <description><![CDATA[Facial nerve sacrificed]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>50</code>
+            <description><![CDATA[Radical parotidectomy, NOS; radical removal of major salivary gland, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>51</code>
+            <description><![CDATA[WITHOUT removal of temporal bone]]></description>
+        </row>
+        <row level="1">
+            <code>52</code>
+            <description><![CDATA[WITH removal of temporal bone]]></description>
+        </row>
+        <row level="1">
+            <code>53</code>
+            <description><![CDATA[WITH removal of overlying skin (requires graft or flap coverage)]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>80</code>
+            <description><![CDATA[Parotidectomy, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>90</code>
+            <description><![CDATA[Surgery, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>99</code>
+            <description><![CDATA[Unknown if surgery performed; death certificate ONLY ]]></description>
+        </row>
+    </surgery-table>
+    <surgery-table title="Pharynx">
+        <site-inclusion>C09.0-C09.9,C10.0-C10.9,C11.0-C11.9,C12.9,C13.0-C13.9,C14.0</site-inclusion>
+        <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
+        <pre-note><![CDATA[Pharynx<br/>Tonsil C09.0-C09.9, Oropharynx C10.0-C10.9, Nasopharynx C11.0-C11.9
+Pyriform Sinus C12.9, Hypopharynx C13.0-C13.9, Pharynx C14.0
+<br/>
+(Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
+
+]]></pre-note>
+        <row level="0">
+            <code>00</code>
+            <description><![CDATA[None; no surgery of primary site; autopsy ONLY]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>10</code>
+            <description><![CDATA[Local tumor destruction, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>11</code>
+            <description><![CDATA[Photodynamic therapy (PDT)]]></description>
+        </row>
+        <row level="1">
+            <code>12</code>
+            <description><![CDATA[Electrocautery; fulguration (includes use of hot forceps for tumor destruction)]]></description>
+        </row>
+        <row level="1">
+            <code>13</code>
+            <description><![CDATA[Cryosurgery]]></description>
+        </row>
+        <row level="1">
+            <code>14</code>
+            <description><![CDATA[Laser]]></description>
+        </row>
+        <row level="1">
+            <code>15</code>
+            <description><![CDATA[Stripping]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>No specimen sent to pathology from surgical events 10-15.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>20</code>
+            <description><![CDATA[Local tumor excision, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>26</code>
+            <description><![CDATA[Polypectomy]]></description>
+        </row>
+        <row level="1">
+            <code>27</code>
+            <description><![CDATA[Excisional biopsy]]></description>
+        </row>
+        <row break="true"/>
+        <row level="1">
+            <code/>
+            <description><![CDATA[Any combination of 20 or 26-27 WITH]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> the following codes INCLUDE local tumor excision, polypectomy or excisional biopsy]]]></description>
+        </row>
+        <row level="2">
+            <code>21</code>
+            <description><![CDATA[Photodynamic therapy (PDT)]]></description>
+        </row>
+        <row level="2">
+            <code>22</code>
+            <description><![CDATA[Electrocautery]]></description>
+        </row>
+        <row level="2">
+            <code>23</code>
+            <description><![CDATA[Cryosurgery]]></description>
+        </row>
+        <row level="2">
+            <code>24</code>
+            <description><![CDATA[Laser ablation]]></description>
+        </row>
+        <row level="2">
+            <code>25</code>
+            <description><![CDATA[Laser excision]]></description>
+        </row>
+        <row level="2">
+            <code>28</code>
+            <description><![CDATA[Stripping]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Specimens sent to pathology from surgical events 20-28.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>30</code>
+            <description><![CDATA[Pharyngectomy, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>31</code>
+            <description><![CDATA[Limited/partial pharyngectomy; tonsillectomy, bilateral tonsillectomy]]></description>
+        </row>
+        <row level="1">
+            <code>32</code>
+            <description><![CDATA[Total pharyngectomy]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>40</code>
+            <description><![CDATA[Pharyngectomy WITH laryngectomy OR removal of contiguous bone tissue, NOS (does NOT include total mandibular resection)]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> code 40 includes mandibulectomy (marginal, segmental, hemi-, and/or laryngectomy) NOS]]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> contiguous bone tissue refers to the mandible]]]></description>
+        </row>
+        <row level="1">
+            <code>41</code>
+            <description><![CDATA[WITH laryngectomy (laryngopharyngectomy)]]></description>
+        </row>
+        <row level="1">
+            <code>42</code>
+            <description><![CDATA[WITH bone [mandibulectomy]]]></description>
+        </row>
+        <row level="1">
+            <code>43</code>
+            <description><![CDATA[WITH both 41 and 42]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>50</code>
+            <description><![CDATA[Radical pharyngectomy (includes total mandibular resection), NOS]]></description>
+        </row>
+        <row level="1">
+            <code>51</code>
+            <description><![CDATA[WITHOUT laryngectomy]]></description>
+        </row>
+        <row level="1">
+            <code>52</code>
+            <description><![CDATA[WITH laryngectomy]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>90</code>
+            <description><![CDATA[Surgery, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>99</code>
+            <description><![CDATA[Unknown if surgery performed; death certificate ONLY ]]></description>
+        </row>
+    </surgery-table>
+    <surgery-table title="Esophagus">
+        <site-inclusion>C15.0-C15.9</site-inclusion>
+        <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
+        <pre-note><![CDATA[Esophagus<br/>C15.0-C15.9
+<br/>
+(Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
+
+]]></pre-note>
+        <row level="0">
+            <code>00</code>
+            <description><![CDATA[None; no surgery of primary site; autopsy ONLY]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>10</code>
+            <description><![CDATA[Local tumor destruction, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>11</code>
+            <description><![CDATA[Photodynamic therapy (PDT)]]></description>
+        </row>
+        <row level="1">
+            <code>12</code>
+            <description><![CDATA[Electrocautery; fulguration (includes use of hot forceps for tumor destruction)]]></description>
+        </row>
+        <row level="1">
+            <code>13</code>
+            <description><![CDATA[Cryosurgery]]></description>
+        </row>
+        <row level="1">
+            <code>14</code>
+            <description><![CDATA[Laser]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>No specimen sent to pathology from surgical events 10-14.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>20</code>
+            <description><![CDATA[Local tumor excision, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>26</code>
+            <description><![CDATA[Polypectomy]]></description>
+        </row>
+        <row level="1">
+            <code>27</code>
+            <description><![CDATA[Excisional biopsy]]></description>
+        </row>
+        <row break="true"/>
+        <row level="1">
+            <code/>
+            <description><![CDATA[Any combination of 20 or 26-27 WITH]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> the following codes INCLUDE local tumor excision, polypectomy or excisional biopsy]]]></description>
+        </row>
+        <row level="2">
+            <code>21</code>
+            <description><![CDATA[Photodynamic therapy (PDT)]]></description>
+        </row>
+        <row level="2">
+            <code>22</code>
+            <description><![CDATA[Electrocautery]]></description>
+        </row>
+        <row level="2">
+            <code>23</code>
+            <description><![CDATA[Cryosurgery]]></description>
+        </row>
+        <row level="2">
+            <code>24</code>
+            <description><![CDATA[Laser ablation]]></description>
+        </row>
+        <row level="2">
+            <code>25</code>
+            <description><![CDATA[Laser excision]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Specimen sent to pathology from surgical events 20-27.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>30</code>
+            <description><![CDATA[Partial esophagectomy]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>40</code>
+            <description><![CDATA[Total esophagectomy, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>50</code>
+            <description><![CDATA[Esophagectomy, NOS WITH laryngectomy and/or gastrectomy, NOS]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> esophagectomy may be partial, total, or NOS]]]></description>
+        </row>
+        <row level="1">
+            <code>51</code>
+            <description><![CDATA[WITH laryngectomy]]></description>
+        </row>
+        <row level="1">
+            <code>52</code>
+            <description><![CDATA[WITH gastrectomy, NOS]]></description>
+        </row>
+        <row level="2">
+            <code>53</code>
+            <description><![CDATA[Partial gastrectomy]]></description>
+        </row>
+        <row level="2">
+            <code>54</code>
+            <description><![CDATA[Total gastrectomy]]></description>
+        </row>
+        <row level="1">
+            <code>55</code>
+            <description><![CDATA[Combination of 51 WITH any of 52-54]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>80</code>
+            <description><![CDATA[Esophagectomy, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>90</code>
+            <description><![CDATA[Surgery, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>99</code>
+            <description><![CDATA[Unknown if surgery performed; death certificate ONLY ]]></description>
+        </row>
+    </surgery-table>
+    <surgery-table title="Stomach">
+        <site-inclusion>C16.0-C16.9</site-inclusion>
+        <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
+        <pre-note><![CDATA[Stomach<br/>C16.0-C16.9
+<br/>
+(Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
+
+]]></pre-note>
+        <row level="0">
+            <code>00</code>
+            <description><![CDATA[None; no surgery of primary site; autopsy ONLY]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>10</code>
+            <description><![CDATA[Local tumor destruction, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>11</code>
+            <description><![CDATA[Photodynamic therapy (PDT)]]></description>
+        </row>
+        <row level="1">
+            <code>12</code>
+            <description><![CDATA[Electrocautery; fulguration (includes use of hot forceps for tumor destruction)]]></description>
+        </row>
+        <row level="1">
+            <code>13</code>
+            <description><![CDATA[Cryosurgery]]></description>
+        </row>
+        <row level="1">
+            <code>14</code>
+            <description><![CDATA[Laser]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>No specimen sent to pathology from surgical events 10-14.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>20</code>
+            <description><![CDATA[Local tumor excision, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>26</code>
+            <description><![CDATA[Polypectomy]]></description>
+        </row>
+        <row level="1">
+            <code>27</code>
+            <description><![CDATA[Excisional biopsy]]></description>
+        </row>
+        <row break="true"/>
+        <row level="1">
+            <code/>
+            <description><![CDATA[Any combination of 20 or 26-27 WITH]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> the following codes INCLUDE local tumor excision, polypectomy or excisional biopsy]]]></description>
+        </row>
+        <row level="2">
+            <code>21</code>
+            <description><![CDATA[Photodynamic therapy (PDT)]]></description>
+        </row>
+        <row level="2">
+            <code>22</code>
+            <description><![CDATA[Electrocautery]]></description>
+        </row>
+        <row level="2">
+            <code>23</code>
+            <description><![CDATA[Cryosurgery]]></description>
+        </row>
+        <row level="2">
+            <code>24</code>
+            <description><![CDATA[Laser ablation]]></description>
+        </row>
+        <row level="2">
+            <code>25</code>
+            <description><![CDATA[Laser excision]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Specimen sent to pathology from surgical events 20-27.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>30</code>
+            <description><![CDATA[Gastrectomy, NOS (partial, subtotal, hemi-)]]></description>
+        </row>
+        <row level="1">
+            <code>31</code>
+            <description><![CDATA[Antrectomy, lower (distal-less than 40% of stomach)***]]></description>
+        </row>
+        <row level="1">
+            <code>32</code>
+            <description><![CDATA[Lower (distal) gastrectomy (partial, subtotal, hemi-)]]></description>
+        </row>
+        <row level="1">
+            <code>33</code>
+            <description><![CDATA[Upper (proximal) gastrectomy (partial, subtotal, hemi-)]]></description>
+        </row>
+        <row break="true"/>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Code 30 includes:</i>]]></description>
+        </row>
+        <row level="2">
+            <code/>
+            <description><![CDATA[<i>Partial gastrectomy, including a sleeve resection of the stomach</i>]]></description>
+        </row>
+        <row level="2">
+            <code/>
+            <description><![CDATA[<i>Billroth I: anastomosis to duodenum (duodenostomy)</i>]]></description>
+        </row>
+        <row level="2">
+            <code/>
+            <description><![CDATA[<i>Billroth II: anastomosis to jejunum (jejunostomy)</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>40</code>
+            <description><![CDATA[Near-total or total gastrectomy, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>41</code>
+            <description><![CDATA[Near-total gastrectomy]]></description>
+        </row>
+        <row level="1">
+            <code>42</code>
+            <description><![CDATA[Total gastrectomy]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>A total gastrectomy may follow a previous partial resection of the stomach.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>50</code>
+            <description><![CDATA[Gastrectomy, NOS WITH removal of a portion of esophagus]]></description>
+        </row>
+        <row level="1">
+            <code>51</code>
+            <description><![CDATA[Partial or subtotal gastrectomy]]></description>
+        </row>
+        <row level="1">
+            <code>52</code>
+            <description><![CDATA[Near total or total gastrectomy]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Codes 50-52 are used for gastrectomy resection when only portions of esophagus are included in procedure. </i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>60</code>
+            <description><![CDATA[Gastrectomy with a resection in continuity with the resection of other organs, NOS***]]></description>
+        </row>
+        <row level="1">
+            <code>61</code>
+            <description><![CDATA[Partial or subtotal gastrectomy, in continuity with the resection of other organs***]]></description>
+        </row>
+        <row level="1">
+            <code>62</code>
+            <description><![CDATA[Near total or total gastrectomy, in continuity with the resection of other organs***]]></description>
+        </row>
+        <row level="1">
+            <code>63</code>
+            <description><![CDATA[Radical gastrectomy, in continuity with the resection of other organs***]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Codes 60-63 are used for gastrectomy resections with organs other than esophagus. Portions of esophagus may or may not be included in the resection.</i>]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> codes 60-63 may include omentectomy]]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> in continuity with or "en bloc" means that all of the tissues were removed during the same procedure, but not necessarily in a single specimen]]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>80</code>
+            <description><![CDATA[Gastrectomy, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>90</code>
+            <description><![CDATA[Surgery, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>99</code>
+            <description><![CDATA[Unknown if surgery performed; death certificate ONLY]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code/>
+            <description><![CDATA[*** Incidental splenectomy NOT included ]]></description>
+        </row>
+    </surgery-table>
+    <surgery-table title="Colon">
+        <site-inclusion>C18.0-C18.9</site-inclusion>
+        <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
+        <pre-note><![CDATA[Colon<br/>C18.0-C18.9
+<br/>
+(Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
+
+<b>Code</b> removal/surgical ablation of single or multiple liver metastases under the data item <i>Surgical Procedure of Other Site.</i>
+
+]]></pre-note>
+        <row level="0">
+            <code>00</code>
+            <description><![CDATA[None; no surgery of primary site; autopsy ONLY]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>10</code>
+            <description><![CDATA[Local tumor destruction, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>11</code>
+            <description><![CDATA[Photodynamic therapy (PDT)]]></description>
+        </row>
+        <row level="1">
+            <code>12</code>
+            <description><![CDATA[Electrocautery; fulguration (includes use of hot forceps for tumor destruction)]]></description>
+        </row>
+        <row level="1">
+            <code>13</code>
+            <description><![CDATA[Cryosurgery]]></description>
+        </row>
+        <row level="1">
+            <code>14</code>
+            <description><![CDATA[Laser]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>No specimen sent to pathology from surgical events 10-14.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>20</code>
+            <description><![CDATA[Local tumor excision, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>27</code>
+            <description><![CDATA[Excisional biopsy]]></description>
+        </row>
+        <row level="1">
+            <code>26</code>
+            <description><![CDATA[Polypectomy, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>28</code>
+            <description><![CDATA[Polypectomy-endoscopic]]></description>
+        </row>
+        <row level="1">
+            <code>29</code>
+            <description><![CDATA[Polypectomy-surgical excision]]></description>
+        </row>
+        <row break="true"/>
+        <row level="1">
+            <code/>
+            <description><![CDATA[Any combination of 20 or 26-29 WITH]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> the following codes INCLUDE local tumor excision, polypectomy (NOS, endoscopic or surgical excision) or excisional biopsy]]]></description>
+        </row>
+        <row level="2">
+            <code>21</code>
+            <description><![CDATA[Photodynamic therapy (PDT)]]></description>
+        </row>
+        <row level="2">
+            <code>22</code>
+            <description><![CDATA[Electrocautery]]></description>
+        </row>
+        <row level="2">
+            <code>23</code>
+            <description><![CDATA[Cryosurgery]]></description>
+        </row>
+        <row level="2">
+            <code>24</code>
+            <description><![CDATA[Laser ablation]]></description>
+        </row>
+        <row level="2">
+            <code>25</code>
+            <description><![CDATA[Laser excision]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Specimen sent to pathology from surgical events 20-29.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>30</code>
+            <description><![CDATA[Partial colectomy, [but less than hemicolectomy] segmental resection]]></description>
+        </row>
+        <row level="1">
+            <code>32</code>
+            <description><![CDATA[Plus resection of contiguous organ; example: small bowel, bladder]]></description>
+        </row>
+        <row break="true"/>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> codes 30-31 include but are not limited to: appendectomy (for an appendix primary only), enterocolectomy, ileocolectomy, partial colectomy, NOS, partial resection of transverse colon and flexures, segmental resection, e.g., cecectomy, sigmoidectomy]]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>40</code>
+            <description><![CDATA[Subtotal colectomy/hemicolectomy [or greater (but less than total); right or left colectomy] (total right or left colon and a portion of transverse colon)]]></description>
+        </row>
+        <row level="1">
+            <code>41</code>
+            <description><![CDATA[Plus resection of contiguous organ; example: small bowel, bladder]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>50</code>
+            <description><![CDATA[Total colectomy (removal of colon from cecum to the rectosigmoid junction; may include a portion of the rectum)]]></description>
+        </row>
+        <row level="1">
+            <code>51</code>
+            <description><![CDATA[Plus resection of contiguous organ; example: small bowel, bladder ]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>60</code>
+            <description><![CDATA[Total proctocolectomy (removal of colon from cecum to the rectosigmoid junction, including the entire rectum)]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> commonly used for familial polyposis or polyposis coli]]]></description>
+        </row>
+        <row level="1">
+            <code>61</code>
+            <description><![CDATA[Plus resection of contiguous organ; example: small bowel, bladder]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>70</code>
+            <description><![CDATA[Colectomy or coloproctotectomy with resection of contiguous organ(s), NOS (where there is not enough information to code 32, 41, 51, or 61)]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Code 70 includes any colectomy (partial, hemicolectomy, or total) WITH a resection of any other organs in continuity with the primary site. Other organs may be partially or totally removed. Other organs may include, but are not limited to, oophorectomy, partial proctectomy, rectal mucosectomy, or pelvic exenteration.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> in continuity with or "en bloc" means that all of the tissues were removed during the same procedure, but not necessarily in a single specimen]]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>80</code>
+            <description><![CDATA[Colectomy, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>90</code>
+            <description><![CDATA[Surgery, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>99</code>
+            <description><![CDATA[Unknown if surgery performed; death certificate ONLY ]]></description>
+        </row>
+    </surgery-table>
+    <surgery-table title="Rectosigmoid">
+        <site-inclusion>C19.9</site-inclusion>
+        <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
+        <pre-note><![CDATA[Rectosigmoid<br/>C19.9
+<br/>
+(Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
+
+<b>Code</b> removal/surgical ablation of single or multiple liver metastases under the data item <i>Surgical Procedure of Other Site.</i>
+
+]]></pre-note>
+        <row level="0">
+            <code>00</code>
+            <description><![CDATA[None; no surgery of primary site; autopsy ONLY]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>10</code>
+            <description><![CDATA[Local tumor destruction, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>11</code>
+            <description><![CDATA[Photodynamic therapy (PDT)]]></description>
+        </row>
+        <row level="1">
+            <code>12</code>
+            <description><![CDATA[Electrocautery; fulguration (includes use of hot forceps for tumor destruction)]]></description>
+        </row>
+        <row level="1">
+            <code>13</code>
+            <description><![CDATA[Cryosurgery]]></description>
+        </row>
+        <row level="1">
+            <code>14</code>
+            <description><![CDATA[Laser ablation]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>No specimen sent to pathology from surgical events 10-14.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>20</code>
+            <description><![CDATA[Local tumor excision, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>26</code>
+            <description><![CDATA[Polypectomy]]></description>
+        </row>
+        <row level="1">
+            <code>27</code>
+            <description><![CDATA[Excisional biopsy]]></description>
+        </row>
+        <row break="true"/>
+        <row level="1">
+            <code/>
+            <description><![CDATA[Combination of 20 or 26-27 WITH]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> the following codes INCLUDE local tumor excision, polypectomy or excisional biopsy]]]></description>
+        </row>
+        <row level="2">
+            <code>21</code>
+            <description><![CDATA[Photodynamic therapy (PDT)]]></description>
+        </row>
+        <row level="2">
+            <code>22</code>
+            <description><![CDATA[Electrocautery]]></description>
+        </row>
+        <row level="2">
+            <code>23</code>
+            <description><![CDATA[Cryosurgery]]></description>
+        </row>
+        <row level="2">
+            <code>24</code>
+            <description><![CDATA[Laser ablation]]></description>
+        </row>
+        <row level="2">
+            <code>25</code>
+            <description><![CDATA[Laser excision]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Specimen sent to pathology from surgical events 20-27.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>30</code>
+            <description><![CDATA[Wedge or segmental resection; partial proctosigmoidectomy, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>31</code>
+            <description><![CDATA[Plus resection of contiguous organs; example: small bowel, bladder]]></description>
+        </row>
+        <row break="true"/>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Procedures coded 30 include, but are not limited to:</i>]]></description>
+        </row>
+        <row level="2">
+            <code/>
+            <description><![CDATA[<i>Anterior resection</i>]]></description>
+        </row>
+        <row level="2">
+            <code/>
+            <description><![CDATA[<i>Hartmann operation</i>]]></description>
+        </row>
+        <row level="2">
+            <code/>
+            <description><![CDATA[<i>Low anterior resection (LAR)</i>]]></description>
+        </row>
+        <row level="2">
+            <code/>
+            <description><![CDATA[<i>Partial colectomy, NOS</i>]]></description>
+        </row>
+        <row level="2">
+            <code/>
+            <description><![CDATA[<i>Rectosigmoidectomy, NOS</i>]]></description>
+        </row>
+        <row level="2">
+            <code/>
+            <description><![CDATA[<i>Sigmoidectomy</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>40</code>
+            <description><![CDATA[Pull through WITH sphincter preservation (colo-anal anastomosis)]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> Procedures coded 40 include but are not limited to: Altemeier's operation, Duhamel's operation, Soave's submucosal resection, Swenson's operation, Turnbull's operation.]]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>50</code>
+            <description><![CDATA[Total proctectomy]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> Procedures coded 50 include but are not limited to: abdominoperineal resection (A & P resection), anterior/posterior resection (A/P resection)/Miles' operation, Rankin's operation]]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>51</code>
+            <description><![CDATA[Total colectomy [removal of the colon from cecum to rectosigmoid or portion of rectum] ]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>55</code>
+            <description><![CDATA[Total colectomy WITH ileostomy, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>56</code>
+            <description><![CDATA[Ileorectal reconstruction]]></description>
+        </row>
+        <row level="1">
+            <code>57</code>
+            <description><![CDATA[Total colectomy WITH other pouch; example: Koch pouch]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>60</code>
+            <description><![CDATA[Total proctocolectomy, NOS [combination of 50 and 51]]]></description>
+        </row>
+        <row level="1">
+            <code>65</code>
+            <description><![CDATA[Total proctocolectomy WITH ileostomy, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>66</code>
+            <description><![CDATA[Total proctocolectomy WITH ileostomy and pouch]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Removal of the colon from cecum to the rectosigmoid or a portion of the rectum.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>70</code>
+            <description><![CDATA[Colectomy or proctocolectomy resection in continuity with other organs; pelvic exenteration]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> Procedures that may be part of an en bloc resection include, but are not limited to: an oophorectomy and a rectal mucosectomy. Code 70 includes any colectomy (partial, hemicolectomy or total) with an en bloc resection of any other organs. There may be partial or total removal of other organs in continuity with the primary.]]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> in continuity with or "en bloc" means that all of the tissues were removed during the same procedure, but not necessarily in a single specimen]]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>80</code>
+            <description><![CDATA[Colectomy, NOS; Proctectomy, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>90</code>
+            <description><![CDATA[Surgery, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>99</code>
+            <description><![CDATA[Unknown if surgery performed; death certificate ONLY ]]></description>
+        </row>
+    </surgery-table>
+    <surgery-table title="Rectum">
+        <site-inclusion>C20.9</site-inclusion>
+        <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
+        <pre-note><![CDATA[Rectum<br/>C20.9
+<br/>
+(Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
+
+<b>Code</b> removal/surgical ablation of single or multiple liver metastases under the data item <i>Surgical Procedure of Other Site.</i>
+
+]]></pre-note>
+        <row level="0">
+            <code>00</code>
+            <description><![CDATA[None; no surgery of primary site; autopsy ONLY]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>10</code>
+            <description><![CDATA[Local tumor destruction, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>11</code>
+            <description><![CDATA[Photodynamic therapy (PDT)]]></description>
+        </row>
+        <row level="1">
+            <code>12</code>
+            <description><![CDATA[Electrocautery; fulguration (includes use of hot forceps for tumor destruction)]]></description>
+        </row>
+        <row level="1">
+            <code>13</code>
+            <description><![CDATA[Cryosurgery]]></description>
+        </row>
+        <row level="1">
+            <code>14</code>
+            <description><![CDATA[Laser]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>No specimen sent to pathology from surgical events 10-14.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>20</code>
+            <description><![CDATA[Local tumor excision, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>27</code>
+            <description><![CDATA[Excisional biopsy]]></description>
+        </row>
+        <row level="1">
+            <code>26</code>
+            <description><![CDATA[Polypectomy]]></description>
+        </row>
+        <row break="true"/>
+        <row level="1">
+            <code/>
+            <description><![CDATA[Any combination of 20 or 26-27 WITH]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> the following codes INCLUDE local tumor excision, polypectomy or excisional biopsy]]]></description>
+        </row>
+        <row level="2">
+            <code>21</code>
+            <description><![CDATA[Photodynamic therapy (PDT)]]></description>
+        </row>
+        <row level="2">
+            <code>22</code>
+            <description><![CDATA[Electrocautery]]></description>
+        </row>
+        <row level="2">
+            <code>23</code>
+            <description><![CDATA[Cryosurgery]]></description>
+        </row>
+        <row level="2">
+            <code>24</code>
+            <description><![CDATA[Laser ablation]]></description>
+        </row>
+        <row level="2">
+            <code>25</code>
+            <description><![CDATA[Laser excision]]></description>
+        </row>
+        <row level="2">
+            <code>28</code>
+            <description><![CDATA[Curette and fulguration]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Specimen sent to pathology from surgical events 20-28.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>30</code>
+            <description><![CDATA[Wedge or segmental resection; partial proctectomy, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Procedures coded 30 include, but are not limited to:</i>]]></description>
+        </row>
+        <row level="2">
+            <code/>
+            <description><![CDATA[<i>Anterior resection</i>]]></description>
+        </row>
+        <row level="2">
+            <code/>
+            <description><![CDATA[<i>Hartmann's operation</i>]]></description>
+        </row>
+        <row level="2">
+            <code/>
+            <description><![CDATA[<i>Low anterior resection (LAR)</i>]]></description>
+        </row>
+        <row level="2">
+            <code/>
+            <description><![CDATA[<i>Transsacral rectosigmoidectomy</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>40</code>
+            <description><![CDATA[Pull through WITH sphincter preservation (coloanal anastomosis)]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> Procedures coded 40 include but are not limited to: Altemeier's operation, Duhamel's operation, Soave's submucosal resection, Swenson's operation, Turnbull's operation.]]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>50</code>
+            <description><![CDATA[Total proctectomy]]></description>
+        </row>
+        <row break="true"/>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Procedure coded 50 includes, but is not limited to:</i>]]></description>
+        </row>
+        <row level="2">
+            <code/>
+            <description><![CDATA[<i>Abdominoperineal resection (Miles Procedure)</i>]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> also called anterior/posterior (A/P) resection/Miles' operation, Rankin's operation]]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>60</code>
+            <description><![CDATA[Total proctocolectomy, NOS ]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>70</code>
+            <description><![CDATA[Proctectomy or proctocolectomy with resection in continuity with other organs; pelvic exenteration]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> in continuity with or "en bloc" means that all of the tissues were removed during the same procedure, but not necessarily in a single specimen]]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>80</code>
+            <description><![CDATA[Proctectomy, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>90</code>
+            <description><![CDATA[Surgery, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>99</code>
+            <description><![CDATA[Unknown if surgery performed; death certificate ONLY ]]></description>
+        </row>
+    </surgery-table>
+    <surgery-table title="Anus">
+        <site-inclusion>C21.0-C21.8</site-inclusion>
+        <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
+        <pre-note><![CDATA[Anus<br/>C21.0-C21.8
+<br/>
+(Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989) 
+
+]]></pre-note>
+        <row level="0">
+            <code>00</code>
+            <description><![CDATA[None; no surgery of primary site; autopsy ONLY]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>10</code>
+            <description><![CDATA[Local tumor destruction, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>11</code>
+            <description><![CDATA[Photodynamic therapy (PDT)]]></description>
+        </row>
+        <row level="1">
+            <code>12</code>
+            <description><![CDATA[Electrocautery; fulguration (includes use of hot forceps for tumor destruction)]]></description>
+        </row>
+        <row level="1">
+            <code>13</code>
+            <description><![CDATA[Cryosurgery]]></description>
+        </row>
+        <row level="1">
+            <code>14</code>
+            <description><![CDATA[Laser]]></description>
+        </row>
+        <row level="1">
+            <code>15</code>
+            <description><![CDATA[Thermal Ablation]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[No specimen sent to pathology from surgical events 10-15.]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>20</code>
+            <description><![CDATA[Local tumor excision, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>26</code>
+            <description><![CDATA[Polypectomy]]></description>
+        </row>
+        <row level="1">
+            <code>27</code>
+            <description><![CDATA[Excisional biopsy]]></description>
+        </row>
+        <row break="true"/>
+        <row level="1">
+            <code/>
+            <description><![CDATA[Any combination of 20 or 26-27 WITH]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> the following codes INCLUDE local tumor excision, polypectomy or excisional biopsy]]]></description>
+        </row>
+        <row level="2">
+            <code>21</code>
+            <description><![CDATA[Photodynamic therapy (PDT)]]></description>
+        </row>
+        <row level="2">
+            <code>22</code>
+            <description><![CDATA[Electrocautery]]></description>
+        </row>
+        <row level="2">
+            <code>23</code>
+            <description><![CDATA[Cryosurgery]]></description>
+        </row>
+        <row level="2">
+            <code>24</code>
+            <description><![CDATA[Laser ablation]]></description>
+        </row>
+        <row level="2">
+            <code>25</code>
+            <description><![CDATA[Laser excision]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[Specimen sent to pathology from surgical events 20-27.]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> margins of resection may have microscopic involvement]]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>60</code>
+            <description><![CDATA[Abdominal perineal resection, NOS (APR; Miles procedure)]]></description>
+        </row>
+        <row level="1">
+            <code>61</code>
+            <description><![CDATA[APR and sentinel node excision]]></description>
+        </row>
+        <row level="1">
+            <code>62</code>
+            <description><![CDATA[APR and unilateral inguinal lymph node dissection]]></description>
+        </row>
+        <row level="1">
+            <code>63</code>
+            <description><![CDATA[APR and bilateral inguinal lymph node dissection]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>90</code>
+            <description><![CDATA[Surgery, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>99</code>
+            <description><![CDATA[Unknown if surgery performed; death certificate ONLY]]></description>
+        </row>
+    </surgery-table>
+    <surgery-table title="Liver and Intrahepatic Bile Ducts">
+        <site-inclusion>C22.0-C22.1</site-inclusion>
+        <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
+        <pre-note><![CDATA[Liver and Intrahepatic Bile Ducts<br/>C22.0-C22.1
+<br/>
+(Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
+
+]]></pre-note>
+        <row level="0">
+            <code>00</code>
+            <description><![CDATA[None; no surgery of primary site; autopsy ONLY]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>10</code>
+            <description><![CDATA[Local tumor destruction, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>11</code>
+            <description><![CDATA[Photodynamic therapy (PDT)]]></description>
+        </row>
+        <row level="1">
+            <code>12</code>
+            <description><![CDATA[Electrocautery; fulguration (includes use of hot forceps for tumor destruction)]]></description>
+        </row>
+        <row level="1">
+            <code>13</code>
+            <description><![CDATA[Cryosurgery]]></description>
+        </row>
+        <row level="1">
+            <code>14</code>
+            <description><![CDATA[Laser]]></description>
+        </row>
+        <row level="1">
+            <code>15</code>
+            <description><![CDATA[Alcohol (Percutaneous Ethanol Injection-PEI)]]></description>
+        </row>
+        <row level="1">
+            <code>16</code>
+            <description><![CDATA[Heat-Radio-frequency ablation (RFA)]]></description>
+        </row>
+        <row level="1">
+            <code>17</code>
+            <description><![CDATA[Other (ultrasound, acetic acid)]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>No specimen sent to pathology from surgical events 10-17.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>20</code>
+            <description><![CDATA[Wedge or segmental resection, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>21</code>
+            <description><![CDATA[Wedge resection]]></description>
+        </row>
+        <row level="1">
+            <code>22</code>
+            <description><![CDATA[Segmental resection, NOS]]></description>
+        </row>
+        <row level="2">
+            <code>23</code>
+            <description><![CDATA[One]]></description>
+        </row>
+        <row level="2">
+            <code>24</code>
+            <description><![CDATA[Two]]></description>
+        </row>
+        <row level="2">
+            <code>25</code>
+            <description><![CDATA[Three]]></description>
+        </row>
+        <row level="2">
+            <code>26</code>
+            <description><![CDATA[Segmental resection AND local tumor destruction]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Specimen sent to pathology from surgical events 20-26.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>30</code>
+            <description><![CDATA[Lobectomy, [simple or] NOS]]></description>
+        </row>
+        <row level="1">
+            <code>36</code>
+            <description><![CDATA[Right lobectomy]]></description>
+        </row>
+        <row level="1">
+            <code>37</code>
+            <description><![CDATA[Left lobectomy]]></description>
+        </row>
+        <row level="1">
+            <code>38</code>
+            <description><![CDATA[Lobectomy AND local tumor destruction]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>50</code>
+            <description><![CDATA[Extended lobectomy, NOS (extended: resection of a single lobe plus a segment of another lobe)]]></description>
+        </row>
+        <row level="1">
+            <code>51</code>
+            <description><![CDATA[Right lobectomy]]></description>
+        </row>
+        <row level="1">
+            <code>52</code>
+            <description><![CDATA[Left lobectomy]]></description>
+        </row>
+        <row level="1">
+            <code>59</code>
+            <description><![CDATA[Extended lobectomy AND local tumor destruction]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>60</code>
+            <description><![CDATA[Hepatectomy, NOS [formerly SEER code 80]]]></description>
+        </row>
+        <row level="1">
+            <code>61</code>
+            <description><![CDATA[Total hepatectomy and transplant [formerly SEER code 70]]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>65</code>
+            <description><![CDATA[Excision of a bile duct (for an intra-hepatic bile duct primary only) [formerly SEER code 40]]]></description>
+        </row>
+        <row level="1">
+            <code>66</code>
+            <description><![CDATA[Excision of a bile duct PLUS partial hepatectomy]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>75</code>
+            <description><![CDATA[Bile duct and hepatectomy WITH transplant]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>90</code>
+            <description><![CDATA[Surgery, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>99</code>
+            <description><![CDATA[Unknown if surgery performed; death certificate ONLY]]></description>
+        </row>
+    </surgery-table>
+    <surgery-table title="Pancreas">
+        <site-inclusion>C25.0-C25.9</site-inclusion>
+        <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
+        <pre-note><![CDATA[Pancreas<br/>C25.0-C25.9
+<br/>
+(Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
+
+]]></pre-note>
+        <row level="0">
+            <code>00</code>
+            <description><![CDATA[None; no surgery of primary site; autopsy ONLY]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>25</code>
+            <description><![CDATA[Local excision of tumor, NOS [formerly SEER code 10]]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>30</code>
+            <description><![CDATA[Partial pancreatectomy, NOS; example: distal [formerly SEER code 20]]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>35</code>
+            <description><![CDATA[Local or partial pancreatectomy and duodenectomy [formerly SEER code 50]]]></description>
+        </row>
+        <row level="1">
+            <code>36</code>
+            <description><![CDATA[WITHOUT distal/partial gastrectomy [formerly SEER code 51 "without subtotal gastrectomy"]]]></description>
+        </row>
+        <row level="1">
+            <code>37</code>
+            <description><![CDATA[WITH partial gastrectomy (Whipple) [formerly SEER code 52 "with subtotal gastrectomy (Whipple)"]]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>40</code>
+            <description><![CDATA[Total pancreatectomy]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>60</code>
+            <description><![CDATA[Total pancreatectomy and subtotal gastrectomy or duodenectomy]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>70</code>
+            <description><![CDATA[Extended pancreatoduodenectomy]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>80</code>
+            <description><![CDATA[Pancreatectomy, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>90</code>
+            <description><![CDATA[Surgery, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>99</code>
+            <description><![CDATA[Unknown if surgery performed; death certificate ONLY ]]></description>
+        </row>
+    </surgery-table>
+    <surgery-table title="Larynx">
+        <site-inclusion>C32.0-C32.9</site-inclusion>
+        <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
+        <pre-note><![CDATA[Larynx<br/>C32.0-C32.9
+<br/>
+(Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
+
+]]></pre-note>
+        <row level="0">
+            <code>00</code>
+            <description><![CDATA[None; no surgery of primary site; autopsy ONLY]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>10</code>
+            <description><![CDATA[Local tumor destruction, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>11</code>
+            <description><![CDATA[Photodynamic therapy (PDT)]]></description>
+        </row>
+        <row level="1">
+            <code>12</code>
+            <description><![CDATA[Electrocautery; fulguration (includes use of hot forceps for tumor destruction)]]></description>
+        </row>
+        <row level="1">
+            <code>13</code>
+            <description><![CDATA[Cryosurgery]]></description>
+        </row>
+        <row level="1">
+            <code>14</code>
+            <description><![CDATA[Laser]]></description>
+        </row>
+        <row level="1">
+            <code>15</code>
+            <description><![CDATA[Stripping]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>No specimen sent to pathology from surgical events 10-15.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>20</code>
+            <description><![CDATA[Local tumor excision, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>26</code>
+            <description><![CDATA[Polypectomy]]></description>
+        </row>
+        <row level="1">
+            <code>27</code>
+            <description><![CDATA[Excisional biopsy]]></description>
+        </row>
+        <row break="true"/>
+        <row level="1">
+            <code/>
+            <description><![CDATA[Any combination of 20 or 26-27 WITH]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> the following codes INCLUDE local tumor excision, polypectomy or excisional biopsy]]]></description>
+        </row>
+        <row level="2">
+            <code>21</code>
+            <description><![CDATA[Photodynamic therapy (PDT)]]></description>
+        </row>
+        <row level="2">
+            <code>22</code>
+            <description><![CDATA[Electrocautery]]></description>
+        </row>
+        <row level="2">
+            <code>23</code>
+            <description><![CDATA[Cryosurgery]]></description>
+        </row>
+        <row level="2">
+            <code>24</code>
+            <description><![CDATA[Laser ablation]]></description>
+        </row>
+        <row level="2">
+            <code>25</code>
+            <description><![CDATA[Laser excision]]></description>
+        </row>
+        <row level="2">
+            <code>28</code>
+            <description><![CDATA[Stripping]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Specimen sent to pathology from surgical events 20-28.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>30</code>
+            <description><![CDATA[Partial excision of the primary site, NOS; subtotal/partial laryngectomy NOS; hemilaryngectomy NOS]]></description>
+        </row>
+        <row level="1">
+            <code>31</code>
+            <description><![CDATA[Vertical laryngectomy]]></description>
+        </row>
+        <row level="1">
+            <code>32</code>
+            <description><![CDATA[Anterior commissure laryngectomy]]></description>
+        </row>
+        <row level="1">
+            <code>33</code>
+            <description><![CDATA[Supraglottic laryngectomy]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>40</code>
+            <description><![CDATA[Total or radical laryngectomy, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>41</code>
+            <description><![CDATA[Total laryngectomy ONLY]]></description>
+        </row>
+        <row level="1">
+            <code>42</code>
+            <description><![CDATA[Radical laryngectomy ONLY]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>50</code>
+            <description><![CDATA[Pharyngolaryngectomy]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>80</code>
+            <description><![CDATA[Laryngectomy, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>90</code>
+            <description><![CDATA[Surgery, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>99</code>
+            <description><![CDATA[Unknown if surgery performed; death certificate ONLY ]]></description>
+        </row>
+    </surgery-table>
+    <surgery-table title="Lung">
+        <site-inclusion>C34.0-C34.9</site-inclusion>
+        <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
+        <pre-note><![CDATA[Lung<br/>C34.0-C34.9
+<br/>
+(Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
+
+]]></pre-note>
+        <row level="0">
+            <code>00</code>
+            <description><![CDATA[None; no surgery of primary site; autopsy ONLY]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>19</code>
+            <description><![CDATA[Local tumor destruction or excision, NOS [formerly SEER code 10]]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Unknown whether a specimen was sent to pathology for surgical events coded 19 (principally for cases diagnosed prior to January 1, 2003).</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>15</code>
+            <description><![CDATA[Local tumor destruction, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>12</code>
+            <description><![CDATA[Laser ablation or cryosurgery [formerly SEER code 12 = laser ablation or excision]]]></description>
+        </row>
+        <row level="1">
+            <code>13</code>
+            <description><![CDATA[Electrocautery; fulguration (includes use of hot forceps for tumor destruction) [formerly SEER code 13 = cautery; fulguration]]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>No specimen sent to pathology from surgical events 12-13 and 15.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>20</code>
+            <description><![CDATA[Excision or resection of less than one lobe, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>23</code>
+            <description><![CDATA[Excision, NOS [formerly SEER code 11 = Excision]]]></description>
+        </row>
+        <row level="1">
+            <code>24</code>
+            <description><![CDATA[Laser excision [formerly SEER code 12 = laser ablation or excision]]]></description>
+        </row>
+        <row level="1">
+            <code>25</code>
+            <description><![CDATA[Bronchial sleeve resection ONLY [formerly SEER code 14]]]></description>
+        </row>
+        <row level="1">
+            <code>21</code>
+            <description><![CDATA[Wedge resection]]></description>
+        </row>
+        <row level="1">
+            <code>22</code>
+            <description><![CDATA[Segmental resection, including lingulectomy]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Specimen sent to pathology from surgical events 20-25.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>30</code>
+            <description><![CDATA[Resection of [at least one] lobe or bilobectomy, but less than the whole lung (partial pneumonectomy, NOS)]]></description>
+        </row>
+        <row level="1">
+            <code>33</code>
+            <description><![CDATA[Lobectomy WITH mediastinal lymph node dissection]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>45</code>
+            <description><![CDATA[Lobe or bilobectomy extended, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>46</code>
+            <description><![CDATA[WITH chest wall]]></description>
+        </row>
+        <row level="1">
+            <code>47</code>
+            <description><![CDATA[WITH pericardium]]></description>
+        </row>
+        <row level="1">
+            <code>48</code>
+            <description><![CDATA[WITH diaphragm]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>55</code>
+            <description><![CDATA[Pneumonectomy, NOS [formerly SEER codes 40, 50, 51, 52, 53, 54]]]></description>
+        </row>
+        <row level="1">
+            <code>56</code>
+            <description><![CDATA[WITH mediastinal lymph node dissection (radical pneumonectomy)]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>The mediastinal lymph node dissection should also be coded under Scope of Regional Lymph Node Surgery.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>65</code>
+            <description><![CDATA[Extended pneumonectomy]]></description>
+        </row>
+        <row level="1">
+            <code>66</code>
+            <description><![CDATA[Extended pneumonectomy plus pleura or diaphragm]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>70</code>
+            <description><![CDATA[Extended radical pneumonectomy]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> an extended radical pneumonectomy is a radical pneumonectomy (including removal of mediastinal nodes) and the removal of other tissues or nodes]]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>The mediastinal lymph node dissection should also be coded under Scope of Regional Lymph Node Surgery.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>80</code>
+            <description><![CDATA[Resection of lung, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>90</code>
+            <description><![CDATA[Surgery, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>99</code>
+            <description><![CDATA[Unknown if surgery performed; death certificate ONLY ]]></description>
+        </row>
+    </surgery-table>
+    <surgery-table title="Bones, Joints, and Articular Cartilage">
+        <site-inclusion>C40.0-C41.9,C47.0-C47.9,C49.0-C49.9</site-inclusion>
+        <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
+        <pre-note><![CDATA[Bones, Joints, and Articular Cartilage<br/>C40.0-C41.9 Peripheral Nerves and Autonomic Nervous System C47.0-C47.9
+Connective, Subcutaneous, and Other Soft Tissues C49.0-C49.9
+<br/>
+(Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
+
+]]></pre-note>
+        <row level="0">
+            <code>00</code>
+            <description><![CDATA[None; no surgery of primary site; autopsy ONLY]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>19</code>
+            <description><![CDATA[Local tumor destruction or excision, NOS [formerly SEER code 10 = local tumor destruction or excision-<b>requires review</b>]]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>15</code>
+            <description><![CDATA[Local tumor destruction [formerly SEER code 10 = local tumor destruction or excision-<b>requires review</b>]]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>No specimen sent to pathology from surgical event 15.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>25</code>
+            <description><![CDATA[Local excision]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>26</code>
+            <description><![CDATA[Partial resection [formerly SEER code 20 = partial resection/internal hemipelvectomy (pelvis)-<b>requires review</b>]]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Specimen sent to pathology from surgical events 25-26.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>30</code>
+            <description><![CDATA[Radical excision or resection of lesion WITH limb salvage]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>40</code>
+            <description><![CDATA[Amputation of limb]]></description>
+        </row>
+        <row level="1">
+            <code>41</code>
+            <description><![CDATA[Partial amputation of limb]]></description>
+        </row>
+        <row level="1">
+            <code>42</code>
+            <description><![CDATA[Total amputation of limb]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>50</code>
+            <description><![CDATA[Major amputation, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>51</code>
+            <description><![CDATA[Forequarter, including scapula]]></description>
+        </row>
+        <row level="1">
+            <code>52</code>
+            <description><![CDATA[Hindquarter, including ilium/hip bone]]></description>
+        </row>
+        <row level="1">
+            <code>53</code>
+            <description><![CDATA[Hemipelvectomy, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>54</code>
+            <description><![CDATA[Internal hemipelvectomy [formerly SEER code 20 = partial resection/internal hemipelvectomy (pelvis)-<b>requires review</b>]]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>90</code>
+            <description><![CDATA[Surgery, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>99</code>
+            <description><![CDATA[Unknown if surgery performed; death certificate ONLY ]]></description>
+        </row>
+    </surgery-table>
+    <surgery-table title="Skin">
+        <site-inclusion>C44.0-C44.9</site-inclusion>
+        <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
+        <pre-note><![CDATA[Skin<br/>C44.0-C44.9
+<br/>
+(Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
+
+]]></pre-note>
+        <row level="0">
+            <code>00</code>
+            <description><![CDATA[None; no surgery of primary site; autopsy ONLY]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>10</code>
+            <description><![CDATA[Local tumor destruction, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>11</code>
+            <description><![CDATA[Photodynamic therapy (PDT)]]></description>
+        </row>
+        <row level="1">
+            <code>12</code>
+            <description><![CDATA[Electrocautery; fulguration (includes use of hot forceps for tumor destruction)]]></description>
+        </row>
+        <row level="1">
+            <code>13</code>
+            <description><![CDATA[Cryosurgery]]></description>
+        </row>
+        <row level="1">
+            <code>14</code>
+            <description><![CDATA[Laser ablation]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>No specimen sent to pathology from surgical events 10-14.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>20</code>
+            <description><![CDATA[Local tumor excision, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>26</code>
+            <description><![CDATA[Polypectomy]]></description>
+        </row>
+        <row level="1">
+            <code>27</code>
+            <description><![CDATA[Excisional biopsy]]></description>
+        </row>
+        <row break="true"/>
+        <row level="1">
+            <code/>
+            <description><![CDATA[Any combination of 20 or 26-27 WITH]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> the following codes INCLUDE local tumor excision, polypectomy or excisional biopsy]]]></description>
+        </row>
+        <row level="2">
+            <code>21</code>
+            <description><![CDATA[Photodynamic therapy (PDT)]]></description>
+        </row>
+        <row level="2">
+            <code>22</code>
+            <description><![CDATA[Electrocautery]]></description>
+        </row>
+        <row level="2">
+            <code>23</code>
+            <description><![CDATA[Cryosurgery]]></description>
+        </row>
+        <row level="2">
+            <code>24</code>
+            <description><![CDATA[Laser ablation]]></description>
+        </row>
+        <row level="2">
+            <code>25</code>
+            <description><![CDATA[Laser excision]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Specimen sent to pathology from surgical events 20-27.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>30</code>
+            <description><![CDATA[Biopsy of primary tumor followed by a gross excision of the lesion (does not have to be done under the same anesthesia)]]></description>
+        </row>
+        <row level="1">
+            <code>31</code>
+            <description><![CDATA[Shave biopsy followed by a gross excision of the lesion]]></description>
+        </row>
+        <row level="1">
+            <code>32</code>
+            <description><![CDATA[Punch biopsy followed by a gross excision of the lesion]]></description>
+        </row>
+        <row level="1">
+            <code>33</code>
+            <description><![CDATA[Incisional biopsy followed by a gross excision of the lesion]]></description>
+        </row>
+        <row level="1">
+            <code>34</code>
+            <description><![CDATA[Mohs surgery, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>35</code>
+            <description><![CDATA[Mohs with 1-cm margin or less]]></description>
+        </row>
+        <row level="1">
+            <code>36</code>
+            <description><![CDATA[Mohs with more than 1-cm margin]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>45</code>
+            <description><![CDATA[Wide excision or reexcision of lesion or minor (local) amputation with margins more than 1 cm, NOS. Margins MUST be microscopically negative. [formerly SEER code 40 or 50 = wide excision or re-excision of lesion or minor (local) amputation, NOS, margins of excision are 1 cm or more, margins may be microscopically involved.]]]></description>
+        </row>
+        <row level="1">
+            <code>46</code>
+            <description><![CDATA[WITH margins more than 1 cm and less than 2 cm]]></description>
+        </row>
+        <row level="1">
+            <code>47</code>
+            <description><![CDATA[WITH margins greater than 2 cm]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>60</code>
+            <description><![CDATA[Major amputation [NOS]]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>90</code>
+            <description><![CDATA[Surgery, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>99</code>
+            <description><![CDATA[Unknown if surgery performed; death certificate ONLY]]></description>
+        </row>
+    </surgery-table>
+    <surgery-table title="Breast">
+        <site-inclusion>C50.0-C50.9</site-inclusion>
+        <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
+        <pre-note><![CDATA[Breast<br/>C50.0-C50.9
+<br/>
+(Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
+
+]]></pre-note>
+        <row level="0">
+            <code>00</code>
+            <description><![CDATA[None; no surgery of primary site; autopsy ONLY]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>19</code>
+            <description><![CDATA[Local tumor destruction, NOS]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>No specimen was sent to pathology for surgical events coded 19 (principally for cases diagnosed prior to January 1, 2003).</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>20</code>
+            <description><![CDATA[Partial mastectomy, NOS; less than total mastectomy, NOS [formerly SEER code 10]]]></description>
+        </row>
+        <row level="1">
+            <code>21</code>
+            <description><![CDATA[Partial mastectomy WITH nipple resection [formerly SEER code 11 = nipple resection]]]></description>
+        </row>
+        <row level="1">
+            <code>22</code>
+            <description><![CDATA[Lumpectomy or excisional biopsy [formerly SEER code 12]]]></description>
+        </row>
+        <row level="1">
+            <code>23</code>
+            <description><![CDATA[Reexcision of the biopsy site for gross or microscopic residual disease [formerly SEER code 13]]]></description>
+        </row>
+        <row level="1">
+            <code>24</code>
+            <description><![CDATA[Segmental mastectomy (including wedge resection, quadrantectomy, tylectomy) [formerly SEER codes 16 = segmental mastectomy, 14 = wedge resection, 15 = quadrantectomy, 17 = tylectomy]]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Procedures coded 20-24 remove the gross primary tumor and some of the breast tissue (breast-conserving or preserving). There may be microscopic residual tumor.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>30</code>
+            <description><![CDATA[Subcutaneous mastectomy]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>A subcutaneous mastectomy is the removal of breast tissue without the nipple and areolar complex or overlying skin.</i>]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> this procedure is rarely used to treat malignancies]]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>40</code>
+            <description><![CDATA[Total (simple) mastectomy, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>41</code>
+            <description><![CDATA[WITHOUT removal of uninvolved contralateral breast]]></description>
+        </row>
+        <row level="1">
+            <code>42</code>
+            <description><![CDATA[WITH removal of uninvolved contralateral breast]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>A simple mastectomy removes all breast tissue, the nipple, and areolar complex. An axillary dissection is not done.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>For single primaries only, code removal of involved contralateral breast under the data item Surgical Procedure of Other Site.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>If contralateral breast reveals a second primary, each breast is abstracted separately. The surgical procedure is coded 41 for the first primary. The surgical code for the contralateral breast is coded to the procedure performed on that site.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>50</code>
+            <description><![CDATA[Modified radical mastectomy]]></description>
+        </row>
+        <row level="1">
+            <code>51</code>
+            <description><![CDATA[WITHOUT removal of uninvolved contralateral breast]]></description>
+        </row>
+        <row level="2">
+            <code>53</code>
+            <description><![CDATA[Reconstruction, NOS]]></description>
+        </row>
+        <row level="3">
+            <code>54</code>
+            <description><![CDATA[Tissue]]></description>
+        </row>
+        <row level="3">
+            <code>55</code>
+            <description><![CDATA[Implant]]></description>
+        </row>
+        <row level="3">
+            <code>56</code>
+            <description><![CDATA[Combined (Tissue and Implant)]]></description>
+        </row>
+        <row level="1">
+            <code>52</code>
+            <description><![CDATA[WITH removal of uninvolved contralateral breast]]></description>
+        </row>
+        <row level="2">
+            <code>57</code>
+            <description><![CDATA[Reconstruction, NOS]]></description>
+        </row>
+        <row level="3">
+            <code>58</code>
+            <description><![CDATA[Tissue]]></description>
+        </row>
+        <row level="3">
+            <code>59</code>
+            <description><![CDATA[Implant]]></description>
+        </row>
+        <row level="3">
+            <code>63</code>
+            <description><![CDATA[Combined (Tissue and Implant)]]></description>
+        </row>
+        <row level="0">
+            <code/>
+            <description><![CDATA[<i>Removal of all breast tissue, the nipple, the areolar complex, and variable amounts of breast skin in continuity with the axilla. The specimen may or may not include a portion of the pectoralis major muscle. </i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> in continuity with or "en bloc" means that all of the tissues were removed during the same procedure, but not necessarily in a single specimen]]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> "tissue" for reconstruction is defined as human tissue such as muscle (latissimus dorsi or rectus abdominis) or skin in contrast to artificial prostheses (implants).]]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code/>
+            <description><![CDATA[<i>If contralateral breast reveals a second primary, it is abstracted separately. The surgical procedure is coded 51 for the first primary. The surgical code for the contralateral breast is coded to the procedure performed on that site.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code/>
+            <description><![CDATA[<i>For single primaries only, code removal of involved contralateral breast under the data item Surgical Procedure of Other Site.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>60</code>
+            <description><![CDATA[Radical mastectomy, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>61</code>
+            <description><![CDATA[WITHOUT removal of uninvolved contralateral breast]]></description>
+        </row>
+        <row level="2">
+            <code>64</code>
+            <description><![CDATA[Reconstruction, NOS]]></description>
+        </row>
+        <row level="2">
+            <code>65</code>
+            <description><![CDATA[Tissue]]></description>
+        </row>
+        <row level="2">
+            <code>66</code>
+            <description><![CDATA[Implant]]></description>
+        </row>
+        <row level="2">
+            <code>67</code>
+            <description><![CDATA[Combined (Tissue and Implant)]]></description>
+        </row>
+        <row level="1">
+            <code>62</code>
+            <description><![CDATA[WITH removal of uninvolved contralateral breast]]></description>
+        </row>
+        <row level="2">
+            <code>68</code>
+            <description><![CDATA[Reconstruction, NOS]]></description>
+        </row>
+        <row level="2">
+            <code>69</code>
+            <description><![CDATA[Tissue]]></description>
+        </row>
+        <row level="2">
+            <code>73</code>
+            <description><![CDATA[Implant]]></description>
+        </row>
+        <row level="2">
+            <code>74</code>
+            <description><![CDATA[Combined (Tissue and Implant)]]></description>
+        </row>
+        <row level="0">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> Removal of breast tissue, nipple, areolar complex, variable amount of skin, pectoralis minor, pectoralis major. Includes en bloc axillary dissection. For single primaries only, code removal of involved contralateral breast under the data item "Surgery of other regional sites, distant sites, or distant lymph nodes."]]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>70</code>
+            <description><![CDATA[Extended radical mastectomy]]></description>
+        </row>
+        <row level="1">
+            <code>71</code>
+            <description><![CDATA[WITHOUT removal of uninvolved contralateral breast]]></description>
+        </row>
+        <row level="1">
+            <code>72</code>
+            <description><![CDATA[WITH removal of uninvolved contralateral breast]]></description>
+        </row>
+        <row level="0">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> Removal of breast tissue, nipple, areolar complex, variable amount of skin, pectoralis minor, pectoralis major. Includes removal of internal mammary nodes and en bloc axillary dissection. For single primaries only, code removal of involved contralateral breast under the data item "Surgery of other regional sites, distant sites, or distant lymph nodes."]]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>80</code>
+            <description><![CDATA[Mastectomy, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>90</code>
+            <description><![CDATA[Surgery, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>99</code>
+            <description><![CDATA[Unknown if surgery performed; death certificate ONLY ]]></description>
+        </row>
+    </surgery-table>
+    <surgery-table title="Cervix Uteri">
+        <site-inclusion>C53.0-C53.9</site-inclusion>
+        <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
+        <pre-note><![CDATA[Cervix Uteri<br/>C53.0-C53.9
+<br/>
+(Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
+
+[<b><i>SEER Guideline:</i></b> <b>For invasive cancers</b>, dilation and curettage is NOT coded as Surgery of Primary Site.]
+
+]]></pre-note>
+        <row level="0">
+            <code>00</code>
+            <description><![CDATA[None; no surgery of primary site; autopsy ONLY]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>10</code>
+            <description><![CDATA[Local tumor destruction, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>11</code>
+            <description><![CDATA[Photodynamic therapy (PDT)]]></description>
+        </row>
+        <row level="1">
+            <code>12</code>
+            <description><![CDATA[Electrocautery; fulguration (includes use of hot forceps for tumor destruction)]]></description>
+        </row>
+        <row level="1">
+            <code>13</code>
+            <description><![CDATA[Cryosurgery]]></description>
+        </row>
+        <row level="1">
+            <code>14</code>
+            <description><![CDATA[Laser]]></description>
+        </row>
+        <row level="1">
+            <code>15</code>
+            <description><![CDATA[Loop Electrocautery Excision Procedure (LEEP)]]></description>
+        </row>
+        <row level="1">
+            <code>16</code>
+            <description><![CDATA[Laser ablation]]></description>
+        </row>
+        <row level="1">
+            <code>17</code>
+            <description><![CDATA[Thermal ablation]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>No specimen sent to pathology from surgical events 10-17.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>20</code>
+            <description><![CDATA[Local tumor excision, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>26</code>
+            <description><![CDATA[Excisional biopsy, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>27</code>
+            <description><![CDATA[Cone biopsy]]></description>
+        </row>
+        <row level="1">
+            <code>24</code>
+            <description><![CDATA[Cone biopsy WITH gross excision of lesion]]></description>
+        </row>
+        <row level="1">
+            <code>29</code>
+            <description><![CDATA[Trachelectomy; removal of cervical stump; cervicectomy]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[Any combination of 20, 24, 26, 27 or 29 WITH]]></description>
+        </row>
+        <row level="2">
+            <code>21</code>
+            <description><![CDATA[Electrocautery]]></description>
+        </row>
+        <row level="2">
+            <code>22</code>
+            <description><![CDATA[Cryosurgery]]></description>
+        </row>
+        <row level="2">
+            <code>23</code>
+            <description><![CDATA[Laser ablation or excision]]></description>
+        </row>
+        <row level="1">
+            <code>25</code>
+            <description><![CDATA[Dilatation and curettage; endocervical curettage (for in situ only)]]></description>
+        </row>
+        <row level="1">
+            <code>28</code>
+            <description><![CDATA[Loop electrocautery excision procedure (LEEP)]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Specimen sent to pathology from surgical events 20-29.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>30</code>
+            <description><![CDATA[Total hysterectomy (simple, pan-) WITHOUT removal of tubes and ovaries]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Total hysterectomy removes both the corpus and cervix uteri and may also include a portion of vaginal cuff.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>40</code>
+            <description><![CDATA[Total hysterectomy (simple, pan-) WITH removal of tubes and/or ovary]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Total hysterectomy removes both the corpus and cervix uteri and may also include a portion of vaginal cuff.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>50</code>
+            <description><![CDATA[Modified radical or extended hysterectomy; radical hysterectomy; extended radical hysterectomy]]></description>
+        </row>
+        <row level="1">
+            <code>51</code>
+            <description><![CDATA[Modified radical hysterectomy]]></description>
+        </row>
+        <row level="1">
+            <code>52</code>
+            <description><![CDATA[Extended hysterectomy]]></description>
+        </row>
+        <row level="1">
+            <code>53</code>
+            <description><![CDATA[Radical hysterectomy; Wertheim procedure]]></description>
+        </row>
+        <row level="1">
+            <code>54</code>
+            <description><![CDATA[Extended radical hysterectomy]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>60</code>
+            <description><![CDATA[Hysterectomy, NOS, WITH or WITHOUT removal of tubes and ovaries]]></description>
+        </row>
+        <row level="1">
+            <code>61</code>
+            <description><![CDATA[WITHOUT removal of tubes and ovaries]]></description>
+        </row>
+        <row level="1">
+            <code>62</code>
+            <description><![CDATA[WITH removal of tubes and ovaries]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>70</code>
+            <description><![CDATA[Pelvic exenteration]]></description>
+        </row>
+        <row level="1">
+            <code>71</code>
+            <description><![CDATA[Anterior exenteration]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Includes bladder, distal ureters, and genital organs WITH their ligamentous attachments and pelvic lymph nodes. The removal of pelvic lymph nodes is also coded under the data item Surgical Procedure of Other Site.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>72</code>
+            <description><![CDATA[Posterior exenteration]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Includes rectum and rectosigmoid WITH ligamentous attachments and pelvic lymph nodes. The removal of pelvic lymph nodes is also coded under the data item Surgical Procedure of Other Site.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>73</code>
+            <description><![CDATA[Total exenteration]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Includes removal of all pelvic contents and pelvic lymph nodes. The removal of pelvic lymph nodes is also coded under the data item Surgical Procedure of Other Site.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>74</code>
+            <description><![CDATA[Extended exenteration]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Includes pelvic blood vessels or bony pelvis.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>90</code>
+            <description><![CDATA[Surgery, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>99</code>
+            <description><![CDATA[Unknown if surgery performed; death certificate ONLY ]]></description>
+        </row>
+    </surgery-table>
+    <surgery-table title="Corpus Uteri">
+        <site-inclusion>C54.0-C55.9</site-inclusion>
+        <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
+        <pre-note><![CDATA[Corpus Uteri<br/>C54.0-C55.9
+<br/>
+(Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
+[<b><i>SEER Guideline:</i></b> <b>For invasive cancers</b>, dilation and curettage is NOT coded as Surgery of Primary Site.]
+
+]]></pre-note>
+        <row level="0">
+            <code>00</code>
+            <description><![CDATA[None; no surgery of primary site; autopsy ONLY]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>19</code>
+            <description><![CDATA[Local tumor destruction or excision, NOS]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Unknown whether a specimen was sent to pathology for surgical events coded 19 (principally for cases diagnosed prior to January 1, 2003).</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>10</code>
+            <description><![CDATA[Local tumor destruction, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>11</code>
+            <description><![CDATA[Photodynamic therapy (PDT)]]></description>
+        </row>
+        <row level="1">
+            <code>12</code>
+            <description><![CDATA[Electrocautery; fulguration (includes use of hot forceps for tumor destruction)]]></description>
+        </row>
+        <row level="1">
+            <code>13</code>
+            <description><![CDATA[Cryosurgery]]></description>
+        </row>
+        <row level="1">
+            <code>14</code>
+            <description><![CDATA[Laser]]></description>
+        </row>
+        <row level="1">
+            <code>15</code>
+            <description><![CDATA[Loop Electocautery Excision Procedure (LEEP)]]></description>
+        </row>
+        <row level="1">
+            <code>16</code>
+            <description><![CDATA[Thermal ablation]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>No specimen sent to pathology from surgical events 10-16.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>20</code>
+            <description><![CDATA[Local tumor excision, NOS; simple excision, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>24</code>
+            <description><![CDATA[Excisional biopsy]]></description>
+        </row>
+        <row level="1">
+            <code>25</code>
+            <description><![CDATA[Polypectomy]]></description>
+        </row>
+        <row level="1">
+            <code>26</code>
+            <description><![CDATA[Myomectomy]]></description>
+        </row>
+        <row break="true"/>
+        <row level="1">
+            <code/>
+            <description><![CDATA[Any combination of 20 or 24-26 WITH]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> the following codes INCLUDE local tumor excision, polypectomy or excisional biopsy]]]></description>
+        </row>
+        <row level="2">
+            <code>21</code>
+            <description><![CDATA[Electrocautery]]></description>
+        </row>
+        <row level="2">
+            <code>22</code>
+            <description><![CDATA[Cryosurgery]]></description>
+        </row>
+        <row level="2">
+            <code>23</code>
+            <description><![CDATA[Laser ablation or excision]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Specimen sent to pathology from surgical events 20-26.</i>]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[Margins of resection may have microscopic involvement]]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> Procedures in code 20 include but are not limited to: cryosurgery, electrocautery, excisional biopsy, laser ablation, thermal ablation]]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>30</code>
+            <description><![CDATA[Subtotal hysterectomy/supracervical hysterectomy/fundectomy WITH or WITHOUT removal of tube(s) and ovary(ies).]]></description>
+        </row>
+        <row level="1">
+            <code>31</code>
+            <description><![CDATA[WITHOUT tube(s) and ovary(ies)]]></description>
+        </row>
+        <row level="1">
+            <code>32</code>
+            <description><![CDATA[WITH tube(s) and ovary(ies)]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> for these procedures, the cervix is left in place.]]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>40</code>
+            <description><![CDATA[Total hysterectomy (simple, pan-) WITHOUT removal of tube(s) and ovary(ies)]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Removes both the corpus and cervix uteri. It may also include a portion of the vaginal cuff.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>50</code>
+            <description><![CDATA[Total hysterectomy (simple, pan-) WITH removal of tube(s) and/or ovary(ies)]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Removes both the corpus and cervix uteri. It may also include a portion of the vaginal cuff</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>60</code>
+            <description><![CDATA[Modified radical or extended hysterectomy; radical hysterectomy; extended radical hysterectomy]]></description>
+        </row>
+        <row level="1">
+            <code>61</code>
+            <description><![CDATA[Modified radical hysterectomy]]></description>
+        </row>
+        <row level="1">
+            <code>62</code>
+            <description><![CDATA[Extended hysterectomy]]></description>
+        </row>
+        <row level="1">
+            <code>63</code>
+            <description><![CDATA[Radical hysterectomy; Wertheim procedure]]></description>
+        </row>
+        <row level="1">
+            <code>64</code>
+            <description><![CDATA[Extended radical hysterectomy]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>65</code>
+            <description><![CDATA[Hysterectomy, NOS, WITH or WITHOUT removal of tube(s) and ovary(ies) [formerly SEER code 70]]]></description>
+        </row>
+        <row level="1">
+            <code>66</code>
+            <description><![CDATA[WITHOUT removal of tube(s) and ovary(ies) [formerly SEER code 71]]]></description>
+        </row>
+        <row level="1">
+            <code>67</code>
+            <description><![CDATA[WITH removal of tube(s) and ovary(ies) [formerly SEER code 72]]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>75</code>
+            <description><![CDATA[Pelvic exenteration [formerly SEER code 80]]]></description>
+        </row>
+        <row level="1">
+            <code>76</code>
+            <description><![CDATA[Anterior exenteration [formerly SEER code 81]]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Includes bladder, distal ureters, and genital organs WITH their ligamentous attachments and pelvic lymph nodes. The removal of pelvic lymph nodes is also coded under the data item Surgical Procedure of Other Site.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>77</code>
+            <description><![CDATA[Posterior exenteration [formerly SEER code 82]]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Includes rectum and rectosigmoid WITH ligamentous attachments and pelvic lymph nodes. The removal of pelvic lymph nodes is also coded under the data item Surgical Procedure of Other Site.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>78</code>
+            <description><![CDATA[Total exenteration [formerly SEER code 83]]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Includes removal of all pelvic contents and pelvic lymph nodes. The removal of pelvic lymph nodes is also coded under the data item Surgical Procedure of Other Site.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>79</code>
+            <description><![CDATA[Extended exenteration [formerly SEER code 84]]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Includes pelvic blood vessels or bony pelvis.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>90</code>
+            <description><![CDATA[Surgery, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>99</code>
+            <description><![CDATA[Unknown if surgery performed; death certificate ONLY]]></description>
+        </row>
+    </surgery-table>
+    <surgery-table title="Ovary">
+        <site-inclusion>C56.9</site-inclusion>
+        <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
+        <pre-note><![CDATA[Ovary<br/>C56.9
+<br/>
+(Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
+
+]]></pre-note>
+        <row level="0">
+            <code>00</code>
+            <description><![CDATA[None; no surgery of primary site; autopsy ONLY]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>17</code>
+            <description><![CDATA[Local tumor destruction, NOS]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>No specimen sent to pathology from surgical event 17.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>25</code>
+            <description><![CDATA[Total removal of tumor or (single) ovary, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>26</code>
+            <description><![CDATA[Resection of ovary (wedge, subtotal, or partial) ONLY, NOS; unknown if hysterectomy done]]></description>
+        </row>
+        <row level="1">
+            <code>27</code>
+            <description><![CDATA[WITHOUT hysterectomy]]></description>
+        </row>
+        <row level="1">
+            <code>28</code>
+            <description><![CDATA[WITH hysterectomy]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Specimen sent to pathology from surgical events 25-28.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>35</code>
+            <description><![CDATA[Unilateral (salpingo-)oophorectomy; unknown if hysterectomy done [formerly SEER code 14]]]></description>
+        </row>
+        <row level="1">
+            <code>36</code>
+            <description><![CDATA[WITHOUT hysterectomy [formerly SEER code 15]]]></description>
+        </row>
+        <row level="1">
+            <code>37</code>
+            <description><![CDATA[WITH hysterectomy [formerly SEER code 16]]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>50</code>
+            <description><![CDATA[Bilateral (salpingo-)oophorectomy; unknown if hysterectomy done [formerly SEER code 20]]]></description>
+        </row>
+        <row level="1">
+            <code>51</code>
+            <description><![CDATA[WITHOUT hysterectomy [formerly SEER code 21]]]></description>
+        </row>
+        <row level="1">
+            <code>52</code>
+            <description><![CDATA[WITH hysterectomy [formerly SEER code 22]]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>55</code>
+            <description><![CDATA[Unilateral or bilateral (salpingo-)oophorectomy WITH OMENTECTOMY, NOS; partial or total; unknown if hysterectomy done [formerly SEER code 30]]]></description>
+        </row>
+        <row level="1">
+            <code>56</code>
+            <description><![CDATA[WITHOUT hysterectomy [formerly SEER code 31]]]></description>
+        </row>
+        <row level="1">
+            <code>57</code>
+            <description><![CDATA[WITH hysterectomy [formerly SEER code 32]]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>60</code>
+            <description><![CDATA[Debulking; cytoreductive surgery, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>61</code>
+            <description><![CDATA[WITH colon (including appendix) and/or small intestine resection (not incidental)]]></description>
+        </row>
+        <row level="1">
+            <code>62</code>
+            <description><![CDATA[WITH partial resection of urinary tract (not incidental)]]></description>
+        </row>
+        <row level="1">
+            <code>63</code>
+            <description><![CDATA[Combination of 61 and 62]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Debulking is a partial or total removal of the tumor mass and can involve the removal of multiple organ sites. It may include removal of ovaries and/or the uterus (a hysterectomy). The pathology report may or may not identify ovarian tissue. A debulking is usually followed by another treatment modality such as chemotherapy.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>70</code>
+            <description><![CDATA[Pelvic exenteration, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>71</code>
+            <description><![CDATA[Anterior]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Includes bladder, distal ureters, and genital organs WITH their ligamentous attachments and pelvic lymph nodes. The removal of pelvic lymph nodes is also coded under the data item Surgical Procedure of Other Site.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>72</code>
+            <description><![CDATA[Posterior]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Includes rectum and rectosigmoid WITH ligamentous attachments and pelvic lymph nodes. The removal of pelvic lymph nodes is also coded under the data item Surgical Procedure of Other Site. </i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>73</code>
+            <description><![CDATA[Total]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Includes removal of all pelvic contents and pelvic lymph nodes. The removal of pelvic lymph nodes is also coded under the data item Surgical Procedure of Other Site.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>74</code>
+            <description><![CDATA[Extended]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Includes pelvic blood vessels or bony pelvis.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>80</code>
+            <description><![CDATA[(Salpingo-)oophorectomy, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>90</code>
+            <description><![CDATA[Surgery, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>99</code>
+            <description><![CDATA[Unknown if surgery performed; death certificate ONLY]]></description>
+        </row>
+    </surgery-table>
+    <surgery-table title="Prostate">
+        <site-inclusion>C61.9</site-inclusion>
+        <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
+        <pre-note><![CDATA[Prostate<br/>C61.9
+<br/>
+(Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
+
+<b>Do not code</b> an orchiectomy in this field. For prostate primaries, orchiectomies are coded in the data item "Hematologic Transplant and Endocrine Procedures."
+
+[SEER note: <b>review all former SEER code 10. Convert code 10 to 21 if Diagnostic Confirmation is code 1-4; otherwise convert code 10 to 19.</b>]
+
+]]></pre-note>
+        <row level="0">
+            <code>00</code>
+            <description><![CDATA[None; no surgery of primary site; autopsy ONLY]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>18</code>
+            <description><![CDATA[Local tumor destruction or excision, NOS [formerly SEER code 10]]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>19</code>
+            <description><![CDATA[Transurethral resection (TURP), NOS [formerly SEER code 11]]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Unknown whether a specimen was sent to pathology for surgical events coded 18 or 19 (principally for cases diagnosed prior to January 1, 2003).</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>10</code>
+            <description><![CDATA[Local tumor destruction, [or excision] NOS]]></description>
+        </row>
+        <row level="1">
+            <code>14</code>
+            <description><![CDATA[Cryoprostatectomy]]></description>
+        </row>
+        <row level="1">
+            <code>15</code>
+            <description><![CDATA[Laser ablation]]></description>
+        </row>
+        <row level="1">
+            <code>16</code>
+            <description><![CDATA[Hyperthermia]]></description>
+        </row>
+        <row level="1">
+            <code>17</code>
+            <description><![CDATA[Other method of local tumor destruction]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>No specimen sent to pathology from surgical events 10-17.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>20</code>
+            <description><![CDATA[Local tumor excision, NOS [formerly SEER code 10 = local tumor destruction or excision, NOS]]]></description>
+        </row>
+        <row level="1">
+            <code>21</code>
+            <description><![CDATA[Transurethral resection (TURP), NOS [formerly SEER code 11 = transurethral resection (TURP) NOS]]]></description>
+        </row>
+        <row level="1">
+            <code>22</code>
+            <description><![CDATA[TURP-cancer is incidental finding during surgery for benign disease [formerly SEER code 12]]]></description>
+        </row>
+        <row level="1">
+            <code>23</code>
+            <description><![CDATA[TURP-patient has suspected/known cancer [SEER code 13]]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[Any combination of 21-23 WITH]]></description>
+        </row>
+        <row level="2">
+            <code>24</code>
+            <description><![CDATA[Cryosurgery]]></description>
+        </row>
+        <row level="2">
+            <code>25</code>
+            <description><![CDATA[Laser]]></description>
+        </row>
+        <row level="2">
+            <code>26</code>
+            <description><![CDATA[Hyperthermia]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Specimen sent to pathology from surgical events 20-26.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>30</code>
+            <description><![CDATA[Subtotal, segmental, or simple prostatectomy, which may leave all or part of the capsule intact [formerly SEER code 30 or 40]]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>50</code>
+            <description><![CDATA[Radical prostatectomy, NOS; total prostatectomy, NOS]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Excised prostate, prostatic capsule, ejaculatory ducts, seminal vesicle(s) and may include a narrow cuff of bladder neck.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>70</code>
+            <description><![CDATA[Prostatectomy WITH resection in continuity with other organs; pelvic exenteration]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Surgeries coded 70 are any prostatectomy WITH resection in continuity with any other organs. The other organs may be partially or totally removed. Procedures may include, but are not limited to, cystoprostatectomy, radical cystectomy, and prostatectomy.</i>]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> in continuity with or "en bloc" means that all of the tissues were removed during the same procedure, but not necessarily in a single specimen]]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>80</code>
+            <description><![CDATA[Prostatectomy, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>90</code>
+            <description><![CDATA[Surgery, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>99</code>
+            <description><![CDATA[Unknown if surgery performed; death certificate ONLY ]]></description>
+        </row>
+    </surgery-table>
+    <surgery-table title="Testis">
+        <site-inclusion>C62.0-C62.9</site-inclusion>
+        <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
+        <pre-note><![CDATA[Testis<br/>C62.0-C62.9
+<br/>
+(Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
+
+]]></pre-note>
+        <row level="0">
+            <code>00</code>
+            <description><![CDATA[None; no surgery of primary site; autopsy ONLY]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>12</code>
+            <description><![CDATA[Local tumor destruction, NOS]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>No specimen sent to pathology from surgical event 12.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>20</code>
+            <description><![CDATA[Local or partial excision of testicle [formerly SEER code 10]]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Specimen sent to pathology from surgical event 20.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>30</code>
+            <description><![CDATA[Excision of testicle, NOS WITHOUT cord]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>40</code>
+            <description><![CDATA[Excision of testicle, NOS WITH cord/or cord not mentioned]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>80</code>
+            <description><![CDATA[Orchiectomy, NOS (unspecified whether partial or total testicle removed)]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>90</code>
+            <description><![CDATA[Surgery, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>99</code>
+            <description><![CDATA[Unknown if surgery performed; death certificate ONLY ]]></description>
+        </row>
+    </surgery-table>
+    <surgery-table title="Kidney, Renal Pelvis, and Ureter">
+        <site-inclusion>C64.9,C65.9,C66.9</site-inclusion>
+        <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
+        <pre-note><![CDATA[Kidney, Renal Pelvis, and Ureter<br/>Kidney C64.9, Renal Pelvis C65.9, Ureter C66.9
+<br/>
+(Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
+
+]]></pre-note>
+        <row level="0">
+            <code>00</code>
+            <description><![CDATA[None; no surgery of primary site; autopsy ONLY]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>10</code>
+            <description><![CDATA[Local tumor destruction, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>11</code>
+            <description><![CDATA[Photodynamic therapy (PDT)]]></description>
+        </row>
+        <row level="1">
+            <code>12</code>
+            <description><![CDATA[Electrocautery; fulguration (includes use of hot forceps for tumor destruction)]]></description>
+        </row>
+        <row level="1">
+            <code>13</code>
+            <description><![CDATA[Cryosurgery]]></description>
+        </row>
+        <row level="1">
+            <code>14</code>
+            <description><![CDATA[Laser]]></description>
+        </row>
+        <row level="1">
+            <code>15</code>
+            <description><![CDATA[Thermal ablation]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>No specimen sent to pathology from this surgical event 10-15.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>20</code>
+            <description><![CDATA[Local tumor excision, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>26</code>
+            <description><![CDATA[Polypectomy]]></description>
+        </row>
+        <row level="1">
+            <code>27</code>
+            <description><![CDATA[Excisional biopsy]]></description>
+        </row>
+        <row break="true"/>
+        <row level="1">
+            <code/>
+            <description><![CDATA[Any combination of 20 or 26-27 WITH]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> the following codes INCLUDE local tumor excision, polypectomy or excisional biopsy]]]></description>
+        </row>
+        <row level="2">
+            <code>21</code>
+            <description><![CDATA[Photodynamic therapy (PDT)]]></description>
+        </row>
+        <row level="2">
+            <code>22</code>
+            <description><![CDATA[Electrocautery]]></description>
+        </row>
+        <row level="2">
+            <code>23</code>
+            <description><![CDATA[Cryosurgery]]></description>
+        </row>
+        <row level="2">
+            <code>24</code>
+            <description><![CDATA[Laser ablation]]></description>
+        </row>
+        <row level="2">
+            <code>25</code>
+            <description><![CDATA[Laser excision]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Specimen sent to pathology from surgical events 20-27.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>30</code>
+            <description><![CDATA[Partial or subtotal nephrectomy (kidney or renal pelvis) or partial ureterectomy (ureter)]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Procedures coded 30 include, but are not limited to:</i>]]></description>
+        </row>
+        <row level="2">
+            <code/>
+            <description><![CDATA[<i>Segmental resection</i>]]></description>
+        </row>
+        <row level="2">
+            <code/>
+            <description><![CDATA[<i>Wedge resection</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>40</code>
+            <description><![CDATA[Complete/total/simple nephrectomy-for kidney parenchyma]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[Nephroureterectomy]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Includes bladder cuff for renal pelvis or ureter.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>50</code>
+            <description><![CDATA[Radical nephrectomy]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>May include removal of a portion of vena cava, adrenal gland(s), Gerota's fascia, perinephric fat, or partial/total ureter.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>70</code>
+            <description><![CDATA[Any nephrectomy (simple, subtotal, complete, partial, total, radical) in continuity with the resection of other organ(s) (colon, bladder)]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>The other organs, such as colon or bladder, may be partially or totally removed.</i>]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> in continuity with or "en bloc" means that all of the tissues were removed during the same procedure, but not necessarily in a single specimen]]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>80</code>
+            <description><![CDATA[Nephrectomy, NOS]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[Ureterectomy, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>90</code>
+            <description><![CDATA[Surgery, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>99</code>
+            <description><![CDATA[Unknown if surgery performed; death certificate ONLY ]]></description>
+        </row>
+    </surgery-table>
+    <surgery-table title="Bladder">
+        <site-inclusion>C67.0-C67.9</site-inclusion>
+        <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
+        <pre-note><![CDATA[Bladder<br/>C67.0-C67.9
+<br/>
+(Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
+
+]]></pre-note>
+        <row level="0">
+            <code>00</code>
+            <description><![CDATA[None; no surgery of primary site; autopsy ONLY]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>10</code>
+            <description><![CDATA[Local tumor destruction, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>11</code>
+            <description><![CDATA[Photodynamic therapy (PDT)]]></description>
+        </row>
+        <row level="1">
+            <code>12</code>
+            <description><![CDATA[Electrocautery; fulguration (includes use of hot forceps for tumor destruction)]]></description>
+        </row>
+        <row level="1">
+            <code>13</code>
+            <description><![CDATA[Cryosurgery]]></description>
+        </row>
+        <row level="1">
+            <code>14</code>
+            <description><![CDATA[Laser]]></description>
+        </row>
+        <row level="1">
+            <code>15</code>
+            <description><![CDATA[Intravesical therapy]]></description>
+        </row>
+        <row level="1">
+            <code>16</code>
+            <description><![CDATA[Bacillus Calmette-Guerin (BCG) or other immunotherapy]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>No specimen sent to pathology from surgical events 10-16.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>20</code>
+            <description><![CDATA[Local tumor excision, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>26</code>
+            <description><![CDATA[Polypectomy]]></description>
+        </row>
+        <row level="1">
+            <code>27</code>
+            <description><![CDATA[Excisional biopsy]]></description>
+        </row>
+        <row break="true"/>
+        <row level="1">
+            <code/>
+            <description><![CDATA[Combination of 20 or 26-27 WITH]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> the following codes INCLUDE local tumor excision, polypectomy or excisional biopsy]]]></description>
+        </row>
+        <row level="2">
+            <code>21</code>
+            <description><![CDATA[Photodynamic therapy (PDT)]]></description>
+        </row>
+        <row level="2">
+            <code>22</code>
+            <description><![CDATA[Electrocautery]]></description>
+        </row>
+        <row level="2">
+            <code>23</code>
+            <description><![CDATA[Cryosurgery]]></description>
+        </row>
+        <row level="2">
+            <code>24</code>
+            <description><![CDATA[Laser ablation]]></description>
+        </row>
+        <row level="2">
+            <code>25</code>
+            <description><![CDATA[Laser excision]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Specimen sent to pathology from surgical events 20-27.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>30</code>
+            <description><![CDATA[Partial cystectomy]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>50</code>
+            <description><![CDATA[Simple/total/complete cystectomy]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>60</code>
+            <description><![CDATA[Radical cystectomy (male only)]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> This code is used only for men. It involves removal of bladder and prostate, with or without urethrectomy. The procedure is also called cystoprostatectomy. If a radical cystectomy is the procedure for a woman, use code 71.]]]></description>
+        </row>
+        <row level="1">
+            <code>61</code>
+            <description><![CDATA[Radical cystectomy PLUS ileal conduit]]></description>
+        </row>
+        <row level="1">
+            <code>62</code>
+            <description><![CDATA[Radical cystectomy PLUS continent reservoir or pouch, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>63</code>
+            <description><![CDATA[Radical cystectomy PLUS abdominal pouch (cutaneous)]]></description>
+        </row>
+        <row level="1">
+            <code>64</code>
+            <description><![CDATA[Radical cystectomy PLUS in situ pouch (orthotopic)]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>70</code>
+            <description><![CDATA[Pelvic exenteration, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>71</code>
+            <description><![CDATA[Radical cystectomy (female only); anterior exenteration]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>A radical cystectomy in a female includes removal of bladder, uterus, ovaries, entire vaginal wall, and entire urethra.</i>]]></description>
+        </row>
+        <row level="1">
+            <code>72</code>
+            <description><![CDATA[Posterior exenteration]]></description>
+        </row>
+        <row level="1">
+            <code>73</code>
+            <description><![CDATA[Total exenteration]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Includes removal of all pelvic contents and pelvic lymph nodes. </i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>74</code>
+            <description><![CDATA[Extended exenteration]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Includes pelvic blood vessels or bony pelvis.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>80</code>
+            <description><![CDATA[Cystectomy, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>90</code>
+            <description><![CDATA[Surgery, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>99</code>
+            <description><![CDATA[Unknown if surgery performed; death certificate ONLY ]]></description>
+        </row>
+    </surgery-table>
+    <surgery-table title="Brain [and other parts of central nervous system]">
+        <site-inclusion>C70.0-C70.9,C71.0-C71.9,C72.0-C72.9</site-inclusion>
+        <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
+        <pre-note><![CDATA[Brain [and other parts of central nervous system]<br/>Meninges C70.0-C70.9, Brain C71.0-C71.9,
+Spinal Cord, Cranial Nerves and Other Parts of Central Nervous System C72.0-C72.9
+<br/>
+(Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
+
+<b>Do not code</b> laminectomies for spinal cord primaries.
+
+[<b><i>SEER Note:</i></b> <b>Review former codes 20, 21-23 and 30.</b>]
+
+]]></pre-note>
+        <row level="0">
+            <code>00</code>
+            <description><![CDATA[None; no surgery of primary site; autopsy ONLY]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>10</code>
+            <description><![CDATA[[Local] Tumor destruction, NOS]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>No specimen sent to pathology from surgical event 10.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Do not record stereotactic radiosurgery as tumor destruction. It should be recorded in the radiation treatment item RX Summ--Radiation.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>20</code>
+            <description><![CDATA[Biopsy [excision] of tumor, lesion, or mass]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Specimen sent to pathology from surgical event 20.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>40</code>
+            <description><![CDATA[Partial resection [NOS]]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>55</code>
+            <description><![CDATA[Gross total resection [formerly SEER codes 31, 32, 50, 60]]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>90</code>
+            <description><![CDATA[Surgery, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>99</code>
+            <description><![CDATA[Unknown if surgery performed; death certificate ONLY ]]></description>
+        </row>
+    </surgery-table>
+    <surgery-table title="Thyroid Gland">
+        <site-inclusion>C73.9</site-inclusion>
+        <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
+        <pre-note><![CDATA[Thyroid Gland<br/>C73.9
+<br/>
+(Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
+
+]]></pre-note>
+        <row level="0">
+            <code>00</code>
+            <description><![CDATA[None; no surgery of primary site; autopsy ONLY]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>13</code>
+            <description><![CDATA[Local tumor destruction, NOS]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>No specimen sent to pathology from surgical event 13.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>25</code>
+            <description><![CDATA[Removal of less than a lobe, NOS [formerly SEER code 10]]]></description>
+        </row>
+        <row level="1">
+            <code>26</code>
+            <description><![CDATA[Local surgical excision [formerly SEER code 11]]]></description>
+        </row>
+        <row level="1">
+            <code>27</code>
+            <description><![CDATA[Removal of a partial lobe ONLY [formerly SEER code 12]]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Specimen sent to pathology from surgical events 25-27.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>20</code>
+            <description><![CDATA[Lobectomy and/or isthmectomy]]></description>
+        </row>
+        <row level="1">
+            <code>21</code>
+            <description><![CDATA[Lobectomy ONLY]]></description>
+        </row>
+        <row level="1">
+            <code>22</code>
+            <description><![CDATA[Isthmectomy ONLY]]></description>
+        </row>
+        <row level="1">
+            <code>23</code>
+            <description><![CDATA[Lobectomy WITH isthmus]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>30</code>
+            <description><![CDATA[Removal of a lobe and partial removal of the contralateral lobe]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>40</code>
+            <description><![CDATA[Subtotal or near total thyroidectomy]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>50</code>
+            <description><![CDATA[Total thyroidectomy]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>80</code>
+            <description><![CDATA[Thyroidectomy, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>90</code>
+            <description><![CDATA[Surgery, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>99</code>
+            <description><![CDATA[Unknown if surgery performed; death certificate ONLY]]></description>
+        </row>
+    </surgery-table>
+    <surgery-table title="Lymph Nodes">
+        <site-inclusion>C77.0-C77.9</site-inclusion>
+        <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
+        <pre-note><![CDATA[Lymph Nodes<br/>Lymph Nodes C77.0-C77.9
+<br/>
+(Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
+
+]]></pre-note>
+        <row level="0">
+            <code>00</code>
+            <description><![CDATA[None; no surgery of primary site; autopsy ONLY]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>19</code>
+            <description><![CDATA[Local tumor destruction or excision, NOS [formerly SEER code 10 under spleen and lymph nodes]]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Unknown whether a specimen was sent to pathology for surgical events coded to 19 (principally for cases diagnosed prior to January 1, 2003).</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>15</code>
+            <description><![CDATA[Local tumor destruction, NOS]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>No specimen sent to pathology from surgical event 15.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>25</code>
+            <description><![CDATA[Local tumor excision, NOS]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Less than a full chain, includes a lymph node biopsy.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>30</code>
+            <description><![CDATA[Lymph node dissection, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>31</code>
+            <description><![CDATA[One chain]]></description>
+        </row>
+        <row level="1">
+            <code>32</code>
+            <description><![CDATA[Two or more chains]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>40</code>
+            <description><![CDATA[Lymph node dissection, NOS PLUS splenectomy]]></description>
+        </row>
+        <row level="1">
+            <code>41</code>
+            <description><![CDATA[One chain]]></description>
+        </row>
+        <row level="1">
+            <code>42</code>
+            <description><![CDATA[Two or more chains]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>50</code>
+            <description><![CDATA[Lymph node dissection, NOS and partial/total removal of adjacent organ(s)]]></description>
+        </row>
+        <row level="1">
+            <code>51</code>
+            <description><![CDATA[One chain]]></description>
+        </row>
+        <row level="1">
+            <code>52</code>
+            <description><![CDATA[Two or more chains]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>60</code>
+            <description><![CDATA[Lymph node dissection, NOS and partial/total removal of adjacent organ(s) PLUS splenectomy (Includes staging laparotomy for lymphoma.)]]></description>
+        </row>
+        <row level="1">
+            <code>61</code>
+            <description><![CDATA[One chain]]></description>
+        </row>
+        <row level="1">
+            <code>62</code>
+            <description><![CDATA[Two or more chains]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>90</code>
+            <description><![CDATA[Surgery, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>99</code>
+            <description><![CDATA[Unknown if surgery performed; death certificate ONLY ]]></description>
+        </row>
+    </surgery-table>
+    <surgery-table title="Hematopoietic/Reticuloendothelial/ Immunoproliferative/Myeloproliferative Disease">
+        <site-inclusion>C42.0,C42.1,C42.3,C42.4</site-inclusion>
+        <hist-inclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-inclusion>
+        <pre-note><![CDATA[Hematopoietic/Reticuloendothelial/ Immunoproliferative/Myeloproliferative Disease<br/>C42.0, C42.1, C42.3, C42.4 for all histologies;
+M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989 for all sites
+
+]]></pre-note>
+        <row level="0">
+            <code>98</code>
+            <description><![CDATA[All hematopoietic/reticuloendothelial/immunoproliferative/myeloproliferative disease sites and/or histologies, WITH or WITHOUT surgical treatment.]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>99</code>
+            <description><![CDATA[Death certificate only]]></description>
+        </row>
+        <row break="true"/>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Surgical procedures for hematopoietic/reticuloendothelial/immunoproliferative/ myeloproliferative primaries are to be recorded using the data item Surgical Procedure of Other Site.</i>]]></description>
+        </row>
+    </surgery-table>
+    <surgery-table title="Spleen">
+        <site-inclusion>C42.2</site-inclusion>
+        <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
+        <pre-note><![CDATA[Spleen<br/>C42.2
+<br/>
+(Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
+
+<b>Note: Lymph Nodes surgery codes have been moved to a separate scheme</b>
+
+]]></pre-note>
+        <row level="0">
+            <code>00</code>
+            <description><![CDATA[None; no surgery of primary site; autopsy ONLY]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>19</code>
+            <description><![CDATA[Local tumor destruction, NOS [formerly SEER code 10 = local excision, destruction, NOS]]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>No specimen was sent to pathology for surgical events coded 19 (principally for cases diagnosed prior to January 1, 2003).</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>21</code>
+            <description><![CDATA[Partial splenectomy]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>22</code>
+            <description><![CDATA[Total splenectomy]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>80</code>
+            <description><![CDATA[Splenectomy, NOS [formerly SEER code 20]]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>90</code>
+            <description><![CDATA[Surgery, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>99</code>
+            <description><![CDATA[Unknown if surgery performed; death certificate ONLY]]></description>
+        </row>
+    </surgery-table>
+    <surgery-table title="Unknown and Ill-Defined Primary Sites">
+        <site-inclusion>C76.0-C76.8,C80.9</site-inclusion>
+        <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
+        <pre-note><![CDATA[Unknown and Ill-Defined Primary Sites<br/>C76.0-C76.8, C80.9
+<br/>
+(Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
+
+]]></pre-note>
+        <row level="0">
+            <code>98</code>
+            <description><![CDATA[All unknown and ill-defined disease sites, WITH or WITHOUT surgical treatment.]]></description>
+        </row>
+        <row break="true"/>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Surgical procedures for unknown and ill-defined primaries are to be recorded using the data item Surgical Procedure of Other Site.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>99</code>
+            <description><![CDATA[Death certificate only ]]></description>
+        </row>
+    </surgery-table>
+    <surgery-table title="All Other Sites">
+        <site-inclusion>C14.1-C14.8,C17.0-C17.9,C23.9,C24.0-C24.9,C26.0-C26.9,C30.0,C31.0-C31.9,C33.9,C37.9,C38.0-C38.8,C39.0-C39.9,C48.0-C48.8,C51.0-C51.9,C52.9,C57.0-C57.9,C58.9,C60.0,C63.0-C63.9,C68.0-C68.9,C69.0-C69.9,C74.0-C74.9,C75.0-C75.9</site-inclusion>
+        <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
+        <pre-note><![CDATA[All Other Sites<br/>C14.1-C14.8, C17.0-C17.9, C23.9, C24.0-C24.9, C26.0-C26.9, C30.0-C 30.1, C31.0-C31.9, C33.9, C37.9, C38.0-C38.8, C39.0-C39.9, C48.0-C48.8, C51.0-C51.9, C52.9, C57.0-C57.9, C58.9, C60.0-C 60.9, C63.0-C63.9, C68.0-C68.9, C69.0-C69.9, C74.0-C74.9, C75.0-C75.9
+<br/>
+(Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
+
+]]></pre-note>
+        <row level="0">
+            <code>00</code>
+            <description><![CDATA[None; no surgery of primary site; autopsy ONLY]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>10</code>
+            <description><![CDATA[Local tumor destruction, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>11</code>
+            <description><![CDATA[Photodynamic therapy (PDT)]]></description>
+        </row>
+        <row level="1">
+            <code>12</code>
+            <description><![CDATA[Electrocautery; fulguration (includes use of hot forceps for tumor destruction)]]></description>
+        </row>
+        <row level="1">
+            <code>13</code>
+            <description><![CDATA[Cryosurgery]]></description>
+        </row>
+        <row level="1">
+            <code>14</code>
+            <description><![CDATA[Laser]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>No specimen sent to pathology from surgical events 10-14.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>20</code>
+            <description><![CDATA[Local tumor excision, NOS]]></description>
+        </row>
+        <row level="1">
+            <code>26</code>
+            <description><![CDATA[Polypectomy]]></description>
+        </row>
+        <row level="1">
+            <code>27</code>
+            <description><![CDATA[Excisional biopsy]]></description>
+        </row>
+        <row break="true"/>
+        <row level="1">
+            <code/>
+            <description><![CDATA[Any combination of 20 or 26-27 WITH]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> the following codes INCLUDE local tumor excision, polypectomy or excisional biopsy]]]></description>
+        </row>
+        <row level="2">
+            <code>21</code>
+            <description><![CDATA[Photodynamic therapy (PDT)]]></description>
+        </row>
+        <row level="2">
+            <code>22</code>
+            <description><![CDATA[Electrocautery]]></description>
+        </row>
+        <row level="2">
+            <code>23</code>
+            <description><![CDATA[Cryosurgery]]></description>
+        </row>
+        <row level="2">
+            <code>24</code>
+            <description><![CDATA[Laser ablation]]></description>
+        </row>
+        <row level="2">
+            <code>25</code>
+            <description><![CDATA[Laser excision]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Specimen sent to pathology from surgical events 20-27.</i>]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>30</code>
+            <description><![CDATA[Simple/partial surgical removal of primary site]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>40</code>
+            <description><![CDATA[Total surgical removal of primary site; enucleation]]></description>
+        </row>
+        <row level="1">
+            <code>41</code>
+            <description><![CDATA[Total enucleation (for eye surgery only)]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>50</code>
+            <description><![CDATA[Surgery stated to be "debulking"]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>60</code>
+            <description><![CDATA[Radical surgery]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<i>Partial or total removal of the primary site WITH a resection in continuity (partial or total removal) with other organs.</i>]]></description>
+        </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[[<b><i>SEER Guideline:</i></b> in continuity with or "en bloc" means that all of the tissues were removed during the same procedure, but not necessarily in a single specimen]]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>90</code>
+            <description><![CDATA[Surgery, NOS]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code>99</code>
+            <description><![CDATA[Unknown if surgery performed; death certificate ONLY ]]></description>
+        </row>
+    </surgery-table>
+</surgery-tables>

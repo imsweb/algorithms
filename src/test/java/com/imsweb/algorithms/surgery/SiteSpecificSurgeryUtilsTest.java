@@ -19,9 +19,9 @@ public class SiteSpecificSurgeryUtilsTest {
     @Test
     @SuppressWarnings("ConstantConditions")
     public void testData() {
-        Pattern sitePattern = Pattern.compile("C\\d\\d\\d(-C\\d\\d\\d)?"), histPattern = Pattern.compile("\\d\\d\\d\\d(-\\d\\d\\d\\d)?");
+        Pattern sitePattern = Pattern.compile("C\\d\\d.?\\d(-C\\d\\d.?\\d)?"), histPattern = Pattern.compile("\\d\\d\\d\\d(-\\d\\d\\d\\d)?");
 
-        for (int year = 2010; year <= LocalDate.now().getYear(); year++) {
+        for (int year = 2003; year <= LocalDate.now().getYear(); year++) {
 
             // make sure the content of the XML only uses ASCII characters
             try {
