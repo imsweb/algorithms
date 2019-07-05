@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
@@ -24,6 +25,7 @@ import com.imsweb.algorithms.censustractpovertyindicator.CensusTractPovertyIndic
 import com.imsweb.algorithms.censustractpovertyindicator.CensusTractPovertyIndicatorUtils;
 import com.imsweb.algorithms.iarc.IarcMpInputRecordDto;
 import com.imsweb.algorithms.iarc.IarcUtils;
+import com.imsweb.algorithms.iccc.IcccOutputDto;
 import com.imsweb.algorithms.iccc.IcccRecodeUtils;
 import com.imsweb.algorithms.internal.Utils;
 import com.imsweb.algorithms.napiia.NapiiaInputPatientDto;
@@ -145,6 +147,7 @@ public class Algorithms {
     public static final String FIELD_SEER_SITE_RECODE = "seerSiteRecode";
     public static final String FIELD_SEER_BEHAV_RECODE = "seerBehaviorRecode";
     public static final String FIELD_ICCC = "iccc";
+    public static final String FIELD_ICCC_MAJOR_CATEGORY = "icccMajorCategory";
     public static final String FIELD_IARC_MP_INDICATOR = "iarcMpIndicator";
     public static final String FIELD_IARC_MP_SITE_GROUP = "iarcMpSiteGroup";
     public static final String FIELD_IARC_MP_HIST_GROUP = "iarcMpHistGroup";
@@ -217,6 +220,7 @@ public class Algorithms {
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SEER_SITE_RECODE, null, 5));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SEER_BEHAV_RECODE, null, 1));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_ICCC, null, 3));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_ICCC_MAJOR_CATEGORY, null, 2));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_IARC_MP_INDICATOR, null, 1));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_IARC_MP_SITE_GROUP, null, 4));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_IARC_MP_HIST_GROUP, null, 2));
@@ -1208,12 +1212,16 @@ public class Algorithms {
             public List<AlgorithmField> getOutputFields() {
                 List<AlgorithmField> fields = new ArrayList<>();
                 fields.add(_CACHED_FIELDS.get(FIELD_ICCC));
+                fields.add(_CACHED_FIELDS.get(FIELD_ICCC_MAJOR_CATEGORY));
                 return fields;
             }
 
             @Override
             public Map<String, List<String>> getUnknownValues() {
-                return Collections.singletonMap(FIELD_ICCC, Collections.singletonList(IcccRecodeUtils.ICCC_UNKNOWN_RECODE));
+                Map<String, List<String>> unknownValues = new HashMap<>();
+                unknownValues.put(FIELD_ICCC, Collections.singletonList(IcccRecodeUtils.ICCC_UNKNOWN_RECODE));
+                unknownValues.put(FIELD_ICCC_MAJOR_CATEGORY, Collections.singletonList(IcccRecodeUtils.ICCC_UNKNOWN_MAJOR_CATEGORY));
+                return unknownValues;
             }
 
             @Override
@@ -1227,11 +1235,16 @@ public class Algorithms {
                     String site = (String)inputTumor.get(FIELD_PRIMARY_SITE);
                     String hist = (String)inputTumor.get(FIELD_HIST_O3);
                     String beh = (String)inputTumor.get(FIELD_BEHAV_O3);
-                    outputTumors.add(Collections.singletonMap(FIELD_ICCC, IcccRecodeUtils.calculateSiteRecode(getVersion(), site, hist, beh, false)));
+
+                    IcccOutputDto output = IcccRecodeUtils.calculateIcccAndMajorCategory(getVersion(), site, hist, beh, false);
+
+                    Map<String, Object> outputTumor = new HashMap<>();
+                    outputTumor.put(FIELD_ICCC, output.getIcccSiteRecode());
+                    outputTumor.put(FIELD_ICCC_MAJOR_CATEGORY, output.getIcccMajorCategory());
+                    outputTumors.add(outputTumor);
                 }
 
                 return AlgorithmOutput.of(outputPatient);
-
             }
         };
     }
