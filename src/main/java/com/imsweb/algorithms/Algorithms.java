@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
@@ -25,7 +24,6 @@ import com.imsweb.algorithms.censustractpovertyindicator.CensusTractPovertyIndic
 import com.imsweb.algorithms.censustractpovertyindicator.CensusTractPovertyIndicatorUtils;
 import com.imsweb.algorithms.iarc.IarcMpInputRecordDto;
 import com.imsweb.algorithms.iarc.IarcUtils;
-import com.imsweb.algorithms.iccc.IcccOutputDto;
 import com.imsweb.algorithms.iccc.IcccRecodeUtils;
 import com.imsweb.algorithms.internal.Utils;
 import com.imsweb.algorithms.napiia.NapiiaInputPatientDto;
@@ -64,12 +62,12 @@ import static com.imsweb.algorithms.seersiterecode.SeerSiteRecodeUtils.VERSION_2
 
 /**
  * Instructions for adding a new algorithm:
- *  - add the constant for the algorithm ID (make sure to follow the naming convention, they all start with ALG_).
- *  - add constants for any field that doesn't have a constant yet (there are two lists, standard fields, and non-standard fields).
- *  - add the new fields (standard and non-standard) to the static fields cache (see _CACHED_FIELDS).
- *  - if the new algorithm needs it, add constants for its options
- *  - add a static method at the end of the class "createXxx" that returns an Algorithm, see how all the other ones are done.
- *  - register the new algorithm (see initialize() method).
+ * - add the constant for the algorithm ID (make sure to follow the naming convention, they all start with ALG_).
+ * - add constants for any field that doesn't have a constant yet (there are two lists, standard fields, and non-standard fields).
+ * - add the new fields (standard and non-standard) to the static fields cache (see _CACHED_FIELDS).
+ * - if the new algorithm needs it, add constants for its options
+ * - add a static method at the end of the class "createXxx" that returns an Algorithm, see how all the other ones are done.
+ * - register the new algorithm (see initialize() method).
  */
 public class Algorithms {
 
@@ -1236,11 +1234,12 @@ public class Algorithms {
                     String hist = (String)inputTumor.get(FIELD_HIST_O3);
                     String beh = (String)inputTumor.get(FIELD_BEHAV_O3);
 
-                    IcccOutputDto output = IcccRecodeUtils.calculateIcccAndMajorCategory(getVersion(), site, hist, beh, false);
+                    String icccCode = IcccRecodeUtils.calculateSiteRecode(getVersion(), site, hist, beh, false);
+                    String icccMajorCategory = IcccRecodeUtils.calculateIcccMajorCategory(icccCode);
 
                     Map<String, Object> outputTumor = new HashMap<>();
-                    outputTumor.put(FIELD_ICCC, output.getIcccSiteRecode());
-                    outputTumor.put(FIELD_ICCC_MAJOR_CATEGORY, output.getIcccMajorCategory());
+                    outputTumor.put(FIELD_ICCC, icccCode);
+                    outputTumor.put(FIELD_ICCC_MAJOR_CATEGORY, icccMajorCategory);
                     outputTumors.add(outputTumor);
                 }
 

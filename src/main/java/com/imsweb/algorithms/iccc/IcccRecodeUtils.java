@@ -66,13 +66,7 @@ public final class IcccRecodeUtils {
      */
     private IcccRecodeUtils() {}
 
-    public static IcccOutputDto calculateIcccAndMajorCategory(String version, String site, String histology, String behavior) {
-        return calculateIcccAndMajorCategory(version, site, histology, behavior, false);
-    }
-
-    public static IcccOutputDto calculateIcccAndMajorCategory(String version, String site, String histology, String behavior, boolean recodeExtended) {
-        String icccSiteRecode = calculateSiteRecode(version, site, histology, behavior, recodeExtended);
-
+    public static String calculateIcccMajorCategory(String icccSiteRecode) {
         int iICCC = Integer.parseInt(icccSiteRecode);
         String icccMajorCategory = ICCC_UNKNOWN_MAJOR_CATEGORY;
         int major = -1;
@@ -96,10 +90,7 @@ public final class IcccRecodeUtils {
         if (major != -1)
             icccMajorCategory = StringUtils.leftPad(String.valueOf(major), 2, "0");
 
-        IcccOutputDto output = new IcccOutputDto();
-        output.setIcccSiteRecode(icccSiteRecode);
-        output.setIcccMajorCategory(icccMajorCategory);
-        return output;
+        return icccMajorCategory;
     }
 
     /**
