@@ -22,9 +22,9 @@ import com.imsweb.algorithms.causespecific.CauseSpecificUtils;
 import com.imsweb.algorithms.censustractpovertyindicator.CensusTractPovertyIndicatorInputDto;
 import com.imsweb.algorithms.censustractpovertyindicator.CensusTractPovertyIndicatorOutputDto;
 import com.imsweb.algorithms.censustractpovertyindicator.CensusTractPovertyIndicatorUtils;
-import com.imsweb.algorithms.countyatdiagnosisanalysis.CountyAtDiagnosisAnalysisInputDto;
-import com.imsweb.algorithms.countyatdiagnosisanalysis.CountyAtDiagnosisAnalysisOutputDto;
-import com.imsweb.algorithms.countyatdiagnosisanalysis.CountyAtDiagnosisAnalysisUtils;
+import com.imsweb.algorithms.countyatdiagnosisanalysis.CountyAtDxAnalysisInputDto;
+import com.imsweb.algorithms.countyatdiagnosisanalysis.CountyAtDxAnalysisOutputDto;
+import com.imsweb.algorithms.countyatdiagnosisanalysis.CountyAtDxAnalysisUtils;
 import com.imsweb.algorithms.iarc.IarcMpInputRecordDto;
 import com.imsweb.algorithms.iarc.IarcUtils;
 import com.imsweb.algorithms.iccc.IcccRecodeUtils;
@@ -1368,12 +1368,12 @@ public class Algorithms {
 
             @Override
             public String getName() {
-                return CountyAtDiagnosisAnalysisUtils.ALG_NAME;
+                return CountyAtDxAnalysisUtils.ALG_NAME;
             }
 
             @Override
             public String getVersion() {
-                return CountyAtDiagnosisAnalysisUtils.ALG_VERSION;
+                return CountyAtDxAnalysisUtils.ALG_VERSION;
             }
 
             @Override
@@ -1422,7 +1422,7 @@ public class Algorithms {
                 patient.put(FIELD_TUMORS, outputTumors);
 
                 for (Map<String, Object> inputTumor : Utils.extractTumors(Utils.extractPatient(input))) {
-                    CountyAtDiagnosisAnalysisInputDto inputDto = new CountyAtDiagnosisAnalysisInputDto();
+                    CountyAtDxAnalysisInputDto inputDto = new CountyAtDxAnalysisInputDto();
                     inputDto.setDateOfDiagnosis((String)inputTumor.get(FIELD_DX_DATE));
                     inputDto.setAddrAtDxState((String)inputTumor.get(FIELD_STATE_DX));
                     inputDto.setCountyAtDx((String)inputTumor.get(FIELD_COUNTY_DX));
@@ -1439,7 +1439,7 @@ public class Algorithms {
                     inputDto.setCensusTrCertainty2010((String)inputTumor.get(FIELD_CENSUS_CERTAINTY_2010));
                     inputDto.setCensusTrCertainty2020((String)inputTumor.get(FIELD_CENSUS_CERTAINTY_2020));
 
-                    CountyAtDiagnosisAnalysisOutputDto output = CountyAtDiagnosisAnalysisUtils.computeCountyAtDiagnosis(inputDto);
+                    CountyAtDxAnalysisOutputDto output = CountyAtDxAnalysisUtils.computeCountyAtDiagnosis(inputDto);
 
                     Map<String, Object> outputTumor = new HashMap<>();
                     outputTumor.put(FIELD_COUNTY_AT_DX_ANALYSIS, output.getCountyAtDxAnalysis());

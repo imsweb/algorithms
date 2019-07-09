@@ -38,6 +38,7 @@ public class CountryData {
     private boolean _uricInitialized = false;
     private boolean _continuumInitialized = false;
     private boolean _povertyInitialized = false;
+    private boolean _countyAtDxAnalysisInitialized = false;
 
     // internal lock to control concurrency
     private ReentrantReadWriteLock _lock = new ReentrantReadWriteLock();
@@ -53,6 +54,7 @@ public class CountryData {
             _uricInitialized = false;
             _continuumInitialized = false;
             _povertyInitialized = false;
+            _countyAtDxAnalysisInitialized = false;
         }
         finally {
             _lock.writeLock().unlock();
@@ -268,6 +270,48 @@ public class CountryData {
                 }
             }
             _povertyInitialized = true;
+        }
+        finally {
+            _lock.writeLock().unlock();
+        }
+    }
+
+    /**
+     * Returns requested state data to be used by the county at diagnosis analysis algorithm
+     */
+    public StateData getCountyAtDxAnalysisData(String state) {
+        _lock.readLock().lock();
+        try {
+            if (!_countyAtDxAnalysisInitialized)
+                throw new RuntimeException("County at diagnosis analysis data cannot be access before it has been initialized!");
+            return _stateData.get(state);
+        }
+        finally {
+            _lock.readLock().unlock();
+        }
+    }
+
+    public boolean isCountyAtDxAnalysisInitialized() {
+        _lock.readLock().lock();
+        try {
+            return _countyAtDxAnalysisInitialized;
+        }
+        finally {
+            _lock.readLock().unlock();
+        }
+    }
+
+    public void initializeCountyAtDxAnalysisData(Map<String, Map<String, CountyData>> data) {
+        _lock.writeLock().lock();
+        try {
+            if (!_countyAtDxAnalysisInitialized) {
+                for (Map.Entry<String, Map<String, CountyData>> stateEntry : data.entrySet()) {
+                    StateData stateData = _stateData.computeIfAbsent(stateEntry.getKey(), k -> new StateData());
+                    for (Map.Entry<String, CountyData> countyEntry : stateEntry.getValue().entrySet())
+                        stateData.getData().computeIfAbsent(countyEntry.getKey(), k -> new CountyData());
+                }
+            }
+            _countyAtDxAnalysisInitialized = true;
         }
         finally {
             _lock.writeLock().unlock();

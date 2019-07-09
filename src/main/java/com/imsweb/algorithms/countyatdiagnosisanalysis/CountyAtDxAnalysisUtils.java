@@ -3,11 +3,10 @@
  */
 package com.imsweb.algorithms.countyatdiagnosisanalysis;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.util.ArrayList;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -15,9 +14,12 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.imsweb.algorithms.internal.CountryData;
+import com.opencsv.CSVReaderBuilder;
 
-public class CountyAtDiagnosisAnalysisUtils {
+import com.imsweb.algorithms.internal.CountryData;
+import com.imsweb.algorithms.internal.CountyData;
+
+public class CountyAtDxAnalysisUtils {
 
     public static final String ALG_NAME = "County at Diagnosis Analysis";
     public static final String ALG_VERSION = "1.0";
@@ -42,8 +44,8 @@ public class CountyAtDiagnosisAnalysisUtils {
 
     private static final List<String> _CANADIAN_STATE_ABBREVIATIONS = Arrays.asList("AB", "BC", "MB", "NB", "NL", "NS", "NT", "NU", "ON", "PE", "QC", "SK", "YT");
 
-    public static CountyAtDiagnosisAnalysisOutputDto computeCountyAtDiagnosis(CountyAtDiagnosisAnalysisInputDto input) {
-        CountyAtDiagnosisAnalysisOutputDto output = new CountyAtDiagnosisAnalysisOutputDto();
+    public static CountyAtDxAnalysisOutputDto computeCountyAtDiagnosis(CountyAtDxAnalysisInputDto input) {
+        CountyAtDxAnalysisOutputDto output = new CountyAtDxAnalysisOutputDto();
 
         String dateOfDiagnosis = input.getDateOfDiagnosis();
         Integer diagnosisYear;
@@ -97,10 +99,11 @@ public class CountyAtDiagnosisAnalysisUtils {
                 output.setCountyAtDxAnalysisFlag(REP_REP_GEO_EQUAL);
             }
             else {
-                if (!CountryData.getInstance().isContinuumDataInitialized())
-                    CountryData.getInstance().initializeContinuumData();
-                if (CountryData.getInstance().getContinuumStateData(input.getAddrAtDxState()) == null ||
-                        CountryData.getInstance().getContinuumStateData(input.getAddrAtDxState()).getCountyData(geocoderCountyAtDx) == null) {
+                if (!CountryData.getInstance().isCountyAtDxAnalysisInitialized())
+                    CountryData.getInstance().initializeCountyAtDxAnalysisData(loadCountyAtDxAnalysisData());
+
+                if (CountryData.getInstance().getCountyAtDxAnalysisData(input.getAddrAtDxState()) == null ||
+                        CountryData.getInstance().getCountyAtDxAnalysisData(input.getAddrAtDxState()).getCountyData(geocoderCountyAtDx) == null) {
                     output.setCountyAtDxAnalysis(input.getCountyAtDx());
                     output.setCountyAtDxAnalysisFlag(REP_GEO_INVALID_FOR_STATE);
                 }
@@ -143,5 +146,19 @@ public class CountyAtDiagnosisAnalysisUtils {
             allNines &= c.equals('9');
 
         return allNines;
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    private static Map<String, Map<String, CountyData>> loadCountyAtDxAnalysisData() {
+        Map<String, java.util.Map<String, CountyData>> result = new HashMap<>();
+        try (Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("countyatdxanalysis/state-county-map.csv"), StandardCharsets.US_ASCII)) {
+            for (String[] row : new CSVReaderBuilder(reader).withSkipLines(1).build().readAll())
+                result.computeIfAbsent(row[0], k -> new HashMap<>()).computeIfAbsent(row[1], k -> new CountyData());
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return result;
     }
 }

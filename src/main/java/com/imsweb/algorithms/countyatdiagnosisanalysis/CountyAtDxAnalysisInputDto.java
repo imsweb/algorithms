@@ -3,7 +3,7 @@
  */
 package com.imsweb.algorithms.countyatdiagnosisanalysis;
 
-public class CountyAtDiagnosisAnalysisInputDto {
+public class CountyAtDxAnalysisInputDto {
 
     private String _dateOfDiagnosis;
     private String _addrAtDxState;
