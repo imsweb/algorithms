@@ -19,7 +19,7 @@ public class SiteSpecificSurgeryUtilsTest {
     @Test
     @SuppressWarnings("ConstantConditions")
     public void testData() {
-        Pattern sitePattern = Pattern.compile("C\\d\\d.?\\d(-C\\d\\d.?\\d)?"), histPattern = Pattern.compile("\\d\\d\\d\\d(-\\d\\d\\d\\d)?");
+        Pattern sitePattern = Pattern.compile("C\\d\\d\\d(-C\\d\\d\\d)?"), histPattern = Pattern.compile("\\d\\d\\d\\d(-\\d\\d\\d\\d)?");
 
         for (int year = 2003; year <= LocalDate.now().getYear(); year++) {
 

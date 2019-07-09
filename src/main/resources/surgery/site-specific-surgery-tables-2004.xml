@@ -4268,9 +4268,9 @@ M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989 (with any si
         </row>
     </surgery-table>
     <surgery-table title="Spleen">
-        <site-inclusion>C42.2</site-inclusion>
+        <site-inclusion>C422</site-inclusion>
         <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
-        <pre-note><![CDATA[Spleen<br/>C42.2
+        <pre-note><![CDATA[Spleen<br/>C422
 <br/>
 (Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
 

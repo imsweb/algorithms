@@ -2,11 +2,11 @@
 
 <surgery-tables version="2003" version-name="2003 SEER Coding Manual">
     <surgery-table title="Oral Cavity">
-        <site-inclusion>C00.0-C00.9,C01.9,C02.0-C02.9,C03.0-C03.9,C04.0-C04.9,C05.0-C05.9,C06.0-C06.9</site-inclusion>
+        <site-inclusion>C000-C009,C019,C020-C029,C030-C039,C040-C049,C050-C059,C060-C069</site-inclusion>
         <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
-        <pre-note><![CDATA[Oral Cavity<br/>Lip C00.0-C00.9, Base of Tongue C01.9, Other Parts of Tongue C02.0-C02.9,
-Gum C03.0-C03.9, Floor of Mouth C04.0-C04.9, Palate C05.0-C05.9,
-Other Parts of Mouth C06.0-C06.9
+        <pre-note><![CDATA[Oral Cavity<br/>Lip C000-C009, Base of Tongue C019, Other Parts of Tongue C020-C029,
+Gum C030-C039, Floor of Mouth C040-C049, Palate C050-C059,
+Other Parts of Mouth C060-C069
 <br/>
 (Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
 
@@ -154,9 +154,9 @@ Other Parts of Mouth C06.0-C06.9
         </row>
     </surgery-table>
     <surgery-table title="Parotid and Other Unspecified Glands">
-        <site-inclusion>C07.9,C08.0-C08.9</site-inclusion>
+        <site-inclusion>C079,C080-C089</site-inclusion>
         <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
-        <pre-note><![CDATA[Parotid and Other Unspecified Glands<br/>Parotid Gland C07.9, Major Salivary Glands C08.0-C08.9
+        <pre-note><![CDATA[Parotid and Other Unspecified Glands<br/>Parotid Gland C079, Major Salivary Glands C080-C089
 <br/>
 (Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
 
@@ -324,10 +324,10 @@ Other Parts of Mouth C06.0-C06.9
         </row>
     </surgery-table>
     <surgery-table title="Pharynx">
-        <site-inclusion>C09.0-C09.9,C10.0-C10.9,C11.0-C11.9,C12.9,C13.0-C13.9,C14.0</site-inclusion>
+        <site-inclusion>C090-C099,C100-C109,C110-C119,C129,C130-C139,C140</site-inclusion>
         <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
-        <pre-note><![CDATA[Pharynx<br/>Tonsil C09.0-C09.9, Oropharynx C10.0-C10.9, Nasopharynx C11.0-C11.9
-Pyriform Sinus C12.9, Hypopharynx C13.0-C13.9, Pharynx C14.0
+        <pre-note><![CDATA[Pharynx<br/>Tonsil C090-C099, Oropharynx C100-C109, Nasopharynx C110-C119
+Pyriform Sinus C129, Hypopharynx C130-C139, Pharynx C140
 <br/>
 (Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
 
@@ -478,9 +478,9 @@ Pyriform Sinus C12.9, Hypopharynx C13.0-C13.9, Pharynx C14.0
         </row>
     </surgery-table>
     <surgery-table title="Esophagus">
-        <site-inclusion>C15.0-C15.9</site-inclusion>
+        <site-inclusion>C150-C159</site-inclusion>
         <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
-        <pre-note><![CDATA[Esophagus<br/>C15.0-C15.9
+        <pre-note><![CDATA[Esophagus<br/>C150-C159
 <br/>
 (Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
 
@@ -616,9 +616,9 @@ Pyriform Sinus C12.9, Hypopharynx C13.0-C13.9, Pharynx C14.0
         </row>
     </surgery-table>
     <surgery-table title="Stomach">
-        <site-inclusion>C16.0-C16.9</site-inclusion>
+        <site-inclusion>C160-C169</site-inclusion>
         <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
-        <pre-note><![CDATA[Stomach<br/>C16.0-C16.9
+        <pre-note><![CDATA[Stomach<br/>C160-C169
 <br/>
 (Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
 
@@ -817,9 +817,9 @@ Pyriform Sinus C12.9, Hypopharynx C13.0-C13.9, Pharynx C14.0
         </row>
     </surgery-table>
     <surgery-table title="Colon">
-        <site-inclusion>C18.0-C18.9</site-inclusion>
+        <site-inclusion>C180-C189</site-inclusion>
         <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
-        <pre-note><![CDATA[Colon<br/>C18.0-C18.9
+        <pre-note><![CDATA[Colon<br/>C180-C189
 <br/>
 (Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
 
@@ -985,9 +985,9 @@ Pyriform Sinus C12.9, Hypopharynx C13.0-C13.9, Pharynx C14.0
         </row>
     </surgery-table>
     <surgery-table title="Rectosigmoid">
-        <site-inclusion>C19.9</site-inclusion>
+        <site-inclusion>C199</site-inclusion>
         <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
-        <pre-note><![CDATA[Rectosigmoid<br/>C19.9
+        <pre-note><![CDATA[Rectosigmoid<br/>C199
 <br/>
 (Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
 
@@ -1190,9 +1190,9 @@ Pyriform Sinus C12.9, Hypopharynx C13.0-C13.9, Pharynx C14.0
         </row>
     </surgery-table>
     <surgery-table title="Rectum">
-        <site-inclusion>C20.9</site-inclusion>
+        <site-inclusion>C209</site-inclusion>
         <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
-        <pre-note><![CDATA[Rectum<br/>C20.9
+        <pre-note><![CDATA[Rectum<br/>C209
 <br/>
 (Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
 
@@ -1362,9 +1362,9 @@ Pyriform Sinus C12.9, Hypopharynx C13.0-C13.9, Pharynx C14.0
         </row>
     </surgery-table>
     <surgery-table title="Anus">
-        <site-inclusion>C21.0-C21.8</site-inclusion>
+        <site-inclusion>C210-C218</site-inclusion>
         <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
-        <pre-note><![CDATA[Anus<br/>C21.0-C21.8
+        <pre-note><![CDATA[Anus<br/>C210-C218
 <br/>
 (Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989) 
 
@@ -1481,9 +1481,9 @@ Pyriform Sinus C12.9, Hypopharynx C13.0-C13.9, Pharynx C14.0
         </row>
     </surgery-table>
     <surgery-table title="Liver and Intrahepatic Bile Ducts">
-        <site-inclusion>C22.0-C22.1</site-inclusion>
+        <site-inclusion>C220-C221</site-inclusion>
         <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
-        <pre-note><![CDATA[Liver and Intrahepatic Bile Ducts<br/>C22.0-C22.1
+        <pre-note><![CDATA[Liver and Intrahepatic Bile Ducts<br/>C220-C221
 <br/>
 (Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
 
@@ -1631,9 +1631,9 @@ Pyriform Sinus C12.9, Hypopharynx C13.0-C13.9, Pharynx C14.0
         </row>
     </surgery-table>
     <surgery-table title="Pancreas">
-        <site-inclusion>C25.0-C25.9</site-inclusion>
+        <site-inclusion>C250-C259</site-inclusion>
         <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
-        <pre-note><![CDATA[Pancreas<br/>C25.0-C25.9
+        <pre-note><![CDATA[Pancreas<br/>C250-C259
 <br/>
 (Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
 
@@ -1697,9 +1697,9 @@ Pyriform Sinus C12.9, Hypopharynx C13.0-C13.9, Pharynx C14.0
         </row>
     </surgery-table>
     <surgery-table title="Larynx">
-        <site-inclusion>C32.0-C32.9</site-inclusion>
+        <site-inclusion>C320-C329</site-inclusion>
         <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
-        <pre-note><![CDATA[Larynx<br/>C32.0-C32.9
+        <pre-note><![CDATA[Larynx<br/>C320-C329
 <br/>
 (Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
 
@@ -1839,9 +1839,9 @@ Pyriform Sinus C12.9, Hypopharynx C13.0-C13.9, Pharynx C14.0
         </row>
     </surgery-table>
     <surgery-table title="Lung">
-        <site-inclusion>C34.0-C34.9</site-inclusion>
+        <site-inclusion>C340-C349</site-inclusion>
         <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
-        <pre-note><![CDATA[Lung<br/>C34.0-C34.9
+        <pre-note><![CDATA[Lung<br/>C340-C349
 <br/>
 (Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
 
@@ -1983,10 +1983,10 @@ Pyriform Sinus C12.9, Hypopharynx C13.0-C13.9, Pharynx C14.0
         </row>
     </surgery-table>
     <surgery-table title="Bones, Joints, and Articular Cartilage">
-        <site-inclusion>C40.0-C41.9,C47.0-C47.9,C49.0-C49.9</site-inclusion>
+        <site-inclusion>C400-C419,C470-C479,C490-C499</site-inclusion>
         <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
-        <pre-note><![CDATA[Bones, Joints, and Articular Cartilage<br/>C40.0-C41.9 Peripheral Nerves and Autonomic Nervous System C47.0-C47.9
-Connective, Subcutaneous, and Other Soft Tissues C49.0-C49.9
+        <pre-note><![CDATA[Bones, Joints, and Articular Cartilage<br/>C400-C419 Peripheral Nerves and Autonomic Nervous System C470-C479
+Connective, Subcutaneous, and Other Soft Tissues C490-C499
 <br/>
 (Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
 
@@ -2074,9 +2074,9 @@ Connective, Subcutaneous, and Other Soft Tissues C49.0-C49.9
         </row>
     </surgery-table>
     <surgery-table title="Skin">
-        <site-inclusion>C44.0-C44.9</site-inclusion>
+        <site-inclusion>C440-C449</site-inclusion>
         <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
-        <pre-note><![CDATA[Skin<br/>C44.0-C44.9
+        <pre-note><![CDATA[Skin<br/>C440-C449
 <br/>
 (Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
 
@@ -2215,9 +2215,9 @@ Connective, Subcutaneous, and Other Soft Tissues C49.0-C49.9
         </row>
     </surgery-table>
     <surgery-table title="Breast">
-        <site-inclusion>C50.0-C50.9</site-inclusion>
+        <site-inclusion>C500-C509</site-inclusion>
         <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
-        <pre-note><![CDATA[Breast<br/>C50.0-C50.9
+        <pre-note><![CDATA[Breast<br/>C500-C509
 <br/>
 (Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
 
@@ -2452,9 +2452,9 @@ Connective, Subcutaneous, and Other Soft Tissues C49.0-C49.9
         </row>
     </surgery-table>
     <surgery-table title="Cervix Uteri">
-        <site-inclusion>C53.0-C53.9</site-inclusion>
+        <site-inclusion>C530-C539</site-inclusion>
         <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
-        <pre-note><![CDATA[Cervix Uteri<br/>C53.0-C53.9
+        <pre-note><![CDATA[Cervix Uteri<br/>C530-C539
 <br/>
 (Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
 
@@ -2655,9 +2655,9 @@ Connective, Subcutaneous, and Other Soft Tissues C49.0-C49.9
         </row>
     </surgery-table>
     <surgery-table title="Corpus Uteri">
-        <site-inclusion>C54.0-C55.9</site-inclusion>
+        <site-inclusion>C540-C559</site-inclusion>
         <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
-        <pre-note><![CDATA[Corpus Uteri<br/>C54.0-C55.9
+        <pre-note><![CDATA[Corpus Uteri<br/>C540-C559
 <br/>
 (Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
 [<b><i>SEER Guideline:</i></b> <b>For invasive cancers</b>, dilation and curettage is NOT coded as Surgery of Primary Site.]
@@ -2880,9 +2880,9 @@ Connective, Subcutaneous, and Other Soft Tissues C49.0-C49.9
         </row>
     </surgery-table>
     <surgery-table title="Ovary">
-        <site-inclusion>C56.9</site-inclusion>
+        <site-inclusion>C569</site-inclusion>
         <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
-        <pre-note><![CDATA[Ovary<br/>C56.9
+        <pre-note><![CDATA[Ovary<br/>C569
 <br/>
 (Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
 
@@ -3038,9 +3038,9 @@ Connective, Subcutaneous, and Other Soft Tissues C49.0-C49.9
         </row>
     </surgery-table>
     <surgery-table title="Prostate">
-        <site-inclusion>C61.9</site-inclusion>
+        <site-inclusion>C619</site-inclusion>
         <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
-        <pre-note><![CDATA[Prostate<br/>C61.9
+        <pre-note><![CDATA[Prostate<br/>C619
 <br/>
 (Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
 
@@ -3173,9 +3173,9 @@ Connective, Subcutaneous, and Other Soft Tissues C49.0-C49.9
         </row>
     </surgery-table>
     <surgery-table title="Testis">
-        <site-inclusion>C62.0-C62.9</site-inclusion>
+        <site-inclusion>C620-C629</site-inclusion>
         <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
-        <pre-note><![CDATA[Testis<br/>C62.0-C62.9
+        <pre-note><![CDATA[Testis<br/>C620-C629
 <br/>
 (Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
 
@@ -3229,9 +3229,9 @@ Connective, Subcutaneous, and Other Soft Tissues C49.0-C49.9
         </row>
     </surgery-table>
     <surgery-table title="Kidney, Renal Pelvis, and Ureter">
-        <site-inclusion>C64.9,C65.9,C66.9</site-inclusion>
+        <site-inclusion>C649,C659,C669</site-inclusion>
         <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
-        <pre-note><![CDATA[Kidney, Renal Pelvis, and Ureter<br/>Kidney C64.9, Renal Pelvis C65.9, Ureter C66.9
+        <pre-note><![CDATA[Kidney, Renal Pelvis, and Ureter<br/>Kidney C649, Renal Pelvis C659, Ureter C669
 <br/>
 (Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
 
@@ -3388,9 +3388,9 @@ Connective, Subcutaneous, and Other Soft Tissues C49.0-C49.9
         </row>
     </surgery-table>
     <surgery-table title="Bladder">
-        <site-inclusion>C67.0-C67.9</site-inclusion>
+        <site-inclusion>C670-C679</site-inclusion>
         <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
-        <pre-note><![CDATA[Bladder<br/>C67.0-C67.9
+        <pre-note><![CDATA[Bladder<br/>C670-C679
 <br/>
 (Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
 
@@ -3564,10 +3564,10 @@ Connective, Subcutaneous, and Other Soft Tissues C49.0-C49.9
         </row>
     </surgery-table>
     <surgery-table title="Brain [and other parts of central nervous system]">
-        <site-inclusion>C70.0-C70.9,C71.0-C71.9,C72.0-C72.9</site-inclusion>
+        <site-inclusion>C700-C709,C710-C719,C720-C729</site-inclusion>
         <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
-        <pre-note><![CDATA[Brain [and other parts of central nervous system]<br/>Meninges C70.0-C70.9, Brain C71.0-C71.9,
-Spinal Cord, Cranial Nerves and Other Parts of Central Nervous System C72.0-C72.9
+        <pre-note><![CDATA[Brain [and other parts of central nervous system]<br/>Meninges C700-C709, Brain C710-C719,
+Spinal Cord, Cranial Nerves and Other Parts of Central Nervous System C720-C729
 <br/>
 (Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
 
@@ -3625,9 +3625,9 @@ Spinal Cord, Cranial Nerves and Other Parts of Central Nervous System C72.0-C72.
         </row>
     </surgery-table>
     <surgery-table title="Thyroid Gland">
-        <site-inclusion>C73.9</site-inclusion>
+        <site-inclusion>C739</site-inclusion>
         <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
-        <pre-note><![CDATA[Thyroid Gland<br/>C73.9
+        <pre-note><![CDATA[Thyroid Gland<br/>C739
 <br/>
 (Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
 
@@ -3711,9 +3711,9 @@ Spinal Cord, Cranial Nerves and Other Parts of Central Nervous System C72.0-C72.
         </row>
     </surgery-table>
     <surgery-table title="Lymph Nodes">
-        <site-inclusion>C77.0-C77.9</site-inclusion>
+        <site-inclusion>C770-C779</site-inclusion>
         <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
-        <pre-note><![CDATA[Lymph Nodes<br/>Lymph Nodes C77.0-C77.9
+        <pre-note><![CDATA[Lymph Nodes<br/>Lymph Nodes C770-C779
 <br/>
 (Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
 
@@ -3813,9 +3813,9 @@ Spinal Cord, Cranial Nerves and Other Parts of Central Nervous System C72.0-C72.
         </row>
     </surgery-table>
     <surgery-table title="Hematopoietic/Reticuloendothelial/ Immunoproliferative/Myeloproliferative Disease">
-        <site-inclusion>C42.0,C42.1,C42.3,C42.4</site-inclusion>
+        <site-inclusion>C420,C421,C423,C424</site-inclusion>
         <hist-inclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-inclusion>
-        <pre-note><![CDATA[Hematopoietic/Reticuloendothelial/ Immunoproliferative/Myeloproliferative Disease<br/>C42.0, C42.1, C42.3, C42.4 for all histologies;
+        <pre-note><![CDATA[Hematopoietic/Reticuloendothelial/ Immunoproliferative/Myeloproliferative Disease<br/>C420, C421, C423, C424 for all histologies;
 M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989 for all sites
 
 ]]></pre-note>
@@ -3835,9 +3835,9 @@ M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989 for all site
         </row>
     </surgery-table>
     <surgery-table title="Spleen">
-        <site-inclusion>C42.2</site-inclusion>
+        <site-inclusion>C422</site-inclusion>
         <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
-        <pre-note><![CDATA[Spleen<br/>C42.2
+        <pre-note><![CDATA[Spleen<br/>C422
 <br/>
 (Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
 
@@ -3884,9 +3884,9 @@ M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989 for all site
         </row>
     </surgery-table>
     <surgery-table title="Unknown and Ill-Defined Primary Sites">
-        <site-inclusion>C76.0-C76.8,C80.9</site-inclusion>
+        <site-inclusion>C760-C768,C809</site-inclusion>
         <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
-        <pre-note><![CDATA[Unknown and Ill-Defined Primary Sites<br/>C76.0-C76.8, C80.9
+        <pre-note><![CDATA[Unknown and Ill-Defined Primary Sites<br/>C760-C768, C809
 <br/>
 (Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
 
@@ -3907,9 +3907,9 @@ M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989 for all site
         </row>
     </surgery-table>
     <surgery-table title="All Other Sites">
-        <site-inclusion>C14.1-C14.8,C17.0-C17.9,C23.9,C24.0-C24.9,C26.0-C26.9,C30.0,C31.0-C31.9,C33.9,C37.9,C38.0-C38.8,C39.0-C39.9,C48.0-C48.8,C51.0-C51.9,C52.9,C57.0-C57.9,C58.9,C60.0,C63.0-C63.9,C68.0-C68.9,C69.0-C69.9,C74.0-C74.9,C75.0-C75.9</site-inclusion>
+        <site-inclusion>C141-C148,C170-C179,C239,C240-C249,C260-C269,C300,C310-C319,C339,C379,C380-C388,C390-C399,C480-C488,C510-C519,C529,C570-C579,C589,C600,C630-C639,C680-C689,C690-C699,C740-C749,C750-C759</site-inclusion>
         <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
-        <pre-note><![CDATA[All Other Sites<br/>C14.1-C14.8, C17.0-C17.9, C23.9, C24.0-C24.9, C26.0-C26.9, C30.0-C 30.1, C31.0-C31.9, C33.9, C37.9, C38.0-C38.8, C39.0-C39.9, C48.0-C48.8, C51.0-C51.9, C52.9, C57.0-C57.9, C58.9, C60.0-C 60.9, C63.0-C63.9, C68.0-C68.9, C69.0-C69.9, C74.0-C74.9, C75.0-C75.9
+        <pre-note><![CDATA[All Other Sites<br/>C141-C148, C170-C179, C239, C240-C249, C260-C269, C300-C 30.1, C310-C319, C339, C379, C380-C388, C390-C399, C480-C488, C510-C519, C529, C570-C579, C589, C600-C 60.9, C630-C639, C680-C689, C690-C699, C740-C749, C750-C759
 <br/>
 (Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
 
