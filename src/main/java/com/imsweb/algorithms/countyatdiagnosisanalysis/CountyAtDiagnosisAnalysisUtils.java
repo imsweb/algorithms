@@ -13,14 +13,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
+
+import com.imsweb.algorithms.internal.CountryData;
+
 public class CountyAtDiagnosisAnalysisUtils {
 
     public static final String ALG_NAME = "County at Diagnosis Analysis";
     public static final String ALG_VERSION = "1.0";
-    public static final String ALG_INFO = "County at Diagnosis Analysis 1.0, released in TBD";
 
+    // special codes
     public static final String INVALID_COUNTY_CODE = "999";
     public static final String CANADIAN_COUNTY_CODE = "998";
+
+    // flag values
     public static final String REP_REP_GEO_EQUAL = "2";
     public static final String REP_GEO_BLANK_OR_UNK = "2.1";
     public static final String REP_GEO_INVALID_FOR_STATE = "2.2";
@@ -35,30 +41,6 @@ public class CountyAtDiagnosisAnalysisUtils {
     public static final String OTHER_REP_AND_GEO_BLANK = "10.1";
 
     private static final List<String> _CANADIAN_STATE_ABBREVIATIONS = Arrays.asList("AB", "BC", "MB", "NB", "NL", "NS", "NT", "NU", "ON", "PE", "QC", "SK", "YT");
-
-    private static final List<String> _VALID_COUNTY_CODES = new ArrayList<>();
-    static {
-        try {
-            File countyCodesFile = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\countyatdxanalysis\\county-codes.txt");
-            BufferedReader reader = new BufferedReader(new FileReader(countyCodesFile));
-            reader.lines().forEach(_VALID_COUNTY_CODES::add);
-        }
-        catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static final Map<String, String> _STATE_CODES = new HashMap<>();
-    static {
-        try {
-            File countyCodesFile = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\countyatdxanalysis\\state-code-mapping.txt");
-            BufferedReader reader = new BufferedReader(new FileReader(countyCodesFile));
-            reader.lines().map(line -> line.split("\t")).forEach(entry -> _STATE_CODES.put(entry[0], entry[1]));
-        }
-        catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
 
     public static CountyAtDiagnosisAnalysisOutputDto computeCountyAtDiagnosis(CountyAtDiagnosisAnalysisInputDto input) {
         CountyAtDiagnosisAnalysisOutputDto output = new CountyAtDiagnosisAnalysisOutputDto();
@@ -77,7 +59,7 @@ public class CountyAtDiagnosisAnalysisUtils {
             }
         }
 
-        if (diagnosisYear == null || isBlank(input.getAddrAtDxState())) {
+        if (diagnosisYear == null || StringUtils.isBlank(input.getAddrAtDxState())) {
             output.setCountyAtDxAnalysis(INVALID_COUNTY_CODE);
             output.setCountyAtDxAnalysisFlag(OTHER_STATE_OR_DX_YEAR_BLANK);
         }
@@ -102,7 +84,7 @@ public class CountyAtDiagnosisAnalysisUtils {
                 geocoderCertainty = input.getCensusTrCertainty2010();
             }
 
-            if (isBlank(geocoderCountyAtDx) && isBlank(input.getCountyAtDx())) {
+            if (StringUtils.isBlank(geocoderCountyAtDx) && StringUtils.isBlank(input.getCountyAtDx())) {
                 output.setCountyAtDxAnalysis(INVALID_COUNTY_CODE);
                 output.setCountyAtDxAnalysisFlag(OTHER_REP_AND_GEO_BLANK);
             }
@@ -114,16 +96,19 @@ public class CountyAtDiagnosisAnalysisUtils {
                 output.setCountyAtDxAnalysis(input.getCountyAtDx());
                 output.setCountyAtDxAnalysisFlag(REP_REP_GEO_EQUAL);
             }
-            else if (!_VALID_COUNTY_CODES.contains(_STATE_CODES.getOrDefault(input.getAddrAtDxState(), "00") + geocoderCountyAtDx)) {
-                output.setCountyAtDxAnalysis(input.getCountyAtDx());
-                output.setCountyAtDxAnalysisFlag(REP_GEO_INVALID_FOR_STATE);
-            }
-            else if (!isBlankOrNineFilled(geocoderCertainty) && isBlankOrNineFilled(input.getCountyAtDx())) {
-                output.setCountyAtDxAnalysis(geocoderCountyAtDx);
-                output.setCountyAtDxAnalysisFlag(GEO_CERT_KNOWN_REP_UNK);
-            }
             else {
-                if (Arrays.asList("1", "6").contains(geocoderCertainty)) {
+                if (!CountryData.getInstance().isContinuumDataInitialized())
+                    CountryData.getInstance().initializeContinuumData();
+                if (CountryData.getInstance().getContinuumStateData(input.getAddrAtDxState()) == null ||
+                        CountryData.getInstance().getContinuumStateData(input.getAddrAtDxState()).getCountyData(geocoderCountyAtDx) == null) {
+                    output.setCountyAtDxAnalysis(input.getCountyAtDx());
+                    output.setCountyAtDxAnalysisFlag(REP_GEO_INVALID_FOR_STATE);
+                }
+                else if (!isBlankOrNineFilled(geocoderCertainty) && isBlankOrNineFilled(input.getCountyAtDx())) {
+                    output.setCountyAtDxAnalysis(geocoderCountyAtDx);
+                    output.setCountyAtDxAnalysisFlag(GEO_CERT_KNOWN_REP_UNK);
+                }
+                else if (Arrays.asList("1", "6").contains(geocoderCertainty)) {
                     output.setCountyAtDxAnalysis(geocoderCountyAtDx);
                     output.setCountyAtDxAnalysisFlag(GEO_CERT_1_OR_6);
                 }
@@ -135,15 +120,13 @@ public class CountyAtDiagnosisAnalysisUtils {
                     output.setCountyAtDxAnalysis(input.getCountyAtDx());
                     output.setCountyAtDxAnalysisFlag(REP_CERT_5);
                 }
-                else if (isBlankOrNineFilled(geocoderCertainty)) {
-                    if (isBlankOrNineFilled(input.getCountyAtDx())) {
-                        output.setCountyAtDxAnalysis(geocoderCountyAtDx);
-                        output.setCountyAtDxAnalysisFlag(GEO_CERT_UNK_REP_UNK);
-                    }
-                    else {
-                        output.setCountyAtDxAnalysis(input.getCountyAtDx());
-                        output.setCountyAtDxAnalysisFlag(REP_CERT_UNK);
-                    }
+                else if (isBlankOrNineFilled(input.getCountyAtDx())) {
+                    output.setCountyAtDxAnalysis(geocoderCountyAtDx);
+                    output.setCountyAtDxAnalysisFlag(GEO_CERT_UNK_REP_UNK);
+                }
+                else {
+                    output.setCountyAtDxAnalysis(input.getCountyAtDx());
+                    output.setCountyAtDxAnalysisFlag(REP_CERT_UNK);
                 }
             }
         }
@@ -151,19 +134,8 @@ public class CountyAtDiagnosisAnalysisUtils {
         return output;
     }
 
-    private static boolean isBlank(String str) {
-        if (str == null || str.isEmpty())
-            return true;
-
-        boolean allSpaces = true;
-        for (Character c : str.toCharArray())
-            allSpaces &= c.equals(' ');
-
-        return allSpaces;
-    }
-
-    private static boolean isBlankOrNineFilled(String str) {
-        if (isBlank(str))
+    static boolean isBlankOrNineFilled(String str) {
+        if (StringUtils.isBlank(str))
             return true;
 
         boolean allNines = true;

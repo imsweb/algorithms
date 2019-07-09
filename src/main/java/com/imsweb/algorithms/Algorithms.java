@@ -65,12 +65,12 @@ import static com.imsweb.algorithms.seersiterecode.SeerSiteRecodeUtils.VERSION_2
 
 /**
  * Instructions for adding a new algorithm:
- *  - add the constant for the algorithm ID (make sure to follow the naming convention, they all start with ALG_).
- *  - add constants for any field that doesn't have a constant yet (there are two lists, standard fields, and non-standard fields).
- *  - add the new fields (standard and non-standard) to the static fields cache (see _CACHED_FIELDS).
- *  - if the new algorithm needs it, add constants for its options
- *  - add a static method at the end of the class "createXxx" that returns an Algorithm, see how all the other ones are done.
- *  - register the new algorithm (see initialize() method).
+ * - add the constant for the algorithm ID (make sure to follow the naming convention, they all start with ALG_).
+ * - add constants for any field that doesn't have a constant yet (there are two lists, standard fields, and non-standard fields).
+ * - add the new fields (standard and non-standard) to the static fields cache (see _CACHED_FIELDS).
+ * - if the new algorithm needs it, add constants for its options
+ * - add a static method at the end of the class "createXxx" that returns an Algorithm, see how all the other ones are done.
+ * - register the new algorithm (see initialize() method).
  */
 public class Algorithms {
 
@@ -166,7 +166,7 @@ public class Algorithms {
     public static final String FIELD_IARC_MP_SITE_GROUP = "iarcMpSiteGroup";
     public static final String FIELD_IARC_MP_HIST_GROUP = "iarcMpHistGroup";
     public static final String FIELD_IARC_MP_HISTOLOGY = "iarcMpHistologicTypeIcdO3";
-    public static final String FIELD_COUNTY_AT_DX_ANALYSIS_FLAG = "countyAtDiagnosisAnalysisFlag";
+    public static final String FIELD_COUNTY_AT_DX_ANALYSIS_FLAG = "countyAtDXAnalysisFlag";
 
     // options
     public static final String PARAM_NHIA_OPTION = "nhiaOption";
@@ -252,6 +252,7 @@ public class Algorithms {
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_IARC_MP_SITE_GROUP, null, 4));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_IARC_MP_HIST_GROUP, null, 2));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_IARC_MP_HISTOLOGY, null, 4));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_COUNTY_AT_DX_ANALYSIS_FLAG, null, 4));
     }
 
     private static void addField(Map<String, AlgorithmField> cache, AlgorithmField field) {
@@ -1359,8 +1360,11 @@ public class Algorithms {
 
     private static Algorithm createCountyAtDiagnosisAnalysis() {
         return new Algorithm() {
+
             @Override
-            public String getId() { return ALG_COUNTY_AT_DIAGNOSIS_ANALYSIS; }
+            public String getId() {
+                return ALG_COUNTY_AT_DIAGNOSIS_ANALYSIS;
+            }
 
             @Override
             public String getName() {
@@ -1374,7 +1378,7 @@ public class Algorithms {
 
             @Override
             public String getInfo() {
-                return CountyAtDiagnosisAnalysisUtils.ALG_INFO;
+                return getName();
             }
 
             @Override
@@ -1407,33 +1411,41 @@ public class Algorithms {
             public List<AlgorithmField> getOutputFields() {
                 List<AlgorithmField> fields = new ArrayList<>();
                 fields.add(_CACHED_FIELDS.get(FIELD_COUNTY_AT_DX_ANALYSIS));
+                fields.add(_CACHED_FIELDS.get(FIELD_COUNTY_AT_DX_ANALYSIS_FLAG));
                 return fields;
             }
 
             @Override
             public AlgorithmOutput execute(AlgorithmInput input) {
-                CountyAtDiagnosisAnalysisInputDto inputDto = new CountyAtDiagnosisAnalysisInputDto();
-                inputDto.setDateOfDiagnosis((String)input.getParameter(FIELD_DX_DATE));
-                inputDto.setAddrAtDxState((String)input.getParameter(FIELD_STATE_DX));
-                inputDto.setCountyAtDx((String)input.getParameter(FIELD_COUNTY_DX));
-                inputDto.setCountyAtDxGeocode1990((String)input.getParameter(FIELD_COUNTY_AT_DX_GEOCODE_1990));
-                inputDto.setCountyAtDxGeocode2000((String)input.getParameter(FIELD_COUNTY_AT_DX_GEOCODE_2000));
-                inputDto.setCountyAtDxGeocode2000((String)input.getParameter(FIELD_COUNTY_AT_DX_GEOCODE_2010));
-                inputDto.setCountyAtDxGeocode2020((String)input.getParameter(FIELD_COUNTY_AT_DX_GEOCODE_2020));
-                inputDto.setStateAtDxGeocode19708090((String)input.getParameter(FIELD_STATE_AT_DX_GEOCODE_19708090));
-                inputDto.setStateAtDxGeocode2000((String)input.getParameter(FIELD_STATE_AT_DX_GEOCODE_2000));
-                inputDto.setStateAtDxGeocode2010((String)input.getParameter(FIELD_STATE_AT_DX_GEOCODE_2010));
-                inputDto.setStateAtDxGeocode2020((String)input.getParameter(FIELD_STATE_AT_DX_GEOCODE_2020));
-                inputDto.setCensusTrCert19708090((String)input.getParameter(FIELD_CENSUS_CERTAINTY_708090));
-                inputDto.setCensusTrCertainty2000((String)input.getParameter(FIELD_CENSUS_CERTAINTY_2000));
-                inputDto.setCensusTrCertainty2010((String)input.getParameter(FIELD_CENSUS_CERTAINTY_2010));
-                inputDto.setCensusTrCertainty2020((String)input.getParameter(FIELD_CENSUS_CERTAINTY_2020));
-
-                CountyAtDiagnosisAnalysisOutputDto output = CountyAtDiagnosisAnalysisUtils.computeCountyAtDiagnosis(inputDto);
-
                 Map<String, Object> patient = new HashMap<>();
-                patient.put(FIELD_COUNTY_AT_DX_ANALYSIS, output.getCountyAtDxAnalysis());
-                patient.put(FIELD_COUNTY_AT_DX_ANALYSIS_FLAG, output.getCountyAtDxAnalysisFlag());
+                List<Map<String, Object>> outputTumors = new ArrayList<>();
+                patient.put(FIELD_TUMORS, outputTumors);
+
+                for (Map<String, Object> inputTumor : Utils.extractTumors(Utils.extractPatient(input))) {
+                    CountyAtDiagnosisAnalysisInputDto inputDto = new CountyAtDiagnosisAnalysisInputDto();
+                    inputDto.setDateOfDiagnosis((String)inputTumor.get(FIELD_DX_DATE));
+                    inputDto.setAddrAtDxState((String)inputTumor.get(FIELD_STATE_DX));
+                    inputDto.setCountyAtDx((String)inputTumor.get(FIELD_COUNTY_DX));
+                    inputDto.setCountyAtDxGeocode1990((String)inputTumor.get(FIELD_COUNTY_AT_DX_GEOCODE_1990));
+                    inputDto.setCountyAtDxGeocode2000((String)inputTumor.get(FIELD_COUNTY_AT_DX_GEOCODE_2000));
+                    inputDto.setCountyAtDxGeocode2000((String)inputTumor.get(FIELD_COUNTY_AT_DX_GEOCODE_2010));
+                    inputDto.setCountyAtDxGeocode2020((String)inputTumor.get(FIELD_COUNTY_AT_DX_GEOCODE_2020));
+                    inputDto.setStateAtDxGeocode19708090((String)inputTumor.get(FIELD_STATE_AT_DX_GEOCODE_19708090));
+                    inputDto.setStateAtDxGeocode2000((String)inputTumor.get(FIELD_STATE_AT_DX_GEOCODE_2000));
+                    inputDto.setStateAtDxGeocode2010((String)inputTumor.get(FIELD_STATE_AT_DX_GEOCODE_2010));
+                    inputDto.setStateAtDxGeocode2020((String)inputTumor.get(FIELD_STATE_AT_DX_GEOCODE_2020));
+                    inputDto.setCensusTrCert19708090((String)inputTumor.get(FIELD_CENSUS_CERTAINTY_708090));
+                    inputDto.setCensusTrCertainty2000((String)inputTumor.get(FIELD_CENSUS_CERTAINTY_2000));
+                    inputDto.setCensusTrCertainty2010((String)inputTumor.get(FIELD_CENSUS_CERTAINTY_2010));
+                    inputDto.setCensusTrCertainty2020((String)inputTumor.get(FIELD_CENSUS_CERTAINTY_2020));
+
+                    CountyAtDiagnosisAnalysisOutputDto output = CountyAtDiagnosisAnalysisUtils.computeCountyAtDiagnosis(inputDto);
+
+                    Map<String, Object> outputTumor = new HashMap<>();
+                    outputTumor.put(FIELD_COUNTY_AT_DX_ANALYSIS, output.getCountyAtDxAnalysis());
+                    outputTumor.put(FIELD_COUNTY_AT_DX_ANALYSIS_FLAG, output.getCountyAtDxAnalysisFlag());
+                    outputTumors.add(outputTumor);
+                }
 
                 return AlgorithmOutput.of(patient);
             }
