@@ -53,6 +53,7 @@ public final class IcccRecodeUtils {
 
     // unknown value
     public static final String ICCC_UNKNOWN_RECODE = "999";
+    public static final String ICCC_UNKNOWN_MAJOR_CATEGORY = "99";
 
     // cached formatted data
     private static final Map<String, List<IcccSiteGroupDto>> _DATA = new HashMap<>();
@@ -64,6 +65,33 @@ public final class IcccRecodeUtils {
      * Private constructor, no instanciation of this class!
      */
     private IcccRecodeUtils() {}
+
+    public static String calculateIcccMajorCategory(String icccSiteRecode) {
+        int iICCC = Integer.parseInt(icccSiteRecode);
+        String icccMajorCategory = ICCC_UNKNOWN_MAJOR_CATEGORY;
+        int major = -1;
+
+        if (11 <= iICCC && iICCC <= 15) major = 1;                          // I.    Lymphoid leukemias
+        else if (21 <= iICCC && iICCC <= 25) major = 2;                     // II.   Lymphomas and reticuloendothelial neoplasms
+        else if (31 <= iICCC && iICCC <= 36) major = 3;                     // III.  CNS and miscellaneous intracranial and intraspinal neoplasms
+        else if (41 <= iICCC && iICCC <= 42) major = 4;                     // IV.   Neuroblastoma and other peripheral nervous cell tumors
+        else if (50 == iICCC) major = 5;                                    // V.    Retinoblastoma
+        else if (61 <= iICCC && iICCC <= 63) major = 6;                     // VI.   Renal tumors
+        else if (71 <= iICCC && iICCC <= 73) major = 7;                     // VII.  Hepatic tumors
+        else if (81 <= iICCC && iICCC <= 85) major = 8;                     // VIII. Malignant bone tumors
+        else if (91 <= iICCC && iICCC <= 95) major = 9;                     // IX.   Soft tissue and other extraosseous sarcomas
+        else if (101 <= iICCC && iICCC <= 105) major = 10;                  // X.    Germ cell tumors, trophoblastic tumors, and neoplasms of gonads
+        else if (112 == iICCC) major = 11;                                  // XI.   Other malignant epithelial neoplasms and malignant melanomas (Thyroid carcinomas)
+        else if (114 == iICCC) major = 12;                                  // XI.   Other malignant epithelial neoplasms and malignant melanomas (Malignant melanomas)
+        else if (115 == iICCC) major = 13;                                  // XI.   Other malignant epithelial neoplasms and malignant melanomas (Skin carcinomas)
+        else if (111 == iICCC || 113 == iICCC || 116 == iICCC) major = 14;  // XI.   Other malignant epithelial neoplasms and malignant melanomas
+        else if (121 <= iICCC && iICCC <= 122) major = 15;                  // XII.  Other and unspecified malignant neoplasms
+
+        if (major != -1)
+            icccMajorCategory = StringUtils.leftPad(String.valueOf(major), 2, "0");
+
+        return icccMajorCategory;
+    }
 
     /**
      * Returns the available versions, ID is the version key, value is the version description.

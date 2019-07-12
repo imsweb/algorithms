@@ -88,5 +88,23 @@ public class IcccRecodeUtilsTest {
         Assert.assertEquals("114", IcccRecodeUtils.calculateSiteRecode(IcccRecodeUtils.VERSION_WHO_2008, "C008", "8000", "3", true));
         Assert.assertEquals("002", IcccRecodeUtils.calculateSiteRecode(IcccRecodeUtils.VERSION_WHO_2008, "C424", "9823", "3", true));
         Assert.assertEquals("114", IcccRecodeUtils.calculateSiteRecode(IcccRecodeUtils.VERSION_WHO_2008, "C809", "8000", "3", true));
+
+        // Test ICCC Major Category
+        Assert.assertEquals("99", IcccRecodeUtils.calculateIcccMajorCategory("999"));
+        Assert.assertEquals("99", IcccRecodeUtils.calculateIcccMajorCategory("999"));
+        Assert.assertEquals("99", IcccRecodeUtils.calculateIcccMajorCategory("999"));
+        Assert.assertEquals("99", IcccRecodeUtils.calculateIcccMajorCategory("999"));
+        Assert.assertEquals("99", IcccRecodeUtils.calculateIcccMajorCategory("999"));
+        Assert.assertEquals("15", IcccRecodeUtils.calculateIcccMajorCategory("122"));
+        Assert.assertEquals("15", IcccRecodeUtils.calculateIcccMajorCategory("122"));
+        Assert.assertEquals("02", IcccRecodeUtils.calculateIcccMajorCategory("022"));
+        Assert.assertEquals("99", IcccRecodeUtils.calculateIcccMajorCategory("999"));
+        Assert.assertEquals("10", IcccRecodeUtils.calculateIcccMajorCategory("101"));
+        Assert.assertEquals("02", IcccRecodeUtils.calculateIcccMajorCategory("022"));
+        Assert.assertEquals("09", IcccRecodeUtils.calculateIcccMajorCategory("093"));
+        Assert.assertEquals("15", IcccRecodeUtils.calculateIcccMajorCategory("121"));
+        Assert.assertEquals("15", IcccRecodeUtils.calculateIcccMajorCategory("122"));
+        Assert.assertEquals("01", IcccRecodeUtils.calculateIcccMajorCategory("011"));
+        Assert.assertEquals("15", IcccRecodeUtils.calculateIcccMajorCategory("122"));
     }
 }
