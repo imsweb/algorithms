@@ -22,6 +22,9 @@ import com.imsweb.algorithms.causespecific.CauseSpecificUtils;
 import com.imsweb.algorithms.censustractpovertyindicator.CensusTractPovertyIndicatorInputDto;
 import com.imsweb.algorithms.censustractpovertyindicator.CensusTractPovertyIndicatorOutputDto;
 import com.imsweb.algorithms.censustractpovertyindicator.CensusTractPovertyIndicatorUtils;
+import com.imsweb.algorithms.countyatdiagnosisanalysis.CountyAtDxAnalysisInputDto;
+import com.imsweb.algorithms.countyatdiagnosisanalysis.CountyAtDxAnalysisOutputDto;
+import com.imsweb.algorithms.countyatdiagnosisanalysis.CountyAtDxAnalysisUtils;
 import com.imsweb.algorithms.iarc.IarcMpInputRecordDto;
 import com.imsweb.algorithms.iarc.IarcUtils;
 import com.imsweb.algorithms.iccc.IcccRecodeUtils;
@@ -84,6 +87,7 @@ public class Algorithms {
     public static final String ALG_SEER_BEHAVIOR_RECODE = "seer-behavior-recode";
     public static final String ALG_ICCC = "iccc";
     public static final String ALG_IARC = "iarc-multiple-primary";
+    public static final String ALG_COUNTY_AT_DIAGNOSIS_ANALYSIS = "county-at-diagnosis-analysis";
 
     // special properties
     public static final String FIELD_TUMORS = "tumors";
@@ -138,6 +142,19 @@ public class Algorithms {
     public static final String FIELD_SURV_MONTH_PRESUMED_ALIVE = "survMosPresumedAlive";
     public static final String FIELD_SURV_FLAG_PRESUMED_ALIVE = "survFlagPresumedAlive";
     public static final String FIELD_SURV_REC_NUM_RECODE = "recordNumberRecode";
+    public static final String FIELD_COUNTY_AT_DX_GEOCODE_1990 = "countyAtDxGeocode1990";
+    public static final String FIELD_COUNTY_AT_DX_GEOCODE_2000 = "countyAtDxGeocode2000";
+    public static final String FIELD_COUNTY_AT_DX_GEOCODE_2010 = "countyAtDxGeocode2010";
+    public static final String FIELD_COUNTY_AT_DX_GEOCODE_2020 = "countyAtDxGeocode2020";
+    public static final String FIELD_STATE_AT_DX_GEOCODE_19708090 = "stateAtDxGeocode19708090";
+    public static final String FIELD_STATE_AT_DX_GEOCODE_2000 = "stateAtDxGeocode2000";
+    public static final String FIELD_STATE_AT_DX_GEOCODE_2010 = "stateAtDxGeocode2010";
+    public static final String FIELD_STATE_AT_DX_GEOCODE_2020 = "stateAtDxGeocode2020";
+    public static final String FIELD_CENSUS_CERTAINTY_708090 = "censusTrCert19708090";
+    public static final String FIELD_CENSUS_CERTAINTY_2000 = "censusTrCertainty2000";
+    public static final String FIELD_CENSUS_CERTAINTY_2010 = "censusTrCertainty2010";
+    public static final String FIELD_CENSUS_CERTAINTY_2020 = "censusTrCertainty2020";
+    public static final String FIELD_COUNTY_AT_DX_ANALYSIS = "countyAtDxAnalysis";
 
     // non-standard fields
     public static final String FIELD_NAPIIA_NEEDS_REVIEW = "napiiaNeedsHumanReview";
@@ -150,6 +167,7 @@ public class Algorithms {
     public static final String FIELD_IARC_MP_SITE_GROUP = "iarcMpSiteGroup";
     public static final String FIELD_IARC_MP_HIST_GROUP = "iarcMpHistGroup";
     public static final String FIELD_IARC_MP_HISTOLOGY = "iarcMpHistologicTypeIcdO3";
+    public static final String FIELD_COUNTY_AT_DX_ANALYSIS_FLAG = "countyAtDxAnalysisFlag";
 
     // options
     public static final String PARAM_NHIA_OPTION = "nhiaOption";
@@ -211,6 +229,19 @@ public class Algorithms {
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SURV_MONTH_PRESUMED_ALIVE, 1787, 4));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SURV_FLAG_PRESUMED_ALIVE, 1786, 1));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SURV_REC_NUM_RECODE, 1775, 2));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_COUNTY_AT_DX_GEOCODE_1990, 94, 3));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_COUNTY_AT_DX_GEOCODE_2000, 95, 3));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_COUNTY_AT_DX_GEOCODE_2010, 96, 3));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_COUNTY_AT_DX_GEOCODE_2020, 97, 3));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_STATE_AT_DX_GEOCODE_19708090, 81, 2));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_STATE_AT_DX_GEOCODE_2000, 82, 2));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_STATE_AT_DX_GEOCODE_2010, 83, 2));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_STATE_AT_DX_GEOCODE_2020, 84, 2));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_CENSUS_CERTAINTY_708090, 364, 1));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_CENSUS_CERTAINTY_2000, 365, 1));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_CENSUS_CERTAINTY_2010, 367, 1));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_CENSUS_CERTAINTY_2020, 369, 1));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_COUNTY_AT_DX_ANALYSIS, 89, 3));
 
         // non-standard fields
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_NAPIIA_NEEDS_REVIEW, null, 1));
@@ -223,6 +254,7 @@ public class Algorithms {
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_IARC_MP_SITE_GROUP, null, 4));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_IARC_MP_HIST_GROUP, null, 2));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_IARC_MP_HISTOLOGY, null, 4));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_COUNTY_AT_DX_ANALYSIS_FLAG, null, 4));
     }
 
     private static void addField(Map<String, AlgorithmField> cache, AlgorithmField field) {
@@ -248,6 +280,7 @@ public class Algorithms {
             addAlgorithm(_CACHED_ALGORITHMS, createSeerBehaviorRecode());
             addAlgorithm(_CACHED_ALGORITHMS, createIccc());
             addAlgorithm(_CACHED_ALGORITHMS, createIarc());
+            addAlgorithm(_CACHED_ALGORITHMS, createCountyAtDiagnosisAnalysis());
         }
         finally {
             _LOCK.writeLock().unlock();
@@ -1333,6 +1366,100 @@ public class Algorithms {
                 }
 
                 return AlgorithmOutput.of(outputPatient);
+            }
+        };
+    }
+
+    private static Algorithm createCountyAtDiagnosisAnalysis() {
+        return new Algorithm() {
+
+            @Override
+            public String getId() {
+                return ALG_COUNTY_AT_DIAGNOSIS_ANALYSIS;
+            }
+
+            @Override
+            public String getName() {
+                return CountyAtDxAnalysisUtils.ALG_NAME;
+            }
+
+            @Override
+            public String getVersion() {
+                return CountyAtDxAnalysisUtils.ALG_VERSION;
+            }
+
+            @Override
+            public String getInfo() {
+                return getName();
+            }
+
+            @Override
+            public List<AlgorithmParam> getParameters() {
+                return Collections.emptyList();
+            }
+
+            @Override
+            public List<AlgorithmField> getInputFields() {
+                List<AlgorithmField> fields = new ArrayList<>();
+                fields.add(_CACHED_FIELDS.get(FIELD_DX_DATE));
+                fields.add(_CACHED_FIELDS.get(FIELD_STATE_DX));
+                fields.add(_CACHED_FIELDS.get(FIELD_COUNTY_DX));
+                fields.add(_CACHED_FIELDS.get(FIELD_COUNTY_AT_DX_GEOCODE_1990));
+                fields.add(_CACHED_FIELDS.get(FIELD_COUNTY_AT_DX_GEOCODE_2000));
+                fields.add(_CACHED_FIELDS.get(FIELD_COUNTY_AT_DX_GEOCODE_2010));
+                fields.add(_CACHED_FIELDS.get(FIELD_COUNTY_AT_DX_GEOCODE_2020));
+                fields.add(_CACHED_FIELDS.get(FIELD_STATE_AT_DX_GEOCODE_19708090));
+                fields.add(_CACHED_FIELDS.get(FIELD_STATE_AT_DX_GEOCODE_2000));
+                fields.add(_CACHED_FIELDS.get(FIELD_STATE_AT_DX_GEOCODE_2010));
+                fields.add(_CACHED_FIELDS.get(FIELD_STATE_AT_DX_GEOCODE_2020));
+                fields.add(_CACHED_FIELDS.get(FIELD_CENSUS_CERTAINTY_708090));
+                fields.add(_CACHED_FIELDS.get(FIELD_CENSUS_CERTAINTY_2000));
+                fields.add(_CACHED_FIELDS.get(FIELD_CENSUS_CERTAINTY_2010));
+                fields.add(_CACHED_FIELDS.get(FIELD_CENSUS_CERTAINTY_2020));
+                return fields;
+            }
+
+            @Override
+            public List<AlgorithmField> getOutputFields() {
+                List<AlgorithmField> fields = new ArrayList<>();
+                fields.add(_CACHED_FIELDS.get(FIELD_COUNTY_AT_DX_ANALYSIS));
+                fields.add(_CACHED_FIELDS.get(FIELD_COUNTY_AT_DX_ANALYSIS_FLAG));
+                return fields;
+            }
+
+            @Override
+            public AlgorithmOutput execute(AlgorithmInput input) {
+                Map<String, Object> patient = new HashMap<>();
+                List<Map<String, Object>> outputTumors = new ArrayList<>();
+                patient.put(FIELD_TUMORS, outputTumors);
+
+                for (Map<String, Object> inputTumor : Utils.extractTumors(Utils.extractPatient(input))) {
+                    CountyAtDxAnalysisInputDto inputDto = new CountyAtDxAnalysisInputDto();
+                    inputDto.setDateOfDiagnosis((String)inputTumor.get(FIELD_DX_DATE));
+                    inputDto.setAddrAtDxState((String)inputTumor.get(FIELD_STATE_DX));
+                    inputDto.setCountyAtDx((String)inputTumor.get(FIELD_COUNTY_DX));
+                    inputDto.setCountyAtDxGeocode1990((String)inputTumor.get(FIELD_COUNTY_AT_DX_GEOCODE_1990));
+                    inputDto.setCountyAtDxGeocode2000((String)inputTumor.get(FIELD_COUNTY_AT_DX_GEOCODE_2000));
+                    inputDto.setCountyAtDxGeocode2000((String)inputTumor.get(FIELD_COUNTY_AT_DX_GEOCODE_2010));
+                    inputDto.setCountyAtDxGeocode2020((String)inputTumor.get(FIELD_COUNTY_AT_DX_GEOCODE_2020));
+                    inputDto.setStateAtDxGeocode19708090((String)inputTumor.get(FIELD_STATE_AT_DX_GEOCODE_19708090));
+                    inputDto.setStateAtDxGeocode2000((String)inputTumor.get(FIELD_STATE_AT_DX_GEOCODE_2000));
+                    inputDto.setStateAtDxGeocode2010((String)inputTumor.get(FIELD_STATE_AT_DX_GEOCODE_2010));
+                    inputDto.setStateAtDxGeocode2020((String)inputTumor.get(FIELD_STATE_AT_DX_GEOCODE_2020));
+                    inputDto.setCensusTrCert19708090((String)inputTumor.get(FIELD_CENSUS_CERTAINTY_708090));
+                    inputDto.setCensusTrCertainty2000((String)inputTumor.get(FIELD_CENSUS_CERTAINTY_2000));
+                    inputDto.setCensusTrCertainty2010((String)inputTumor.get(FIELD_CENSUS_CERTAINTY_2010));
+                    inputDto.setCensusTrCertainty2020((String)inputTumor.get(FIELD_CENSUS_CERTAINTY_2020));
+
+                    CountyAtDxAnalysisOutputDto output = CountyAtDxAnalysisUtils.computeCountyAtDiagnosis(inputDto);
+
+                    Map<String, Object> outputTumor = new HashMap<>();
+                    outputTumor.put(FIELD_COUNTY_AT_DX_ANALYSIS, output.getCountyAtDxAnalysis());
+                    outputTumor.put(FIELD_COUNTY_AT_DX_ANALYSIS_FLAG, output.getCountyAtDxAnalysisFlag());
+                    outputTumors.add(outputTumor);
+                }
+
+                return AlgorithmOutput.of(patient);
             }
         };
     }
