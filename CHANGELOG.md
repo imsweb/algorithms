@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 2.1**
+
+- Added site-specific surgery tables for years 2003-2009.
+
 **Changes in version 2.0**
 
 - Changed Survival Time Algorithm to calculate record number recode for all records even if the record is considered invalid.
