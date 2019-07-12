@@ -3,14 +3,24 @@
  */
 package lab;
 
-import com.imsweb.algorithms.surgery.SiteSpecificSurgeryUtils;
-import com.imsweb.algorithms.surgery.SurgeryRowDto;
-import com.imsweb.algorithms.surgery.SurgeryTableDto;
-import com.imsweb.algorithms.surgery.SurgeryTablesDto;
-import com.imsweb.seerutilsgui.SeerGuiUtils;
-import com.imsweb.seerutilsgui.SeerList;
-import com.imsweb.seerutilsgui.table.SeerColumn;
-import com.imsweb.seerutilsgui.table.SeerTable;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -33,26 +43,14 @@ import javax.swing.table.TableColumnModel;
 import javax.swing.text.View;
 import javax.swing.text.html.HTMLEditorKit;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
-
-import org.junit.Test;
+import com.imsweb.algorithms.surgery.SiteSpecificSurgeryUtils;
+import com.imsweb.algorithms.surgery.SurgeryRowDto;
+import com.imsweb.algorithms.surgery.SurgeryTableDto;
+import com.imsweb.algorithms.surgery.SurgeryTablesDto;
+import com.imsweb.seerutilsgui.SeerGuiUtils;
+import com.imsweb.seerutilsgui.SeerList;
+import com.imsweb.seerutilsgui.table.SeerColumn;
+import com.imsweb.seerutilsgui.table.SeerTable;
 
 @SuppressWarnings("ConstantConditions")
 public class SurgeryTablesViewerLab extends JFrame {
@@ -318,7 +316,7 @@ public class SurgeryTablesViewerLab extends JFrame {
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         SeerGuiUtils.setupGuiEnvForSeerProject();
 
         SurgeryTablesViewerLab viewer = new SurgeryTablesViewerLab();
