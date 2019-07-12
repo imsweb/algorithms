@@ -166,7 +166,7 @@ public class Algorithms {
     public static final String FIELD_IARC_MP_SITE_GROUP = "iarcMpSiteGroup";
     public static final String FIELD_IARC_MP_HIST_GROUP = "iarcMpHistGroup";
     public static final String FIELD_IARC_MP_HISTOLOGY = "iarcMpHistologicTypeIcdO3";
-    public static final String FIELD_COUNTY_AT_DX_ANALYSIS_FLAG = "countyAtDXAnalysisFlag";
+    public static final String FIELD_COUNTY_AT_DX_ANALYSIS_FLAG = "countyAtDxAnalysisFlag";
 
     // options
     public static final String PARAM_NHIA_OPTION = "nhiaOption";

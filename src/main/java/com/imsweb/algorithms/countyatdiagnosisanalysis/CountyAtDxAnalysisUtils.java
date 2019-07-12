@@ -18,6 +18,7 @@ import com.opencsv.CSVReaderBuilder;
 
 import com.imsweb.algorithms.internal.CountryData;
 import com.imsweb.algorithms.internal.CountyData;
+import com.imsweb.algorithms.internal.StateData;
 
 public class CountyAtDxAnalysisUtils {
 
@@ -102,8 +103,8 @@ public class CountyAtDxAnalysisUtils {
                 if (!CountryData.getInstance().isCountyAtDxAnalysisInitialized())
                     CountryData.getInstance().initializeCountyAtDxAnalysisData(loadCountyAtDxAnalysisData());
 
-                if (CountryData.getInstance().getCountyAtDxAnalysisData(input.getAddrAtDxState()) == null ||
-                        CountryData.getInstance().getCountyAtDxAnalysisData(input.getAddrAtDxState()).getCountyData(geocoderCountyAtDx) == null) {
+                StateData stateData = CountryData.getInstance().getCountyAtDxAnalysisData(input.getAddrAtDxState());
+                if (stateData == null || stateData.getCountyData(geocoderCountyAtDx) == null) {
                     output.setCountyAtDxAnalysis(input.getCountyAtDx());
                     output.setCountyAtDxAnalysisFlag(REP_GEO_INVALID_FOR_STATE);
                 }
