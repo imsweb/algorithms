@@ -2,6 +2,7 @@
 
 **Changes in version 2.1**
 
+- Added computed field icccMajorCategory to the ICCC algorithm.
 - Added site-specific surgery tables for years 2003-2009.
 
 **Changes in version 2.0**
