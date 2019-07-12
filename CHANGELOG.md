@@ -2,6 +2,7 @@
 
 **Changes in version 2.1**
 
+- Added new algorithm to compute County at DX Analysis.
 - Added computed field icccMajorCategory to the ICCC algorithm.
 - Added site-specific surgery tables for years 2003-2009.
 
