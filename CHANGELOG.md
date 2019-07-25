@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 2.2**
+
+- Fixed a few site-specific surgery tables that slightly changed for the 2018 DX year.
+
 **Changes in version 2.1**
 
 - Added new algorithm to compute County at DX Analysis.
