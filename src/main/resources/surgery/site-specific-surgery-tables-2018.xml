@@ -2345,7 +2345,12 @@ Connective, Subcutaneous, And Other Soft Tissues C490-C499
         <row break="true"/>
         <row level="0">
             <code/>
-            <description><![CDATA[[<b><i>SEER Note:</i></b> Assign code 23 for lumpectomy and additional margin excision during the same procedure.]]]></description>
+            <description><![CDATA[[<b><i>SEER Note:</i></b> Assign code 22 when a patient has a lumpectomy and an additional margin excision during the same procedure.]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code/>
+            <description><![CDATA[According to the Commission on Cancer, re-excision of the margins intraoperatively during same surgical event does not require additional resources; it is still 22. Subsequent re-excision of lumpectomy margins during separate surgical event requires additional resources: anesthesia, op room, and surgical staff; it qualifies for code 23.]]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -2454,7 +2459,12 @@ Connective, Subcutaneous, And Other Soft Tissues C490-C499
         <row break="true"/>
         <row level="0">
             <code/>
-            <description><![CDATA[[<b><i>SEER Note:</i></b> For a simple bilateral mastectomy, assign code 41 with code 1 in Surgical Procedure of Other Site. Assign code 76 for a more extensive bilateral mastectomy. Assign code 0 in Surgical Procedure of Other Site.]]]></description>
+            <description><![CDATA[[<b><i>SEER Note:</i></b> Assign code 76 for a more extensive bilateral mastectomy. Assign code 0 in Surgical Procedure of Other Site.]]></description>
+        </row>
+        <row break="true"/>
+        <row level="0">
+            <code/>
+            <description><![CDATA[For a simple bilateral mastectomy, assign code 41 with code 1 in Surgical Procedure of Other Site.]]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -3726,7 +3736,7 @@ Do not code an orchiectomy in this field. For prostate primaries, orchiectomies 
             <code>23</code>
             <description><![CDATA[Cryosurgery]]></description>
         </row>
-        <row level="1">
+        <row level="2">
             <code>24</code>
             <description><![CDATA[Laser ablation]]></description>
         </row>
@@ -4146,7 +4156,7 @@ Do not code laminectomies for spinal cord primaries
     <surgery-table title="Hematopoietic/Reticuloendothelial/Immunoproliferative/Myeloproliferative Disease">
         <site-inclusion>C420,C421,C423,C424</site-inclusion>
         <hist-inclusion>9727,9732,9741-9742,9762-9809,9832,9840-9931,9945-9946,9950-9967,9975-9992</hist-inclusion>
-        <pre-note><![CDATA[Hematopoietic/Reticuloendothelial/Immunoproliferative/Myeloproliferative Disease<br/>C420, C421, C423, C424 (with any histology) or M9727, 9732, 9741-9742, 9762-9809, 9832, 9840-9931, 9945-9946, 9950-9967, 9975-9992
+        <pre-note><![CDATA[Hematopoietic/Reticuloendothelial/Immunoproliferative/Myeloproliferative Disease<br/>C420, C421, C423, C424 (with any histology) or M9727, 9732, 9741-9742, 9762-9809, 9832, 9840-9931, 9945-9946, 9950-9967, 9975-9992 (with any site)
 ]]></pre-note>
         <row level="0">
             <code>98</code>
@@ -4298,15 +4308,15 @@ Do not code laminectomies for spinal cord primaries
             <code>21</code>
             <description><![CDATA[Photodynamic therapy (PDT)]]></description>
         </row>
-        <row level="1">
+        <row level="2">
             <code>22</code>
             <description><![CDATA[Electrocautery]]></description>
         </row>
-        <row level="1">
+        <row level="2">
             <code>23</code>
             <description><![CDATA[Cryosurgery]]></description>
         </row>
-        <row level="1">
+        <row level="2">
             <code>24</code>
             <description><![CDATA[Laser ablation]]></description>
         </row>
