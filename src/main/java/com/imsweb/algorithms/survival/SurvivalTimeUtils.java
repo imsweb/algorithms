@@ -157,7 +157,7 @@ public class SurvivalTimeUtils {
                         tempInternalRecords.add(new InternalRecDto(orgRecord, recordResult));
                     }
                     //Let's sort the temp records list and assign back the sorted index to the output
-                    Collections.sort(tempInternalRecords);
+                    tempInternalRecords = sortTempRecords(tempInternalRecords);
                     for (int sortedIdx = 1; sortedIdx <= tempInternalRecords.size(); sortedIdx++) // output sort index should be 1-based
                         tempInternalRecords.get(sortedIdx - 1)._recordResult.setSortedIndex(sortedIdx);
                     patientResultsDto.setSurvivalTimeOutputPatientDtoList(patientResultsList);
@@ -250,7 +250,7 @@ public class SurvivalTimeUtils {
             for (InternalRecDto rec : validTempRecords)
                 if (rec._seqNum >= 60 && rec._seqNum <= 97)
                     rec._seqNum = rec._seqNum + 100;
-            Collections.sort(validTempRecords);
+            validTempRecords = sortTempRecords(validTempRecords);
 
             // calculate the variables without presuming ALIVE (this one cannot handle an unknown DOLC)
             if (dolcYear != 9999)
@@ -296,7 +296,7 @@ public class SurvivalTimeUtils {
             }
 
             // assign the sorted index on every output record: based on sorted tmp records
-            Collections.sort(allTempRecords);
+            allTempRecords = sortTempRecords(allTempRecords);
             for (int sortedIdx = 1; sortedIdx <= allTempRecords.size(); sortedIdx++) // output sort index should be 1-based
                 allTempRecords.get(sortedIdx - 1)._recordResult.setSortedIndex(sortedIdx);
 
@@ -653,6 +653,64 @@ public class SurvivalTimeUtils {
             result = 31 * result + _day;
             result = 31 * result + _seqNum;
             return result;
+        }
+    }
+
+    /**
+    * This method is added to avoid the situation where a > b and b > c and c > a
+     * Valid dates are always ordered first and then we add the invalid ones, we compare the invalid one starting from the last one
+     * Example:
+     * rec 1: 01: 2015/3/5
+     * rec 2: 02: 2015/99/99
+     * rec 3: 60: 2015/2/23
+     * We want 3 and 1 to be compared first which 3 is first and 1 is second. (3, 1)
+     * Then we compare the invalid one starting from the last, that is rec 1 in this case.
+     * The order will become 3, 1, 2
+     */
+    private static List<InternalRecDto> sortTempRecords(List<InternalRecDto> list) {
+        List<InternalRecDto> validRecords = new ArrayList<>();
+        List<InternalRecDto> dayMissingRecords = new ArrayList<>();
+        List<InternalRecDto> monthMissingRecords = new ArrayList<>();
+        List<InternalRecDto> yearMissingRecords = new ArrayList<>();
+        for (InternalRecDto dto: list) {
+            if (dto._year == 9999)
+                yearMissingRecords.add(dto);
+            else if (dto._month == 99)
+                monthMissingRecords.add(dto);
+            else if (dto._day == 99)
+                dayMissingRecords.add(dto);
+            else
+                validRecords.add(dto);
+        }
+
+        List<InternalRecDto> result = new ArrayList<>(validRecords);
+        Collections.sort(result);
+
+        //Handle day missing records
+        sortTempRecords(result, dayMissingRecords);
+        //Handle Month missing records
+        sortTempRecords(result, monthMissingRecords);
+        //Handle year missing record
+        sortTempRecords(result, yearMissingRecords);
+        return result;
+    }
+
+    private static void sortTempRecords(List<InternalRecDto> result, List<InternalRecDto> subList) {
+        Collections.sort(subList);
+        if (result.isEmpty())
+            result.addAll(subList);
+        else {
+            for (InternalRecDto r : subList) {
+                for (int i = result.size() - 1; i >= 0; i--) {
+                    //if the subList record is later than the sorted result record, append it after it
+                    if (r.compareTo(result.get(i)) >= 0) {
+                        result.add(i + 1, r);
+                        break;
+                    }
+                    else if (i == 0)
+                        result.add(0, r);
+                }
+            }
         }
     }
 }
