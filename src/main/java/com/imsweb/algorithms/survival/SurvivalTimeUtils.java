@@ -720,7 +720,7 @@ public class SurvivalTimeUtils {
         else {
             for (InternalRecDto r : subList) {
                 for (int i = result.size() - 1; i >= 0; i--) {
-                    //if the subList record's date is later than the sorted result record, append it after it
+                    //if the subList record's date is later than the sorted result record, append it after sorted record
                     if (r.compareDateOnly(result.get(i)) > 0) {
                         result.add(i + 1, r);
                         break;

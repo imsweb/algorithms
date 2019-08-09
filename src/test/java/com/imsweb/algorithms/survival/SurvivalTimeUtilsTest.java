@@ -255,11 +255,11 @@ public class SurvivalTimeUtilsTest {
         records.clear();
         records.add(createRecord(1987, 10, 14, 2012, 12, 31, 1956, 3, 4, 1, 0, 1));
         records.add(createRecord(1987, 5, 27, 2012, 12, 31, 1956, 3, 4, 61, 0, 1));
-        records.add(createRecord(1987, 9, 99, 2012, 12, 31, 1956, 3, 4, 62, 0, 1));
+        records.add(createRecord(1987, 99, 99, 2012, 12, 31, 1956, 3, 4, 62, 0, 1));
         results = calculateSurvivalTime(records, 2010);
-        Assert.assertEquals(3, results.getSurvivalTimeOutputPatientDtoList().get(0).getSortedIndex().intValue());
+        Assert.assertEquals(2, results.getSurvivalTimeOutputPatientDtoList().get(0).getSortedIndex().intValue());
         Assert.assertEquals(1, results.getSurvivalTimeOutputPatientDtoList().get(1).getSortedIndex().intValue());
-        Assert.assertEquals(2, results.getSurvivalTimeOutputPatientDtoList().get(2).getSortedIndex().intValue());
+        Assert.assertEquals(3, results.getSurvivalTimeOutputPatientDtoList().get(2).getSortedIndex().intValue());
 
         records.clear();
         records.add(createRecord(1990, 1, 17, 2012, 12, 31, 1956, 3, 4, 1, 0, 1));
