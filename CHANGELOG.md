@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 2.3**
+
+- Improved the sorting mechanism of Survival Time Algorithm to handle corner cases.
+
 **Changes in version 2.2**
 
 - Fixed a few site-specific surgery tables that slightly changed for the 2018 DX year.

@@ -186,28 +186,19 @@ public class SurvivalTimeUtilsTest {
         records.add(createRecord(2010, 1, 1, 2012, 12, 31, 1956, 3, 4, 9, 0, 1));
         records.add(createRecord(2011, 1, 2, 2012, 12, 31, 1956, 3, 4, 8, 0, 1));
         results = calculateSurvivalTime(records, 2010);
-        assertResults(results.getSurvivalTimeOutputPatientDtoList().get(0), "9999", "9", "9999", "9", 1);
-        assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(0), null, null, null, "2010", "12", "31", "2010", "12", "31");
-        assertResults(results.getSurvivalTimeOutputPatientDtoList().get(1), "9999", "9", "9999", "9", 11);
-        assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(1), null, null, null, "2010", "12", "31", "2010", "12", "31");
-        assertResults(results.getSurvivalTimeOutputPatientDtoList().get(2), "9999", "9", "9999", "9", 12);
-        assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(2), null, null, null, "2010", "12", "31", "2010", "12", "31");
-        assertResults(results.getSurvivalTimeOutputPatientDtoList().get(3), "0010", "1", "0010", "1", 9);
-        assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(3), "2010", "03", "01", "2010", "12", "31", "2010", "12", "31");
-        assertResults(results.getSurvivalTimeOutputPatientDtoList().get(4), "0011", "3", "0011", "3", 8);
-        assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(4), "2010", "01", "30", "2010", "12", "31", "2010", "12", "31");
-        assertResults(results.getSurvivalTimeOutputPatientDtoList().get(5), "9999", "9", "9999", "9", 2);
-        assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(5), null, null, null, "2010", "12", "31", "2010", "12", "31");
-        assertResults(results.getSurvivalTimeOutputPatientDtoList().get(6), "0013", "1", "0013", "1", 3);
-        assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(6), "2009", "11", "11", "2010", "12", "31", "2010", "12", "31");
-        assertResults(results.getSurvivalTimeOutputPatientDtoList().get(7), "9999", "9", "9999", "9", 4);
-        assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(7), null, null, null, "2010", "12", "31", "2010", "12", "31");
-        assertResults(results.getSurvivalTimeOutputPatientDtoList().get(8), "9999", "9", "9999", "9", 5);
-        assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(8), null, null, null, "2010", "12", "31", "2010", "12", "31");
-        assertResults(results.getSurvivalTimeOutputPatientDtoList().get(9), "0034", "1", "0034", "1", 6);
-        assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(9), "2008", "03", "01", "2010", "12", "31", "2010", "12", "31");
-        assertResults(results.getSurvivalTimeOutputPatientDtoList().get(10), "0011", "1", "0011", "1", 7);
-        assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(10), "2010", "01", "01", "2010", "12", "31", "2010", "12", "31");
+        Assert.assertEquals(1, results.getSurvivalTimeOutputPatientDtoList().get(0).getSortedIndex().intValue());
+        Assert.assertEquals(8, results.getSurvivalTimeOutputPatientDtoList().get(1).getSortedIndex().intValue());
+        Assert.assertEquals(9, results.getSurvivalTimeOutputPatientDtoList().get(2).getSortedIndex().intValue());
+        Assert.assertEquals(6, results.getSurvivalTimeOutputPatientDtoList().get(3).getSortedIndex().intValue());
+        Assert.assertEquals(5, results.getSurvivalTimeOutputPatientDtoList().get(4).getSortedIndex().intValue());
+        Assert.assertEquals(10, results.getSurvivalTimeOutputPatientDtoList().get(5).getSortedIndex().intValue());
+        Assert.assertEquals(3, results.getSurvivalTimeOutputPatientDtoList().get(6).getSortedIndex().intValue());
+        Assert.assertEquals(11, results.getSurvivalTimeOutputPatientDtoList().get(7).getSortedIndex().intValue());
+        Assert.assertEquals(12, results.getSurvivalTimeOutputPatientDtoList().get(8).getSortedIndex().intValue());
+        Assert.assertEquals(2, results.getSurvivalTimeOutputPatientDtoList().get(9).getSortedIndex().intValue());
+        Assert.assertEquals(4, results.getSurvivalTimeOutputPatientDtoList().get(10).getSortedIndex().intValue());
+        Assert.assertEquals(7, results.getSurvivalTimeOutputPatientDtoList().get(11).getSortedIndex().intValue());
+
 
         //Testing record number recode
         records.clear();
@@ -216,6 +207,88 @@ public class SurvivalTimeUtilsTest {
         results = calculateSurvivalTime(records, 2010);
         assertResults(results.getSurvivalTimeOutputPatientDtoList().get(0), "9999", "9", "9999", "9", 2);
         assertResults(results.getSurvivalTimeOutputPatientDtoList().get(1), "9999", "9", "9999", "9", 1);
+
+        //Testing record number recode
+        records.clear();
+        records.add(createRecord(2015, 3, 5, 2015, 4, 27, 1937, 1, 99, 1, 0, 1));
+        records.add(createRecord(2015, 99, 99, 2015, 4, 27, 1937, 1, 99, 2, 0, 1));
+        records.add(createRecord(2015, 2, 23, 2015, 4, 27, 1937, 1, 99, 60, 0, 1));
+        results = calculateSurvivalTime(records, 2016);
+        assertResults(results.getSurvivalTimeOutputPatientDtoList().get(0), "0001", "1", "0001", "1", 2);
+        assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(0), "2015", "03", "05", "2015", "04", "27", "2015", "04", "27");
+        assertResults(results.getSurvivalTimeOutputPatientDtoList().get(1), "0000", "2", "0000", "2", 3);
+        assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(1), "2015", "03", "31", "2015", "04", "27", "2015", "04", "27");
+        assertResults(results.getSurvivalTimeOutputPatientDtoList().get(2), "0002", "1", "0002", "1", 1);
+        assertSurvivalDates(results.getSurvivalTimeOutputPatientDtoList().get(2), "2015", "02", "23", "2015", "04", "27", "2015", "04", "27");
+
+        records.clear();
+        records.add(createRecord(1987, 1, 14, 2012, 12, 31, 1956, 3, 4, 1, 0, 1));
+        records.add(createRecord(1989, 2, 27, 2012, 12, 31, 1956, 3, 4, 2, 0, 1));
+        records.add(createRecord(1990, 10, 22, 2012, 12, 31, 1956, 3, 4, 3, 0, 1));
+        records.add(createRecord(9999, 99, 99, 2012, 12, 31, 1956, 3, 4, 61, 0, 1));
+        records.add(createRecord(1989, 2, 27, 2012, 12, 31, 1956, 3, 4, 62, 0, 1));
+        results = calculateSurvivalTime(records, 2010);
+        Assert.assertEquals(1, results.getSurvivalTimeOutputPatientDtoList().get(0).getSortedIndex().intValue());
+        Assert.assertEquals(2, results.getSurvivalTimeOutputPatientDtoList().get(1).getSortedIndex().intValue());
+        Assert.assertEquals(5, results.getSurvivalTimeOutputPatientDtoList().get(2).getSortedIndex().intValue());
+        Assert.assertEquals(3, results.getSurvivalTimeOutputPatientDtoList().get(3).getSortedIndex().intValue());
+        Assert.assertEquals(4, results.getSurvivalTimeOutputPatientDtoList().get(4).getSortedIndex().intValue());
+
+        records.clear();
+        records.add(createRecord(1987, 10, 14, 2012, 12, 31, 1956, 3, 4, 1, 0, 1));
+        records.add(createRecord(1987, 99, 99, 2012, 12, 31, 1956, 3, 4, 61, 0, 1));
+        records.add(createRecord(1987, 5, 27, 2012, 12, 31, 1956, 3, 4, 62, 0, 1));
+        results = calculateSurvivalTime(records, 2010);
+        Assert.assertEquals(3, results.getSurvivalTimeOutputPatientDtoList().get(0).getSortedIndex().intValue());
+        Assert.assertEquals(1, results.getSurvivalTimeOutputPatientDtoList().get(1).getSortedIndex().intValue());
+        Assert.assertEquals(2, results.getSurvivalTimeOutputPatientDtoList().get(2).getSortedIndex().intValue());
+
+        records.clear();
+        records.add(createRecord(1987, 10, 14, 2012, 12, 31, 1956, 3, 4, 1, 0, 1));
+        records.add(createRecord(1987, 99, 99, 2012, 12, 31, 1956, 3, 4, 2, 0, 1));
+        records.add(createRecord(1987, 5, 27, 2012, 12, 31, 1956, 3, 4, 3, 0, 1));
+        results = calculateSurvivalTime(records, 2010);
+        Assert.assertEquals(2, results.getSurvivalTimeOutputPatientDtoList().get(0).getSortedIndex().intValue());
+        Assert.assertEquals(3, results.getSurvivalTimeOutputPatientDtoList().get(1).getSortedIndex().intValue());
+        Assert.assertEquals(1, results.getSurvivalTimeOutputPatientDtoList().get(2).getSortedIndex().intValue());
+
+        records.clear();
+        records.add(createRecord(1987, 10, 14, 2012, 12, 31, 1956, 3, 4, 1, 0, 1));
+        records.add(createRecord(1987, 5, 27, 2012, 12, 31, 1956, 3, 4, 61, 0, 1));
+        records.add(createRecord(1987, 99, 99, 2012, 12, 31, 1956, 3, 4, 62, 0, 1));
+        results = calculateSurvivalTime(records, 2010);
+        Assert.assertEquals(2, results.getSurvivalTimeOutputPatientDtoList().get(0).getSortedIndex().intValue());
+        Assert.assertEquals(1, results.getSurvivalTimeOutputPatientDtoList().get(1).getSortedIndex().intValue());
+        Assert.assertEquals(3, results.getSurvivalTimeOutputPatientDtoList().get(2).getSortedIndex().intValue());
+
+        records.clear();
+        records.add(createRecord(1990, 1, 17, 2012, 12, 31, 1956, 3, 4, 1, 0, 1));
+        records.add(createRecord(1990, 1, 2, 2012, 12, 31, 1956, 3, 4, 2, 0, 1));
+        records.add(createRecord(1990, 1, 99, 2012, 12, 31, 1956, 3, 4, 61, 0, 1));
+        records.add(createRecord(1990, 1, 15, 2012, 12, 31, 1956, 3, 4, 62, 0, 1));
+        records.add(createRecord(1990, 1, 99, 2012, 12, 31, 1956, 3, 4, 63, 0, 1));
+        records.add(createRecord(1990, 1, 10, 2012, 12, 31, 1956, 3, 4, 64, 0, 1));
+        results = calculateSurvivalTime(records, 2010);
+        Assert.assertEquals(4, results.getSurvivalTimeOutputPatientDtoList().get(0).getSortedIndex().intValue());
+        Assert.assertEquals(1, results.getSurvivalTimeOutputPatientDtoList().get(1).getSortedIndex().intValue());
+        Assert.assertEquals(5, results.getSurvivalTimeOutputPatientDtoList().get(2).getSortedIndex().intValue());
+        Assert.assertEquals(3, results.getSurvivalTimeOutputPatientDtoList().get(3).getSortedIndex().intValue());
+        Assert.assertEquals(6, results.getSurvivalTimeOutputPatientDtoList().get(4).getSortedIndex().intValue());
+        Assert.assertEquals(2, results.getSurvivalTimeOutputPatientDtoList().get(5).getSortedIndex().intValue());
+
+        records.clear();
+        records.add(createRecord(1990, 1, 17, 2012, 12, 31, 1956, 3, 4, 1, 0, 1));
+        records.add(createRecord(1990, 1, 2, 2012, 12, 31, 1956, 3, 4, 2, 0, 1));
+        records.add(createRecord(1990, 1, 99, 2012, 12, 31, 1956, 3, 4, 61, 0, 1));
+        records.add(createRecord(1990, 1, 15, 2012, 12, 31, 1956, 3, 4, 62, 0, 1));
+        records.add(createRecord(1990, 1, 99, 2012, 12, 31, 1956, 3, 4, 63, 0, 1));
+        results = calculateSurvivalTime(records, 2010);
+        Assert.assertEquals(4, results.getSurvivalTimeOutputPatientDtoList().get(0).getSortedIndex().intValue());
+        Assert.assertEquals(1, results.getSurvivalTimeOutputPatientDtoList().get(1).getSortedIndex().intValue());
+        Assert.assertEquals(2, results.getSurvivalTimeOutputPatientDtoList().get(2).getSortedIndex().intValue());
+        Assert.assertEquals(3, results.getSurvivalTimeOutputPatientDtoList().get(3).getSortedIndex().intValue());
+        Assert.assertEquals(5, results.getSurvivalTimeOutputPatientDtoList().get(4).getSortedIndex().intValue());
+
     }
 
     private SurvivalTimeOutputPatientDto calculateSurvivalTime(List<SurvivalTimeInputRecordDto> records, int endPointYear) {

@@ -157,7 +157,7 @@ public class SurvivalTimeUtils {
                         tempInternalRecords.add(new InternalRecDto(orgRecord, recordResult));
                     }
                     //Let's sort the temp records list and assign back the sorted index to the output
-                    Collections.sort(tempInternalRecords);
+                    tempInternalRecords = sortTempRecords(tempInternalRecords);
                     for (int sortedIdx = 1; sortedIdx <= tempInternalRecords.size(); sortedIdx++) // output sort index should be 1-based
                         tempInternalRecords.get(sortedIdx - 1)._recordResult.setSortedIndex(sortedIdx);
                     patientResultsDto.setSurvivalTimeOutputPatientDtoList(patientResultsList);
@@ -245,12 +245,7 @@ public class SurvivalTimeUtils {
             }
 
             // STEP 1 - sort the records by DX date (and/or sequence number)
-            //    the sequence numbers might be used to determine the order; there are two families of sequences: federal (00-59, 98, 99) and non-federal (60-97);
-            //    sine the non-federal need to always be after the federal, let's add 100 to all the non-federal (making them 160-197)
-            for (InternalRecDto rec : validTempRecords)
-                if (rec._seqNum >= 60 && rec._seqNum <= 97)
-                    rec._seqNum = rec._seqNum + 100;
-            Collections.sort(validTempRecords);
+            validTempRecords = sortTempRecords(validTempRecords);
 
             // calculate the variables without presuming ALIVE (this one cannot handle an unknown DOLC)
             if (dolcYear != 9999)
@@ -296,7 +291,7 @@ public class SurvivalTimeUtils {
             }
 
             // assign the sorted index on every output record: based on sorted tmp records
-            Collections.sort(allTempRecords);
+            allTempRecords = sortTempRecords(allTempRecords);
             for (int sortedIdx = 1; sortedIdx <= allTempRecords.size(); sortedIdx++) // output sort index should be 1-based
                 allTempRecords.get(sortedIdx - 1)._recordResult.setSortedIndex(sortedIdx);
 
@@ -594,8 +589,12 @@ public class SurvivalTimeUtils {
                 _day = _daySafe = 99;
 
             // sequence number
+            //    the sequence numbers might be used to determine the order; there are two families of sequences: federal (00-59, 98, 99) and non-federal (60-97);
+            //    sine the non-federal need to always be after the federal, let's add 100 to all the non-federal (making them 160-197)
             String seqNumStr = record.getSequenceNumberCentral();
             _seqNum = NumberUtils.isDigits(seqNumStr) ? Integer.parseInt(seqNumStr) : -1;
+            if (_seqNum >= 60 && _seqNum <= 97)
+                _seqNum = _seqNum + 100;
         }
 
         @Override
@@ -612,6 +611,25 @@ public class SurvivalTimeUtils {
                 else {
                     if (_day == 99 || other._day == 99 || this._day == other._day)
                         return _seqNum - other._seqNum;
+                    else
+                        return _day - other._day;
+                }
+            }
+        }
+
+        public int compareDateOnly(InternalRecDto other) {
+            if (_year == 9999 || other._year == 9999)
+                return 0;
+            else if (_year != other._year)
+                return _year - other._year;
+            else {
+                if (_month == 99 || other._month == 99)
+                    return 0;
+                else if (_month != other._month)
+                    return _month - other._month;
+                else {
+                    if (_day == 99 || other._day == 99 || this._day == other._day)
+                        return 0;
                     else
                         return _day - other._day;
                 }
@@ -654,5 +672,98 @@ public class SurvivalTimeUtils {
             result = 31 * result + _seqNum;
             return result;
         }
+    }
+
+    /**
+     * This method is added to avoid the situation where a > b and b > c and c > a
+     * Valid dates are always ordered first and then we add the invalid ones, we compare the invalid one starting from the last one
+     * Example:
+     * rec 1: 01: 2015/3/5
+     * rec 2: 02: 2015/99/99
+     * rec 3: 60: 2015/2/23
+     * We want 3 and 1 to be compared first which 3 is first and 1 is second. (3, 1)
+     * Then we compare the invalid one starting from the last, that is rec 1 in this case.
+     * The order will become 3, 1, 2
+     */
+    private static List<InternalRecDto> sortTempRecords(List<InternalRecDto> list) {
+        List<InternalRecDto> validRecords = new ArrayList<>();
+        List<InternalRecDto> dayMissingRecords = new ArrayList<>();
+        List<InternalRecDto> monthMissingRecords = new ArrayList<>();
+        List<InternalRecDto> yearMissingRecords = new ArrayList<>();
+        for (InternalRecDto dto : list) {
+            if (dto._year == 9999)
+                yearMissingRecords.add(dto);
+            else if (dto._month == 99)
+                monthMissingRecords.add(dto);
+            else if (dto._day == 99)
+                dayMissingRecords.add(dto);
+            else
+                validRecords.add(dto);
+        }
+
+        List<InternalRecDto> result = new ArrayList<>(validRecords);
+        Collections.sort(result);
+
+        //Handle day missing records
+        sortTempRecords(result, dayMissingRecords);
+        //Handle Month missing records
+        sortTempRecords(result, monthMissingRecords);
+        //Handle year missing record
+        sortTempRecords(result, yearMissingRecords);
+        return result;
+    }
+
+    private static void sortTempRecords(List<InternalRecDto> result, List<InternalRecDto> subList) {
+        Collections.sort(subList);
+        if (result.isEmpty())
+            result.addAll(subList);
+        else {
+            for (InternalRecDto r : subList) {
+                for (int i = result.size() - 1; i >= 0; i--) {
+                    //if the subList record's date is later than the sorted result record, append it after sorted record
+                    if (r.compareDateOnly(result.get(i)) > 0) {
+                        result.add(i + 1, r);
+                        break;
+                    }
+                    else if (r.compareDateOnly(result.get(i)) == 0) {
+                        if ((r._seqNum < 100 && r._seqNum >= result.get(i)._seqNum) || (r._seqNum > 100 && result.get(i)._seqNum > 100 && r._seqNum >= result.get(i)._seqNum)) {
+                            result.add(i + 1, r);
+                            break;
+                        }
+                        else if (r._seqNum > 100) {
+                            List<InternalRecDto> sortedRecordsWithPotentialLaterDate = new ArrayList<>();
+                            for (int j = 0; j <= i; j++)
+                                if (r.compareDateOnly(result.get(j)) == 0)
+                                    sortedRecordsWithPotentialLaterDate.add(result.get(j));
+
+                            if (!hasConflictedSequence(r._seqNum, sortedRecordsWithPotentialLaterDate)) {
+                                result.add(i + 1, r);
+                                break;
+                            }
+                        }
+                    }
+                    if (i == 0)
+                        result.add(0, r);
+                }
+            }
+        }
+    }
+
+    //This method is only for non federal, it checks if current non-federal should go before another non-federal
+    private static boolean hasConflictedSequence(int seq, List<InternalRecDto> sortedResult) {
+        //if all other records are federal, the non federal should go last
+        if (sortedResult.stream().noneMatch(r -> r._seqNum > 100))
+            return false;
+        //if the other non federal's are not in the right order, don't bother fixing this
+        for (int i = 0; i < sortedResult.size() - 1; i++)
+            for (int j = i + 1; j <= sortedResult.size() - 1; j++)
+                if (sortedResult.get(i)._seqNum > 100 && sortedResult.get(j)._seqNum > 100 && sortedResult.get(i)._seqNum > sortedResult.get(j)._seqNum)
+                    return false;
+        //If they are in order and if current sequence number is less than one of them, we need to move the current record
+        for (int i = sortedResult.size() - 1; i >= 0; i--)
+            if (sortedResult.get(i)._seqNum > 100)
+                return seq <= sortedResult.get(i)._seqNum;
+
+        return false;
     }
 }
