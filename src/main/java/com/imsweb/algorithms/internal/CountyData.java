@@ -11,6 +11,11 @@ import java.util.Map;
  */
 public class CountyData {
 
+    // prcda, uiho data
+    private String _prcda;
+    private String _uiho;
+    private String _uihoFacility;
+
     // urban continuum data
     private String _urbanContinuum1993;
     private String _urbanContinuum2003;
@@ -18,6 +23,18 @@ public class CountyData {
 
     // census data keyed by census tract code
     private Map<String, CensusData> _censusData = new HashMap<>();
+
+    public String getPRCDA() { return _prcda; }
+
+    public void setPRCDA(String prcda) { _prcda = prcda; }
+
+    public String getUIHO() { return _uiho; }
+
+    public void setUIHO(String uiho) { _uiho = uiho; }
+
+    public String getUIHOFacility() { return _uihoFacility; }
+
+    public void setUIHOFacility(String uihoFacility) { _uihoFacility = uihoFacility; }
 
     public String getUrbanContinuum1993() {
         return _urbanContinuum1993;
