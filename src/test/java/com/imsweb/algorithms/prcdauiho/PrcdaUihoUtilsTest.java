@@ -57,7 +57,7 @@ public class PrcdaUihoUtilsTest {
                 } else {
                     String stCnty = state + county;
                     if (prcda_states.contains(state)) {
-                        Assert.assertEquals("1", output.getPRCDA());
+                        Assert.assertEquals(PRCDA_YES, output.getPRCDA());
                     } else if ("AZ001".equals(stCnty) || "AZ003".equals(stCnty) || "AZ007".equals(stCnty)
                             || "CO007".equals(stCnty) || "NV003".equals(stCnty) || "NV007".equals(stCnty)
                             || "NV009".equals(stCnty) || "SE007".equals(stCnty) || "SE009".equals(stCnty)) {
