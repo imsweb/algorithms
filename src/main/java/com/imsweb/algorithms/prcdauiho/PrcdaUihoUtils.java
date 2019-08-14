@@ -11,6 +11,9 @@ import org.apache.commons.lang3.math.NumberUtils;
 
 /**
  * This class can be used to calculate PRCDA, UIHO, and UIHO facility.
+ * <br/><br/>
+ * https://seer.cancer.gov/seerstat/variables/countyattribs/static.html#chsda
+ * <br/><br/>
  * Created on Aug 12, 2019 by howew
  * @author howew
  */
