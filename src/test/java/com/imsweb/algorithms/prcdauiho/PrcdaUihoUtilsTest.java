@@ -33,20 +33,20 @@ public class PrcdaUihoUtilsTest {
     @Test
     public void testComputeRuralUrbanContinuum() {
 
-        List<String> valid_states = Arrays.asList("AZ", "CO", "GA", "NV", "SE");
-        List<String> prcda_states = Arrays.asList("AK", "CT", "NV", "OK", "SC");
-        List<String> inval_states = Arrays.asList("", "99", null);
-        List<String> valid_county = Arrays.asList("001", "003", "005", "007", "999");
-        List<String> inval_county = Arrays.asList("", "ABC", "01", null);
+        List<String> validStates = Arrays.asList("AZ", "CO", "GA", "NV", "SE");
+        List<String> prcdaStates = Arrays.asList("AK", "CT", "NV", "OK", "SC");
+        List<String> invalStates = Arrays.asList("", "99", null);
+        List<String> validCounty = Arrays.asList("001", "003", "005", "007", "999");
+        List<String> invalCounty = Arrays.asList("", "ABC", "01", null);
 
         List<String> states = new ArrayList<>();
-        states.addAll(valid_states);
-        states.addAll(inval_states);
-        states.addAll(prcda_states);
+        states.addAll(validStates);
+        states.addAll(invalStates);
+        states.addAll(prcdaStates);
 
         List<String> counties = new ArrayList<>();
-        counties.addAll(valid_county);
-        counties.addAll(inval_county);
+        counties.addAll(validCounty);
+        counties.addAll(invalCounty);
 
         PrcdaUihoInputDto input = new PrcdaUihoInputDto();
 
@@ -55,14 +55,14 @@ public class PrcdaUihoUtilsTest {
                 input.setAddressAtDxState(state);
                 input.setAddressAtDxCounty(county);
                 PrcdaUihoOutputDto output = PrcdaUihoUtils.computerPrcdaUiho(input);
-                if (inval_states.contains(state) || inval_county.contains(county)) {
+                if (invalStates.contains(state) || invalCounty.contains(county)) {
                     Assert.assertEquals(PRCDA_INVALID, output.getPRCDA());
                     Assert.assertEquals(UIHO_INVALID, output.getUIHO());
                     Assert.assertEquals(UIHO_FACILITY_INVALID, output.getUIHOFacility());
                 }
                 else {
                     String stCnty = state + county;
-                    if (prcda_states.contains(state)) {
+                    if (prcdaStates.contains(state)) {
                         Assert.assertEquals(PRCDA_YES, output.getPRCDA());
                     }
                     else if ("AZ001".equals(stCnty) || "AZ003".equals(stCnty) || "AZ007".equals(stCnty)

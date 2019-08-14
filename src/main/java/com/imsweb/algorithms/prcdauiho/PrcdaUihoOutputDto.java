@@ -13,9 +13,13 @@ public class PrcdaUihoOutputDto {
         return _prcda;
     }
 
-    public String getUIHO() { return _uiho; }
+    public String getUIHO() {
+        return _uiho;
+    }
 
-    public String getUIHOFacility() { return _uihoFacility; }
+    public String getUIHOFacility() {
+        return _uihoFacility;
+    }
 
     public void setPRCDA(String str) {
         _prcda = str;

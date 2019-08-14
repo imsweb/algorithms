@@ -24,17 +24,29 @@ public class CountyData {
     // census data keyed by census tract code
     private Map<String, CensusData> _censusData = new HashMap<>();
 
-    public String getPRCDA() { return _prcda; }
+    public String getPRCDA() {
+        return _prcda;
+    }
 
-    public void setPRCDA(String prcda) { _prcda = prcda; }
+    public void setPRCDA(String prcda) {
+        _prcda = prcda;
+    }
 
-    public String getUIHO() { return _uiho; }
+    public String getUIHO() {
+        return _uiho;
+    }
 
-    public void setUIHO(String uiho) { _uiho = uiho; }
+    public void setUIHO(String uiho) {
+        _uiho = uiho;
+    }
 
-    public String getUIHOFacility() { return _uihoFacility; }
+    public String getUIHOFacility() {
+        return _uihoFacility;
+    }
 
-    public void setUIHOFacility(String uihoFacility) { _uihoFacility = uihoFacility; }
+    public void setUIHOFacility(String uihoFacility) {
+        _uihoFacility = uihoFacility;
+    }
 
     public String getUrbanContinuum1993() {
         return _urbanContinuum1993;
