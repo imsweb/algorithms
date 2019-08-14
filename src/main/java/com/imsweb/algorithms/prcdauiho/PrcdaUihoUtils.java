@@ -37,7 +37,7 @@ public final class PrcdaUihoUtils {
     public static final String UIHO_FACILITY_INVALID = "99";
 
     // States where every county is PRCDA
-    protected static final List<String> ENTIRE_STATE_PRCDA = Arrays.asList("AK", "CT", "NV", "OK", "SC");
+    public static final List<String> ENTIRE_STATE_PRCDA = Collections.unmodifiableList(Arrays.asList("AK", "CT", "NV", "OK", "SC"));
 
     private static PrcdaUihoDataProvider _PROVIDER;
 
