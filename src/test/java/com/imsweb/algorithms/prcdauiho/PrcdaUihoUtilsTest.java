@@ -10,6 +10,7 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
+import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.ENTIRE_STATE_PRCDA;
 import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.PRCDA_INVALID;
 import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.PRCDA_NO;
 import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.PRCDA_YES;
@@ -19,10 +20,6 @@ import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.UIHO_INVALID;
 import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.UIHO_NO;
 
 public class PrcdaUihoUtilsTest {
-
-    private static final String _PROP_STATE_DX = "addressAtDxState";
-    private static final String _PROP_COUNTY_DX = "addressAtDxCounty";
-
     @Test
     public void assertInfo() {
         Assert.assertNotNull(PrcdaUihoUtils.ALG_VERSION);
@@ -34,7 +31,6 @@ public class PrcdaUihoUtilsTest {
     public void testComputeRuralUrbanContinuum() {
 
         List<String> validStates = Arrays.asList("AZ", "CO", "GA", "NV", "SE");
-        List<String> prcdaStates = Arrays.asList("AK", "CT", "NV", "OK", "SC");
         List<String> invalStates = Arrays.asList("", "99", null);
         List<String> validCounty = Arrays.asList("001", "003", "005", "007", "999");
         List<String> invalCounty = Arrays.asList("", "ABC", "01", null);
@@ -42,7 +38,7 @@ public class PrcdaUihoUtilsTest {
         List<String> states = new ArrayList<>();
         states.addAll(validStates);
         states.addAll(invalStates);
-        states.addAll(prcdaStates);
+        states.addAll(ENTIRE_STATE_PRCDA);
 
         List<String> counties = new ArrayList<>();
         counties.addAll(validCounty);
@@ -62,7 +58,7 @@ public class PrcdaUihoUtilsTest {
                 }
                 else {
                     String stCnty = state + county;
-                    if (prcdaStates.contains(state)) {
+                    if (ENTIRE_STATE_PRCDA.contains(state)) {
                         Assert.assertEquals(PRCDA_YES, output.getPRCDA());
                     }
                     else if ("AZ001".equals(stCnty) || "AZ003".equals(stCnty) || "AZ007".equals(stCnty)
