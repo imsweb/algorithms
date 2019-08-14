@@ -13,9 +13,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import com.imsweb.algorithms.prcdauiho.PrcdaUihoInputDto;
-import com.imsweb.algorithms.prcdauiho.PrcdaUihoOutputDto;
-import com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import com.imsweb.algorithms.behavrecode.BehaviorRecodeUtils;
@@ -40,6 +37,9 @@ import com.imsweb.algorithms.nhia.NhiaInputPatientDto;
 import com.imsweb.algorithms.nhia.NhiaInputRecordDto;
 import com.imsweb.algorithms.nhia.NhiaResultsDto;
 import com.imsweb.algorithms.nhia.NhiaUtils;
+import com.imsweb.algorithms.prcdauiho.PrcdaUihoInputDto;
+import com.imsweb.algorithms.prcdauiho.PrcdaUihoOutputDto;
+import com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils;
 import com.imsweb.algorithms.ruralurban.RuralUrbanInputDto;
 import com.imsweb.algorithms.ruralurban.RuralUrbanOutputDto;
 import com.imsweb.algorithms.ruralurban.RuralUrbanUtils;
@@ -55,7 +55,9 @@ import static com.imsweb.algorithms.iccc.IcccRecodeUtils.VERSION_WHO_2008_INFO;
 import static com.imsweb.algorithms.nhia.NhiaUtils.NHIA_OPTION_ALL_CASES;
 import static com.imsweb.algorithms.nhia.NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE;
 import static com.imsweb.algorithms.nhia.NhiaUtils.NHIA_OPTION_SEVEN_ONLY;
-import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.*;
+import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.PRCDA_INVALID;
+import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.UIHO_FACILITY_INVALID;
+import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.UIHO_INVALID;
 import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.CONTINUUM_UNK_96;
 import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.CONTINUUM_UNK_97;
 import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.CONTINUUM_UNK_98;
@@ -1524,9 +1526,9 @@ public class Algorithms {
             @Override
             public Map<String, List<String>> getUnknownValues() {
                 Map<String, List<String>> result = new HashMap<>();
-                result.put(FIELD_PRCDA_2016_COUNTY, Arrays.asList(PRCDA_INVALID));
-                result.put(FIELD_UIHO_2016_COUNTY, Arrays.asList(UIHO_INVALID));
-                result.put(FIELD_UIHO_FACILITY, Arrays.asList(UIHO_FACILITY_INVALID));
+                result.put(FIELD_PRCDA_2016_COUNTY, Collections.singletonList(PRCDA_INVALID));
+                result.put(FIELD_UIHO_2016_COUNTY, Collections.singletonList(UIHO_INVALID));
+                result.put(FIELD_UIHO_FACILITY, Collections.singletonList(UIHO_FACILITY_INVALID));
                 return result;
             }
 

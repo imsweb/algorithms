@@ -3,12 +3,6 @@
  */
 package com.imsweb.algorithms.prcdauiho;
 
-import com.imsweb.algorithms.internal.CountryData;
-import com.imsweb.algorithms.internal.CountyData;
-import com.imsweb.algorithms.internal.StateData;
-import com.opencsv.CSVReaderBuilder;
-import org.apache.commons.lang3.StringUtils;
-
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -16,7 +10,24 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.*;
+import org.apache.commons.lang3.StringUtils;
+
+import com.opencsv.CSVReaderBuilder;
+
+import com.imsweb.algorithms.internal.CountryData;
+import com.imsweb.algorithms.internal.CountyData;
+import com.imsweb.algorithms.internal.StateData;
+
+import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.ENTIRE_STATE_PRCDA;
+import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.PRCDA_INVALID;
+import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.PRCDA_NO;
+import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.PRCDA_YES;
+import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.UIHO_FACILITY_INVALID;
+import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.UIHO_FACILITY_NONE;
+import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.UIHO_INVALID;
+import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.UIHO_NO;
+import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.isCountyAtDxValid;
+import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.isStateAtDxValid;
 
 /**
  * The purpose of this class is to get the PRCDA, UIHO, and UIHO facility for the provided

@@ -7,7 +7,7 @@ public class PrcdaUihoOutputDto {
 
     private String _prcda, _uiho, _uihoFacility;
 
-    public PrcdaUihoOutputDto() {  }
+    public PrcdaUihoOutputDto() { }
 
     public String getPRCDA() {
         return _prcda;

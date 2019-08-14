@@ -3,10 +3,10 @@
  */
 package com.imsweb.algorithms.prcdauiho;
 
-import org.apache.commons.lang3.math.NumberUtils;
-
 import java.util.Arrays;
 import java.util.List;
+
+import org.apache.commons.lang3.math.NumberUtils;
 
 /**
  * This class can be used to calculate PRCDA, UIHO, and UIHO facility.
@@ -20,7 +20,9 @@ public final class PrcdaUihoUtils {
     public static final String ALG_INFO = "NPCR PRCDA & UIHO Linkage Program version 1.0, released in August 2019";
 
     //Valid NAACCR values for state at dx
-    private static final List<String> _VALID_STATES = Arrays.asList("AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY", "AS", "GU", "MP", "PW", "PR", "UM", "VI", "FM", "MH", "TT", "AB", "BC", "MB", "NB", "NL", "NS", "NT", "NU", "ON", "PE", "QC", "SK", "YT", "AA", "AE", "AP");
+    private static final List<String> _VALID_STATES = Arrays.asList("AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA",
+            "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY", "AS", "GU",
+            "MP", "PW", "PR", "UM", "VI", "FM", "MH", "TT", "AB", "BC", "MB", "NB", "NL", "NS", "NT", "NU", "ON", "PE", "QC", "SK", "YT", "AA", "AE", "AP");
 
     //NAACCR values for missing or unknown state at dx
     private static final List<String> _MISSING_OR_UNKNOWN_STATES = Arrays.asList("CD", "US", "XX", "YY", "ZZ");
@@ -35,8 +37,9 @@ public final class PrcdaUihoUtils {
 
     // States where every county is PRCDA
     public static final List<String> ENTIRE_STATE_PRCDA;
+
     static {
-        ENTIRE_STATE_PRCDA = Arrays.asList(new String[] { "AK", "CT", "NV", "OK", "SC" });
+        ENTIRE_STATE_PRCDA = Arrays.asList("AK", "CT", "NV", "OK", "SC");
     }
 
     private static PrcdaUihoDataProvider _PROVIDER;
@@ -84,7 +87,8 @@ public final class PrcdaUihoUtils {
 
             if (ENTIRE_STATE_PRCDA.contains(input.getAddressAtDxState())) {
                 result.setPRCDA(PRCDA_YES);
-            } else {
+            }
+            else {
                 result.setPRCDA(_PROVIDER.getPRCDA(input.getAddressAtDxState(), input.getAddressAtDxCounty()));
             }
             result.setUIHO(_PROVIDER.getUIHO(input.getAddressAtDxState(), input.getAddressAtDxCounty()));
