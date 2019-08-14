@@ -77,9 +77,9 @@ public class PrcdaUihoUtilsTest {
                         Assert.assertEquals("1", output.getUIHO());
                         Assert.assertEquals("24", output.getUIHOFacility());
                     } else {
-                        Assert.assertEquals("0", output.getPRCDA());
-                        Assert.assertEquals("0", output.getUIHO());
-                        Assert.assertEquals("00", output.getUIHOFacility());
+                        Assert.assertEquals(PRCDA_NO, output.getPRCDA());
+                        Assert.assertEquals(UIHO_NO, output.getUIHO());
+                        Assert.assertEquals(UIHO_FACILITY_NONE, output.getUIHOFacility());
                     }
                 }
             }
