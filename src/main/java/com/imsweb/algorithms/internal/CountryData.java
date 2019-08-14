@@ -39,6 +39,7 @@ public class CountryData {
     private boolean _continuumInitialized = false;
     private boolean _povertyInitialized = false;
     private boolean _countyAtDxAnalysisInitialized = false;
+    private boolean _prcdaUihoInitialized = false;
 
     // internal lock to control concurrency
     private ReentrantReadWriteLock _lock = new ReentrantReadWriteLock();
@@ -55,6 +56,7 @@ public class CountryData {
             _continuumInitialized = false;
             _povertyInitialized = false;
             _countyAtDxAnalysisInitialized = false;
+            _prcdaUihoInitialized = false;
         }
         finally {
             _lock.writeLock().unlock();
@@ -312,6 +314,58 @@ public class CountryData {
                 }
             }
             _countyAtDxAnalysisInitialized = true;
+        }
+        finally {
+            _lock.writeLock().unlock();
+        }
+    }
+
+    /**
+     * Returns requested state data to be used by the PRCDA/UIHO algorithm.
+     */
+    public StateData getPrcdaUihoData(String state) {
+        _lock.readLock().lock();
+        try {
+            if (!_prcdaUihoInitialized)
+                throw new RuntimeException("PRCDA/UIHO data cannot be access before it has been initialized!");
+            return _stateData.get(state);
+        }
+        finally {
+            _lock.readLock().unlock();
+        }
+    }
+
+    /**
+     * Returns true if the PRCDA/UIHO data has been initialized, false otherwise.
+     */
+    public boolean isPrcdaUihoDataInitialized() {
+        _lock.readLock().lock();
+        try {
+            return _prcdaUihoInitialized;
+        }
+        finally {
+            _lock.readLock().unlock();
+        }
+    }
+
+    /**
+     * Initializes the given Continuum data (this call will make all other access to the data structure block).
+     */
+    public void initializePrcdaUihoData(Map<String, Map<String, CountyData>> data) {
+        _lock.writeLock().lock();
+        try {
+            if (!_prcdaUihoInitialized) {
+                for (Map.Entry<String, Map<String, CountyData>> stateEntry : data.entrySet()) {
+                    StateData stateData = _stateData.computeIfAbsent(stateEntry.getKey(), k -> new StateData());
+                    for (Map.Entry<String, CountyData> countyEntry : stateEntry.getValue().entrySet()) {
+                        CountyData countyData = stateData.getData().computeIfAbsent(countyEntry.getKey(), k -> new CountyData());
+                        countyData.setPRCDA(countyEntry.getValue().getPRCDA());
+                        countyData.setUIHO(countyEntry.getValue().getUIHO());
+                        countyData.setUIHOFacility(countyEntry.getValue().getUIHOFacility());
+                    }
+                }
+            }
+            _prcdaUihoInitialized = true;
         }
         finally {
             _lock.writeLock().unlock();

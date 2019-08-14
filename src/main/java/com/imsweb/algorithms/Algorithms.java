@@ -37,6 +37,9 @@ import com.imsweb.algorithms.nhia.NhiaInputPatientDto;
 import com.imsweb.algorithms.nhia.NhiaInputRecordDto;
 import com.imsweb.algorithms.nhia.NhiaResultsDto;
 import com.imsweb.algorithms.nhia.NhiaUtils;
+import com.imsweb.algorithms.prcdauiho.PrcdaUihoInputDto;
+import com.imsweb.algorithms.prcdauiho.PrcdaUihoOutputDto;
+import com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils;
 import com.imsweb.algorithms.ruralurban.RuralUrbanInputDto;
 import com.imsweb.algorithms.ruralurban.RuralUrbanOutputDto;
 import com.imsweb.algorithms.ruralurban.RuralUrbanUtils;
@@ -52,6 +55,9 @@ import static com.imsweb.algorithms.iccc.IcccRecodeUtils.VERSION_WHO_2008_INFO;
 import static com.imsweb.algorithms.nhia.NhiaUtils.NHIA_OPTION_ALL_CASES;
 import static com.imsweb.algorithms.nhia.NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE;
 import static com.imsweb.algorithms.nhia.NhiaUtils.NHIA_OPTION_SEVEN_ONLY;
+import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.PRCDA_INVALID;
+import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.UIHO_FACILITY_INVALID;
+import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.UIHO_INVALID;
 import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.CONTINUUM_UNK_96;
 import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.CONTINUUM_UNK_97;
 import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.CONTINUUM_UNK_98;
@@ -88,6 +94,7 @@ public class Algorithms {
     public static final String ALG_ICCC = "iccc";
     public static final String ALG_IARC = "iarc-multiple-primary";
     public static final String ALG_COUNTY_AT_DIAGNOSIS_ANALYSIS = "county-at-diagnosis-analysis";
+    public static final String ALG_PRCDA_UIHO = "prcda-uiho";
 
     // special properties
     public static final String FIELD_TUMORS = "tumors";
@@ -168,6 +175,9 @@ public class Algorithms {
     public static final String FIELD_IARC_MP_HIST_GROUP = "iarcMpHistGroup";
     public static final String FIELD_IARC_MP_HISTOLOGY = "iarcMpHistologicTypeIcdO3";
     public static final String FIELD_COUNTY_AT_DX_ANALYSIS_FLAG = "countyAtDxAnalysisFlag";
+    public static final String FIELD_PRCDA_2016_COUNTY = "prcda16";
+    public static final String FIELD_UIHO_2016_COUNTY = "uiho16";
+    public static final String FIELD_UIHO_FACILITY = "uihoFac";
 
     // options
     public static final String PARAM_NHIA_OPTION = "nhiaOption";
@@ -255,6 +265,9 @@ public class Algorithms {
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_IARC_MP_HIST_GROUP, null, 2));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_IARC_MP_HISTOLOGY, null, 4));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_COUNTY_AT_DX_ANALYSIS_FLAG, null, 4));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_PRCDA_2016_COUNTY, null, 1));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_UIHO_2016_COUNTY, null, 1));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_UIHO_FACILITY, null, 2));
     }
 
     private static void addField(Map<String, AlgorithmField> cache, AlgorithmField field) {
@@ -281,6 +294,7 @@ public class Algorithms {
             addAlgorithm(_CACHED_ALGORITHMS, createIccc());
             addAlgorithm(_CACHED_ALGORITHMS, createIarc());
             addAlgorithm(_CACHED_ALGORITHMS, createCountyAtDiagnosisAnalysis());
+            addAlgorithm(_CACHED_ALGORITHMS, createPrcdaUiho());
         }
         finally {
             _LOCK.writeLock().unlock();
@@ -1460,6 +1474,88 @@ public class Algorithms {
                 }
 
                 return AlgorithmOutput.of(patient);
+            }
+        };
+    }
+
+    private static Algorithm createPrcdaUiho() {
+        return new Algorithm() {
+
+            @Override
+            public String getId() {
+                return ALG_PRCDA_UIHO;
+            }
+
+            @Override
+            public String getName() {
+                return PrcdaUihoUtils.ALG_NAME;
+            }
+
+            @Override
+            public String getVersion() {
+                return PrcdaUihoUtils.ALG_VERSION;
+            }
+
+            @Override
+            public String getInfo() {
+                return PrcdaUihoUtils.ALG_INFO;
+            }
+
+            @Override
+            public List<AlgorithmParam> getParameters() {
+                return Collections.emptyList();
+            }
+
+            @Override
+            public List<AlgorithmField> getInputFields() {
+                List<AlgorithmField> fields = new ArrayList<>();
+                fields.add(_CACHED_FIELDS.get(FIELD_STATE_DX));
+                fields.add(_CACHED_FIELDS.get(FIELD_COUNTY_DX));
+                return fields;
+            }
+
+            @Override
+            public List<AlgorithmField> getOutputFields() {
+                List<AlgorithmField> fields = new ArrayList<>();
+                fields.add(_CACHED_FIELDS.get(FIELD_PRCDA_2016_COUNTY));
+                fields.add(_CACHED_FIELDS.get(FIELD_UIHO_2016_COUNTY));
+                fields.add(_CACHED_FIELDS.get(FIELD_UIHO_FACILITY));
+                return fields;
+            }
+
+            @Override
+            public Map<String, List<String>> getUnknownValues() {
+                Map<String, List<String>> result = new HashMap<>();
+                result.put(FIELD_PRCDA_2016_COUNTY, Collections.singletonList(PRCDA_INVALID));
+                result.put(FIELD_UIHO_2016_COUNTY, Collections.singletonList(UIHO_INVALID));
+                result.put(FIELD_UIHO_FACILITY, Collections.singletonList(UIHO_FACILITY_INVALID));
+                return result;
+            }
+
+            @Override
+            public AlgorithmOutput execute(AlgorithmInput input) {
+
+                Map<String, Object> outputPatient = new HashMap<>();
+                List<Map<String, Object>> outputTumors = new ArrayList<>();
+                outputPatient.put(FIELD_TUMORS, outputTumors);
+
+                for (Map<String, Object> inputTumor : Utils.extractTumors(Utils.extractPatient(input))) {
+                    PrcdaUihoInputDto inputDto = new PrcdaUihoInputDto();
+                    inputDto.setAddressAtDxState((String)inputTumor.get(FIELD_STATE_DX));
+                    inputDto.setAddressAtDxCounty((String)inputTumor.get(FIELD_COUNTY_DX));
+
+                    PrcdaUihoOutputDto outputDto = PrcdaUihoUtils.computerPrcdaUiho(inputDto);
+
+                    Map<String, Object> outputTumor = new HashMap<>();
+                    outputTumor.put(FIELD_PRCDA_2016_COUNTY, outputDto.getPRCDA());
+                    outputTumor.put(FIELD_UIHO_2016_COUNTY, outputDto.getUIHO());
+                    outputTumor.put(FIELD_UIHO_FACILITY, outputDto.getUIHOFacility());
+
+                    outputTumors.add(outputTumor);
+                }
+
+                return AlgorithmOutput.of(outputPatient);
+
             }
         };
     }
