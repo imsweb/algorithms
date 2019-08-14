@@ -4,6 +4,7 @@
 package com.imsweb.algorithms.prcdauiho;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang3.math.NumberUtils;
@@ -36,11 +37,7 @@ public final class PrcdaUihoUtils {
     public static final String UIHO_FACILITY_INVALID = "99";
 
     // States where every county is PRCDA
-    public static final List<String> ENTIRE_STATE_PRCDA;
-
-    static {
-        ENTIRE_STATE_PRCDA = Arrays.asList("AK", "CT", "NV", "OK", "SC");
-    }
+    public static final List<String> ENTIRE_STATE_PRCDA = Collections.unmodifiableList(Arrays.asList("AK", "CT", "NV", "OK", "SC"));
 
     private static PrcdaUihoDataProvider _PROVIDER;
 
