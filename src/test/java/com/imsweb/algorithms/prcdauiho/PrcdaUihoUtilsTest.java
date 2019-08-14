@@ -3,15 +3,20 @@
  */
 package com.imsweb.algorithms.prcdauiho;
 
-import com.imsweb.algorithms.ruralurban.RuralUrbanInputDto;
-import com.imsweb.algorithms.ruralurban.RuralUrbanOutputDto;
-import com.imsweb.algorithms.ruralurban.RuralUrbanUtils;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.*;
-
-import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.*;
+import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.PRCDA_INVALID;
+import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.PRCDA_NO;
+import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.PRCDA_YES;
+import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.UIHO_FACILITY_INVALID;
+import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.UIHO_FACILITY_NONE;
+import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.UIHO_INVALID;
+import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.UIHO_NO;
 
 public class PrcdaUihoUtilsTest {
 
@@ -54,29 +59,35 @@ public class PrcdaUihoUtilsTest {
                     Assert.assertEquals(PRCDA_INVALID, output.getPRCDA());
                     Assert.assertEquals(UIHO_INVALID, output.getUIHO());
                     Assert.assertEquals(UIHO_FACILITY_INVALID, output.getUIHOFacility());
-                } else {
+                }
+                else {
                     String stCnty = state + county;
                     if (prcda_states.contains(state)) {
                         Assert.assertEquals(PRCDA_YES, output.getPRCDA());
-                    } else if ("AZ001".equals(stCnty) || "AZ003".equals(stCnty) || "AZ007".equals(stCnty)
+                    }
+                    else if ("AZ001".equals(stCnty) || "AZ003".equals(stCnty) || "AZ007".equals(stCnty)
                             || "CO007".equals(stCnty) || "NV003".equals(stCnty) || "NV007".equals(stCnty)
                             || "NV009".equals(stCnty) || "SE007".equals(stCnty) || "SE009".equals(stCnty)) {
                         Assert.assertEquals("1", output.getPRCDA());
                         Assert.assertEquals("0", output.getUIHO());
                         Assert.assertEquals("00", output.getUIHOFacility());
-                    } else if ("AZ005".equals(stCnty)) {
+                    }
+                    else if ("AZ005".equals(stCnty)) {
                         Assert.assertEquals("1", output.getPRCDA());
                         Assert.assertEquals("1", output.getUIHO());
                         Assert.assertEquals("01", output.getUIHOFacility());
-                    } else if ("CO001".equals(stCnty) || "CO005".equals(stCnty)) {
+                    }
+                    else if ("CO001".equals(stCnty) || "CO005".equals(stCnty)) {
                         Assert.assertEquals("0", output.getPRCDA());
                         Assert.assertEquals("1", output.getUIHO());
                         Assert.assertEquals("12", output.getUIHOFacility());
-                    } else if ("NV001".equals(stCnty) || "NV005".equals(stCnty)) {
+                    }
+                    else if ("NV001".equals(stCnty) || "NV005".equals(stCnty)) {
                         Assert.assertEquals("1", output.getPRCDA());
                         Assert.assertEquals("1", output.getUIHO());
                         Assert.assertEquals("24", output.getUIHOFacility());
-                    } else {
+                    }
+                    else {
                         Assert.assertEquals(PRCDA_NO, output.getPRCDA());
                         Assert.assertEquals(UIHO_NO, output.getUIHO());
                         Assert.assertEquals(UIHO_FACILITY_NONE, output.getUIHOFacility());
