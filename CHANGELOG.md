@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 2.4**
+
+- Updated the Census Tract Poverty Indicator algorithm to handle 2015+ cases using the latest 5 year data from the ACS (2013-2017).
+
 **Changes in version 2.3**
 
 - Improved the sorting mechanism of Survival Time Algorithm to handle corner cases.
