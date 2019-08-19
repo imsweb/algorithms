@@ -13,7 +13,9 @@ import org.apache.commons.lang3.math.NumberUtils;
 public class RuralUrbanInputDto {
 
     //Valid NAACCR values for state at dx
-    private static final List<String> _VALID_STATES = Arrays.asList("AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY", "AS", "GU", "MP", "PW", "PR", "UM", "VI", "FM", "MH", "TT", "AB", "BC", "MB", "NB", "NL", "NS", "NT", "NU", "ON", "PE", "QC", "SK", "YT", "AA", "AE", "AP");
+    private static final List<String> _VALID_STATES = Arrays.asList("AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA",
+            "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY", "AS", "GU",
+            "MP", "PW", "PR", "UM", "VI", "FM", "MH", "TT", "AB", "BC", "MB", "NB", "NL", "NS", "NT", "NU", "ON", "PE", "QC", "SK", "YT", "AA", "AE", "AP");
 
     //NAACCR values for missing or unknown state at dx
     private static final List<String> _MISSING_OR_UNKNOWN_STATES = Arrays.asList("", "CD", "US", "XX", "YY", "ZZ");
@@ -35,7 +37,7 @@ public class RuralUrbanInputDto {
         _SEER_CITY_RECODES.put("SE", "WA");
     }
 
-    private String _addressAtDxCounty;
+    private String _countyAtDxAnalysis;
     private String _addressAtDxState;
     private String _censusTract2000;
     private String _censusTract2010;
@@ -45,24 +47,12 @@ public class RuralUrbanInputDto {
 
     public void applyRecodes() {
         _addressAtDxState = _addressAtDxState == null ? "" : _addressAtDxState.toUpperCase().trim();
-        _addressAtDxCounty = _addressAtDxCounty == null ? "" : _addressAtDxCounty.trim();
+        _countyAtDxAnalysis = _countyAtDxAnalysis == null ? "" : _countyAtDxAnalysis.trim();
         _censusTract2000 = _censusTract2000 == null ? "" : _censusTract2000.trim();
         _censusTract2010 = _censusTract2010 == null ? "" : _censusTract2010.trim();
 
         // recode state for SEER cities
         _addressAtDxState = _SEER_CITY_RECODES.containsKey(_addressAtDxState) ? _SEER_CITY_RECODES.get(_addressAtDxState) : _addressAtDxState;
-    }
-
-    public boolean isCountyAtDxValidOrMissingOrUnknown() {
-        return (NumberUtils.isDigits(_addressAtDxCounty)) || isCountyAtDxMissingOrUnknown();
-    }
-
-    public boolean isStateAtDxMissingOrUnknown() {
-        return _MISSING_OR_UNKNOWN_STATES.contains(_addressAtDxState);
-    }
-
-    public boolean isStateAtDxValidOrMissingOrUnknown() {
-        return _VALID_STATES.contains(_addressAtDxState) || isStateAtDxMissingOrUnknown();
     }
 
     public boolean isCensusTract2000MissingOrUnknown() {
@@ -81,10 +71,25 @@ public class RuralUrbanInputDto {
         return (NumberUtils.isDigits(_censusTract2010) && Integer.parseInt(_censusTract2010) >= 100) || isCensusTract2010MissingOrUnknown();
     }
 
+    public boolean isCountyMissingOrUnknown() {
+        return _MISSING_OR_UNKNOWN_COUNTIES.contains(_countyAtDxAnalysis);
+    }
+
+    public boolean isCountyValidOrMissingOrUnknown() {
+        return (NumberUtils.isDigits(_countyAtDxAnalysis)) || isCountyMissingOrUnknown();
+    }
+
+    public boolean isStateMissingOrUnknown() {
+        return _MISSING_OR_UNKNOWN_STATES.contains(_addressAtDxState);
+    }
+
+    public boolean isStateValidOrMissingOrUnknown() {
+        return _VALID_STATES.contains(_addressAtDxState) || isStateMissingOrUnknown();
+    }
 
     // getters
-    public String getAddressAtDxCounty() {
-        return _addressAtDxCounty;
+    public String getCountyAtDxAnalysis() {
+        return _countyAtDxAnalysis;
     }
 
     public String getAddressAtDxState() {
@@ -99,13 +104,9 @@ public class RuralUrbanInputDto {
         return _censusTract2010;
     }
 
-    public boolean isCountyAtDxMissingOrUnknown() {
-        return _MISSING_OR_UNKNOWN_COUNTIES.contains(_addressAtDxCounty);
-    }
-
     // setters
-    public void setAddressAtDxCounty(String addressAtDxCounty) {
-        _addressAtDxCounty = addressAtDxCounty;
+    public void setCountyAtDxAnalysis(String countyAtDxAnalysis) {
+        _countyAtDxAnalysis = countyAtDxAnalysis;
     }
 
     public void setAddressAtDxState(String addressAtDxState) {

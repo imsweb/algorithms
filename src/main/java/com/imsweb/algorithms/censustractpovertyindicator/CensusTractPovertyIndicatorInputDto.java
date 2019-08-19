@@ -7,7 +7,7 @@ public class CensusTractPovertyIndicatorInputDto {
 
     private String _addressAtDxState;
 
-    private String _addressAtDxCounty;
+    private String _countyAtDxAnalysis;
 
     private String _dateOfDiagnosisYear;
 
@@ -26,12 +26,12 @@ public class CensusTractPovertyIndicatorInputDto {
         _addressAtDxState = addressAtDxState;
     }
 
-    public String getAddressAtDxCounty() {
-        return _addressAtDxCounty;
+    public String getCountyAtDxAnalysis() {
+        return _countyAtDxAnalysis;
     }
 
-    public void setAddressAtDxCounty(String addressAtDxCounty) {
-        _addressAtDxCounty = addressAtDxCounty;
+    public void setCountyAtDxAnalysis(String countyAtDxAnalysis) {
+        _countyAtDxAnalysis = countyAtDxAnalysis;
     }
 
     public String getDateOfDiagnosisYear() {

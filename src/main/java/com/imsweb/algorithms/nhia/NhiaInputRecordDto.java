@@ -19,7 +19,7 @@ public class NhiaInputRecordDto {
 
     private String _ihs;
 
-    private String _countyAtDx;
+    private String _countyAtDxAnalysis;
 
     private String _stateAtDx;
 
@@ -79,12 +79,12 @@ public class NhiaInputRecordDto {
         _ihs = ihs;
     }
 
-    public String getCountyAtDx() {
-        return _countyAtDx;
+    public String getCountyAtDxAnalysis() {
+        return _countyAtDxAnalysis;
     }
 
-    public void setCountyAtDx(String countyAtDx) {
-        this._countyAtDx = countyAtDx;
+    public void setCountyAtDxAnalysis(String countyAtDx) {
+        _countyAtDxAnalysis = countyAtDx;
     }
 
     public String getStateAtDx() {

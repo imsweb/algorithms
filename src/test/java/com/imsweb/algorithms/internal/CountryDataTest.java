@@ -29,7 +29,7 @@ public class CountryDataTest {
         // we will use this simple URAC calculation...
         final RuralUrbanInputDto rucaInput = new RuralUrbanInputDto();
         rucaInput.setAddressAtDxState("AL");
-        rucaInput.setAddressAtDxCounty("001");
+        rucaInput.setCountyAtDxAnalysis("001");
         rucaInput.setCensusTract2010(null);
         final String rucaExpectedValue = "D";
         Assert.assertEquals(rucaExpectedValue, RuralUrbanUtils.computeRuralUrbanCommutingArea(rucaInput).getRuralUrbanCommutingArea2010());
@@ -37,7 +37,7 @@ public class CountryDataTest {
         // we will use this simple URIC calculation...
         final RuralUrbanInputDto uricInput = new RuralUrbanInputDto();
         uricInput.setAddressAtDxState("AL");
-        uricInput.setAddressAtDxCounty("001");
+        uricInput.setCountyAtDxAnalysis("001");
         uricInput.setCensusTract2010("020200");
         final String uricExpectedValue = "1";
         Assert.assertEquals(uricExpectedValue, RuralUrbanUtils.computeUrbanRuralIndicatorCode(uricInput).getUrbanRuralIndicatorCode2010());
@@ -45,14 +45,14 @@ public class CountryDataTest {
         // we will use this simple Continuum calculation...
         final RuralUrbanInputDto continuumInput = new RuralUrbanInputDto();
         continuumInput.setAddressAtDxState("AL");
-        continuumInput.setAddressAtDxCounty("001");
+        continuumInput.setCountyAtDxAnalysis("001");
         final String continuumExpectedValue = "02";
         Assert.assertEquals(continuumExpectedValue, RuralUrbanUtils.computeRuralUrbanContinuum(continuumInput).getRuralUrbanContinuum2013());
 
         // we will use this simple poverty indicator calculation...
         final CensusTractPovertyIndicatorInputDto povertyInput = new CensusTractPovertyIndicatorInputDto();
         povertyInput.setAddressAtDxState("AL");
-        povertyInput.setAddressAtDxCounty("001");
+        povertyInput.setCountyAtDxAnalysis("001");
         povertyInput.setCensusTract2010("020200");
         povertyInput.setDateOfDiagnosisYear("2010");
         final String povertyExpectedValue = "3";

@@ -427,7 +427,7 @@ public class Algorithms {
                     dto.setIhs((String)patientMap.get(FIELD_IHS));
                     dto.setNameLast((String)patientMap.get(FIELD_NAME_LAST));
                     dto.setNameMaiden((String)patientMap.get(FIELD_NAME_MAIDEN));
-                    dto.setCountyAtDx((String)tumorMap.get(FIELD_COUNTY_AT_DX_ANALYSIS));
+                    dto.setCountyAtDxAnalysis((String)tumorMap.get(FIELD_COUNTY_AT_DX_ANALYSIS));
                     dto.setStateAtDx((String)tumorMap.get(FIELD_STATE_DX));
                     inputPatient.getNhiaInputPatientDtoList().add(dto);
                 }
@@ -688,7 +688,7 @@ public class Algorithms {
                 for (Map<String, Object> inputTumor : Utils.extractTumors(Utils.extractPatient(input))) {
                     CensusTractPovertyIndicatorInputDto inputDto = new CensusTractPovertyIndicatorInputDto();
                     inputDto.setAddressAtDxState((String)inputTumor.get(FIELD_STATE_DX));
-                    inputDto.setAddressAtDxCounty((String)inputTumor.get(FIELD_COUNTY_AT_DX_ANALYSIS));
+                    inputDto.setCountyAtDxAnalysis((String)inputTumor.get(FIELD_COUNTY_AT_DX_ANALYSIS));
                     inputDto.setDateOfDiagnosisYear(Utils.extractYear((String)inputTumor.get(FIELD_DX_DATE)));
                     inputDto.setCensusTract2000((String)inputTumor.get(FIELD_CENSUS_2000));
                     inputDto.setCensusTract2010((String)inputTumor.get(FIELD_CENSUS_2010));
@@ -894,7 +894,7 @@ public class Algorithms {
                 for (Map<String, Object> inputTumor : Utils.extractTumors(Utils.extractPatient(input))) {
                     RuralUrbanInputDto inputDto = new RuralUrbanInputDto();
                     inputDto.setAddressAtDxState((String)inputTumor.get(FIELD_STATE_DX));
-                    inputDto.setAddressAtDxCounty((String)inputTumor.get(FIELD_COUNTY_AT_DX_ANALYSIS));
+                    inputDto.setCountyAtDxAnalysis((String)inputTumor.get(FIELD_COUNTY_AT_DX_ANALYSIS));
                     inputDto.setCensusTract2000((String)inputTumor.get(FIELD_CENSUS_2000));
                     inputDto.setCensusTract2010((String)inputTumor.get(FIELD_CENSUS_2010));
 
@@ -977,7 +977,7 @@ public class Algorithms {
                 for (Map<String, Object> inputTumor : Utils.extractTumors(Utils.extractPatient(input))) {
                     RuralUrbanInputDto inputDto = new RuralUrbanInputDto();
                     inputDto.setAddressAtDxState((String)inputTumor.get(FIELD_STATE_DX));
-                    inputDto.setAddressAtDxCounty((String)inputTumor.get(FIELD_COUNTY_AT_DX_ANALYSIS));
+                    inputDto.setCountyAtDxAnalysis((String)inputTumor.get(FIELD_COUNTY_AT_DX_ANALYSIS));
                     inputDto.setCensusTract2000((String)inputTumor.get(FIELD_CENSUS_2000));
                     inputDto.setCensusTract2010((String)inputTumor.get(FIELD_CENSUS_2010));
 
@@ -1060,7 +1060,7 @@ public class Algorithms {
                 for (Map<String, Object> inputTumor : Utils.extractTumors(Utils.extractPatient(input))) {
                     RuralUrbanInputDto inputDto = new RuralUrbanInputDto();
                     inputDto.setAddressAtDxState((String)inputTumor.get(FIELD_STATE_DX));
-                    inputDto.setAddressAtDxCounty((String)inputTumor.get(FIELD_COUNTY_AT_DX_ANALYSIS));
+                    inputDto.setCountyAtDxAnalysis((String)inputTumor.get(FIELD_COUNTY_AT_DX_ANALYSIS));
 
                     RuralUrbanOutputDto outputDto = RuralUrbanUtils.computeRuralUrbanContinuum(inputDto);
 

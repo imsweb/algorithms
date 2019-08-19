@@ -4,6 +4,7 @@
 
 - Updated the Census Tract Poverty Indicator algorithm to handle 2015+ cases using the latest 5 year data from the ACS (2013-2017).
 - Added an algorithm to look up Purchased/Referred Care Delivery Areas (PRCDA), Urban Indian Health Organizations (UIHO), and UIHO Facility Numbers for a given state/county.
+- County at Diagnosis Reported (#90) was replaced with County at Diagnosis for Analysis (#89) in the following algorithms: NHIA, RUCA, URIC, Urban/Rural Continuum, Census Tract Poverty. 
 
 **Changes in version 2.3**
 
