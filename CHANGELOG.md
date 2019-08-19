@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 2.4**
+
+- The list of InputFields was updated for the following algorithms in the framework: NHIA, RUCA, URIC, Urban/Rural Continuum, Census Tract Poverty.  County at DX Reported (#90) was replaced with County at DX for Analysis (#89). 
+
 **Changes in version 2.3**
 
 - Improved the sorting mechanism of Survival Time Algorithm to handle corner cases.
