@@ -15,7 +15,7 @@ public class RuralUrbanUtilsTest {
 
     // this properties have been deprecated in the main class but so many tests use them that it was easier to copy them here
     private static final String _PROP_STATE_DX = "addressAtDxState";
-    private static final String _PROP_COUNTY_DX = "addressAtDxCounty";
+    private static final String _PROP_COUNTY_DX_ANALYSIS = "countyAtDxAnalysis";
     private static final String _PROP_CENSUS_TRACT_2000 = "censusTract2000";
     private static final String _PROP_CENSUS_TRACT_2010 = "censusTract2010";
 
@@ -30,13 +30,13 @@ public class RuralUrbanUtilsTest {
     public void testGetRuralUrbanCensusPercentage() {
         RuralUrbanInputDto input = new RuralUrbanInputDto();
         input.setAddressAtDxState("AL");
-        input.setAddressAtDxCounty("001");
+        input.setCountyAtDxAnalysis("001");
         input.setCensusTract2010("020200");
         // only provided the 2010 census, so there should be no result for the 2000 percentage...
         Assert.assertNull(RuralUrbanUtils.computeUrbanRuralIndicatorCode(input).getUrbanRuralIndicatorCode2000Percentage());
         Assert.assertNotNull(RuralUrbanUtils.computeUrbanRuralIndicatorCode(input).getUrbanRuralIndicatorCode2010Percentage());
         input.setAddressAtDxState("PR");
-        input.setAddressAtDxCounty("151");
+        input.setCountyAtDxAnalysis("151");
         input.setCensusTract2000("000000");
         input.setCensusTract2010("000000");
         // PR 151 000000 is in the 2000 excel file, but the percentage is missing --- only the indicator value is given
@@ -57,7 +57,7 @@ public class RuralUrbanUtilsTest {
         for (String state : states) {
             for (String county : counties) {
                 record.put(_PROP_STATE_DX, state);
-                record.put(_PROP_COUNTY_DX, county);
+                record.put(_PROP_COUNTY_DX_ANALYSIS, county);
 
                 if ("--".equals(state) || "---".equals(county)) {
                     Assert.assertEquals("96", computeRuralUrbanContinuum(record).getRuralUrbanContinuum1993());
@@ -115,7 +115,7 @@ public class RuralUrbanUtilsTest {
                         Assert.assertEquals("C", computeRuralUrbanCommutingArea(record).getRuralUrbanCommutingArea2010());
                     }
                     else {
-                        record.put(_PROP_COUNTY_DX, "001");
+                        record.put(_PROP_COUNTY_DX_ANALYSIS, "001");
                         record.put(_PROP_CENSUS_TRACT_2000, "020800");
                         Assert.assertEquals("3", computeUrbanRuralIndicatorCode(record).getUrbanRuralIndicatorCode2000());
                         record.put(_PROP_CENSUS_TRACT_2000, tract);
@@ -132,7 +132,7 @@ public class RuralUrbanUtilsTest {
         ////////////////////////////////////////////////////////////
         // test recoding of Seattle to Washington
         record.put(_PROP_STATE_DX, "SE");
-        record.put(_PROP_COUNTY_DX, "001");
+        record.put(_PROP_COUNTY_DX_ANALYSIS, "001");
         String result1993 = computeRuralUrbanContinuum(record).getRuralUrbanContinuum1993();
         String result2003 = computeRuralUrbanContinuum(record).getRuralUrbanContinuum2003();
         String result2013 = computeRuralUrbanContinuum(record).getRuralUrbanContinuum2013();
@@ -143,7 +143,7 @@ public class RuralUrbanUtilsTest {
 
         // test recoding of Los Angeles to California
         record.put(_PROP_STATE_DX, "LO");
-        record.put(_PROP_COUNTY_DX, "001");
+        record.put(_PROP_COUNTY_DX_ANALYSIS, "001");
         result1993 = computeRuralUrbanContinuum(record).getRuralUrbanContinuum1993();
         result2003 = computeRuralUrbanContinuum(record).getRuralUrbanContinuum2003();
         result2013 = computeRuralUrbanContinuum(record).getRuralUrbanContinuum2013();
@@ -154,7 +154,7 @@ public class RuralUrbanUtilsTest {
 
         // test recoding of Greater Bay to California
         record.put(_PROP_STATE_DX, "GB");
-        record.put(_PROP_COUNTY_DX, "001");
+        record.put(_PROP_COUNTY_DX_ANALYSIS, "001");
         result1993 = computeRuralUrbanContinuum(record).getRuralUrbanContinuum1993();
         result2003 = computeRuralUrbanContinuum(record).getRuralUrbanContinuum2003();
         result2013 = computeRuralUrbanContinuum(record).getRuralUrbanContinuum2013();
@@ -165,7 +165,7 @@ public class RuralUrbanUtilsTest {
 
         // test recoding of Atlanta to Georgia
         record.put(_PROP_STATE_DX, "AT");
-        record.put(_PROP_COUNTY_DX, "001");
+        record.put(_PROP_COUNTY_DX_ANALYSIS, "001");
         result1993 = computeRuralUrbanContinuum(record).getRuralUrbanContinuum1993();
         result2003 = computeRuralUrbanContinuum(record).getRuralUrbanContinuum2003();
         result2013 = computeRuralUrbanContinuum(record).getRuralUrbanContinuum2013();
@@ -176,7 +176,7 @@ public class RuralUrbanUtilsTest {
 
         // test recoding of Detroit to Michigan
         record.put(_PROP_STATE_DX, "DT");
-        record.put(_PROP_COUNTY_DX, "001");
+        record.put(_PROP_COUNTY_DX_ANALYSIS, "001");
         result1993 = computeRuralUrbanContinuum(record).getRuralUrbanContinuum1993();
         result2003 = computeRuralUrbanContinuum(record).getRuralUrbanContinuum2003();
         result2013 = computeRuralUrbanContinuum(record).getRuralUrbanContinuum2013();
@@ -190,22 +190,22 @@ public class RuralUrbanUtilsTest {
         //////////////////////////////////////////////////////////////////////////////////////////////
         // test for Clifton Forge, VA
         record.put(_PROP_STATE_DX, "VA");
-        record.put(_PROP_COUNTY_DX, "560");
+        record.put(_PROP_COUNTY_DX_ANALYSIS, "560");
         result2003 = computeRuralUrbanContinuum(record).getRuralUrbanContinuum2003();
         result2013 = computeRuralUrbanContinuum(record).getRuralUrbanContinuum2013();
         Assert.assertEquals(result2013, result2003);
 
         // test for Miscellaneous AK counties
         record.put(_PROP_STATE_DX, "AK");
-        record.put(_PROP_COUNTY_DX, "201");
+        record.put(_PROP_COUNTY_DX_ANALYSIS, "201");
         result2003 = computeRuralUrbanContinuum(record).getRuralUrbanContinuum2003();
         result2013 = computeRuralUrbanContinuum(record).getRuralUrbanContinuum2013();
         Assert.assertEquals(result2013, result2003);
-        record.put(_PROP_COUNTY_DX, "232");
+        record.put(_PROP_COUNTY_DX_ANALYSIS, "232");
         result2003 = computeRuralUrbanContinuum(record).getRuralUrbanContinuum2003();
         result2013 = computeRuralUrbanContinuum(record).getRuralUrbanContinuum2013();
         Assert.assertEquals(result2013, result2003);
-        record.put(_PROP_COUNTY_DX, "280");
+        record.put(_PROP_COUNTY_DX_ANALYSIS, "280");
         result2003 = computeRuralUrbanContinuum(record).getRuralUrbanContinuum2003();
         result2013 = computeRuralUrbanContinuum(record).getRuralUrbanContinuum2013();
         Assert.assertEquals(result2013, result2003);
@@ -214,7 +214,7 @@ public class RuralUrbanUtilsTest {
         // TEST KALAWAO, HAWAII - 2003
         //////////////////////////////////////////////////////////////////////////////////////////////
         record.put(_PROP_STATE_DX, "HI");
-        record.put(_PROP_COUNTY_DX, "005");
+        record.put(_PROP_COUNTY_DX_ANALYSIS, "005");
         result2003 = computeRuralUrbanContinuum(record).getRuralUrbanContinuum2003();
         Assert.assertEquals("05", result2003);
     }
@@ -223,7 +223,7 @@ public class RuralUrbanUtilsTest {
     private RuralUrbanOutputDto computeUrbanRuralIndicatorCode(Map<String, String> record) {
         RuralUrbanInputDto input = new RuralUrbanInputDto();
         input.setAddressAtDxState(record.get(_PROP_STATE_DX));
-        input.setAddressAtDxCounty(record.get(_PROP_COUNTY_DX));
+        input.setCountyAtDxAnalysis(record.get(_PROP_COUNTY_DX_ANALYSIS));
         input.setCensusTract2000(record.get(_PROP_CENSUS_TRACT_2000));
         input.setCensusTract2010(record.get(_PROP_CENSUS_TRACT_2010));
         return RuralUrbanUtils.computeUrbanRuralIndicatorCode(input);
@@ -233,7 +233,7 @@ public class RuralUrbanUtilsTest {
     private RuralUrbanOutputDto computeRuralUrbanCommutingArea(Map<String, String> record) {
         RuralUrbanInputDto input = new RuralUrbanInputDto();
         input.setAddressAtDxState(record.get(_PROP_STATE_DX));
-        input.setAddressAtDxCounty(record.get(_PROP_COUNTY_DX));
+        input.setCountyAtDxAnalysis(record.get(_PROP_COUNTY_DX_ANALYSIS));
         input.setCensusTract2000(record.get(_PROP_CENSUS_TRACT_2000));
         input.setCensusTract2010(record.get(_PROP_CENSUS_TRACT_2010));
         return RuralUrbanUtils.computeRuralUrbanCommutingArea(input);
@@ -243,7 +243,7 @@ public class RuralUrbanUtilsTest {
     private RuralUrbanOutputDto computeRuralUrbanContinuum(Map<String, String> record) {
         RuralUrbanInputDto input = new RuralUrbanInputDto();
         input.setAddressAtDxState(record.get(_PROP_STATE_DX));
-        input.setAddressAtDxCounty(record.get(_PROP_COUNTY_DX));
+        input.setCountyAtDxAnalysis(record.get(_PROP_COUNTY_DX_ANALYSIS));
         return RuralUrbanUtils.computeRuralUrbanContinuum(input);
     }
 }

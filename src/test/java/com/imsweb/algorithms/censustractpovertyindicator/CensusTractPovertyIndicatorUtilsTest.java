@@ -12,7 +12,7 @@ import org.junit.Test;
 public class CensusTractPovertyIndicatorUtilsTest {
 
     private static final String _PROP_STATE_DX = "addressAtDxState";
-    private static final String _PROP_COUNTY_DX = "addressAtDxCounty";
+    private static final String _PROP_COUNTY_DX_ANALYSIS = "countyAtDxAnalysis";
     private static final String _PROP_DIAGNOSIS_YEAR = "dateOfDiagnosisYear";
     private static final String _PROP_CENSUS_TRACT_2000 = "censusTract2000";
     private static final String _PROP_CENSUS_TRACT_2010 = "censusTract2010";
@@ -22,7 +22,7 @@ public class CensusTractPovertyIndicatorUtilsTest {
 
         Map<String, String> record = new HashMap<>();
         record.put(_PROP_STATE_DX, "WY");
-        record.put(_PROP_COUNTY_DX, "039");
+        record.put(_PROP_COUNTY_DX_ANALYSIS, "039");
         record.put(_PROP_CENSUS_TRACT_2000, "997600");
 
         //test not enough information
@@ -53,7 +53,7 @@ public class CensusTractPovertyIndicatorUtilsTest {
         Assert.assertEquals("3", computePovertyIndicator(record).getCensusTractPovertyIndicator());
         //test year category 4 with a combination of state, county and census 2010 in the lookup
         record.put(_PROP_STATE_DX, "AL");
-        record.put(_PROP_COUNTY_DX, "001");
+        record.put(_PROP_COUNTY_DX_ANALYSIS, "001");
         record.put(_PROP_CENSUS_TRACT_2010, "020900");
         record.put(_PROP_DIAGNOSIS_YEAR, "2009");
         Assert.assertEquals("2", computePovertyIndicator(record).getCensusTractPovertyIndicator());
@@ -85,7 +85,7 @@ public class CensusTractPovertyIndicatorUtilsTest {
         //test 2018+ years
         record.clear();
         record.put(_PROP_STATE_DX, "WY");
-        record.put(_PROP_COUNTY_DX, "039");
+        record.put(_PROP_COUNTY_DX_ANALYSIS, "039");
         record.put(_PROP_CENSUS_TRACT_2010, "967702");
         record.put(_PROP_DIAGNOSIS_YEAR, "2018");
         Assert.assertEquals("9", computePovertyIndicator(record, false).getCensusTractPovertyIndicator());
@@ -94,7 +94,7 @@ public class CensusTractPovertyIndicatorUtilsTest {
         //test unknown year
         record.clear();
         record.put(_PROP_STATE_DX, "WY");
-        record.put(_PROP_COUNTY_DX, "039");
+        record.put(_PROP_COUNTY_DX_ANALYSIS, "039");
         record.put(_PROP_CENSUS_TRACT_2010, "967702");
         record.put(_PROP_DIAGNOSIS_YEAR, "999");
         Assert.assertEquals("9", computePovertyIndicator(record, false).getCensusTractPovertyIndicator());
@@ -103,7 +103,7 @@ public class CensusTractPovertyIndicatorUtilsTest {
         // test a real case from DMS (this case failed when we generated unique keys from the concatenated state/county/census)
         record.clear();
         record.put(_PROP_STATE_DX, "HI");
-        record.put(_PROP_COUNTY_DX, "003");
+        record.put(_PROP_COUNTY_DX_ANALYSIS, "003");
         record.put(_PROP_CENSUS_TRACT_2000, "003405");
         record.put(_PROP_DIAGNOSIS_YEAR, "2007");
         Assert.assertEquals("3", computePovertyIndicator(record).getCensusTractPovertyIndicator());
@@ -117,7 +117,7 @@ public class CensusTractPovertyIndicatorUtilsTest {
 
         CensusTractPovertyIndicatorInputDto input = new CensusTractPovertyIndicatorInputDto();
         input.setAddressAtDxState(record.get(_PROP_STATE_DX));
-        input.setAddressAtDxCounty(record.get(_PROP_COUNTY_DX));
+        input.setCountyAtDxAnalysis(record.get(_PROP_COUNTY_DX_ANALYSIS));
         input.setDateOfDiagnosisYear(record.get(_PROP_DIAGNOSIS_YEAR));
         input.setCensusTract2000(record.get(_PROP_CENSUS_TRACT_2000));
         input.setCensusTract2010(record.get(_PROP_CENSUS_TRACT_2010));

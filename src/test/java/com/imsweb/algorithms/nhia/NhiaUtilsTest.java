@@ -27,7 +27,7 @@ public class NhiaUtilsTest {
     private static final String _PROP_RACE1 = "race1";
     private static final String _PROP_SEX = "sex";
     private static final String _PROP_IHS = "ihs";
-    private static final String _PROP_COUNTY_DX = "addressAtDxCounty";
+    private static final String _PROP_COUNTY_DX_ANALYSIS = "countyAtDxAnalysis";
     private static final String _PROP_STATE_DX = "addressAtDxState";
 
     @Test
@@ -139,7 +139,7 @@ public class NhiaUtilsTest {
         record.clear();
         record.put(_PROP_SPANISH_HISPANIC_ORIGIN, "9");
         record.put(_PROP_STATE_DX, "AL");
-        record.put(_PROP_COUNTY_DX, "009");
+        record.put(_PROP_COUNTY_DX_ANALYSIS, "009");
         Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
         record.put(_PROP_NAME_LAST, "AdOrno");
         Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
@@ -157,7 +157,7 @@ public class NhiaUtilsTest {
         record.clear();
         record.put(_PROP_SPANISH_HISPANIC_ORIGIN, "9");
         record.put(_PROP_STATE_DX, "AL");
-        record.put(_PROP_COUNTY_DX, "009");
+        record.put(_PROP_COUNTY_DX_ANALYSIS, "009");
         record.put(_PROP_SEX, "2");
         Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
         record.put(_PROP_NAME_LAST, "ADORNO");
@@ -181,7 +181,7 @@ public class NhiaUtilsTest {
         record.clear();
         record.put(_PROP_SPANISH_HISPANIC_ORIGIN, "0");
         record.put(_PROP_STATE_DX, "AL");
-        record.put(_PROP_COUNTY_DX, "009");
+        record.put(_PROP_COUNTY_DX_ANALYSIS, "009");
         record.put(_PROP_SEX, "2");
         record.put(_PROP_NAME_LAST, "flint");
         record.put(_PROP_NAME_MAIDEN, "ADORNO");
@@ -193,7 +193,7 @@ public class NhiaUtilsTest {
         record.clear();
         record.put(_PROP_SPANISH_HISPANIC_ORIGIN, "9");
         record.put(_PROP_STATE_DX, "AL");
-        record.put(_PROP_COUNTY_DX, "001");
+        record.put(_PROP_COUNTY_DX_ANALYSIS, "001");
         Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
         record.put(_PROP_NAME_LAST, "ADORNO");
         Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
@@ -221,7 +221,7 @@ public class NhiaUtilsTest {
         record.clear();
         record.put(_PROP_SPANISH_HISPANIC_ORIGIN, "9");
         record.put(_PROP_STATE_DX, "AL");
-        record.put(_PROP_COUNTY_DX, "009");
+        record.put(_PROP_COUNTY_DX_ANALYSIS, "009");
         record.put(_PROP_SEX, "1");
         record.put(_PROP_NAME_LAST, "sseewwbbeesseeww");
         Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
@@ -230,7 +230,7 @@ public class NhiaUtilsTest {
         record.clear();
         record.put(_PROP_SPANISH_HISPANIC_ORIGIN, "0");
         record.put(_PROP_STATE_DX, "AL");
-        record.put(_PROP_COUNTY_DX, "005");
+        record.put(_PROP_COUNTY_DX_ANALYSIS, "005");
         record.put(_PROP_SEX, "2");
         record.put(_PROP_NAME_LAST, "ADORNO");
         Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(record, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
@@ -245,25 +245,25 @@ public class NhiaUtilsTest {
         record.put(_PROP_BIRTH_PLACE_COUNTRY, "ZZU");
         Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(record, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
         record.put(_PROP_STATE_DX, "GA");
-        record.put(_PROP_COUNTY_DX, "073");
+        record.put(_PROP_COUNTY_DX_ANALYSIS, "073");
         Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
         record.put(_PROP_STATE_DX, "IL");
-        record.put(_PROP_COUNTY_DX, "103");
+        record.put(_PROP_COUNTY_DX_ANALYSIS, "103");
         Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(record, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
         record.put(_PROP_STATE_DX, "AK");
-        record.put(_PROP_COUNTY_DX, "232");
+        record.put(_PROP_COUNTY_DX_ANALYSIS, "232");
         Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
         record.put(_PROP_STATE_DX, "NE");
-        record.put(_PROP_COUNTY_DX, "007");
+        record.put(_PROP_COUNTY_DX_ANALYSIS, "007");
         Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
         record.put(_PROP_STATE_DX, "AK");
-        record.put(_PROP_COUNTY_DX, "105");
+        record.put(_PROP_COUNTY_DX_ANALYSIS, "105");
         Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
         record.put(_PROP_STATE_DX, "AK");
-        record.put(_PROP_COUNTY_DX, "280");
+        record.put(_PROP_COUNTY_DX_ANALYSIS, "280");
         Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
         record.put(_PROP_STATE_DX, "AK");
-        record.put(_PROP_COUNTY_DX, "195");
+        record.put(_PROP_COUNTY_DX_ANALYSIS, "195");
         Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
 
     }
@@ -277,7 +277,7 @@ public class NhiaUtilsTest {
         rec1.put(_PROP_NAME_LAST, "ADORNO");
         rec1.put(_PROP_BIRTH_PLACE_COUNTRY, "ZZP");
         rec1.put(_PROP_STATE_DX, "GA");
-        rec1.put(_PROP_COUNTY_DX, "073");
+        rec1.put(_PROP_COUNTY_DX_ANALYSIS, "073");
         //one record with low hispanic county at DX
         patient1.add(rec1);
         //name option doesn't run.
@@ -289,7 +289,7 @@ public class NhiaUtilsTest {
         rec2.put(_PROP_NAME_LAST, "ADORNO");
         rec2.put(_PROP_BIRTH_PLACE_COUNTRY, "ZZP");
         rec2.put(_PROP_STATE_DX, "IL");
-        rec2.put(_PROP_COUNTY_DX, "103");
+        rec2.put(_PROP_COUNTY_DX_ANALYSIS, "103");
         //Add one more record with high hispanic county at DX
         patient1.add(rec2);
         //The patient's county at dx considered as high hispanic.
@@ -302,7 +302,7 @@ public class NhiaUtilsTest {
         rec3.setNameLast("ADORNO");
         rec3.setBirthplaceCountry("ZZP");
         rec3.setStateAtDx("AL");
-        rec3.setCountyAtDx("007");
+        rec3.setCountyAtDxAnalysis("007");
         //one record with low hispanic county at DX
         patient2.setNhiaInputPatientDtoList(new ArrayList<>());
         patient2.getNhiaInputPatientDtoList().add(rec3);
@@ -315,7 +315,7 @@ public class NhiaUtilsTest {
         rec4.setNameLast("ADORNO");
         rec4.setBirthplaceCountry("ZZP");
         rec4.setStateAtDx("AL");
-        rec4.setCountyAtDx("005");
+        rec4.setCountyAtDxAnalysis("005");
         //Add one more record with high hispanic county at DX
         patient2.getNhiaInputPatientDtoList().add(rec4);
         //The patient's county at dx considered as high hispanic.
@@ -334,7 +334,7 @@ public class NhiaUtilsTest {
                 rec.put(_PROP_RACE1, row[2]);
                 rec.put(_PROP_IHS, row[3]);
                 rec.put(_PROP_STATE_DX, row[4]);
-                rec.put(_PROP_COUNTY_DX, row[5]);
+                rec.put(_PROP_COUNTY_DX_ANALYSIS, row[5]);
                 rec.put(_PROP_SEX, row[6]);
                 rec.put(_PROP_NAME_LAST, row[7]);
                 rec.put(_PROP_NAME_MAIDEN, row[8]);
@@ -365,7 +365,7 @@ public class NhiaUtilsTest {
         input.setIhs(record.get(_PROP_IHS));
         input.setNameLast(record.get(_PROP_NAME_LAST));
         input.setNameMaiden(record.get(_PROP_NAME_MAIDEN));
-        input.setCountyAtDx(record.get(_PROP_COUNTY_DX));
+        input.setCountyAtDxAnalysis(record.get(_PROP_COUNTY_DX_ANALYSIS));
         input.setStateAtDx(record.get(_PROP_STATE_DX));
         return NhiaUtils.computeNhia(input, option);
     }
@@ -383,7 +383,7 @@ public class NhiaUtilsTest {
             dto.setIhs(record.get(_PROP_IHS));
             dto.setNameLast(record.get(_PROP_NAME_LAST));
             dto.setNameMaiden(record.get(_PROP_NAME_MAIDEN));
-            dto.setCountyAtDx(record.get(_PROP_COUNTY_DX));
+            dto.setCountyAtDxAnalysis(record.get(_PROP_COUNTY_DX_ANALYSIS));
             dto.setStateAtDx(record.get(_PROP_STATE_DX));
             input.getNhiaInputPatientDtoList().add(dto);
         }

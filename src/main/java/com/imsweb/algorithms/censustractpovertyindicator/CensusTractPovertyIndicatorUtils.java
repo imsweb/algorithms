@@ -21,7 +21,7 @@ public final class CensusTractPovertyIndicatorUtils {
 
     //Naaccr Items Used for calculation
     public static final String PROP_STATE_DX = "addressAtDxState";
-    public static final String PROP_COUNTY_DX = "addressAtDxCounty";
+    public static final String PROP_COUNTY_DX_ANALYSIS = "countyAtDxAnalysis";
     public static final String PROP_DIAGNOSIS_YEAR = "dateOfDiagnosisYear";
     public static final String PROP_CENSUS_TRACT_2000 = "censusTract2000";
     public static final String PROP_CENSUS_TRACT_2010 = "censusTract2010";
@@ -37,7 +37,7 @@ public final class CensusTractPovertyIndicatorUtils {
      * The provided record doesn't need to contain all the input variables, but the algorithm will use the following ones:
      * <ul>
      * <li>addressAtDxState (#80)</li>
-     * <li>addressAtDxCounty (#90)</li>
+     * <li>countyAtDxAnalysis (#89)</li>
      * <li>dateOfDiagnosisYear (#390)</li>
      * <li>censusTract2000 (#130)</li>
      * <li>censusTract2010 (#135)</li>
@@ -60,7 +60,7 @@ public final class CensusTractPovertyIndicatorUtils {
 
         CensusTractPovertyIndicatorInputDto input = new CensusTractPovertyIndicatorInputDto();
         input.setAddressAtDxState(record.get(PROP_STATE_DX));
-        input.setAddressAtDxCounty(record.get(PROP_COUNTY_DX));
+        input.setCountyAtDxAnalysis(record.get(PROP_COUNTY_DX_ANALYSIS));
         input.setDateOfDiagnosisYear(record.get(PROP_DIAGNOSIS_YEAR));
         input.setCensusTract2000(record.get(PROP_CENSUS_TRACT_2000));
         input.setCensusTract2010(record.get(PROP_CENSUS_TRACT_2010));
@@ -75,7 +75,7 @@ public final class CensusTractPovertyIndicatorUtils {
      * The provided record doesn't need to contain all the input variables, but the algorithm will use the following ones:
      * <ul>
      * <li>addressAtDxState (#80)</li>
-     * <li>addressAtDxCounty (#90)</li>
+     * <li>countyAtDxAnalysis (#89)</li>
      * <li>dateOfDiagnosisYear (#390)</li>
      * <li>censusTract2000 (#130)</li>
      * <li>censusTract2010 (#135)</li>
@@ -99,7 +99,7 @@ public final class CensusTractPovertyIndicatorUtils {
 
         CensusTractPovertyIndicatorInputDto input = new CensusTractPovertyIndicatorInputDto();
         input.setAddressAtDxState(record.get(PROP_STATE_DX));
-        input.setAddressAtDxCounty(record.get(PROP_COUNTY_DX));
+        input.setCountyAtDxAnalysis(record.get(PROP_COUNTY_DX_ANALYSIS));
         input.setDateOfDiagnosisYear(record.get(PROP_DIAGNOSIS_YEAR));
         input.setCensusTract2000(record.get(PROP_CENSUS_TRACT_2000));
         input.setCensusTract2010(record.get(PROP_CENSUS_TRACT_2010));
@@ -113,7 +113,7 @@ public final class CensusTractPovertyIndicatorUtils {
      * The provided input dto has the following parameters used in the calculation:
      * <ul>
      * <li>_addressAtDxState</li>
-     * <li>_addressAtDxCounty</li>
+     * <li>_countyAtDxAnalysis</li>
      * <li>_dateOfDiagnosisYear</li>
      * <li>_censusTract2000</li>
      * <li>_censusTract2010</li>
@@ -141,7 +141,7 @@ public final class CensusTractPovertyIndicatorUtils {
      * The provided input dto has the following parameters used in the calculation:
      * <ul>
      * <li>_addressAtDxState</li>
-     * <li>_addressAtDxCounty</li>
+     * <li>_countyAtDxAnalysis</li>
      * <li>_dateOfDiagnosisYear</li>
      * <li>_censusTract2000</li>
      * <li>_censusTract2010</li>
@@ -166,7 +166,7 @@ public final class CensusTractPovertyIndicatorUtils {
         result.setCensusTractPovertyIndicator(POVERTY_INDICATOR_UNKNOWN);
 
         String dxYear = input.getDateOfDiagnosisYear();
-        if (!NumberUtils.isDigits(dxYear) || input.getAddressAtDxState() == null || input.getAddressAtDxCounty() == null)
+        if (!NumberUtils.isDigits(dxYear) || input.getAddressAtDxState() == null || input.getCountyAtDxAnalysis() == null)
             return result;
 
         String censusTract, yearCategory;
@@ -217,7 +217,7 @@ public final class CensusTractPovertyIndicatorUtils {
         if (censusTract != null) {
             if (_PROVIDER == null)
                 initializeInternalDataProvider();
-            result.setCensusTractPovertyIndicator(_PROVIDER.getPovertyIndicator(yearCategory, input.getAddressAtDxState(), input.getAddressAtDxCounty(), censusTract));
+            result.setCensusTractPovertyIndicator(_PROVIDER.getPovertyIndicator(yearCategory, input.getAddressAtDxState(), input.getCountyAtDxAnalysis(), censusTract));
         }
 
         // getPovertyIndicator method never returns null, but lets make sure we don't return null value anyways

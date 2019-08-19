@@ -20,7 +20,7 @@ public final class RuralUrbanUtils {
 
     //NAACCR Items Used for calculation
     public static final String PROP_STATE_DX = "addressAtDxState";
-    public static final String PROP_COUNTY_DX = "addressAtDxCounty";
+    public static final String PROP_COUNTY_DX_ANALYSIS = "countyAtDxAnalysis";
     public static final String PROP_CENSUS_TRACT_2000 = "censusTract2000";
     public static final String PROP_CENSUS_TRACT_2010 = "censusTract2010";
 
@@ -49,7 +49,7 @@ public final class RuralUrbanUtils {
      * The provided record doesn't need to contain all the input variables, but the algorithm will use the following ones:
      * <ul>
      * <li>addressAtDxState (#80)</li>
-     * <li>addressAtDxCounty (#90)</li>
+     * <li>countyAtDxAnalysis (#89)</li>
      * <li>censusTract2000 (#130)</li>
      * <li>censusTract2010 (#135)</li>
      * </ul>
@@ -76,7 +76,7 @@ public final class RuralUrbanUtils {
     public static RuralUrbanOutputDto computeUrbanRuralIndicatorCode(Map<String, String> record) {
         RuralUrbanInputDto input = new RuralUrbanInputDto();
         input.setAddressAtDxState(record.get(PROP_STATE_DX));
-        input.setAddressAtDxCounty(record.get(PROP_COUNTY_DX));
+        input.setCountyAtDxAnalysis(record.get(PROP_COUNTY_DX_ANALYSIS));
         input.setCensusTract2000(record.get(PROP_CENSUS_TRACT_2000));
         input.setCensusTract2010(record.get(PROP_CENSUS_TRACT_2010));
         return computeUrbanRuralIndicatorCode(input);
@@ -88,7 +88,7 @@ public final class RuralUrbanUtils {
      * The provided input dto has the following parameters used in the calculation:
      * <ul>
      * <li>addressAtDxState (#80)</li>
-     * <li>addressAtDxCounty (#90)</li>
+     * <li>countyAtDxAnalysis (#89)</li>
      * <li>censusTract2000 (#130)</li>
      * <li>censusTract2010 (#135)</li>
      * </ul>
@@ -116,35 +116,35 @@ public final class RuralUrbanUtils {
         input.applyRecodes();
 
         // 2000
-        if (!input.isStateAtDxValidOrMissingOrUnknown() || !input.isCountyAtDxValidOrMissingOrUnknown() || !input.isCensusTract2000ValidOrMissingOrUnknown())
+        if (!input.isStateValidOrMissingOrUnknown() || !input.isCountyValidOrMissingOrUnknown() || !input.isCensusTract2000ValidOrMissingOrUnknown())
             result.setUrbanRuralIndicatorCode2000("A");
-        else if (input.isStateAtDxMissingOrUnknown() || input.isCountyAtDxMissingOrUnknown() || input.isCensusTract2000MissingOrUnknown())
+        else if (input.isStateMissingOrUnknown() || input.isCountyMissingOrUnknown() || input.isCensusTract2000MissingOrUnknown())
             result.setUrbanRuralIndicatorCode2000("D");
-        else if ("000".equals(input.getAddressAtDxCounty()))
+        else if ("000".equals(input.getCountyAtDxAnalysis()))
             result.setUrbanRuralIndicatorCode2000("B");
         else {
             if (_PROVIDER == null)
                 initializeInternalDataProvider();
-            result.setUrbanRuralIndicatorCode2000(_PROVIDER.getUrbanRuralIndicatorCode(TRACT_CATEGORY_1, input.getAddressAtDxState(), input.getAddressAtDxCounty(), input.getCensusTract2000()));
+            result.setUrbanRuralIndicatorCode2000(_PROVIDER.getUrbanRuralIndicatorCode(TRACT_CATEGORY_1, input.getAddressAtDxState(), input.getCountyAtDxAnalysis(), input.getCensusTract2000()));
             result.setUrbanRuralIndicatorCode2000Percentage(
-                    _PROVIDER.getRuralUrbanCensusPercentage(TRACT_CATEGORY_1, input.getAddressAtDxState(), input.getAddressAtDxCounty(), input.getCensusTract2000()));
+                    _PROVIDER.getRuralUrbanCensusPercentage(TRACT_CATEGORY_1, input.getAddressAtDxState(), input.getCountyAtDxAnalysis(), input.getCensusTract2000()));
         }
         if (result.getUrbanRuralIndicatorCode2000() == null)
             result.setUrbanRuralIndicatorCode2000(URBAN_RURAL_INDICATOR_CODE_UNKNOWN);
 
         // 2010
-        if (!input.isStateAtDxValidOrMissingOrUnknown() || !input.isCountyAtDxValidOrMissingOrUnknown() || !input.isCensusTract2010ValidOrMissingOrUnknown())
+        if (!input.isStateValidOrMissingOrUnknown() || !input.isCountyValidOrMissingOrUnknown() || !input.isCensusTract2010ValidOrMissingOrUnknown())
             result.setUrbanRuralIndicatorCode2010("A");
-        else if (input.isStateAtDxMissingOrUnknown() || input.isCountyAtDxMissingOrUnknown() || input.isCensusTract2010MissingOrUnknown())
+        else if (input.isStateMissingOrUnknown() || input.isCountyMissingOrUnknown() || input.isCensusTract2010MissingOrUnknown())
             result.setUrbanRuralIndicatorCode2010("D");
-        else if ("000".equals(input.getAddressAtDxCounty()))
+        else if ("000".equals(input.getCountyAtDxAnalysis()))
             result.setUrbanRuralIndicatorCode2010("B");
         else {
             if (_PROVIDER == null)
                 initializeInternalDataProvider();
-            result.setUrbanRuralIndicatorCode2010(_PROVIDER.getUrbanRuralIndicatorCode(TRACT_CATEGORY_2, input.getAddressAtDxState(), input.getAddressAtDxCounty(), input.getCensusTract2010()));
+            result.setUrbanRuralIndicatorCode2010(_PROVIDER.getUrbanRuralIndicatorCode(TRACT_CATEGORY_2, input.getAddressAtDxState(), input.getCountyAtDxAnalysis(), input.getCensusTract2010()));
             result.setUrbanRuralIndicatorCode2010Percentage(
-                    _PROVIDER.getRuralUrbanCensusPercentage(TRACT_CATEGORY_2, input.getAddressAtDxState(), input.getAddressAtDxCounty(), input.getCensusTract2010()));
+                    _PROVIDER.getRuralUrbanCensusPercentage(TRACT_CATEGORY_2, input.getAddressAtDxState(), input.getCountyAtDxAnalysis(), input.getCensusTract2010()));
         }
         if (result.getUrbanRuralIndicatorCode2010() == null)
             result.setUrbanRuralIndicatorCode2010(URBAN_RURAL_INDICATOR_CODE_UNKNOWN);
@@ -158,7 +158,7 @@ public final class RuralUrbanUtils {
      * The provided record doesn't need to contain all the input variables, but the algorithm will use the following ones:
      * <ul>
      * <li>addressAtDxState (#80)</li>
-     * <li>addressAtDxCounty (#90)</li>
+     * <li>countyAtDxAnalysis (#89)</li>
      * <li>censusTract2000 (#130)</li>
      * <li>censusTract2010 (#135)</li>
      * </ul>
@@ -183,7 +183,7 @@ public final class RuralUrbanUtils {
     public static RuralUrbanOutputDto computeRuralUrbanCommutingArea(Map<String, String> record) {
         RuralUrbanInputDto input = new RuralUrbanInputDto();
         input.setAddressAtDxState(record.get(PROP_STATE_DX));
-        input.setAddressAtDxCounty(record.get(PROP_COUNTY_DX));
+        input.setCountyAtDxAnalysis(record.get(PROP_COUNTY_DX_ANALYSIS));
         input.setCensusTract2000(record.get(PROP_CENSUS_TRACT_2000));
         input.setCensusTract2010(record.get(PROP_CENSUS_TRACT_2010));
         return computeRuralUrbanCommutingArea(input);
@@ -195,7 +195,7 @@ public final class RuralUrbanUtils {
      * The provided input dto has the following parameters used in the calculation:
      * <ul>
      * <li>addressAtDxState (#80)</li>
-     * <li>addressAtDxCounty (#90)</li>
+     * <li>countyAtDxAnalysis (#89)</li>
      * <li>censusTract2000 (#130)</li>
      * <li>censusTract2010 (#135)</li>
      * </ul>
@@ -222,31 +222,31 @@ public final class RuralUrbanUtils {
         input.applyRecodes();
 
         // 2000
-        if (!input.isStateAtDxValidOrMissingOrUnknown() || !input.isCountyAtDxValidOrMissingOrUnknown() || !input.isCensusTract2000ValidOrMissingOrUnknown())
+        if (!input.isStateValidOrMissingOrUnknown() || !input.isCountyValidOrMissingOrUnknown() || !input.isCensusTract2000ValidOrMissingOrUnknown())
             result.setRuralUrbanCommutingArea2000("A");
-        else if (input.isStateAtDxMissingOrUnknown() || input.isCountyAtDxMissingOrUnknown() || input.isCensusTract2000MissingOrUnknown())
+        else if (input.isStateMissingOrUnknown() || input.isCountyMissingOrUnknown() || input.isCensusTract2000MissingOrUnknown())
             result.setRuralUrbanCommutingArea2000("D");
-        else if ("000".equals(input.getAddressAtDxCounty()))
+        else if ("000".equals(input.getCountyAtDxAnalysis()))
             result.setRuralUrbanCommutingArea2000("B");
         else {
             if (_PROVIDER == null)
                 initializeInternalDataProvider();
-            result.setRuralUrbanCommutingArea2000(_PROVIDER.getRuralUrbanCommutingArea(TRACT_CATEGORY_1, input.getAddressAtDxState(), input.getAddressAtDxCounty(), input.getCensusTract2000()));
+            result.setRuralUrbanCommutingArea2000(_PROVIDER.getRuralUrbanCommutingArea(TRACT_CATEGORY_1, input.getAddressAtDxState(), input.getCountyAtDxAnalysis(), input.getCensusTract2000()));
         }
         if (result.getRuralUrbanCommutingArea2000() == null)
             result.setRuralUrbanCommutingArea2000(RURAL_URBAN_COMMUTING_AREA_UNKNOWN);
 
         // 2010
-        if (!input.isStateAtDxValidOrMissingOrUnknown() || !input.isCountyAtDxValidOrMissingOrUnknown() || !input.isCensusTract2010ValidOrMissingOrUnknown())
+        if (!input.isStateValidOrMissingOrUnknown() || !input.isCountyValidOrMissingOrUnknown() || !input.isCensusTract2010ValidOrMissingOrUnknown())
             result.setRuralUrbanCommutingArea2010("A");
-        else if (input.isStateAtDxMissingOrUnknown() || input.isCountyAtDxMissingOrUnknown() || input.isCensusTract2010MissingOrUnknown())
+        else if (input.isStateMissingOrUnknown() || input.isCountyMissingOrUnknown() || input.isCensusTract2010MissingOrUnknown())
             result.setRuralUrbanCommutingArea2010("D");
-        else if ("000".equals(input.getAddressAtDxCounty()))
+        else if ("000".equals(input.getCountyAtDxAnalysis()))
             result.setRuralUrbanCommutingArea2010("B");
         else {
             if (_PROVIDER == null)
                 initializeInternalDataProvider();
-            result.setRuralUrbanCommutingArea2010(_PROVIDER.getRuralUrbanCommutingArea(TRACT_CATEGORY_2, input.getAddressAtDxState(), input.getAddressAtDxCounty(), input.getCensusTract2010()));
+            result.setRuralUrbanCommutingArea2010(_PROVIDER.getRuralUrbanCommutingArea(TRACT_CATEGORY_2, input.getAddressAtDxState(), input.getCountyAtDxAnalysis(), input.getCensusTract2010()));
         }
         if (result.getRuralUrbanCommutingArea2010() == null)
             result.setRuralUrbanCommutingArea2010(RURAL_URBAN_COMMUTING_AREA_UNKNOWN);
@@ -260,7 +260,7 @@ public final class RuralUrbanUtils {
      * The provided record doesn't need to contain all the input variables, but the algorithm will use the following ones:
      * <ul>
      * <li>addressAtDxState (#80)</li>
-     * <li>addressAtDxCounty (#90)</li>
+     * <li>countyAtDxAnalysis (#89)</li>
      * </ul>
      * All those properties are defined as constants in this class.
      * <br/><br/>
@@ -290,7 +290,7 @@ public final class RuralUrbanUtils {
     public static RuralUrbanOutputDto computeRuralUrbanContinuum(Map<String, String> record) {
         RuralUrbanInputDto input = new RuralUrbanInputDto();
         input.setAddressAtDxState(record.get(PROP_STATE_DX));
-        input.setAddressAtDxCounty(record.get(PROP_COUNTY_DX));
+        input.setCountyAtDxAnalysis(record.get(PROP_COUNTY_DX_ANALYSIS));
         return computeRuralUrbanContinuum(input);
     }
 
@@ -300,7 +300,7 @@ public final class RuralUrbanUtils {
      * The provided input dto has the following parameters used in the calculation:
      * <ul>
      * <li>addressAtDxState (#80)</li>
-     * <li>addressAtDxCounty (#90)</li>
+     * <li>countyAtDxAnalysis (#89)</li>
      * </ul>
      * All those properties are defined as constants in this class.
      * <br/><br/>
@@ -330,17 +330,17 @@ public final class RuralUrbanUtils {
 
         input.applyRecodes();
 
-        if (!input.isStateAtDxValidOrMissingOrUnknown() || !input.isCountyAtDxValidOrMissingOrUnknown()) {
+        if (!input.isStateValidOrMissingOrUnknown() || !input.isCountyValidOrMissingOrUnknown()) {
             result.setRuralUrbanContinuum1993("96");
             result.setRuralUrbanContinuum2003("96");
             result.setRuralUrbanContinuum2013("96");
         }
-        else if (input.isStateAtDxMissingOrUnknown() || input.isCountyAtDxMissingOrUnknown()) {
+        else if (input.isStateMissingOrUnknown() || input.isCountyMissingOrUnknown()) {
             result.setRuralUrbanContinuum1993("99");
             result.setRuralUrbanContinuum2003("99");
             result.setRuralUrbanContinuum2013("99");
         }
-        else if ("000".equals(input.getAddressAtDxCounty())) {
+        else if ("000".equals(input.getCountyAtDxAnalysis())) {
             result.setRuralUrbanContinuum1993("97");
             result.setRuralUrbanContinuum2003("97");
             result.setRuralUrbanContinuum2013("97");
@@ -349,9 +349,9 @@ public final class RuralUrbanUtils {
             if (_PROVIDER == null)
                 initializeInternalDataProvider();
 
-            result.setRuralUrbanContinuum1993(_PROVIDER.getRuralUrbanContinuum(RuralUrbanDataProvider.BEALE_CATEGORY_1, input.getAddressAtDxState(), input.getAddressAtDxCounty()));
-            result.setRuralUrbanContinuum2003(_PROVIDER.getRuralUrbanContinuum(RuralUrbanDataProvider.BEALE_CATEGORY_2, input.getAddressAtDxState(), input.getAddressAtDxCounty()));
-            result.setRuralUrbanContinuum2013(_PROVIDER.getRuralUrbanContinuum(RuralUrbanDataProvider.BEALE_CATEGORY_3, input.getAddressAtDxState(), input.getAddressAtDxCounty()));
+            result.setRuralUrbanContinuum1993(_PROVIDER.getRuralUrbanContinuum(RuralUrbanDataProvider.BEALE_CATEGORY_1, input.getAddressAtDxState(), input.getCountyAtDxAnalysis()));
+            result.setRuralUrbanContinuum2003(_PROVIDER.getRuralUrbanContinuum(RuralUrbanDataProvider.BEALE_CATEGORY_2, input.getAddressAtDxState(), input.getCountyAtDxAnalysis()));
+            result.setRuralUrbanContinuum2013(_PROVIDER.getRuralUrbanContinuum(RuralUrbanDataProvider.BEALE_CATEGORY_3, input.getAddressAtDxState(), input.getCountyAtDxAnalysis()));
         }
 
         if (result.getRuralUrbanContinuum1993() == null)

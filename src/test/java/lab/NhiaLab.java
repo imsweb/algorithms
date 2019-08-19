@@ -58,7 +58,7 @@ public class NhiaLab {
             rec.put(NhiaUtils.PROP_RACE1, row[2]);
             rec.put(NhiaUtils.PROP_IHS, row[3]);
             rec.put(NhiaUtils.PROP_STATE_DX, row[4]);
-            rec.put(NhiaUtils.PROP_COUNTY_DX, row[5]);
+            rec.put(NhiaUtils.PROP_COUNTY_DX_ANALYSIS, row[5]);
             rec.put(NhiaUtils.PROP_SEX, row[6]);
             rec.put(NhiaUtils.PROP_NAME_LAST, row[7]);
             rec.put(NhiaUtils.PROP_NAME_MAIDEN, row[8]);
@@ -179,7 +179,7 @@ public class NhiaLab {
             System.out.println("Race              " + sasRec.get(NhiaUtils.PROP_RACE1) + "\t" + javaRec.get(NhiaUtils.PROP_RACE1));
             System.out.println("Sex               " + sasRec.get(NhiaUtils.PROP_SEX) + "\t" + javaRec.get(NhiaUtils.PROP_SEX));
             System.out.println("State             " + sasRec.get(NhiaUtils.PROP_STATE_DX) + "\t" + javaRec.get(NhiaUtils.PROP_STATE_DX));
-            System.out.println("County            " + sasRec.get(NhiaUtils.PROP_COUNTY_DX) + "\t" + javaRec.get(NhiaUtils.PROP_COUNTY_DX));
+            System.out.println("County            " + sasRec.get(NhiaUtils.PROP_COUNTY_DX_ANALYSIS) + "\t" + javaRec.get(NhiaUtils.PROP_COUNTY_DX_ANALYSIS));
             System.out.println("IHS               " + sasRec.get(NhiaUtils.PROP_IHS) + "\t" + javaRec.get(NhiaUtils.PROP_IHS));
             System.out.println("Nhia              " + sasRec.get("nhia") + "\t" + javaRec.get("nhia"));
             System.out.println("...........................................");
@@ -240,7 +240,7 @@ public class NhiaLab {
                 System.out.println("Race              " + record.get(NhiaUtils.PROP_RACE1));
                 System.out.println("Sex               " + record.get(NhiaUtils.PROP_SEX));
                 System.out.println("State             " + record.get(NhiaUtils.PROP_STATE_DX));
-                System.out.println("County            " + record.get(NhiaUtils.PROP_COUNTY_DX));
+                System.out.println("County            " + record.get(NhiaUtils.PROP_COUNTY_DX_ANALYSIS));
                 System.out.println("IHS               " + record.get(NhiaUtils.PROP_IHS));
                 System.out.println("Nhia              " + record.get("nhia") + "\t" + utilsNhia);
                 System.out.println("...........................................");

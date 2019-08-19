@@ -39,7 +39,7 @@ public final class NhiaUtils {
     public static final String PROP_RACE1 = "race1";
     public static final String PROP_SEX = "sex";
     public static final String PROP_IHS = "ihs";
-    public static final String PROP_COUNTY_DX = "addressAtDxCounty";
+    public static final String PROP_COUNTY_DX_ANALYSIS = "countyAtDxAnalysis";
     public static final String PROP_STATE_DX = "addressAtDxState";
 
     public static final String NHIA_NON_HISPANIC = "0";
@@ -124,7 +124,7 @@ public final class NhiaUtils {
      * <li>race1 (#160)</li>
      * <li>ihs (#192)</li>
      * <li>addressAtDxState (#80)</li>
-     * <li>addressAtDxCounty (#90)</li>
+     * <li>countyAtDxAnalysis (#89)</li>
      * <li>sex (#220)</li>
      * <li>nameLast (#2230)</li>
      * <li>nameMaiden (#2390)</li>
@@ -157,7 +157,7 @@ public final class NhiaUtils {
         input.setIhs(record.get(PROP_IHS));
         input.setNameLast(record.get(PROP_NAME_LAST));
         input.setNameMaiden(record.get(PROP_NAME_MAIDEN));
-        input.setCountyAtDx(record.get(PROP_COUNTY_DX));
+        input.setCountyAtDxAnalysis(record.get(PROP_COUNTY_DX_ANALYSIS));
         input.setStateAtDx(record.get(PROP_STATE_DX));
         return computeNhia(input, option);
     }
@@ -172,7 +172,7 @@ public final class NhiaUtils {
      * <li>race1 (#160)</li>
      * <li>ihs (#192)</li>
      * <li>addressAtDxState (#80)</li>
-     * <li>addressAtDxCounty (#90)</li>
+     * <li>countyAtDxAnalysis (#89)</li>
      * <li>sex (#220)</li>
      * <li>nameLast (#2230)</li>
      * <li>nameMaiden (#2390)</li>
@@ -208,24 +208,24 @@ public final class NhiaUtils {
             input.setNameLast(patient.get(0).get(PROP_NAME_LAST));
             input.setNameMaiden(patient.get(0).get(PROP_NAME_MAIDEN));
             //The following 2 properties are specific to each record, lets get the first one for now.
-            input.setCountyAtDx(patient.get(0).get(PROP_COUNTY_DX));
+            input.setCountyAtDxAnalysis(patient.get(0).get(PROP_COUNTY_DX_ANALYSIS));
             input.setStateAtDx(patient.get(0).get(PROP_STATE_DX));
             //The option (to run the surname portion) is applied for a patient if hispanic percentage is < 5 % for all of the counties of DX.
             //Lets first assume all counties are less than 5% hispanic.
             boolean lowHispanicCounty = true;
             //Then lets go through all records and see if there are counties with hispanic percentage greater than 5%, if we get one consider the countyDx of the patient as high hispanic
             for (Map<String, String> record : patient)
-                if (!isLowHispanicEthnicityCounty(record.get(PROP_COUNTY_DX), record.get(PROP_STATE_DX))) {
+                if (!isLowHispanicEthnicityCounty(record.get(PROP_COUNTY_DX_ANALYSIS), record.get(PROP_STATE_DX))) {
                     lowHispanicCounty = false;
                     //Lets use that county which is more than 5%
                     input.setStateAtDx(record.get(PROP_STATE_DX));
-                    input.setCountyAtDx(record.get(PROP_COUNTY_DX));
+                    input.setCountyAtDxAnalysis(record.get(PROP_COUNTY_DX_ANALYSIS));
                     break;
                 }
             //if lowHispanicCounty is still true, that means all counties of Dx are low hispanic, So we should consider the patient is in low hispanic county.
             //lets use unknown county which is always considered as low hispanic
             if (lowHispanicCounty)
-                input.setCountyAtDx("999");
+                input.setCountyAtDxAnalysis("999");
         }
 
         return computeNhia(input, option);
@@ -241,7 +241,7 @@ public final class NhiaUtils {
      * <li>_race1</li>
      * <li>_ihs</li>
      * <li>_addressAtDxState</li>
-     * <li>_addressAtDxCounty</li>
+     * <li>_countyAtDxAnalysis</li>
      * <li>_sex</li>
      * <li>_nameLast</li>
      * <li>_nameMaiden</li>
@@ -272,24 +272,24 @@ public final class NhiaUtils {
             input.setNameLast(firstRecord.getNameLast());
             input.setNameMaiden(firstRecord.getNameMaiden());
             //The following 2 properties are specific to each record, lets get the first one for now.
-            input.setCountyAtDx(firstRecord.getCountyAtDx());
+            input.setCountyAtDxAnalysis(firstRecord.getCountyAtDxAnalysis());
             input.setStateAtDx(firstRecord.getStateAtDx());
             //The option (to run the surname portion) is applied for a patient if hispanic percentage is < 5 % for all of the counties of DX.
             //Lets first assume all counties are less than 5% hispanic.
             boolean lowHispanicCounty = true;
             //Then lets go through all records and see if there are counties with hispanic percentage greater than 5%, if we get one consider the countyDx of the patient as high hispanic
             for (NhiaInputRecordDto record : patient.getNhiaInputPatientDtoList())
-                if (!isLowHispanicEthnicityCounty(record.getCountyAtDx(), record.getStateAtDx())) {
+                if (!isLowHispanicEthnicityCounty(record.getCountyAtDxAnalysis(), record.getStateAtDx())) {
                     lowHispanicCounty = false;
                     //Lets use that county which is more than 5%
                     input.setStateAtDx(record.getStateAtDx());
-                    input.setCountyAtDx(record.getCountyAtDx());
+                    input.setCountyAtDxAnalysis(record.getCountyAtDxAnalysis());
                     break;
                 }
             //if lowHispanicCounty is still true, that means all counties of Dx are low hispanic, So we should consider the patient is in low hispanic county.
             //lets use unknown county which is always considered as low hispanic
             if (lowHispanicCounty)
-                input.setCountyAtDx("999");
+                input.setCountyAtDxAnalysis("999");
         }
         return computeNhia(input, option);
     }
@@ -304,7 +304,7 @@ public final class NhiaUtils {
      * <li>_race1</li>
      * <li>_ihs</li>
      * <li>_addressAtDxState</li>
-     * <li>_addressAtDxCounty</li>
+     * <li>_countyAtDxAnalysis</li>
      * <li>_sex</li>
      * <li>_nameLast</li>
      * <li>_nameMaiden</li>
@@ -364,7 +364,7 @@ public final class NhiaUtils {
             else if (!_SPAN_HISP_ORIG_SPANISH_NOS.equals(spanishOrigin) && !_RACE_PACIFIC.contains(race1)) {
                 // try to use indirect identification using surnames
                 boolean runSurname = true;
-                String county = input.getCountyAtDx();
+                String county = input.getCountyAtDxAnalysis();
                 String state = input.getStateAtDx();
                 if (_SPAN_HISP_ORIG_NON_HISPANIC.equals(spanishOrigin)) {
                     if (isLowHispanicEthnicityCounty(county, state))
