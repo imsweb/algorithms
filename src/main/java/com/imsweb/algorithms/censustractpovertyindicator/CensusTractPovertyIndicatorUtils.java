@@ -16,8 +16,8 @@ import org.apache.commons.lang3.math.NumberUtils;
 public final class CensusTractPovertyIndicatorUtils {
 
     public static final String ALG_NAME = "NAACCR Poverty Linkage Program";
-    public static final String ALG_VERSION = "8.0";
-    public static final String ALG_INFO = "NAACCR Poverty Linkage Program version 8.0, released in September 2018";
+    public static final String ALG_VERSION = "9.0";
+    public static final String ALG_INFO = "NAACCR Poverty Linkage Program version 9.0, released in August 2019";
 
     //Naaccr Items Used for calculation
     public static final String PROP_STATE_DX = "addressAtDxState";
@@ -156,7 +156,7 @@ public final class CensusTractPovertyIndicatorUtils {
      * 9 = Unknown
      * <br/><br/>
      * @param input a <code>CensusTractPovertyIndicatorInputDto</code> input object
-     * @param includeRecentYears if true, the years 2012+ will be calculated using the year category 4 logic, otherwise they will be set to 9
+     * @param includeRecentYears if true, the indicator will be calculated for the past 2-3 years using the latest data, otherwise they will be set to 9
      * @return the computed poverty indicator value
      */
     public static CensusTractPovertyIndicatorOutputDto computePovertyIndicator(CensusTractPovertyIndicatorInputDto input, boolean includeRecentYears) {
@@ -203,8 +203,12 @@ public final class CensusTractPovertyIndicatorUtils {
             yearCategory = CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_8;
             censusTract = input.getCensusTract2010();
         }
-        else if (year >= 2014 && (year <= 2016 || (includeRecentYears && year <= LocalDate.now().getYear()))) {
+        else if (year == 2014) {
             yearCategory = CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_9;
+            censusTract = input.getCensusTract2010();
+        }
+        else if (year >= 2015 && (year <= 2017 || (includeRecentYears && year <= LocalDate.now().getYear()))) {
+            yearCategory = CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_10;
             censusTract = input.getCensusTract2010();
         }
         else
