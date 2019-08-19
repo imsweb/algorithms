@@ -79,7 +79,7 @@ public class AlgorithmsTest {
         input.setPatient(patMap);
         tumMap = new HashMap<>();
         tumMap.put(Algorithms.FIELD_STATE_DX, "HI");
-        tumMap.put(Algorithms.FIELD_COUNTY_DX, "003");
+        tumMap.put(Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS, "003");
         tumMap.put(Algorithms.FIELD_CENSUS_2000, "003405");
         tumMap.put(Algorithms.FIELD_DX_DATE, "20070101");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
@@ -113,7 +113,7 @@ public class AlgorithmsTest {
         input.setPatient(patMap);
         tumMap = new HashMap<>();
         tumMap.put(Algorithms.FIELD_STATE_DX, "AL");
-        tumMap.put(Algorithms.FIELD_COUNTY_DX, "001");
+        tumMap.put(Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS, "001");
         tumMap.put(Algorithms.FIELD_CENSUS_2000, "020200");
         tumMap.put(Algorithms.FIELD_CENSUS_2010, "020200");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
@@ -129,7 +129,7 @@ public class AlgorithmsTest {
         input.setPatient(patMap);
         tumMap = new HashMap<>();
         tumMap.put(Algorithms.FIELD_STATE_DX, "AL");
-        tumMap.put(Algorithms.FIELD_COUNTY_DX, "001");
+        tumMap.put(Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS, "001");
         tumMap.put(Algorithms.FIELD_CENSUS_2000, "020200");
         tumMap.put(Algorithms.FIELD_CENSUS_2010, "020200");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
@@ -145,7 +145,7 @@ public class AlgorithmsTest {
         input.setPatient(patMap);
         tumMap = new HashMap<>();
         tumMap.put(Algorithms.FIELD_STATE_DX, "AL");
-        tumMap.put(Algorithms.FIELD_COUNTY_DX, "001");
+        tumMap.put(Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS, "001");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
         Assert.assertEquals("02", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_RURAL_CONT_1993));
         Assert.assertEquals("02", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_RURAL_CONT_2003));
