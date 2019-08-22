@@ -76,7 +76,7 @@ public class CensusTractPovertyIndicatorUtilsTest {
         //test year category 9 with a combination of state, county and census 2010 in the lookup
         record.put(_PROP_CENSUS_TRACT_2010, "020700");
         record.put(_PROP_DIAGNOSIS_YEAR, "2014");
-        Assert.assertEquals("1", computePovertyIndicator(record).getCensusTractPovertyIndicator());
+        Assert.assertEquals("3", computePovertyIndicator(record).getCensusTractPovertyIndicator());
         //test year category 10 with a combination of state, county and census 2010 in the lookup
         record.put(_PROP_CENSUS_TRACT_2010, "020700");
         record.put(_PROP_DIAGNOSIS_YEAR, "2015");

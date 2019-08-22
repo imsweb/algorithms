@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 2.5**
+
+- Corrected an issue with the 2012-2016 Census Tract Poverty Indicator lookup table/resource file.
+
 **Changes in version 2.4**
 
 - Updated the Census Tract Poverty Indicator algorithm to handle 2015+ cases using the latest 5 year data from the ACS (2013-2017).
