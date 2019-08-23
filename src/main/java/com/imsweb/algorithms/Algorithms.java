@@ -818,7 +818,7 @@ public class Algorithms {
                     outputTumor.put(FIELD_SURV_FLAG_PRESUMED_ALIVE, dto.getSurvivalMonthsFlagPresumedAlive());
                     outputTumor.put(FIELD_SURV_DATE_PRESUMED_ALIVE,
                             Utils.combineDate(dto.getSurvivalTimeDolcYearPresumedAlive(), dto.getSurvivalTimeDolcMonthPresumedAlive(), dto.getSurvivalTimeDolcDayPresumedAlive()));
-                    outputTumor.put(FIELD_SURV_DX_DATE_RECODE, dto.getSurvivalTimeDxYear() + dto.getSurvivalTimeDxMonth() + dto.getSurvivalTimeDxDay());
+                    outputTumor.put(FIELD_SURV_DX_DATE_RECODE, Utils.combineDate(dto.getSurvivalTimeDxYear(), dto.getSurvivalTimeDxMonth(), dto.getSurvivalTimeDxDay()));
                     outputTumor.put(FIELD_SURV_REC_NUM_RECODE, String.valueOf(dto.getSortedIndex()));
 
                     outputTumorList.add(outputTumor);
