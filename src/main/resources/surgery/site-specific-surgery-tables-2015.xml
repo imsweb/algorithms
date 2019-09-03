@@ -4111,7 +4111,7 @@ Do not code laminectomies for spinal cord primaries
             <description><![CDATA[Unknown if surgery performed; death certificate ONLY]]></description>
         </row>
     </surgery-table>
-    <surgery-table title="Hematopoietic/Reticuloendothelial/">
+    <surgery-table title="Hematopoietic/Reticuloendothelial/Immunoproliferative/Myeloproliferative Disease">
         <site-inclusion>C420,C421,C423,C424</site-inclusion>
         <hist-inclusion>9727,9733,9741-9742,9764-9809,9832,9840-9931,9945-9946,9950-9967,9975-9992</hist-inclusion>
         <pre-note><![CDATA[Hematopoietic/Reticuloendothelial/<br/>Immunoproliferative/Myeloproliferative Disease
