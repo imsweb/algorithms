@@ -771,7 +771,7 @@ Pyriform Sinus C129, Hypopharynx C130-C139, Pharynx C140<br/>
     </surgery-table>
     <surgery-table title="Colon">
         <site-inclusion>C180-C189</site-inclusion>
-        <hist-exclusion>9727,9733,9741-9742,9764-9809,9832,9840-9931,9945-9946,9950-9967,9975-9992</hist-exclusion>
+        <hist-exclusion>9727,9733,9741-9742,9764-9809,9832,9840-9931,9945-9946,9950-9967,9975-9992,1294</hist-exclusion>
         <pre-note><![CDATA[C180-C189<br/>
 (Except for M-9727, 9733, 9741-9742, 9764-9809, 9832, 9840-9931, 9945-9946, 9950-9967 and 9975-9992)<br/>
 <br/>
@@ -947,7 +947,7 @@ Pyriform Sinus C129, Hypopharynx C130-C139, Pharynx C140<br/>
     </surgery-table>
     <surgery-table title="Rectosigmoid">
         <site-inclusion>C199</site-inclusion>
-        <hist-exclusion>9727,9733,9741-9742,9764-9809,9832,9840-9931,9945-9946,9950-9967,9975-9992</hist-exclusion>
+        <hist-exclusion>9727,9733,9741-9742,9764-9809,9832,9840-9931,9945-9946,9950-9967,9975-9992,1294</hist-exclusion>
         <pre-note><![CDATA[C199<br/>
 (Except for M-9727, 9733, 9741-9742, 9764-9809, 9832, 9840-9931, 9945-9946, 9950-9967 and 9975-9992)<br/>
 <br/>
@@ -1128,7 +1128,7 @@ Pyriform Sinus C129, Hypopharynx C130-C139, Pharynx C140<br/>
     </surgery-table>
     <surgery-table title="Rectum">
         <site-inclusion>C209</site-inclusion>
-        <hist-exclusion>9727,9733,9741-9742,9764-9809,9832,9840-9931,9945-9946,9950-9967,9975-9992</hist-exclusion>
+        <hist-exclusion>9727,9733,9741-9742,9764-9809,9832,9840-9931,9945-9946,9950-9967,9975-9992,1294</hist-exclusion>
         <pre-note><![CDATA[C209<br/>
 (Except for M-9727, 9733, 9741-9742, 9764-9809, 9832, 9840-9931, 9945-9946, 9950-9967 and 9975-9992)<br/>
 <br/>
@@ -3101,7 +3101,7 @@ Do not code debulking or cytoreductive surgery based on: multiple biopsies alone
     </surgery-table>
     <surgery-table title="Prostate">
         <site-inclusion>C619</site-inclusion>
-        <hist-exclusion>9727,9733,9741-9742,9764-9809,9832,9840-9931,9945-9946,9950-9967,9975-9992</hist-exclusion>
+        <hist-exclusion>9727,9733,9741-9742,9764-9809,9832,9840-9931,9945-9946,9950-9967,9975-9992,3250</hist-exclusion>
         <pre-note><![CDATA[C619<br/>
 (Except for M-9727, 9733, 9741-9742, 9764-9809, 9832, 9840-9931, 9945-9946, 9950-9967 and 9975-9992)<br/>
 <br/>

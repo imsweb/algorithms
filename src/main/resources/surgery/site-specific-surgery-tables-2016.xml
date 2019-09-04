@@ -3821,7 +3821,7 @@ Do not code an orchiectomy in this field. For prostate primaries, orchiectomies 
             <description><![CDATA[Unknown if surgery performed; death certificate ONLY]]></description>
         </row>
     </surgery-table>
-    <surgery-table title="Brain [and other parts of central nervous system] Meninges">
+    <surgery-table title="Brain [and other parts of central nervous system]">
         <site-inclusion>C700-C709,C710-C719,C720-C729</site-inclusion>
         <hist-exclusion>9727,9732,9741-9742,9762-9809,9832,9840-9931,9945-9946,9950-9967,9975-9992</hist-exclusion>
         <pre-note><![CDATA[Brain [and other parts of central nervous system] Meninges<br/>C700-C709, Brain C710-C719, Spinal Cord, Cranial Nerves and Other Parts of Central Nervous System C720-C729 <br/>
