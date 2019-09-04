@@ -3,16 +3,16 @@
  */
 package com.imsweb.algorithms.surgery;
 
-import com.imsweb.seerutils.SeerUtils;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
-import java.util.regex.Pattern;
+import com.imsweb.seerutils.SeerUtils;
 
 public class SiteSpecificSurgeryUtilsTest {
 
@@ -21,7 +21,7 @@ public class SiteSpecificSurgeryUtilsTest {
     public void testData() {
         Pattern sitePattern = Pattern.compile("C\\d\\d\\d(-C\\d\\d\\d)?"), histPattern = Pattern.compile("\\d\\d\\d\\d(-\\d\\d\\d\\d)?");
 
-        for (int year = 2003; year <= LocalDate.now().getYear(); year++) {
+        for (int year = 1998; year <= LocalDate.now().getYear(); year++) {
 
             // make sure the content of the XML only uses ASCII characters
             try {
@@ -83,5 +83,8 @@ public class SiteSpecificSurgeryUtilsTest {
         SurgeryTableDto table = SiteSpecificSurgeryUtils.getInstance().getTable(2014, "C000", "8000");
         Assert.assertEquals("Oral Cavity", table.getTitle());
         Assert.assertEquals(37, table.getRow().size());
+
+        table = SiteSpecificSurgeryUtils.getInstance().getTable(2009, "C421", "9875");
+        Assert.assertEquals("Hematopoietic/Reticuloendothelial/Immunoproliferative/Myeloproliferative Disease", table.getTitle());
     }
 }

@@ -3,7 +3,15 @@
  */
 package com.imsweb.algorithms.surgery;
 
-import com.imsweb.algorithms.surgery.xml.SurgeryTablesXmlDto;
+import java.net.URL;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.regex.Pattern;
+import java.util.stream.IntStream;
+
+import org.apache.commons.lang3.StringUtils;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.basic.BooleanConverter;
@@ -22,18 +30,12 @@ import com.thoughtworks.xstream.io.xml.XppDriver;
 import com.thoughtworks.xstream.security.NoTypePermission;
 import com.thoughtworks.xstream.security.WildcardTypePermission;
 
-import org.apache.commons.lang3.StringUtils;
-
-import java.net.URL;
-import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
-import java.util.regex.Pattern;
-import java.util.stream.IntStream;
+import com.imsweb.algorithms.surgery.xml.SurgeryTablesXmlDto;
 
 /**
  * Utility class to return site-specific surgery information that can be used to build application-specific lookups.
+ * <br/><br/>
+ * Data for the tables was taken from the SEER website: https://seer.cancer.gov/tools/codingmanuals/historical.html
  */
 public final class SiteSpecificSurgeryUtils {
 
@@ -114,11 +116,11 @@ public final class SiteSpecificSurgeryUtils {
      * @return available data, null if no data correspond to the requested year
      */
     public SurgeryTablesDto getTables(int dxYear) {
-        if (dxYear < 2003 || dxYear > LocalDate.now().getYear())
+        if (dxYear < 1998 || dxYear > LocalDate.now().getYear())
             return null;
 
         // optimization: some years share the same data, so let's adjust the DX year so its XML data actually exists
-        int year = IntStream.of(2003, 2004, 2007, 2010, 2012, 2013, 2014, 2015, 2016, 2018).filter(y -> y <= dxYear).max().orElse(2018);
+        int year = IntStream.of(1998, 2004, 2007, 2010, 2012, 2013, 2014, 2015, 2016, 2018).filter(y -> y <= dxYear).max().orElse(2018);
 
         _lock.readLock().lock();
         if (!_data.containsKey(year)) {

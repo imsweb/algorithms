@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 2.6**
+
+- Fixed some errors in the selection of the site-specific surgery tables.
+
 **Changes in version 2.5**
 
 - Corrected an issue with the 2012-2016 Census Tract Poverty Indicator lookup table/resource file.
