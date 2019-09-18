@@ -84,7 +84,18 @@ public class SiteSpecificSurgeryUtilsTest {
         Assert.assertEquals("Oral Cavity", table.getTitle());
         Assert.assertEquals(37, table.getRow().size());
 
-        table = SiteSpecificSurgeryUtils.getInstance().getTable(2009, "C421", "9875");
-        Assert.assertEquals("Hematopoietic/Reticuloendothelial/Immunoproliferative/Myeloproliferative Disease", table.getTitle());
+        // C421 with any histology should be the Hemato table
+        String hematoTitle = "Hematopoietic/Reticuloendothelial/Immunoproliferative/Myeloproliferative Disease";
+        Assert.assertEquals(hematoTitle, SiteSpecificSurgeryUtils.getInstance().getTable(2009, "C421", "9875").getTitle());
+        Assert.assertEquals(hematoTitle, SiteSpecificSurgeryUtils.getInstance().getTable(2018, "C421", "9875").getTitle());
+        Assert.assertEquals(hematoTitle, SiteSpecificSurgeryUtils.getInstance().getTable(2018, "C421", "9732").getTitle());
+        Assert.assertEquals(hematoTitle, SiteSpecificSurgeryUtils.getInstance().getTable(2018, "C421", "8000").getTitle());
+
+        // specific hemato histology with any site should be the Hemato table
+        Assert.assertEquals(hematoTitle, SiteSpecificSurgeryUtils.getInstance().getTable(2009, "C421", "9732").getTitle());
+        Assert.assertEquals(hematoTitle, SiteSpecificSurgeryUtils.getInstance().getTable(2018, "C421", "9732").getTitle());
+        Assert.assertEquals(hematoTitle, SiteSpecificSurgeryUtils.getInstance().getTable(2018, "C000", "9732").getTitle());
+        Assert.assertEquals(hematoTitle, SiteSpecificSurgeryUtils.getInstance().getTable(2018, "C123", "9732").getTitle());
+        Assert.assertEquals(hematoTitle, SiteSpecificSurgeryUtils.getInstance().getTable(2018, "C150", "9732").getTitle());
     }
 }

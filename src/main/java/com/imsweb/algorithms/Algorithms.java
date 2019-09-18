@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import com.imsweb.algorithms.behavrecode.BehaviorRecodeUtils;
@@ -819,7 +820,7 @@ public class Algorithms {
                     outputTumor.put(FIELD_SURV_DATE_PRESUMED_ALIVE,
                             Utils.combineDate(dto.getSurvivalTimeDolcYearPresumedAlive(), dto.getSurvivalTimeDolcMonthPresumedAlive(), dto.getSurvivalTimeDolcDayPresumedAlive()));
                     outputTumor.put(FIELD_SURV_DX_DATE_RECODE, Utils.combineDate(dto.getSurvivalTimeDxYear(), dto.getSurvivalTimeDxMonth(), dto.getSurvivalTimeDxDay()));
-                    outputTumor.put(FIELD_SURV_REC_NUM_RECODE, String.valueOf(dto.getSortedIndex()));
+                    outputTumor.put(FIELD_SURV_REC_NUM_RECODE, dto.getSortedIndex() == null ? null : StringUtils.leftPad(dto.getSortedIndex().toString(), 2, '0'));
 
                     outputTumorList.add(outputTumor);
                 }

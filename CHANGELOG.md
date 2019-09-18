@@ -1,8 +1,13 @@
 ## Algorithms Version History
 
+**Changes in version 2.7**
+
+- Fixed a mistake in the selection of the Hematopoietic site-specific surgery table.
+- Now zero-padding the record number recode in the survival algorithms; this only affects the new Algorithms framework.
+
 **Changes in version 2.6**
 
-- Fixed some errors in the selection of the site-specific surgery tables.
+- Fixed some mistakes in the selection of the site-specific surgery tables.
 
 **Changes in version 2.5**
 
