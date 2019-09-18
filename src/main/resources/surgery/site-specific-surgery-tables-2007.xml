@@ -2272,7 +2272,7 @@ Connective, Subcutaneous, And Other Soft Tissues C490-C499
     </surgery-table>
     <surgery-table title="Breast">
         <site-inclusion>C500-C509</site-inclusion>
-        <hist-inclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-inclusion>
+        <hist-exclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-exclusion>
         <pre-note><![CDATA[Breast<br/>C500-C509
 Except for M-9750, 9760-9764, 9800-9820, 9826, 9831-9920, 9931-9964, 9980-9989)
 
@@ -4035,7 +4035,7 @@ Note: For Surgery Codes: see site-specific scheme for primary sites other than C
             <description><![CDATA[[<b><i>SEER Note:</i></b> Lymph node chains are subsites of lymph node regions. Use information pertaining to lymph node chains to code lymph node surgery; use lymph node region information to code stage.]]]></description>
         </row>
     </surgery-table>
-    <surgery-table title="Hematopoietic/Reticuloendothelial/">
+    <surgery-table title="Hematopoietic/Reticuloendothelial/Immunoproliferative/Myeloproliferative Disease">
         <site-inclusion>C420,C421,C423,C424</site-inclusion>
         <hist-inclusion>9750,9760-9764,9800-9820,9826,9831-9920,9931-9964,9980-9989</hist-inclusion>
         <pre-note><![CDATA[Hematopoietic/Reticuloendothelial/<br/>Immunoproliferative/Myeloproliferative Disease
