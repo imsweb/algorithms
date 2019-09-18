@@ -477,10 +477,10 @@
     </surgery-table>
     <surgery-table title="Esophagus">
         <site-inclusion>C150-C159</site-inclusion>
-        <hist-exclusion>9727,9732,9741-9742,9764-9809,9832,9840-9931,9945-9946,9950-9967,9975-9992</hist-exclusion>
+        <hist-exclusion>9727,9732,9741-9742,9762-9809,9832,9840-9931,9945-9946,9950-9967,9975-9992</hist-exclusion>
         <pre-note><![CDATA[Esophagus<br/>C150-C159
 <br/>
-(Except for M9727, 9733, 9741-9742, 9764-9809, 9832, 9840-9931, 9945-9946, 9950-9967, 9975-9992)
+(Except for M9727, 9732, 9741-9742, 9762-9809, 9832, 9840-9931, 9945-9946, 9950-9967, 9975-9992)
 ]]></pre-note>
         <row level="0">
             <code>00</code>
