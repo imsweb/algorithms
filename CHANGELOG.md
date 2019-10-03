@@ -1,8 +1,21 @@
 ## Algorithms Version History
 
-**Changes in version 2.5**
+**Changes in version 2.8**
 
 - Updated the PRCDA/UIHO algorithm.  There were some changes to when "Unknown" was used.
+
+**Changes in version 2.7**
+
+- Fixed a mistake in the selection of the Hematopoietic site-specific surgery table.
+- Now zero-padding the record number recode in the survival algorithms; this only affects the new Algorithms framework.
+
+**Changes in version 2.6**
+
+- Fixed some mistakes in the selection of the site-specific surgery tables.
+
+**Changes in version 2.5**
+
+- Corrected an issue with the 2012-2016 Census Tract Poverty Indicator lookup table/resource file.
 
 **Changes in version 2.4**
 
