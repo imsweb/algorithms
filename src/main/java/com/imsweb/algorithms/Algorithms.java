@@ -55,9 +55,9 @@ import static com.imsweb.algorithms.iccc.IcccRecodeUtils.VERSION_WHO_2008_INFO;
 import static com.imsweb.algorithms.nhia.NhiaUtils.NHIA_OPTION_ALL_CASES;
 import static com.imsweb.algorithms.nhia.NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE;
 import static com.imsweb.algorithms.nhia.NhiaUtils.NHIA_OPTION_SEVEN_ONLY;
-import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.PRCDA_INVALID;
-import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.UIHO_FACILITY_INVALID;
-import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.UIHO_INVALID;
+import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.PRCDA_UNKNOWN;
+import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.UIHO_FACILITY_UNKNOWN;
+import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.UIHO_UNKNOWN;
 import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.CONTINUUM_UNK_96;
 import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.CONTINUUM_UNK_97;
 import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.CONTINUUM_UNK_98;
@@ -175,9 +175,9 @@ public class Algorithms {
     public static final String FIELD_IARC_MP_HIST_GROUP = "iarcMpHistGroup";
     public static final String FIELD_IARC_MP_HISTOLOGY = "iarcMpHistologicTypeIcdO3";
     public static final String FIELD_COUNTY_AT_DX_ANALYSIS_FLAG = "countyAtDxAnalysisFlag";
-    public static final String FIELD_PRCDA_2016_COUNTY = "prcda16";
-    public static final String FIELD_UIHO_2016_COUNTY = "uiho16";
-    public static final String FIELD_UIHO_FACILITY = "uihoFac";
+    public static final String FIELD_PRCDA_2017_COUNTY = "prcda17";
+    public static final String FIELD_UIHO_2017_COUNTY = "uiho17";
+    public static final String FIELD_UIHO_2017_FACILITY = "uihoFac17";
 
     // options
     public static final String PARAM_NHIA_OPTION = "nhiaOption";
@@ -265,9 +265,9 @@ public class Algorithms {
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_IARC_MP_HIST_GROUP, null, 2));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_IARC_MP_HISTOLOGY, null, 4));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_COUNTY_AT_DX_ANALYSIS_FLAG, null, 4));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_PRCDA_2016_COUNTY, null, 1));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_UIHO_2016_COUNTY, null, 1));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_UIHO_FACILITY, null, 2));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_PRCDA_2017_COUNTY, null, 1));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_UIHO_2017_COUNTY, null, 1));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_UIHO_2017_FACILITY, null, 2));
     }
 
     private static void addField(Map<String, AlgorithmField> cache, AlgorithmField field) {
@@ -1517,18 +1517,18 @@ public class Algorithms {
             @Override
             public List<AlgorithmField> getOutputFields() {
                 List<AlgorithmField> fields = new ArrayList<>();
-                fields.add(_CACHED_FIELDS.get(FIELD_PRCDA_2016_COUNTY));
-                fields.add(_CACHED_FIELDS.get(FIELD_UIHO_2016_COUNTY));
-                fields.add(_CACHED_FIELDS.get(FIELD_UIHO_FACILITY));
+                fields.add(_CACHED_FIELDS.get(FIELD_PRCDA_2017_COUNTY));
+                fields.add(_CACHED_FIELDS.get(FIELD_UIHO_2017_COUNTY));
+                fields.add(_CACHED_FIELDS.get(FIELD_UIHO_2017_FACILITY));
                 return fields;
             }
 
             @Override
             public Map<String, List<String>> getUnknownValues() {
                 Map<String, List<String>> result = new HashMap<>();
-                result.put(FIELD_PRCDA_2016_COUNTY, Collections.singletonList(PRCDA_INVALID));
-                result.put(FIELD_UIHO_2016_COUNTY, Collections.singletonList(UIHO_INVALID));
-                result.put(FIELD_UIHO_FACILITY, Collections.singletonList(UIHO_FACILITY_INVALID));
+                result.put(FIELD_PRCDA_2017_COUNTY, Collections.singletonList(PRCDA_UNKNOWN));
+                result.put(FIELD_UIHO_2017_COUNTY, Collections.singletonList(UIHO_UNKNOWN));
+                result.put(FIELD_UIHO_2017_FACILITY, Collections.singletonList(UIHO_FACILITY_UNKNOWN));
                 return result;
             }
 
@@ -1544,12 +1544,12 @@ public class Algorithms {
                     inputDto.setAddressAtDxState((String)inputTumor.get(FIELD_STATE_DX));
                     inputDto.setAddressAtDxCounty((String)inputTumor.get(FIELD_COUNTY_DX));
 
-                    PrcdaUihoOutputDto outputDto = PrcdaUihoUtils.computerPrcdaUiho(inputDto);
+                    PrcdaUihoOutputDto outputDto = PrcdaUihoUtils.computePrcdaUiho(inputDto);
 
                     Map<String, Object> outputTumor = new HashMap<>();
-                    outputTumor.put(FIELD_PRCDA_2016_COUNTY, outputDto.getPRCDA());
-                    outputTumor.put(FIELD_UIHO_2016_COUNTY, outputDto.getUIHO());
-                    outputTumor.put(FIELD_UIHO_FACILITY, outputDto.getUIHOFacility());
+                    outputTumor.put(FIELD_PRCDA_2017_COUNTY, outputDto.getPRCDA());
+                    outputTumor.put(FIELD_UIHO_2017_COUNTY, outputDto.getUIHO());
+                    outputTumor.put(FIELD_UIHO_2017_FACILITY, outputDto.getUIHOFacility());
 
                     outputTumors.add(outputTumor);
                 }
