@@ -3,6 +3,7 @@
 **Changes in version 2.8**
 
 - Updated the PRCDA/UIHO algorithm.  There were some changes to when "Unknown" was used.
+- Renamed the algorithm API fields associated with the PRCDA/UIHO algorithm.
 
 **Changes in version 2.7**
 
