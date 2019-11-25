@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 2.9**
+
+- Removed unused input fields from County at DX Analysis algorithm. 
+
 **Changes in version 2.8**
 
 - Updated the PRCDA/UIHO algorithm.  There were some changes to when "Unknown" was used.

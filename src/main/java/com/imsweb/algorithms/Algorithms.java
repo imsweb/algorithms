@@ -1423,10 +1423,6 @@ public class Algorithms {
                 fields.add(_CACHED_FIELDS.get(FIELD_COUNTY_AT_DX_GEOCODE_2000));
                 fields.add(_CACHED_FIELDS.get(FIELD_COUNTY_AT_DX_GEOCODE_2010));
                 fields.add(_CACHED_FIELDS.get(FIELD_COUNTY_AT_DX_GEOCODE_2020));
-                fields.add(_CACHED_FIELDS.get(FIELD_STATE_AT_DX_GEOCODE_19708090));
-                fields.add(_CACHED_FIELDS.get(FIELD_STATE_AT_DX_GEOCODE_2000));
-                fields.add(_CACHED_FIELDS.get(FIELD_STATE_AT_DX_GEOCODE_2010));
-                fields.add(_CACHED_FIELDS.get(FIELD_STATE_AT_DX_GEOCODE_2020));
                 fields.add(_CACHED_FIELDS.get(FIELD_CENSUS_CERTAINTY_708090));
                 fields.add(_CACHED_FIELDS.get(FIELD_CENSUS_CERTAINTY_2000));
                 fields.add(_CACHED_FIELDS.get(FIELD_CENSUS_CERTAINTY_2010));
@@ -1457,10 +1453,6 @@ public class Algorithms {
                     inputDto.setCountyAtDxGeocode2000((String)inputTumor.get(FIELD_COUNTY_AT_DX_GEOCODE_2000));
                     inputDto.setCountyAtDxGeocode2000((String)inputTumor.get(FIELD_COUNTY_AT_DX_GEOCODE_2010));
                     inputDto.setCountyAtDxGeocode2020((String)inputTumor.get(FIELD_COUNTY_AT_DX_GEOCODE_2020));
-                    inputDto.setStateAtDxGeocode19708090((String)inputTumor.get(FIELD_STATE_AT_DX_GEOCODE_19708090));
-                    inputDto.setStateAtDxGeocode2000((String)inputTumor.get(FIELD_STATE_AT_DX_GEOCODE_2000));
-                    inputDto.setStateAtDxGeocode2010((String)inputTumor.get(FIELD_STATE_AT_DX_GEOCODE_2010));
-                    inputDto.setStateAtDxGeocode2020((String)inputTumor.get(FIELD_STATE_AT_DX_GEOCODE_2020));
                     inputDto.setCensusTrCert19708090((String)inputTumor.get(FIELD_CENSUS_CERTAINTY_708090));
                     inputDto.setCensusTrCertainty2000((String)inputTumor.get(FIELD_CENSUS_CERTAINTY_2000));
                     inputDto.setCensusTrCertainty2010((String)inputTumor.get(FIELD_CENSUS_CERTAINTY_2010));

@@ -20,10 +20,6 @@ public class CountyAtDiagnosisAnalysisUtilsTest {
         input.setCountyAtDxGeocode2000("003");
         input.setCountyAtDxGeocode2010("005");
         input.setCountyAtDxGeocode2020("007");
-        input.setStateAtDxGeocode19708090("MD");
-        input.setStateAtDxGeocode2000("MD");
-        input.setStateAtDxGeocode2010("MD");
-        input.setStateAtDxGeocode2020("MD");
         input.setCensusTrCert19708090("1");
         input.setCensusTrCertainty2000("1");
         input.setCensusTrCertainty2010("1");
