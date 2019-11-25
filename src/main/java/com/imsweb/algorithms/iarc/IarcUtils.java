@@ -212,7 +212,7 @@ public class IarcUtils {
             _day = NumberUtils.isDigits(dayStr) ? Integer.parseInt(dayStr) : 99;
             if (_month == 99)
                 _day = 99;
-            _seqNum = record.getSequenceNumber();
+            _seqNum = record.getSequenceNumber() == null ? -1 : record.getSequenceNumber();
             //    the sequence numbers might be used to determine the order; there are two families of sequences: federal (00-59, 98, 99) and non-federal (60-97);
             //    sine the non-federal need to always be after the federal, let's add 100 to all the non-federal (making them 160-197)
             if (_seqNum >= 60 && _seqNum <= 97)

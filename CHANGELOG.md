@@ -3,6 +3,7 @@
 **Changes in version 2.9**
 
 - Removed unused input fields from County at DX Analysis algorithm. 
+- Fixed IARC algorithm crashing when input sequence number is blank.
 
 **Changes in version 2.8**
 

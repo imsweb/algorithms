@@ -130,5 +130,13 @@ public class IarcUtilsTest {
         results = IarcUtils.calculateIarcMp(patient);
         Assert.assertEquals(IarcUtils.PRIMARY, results.get(0).getInternationalPrimaryIndicator());
         Assert.assertEquals(IarcUtils.PRIMARY, results.get(1).getInternationalPrimaryIndicator());
+
+        // two input, first sequence is blank (used to cause an exception)
+        patient.clear();
+        patient.add(new IarcMpInputRecordDto("2001", "99", "01", null, "C239", "9140", "3"));
+        patient.add(new IarcMpInputRecordDto("2001", "99", "30", 0, "C679", "9140", "3"));
+        results = IarcUtils.calculateIarcMp(patient);
+        Assert.assertEquals(IarcUtils.PRIMARY, results.get(0).getInternationalPrimaryIndicator());
+        Assert.assertEquals(IarcUtils.DUPLICATE, results.get(1).getInternationalPrimaryIndicator());
     }
 }
