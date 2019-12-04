@@ -1451,7 +1451,7 @@ public class Algorithms {
                     inputDto.setCountyAtDx((String)inputTumor.get(FIELD_COUNTY_DX));
                     inputDto.setCountyAtDxGeocode1990((String)inputTumor.get(FIELD_COUNTY_AT_DX_GEOCODE_1990));
                     inputDto.setCountyAtDxGeocode2000((String)inputTumor.get(FIELD_COUNTY_AT_DX_GEOCODE_2000));
-                    inputDto.setCountyAtDxGeocode2000((String)inputTumor.get(FIELD_COUNTY_AT_DX_GEOCODE_2010));
+                    inputDto.setCountyAtDxGeocode2010((String)inputTumor.get(FIELD_COUNTY_AT_DX_GEOCODE_2010));
                     inputDto.setCountyAtDxGeocode2020((String)inputTumor.get(FIELD_COUNTY_AT_DX_GEOCODE_2020));
                     inputDto.setCensusTrCert19708090((String)inputTumor.get(FIELD_CENSUS_CERTAINTY_708090));
                     inputDto.setCensusTrCertainty2000((String)inputTumor.get(FIELD_CENSUS_CERTAINTY_2000));

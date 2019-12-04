@@ -6,7 +6,7 @@ package com.imsweb.algorithms.countyatdiagnosisanalysis;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class CountyAtDiagnosisAnalysisUtilsTest {
+public class CountyAtDxAnalysisUtilsTest {
 
     @Test
     public void testComputeCountyAtDiagnosis() {

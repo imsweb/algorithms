@@ -11,8 +11,12 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.imsweb.algorithms.countyatdiagnosisanalysis.CountyAtDxAnalysisUtils;
 import com.imsweb.algorithms.internal.Utils;
 import com.imsweb.algorithms.nhia.NhiaUtils;
+
+import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS;
+import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS_FLAG;
 
 public class AlgorithmsTest {
 
@@ -79,7 +83,7 @@ public class AlgorithmsTest {
         input.setPatient(patMap);
         tumMap = new HashMap<>();
         tumMap.put(Algorithms.FIELD_STATE_DX, "HI");
-        tumMap.put(Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS, "003");
+        tumMap.put(FIELD_COUNTY_AT_DX_ANALYSIS, "003");
         tumMap.put(Algorithms.FIELD_CENSUS_2000, "003405");
         tumMap.put(Algorithms.FIELD_DX_DATE, "20070101");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
@@ -113,7 +117,7 @@ public class AlgorithmsTest {
         input.setPatient(patMap);
         tumMap = new HashMap<>();
         tumMap.put(Algorithms.FIELD_STATE_DX, "AL");
-        tumMap.put(Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS, "001");
+        tumMap.put(FIELD_COUNTY_AT_DX_ANALYSIS, "001");
         tumMap.put(Algorithms.FIELD_CENSUS_2000, "020200");
         tumMap.put(Algorithms.FIELD_CENSUS_2010, "020200");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
@@ -129,7 +133,7 @@ public class AlgorithmsTest {
         input.setPatient(patMap);
         tumMap = new HashMap<>();
         tumMap.put(Algorithms.FIELD_STATE_DX, "AL");
-        tumMap.put(Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS, "001");
+        tumMap.put(FIELD_COUNTY_AT_DX_ANALYSIS, "001");
         tumMap.put(Algorithms.FIELD_CENSUS_2000, "020200");
         tumMap.put(Algorithms.FIELD_CENSUS_2010, "020200");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
@@ -145,7 +149,7 @@ public class AlgorithmsTest {
         input.setPatient(patMap);
         tumMap = new HashMap<>();
         tumMap.put(Algorithms.FIELD_STATE_DX, "AL");
-        tumMap.put(Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS, "001");
+        tumMap.put(FIELD_COUNTY_AT_DX_ANALYSIS, "001");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
         Assert.assertEquals("02", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_RURAL_CONT_1993));
         Assert.assertEquals("02", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_RURAL_CONT_2003));
@@ -208,6 +212,30 @@ public class AlgorithmsTest {
         tumMap.put(Algorithms.FIELD_SEQ_NUM_CTRL, "01");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
         Assert.assertEquals("9", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_IARC_MP_INDICATOR));
+
+        // county at DX
+        alg = Algorithms.getAlgorithm(Algorithms.ALG_COUNTY_AT_DIAGNOSIS_ANALYSIS);
+        Assert.assertTrue(alg.getParameters().isEmpty());
+        Assert.assertTrue(alg.getUnknownValues().isEmpty());
+        input = new AlgorithmInput();
+        patMap = new HashMap<>();
+        input.setPatient(patMap);
+        tumMap = new HashMap<>();
+        tumMap.put(Algorithms.FIELD_DX_DATE, "20150101");
+        tumMap.put(Algorithms.FIELD_STATE_DX, "MD");
+        tumMap.put(Algorithms.FIELD_COUNTY_DX, "005");
+        tumMap.put(Algorithms.FIELD_COUNTY_AT_DX_GEOCODE_1990, "001");
+        tumMap.put(Algorithms.FIELD_COUNTY_AT_DX_GEOCODE_2000, "003");
+        tumMap.put(Algorithms.FIELD_COUNTY_AT_DX_GEOCODE_2010, "005");
+        tumMap.put(Algorithms.FIELD_COUNTY_AT_DX_GEOCODE_2020, "007");
+        tumMap.put(Algorithms.FIELD_CENSUS_CERTAINTY_708090, "1");
+        tumMap.put(Algorithms.FIELD_CENSUS_CERTAINTY_2000, "1");
+        tumMap.put(Algorithms.FIELD_CENSUS_CERTAINTY_2010, "1");
+        tumMap.put(Algorithms.FIELD_CENSUS_CERTAINTY_2020, "1");
+        patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
+        Map<String, Object> tumor = Utils.extractTumors(alg.execute(input).getPatient()).get(0);
+        Assert.assertEquals("005", tumor.get(FIELD_COUNTY_AT_DX_ANALYSIS));
+        Assert.assertEquals(CountyAtDxAnalysisUtils.REP_REP_GEO_EQUAL, tumor.get(FIELD_COUNTY_AT_DX_ANALYSIS_FLAG));
     }
 
     @Test
