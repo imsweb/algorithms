@@ -36,7 +36,7 @@ public interface Algorithm {
     /**
      * Returns the list of parameters (options) for this algorithm.
      */
-    List<AlgorithmParam> getParameters();
+    List<AlgorithmParam<?>> getParameters();
 
     /**
      * Returns the list of input fields for this algorithm.

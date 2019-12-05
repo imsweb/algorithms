@@ -30,7 +30,7 @@ public class AlgorithmsTest {
         Algorithm alg = Algorithms.getAlgorithm(Algorithms.ALG_NHIA);
         Assert.assertEquals(1, alg.getParameters().size());
         Assert.assertTrue(alg.getUnknownValues().isEmpty());
-        AlgorithmParam nhiaOption = alg.getParameters().get(0);
+        AlgorithmParam<?> nhiaOption = alg.getParameters().get(0);
         Assert.assertEquals(Algorithms.PARAM_NHIA_OPTION, nhiaOption.getId());
         Assert.assertNotNull(nhiaOption.getName());
         Assert.assertEquals(String.class, nhiaOption.getType());
@@ -42,7 +42,7 @@ public class AlgorithmsTest {
         patMap.put(Algorithms.FIELD_SPAN_HISP_OR, "1");
         input.setPatient(patMap);
         Assert.assertEquals(NhiaUtils.NHIA_MEXICAN, alg.execute(input).getPatient().get(Algorithms.FIELD_NHIA));
-        patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(new HashMap()));
+        patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(new HashMap<>()));
         Assert.assertEquals(NhiaUtils.NHIA_MEXICAN, alg.execute(input).getPatient().get(Algorithms.FIELD_NHIA));
 
         // NAPIIA
@@ -264,7 +264,7 @@ public class AlgorithmsTest {
             }
 
             @Override
-            public List<AlgorithmParam> getParameters() {
+            public List<AlgorithmParam<?>> getParameters() {
                 return Collections.emptyList();
             }
 

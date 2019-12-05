@@ -386,8 +386,8 @@ public class Algorithms {
             }
 
             @Override
-            public List<AlgorithmParam> getParameters() {
-                List<AlgorithmParam> params = new ArrayList<>();
+            public List<AlgorithmParam<?>> getParameters() {
+                List<AlgorithmParam<?>> params = new ArrayList<>();
                 params.add(AlgorithmParam.of(PARAM_NHIA_OPTION, "NHIA Option", String.class, Arrays.asList(NHIA_OPTION_ALL_CASES, NHIA_OPTION_SEVEN_AND_NINE, NHIA_OPTION_SEVEN_ONLY)));
                 return params;
             }
@@ -467,7 +467,7 @@ public class Algorithms {
             }
 
             @Override
-            public List<AlgorithmParam> getParameters() {
+            public List<AlgorithmParam<?>> getParameters() {
                 return Collections.emptyList();
             }
 
@@ -555,8 +555,8 @@ public class Algorithms {
             }
 
             @Override
-            public List<AlgorithmParam> getParameters() {
-                List<AlgorithmParam> params = new ArrayList<>();
+            public List<AlgorithmParam<?>> getParameters() {
+                List<AlgorithmParam<?>> params = new ArrayList<>();
                 params.add(AlgorithmParam.of(PARAM_SEER_COD_CLASS_CUTOFF_YEAR, "Cutoff Year", Integer.class));
                 return params;
             }
@@ -646,8 +646,8 @@ public class Algorithms {
             }
 
             @Override
-            public List<AlgorithmParam> getParameters() {
-                List<AlgorithmParam> params = new ArrayList<>();
+            public List<AlgorithmParam<?>> getParameters() {
+                List<AlgorithmParam<?>> params = new ArrayList<>();
                 params.add(AlgorithmParam.of(PARAM_CENSUS_POVERTY_INC_RECENT_YEARS, "Include Recent Years", Boolean.class));
                 return params;
             }
@@ -728,8 +728,8 @@ public class Algorithms {
             }
 
             @Override
-            public List<AlgorithmParam> getParameters() {
-                List<AlgorithmParam> params = new ArrayList<>();
+            public List<AlgorithmParam<?>> getParameters() {
+                List<AlgorithmParam<?>> params = new ArrayList<>();
                 params.add(AlgorithmParam.of(PARAM_SURV_CUTOFF_YEAR, "Cutoff Year", Integer.class));
                 return params;
             }
@@ -855,7 +855,7 @@ public class Algorithms {
             }
 
             @Override
-            public List<AlgorithmParam> getParameters() {
+            public List<AlgorithmParam<?>> getParameters() {
                 return Collections.emptyList();
             }
 
@@ -938,7 +938,7 @@ public class Algorithms {
             }
 
             @Override
-            public List<AlgorithmParam> getParameters() {
+            public List<AlgorithmParam<?>> getParameters() {
                 return Collections.emptyList();
             }
 
@@ -1021,7 +1021,7 @@ public class Algorithms {
             }
 
             @Override
-            public List<AlgorithmParam> getParameters() {
+            public List<AlgorithmParam<?>> getParameters() {
                 return Collections.emptyList();
             }
 
@@ -1103,7 +1103,7 @@ public class Algorithms {
             }
 
             @Override
-            public List<AlgorithmParam> getParameters() {
+            public List<AlgorithmParam<?>> getParameters() {
                 return Collections.emptyList();
             }
 
@@ -1170,7 +1170,7 @@ public class Algorithms {
             }
 
             @Override
-            public List<AlgorithmParam> getParameters() {
+            public List<AlgorithmParam<?>> getParameters() {
                 return Collections.emptyList();
             }
 
@@ -1241,7 +1241,7 @@ public class Algorithms {
             }
 
             @Override
-            public List<AlgorithmParam> getParameters() {
+            public List<AlgorithmParam<?>> getParameters() {
                 return Collections.emptyList();
             }
 
@@ -1320,7 +1320,7 @@ public class Algorithms {
             }
 
             @Override
-            public List<AlgorithmParam> getParameters() {
+            public List<AlgorithmParam<?>> getParameters() {
                 return Collections.emptyList();
             }
 
@@ -1409,7 +1409,7 @@ public class Algorithms {
             }
 
             @Override
-            public List<AlgorithmParam> getParameters() {
+            public List<AlgorithmParam<?>> getParameters() {
                 return Collections.emptyList();
             }
 
@@ -1495,7 +1495,7 @@ public class Algorithms {
             }
 
             @Override
-            public List<AlgorithmParam> getParameters() {
+            public List<AlgorithmParam<?>> getParameters() {
                 return Collections.emptyList();
             }
 
