@@ -1227,7 +1227,7 @@ public class Algorithms {
 
             @Override
             public String getName() {
-                return IcccRecodeUtils.ALG_NAME + " " + VERSION_WHO_2008;
+                return IcccRecodeUtils.ALG_NAME;
             }
 
             @Override

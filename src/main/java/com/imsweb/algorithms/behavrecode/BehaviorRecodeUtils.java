@@ -15,9 +15,9 @@ import org.apache.commons.lang3.math.NumberUtils;
 public class BehaviorRecodeUtils {
 
     //Algorithm info
-    public static final String ALG_NAME = "SEER Behavior Recode for Analysis - 1973-2004 SEER Research Data (November 2006 submission) and Later Releases";
+    public static final String ALG_NAME = "SEER Behavior Recode for Analysis";
     public static final String ALG_VERSION = "2006+";
-    public static final String ALG_INFO = "Calculates SEER behavior recode for November 2006 submission and later releases.";
+    public static final String ALG_INFO = "SEER behavior recode for November 2006 submission and later releases.";
 
     //Behavior recode for analysis values
     public static final String BENIGN = "0";

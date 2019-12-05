@@ -25,7 +25,7 @@ import com.imsweb.algorithms.internal.Utils;
 public final class IcccRecodeUtils {
 
     // algorithm name
-    public static final String ALG_NAME = "Main Classification from the International Classification of Childhood Cancer";
+    public static final String ALG_NAME = "International Classification of Childhood Cancer";
 
     // properties used by the algorithm
     public static final String PROP_PRIMARY_SITE = "primarySite";
@@ -34,11 +34,11 @@ public final class IcccRecodeUtils {
 
     // version for the 2010+ data (http://seer.cancer.gov/iccc/iccc3.html)
     public static final String VERSION_THIRD_EDITION = "Third Edition";
-    public static final String VERSION_THIRD_EDITION_INFO = "Main Classification from the International Classification of Childhood Cancer, Third edition (ICCC-3) based on ICD-O-3";
+    public static final String VERSION_THIRD_EDITION_INFO = "International Classification of Childhood Cancer, Third edition (ICCC-3) based on ICD-O-3";
 
     // version based on the WHO 2008 classification (http://seer.cancer.gov/iccc/iccc-who2008.html)
     public static final String VERSION_WHO_2008 = "ICD-O-3/WHO 2008";
-    public static final String VERSION_WHO_2008_INFO = "Main Classification from the International Classification of Childhood Cancer based on ICD-O-3/WHO 2008";
+    public static final String VERSION_WHO_2008_INFO = "International Classification of Childhood Cancer based on ICD-O-3/WHO 2008";
 
     // cached versions
     private static final Map<String, String> _VERSIONS = new HashMap<>();
