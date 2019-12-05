@@ -34,6 +34,13 @@ public interface Algorithm {
     String getInfo();
 
     /**
+     * Returns a URL (a website address) to online documentation resource (optional).
+     */
+    default String getDocumentationUrl() {
+        return null;
+    }
+
+    /**
      * Returns the list of parameters (options) for this algorithm.
      */
     List<AlgorithmParam<?>> getParameters();

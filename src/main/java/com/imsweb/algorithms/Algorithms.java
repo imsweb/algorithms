@@ -386,6 +386,11 @@ public class Algorithms {
             }
 
             @Override
+            public String getDocumentationUrl() {
+                return "https://www.naaccr.org/analysis-and-data-improvement-tools/#NHAPIIA";
+            }
+
+            @Override
             public List<AlgorithmParam<?>> getParameters() {
                 List<AlgorithmParam<?>> params = new ArrayList<>();
                 params.add(AlgorithmParam.of(PARAM_NHIA_OPTION, "NHIA Option", String.class, Arrays.asList(NHIA_OPTION_ALL_CASES, NHIA_OPTION_SEVEN_AND_NINE, NHIA_OPTION_SEVEN_ONLY)));
@@ -464,6 +469,11 @@ public class Algorithms {
             @Override
             public String getInfo() {
                 return NapiiaUtils.ALG_INFO;
+            }
+
+            @Override
+            public String getDocumentationUrl() {
+                return "https://www.naaccr.org/analysis-and-data-improvement-tools/#NHAPIIA";
             }
 
             @Override
@@ -552,6 +562,11 @@ public class Algorithms {
             @Override
             public String getInfo() {
                 return getName();
+            }
+
+            @Override
+            public String getDocumentationUrl() {
+                return "http://seer.cancer.gov/causespecific/";
             }
 
             @Override
@@ -646,6 +661,11 @@ public class Algorithms {
             }
 
             @Override
+            public String getDocumentationUrl() {
+                return "https://www.naaccr.org/analysis-and-data-improvement-tools/#POVERTY";
+            }
+
+            @Override
             public List<AlgorithmParam<?>> getParameters() {
                 List<AlgorithmParam<?>> params = new ArrayList<>();
                 params.add(AlgorithmParam.of(PARAM_CENSUS_POVERTY_INC_RECENT_YEARS, "Include Recent Years", Boolean.class));
@@ -725,6 +745,11 @@ public class Algorithms {
             @Override
             public String getInfo() {
                 return SurvivalTimeUtils.ALG_INFO;
+            }
+
+            @Override
+            public String getDocumentationUrl() {
+                return "http://seer.cancer.gov/survivaltime/";
             }
 
             @Override
@@ -855,6 +880,11 @@ public class Algorithms {
             }
 
             @Override
+            public String getDocumentationUrl() {
+                return "https://www.naaccr.org/analysis-and-data-improvement-tools/#RURAL";
+            }
+
+            @Override
             public List<AlgorithmParam<?>> getParameters() {
                 return Collections.emptyList();
             }
@@ -935,6 +965,11 @@ public class Algorithms {
             @Override
             public String getInfo() {
                 return RuralUrbanUtils.ALG_INFO;
+            }
+
+            @Override
+            public String getDocumentationUrl() {
+                return "https://www.naaccr.org/analysis-and-data-improvement-tools/#RURAL";
             }
 
             @Override
@@ -1021,6 +1056,11 @@ public class Algorithms {
             }
 
             @Override
+            public String getDocumentationUrl() {
+                return "https://www.naaccr.org/analysis-and-data-improvement-tools/#RURAL";
+            }
+
+            @Override
             public List<AlgorithmParam<?>> getParameters() {
                 return Collections.emptyList();
             }
@@ -1103,6 +1143,11 @@ public class Algorithms {
             }
 
             @Override
+            public String getDocumentationUrl() {
+                return "http://seer.cancer.gov/siterecode";
+            }
+
+            @Override
             public List<AlgorithmParam<?>> getParameters() {
                 return Collections.emptyList();
             }
@@ -1167,6 +1212,11 @@ public class Algorithms {
             @Override
             public String getInfo() {
                 return BehaviorRecodeUtils.ALG_INFO;
+            }
+
+            @Override
+            public String getDocumentationUrl() {
+                return "https://seer.cancer.gov/behavrecode/";
             }
 
             @Override
@@ -1238,6 +1288,11 @@ public class Algorithms {
             @Override
             public String getInfo() {
                 return VERSION_WHO_2008_INFO;
+            }
+
+            @Override
+            public String getDocumentationUrl() {
+                return "http://seer.cancer.gov/iccc";
             }
 
             @Override
@@ -1317,6 +1372,11 @@ public class Algorithms {
             @Override
             public String getInfo() {
                 return IarcUtils.ALG_INFO;
+            }
+
+            @Override
+            public String getDocumentationUrl() {
+                return "http://www.iacr.com.fr/images/doc/MPrules_july2004.pdf";
             }
 
             @Override
@@ -1406,6 +1466,11 @@ public class Algorithms {
             @Override
             public String getInfo() {
                 return getName();
+            }
+
+            @Override
+            public String getDocumentationUrl() {
+                return "https://www.naaccr.org/analysis-and-data-improvement-tools/#1571164427018-84262475-4421";
             }
 
             @Override
