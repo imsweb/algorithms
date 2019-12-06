@@ -14,11 +14,33 @@ import org.junit.Test;
 import com.imsweb.algorithms.countyatdiagnosisanalysis.CountyAtDxAnalysisUtils;
 import com.imsweb.algorithms.internal.Utils;
 import com.imsweb.algorithms.nhia.NhiaUtils;
+import com.imsweb.naaccrxml.NaaccrFormat;
+import com.imsweb.naaccrxml.NaaccrXmlDictionaryUtils;
+import com.imsweb.naaccrxml.entity.dictionary.NaaccrDictionary;
 
 import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS;
 import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS_FLAG;
 
 public class AlgorithmsTest {
+
+    @Test
+    public void testFields() {
+        NaaccrDictionary dictionary = NaaccrXmlDictionaryUtils.getMergedDictionaries(NaaccrFormat.NAACCR_VERSION_180);
+        for (AlgorithmField field : Algorithms.getAllFields()) {
+            Assert.assertNotNull(field.getId());
+            Assert.assertNotNull(field.getId(), field.getName());
+            Assert.assertNotNull(field.getId(), field.getShortName());
+            Assert.assertNotNull(field.getId(), field.getLength());
+            Assert.assertNotNull(field.getId(), field.getDataLevel());
+
+            if (field.getNumber() != null) {
+                Assert.assertEquals(dictionary.getItemByNaaccrNum(field.getNumber()).getNaaccrId(), field.getId());
+                Assert.assertEquals(dictionary.getItemByNaaccrNum(field.getNumber()).getNaaccrName(), field.getName());
+            }
+        }
+
+
+    }
 
     @Test
     public void testDefaultAlgorithms() {

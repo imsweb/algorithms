@@ -3,6 +3,8 @@
  */
 package com.imsweb.algorithms;
 
+import java.util.Objects;
+
 /**
  * Abstraction of an "field" that is used either as input or output (or both) for an given algorithm.
  */
@@ -94,5 +96,18 @@ public class AlgorithmField {
 
     public void setDataLevel(String dataLevel) {
         _dataLevel = dataLevel;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AlgorithmField that = (AlgorithmField)o;
+        return _id.equals(that._id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(_id);
     }
 }

@@ -6,6 +6,7 @@ package com.imsweb.algorithms;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -163,7 +164,7 @@ public class Algorithms {
     public static final String FIELD_CENSUS_CERTAINTY_708090 = "censusTrCert19708090";
     public static final String FIELD_CENSUS_CERTAINTY_2000 = "censusTrCertainty2000";
     public static final String FIELD_CENSUS_CERTAINTY_2010 = "censusTrCertainty2010";
-    public static final String FIELD_CENSUS_CERTAINTY_2020 = "censusTrCertainty2020";
+    public static final String FIELD_CENSUS_CERTAINTY_2020 = "censusTractCertainty2020"; // really, not the same convention as the 3 other fields??? Someone should get fired!
     public static final String FIELD_COUNTY_AT_DX_ANALYSIS = "countyAtDxAnalysis";
 
     // non-standard fields
@@ -253,24 +254,24 @@ public class Algorithms {
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_CENSUS_CERTAINTY_708090, 364, 1, "Census Tr Cert 1970/80/90", "Cens Cert 70/80/90", DATA_LEVEL_TUMOR));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_CENSUS_CERTAINTY_2000, 365, 1, "Census Tr Certainty 2000", "Cens Cert 2000", DATA_LEVEL_TUMOR));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_CENSUS_CERTAINTY_2010, 367, 1, "Census Tr Certainty 2010", "Cens Cert 2010", DATA_LEVEL_TUMOR));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_CENSUS_CERTAINTY_2020, 369, 1, "Census Tr Certainty 2020", "Cens Cert 2020", DATA_LEVEL_TUMOR));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_CENSUS_CERTAINTY_2020, 369, 1, "Census Tract Certainty 2020", "Cens Cert 2020", DATA_LEVEL_TUMOR));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_COUNTY_AT_DX_ANALYSIS, 89, 3, "County at DX Analysis", "DX Anlys Cty", DATA_LEVEL_TUMOR));
 
         // non-standard fields
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_NAPIIA_NEEDS_REVIEW, null, 1, "", "", DATA_LEVEL_PATIENT));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_NAPIIA_REVIEW_REASON, null, 256, "", "", DATA_LEVEL_PATIENT));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SEER_SITE_RECODE, null, 5, "", "", DATA_LEVEL_TUMOR));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SEER_BEHAV_RECODE, null, 1, "", "", DATA_LEVEL_TUMOR));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_ICCC, null, 3, "", "", DATA_LEVEL_TUMOR));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_ICCC_MAJOR_CATEGORY, null, 2, "", "", DATA_LEVEL_TUMOR));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_IARC_MP_INDICATOR, null, 1, "", "", DATA_LEVEL_TUMOR));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_IARC_MP_SITE_GROUP, null, 4, "", "", DATA_LEVEL_TUMOR));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_IARC_MP_HIST_GROUP, null, 2, "", "", DATA_LEVEL_TUMOR));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_IARC_MP_HISTOLOGY, null, 4, "", "", DATA_LEVEL_TUMOR));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_COUNTY_AT_DX_ANALYSIS_FLAG, null, 4, "", "", DATA_LEVEL_TUMOR));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_PRCDA_COUNTY_2017, null, 1, "", "", DATA_LEVEL_TUMOR));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_UIHO_COUNTY_2017, null, 1, "", "", DATA_LEVEL_TUMOR));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_UIHO_FACILITY_2017, null, 2, "", "", DATA_LEVEL_TUMOR));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_NAPIIA_NEEDS_REVIEW, null, 1, "NAPIIA Needs Review", "NAPIIA Rev", DATA_LEVEL_PATIENT));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_NAPIIA_REVIEW_REASON, null, 256, "NAPIIA Review Reason", "NAPIIA Rev Res", DATA_LEVEL_PATIENT));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SEER_SITE_RECODE, null, 5, "SEER Site Recode ICD-O-3", "Site Recode", DATA_LEVEL_TUMOR));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SEER_BEHAV_RECODE, null, 1, "SEER Site Behavior Recode ICD-O-3", "SEER Behav", DATA_LEVEL_TUMOR));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_ICCC, null, 3, "International Classification of Childhood Cancer (ICCC)", "ICCC", DATA_LEVEL_TUMOR));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_ICCC_MAJOR_CATEGORY, null, 2, "ICCC Major Category", "ICCC Cat", DATA_LEVEL_TUMOR));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_IARC_MP_INDICATOR, null, 1, "IARC Multiple Primary Indicator", "IARC MP", DATA_LEVEL_TUMOR));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_IARC_MP_SITE_GROUP, null, 4, "IARC Multiple Primary Site Group", "IARC MP Site Gr", DATA_LEVEL_TUMOR));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_IARC_MP_HIST_GROUP, null, 2, "IARC Multiple Primary Histology Group", "IARC MP Hist Grp", DATA_LEVEL_TUMOR));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_IARC_MP_HISTOLOGY, null, 4, "IARC Multiple Primary Histology", "IARC MP Hist", DATA_LEVEL_TUMOR));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_COUNTY_AT_DX_ANALYSIS_FLAG, null, 4, "County at DX Analysis Flag", "DX Anlys Cty Fg", DATA_LEVEL_TUMOR));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_PRCDA_COUNTY_2017, null, 1, "PRCDA County 2017", "PRCDA Cty 17", DATA_LEVEL_TUMOR));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_UIHO_COUNTY_2017, null, 1, "UIHO County 2017", "UIHO Cty 17", DATA_LEVEL_TUMOR));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_UIHO_FACILITY_2017, null, 2, "UIHO Facility 2017", "UIHO Fac 17", DATA_LEVEL_TUMOR));
     }
 
     private static void addField(Map<String, AlgorithmField> cache, AlgorithmField field) {
@@ -362,6 +363,10 @@ public class Algorithms {
         finally {
             _LOCK.readLock().unlock();
         }
+    }
+
+    public static Collection<AlgorithmField> getAllFields() {
+        return Collections.unmodifiableCollection(_CACHED_FIELDS.values());
     }
 
     private static Algorithm createNhia() {
