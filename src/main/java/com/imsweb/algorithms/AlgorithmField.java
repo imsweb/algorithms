@@ -10,8 +10,8 @@ import java.util.Objects;
  */
 public class AlgorithmField {
 
-    public static String DATA_LEVEL_PATIENT = "Patient";
-    public static String DATA_LEVEL_TUMOR = "Tumor";
+    public static final String DATA_LEVEL_PATIENT = "Patient";
+    public static final String DATA_LEVEL_TUMOR = "Tumor";
 
     public static AlgorithmField of(String id, Integer number, Integer length, String name, String shortName, String dataLevel) {
         AlgorithmField field = new AlgorithmField();
