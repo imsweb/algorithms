@@ -216,8 +216,8 @@ public class Algorithms {
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_VS, 1760, 1, "Vital Status", "VS", DATA_LEVEL_PATIENT));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_TYPE_RPT_SRC, 500, 1, "Type of Reporting Source", "Rpt Src", DATA_LEVEL_TUMOR));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_COD, 1910, 4, "Cause of Death", "COD", DATA_LEVEL_PATIENT));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SEER_COD_CLASS, 1914, 1, "SEER Cause Specific COD", "COD Spec", DATA_LEVEL_PATIENT));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SEER_COD_OTHER, 1915, 1, "SEER Other COD", "COD Other", DATA_LEVEL_PATIENT));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SEER_COD_CLASS, 1914, 1, "SEER Cause Specific COD", "COD Spec", DATA_LEVEL_TUMOR));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SEER_COD_OTHER, 1915, 1, "SEER Other COD", "COD Other", DATA_LEVEL_TUMOR));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_ICD_REV_NUM, 1920, 1, "ICD Revision Number", "COD Rev#", DATA_LEVEL_PATIENT));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SEQ_NUM_CTRL, 380, 2, "Sequence Number--Central", "Ctrl Seq#", DATA_LEVEL_TUMOR));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_PRIMARY_SITE, 400, 4, "Primary Site", "Site", DATA_LEVEL_TUMOR));
