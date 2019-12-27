@@ -234,7 +234,7 @@ public class Algorithms {
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_RURAL_CONT_1993, 3300, 2, "RuralUrban Continuum 1993", "Rur Urb Cont 93", DATA_LEVEL_TUMOR));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_RURAL_CONT_2003, 3310, 2, "RuralUrban Continuum 2003", "Rur Urb Cont 03", DATA_LEVEL_TUMOR));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_RURAL_CONT_2013, 3312, 2, "RuralUrban Continuum 2013", "Rur Urb Cont 13", DATA_LEVEL_TUMOR));
-        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SURV_VS_RECODE, 1762, 1, "Vital Status Recode", "VS Rec", DATA_LEVEL_TUMOR));
+        addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SURV_VS_RECODE, 1762, 1, "Vital Status Recode", "VS Rec", DATA_LEVEL_PATIENT));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SURV_DX_DATE_RECODE, 1788, 8, "Surv-Date DX Recode", "Surv DX", DATA_LEVEL_TUMOR));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SURV_DATE_ACTIVE_FUP, 1782, 8, "Surv-Date Active Followup", "Surv Dt", DATA_LEVEL_TUMOR));
         addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_SURV_DATE_PRESUMED_ALIVE, 1785, 8, "Surv-Date Presumed Alive", "Surv Dt PA", DATA_LEVEL_TUMOR));
