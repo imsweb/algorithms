@@ -1,5 +1,10 @@
 ## Algorithms Version History
 
+**Changes in version 2.11**
+
+- Changed a few algorithm names to make them a bit shorter.
+- Added more information for the algorithms and their input/output fields.
+
 **Changes in version 2.10**
 
 - Fixed County at DX algorithm setting the wrong input field.
