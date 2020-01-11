@@ -17,6 +17,7 @@ import org.junit.Test;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
+import com.opencsv.exceptions.CsvException;
 
 public class NhiaUtilsTest {
 
@@ -324,7 +325,7 @@ public class NhiaUtilsTest {
 
     @SuppressWarnings("ConstantConditions")
     @Test
-    public void testCsvFile() throws IOException {
+    public void testCsvFile() throws IOException, CsvException {
         try (CSVReader reader = new CSVReaderBuilder(
                 new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("nhia/testNHIA.csv"), StandardCharsets.US_ASCII)).withSkipLines(1).build()) {
             for (String[] row : reader.readAll()) {

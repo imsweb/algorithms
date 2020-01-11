@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvException;
 
 /**
  * This class is used to calculate the NAPIIA variable. More information can be found here:
@@ -621,7 +622,7 @@ public final class NapiiaUtils {
                     map.put(row[0].toUpperCase(), Short.valueOf(row[1]));
             }
         }
-        catch (IOException e) {
+        catch (CsvException | IOException e) {
             throw new RuntimeException("Unable to read internal " + file, e);
         }
     }

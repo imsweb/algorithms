@@ -15,6 +15,7 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 
 import com.opencsv.CSVReaderBuilder;
+import com.opencsv.exceptions.CsvException;
 
 import com.imsweb.algorithms.internal.CountryData;
 import com.imsweb.algorithms.internal.CountyData;
@@ -156,7 +157,7 @@ public class CountyAtDxAnalysisUtils {
             for (String[] row : new CSVReaderBuilder(reader).withSkipLines(1).build().readAll())
                 result.computeIfAbsent(row[0], k -> new HashMap<>()).computeIfAbsent(row[1], k -> new CountyData());
         }
-        catch (IOException e) {
+        catch (CsvException | IOException e) {
             throw new RuntimeException(e);
         }
 

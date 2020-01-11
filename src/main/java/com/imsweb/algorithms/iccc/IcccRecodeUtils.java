@@ -14,6 +14,7 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 
 import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvException;
 
 import com.imsweb.algorithms.internal.Utils;
 
@@ -282,7 +283,7 @@ public final class IcccRecodeUtils {
                 }
             }
         }
-        catch (IOException e) {
+        catch (CsvException | IOException e) {
             throw new RuntimeException(e);
         }
     }

@@ -16,6 +16,7 @@ import java.util.Map;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import com.opencsv.CSVReaderBuilder;
+import com.opencsv.exceptions.CsvException;
 
 import com.imsweb.algorithms.historicstage.internal.HistStageDataCsExtDto;
 import com.imsweb.algorithms.historicstage.internal.HistStageDataCsMetsDto;
@@ -741,7 +742,7 @@ public final class HistoricStageUtils {
                         _DATA_LEUKEMIA.add(new HistStageDataLeukemiaDto(row));
                 }
             }
-            catch (IOException e) {
+            catch (CsvException | IOException e) {
                 throw new RuntimeException("Unable to read Historic-stage-Leuk.csv", e);
             }
         }
@@ -758,7 +759,7 @@ public final class HistoricStageUtils {
                         _DATA_HISTORIC_STAGE_SCHEMA.add(new HistStageDataSchemaDto(row));
                 }
             }
-            catch (IOException e) {
+            catch (CsvException | IOException e) {
                 throw new RuntimeException("Unable to read Historic-stage-SchemaFor2004+.csv", e);
             }
         }
@@ -775,7 +776,7 @@ public final class HistoricStageUtils {
                         _DATA_CS_EXT.add(new HistStageDataCsExtDto(row));
                 }
             }
-            catch (IOException e) {
+            catch (CsvException | IOException e) {
                 throw new RuntimeException("Unable to read Historic-stage-csExt.csv", e);
             }
 
@@ -788,7 +789,7 @@ public final class HistoricStageUtils {
                         _DATA_CS_NODE.add(new HistStageDataCsNodeDto(row));
                 }
             }
-            catch (IOException e) {
+            catch (CsvException | IOException e) {
                 throw new RuntimeException("Unable to read Historic-stage-csNode.csv", e);
             }
 
@@ -801,7 +802,7 @@ public final class HistoricStageUtils {
                         _DATA_CS_METS.add(new HistStageDataCsMetsDto(row));
                 }
             }
-            catch (IOException e) {
+            catch (CsvException | IOException e) {
                 throw new RuntimeException("Unable to read Historic-stage-csMets.csv", e);
             }
 
@@ -814,7 +815,7 @@ public final class HistoricStageUtils {
                         _DATA_CS_STAGE.add(new HistStageDataCsStageDto(row));
                 }
             }
-            catch (IOException e) {
+            catch (CsvException | IOException e) {
                 throw new RuntimeException("Unable to read Historic-stage-csStage.csv", e);
             }
         }
@@ -831,7 +832,7 @@ public final class HistoricStageUtils {
                         _DATA_EOD10_EXT.add(new HistStageDataEod10ExtDto(row));
                 }
             }
-            catch (IOException e) {
+            catch (CsvException | IOException e) {
                 throw new RuntimeException("Unable to read Historic-stage-Eod10Ext.csv", e);
             }
 
@@ -844,7 +845,7 @@ public final class HistoricStageUtils {
                         _DATA_EOD10_NODE.add(new HistStageDataEod10NodeDto(row));
                 }
             }
-            catch (IOException e) {
+            catch (CsvException | IOException e) {
                 throw new RuntimeException("Unable to read Historic-stage-Eod10Node.csv", e);
             }
 
@@ -857,7 +858,7 @@ public final class HistoricStageUtils {
                         _DATA_EOD10_STAGE.add(new HistStageDataEod10StageDto(row));
                 }
             }
-            catch (IOException e) {
+            catch (CsvException | IOException e) {
                 throw new RuntimeException("Unable to read Historic-stage-Eod10Stage.csv", e);
             }
         }
@@ -874,7 +875,7 @@ public final class HistoricStageUtils {
                         _DATA_EOD_PATCH.add(new HistStageDataEodPatchDto(row));
                 }
             }
-            catch (IOException e) {
+            catch (CsvException | IOException e) {
                 throw new RuntimeException("Unable to read Historic-stage-EodPatch.csv", e);
             }
         }
@@ -891,7 +892,7 @@ public final class HistoricStageUtils {
                         _DATA_EOD_4DIG_STAGE.add(new HistStageDataEod4digStageDto(row));
                 }
             }
-            catch (IOException e) {
+            catch (CsvException | IOException e) {
                 throw new RuntimeException("Unable to read Historic-stage-Eod4digStage.csv", e);
             }
         }
@@ -910,7 +911,7 @@ public final class HistoricStageUtils {
                         _DATA_EOD_13DIG_NODE.add(new HistStageDataEod13digNodeDto(row));
                 }
             }
-            catch (IOException e) {
+            catch (CsvException | IOException e) {
                 throw new RuntimeException("Unable to read Historic-stage-Eod13digNodes.csv", e);
             }
 
@@ -923,7 +924,7 @@ public final class HistoricStageUtils {
                         _DATA_EOD_13DIG_EXT.add(new HistStageDataEod13digExtDto(row));
                 }
             }
-            catch (IOException e) {
+            catch (CsvException | IOException e) {
                 throw new RuntimeException("Unable to read Historic-stage-Eod13digExt.csv", e);
             }
 
@@ -936,7 +937,7 @@ public final class HistoricStageUtils {
                         _DATA_EOD_13DIG_LUNG.add(new HistStageDataEod13digLungDto(row));
                 }
             }
-            catch (IOException e) {
+            catch (CsvException | IOException e) {
                 throw new RuntimeException("Unable to read Historic-stage-Eod13digLung.csv", e);
             }
 
@@ -949,7 +950,7 @@ public final class HistoricStageUtils {
                         _DATA_EOD_13DIG_MELANOMA.add(new HistStageDataEod13digMelanomaDto(row));
                 }
             }
-            catch (IOException e) {
+            catch (CsvException | IOException e) {
                 throw new RuntimeException("Unable to read Historic-stage-Eod13digMelanoma.csv", e);
             }
 
@@ -962,7 +963,7 @@ public final class HistoricStageUtils {
                         _DATA_EOD_13DIG_BLADDER.add(new HistStageDataEod13digBladderDto(row));
                 }
             }
-            catch (IOException e) {
+            catch (CsvException | IOException e) {
                 throw new RuntimeException("Unable to read Historic-stage-Eod13digBladder.csv", e);
             }
 
@@ -975,7 +976,7 @@ public final class HistoricStageUtils {
                         _DATA_EOD_13DIG_GENERAL_STAGE.add(new HistStageDataEod13digGeneralStageDto(row));
                 }
             }
-            catch (IOException e) {
+            catch (CsvException | IOException e) {
                 throw new RuntimeException("Unable to read Historic-stage-Eod13digGeneralStage.csv", e);
             }
         }
@@ -992,7 +993,7 @@ public final class HistoricStageUtils {
                         _DATA_EOD_2DIG_EXT.add(new HistStageDataEod2digExtDto(row));
                 }
             }
-            catch (IOException e) {
+            catch (CsvException | IOException e) {
                 throw new RuntimeException("Unable to read Historic-stage-Eod2digExt.csv", e);
             }
 
@@ -1005,7 +1006,7 @@ public final class HistoricStageUtils {
                         _DATA_EOD_2DIG_NODE.add(new HistStageDataEod2digNodeDto(row));
                 }
             }
-            catch (IOException e) {
+            catch (CsvException | IOException e) {
                 throw new RuntimeException("Unable to read Historic-stage-Eod2digNode.csv", e);
             }
 
@@ -1018,7 +1019,7 @@ public final class HistoricStageUtils {
                         _DATA_EOD_2DIG_DIRECT_STAGE.add(new HistStageDataEod2digDirectStageDto(row));
                 }
             }
-            catch (IOException e) {
+            catch (CsvException | IOException e) {
                 throw new RuntimeException("Unable to read Historic-stage-Eod2digDirectStage.csv", e);
             }
 
@@ -1031,7 +1032,7 @@ public final class HistoricStageUtils {
                         _DATA_EOD_2DIG_EXTENSION_NODE_STAGE.add(new HistStageDataEod2digExtNodeStageDto(row));
                 }
             }
-            catch (IOException e) {
+            catch (CsvException | IOException e) {
                 throw new RuntimeException("Unable to read Historic-stage-Eod2digExtNodeStage.csv", e);
             }
         }
@@ -1048,7 +1049,7 @@ public final class HistoricStageUtils {
                         _DATA_EOD0_STAGE.add(new HistStageDataEod0StageDto(row));
                 }
             }
-            catch (IOException e) {
+            catch (CsvException | IOException e) {
                 throw new RuntimeException("Unable to read Historic-stage-Eod0Stage.csv", e);
             }
         }

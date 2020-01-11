@@ -19,6 +19,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
+import com.opencsv.exceptions.CsvException;
 
 import com.imsweb.algorithms.icd.IcdO2Entry.ConversionResultType;
 
@@ -768,7 +769,7 @@ public class IcdUtils {
                     result.put(entry.getSourceCode(), entry);
             }
         }
-        catch (IOException e) {
+        catch (CsvException | IOException e) {
             throw new RuntimeException(e);
         }
     }

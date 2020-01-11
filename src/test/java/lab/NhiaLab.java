@@ -152,8 +152,8 @@ public class NhiaLab {
         long totalCases = 0;
         long diff = 0;
         while (sasLine != null && javaLine != null) {
-            Map<String, String> sasRec = layout.createRecordFromLine(sasLine);
-            Map<String, String> javaRec = layout.createRecordFromLine(javaLine);
+            Map<String, String> sasRec = layout.createRecordFromLine(sasLine, 1, null);
+            Map<String, String> javaRec = layout.createRecordFromLine(javaLine, 1, null);
 
             //this code is added because sometimes the test files have bad lines.
             /*
@@ -204,7 +204,7 @@ public class NhiaLab {
         long totalCases = 0;
         while (line != null) {
             totalCases++;
-            Map<String, String> rec = layout.createRecordFromLine(line);
+            Map<String, String> rec = layout.createRecordFromLine(line, 1, null);
             String patIdNum = rec.get("patientIdNumber");
             if (patIdNum != null && !patIdNum.equals(currentPatIdNum)) {
                 if (!patient.isEmpty())

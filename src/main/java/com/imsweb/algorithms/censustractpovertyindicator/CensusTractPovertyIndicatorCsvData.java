@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.opencsv.CSVReaderBuilder;
+import com.opencsv.exceptions.CsvException;
 
 import com.imsweb.algorithms.internal.CensusData;
 import com.imsweb.algorithms.internal.CountryData;
@@ -79,7 +80,7 @@ public class CensusTractPovertyIndicatorCsvData implements CensusTractPovertyInd
                 dto.getPovertyIndicators().putIfAbsent(yearRangeCategory, indicator);
             }
         }
-        catch (IOException e) {
+        catch (CsvException | IOException e) {
             throw new RuntimeException(e);
         }
     }

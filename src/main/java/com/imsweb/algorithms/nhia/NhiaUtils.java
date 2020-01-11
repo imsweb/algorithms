@@ -18,6 +18,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.stream.Collectors;
 
 import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvException;
 
 /**
  * This class is used to calculate the NHIA variable. More information can be found here:
@@ -532,7 +533,7 @@ public final class NhiaUtils {
                 return reader.readAll().stream().map(row -> row[0].toUpperCase()).collect(Collectors.toSet());
             }
         }
-        catch (IOException e) {
+        catch (CsvException | IOException e) {
             throw new RuntimeException("Unable to read internal " + file, e);
         }
     }

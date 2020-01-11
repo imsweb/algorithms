@@ -1,5 +1,11 @@
 ## Algorithms Version History
 
+**Changes in version 2.12**
+
+- Restructured internal algorithms.
+- Updated CSV library from version 4.2 to version 5.0.
+- Updated Apache commons-lang library from version 3.7 to version 3.9.
+
 **Changes in version 2.11**
 
 - Changed a few algorithm names to make them a bit shorter.

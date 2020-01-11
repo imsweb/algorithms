@@ -15,6 +15,7 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 
 import com.opencsv.CSVReaderBuilder;
+import com.opencsv.exceptions.CsvException;
 
 import com.imsweb.algorithms.internal.CensusData;
 import com.imsweb.algorithms.internal.CountryData;
@@ -118,7 +119,7 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
                     dto.setIndicatorCodePercentage2000(Float.valueOf(percent));
             }
         }
-        catch (IOException e) {
+        catch (CsvException | IOException e) {
             throw new RuntimeException(e);
         }
 
@@ -136,7 +137,7 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
                     dto.setIndicatorCodePercentage2010(Float.valueOf(percent));
             }
         }
-        catch (IOException e) {
+        catch (CsvException | IOException e) {
             throw new RuntimeException(e);
         }
 
@@ -195,7 +196,7 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
                     dto.setCommutingArea2000("2");
             }
         }
-        catch (IOException e) {
+        catch (CsvException | IOException e) {
             throw new RuntimeException(e);
         }
 
@@ -213,7 +214,7 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
                     dto.setCommutingArea2010("2");
             }
         }
-        catch (IOException e) {
+        catch (CsvException | IOException e) {
             throw new RuntimeException(e);
         }
 
@@ -278,7 +279,7 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
                 dto.setUrbanContinuum1993(StringUtils.leftPad(val, 2, '0'));
             }
         }
-        catch (IOException e) {
+        catch (CsvException | IOException e) {
             throw new RuntimeException(e);
         }
 
@@ -291,7 +292,7 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
                 dto.setUrbanContinuum2003(StringUtils.leftPad(val, 2, '0'));
             }
         }
-        catch (IOException e) {
+        catch (CsvException | IOException e) {
             throw new RuntimeException(e);
         }
 
@@ -304,7 +305,7 @@ public class RuralUrbanCsvData implements RuralUrbanDataProvider {
                 dto.setUrbanContinuum2013(StringUtils.leftPad(val, 2, '0'));
             }
         }
-        catch (IOException e) {
+        catch (CsvException | IOException e) {
             throw new RuntimeException(e);
         }
 

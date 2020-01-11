@@ -13,6 +13,7 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 
 import com.opencsv.CSVReaderBuilder;
+import com.opencsv.exceptions.CsvException;
 
 import com.imsweb.algorithms.internal.CountryData;
 import com.imsweb.algorithms.internal.CountyData;
@@ -21,11 +22,11 @@ import com.imsweb.algorithms.internal.StateData;
 import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.ENTIRE_STATE_NON_PRCDA;
 import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.ENTIRE_STATE_PRCDA;
 import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.MIXED_PRCDA;
-import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.PRCDA_UNKNOWN;
 import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.PRCDA_NO;
+import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.PRCDA_UNKNOWN;
 import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.PRCDA_YES;
-import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.UIHO_FACILITY_UNKNOWN;
 import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.UIHO_FACILITY_NONE;
+import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.UIHO_FACILITY_UNKNOWN;
 import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.UIHO_NO;
 import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.UIHO_UNKNOWN;
 import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.isCountyAtDxValid;
@@ -117,7 +118,7 @@ public class PrcdaUihoCsvData implements PrcdaUihoDataProvider {
                 dto.setUIHOFacility(StringUtils.leftPad(uihoFacility, 2, '0'));
             }
         }
-        catch (IOException e) {
+        catch (CsvException | IOException e) {
             throw new RuntimeException(e);
         }
         return result;

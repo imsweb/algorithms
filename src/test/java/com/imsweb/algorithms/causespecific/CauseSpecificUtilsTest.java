@@ -14,6 +14,7 @@ import org.junit.Test;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
+import com.opencsv.exceptions.CsvException;
 
 public class CauseSpecificUtilsTest {
 
@@ -34,7 +35,7 @@ public class CauseSpecificUtilsTest {
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    public void testCsvFile() throws IOException {
+    public void testCsvFile() throws IOException, CsvException {
         int count = 0;
         try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("causespecific/testCauseSpecific.csv");
              CSVReader reader = new CSVReaderBuilder(new InputStreamReader(is, StandardCharsets.US_ASCII)).withSkipLines(1).build()) {

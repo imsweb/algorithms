@@ -17,6 +17,7 @@ import org.junit.Test;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
+import com.opencsv.exceptions.CsvException;
 
 public class NapiiaUtilsTest {
 
@@ -849,7 +850,7 @@ public class NapiiaUtilsTest {
 
     @SuppressWarnings("ConstantConditions")
     @Test
-    public void testCsvFile() throws IOException {
+    public void testCsvFile() throws IOException, CsvException {
         int line = 0;
         try (CSVReader reader = new CSVReaderBuilder(
                 new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("napiia/testNAPIIA.csv"), StandardCharsets.US_ASCII)).withSkipLines(1).build()) {

@@ -30,6 +30,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.CSVWriter;
+import com.opencsv.exceptions.CsvException;
 
 import com.imsweb.algorithms.napiia.NapiiaInputPatientDto;
 import com.imsweb.algorithms.napiia.NapiiaInputRecordDto;
@@ -50,7 +51,7 @@ public class NapiiaLab {
         //countInputRecords();
     }
 
-    private static void createTestingData() throws IOException {
+    private static void createTestingData() throws IOException, CsvException {
         List<Map<String, String>> list = new ArrayList<>();
         for (String[] row : new CSVReaderBuilder(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("tools-test-data/testNAPIIA.csv"))).withSkipLines(1).build()
                 .readAll()) {
@@ -115,7 +116,7 @@ public class NapiiaLab {
 
         String line = reader.readLine();
         while (line != null) {
-            Map<String, String> rec = absLayout.createRecordFromLine(line);
+            Map<String, String> rec = absLayout.createRecordFromLine(line, 1, null);
 
             NapiiaInputRecordDto inputDto = new NapiiaInputRecordDto();
             // TODO translate record into input DTO
@@ -149,8 +150,8 @@ public class NapiiaLab {
         long totalCases = 0;
         long diff = 0;
         while (sasLine != null && javaLine != null) {
-            Map<String, String> sasRec = layout.createRecordFromLine(sasLine);
-            Map<String, String> javaRec = layout.createRecordFromLine(javaLine);
+            Map<String, String> sasRec = layout.createRecordFromLine(sasLine, 1, null);
+            Map<String, String> javaRec = layout.createRecordFromLine(javaLine, 1, null);
 
             //this code is added because sometimes the test files have bad lines. You should comment this out if you are testing fake data without patient id number (like testNAPIIA.csv)
             if (javaRec.get("patientIdNumber") == null || !NumberUtils.isDigits(javaRec.get("patientIdNumber"))) {
@@ -165,13 +166,13 @@ public class NapiiaLab {
             if (Integer.valueOf(javaRec.get("patientIdNumber")) > Integer.valueOf(sasRec.get("patientIdNumber"))) {
                 while (!javaRec.get("patientIdNumber").equals(sasRec.get("patientIdNumber"))) {
                     sasLine = sasReader.readLine();
-                    sasRec = layout.createRecordFromLine(sasLine);
+                    sasRec = layout.createRecordFromLine(sasLine, 1, null);
                 }
             }
             if (Integer.valueOf(sasRec.get("patientIdNumber")) > Integer.valueOf(javaRec.get("patientIdNumber"))) {
                 while (!sasRec.get("patientIdNumber").equals(javaRec.get("patientIdNumber"))) {
                     javaLine = javaReader.readLine();
-                    javaRec = layout.createRecordFromLine(javaLine);
+                    javaRec = layout.createRecordFromLine(javaLine, 1, null);
                 }
             }
 
@@ -212,7 +213,7 @@ public class NapiiaLab {
         long totalCases = 0;
         while (line != null) {
             totalCases++;
-            Map<String, String> rec = layout.createRecordFromLine(line);
+            Map<String, String> rec = layout.createRecordFromLine(line, 1, null);
             String patIdNum = rec.get("patientIdNumber");
             if (patIdNum != null && !patIdNum.equals(currentPatIdNum)) {
                 if (!patient.isEmpty())

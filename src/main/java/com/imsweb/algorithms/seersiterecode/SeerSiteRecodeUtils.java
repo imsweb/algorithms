@@ -18,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvException;
 
 import com.imsweb.algorithms.internal.Utils;
 
@@ -257,7 +258,7 @@ public final class SeerSiteRecodeUtils {
 
             }
         }
-        catch (IOException e) {
+        catch (CsvException | IOException e) {
             throw new RuntimeException(e);
         }
     }
