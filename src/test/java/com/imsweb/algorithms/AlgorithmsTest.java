@@ -48,6 +48,8 @@ public class AlgorithmsTest {
         Algorithms.initialize();
         Assert.assertFalse(Algorithms.getAlgorithms().isEmpty());
 
+        Assert.assertTrue(Algorithms.isInitialized());
+
         // NHIA
         Algorithm alg = Algorithms.getAlgorithm(Algorithms.ALG_NHIA);
         Assert.assertEquals(1, alg.getParameters().size());
