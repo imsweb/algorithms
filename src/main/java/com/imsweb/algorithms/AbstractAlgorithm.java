@@ -4,7 +4,6 @@
 package com.imsweb.algorithms;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -93,7 +92,7 @@ public abstract class AbstractAlgorithm implements Algorithm {
 
     @Override
     public Map<String, List<String>> getUnknownValues() {
-        return Collections.emptyMap();
+        return _unknownValues;
     }
 
     @Override
