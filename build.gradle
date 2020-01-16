@@ -44,7 +44,7 @@ tasks.withType(Javadoc) {
 jar {
     manifest {
         attributes('Implementation-Title': project.name,
-                'Implementation-Version': version,
+                'Implementation-Version': archiveVersion,
                 'Implementation-Vendor': 'Information Management Services Inc.',
                 'Created-By': System.properties['java.vm.version'] + ' (' + System.properties['java.vm.vendor'] + ')',
                 'Built-By': System.getProperty('user.name'),
