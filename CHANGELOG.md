@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Chages in version 2.13-SNAPSHOT**
+
+- Updated Cause-Specific Survival Aglorithm to fix error in handling of anal cancers.
+
 **Changes in version 2.12**
 
 - Restructured internal algorithms.
