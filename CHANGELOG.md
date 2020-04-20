@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 2.14-SNAPSHOT**
+
+-Fixed small bug in Historic Stage definition for Pancreas Head & Tail lymph nodes
+
 **Changes in version 2.13**
 
 - Updated Cause-Specific Survival algorithm to fix error in handling of anal cancers.
