@@ -38,10 +38,10 @@ public final class CauseSpecificUtils {
     public static final String ALIVE_OR_DEAD_OF_OTHER_CAUSES = "0";
     public static final String DEAD = "1";
     public static final String MISSING_UNKNOWN_DEATH_OF_CODE = "8";
-    public static final String NA_NOT_FIRST_TUMOR = "9";
+    public static final String SEQUENCE_NOT_APPLICABLE = "9";
 
     //lookup for tables
-    private static List<CauseSpecificDataDto> _DATA_SITE_SPECIFIC = new ArrayList<>();
+    private static final List<CauseSpecificDataDto> _DATA_SITE_SPECIFIC = new ArrayList<>();
 
     /**
      * Calculates cause specific and cause other death classification values for the provided record.
@@ -62,7 +62,8 @@ public final class CauseSpecificUtils {
      * <ul>
      * <li>ALIVE OR DEAD OF OTHER CAUSES = "0"</li>
      * <li>DEAD = "1"</li>
-     * <li>N/A NOT FIRST TUMOR = "2"</li>
+     * <li>MISSING UNKNOWN DEATH CODE = "8"</li>
+     * <li>SEQUENCE NOT APPLICABLE = "9"</li>
      * </ul>
      * @deprecated use the method that takes a <code>CauseSpecificInputDto</code> object as parameter
      */
@@ -89,7 +90,8 @@ public final class CauseSpecificUtils {
      * <ul>
      * <li>ALIVE OR DEAD OF OTHER CAUSES = "0"</li>
      * <li>DEAD = "1"</li>
-     * <li>N/A NOT FIRST TUMOR = "2"</li>
+     * <li>MISSING UNKNOWN DEATH CODE = "8"</li>
+     * <li>SEQUENCE NOT APPLICABLE = "9"</li>
      * </ul>
      */
 
@@ -117,7 +119,8 @@ public final class CauseSpecificUtils {
      * <ul>
      * <li>ALIVE OR DEAD OF OTHER CAUSES = "0"</li>
      * <li>DEAD = "1"</li>
-     * <li>N/A NOT FIRST TUMOR = "2"</li>
+     * <li>MISSING UNKNOWN DEATH CODE = "8"</li>
+     * <li>SEQUENCE NOT APPLICABLE = "9"</li>
      * </ul>
      * @deprecated use the method that takes a <code>CauseSpecificInputDto</code> object as parameter
      */
@@ -152,19 +155,17 @@ public final class CauseSpecificUtils {
      * <ul>
      * <li>ALIVE OR DEAD OF OTHER CAUSES = "0"</li>
      * <li>DEAD = "1"</li>
-     * <li>N/A NOT FIRST TUMOR = "2"</li>
+     * <li>MISSING UNKNOWN DEATH CODE = "8"</li>
+     * <li>SEQUENCE NOT APPLICABLE = "9"</li>
      * </ul>
      */
     public static CauseSpecificResultDto computeCauseSpecific(CauseSpecificInputDto input, int cutOffYear) {
         CauseSpecificResultDto result = new CauseSpecificResultDto();
-        int seq;
-        if ("00".equals(input.getSequenceNumberCentral()))
-            seq = 0;
-        else if ("01".equals(input.getSequenceNumberCentral()))
-            seq = 1;
-        else {
-            result.setCauseSpecificDeathClassification(NA_NOT_FIRST_TUMOR);
-            result.setCauseOtherDeathClassification(NA_NOT_FIRST_TUMOR);
+
+        int seq = NumberUtils.isDigits(input.getSequenceNumberCentral()) ? Integer.parseInt(input.getSequenceNumberCentral()) : -1;
+        if (seq < 0 || seq > 59) {
+            result.setCauseSpecificDeathClassification(SEQUENCE_NOT_APPLICABLE);
+            result.setCauseOtherDeathClassification(SEQUENCE_NOT_APPLICABLE);
             return result;
         }
 

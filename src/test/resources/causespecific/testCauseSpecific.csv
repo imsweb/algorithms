@@ -1,7 +1,7 @@
 seqNumCentral,icdRevisionNum,causeOfDeath,primarySite,histology,dolcYear,vitalStatus,cause-specific,cause-other,comment
 ,1,C798,C400,8000,2012,,9,9,null sequence number
 AA,1,C798,C400,8000,2012,,9,9,invalid sequence number
-02,1,C798,C400,8000,2012,,9,9,not supported sequence number
+02,1,C798,C400,8000,2012,,1,0,seq 2-59
 66,,,,,,,9,9,not supported sequence number
 00,2,C798,C400,8000,2012,,0,1,not supported icd revision
 01,A,C798,C400,8000,2012,,0,1,invalid icd revision

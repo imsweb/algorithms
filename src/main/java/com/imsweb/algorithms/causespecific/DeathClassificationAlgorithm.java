@@ -47,8 +47,8 @@ public class DeathClassificationAlgorithm extends AbstractAlgorithm {
         _outputFields.add(Algorithms.getField(FIELD_SEER_COD_CLASS));
         _outputFields.add(Algorithms.getField(FIELD_SEER_COD_OTHER));
 
-        _unknownValues.put(FIELD_SEER_COD_CLASS, Arrays.asList(CauseSpecificUtils.MISSING_UNKNOWN_DEATH_OF_CODE, CauseSpecificUtils.NA_NOT_FIRST_TUMOR));
-        _unknownValues.put(FIELD_SEER_COD_OTHER, Arrays.asList(CauseSpecificUtils.MISSING_UNKNOWN_DEATH_OF_CODE, CauseSpecificUtils.NA_NOT_FIRST_TUMOR));
+        _unknownValues.put(FIELD_SEER_COD_CLASS, Arrays.asList(CauseSpecificUtils.MISSING_UNKNOWN_DEATH_OF_CODE, CauseSpecificUtils.SEQUENCE_NOT_APPLICABLE));
+        _unknownValues.put(FIELD_SEER_COD_OTHER, Arrays.asList(CauseSpecificUtils.MISSING_UNKNOWN_DEATH_OF_CODE, CauseSpecificUtils.SEQUENCE_NOT_APPLICABLE));
     }
 
     @Override
