@@ -253,7 +253,7 @@ public final class CauseSpecificUtils {
         }
 
         for (CauseSpecificDataDto obj : getData())
-            if (obj.doesMatchThisRow(input.getIcdRevisionNumber(), String.valueOf(seq), recode, cod)) {
+            if (obj.doesMatchThisRow(input.getIcdRevisionNumber(), seq == 0 ? "0" : "1-59", recode, cod)) {
                 result.setCauseSpecificDeathClassification(DEAD);
                 result.setCauseOtherDeathClassification(ALIVE_OR_DEAD_OF_OTHER_CAUSES);
                 return result;
