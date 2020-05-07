@@ -1,8 +1,9 @@
 ## Algorithms Version History
 
-**Changes in version 2.14-SNAPSHOT**
+**Changes in version 2.14**
 
 -Fixed small bug in Historic Stage definition for Pancreas Head & Tail lymph nodes
+- Updated CSV library from version 5.0 to version 5.1.
 
 **Changes in version 2.13**
 
