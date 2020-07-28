@@ -20,6 +20,9 @@ import com.imsweb.naaccrxml.entity.dictionary.NaaccrDictionary;
 
 import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS;
 import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS_FLAG;
+import static com.imsweb.algorithms.Algorithms.FIELD_PRCDA_COUNTY;
+import static com.imsweb.algorithms.Algorithms.FIELD_UIHO_COUNTY;
+import static com.imsweb.algorithms.Algorithms.FIELD_UIHO_FACILITY;
 
 public class AlgorithmsTest {
 
@@ -260,6 +263,22 @@ public class AlgorithmsTest {
         Map<String, Object> tumor = Utils.extractTumors(alg.execute(input).getPatient()).get(0);
         Assert.assertEquals("005", tumor.get(FIELD_COUNTY_AT_DX_ANALYSIS));
         Assert.assertEquals(CountyAtDxAnalysisUtils.REP_REP_GEO_EQUAL, tumor.get(FIELD_COUNTY_AT_DX_ANALYSIS_FLAG));
+
+        alg = Algorithms.getAlgorithm(Algorithms.ALG_PRCDA_UIHO);
+        Assert.assertTrue(alg.getParameters().isEmpty());
+        Assert.assertFalse(alg.getUnknownValues().isEmpty());
+        input = new AlgorithmInput();
+        patMap = new HashMap<>();
+        input.setPatient(patMap);
+        tumMap = new HashMap<>();
+        tumMap.put(Algorithms.FIELD_STATE_DX, "CA");
+        tumMap.put(Algorithms.FIELD_COUNTY_DX, "013");
+        patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
+        tumor = Utils.extractTumors(alg.execute(input).getPatient()).get(0);
+        Assert.assertEquals("0", tumor.get(FIELD_PRCDA_COUNTY));
+        Assert.assertEquals("1", tumor.get(FIELD_UIHO_COUNTY));
+        Assert.assertEquals("07", tumor.get(FIELD_UIHO_FACILITY));
+
     }
 
     @Test

@@ -135,9 +135,9 @@ public class Algorithms {
     public static final String FIELD_IARC_MP_HIST_GROUP = "iarcMpHistGroup";
     public static final String FIELD_IARC_MP_HISTOLOGY = "iarcMpHistologicTypeIcdO3";
     public static final String FIELD_COUNTY_AT_DX_ANALYSIS_FLAG = "countyAtDxAnalysisFlag";
-    public static final String FIELD_PRCDA_COUNTY_2017 = "prcdaCounty2017";
-    public static final String FIELD_UIHO_COUNTY_2017 = "uihoCounty2017";
-    public static final String FIELD_UIHO_FACILITY_2017 = "uihoFacility2017";
+    public static final String FIELD_PRCDA_COUNTY = "prcdaCounty";
+    public static final String FIELD_UIHO_COUNTY = "uihoCounty";
+    public static final String FIELD_UIHO_FACILITY = "uihoFacility";
 
     // options
     public static final String PARAM_NHIA_OPTION = "nhiaOption";
@@ -236,9 +236,9 @@ public class Algorithms {
             addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_IARC_MP_HIST_GROUP, null, 2, "IARC Multiple Primary Histology Group", "IARC MP Hist Grp", DATA_LEVEL_TUMOR));
             addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_IARC_MP_HISTOLOGY, null, 4, "IARC Multiple Primary Histology", "IARC MP Hist", DATA_LEVEL_TUMOR));
             addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_COUNTY_AT_DX_ANALYSIS_FLAG, null, 4, "County at DX Analysis Flag", "DX Anlys Cty Fg", DATA_LEVEL_TUMOR));
-            addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_PRCDA_COUNTY_2017, null, 1, "PRCDA County 2017", "PRCDA Cty 17", DATA_LEVEL_TUMOR));
-            addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_UIHO_COUNTY_2017, null, 1, "UIHO County 2017", "UIHO Cty 17", DATA_LEVEL_TUMOR));
-            addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_UIHO_FACILITY_2017, null, 2, "UIHO Facility 2017", "UIHO Fac 17", DATA_LEVEL_TUMOR));
+            addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_PRCDA_COUNTY, null, 1, "PRCDA County 2018", "PRCDA Cty 18", DATA_LEVEL_TUMOR));
+            addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_UIHO_COUNTY, null, 1, "UIHO County 2020", "UIHO Cty 20", DATA_LEVEL_TUMOR));
+            addField(_CACHED_FIELDS, AlgorithmField.of(FIELD_UIHO_FACILITY, null, 2, "UIHO Facility 2020", "UIHO Fac 20", DATA_LEVEL_TUMOR));
 
             // algorithms
             addAlgorithm(_CACHED_ALGORITHMS, new NhiaAlgorithm());

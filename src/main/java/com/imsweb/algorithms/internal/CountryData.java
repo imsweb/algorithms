@@ -39,7 +39,8 @@ public class CountryData {
     private boolean _continuumInitialized = false;
     private boolean _povertyInitialized = false;
     private boolean _countyAtDxAnalysisInitialized = false;
-    private boolean _prcdaUihoInitialized = false;
+    private boolean _prcdaInitialized = false;
+    private boolean _uihoInitialized = false;
 
     // internal lock to control concurrency
     private ReentrantReadWriteLock _lock = new ReentrantReadWriteLock();
@@ -56,7 +57,8 @@ public class CountryData {
             _continuumInitialized = false;
             _povertyInitialized = false;
             _countyAtDxAnalysisInitialized = false;
-            _prcdaUihoInitialized = false;
+            _prcdaInitialized = false;
+            _uihoInitialized = false;
         }
         finally {
             _lock.writeLock().unlock();
@@ -321,13 +323,13 @@ public class CountryData {
     }
 
     /**
-     * Returns requested state data to be used by the PRCDA/UIHO algorithm.
+     * Returns requested state data to be used by the PRCDA algorithm.
      */
-    public StateData getPrcdaUihoData(String state) {
+    public StateData getPrcdaData(String state) {
         _lock.readLock().lock();
         try {
-            if (!_prcdaUihoInitialized)
-                throw new RuntimeException("PRCDA/UIHO data cannot be access before it has been initialized!");
+            if (!_prcdaInitialized)
+                throw new RuntimeException("PRCDA data cannot be access before it has been initialized!");
             return _stateData.get(state);
         }
         finally {
@@ -336,12 +338,12 @@ public class CountryData {
     }
 
     /**
-     * Returns true if the PRCDA/UIHO data has been initialized, false otherwise.
+     * Returns true if the PRCDA data has been initialized, false otherwise.
      */
-    public boolean isPrcdaUihoDataInitialized() {
+    public boolean isPrcdaDataInitialized() {
         _lock.readLock().lock();
         try {
-            return _prcdaUihoInitialized;
+            return _prcdaInitialized;
         }
         finally {
             _lock.readLock().unlock();
@@ -349,26 +351,76 @@ public class CountryData {
     }
 
     /**
-     * Initializes the given Continuum data (this call will make all other access to the data structure block).
+     * Initializes the given PRCDA data (this call will make all other access to the data structure block).
      */
-    public void initializePrcdaUihoData(Map<String, Map<String, CountyData>> data) {
+    public void initializePrcdaData(Map<String, Map<String, CountyData>> data) {
         _lock.writeLock().lock();
         try {
-            if (!_prcdaUihoInitialized) {
+            if (!_prcdaInitialized) {
                 for (Map.Entry<String, Map<String, CountyData>> stateEntry : data.entrySet()) {
                     StateData stateData = _stateData.computeIfAbsent(stateEntry.getKey(), k -> new StateData());
                     for (Map.Entry<String, CountyData> countyEntry : stateEntry.getValue().entrySet()) {
                         CountyData countyData = stateData.getData().computeIfAbsent(countyEntry.getKey(), k -> new CountyData());
                         countyData.setPRCDA(countyEntry.getValue().getPRCDA());
-                        countyData.setUIHO(countyEntry.getValue().getUIHO());
-                        countyData.setUIHOFacility(countyEntry.getValue().getUIHOFacility());
                     }
                 }
             }
-            _prcdaUihoInitialized = true;
+            _prcdaInitialized = true;
         }
         finally {
             _lock.writeLock().unlock();
         }
     }
+
+    /**
+     * Returns requested state data to be used by the UIHO algorithm.
+     */
+    public StateData getUihoData(String state) {
+        _lock.readLock().lock();
+        try {
+            if (!_uihoInitialized)
+                throw new RuntimeException("UIHO data cannot be access before it has been initialized!");
+            return _stateData.get(state);
+        }
+        finally {
+            _lock.readLock().unlock();
+        }
+    }
+
+    /**
+     * Returns true if the UIHO data has been initialized, false otherwise.
+     */
+    public boolean isUihoDataInitialized() {
+        _lock.readLock().lock();
+        try {
+            return _uihoInitialized;
+        }
+        finally {
+            _lock.readLock().unlock();
+        }
+    }
+
+    /**
+     * Initializes the given UIHO data (this call will make all other access to the data structure block).
+     */
+    public void initializeUihoData(Map<String, Map<String, CountyData>> data) {
+        _lock.writeLock().lock();
+        try {
+            if (!_uihoInitialized) {
+                for (Map.Entry<String, Map<String, CountyData>> stateEntry : data.entrySet()) {
+                    StateData stateData = _stateData.computeIfAbsent(stateEntry.getKey(), k -> new StateData());
+                    for (Map.Entry<String, CountyData> countyEntry : stateEntry.getValue().entrySet()) {
+                        CountyData countyData = stateData.getData().computeIfAbsent(countyEntry.getKey(), k -> new CountyData());
+                        countyData.setUIHO(countyEntry.getValue().getUIHO());
+                        countyData.setUIHOFacility(countyEntry.getValue().getUIHOFacility());
+                    }
+                }
+            }
+            _uihoInitialized = true;
+        }
+        finally {
+            _lock.writeLock().unlock();
+        }
+    }
+
 }
