@@ -15,12 +15,7 @@ import com.imsweb.algorithms.AlgorithmOutput;
 import com.imsweb.algorithms.Algorithms;
 import com.imsweb.algorithms.internal.Utils;
 
-import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_DX;
-import static com.imsweb.algorithms.Algorithms.FIELD_PRCDA_COUNTY_2017;
-import static com.imsweb.algorithms.Algorithms.FIELD_STATE_DX;
-import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
-import static com.imsweb.algorithms.Algorithms.FIELD_UIHO_COUNTY_2017;
-import static com.imsweb.algorithms.Algorithms.FIELD_UIHO_FACILITY_2017;
+import static com.imsweb.algorithms.Algorithms.*;
 import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.PRCDA_UNKNOWN;
 import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.UIHO_FACILITY_UNKNOWN;
 import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.UIHO_UNKNOWN;
@@ -33,13 +28,13 @@ public class PrcdaUihoAlgorithm extends AbstractAlgorithm {
         _inputFields.add(Algorithms.getField(FIELD_STATE_DX));
         _inputFields.add(Algorithms.getField(FIELD_COUNTY_DX));
 
-        _outputFields.add(Algorithms.getField(FIELD_PRCDA_COUNTY_2017));
-        _outputFields.add(Algorithms.getField(FIELD_UIHO_COUNTY_2017));
-        _outputFields.add(Algorithms.getField(FIELD_UIHO_FACILITY_2017));
+        _outputFields.add(Algorithms.getField(FIELD_PRCDA_COUNTY));
+        _outputFields.add(Algorithms.getField(FIELD_UIHO_COUNTY));
+        _outputFields.add(Algorithms.getField(FIELD_UIHO_FACILITY));
 
-        _unknownValues.put(FIELD_PRCDA_COUNTY_2017, Collections.singletonList(PRCDA_UNKNOWN));
-        _unknownValues.put(FIELD_UIHO_COUNTY_2017, Collections.singletonList(UIHO_UNKNOWN));
-        _unknownValues.put(FIELD_UIHO_FACILITY_2017, Collections.singletonList(UIHO_FACILITY_UNKNOWN));
+        _unknownValues.put(FIELD_PRCDA_COUNTY, Collections.singletonList(PRCDA_UNKNOWN));
+        _unknownValues.put(FIELD_UIHO_COUNTY, Collections.singletonList(UIHO_UNKNOWN));
+        _unknownValues.put(FIELD_UIHO_FACILITY, Collections.singletonList(UIHO_FACILITY_UNKNOWN));
     }
 
     @Override
@@ -56,9 +51,9 @@ public class PrcdaUihoAlgorithm extends AbstractAlgorithm {
             PrcdaUihoOutputDto outputDto = PrcdaUihoUtils.computePrcdaUiho(inputDto);
 
             Map<String, Object> outputTumor = new HashMap<>();
-            outputTumor.put(FIELD_PRCDA_COUNTY_2017, outputDto.getPRCDA());
-            outputTumor.put(FIELD_UIHO_COUNTY_2017, outputDto.getUIHO());
-            outputTumor.put(FIELD_UIHO_FACILITY_2017, outputDto.getUIHOFacility());
+            outputTumor.put(FIELD_PRCDA_COUNTY, outputDto.getPRCDA());
+            outputTumor.put(FIELD_UIHO_COUNTY, outputDto.getUIHO());
+            outputTumor.put(FIELD_UIHO_FACILITY, outputDto.getUIHOFacility());
 
             outputTumors.add(outputTumor);
         }
