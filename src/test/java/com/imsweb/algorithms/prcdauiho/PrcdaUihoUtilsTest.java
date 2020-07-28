@@ -32,10 +32,38 @@ public class PrcdaUihoUtilsTest {
     @Test
     public void testComputePrcdaUiho() {
 
-        List<String> validStates = Arrays.asList("AK", "AZ", "CO", "GA", "NV", "SE");
+        List<String> validStates = Arrays.asList("AK", "AZ", "CO", "GA", "MN", "NV", "SE", "VA");
         List<String> invalStates = Arrays.asList("", "99", null);
-        List<String> validCounty = Arrays.asList("001", "003", "005", "007", "999");
+        List<String> validCounty = Arrays.asList("001", "003", "005", "007", "017", "097", "999");
         List<String> invalCounty = Arrays.asList("", "ABC", "01", null);
+
+        List<String> prcdaYes = Arrays.asList(
+                "AZ001", "AZ003", "AZ005", "AZ007", "AZ017",
+                                           "CO007",
+                "MN001",          "MN005", "MN007", "MN017",
+                "NV001", "NV003", "NV005", "NV007", "NV017",
+                                           "SE007", "SE017",
+                                                             "VA097"
+        );
+        List<String> prcdaNo = Arrays.asList(
+                                                             "AZ097",
+                "CO001", "CO003", "CO005",          "CO017", "CO097",
+                         "MN003",                            "MN097",
+                                                             "NV097",
+                "SE001", "SE003", "SE005",                   "SE097",
+                "VA001", "VA003", "VA005", "VA007", "VA017"
+        );
+
+        List<String> uihoNo = Arrays.asList(
+                "AK001", "AK003", "AK005", "AK007", "AK017", "AK097",
+                "AZ001", "AZ003",          "AZ007", "AZ017", "AZ097",
+                         "CO003",          "CO007", "CO017", "CO097",
+                "GA001", "GA003", "GA005", "GA007", "GA017", "GA097",
+                "MN001", "MN003", "MN005", "MN007",          "MN097",
+                         "NV003",          "NV007", "NV017", "NV097",
+                "SE001", "SE003", "SE005", "SE007", "SE017", "SE097",
+                "VA001", "VA003", "VA005", "VA007", "VA017", "VA097"
+        );
 
         List<String> states = new ArrayList<>();
         states.addAll(validStates);
@@ -72,18 +100,14 @@ public class PrcdaUihoUtilsTest {
                     }
                     else {
                         String stCnty = state + county;
-                        if ("AZ001".equals(stCnty) || "AZ003".equals(stCnty) || "AZ005".equals(stCnty) || "AZ007".equals(stCnty)
-                                || "CO007".equals(stCnty)
-                                || "NV001".equals(stCnty) || "NV003".equals(stCnty) || "NV005".equals(stCnty) || "NV007".equals(stCnty)
-                                || "SE007".equals(stCnty) || "SE009".equals(stCnty)) {
+                        if (prcdaYes.contains(stCnty)) {
                             Assert.assertEquals(PRCDA_YES, output.getPRCDA());
                         }
-                        else if ("CO001".equals(stCnty) || "CO003".equals(stCnty) || "CO005".equals(stCnty)
-                                || "SE001".equals(stCnty) || "SE003".equals(stCnty)) {
+                        else if (prcdaNo.contains(stCnty)) {
                             Assert.assertEquals(PRCDA_NO, output.getPRCDA());
                         }
                         // note: if AK or GA ever change to "MIXED_PRCDA" add them here
-                        else if ("AZ999".equals(stCnty) || "CO999".equals(stCnty) || "SE999".equals(stCnty)) {
+                        else if ("AZ999".equals(stCnty) || "CO999".equals(stCnty) || "MN999".equals(stCnty) || "SE999".equals(stCnty) || "VA999".equals(stCnty) ) {
                             Assert.assertEquals(PRCDA_UNKNOWN, output.getPRCDA());
                         }
                     }
@@ -95,11 +119,7 @@ public class PrcdaUihoUtilsTest {
                     }
                     else {
                         String stCnty = state + county;
-                        if ("999".equals(county)
-                                ||"AZ001".equals(stCnty) || "AZ003".equals(stCnty) || "AZ007".equals(stCnty)
-                                || "CO003".equals(stCnty) || "CO007".equals(stCnty)
-                                || "NV003".equals(stCnty) || "NV007".equals(stCnty)
-                                || "SE001".equals(stCnty) || "SE003".equals(stCnty) || "SE007".equals(stCnty)) {
+                        if ("999".equals(county) || uihoNo.contains(stCnty)) {
                             Assert.assertEquals(UIHO_NO, output.getUIHO());
                             Assert.assertEquals(UIHO_FACILITY_NONE, output.getUIHOFacility());
                         }
@@ -110,6 +130,10 @@ public class PrcdaUihoUtilsTest {
                         else if ("CO001".equals(stCnty) || "CO005".equals(stCnty)) {
                             Assert.assertEquals("1", output.getUIHO());
                             Assert.assertEquals("12", output.getUIHOFacility());
+                        }
+                        else if ("MN017".equals(stCnty)) {
+                            Assert.assertEquals("1", output.getUIHO());
+                            Assert.assertEquals("49", output.getUIHOFacility());
                         }
                         else if ("NV001".equals(stCnty) || "NV005".equals(stCnty)) {
                             Assert.assertEquals("1", output.getUIHO());
