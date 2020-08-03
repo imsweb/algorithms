@@ -33,12 +33,12 @@ public class PrcdaUihoAlgorithm extends AbstractAlgorithm {
         _inputFields.add(Algorithms.getField(FIELD_STATE_DX));
         _inputFields.add(Algorithms.getField(FIELD_COUNTY_DX));
 
-        _outputFields.add(Algorithms.getField(FIELD_PRCDA_COUNTY));
-        _outputFields.add(Algorithms.getField(FIELD_UIHO_COUNTY));
+        _outputFields.add(Algorithms.getField(FIELD_IHS_PRCDA));
+        _outputFields.add(Algorithms.getField(FIELD_UIHO));
         _outputFields.add(Algorithms.getField(FIELD_UIHO_FACILITY));
 
-        _unknownValues.put(FIELD_PRCDA_COUNTY, Collections.singletonList(PRCDA_UNKNOWN));
-        _unknownValues.put(FIELD_UIHO_COUNTY, Collections.singletonList(UIHO_UNKNOWN));
+        _unknownValues.put(FIELD_IHS_PRCDA, Collections.singletonList(PRCDA_UNKNOWN));
+        _unknownValues.put(FIELD_UIHO, Collections.singletonList(UIHO_UNKNOWN));
         _unknownValues.put(FIELD_UIHO_FACILITY, Collections.singletonList(UIHO_FACILITY_UNKNOWN));
     }
 
@@ -56,8 +56,8 @@ public class PrcdaUihoAlgorithm extends AbstractAlgorithm {
             PrcdaUihoOutputDto outputDto = PrcdaUihoUtils.computePrcdaUiho(inputDto);
 
             Map<String, Object> outputTumor = new HashMap<>();
-            outputTumor.put(FIELD_PRCDA_COUNTY, outputDto.getPRCDA());
-            outputTumor.put(FIELD_UIHO_COUNTY, outputDto.getUIHO());
+            outputTumor.put(FIELD_IHS_PRCDA, outputDto.getPRCDA());
+            outputTumor.put(FIELD_UIHO, outputDto.getUIHO());
             outputTumor.put(FIELD_UIHO_FACILITY, outputDto.getUIHOFacility());
 
             outputTumors.add(outputTumor);
