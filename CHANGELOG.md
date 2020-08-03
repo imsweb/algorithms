@@ -1,10 +1,9 @@
 ## Algorithms Version History
-**Changes in version 2.15**
-
-- Fixed an issue with NHIA where individuals who were born in predominantly non-Hispanic countries were being set to non-Hispanic even though their Spanish/Hispanic origin was directly identified (values of 1-6, or 8).
 
 **Changes in version 2.15**
 
+- Fixed an issue with NHIA where individuals who were born in predominantly non-Hispanic countries were being wrongly set to non-Hispanic.
+- Renamed output variable names for PRCDA and UIHO algorithms to match official NAACCR XML IDs.
 - The lookup tables used by the PRCDA and UIHO algorithms were updated with the latest information.
 
 **Changes in version 2.14**
