@@ -49,6 +49,7 @@ public class CensusTractPovertyIndicatorCsvData implements CensusTractPovertyInd
             readCsvData("poverty-indicator-2011-2015.csv", YEAR_CATEGORY_8, data);
             readCsvData("poverty-indicator-2012-2016.csv", YEAR_CATEGORY_9, data);
             readCsvData("poverty-indicator-2013-2017.csv", YEAR_CATEGORY_10, data);
+            readCsvData("poverty-indicator-2014-2018.csv", YEAR_CATEGORY_11, data);
             CountryData.getInstance().initializePovertyData(data);
         }
 
