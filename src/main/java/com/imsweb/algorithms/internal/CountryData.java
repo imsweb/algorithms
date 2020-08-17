@@ -40,6 +40,7 @@ public class CountryData {
     private boolean _povertyInitialized = false;
     private boolean _countyAtDxAnalysisInitialized = false;
     private boolean _prcdaUihoInitialized = false;
+    private boolean _yostAcsPovertyInitialized = false;
 
     // internal lock to control concurrency
     private ReentrantReadWriteLock _lock = new ReentrantReadWriteLock();
@@ -349,7 +350,7 @@ public class CountryData {
     }
 
     /**
-     * Initializes the given Continuum data (this call will make all other access to the data structure block).
+     * Initializes the given PRCDA/UIHO data (this call will make all other access to the data structure block).
      */
     public void initializePrcdaUihoData(Map<String, Map<String, CountyData>> data) {
         _lock.writeLock().lock();
@@ -371,4 +372,90 @@ public class CountryData {
             _lock.writeLock().unlock();
         }
     }
+
+    /**
+     * Returns requested state data to be used by the Yost/ACS Poverty algorithm.
+     */
+    public StateData getYostAcsPovertyData(String state) {
+        _lock.readLock().lock();
+        try {
+            if (!_yostAcsPovertyInitialized)
+                throw new RuntimeException("Yost/ACS Poverty data cannot be access before it has been initialized!");
+            return _stateData.get(state);
+        }
+        finally {
+            _lock.readLock().unlock();
+        }
+    }
+
+    /**
+     * Returns true if the Yost/ACS Poverty data has been initialized, false otherwise.
+     */
+    public boolean isYostAcsPovertyDataInitialized() {
+        _lock.readLock().lock();
+        try {
+            return _yostAcsPovertyInitialized;
+        }
+        finally {
+            _lock.readLock().unlock();
+        }
+    }
+
+    /**
+     * Initializes the given Yost/ACS Poverty data (this call will make all other access to the data structure block).
+     */
+    public void initializeYostAcsPovertyData(Map<String, Map<String, Map<String, CensusData>>> data) {
+        _lock.writeLock().lock();
+        try {
+            if (!_yostAcsPovertyInitialized) {
+                for (Map.Entry<String, Map<String, Map<String, CensusData>>> stateEntry : data.entrySet()) {
+                    StateData stateData = _stateData.computeIfAbsent(stateEntry.getKey(), k -> new StateData());
+                    for (Map.Entry<String, Map<String, CensusData>> countyEntry : stateEntry.getValue().entrySet()) {
+                        CountyData countyData = stateData.getData().computeIfAbsent(countyEntry.getKey(), k -> new CountyData());
+                        for (Map.Entry<String, CensusData> censusEntry : countyEntry.getValue().entrySet()) {
+                            CensusData censusData = countyData.getData().computeIfAbsent(censusEntry.getKey(), k -> new CensusData());
+
+                            censusData.setAcsPctPov0610AIAN(censusEntry.getValue().getAcsPctPov0610AIAN());
+                            censusData.setAcsPctPov0610AllRaces(censusEntry.getValue().getAcsPctPov0610AllRaces());
+                            censusData.setAcsPctPov0610AsianNHOPI(censusEntry.getValue().getAcsPctPov0610AsianNHOPI());
+                            censusData.setAcsPctPov0610Black(censusEntry.getValue().getAcsPctPov0610Black());
+                            censusData.setAcsPctPov0610Hispanic(censusEntry.getValue().getAcsPctPov0610Hispanic());
+                            censusData.setAcsPctPov0610OtherMulti(censusEntry.getValue().getAcsPctPov0610OtherMulti());
+                            censusData.setAcsPctPov0610White(censusEntry.getValue().getAcsPctPov0610White());
+                            censusData.setAcsPctPov0610WhiteNonHisp(censusEntry.getValue().getAcsPctPov0610WhiteNonHisp());
+                            censusData.setYostQuintile0610State(censusEntry.getValue().getYostQuintile0610State());
+                            censusData.setYostQuintile0610US(censusEntry.getValue().getYostQuintile0610US());
+
+                            censusData.setAcsPctPov1014AIAN(censusEntry.getValue().getAcsPctPov1014AIAN());
+                            censusData.setAcsPctPov1014AllRaces(censusEntry.getValue().getAcsPctPov1014AllRaces());
+                            censusData.setAcsPctPov1014AsianNHOPI(censusEntry.getValue().getAcsPctPov1014AsianNHOPI());
+                            censusData.setAcsPctPov1014Black(censusEntry.getValue().getAcsPctPov1014Black());
+                            censusData.setAcsPctPov1014Hispanic(censusEntry.getValue().getAcsPctPov1014Hispanic());
+                            censusData.setAcsPctPov1014OtherMulti(censusEntry.getValue().getAcsPctPov1014OtherMulti());
+                            censusData.setAcsPctPov1014White(censusEntry.getValue().getAcsPctPov1014White());
+                            censusData.setAcsPctPov1014WhiteNonHisp(censusEntry.getValue().getAcsPctPov1014WhiteNonHisp());
+                            censusData.setYostQuintile1014State(censusEntry.getValue().getYostQuintile1014State());
+                            censusData.setYostQuintile1014US(censusEntry.getValue().getYostQuintile1014US());
+
+                            censusData.setAcsPctPov1418AIAN(censusEntry.getValue().getAcsPctPov1418AIAN());
+                            censusData.setAcsPctPov1418AllRaces(censusEntry.getValue().getAcsPctPov1418AllRaces());
+                            censusData.setAcsPctPov1418AsianNHOPI(censusEntry.getValue().getAcsPctPov1418AsianNHOPI());
+                            censusData.setAcsPctPov1418Black(censusEntry.getValue().getAcsPctPov1418Black());
+                            censusData.setAcsPctPov1418Hispanic(censusEntry.getValue().getAcsPctPov1418Hispanic());
+                            censusData.setAcsPctPov1418OtherMulti(censusEntry.getValue().getAcsPctPov1418OtherMulti());
+                            censusData.setAcsPctPov1418White(censusEntry.getValue().getAcsPctPov1418White());
+                            censusData.setAcsPctPov1418WhiteNonHisp(censusEntry.getValue().getAcsPctPov1418WhiteNonHisp());
+                            censusData.setYostQuintile1418State(censusEntry.getValue().getYostQuintile1418State());
+                            censusData.setYostQuintile1418US(censusEntry.getValue().getYostQuintile1418US());
+                        }
+                    }
+                }
+            }
+            _yostAcsPovertyInitialized = true;
+        }
+        finally {
+            _lock.writeLock().unlock();
+        }
+    }
+
 }

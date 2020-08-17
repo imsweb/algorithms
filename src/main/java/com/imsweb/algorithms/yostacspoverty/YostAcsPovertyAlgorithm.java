@@ -1,4 +1,4 @@
-package com.imsweb.algorithms.acslinkage;
+package com.imsweb.algorithms.yostacspoverty;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,29 +27,29 @@ import static com.imsweb.algorithms.Algorithms.FIELD_ACS_POV1014_HISP;
 import static com.imsweb.algorithms.Algorithms.FIELD_ACS_POV1014_OTHER_MULTI;
 import static com.imsweb.algorithms.Algorithms.FIELD_ACS_POV1014_WHITE;
 import static com.imsweb.algorithms.Algorithms.FIELD_ACS_POV1014_WHITE_NON_HISP;
-import static com.imsweb.algorithms.Algorithms.FIELD_ACS_POV1317_AIAN;
-import static com.imsweb.algorithms.Algorithms.FIELD_ACS_POV1317_ALL_RACES;
-import static com.imsweb.algorithms.Algorithms.FIELD_ACS_POV1317_ASIAN_NHOPI;
-import static com.imsweb.algorithms.Algorithms.FIELD_ACS_POV1317_BLACK;
-import static com.imsweb.algorithms.Algorithms.FIELD_ACS_POV1317_HISPANIC;
-import static com.imsweb.algorithms.Algorithms.FIELD_ACS_POV1317_OTHER_MULTI;
-import static com.imsweb.algorithms.Algorithms.FIELD_ACS_POV1317_WHITE;
-import static com.imsweb.algorithms.Algorithms.FIELD_ACS_POV1317_WHITE_NON_HISP;
+import static com.imsweb.algorithms.Algorithms.FIELD_ACS_POV1418_AIAN;
+import static com.imsweb.algorithms.Algorithms.FIELD_ACS_POV1418_ALL_RACES;
+import static com.imsweb.algorithms.Algorithms.FIELD_ACS_POV1418_ASIAN_NHOPI;
+import static com.imsweb.algorithms.Algorithms.FIELD_ACS_POV1418_BLACK;
+import static com.imsweb.algorithms.Algorithms.FIELD_ACS_POV1418_HISPANIC;
+import static com.imsweb.algorithms.Algorithms.FIELD_ACS_POV1418_OTHER_MULTI;
+import static com.imsweb.algorithms.Algorithms.FIELD_ACS_POV1418_WHITE;
+import static com.imsweb.algorithms.Algorithms.FIELD_ACS_POV1418_WHITE_NON_HISP;
 import static com.imsweb.algorithms.Algorithms.FIELD_ACS_YOST_Q0610_STATE;
 import static com.imsweb.algorithms.Algorithms.FIELD_ACS_YOST_Q0610_US;
 import static com.imsweb.algorithms.Algorithms.FIELD_ACS_YOST_Q1014_STATE;
 import static com.imsweb.algorithms.Algorithms.FIELD_ACS_YOST_Q1014_US;
-import static com.imsweb.algorithms.Algorithms.FIELD_ACS_YOST_Q1317_STATE;
-import static com.imsweb.algorithms.Algorithms.FIELD_ACS_YOST_Q1317_US;
+import static com.imsweb.algorithms.Algorithms.FIELD_ACS_YOST_Q1418_STATE;
+import static com.imsweb.algorithms.Algorithms.FIELD_ACS_YOST_Q1418_US;
 import static com.imsweb.algorithms.Algorithms.FIELD_CENSUS_2010;
 import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS;
 import static com.imsweb.algorithms.Algorithms.FIELD_DX_DATE;
 import static com.imsweb.algorithms.Algorithms.FIELD_STATE_DX;
 
-public class AcsLinkageAlgorithm extends AbstractAlgorithm {
+public class YostAcsPovertyAlgorithm extends AbstractAlgorithm {
 
-    public AcsLinkageAlgorithm() {
-        super(Algorithms.ALG_ACS_LINKAGE, AcsLinkageUtils.ALG_NAME, AcsLinkageUtils.ALG_VERSION, AcsLinkageUtils.ALG_INFO);
+    public YostAcsPovertyAlgorithm() {
+        super(Algorithms.ALG_ACS_LINKAGE, YostAcsPovertyUtils.ALG_NAME, YostAcsPovertyUtils.ALG_VERSION, YostAcsPovertyUtils.ALG_INFO);
 
         _inputFields.add(Algorithms.getField(FIELD_DX_DATE));
         _inputFields.add(Algorithms.getField(FIELD_STATE_DX));
@@ -76,16 +76,16 @@ public class AcsLinkageAlgorithm extends AbstractAlgorithm {
         _outputFields.add(Algorithms.getField(FIELD_ACS_POV1014_OTHER_MULTI));
         _outputFields.add(Algorithms.getField(FIELD_ACS_POV1014_WHITE_NON_HISP));
         _outputFields.add(Algorithms.getField(FIELD_ACS_POV1014_HISP));
-        _outputFields.add(Algorithms.getField(FIELD_ACS_YOST_Q1317_US));
-        _outputFields.add(Algorithms.getField(FIELD_ACS_YOST_Q1317_STATE));
-        _outputFields.add(Algorithms.getField(FIELD_ACS_POV1317_ALL_RACES));
-        _outputFields.add(Algorithms.getField(FIELD_ACS_POV1317_WHITE));
-        _outputFields.add(Algorithms.getField(FIELD_ACS_POV1317_BLACK));
-        _outputFields.add(Algorithms.getField(FIELD_ACS_POV1317_AIAN));
-        _outputFields.add(Algorithms.getField(FIELD_ACS_POV1317_ASIAN_NHOPI));
-        _outputFields.add(Algorithms.getField(FIELD_ACS_POV1317_OTHER_MULTI));
-        _outputFields.add(Algorithms.getField(FIELD_ACS_POV1317_WHITE_NON_HISP));
-        _outputFields.add(Algorithms.getField(FIELD_ACS_POV1317_HISPANIC));
+        _outputFields.add(Algorithms.getField(FIELD_ACS_YOST_Q1418_US));
+        _outputFields.add(Algorithms.getField(FIELD_ACS_YOST_Q1418_STATE));
+        _outputFields.add(Algorithms.getField(FIELD_ACS_POV1418_ALL_RACES));
+        _outputFields.add(Algorithms.getField(FIELD_ACS_POV1418_WHITE));
+        _outputFields.add(Algorithms.getField(FIELD_ACS_POV1418_BLACK));
+        _outputFields.add(Algorithms.getField(FIELD_ACS_POV1418_AIAN));
+        _outputFields.add(Algorithms.getField(FIELD_ACS_POV1418_ASIAN_NHOPI));
+        _outputFields.add(Algorithms.getField(FIELD_ACS_POV1418_OTHER_MULTI));
+        _outputFields.add(Algorithms.getField(FIELD_ACS_POV1418_WHITE_NON_HISP));
+        _outputFields.add(Algorithms.getField(FIELD_ACS_POV1418_HISPANIC));
     }
 
     @Override
@@ -98,16 +98,16 @@ public class AcsLinkageAlgorithm extends AbstractAlgorithm {
         List<Map<String, Object>> tumors = Utils.extractTumors(inputPatient);
 
         for (Map<String, Object> tumor : tumors) {
-            AcsLinkageInputDto inputDto = new AcsLinkageInputDto();
+            YostAcsPovertyInputDto inputDto = new YostAcsPovertyInputDto();
 
             inputDto.setAddressAtDxState((String)tumor.get(FIELD_STATE_DX));
             inputDto.setCountyAtDxAnalysis((String)tumor.get(FIELD_COUNTY_AT_DX_ANALYSIS));
             inputDto.setCensusTract2010((String)tumor.get(FIELD_CENSUS_2010));
             inputDto.setDateOfDiagnosis((String)tumor.get(FIELD_DX_DATE));
 
-            AcsLinkageOutputDto resultDto;
+            YostAcsPovertyOutputDto resultDto;
             Map<String, Object> outputTumor = new HashMap<>();
-            resultDto = AcsLinkageUtils.computeACSData(inputDto);
+            resultDto = YostAcsPovertyUtils.computeYostAcsPovertyData(inputDto);
             outputTumor.put(FIELD_ACS_YOST_Q0610_US, resultDto.getYostQuintile0610US());
             outputTumor.put(FIELD_ACS_YOST_Q0610_STATE, resultDto.getYostQuintile0610State());
             outputTumor.put(FIELD_ACS_POV0610_ALL_RACES, resultDto.getAcsPctPov0610AllRaces());
@@ -130,16 +130,16 @@ public class AcsLinkageAlgorithm extends AbstractAlgorithm {
             outputTumor.put(FIELD_ACS_POV1014_WHITE_NON_HISP, resultDto.getAcsPctPov1014WhiteNonHisp());
             outputTumor.put(FIELD_ACS_POV1014_HISP, resultDto.getAcsPctPov1014Hispanic());
 
-            outputTumor.put(FIELD_ACS_YOST_Q1317_US, resultDto.getYostQuintile1317US());
-            outputTumor.put(FIELD_ACS_YOST_Q1317_STATE, resultDto.getYostQuintile1317State());
-            outputTumor.put(FIELD_ACS_POV1317_ALL_RACES, resultDto.getAcsPctPov1317AllRaces());
-            outputTumor.put(FIELD_ACS_POV1317_WHITE, resultDto.getAcsPctPov1317White());
-            outputTumor.put(FIELD_ACS_POV1317_BLACK, resultDto.getAcsPctPov1317Black());
-            outputTumor.put(FIELD_ACS_POV1317_AIAN, resultDto.getAcsPctPov1317AIAN());
-            outputTumor.put(FIELD_ACS_POV1317_ASIAN_NHOPI, resultDto.getAcsPctPov1317AsianNHOPI());
-            outputTumor.put(FIELD_ACS_POV1317_OTHER_MULTI, resultDto.getAcsPctPov1317OtherMulti());
-            outputTumor.put(FIELD_ACS_POV1317_WHITE_NON_HISP, resultDto.getAcsPctPov1317WhiteNonHisp());
-            outputTumor.put(FIELD_ACS_POV1317_HISPANIC, resultDto.getAcsPctPov1317Hispanic());
+            outputTumor.put(FIELD_ACS_YOST_Q1418_US, resultDto.getYostQuintile1418US());
+            outputTumor.put(FIELD_ACS_YOST_Q1418_STATE, resultDto.getYostQuintile1418State());
+            outputTumor.put(FIELD_ACS_POV1418_ALL_RACES, resultDto.getAcsPctPov1418AllRaces());
+            outputTumor.put(FIELD_ACS_POV1418_WHITE, resultDto.getAcsPctPov1418White());
+            outputTumor.put(FIELD_ACS_POV1418_BLACK, resultDto.getAcsPctPov1418Black());
+            outputTumor.put(FIELD_ACS_POV1418_AIAN, resultDto.getAcsPctPov1418AIAN());
+            outputTumor.put(FIELD_ACS_POV1418_ASIAN_NHOPI, resultDto.getAcsPctPov1418AsianNHOPI());
+            outputTumor.put(FIELD_ACS_POV1418_OTHER_MULTI, resultDto.getAcsPctPov1418OtherMulti());
+            outputTumor.put(FIELD_ACS_POV1418_WHITE_NON_HISP, resultDto.getAcsPctPov1418WhiteNonHisp());
+            outputTumor.put(FIELD_ACS_POV1418_HISPANIC, resultDto.getAcsPctPov1418Hispanic());
 
             outputTumors.add(outputTumor);
         }

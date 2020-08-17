@@ -1,6 +1,6 @@
-package com.imsweb.algorithms.acslinkage;
+package com.imsweb.algorithms.yostacspoverty;
 
-public class AcsLinkageInputDto {
+public class YostAcsPovertyInputDto {
 
     private String _addressAtDxState;
 
@@ -10,7 +10,7 @@ public class AcsLinkageInputDto {
 
     private String _censusTract2010;
 
-    public AcsLinkageInputDto() {
+    public YostAcsPovertyInputDto() {
     }
 
     public String getAddressAtDxState() { return _addressAtDxState; }

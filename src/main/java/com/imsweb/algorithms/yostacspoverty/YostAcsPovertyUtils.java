@@ -1,4 +1,4 @@
-package com.imsweb.algorithms.acslinkage;
+package com.imsweb.algorithms.yostacspoverty;
 
 import java.time.LocalDate;
 
@@ -10,13 +10,13 @@ import org.apache.commons.lang3.math.NumberUtils;
  * Created on Oct 13, 2017 by howew
  * @author howew
  */
-public final class AcsLinkageUtils {
+public final class YostAcsPovertyUtils {
 
-    public static final String ALG_NAME = "NAACCR ACS Linkage Program";
-    public static final String ALG_VERSION = "3.0";
-    public static final String ALG_INFO = "NAACCR ACS Linkage Program version 3.0, released in October 2019";
+    public static final String ALG_NAME = "NAACCR Yost Quintile & Area-Based Social Measures Linkage Program";
+    public static final String ALG_VERSION = "2.0";
+    public static final String ALG_INFO = "NAACCR Yost Quintile & Area-Based Social Measures Linkage Program version 2.0, released in August 2020";
 
-    private static AcsLinkageDataProvider _PROVIDER;
+    private static YostAcsPovertyDataProvider _PROVIDER;
 
     /**
      * Calculates the ACS data for the provided ACS data input dto
@@ -26,8 +26,8 @@ public final class AcsLinkageUtils {
      * @param input a <code>ACSLinkageInputDto</code> input object
      * @return the computed ACS data
      */
-    public static AcsLinkageOutputDto computeACSData(AcsLinkageInputDto input) {
-        AcsLinkageOutputDto result = new AcsLinkageOutputDto();
+    public static YostAcsPovertyOutputDto computeYostAcsPovertyData(YostAcsPovertyInputDto input) {
+        YostAcsPovertyOutputDto result = new YostAcsPovertyOutputDto();
         if (input.isFullyInitialized()) {
             String dxYear = StringUtils.rightPad(input.getDateOfDiagnosis(), 4).substring(0, 4).trim();
             if (!StringUtils.isBlank(dxYear) && NumberUtils.isDigits(dxYear)) {
@@ -35,7 +35,7 @@ public final class AcsLinkageUtils {
                 if (yearDX >= 2005 && yearDX <= LocalDate.now().getYear()) {
                     if (_PROVIDER == null)
                         initializeInternalDataProvider();
-                    result = _PROVIDER.getAcsData(input.getAddressAtDxState(), input.getCountyAtDxAnalysis(), input.getCensusTract2010());
+                    result = _PROVIDER.getYostAcsPovertyData(input.getAddressAtDxState(), input.getCountyAtDxAnalysis(), input.getCensusTract2010());
                 }
             }
         }
@@ -50,7 +50,7 @@ public final class AcsLinkageUtils {
      * Once a provider has been set, this method cannot be called (it will throw an exception).
      * @param provider the <code>ACSLinkageDataProvider</code> to set
      */
-    public static synchronized void setDataProvider(AcsLinkageDataProvider provider) {
+    public static synchronized void setDataProvider(YostAcsPovertyDataProvider provider) {
         if (_PROVIDER != null)
             throw new RuntimeException("The data provider has already been set!");
         _PROVIDER = provider;
@@ -59,6 +59,6 @@ public final class AcsLinkageUtils {
     private static synchronized void initializeInternalDataProvider() {
         if (_PROVIDER != null)
             return;
-        _PROVIDER = new AcsLinkageCsvData();
+        _PROVIDER = new YostAcsPovertyCsvData();
     }
 }

@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 2.15**
+
+- Added an algorithm to retrieve Yost quintiles and area-based social measures for a state/county/tract.
+
 **Changes in version 2.14**
 
 - Now computing death classification for sequences 2-59.

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import com.imsweb.algorithms.acslinkage.AcsLinkageAlgorithm;
+import com.imsweb.algorithms.yostacspoverty.YostAcsPovertyAlgorithm;
 import com.imsweb.algorithms.behavrecode.SeerBehaviorRecodeAlgorithm;
 import com.imsweb.algorithms.causespecific.DeathClassificationAlgorithm;
 import com.imsweb.algorithms.censustractpovertyindicator.CensusTractPovertyIndicatorAlgorithm;
@@ -160,16 +160,16 @@ public class Algorithms {
     public static final String FIELD_ACS_POV1014_OTHER_MULTI = "acsPctPov1014OtherMulti";
     public static final String FIELD_ACS_POV1014_WHITE_NON_HISP = "acsPctPov1014WhiteNonHisp";
     public static final String FIELD_ACS_POV1014_HISP = "acsPctPov1014Hispanic";
-    public static final String FIELD_ACS_YOST_Q1317_US = "yostQuintile1317US";
-    public static final String FIELD_ACS_YOST_Q1317_STATE = "yostQuintile1317State";
-    public static final String FIELD_ACS_POV1317_ALL_RACES = "acsPctPov1317AllRaces";
-    public static final String FIELD_ACS_POV1317_WHITE = "acsPctPov1317White";
-    public static final String FIELD_ACS_POV1317_BLACK = "acsPctPov1317Black";
-    public static final String FIELD_ACS_POV1317_AIAN = "acsPctPov1317AIAN";
-    public static final String FIELD_ACS_POV1317_ASIAN_NHOPI = "acsPctPov1317AsianNHOPI";
-    public static final String FIELD_ACS_POV1317_OTHER_MULTI = "acsPctPov1317OtherMulti";
-    public static final String FIELD_ACS_POV1317_WHITE_NON_HISP = "acsPctPov1317WhiteNonHisp";
-    public static final String FIELD_ACS_POV1317_HISPANIC = "acsPctPov1317Hispanic";
+    public static final String FIELD_ACS_YOST_Q1418_US = "yostQuintile1418US";
+    public static final String FIELD_ACS_YOST_Q1418_STATE = "yostQuintile1418State";
+    public static final String FIELD_ACS_POV1418_ALL_RACES = "acsPctPov1418AllRaces";
+    public static final String FIELD_ACS_POV1418_WHITE = "acsPctPov1418White";
+    public static final String FIELD_ACS_POV1418_BLACK = "acsPctPov1418Black";
+    public static final String FIELD_ACS_POV1418_AIAN = "acsPctPov1418AIAN";
+    public static final String FIELD_ACS_POV1418_ASIAN_NHOPI = "acsPctPov1418AsianNHOPI";
+    public static final String FIELD_ACS_POV1418_OTHER_MULTI = "acsPctPov1418OtherMulti";
+    public static final String FIELD_ACS_POV1418_WHITE_NON_HISP = "acsPctPov1418WhiteNonHisp";
+    public static final String FIELD_ACS_POV1418_HISPANIC = "acsPctPov1418Hispanic";
 
     // options
     public static final String PARAM_NHIA_OPTION = "nhiaOption";
@@ -291,16 +291,16 @@ public class Algorithms {
             addField(AlgorithmField.of(FIELD_ACS_POV1014_OTHER_MULTI, null, 6, "ACS Pct Poverty (2010-2014, Other/Multiracial)", "ACS Pov 1014 Other/Multiracial", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_ACS_POV1014_WHITE_NON_HISP, null, 6, "ACS Pct Poverty (2010-2014, White, Non-Hispanic)", "ACS Pov 1014 Non-Hispanic", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_ACS_POV1014_HISP, null, 6, "ACS Pct Poverty (2010-2014, Hispanic)", "ACS Pov 1014 Hispanic", DATA_LEVEL_TUMOR));
-            addField(AlgorithmField.of(FIELD_ACS_YOST_Q1317_US, null, 1, "Yost Quintile (2013-2017, Across States)", "Yost 1317 US", DATA_LEVEL_TUMOR));
-            addField(AlgorithmField.of(FIELD_ACS_YOST_Q1317_STATE, null, 1, "Yost Quintile (2013-2017, State Specific)", "Yost 1317 State", DATA_LEVEL_TUMOR));
-            addField(AlgorithmField.of(FIELD_ACS_POV1317_ALL_RACES, null, 6, "ACS Pct Poverty (2013-2017, All Races)", "ACS Pov 1317 All", DATA_LEVEL_TUMOR));
-            addField(AlgorithmField.of(FIELD_ACS_POV1317_WHITE, null, 6, "ACS Pct Poverty (2013-2017, White)", "ACS Pov 1317 White", DATA_LEVEL_TUMOR));
-            addField(AlgorithmField.of(FIELD_ACS_POV1317_BLACK, null, 6, "ACS Pct Poverty (2013-2017, Black)", "ACS Pov 1317 Black", DATA_LEVEL_TUMOR));
-            addField(AlgorithmField.of(FIELD_ACS_POV1317_AIAN, null, 6, "ACS Pct Poverty (2013-2017, AIAN)", "ACS Pov 1317 AIAN", DATA_LEVEL_TUMOR));
-            addField(AlgorithmField.of(FIELD_ACS_POV1317_ASIAN_NHOPI, null, 6, "ACS Pct Poverty (2013-2017, Asian/NHOPI)", "ACS Pov 1317 Asian/NHOPI", DATA_LEVEL_TUMOR));
-            addField(AlgorithmField.of(FIELD_ACS_POV1317_OTHER_MULTI, null, 6, "ACS Pct Poverty (2013-2017, Other/Multiracial)", "ACS Pov 1317 Other/Multiracial", DATA_LEVEL_TUMOR));
-            addField(AlgorithmField.of(FIELD_ACS_POV1317_WHITE_NON_HISP, null, 6, "ACS Pct Poverty (2013-2017, White, Non-Hispanic)", "ACS Pov 1317 Non-Hispanic", DATA_LEVEL_TUMOR));
-            addField(AlgorithmField.of(FIELD_ACS_POV1317_HISPANIC, null, 6, "ACS Pct Poverty (2013-2017, Hispanic)", "ACS Pov 1317 Hispanic", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_ACS_YOST_Q1418_US, null, 1, "Yost Quintile (2014-2018, Across States)", "Yost 1418 US", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_ACS_YOST_Q1418_STATE, null, 1, "Yost Quintile (2014-2018, State Specific)", "Yost 1418 State", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_ACS_POV1418_ALL_RACES, null, 6, "ACS Pct Poverty (2014-2018, All Races)", "ACS Pov 1418 All", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_ACS_POV1418_WHITE, null, 6, "ACS Pct Poverty (2014-2018, White)", "ACS Pov 1418 White", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_ACS_POV1418_BLACK, null, 6, "ACS Pct Poverty (2014-2018, Black)", "ACS Pov 1418 Black", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_ACS_POV1418_AIAN, null, 6, "ACS Pct Poverty (2014-2018, AIAN)", "ACS Pov 1418 AIAN", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_ACS_POV1418_ASIAN_NHOPI, null, 6, "ACS Pct Poverty (2014-2018, Asian/NHOPI)", "ACS Pov 1418 Asian/NHOPI", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_ACS_POV1418_OTHER_MULTI, null, 6, "ACS Pct Poverty (2014-2018, Other/Multiracial)", "ACS Pov 1418 Other/Multiracial", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_ACS_POV1418_WHITE_NON_HISP, null, 6, "ACS Pct Poverty (2014-2018, White, Non-Hispanic)", "ACS Pov 1418 Non-Hispanic", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_ACS_POV1418_HISPANIC, null, 6, "ACS Pct Poverty (2014-2018, Hispanic)", "ACS Pov 1418 Hispanic", DATA_LEVEL_TUMOR));
 
             // algorithms
             addAlgorithm(new NhiaAlgorithm());
@@ -317,7 +317,7 @@ public class Algorithms {
             addAlgorithm(new IarcAlgorithm());
             addAlgorithm(new CountyAtDxAnalysisAlgorithm());
             addAlgorithm(new PrcdaUihoAlgorithm());
-            addAlgorithm(new AcsLinkageAlgorithm());
+            addAlgorithm(new YostAcsPovertyAlgorithm());
         }
         finally {
             _LOCK.writeLock().unlock();

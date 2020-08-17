@@ -1,4 +1,4 @@
-package com.imsweb.algorithms.acslinkage;
+package com.imsweb.algorithms.yostacspoverty;
 
 /**
  * The purpose of the <code>ACSLinkageDataProvider</code> is to get the data for provided year range, state
@@ -7,7 +7,7 @@ package com.imsweb.algorithms.acslinkage;
  * Created on Oct 12, 2017 by howew
  * @author howew
  */
-public interface AcsLinkageDataProvider {
+public interface YostAcsPovertyDataProvider {
 
     /**
      * Returns ACS data for provided range, state of dx, county of dx, and census tract.
@@ -18,6 +18,6 @@ public interface AcsLinkageDataProvider {
      * @param censusTract census tract (2000 or 2010)
      * @return the corresponding ACS Data
      */
-    AcsLinkageOutputDto getAcsData(String state, String county, String censusTract);
+    YostAcsPovertyOutputDto getYostAcsPovertyData(String state, String county, String censusTract);
 }
 
