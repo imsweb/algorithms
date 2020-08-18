@@ -54,10 +54,10 @@ public class PrcdaUihoCsvData implements PrcdaUihoDataProvider {
             return PRCDA_UNKNOWN;
         }
 
-        if (!CountryData.getInstance().isPrcdaUihoDataInitialized())
-            CountryData.getInstance().initializePrcdaUihoData(loadPrcdaUihoData());
+        if (!CountryData.getInstance().isPrcdaDataInitialized())
+            CountryData.getInstance().initializePrcdaData(loadPrcdaData());
 
-        StateData stateData = CountryData.getInstance().getPrcdaUihoData(state);
+        StateData stateData = CountryData.getInstance().getPrcdaData(state);
         if (stateData == null)
             return PRCDA_NO;
         CountyData countyData = stateData.getCountyData(county);
@@ -73,10 +73,10 @@ public class PrcdaUihoCsvData implements PrcdaUihoDataProvider {
         if (!isStateAtDxValid(state) || !isCountyAtDxValid(county))
             return UIHO_UNKNOWN;
 
-        if (!CountryData.getInstance().isPrcdaUihoDataInitialized())
-            CountryData.getInstance().initializePrcdaUihoData(loadPrcdaUihoData());
+        if (!CountryData.getInstance().isUihoDataInitialized())
+            CountryData.getInstance().initializeUihoData(loadUihoData());
 
-        StateData stateData = CountryData.getInstance().getPrcdaUihoData(state);
+        StateData stateData = CountryData.getInstance().getUihoData(state);
         if (stateData == null)
             return UIHO_NO;
         CountyData countyData = stateData.getCountyData(county);
@@ -92,10 +92,10 @@ public class PrcdaUihoCsvData implements PrcdaUihoDataProvider {
         if (!isStateAtDxValid(state) || !isCountyAtDxValid(county))
             return UIHO_FACILITY_UNKNOWN;
 
-        if (!CountryData.getInstance().isPrcdaUihoDataInitialized())
-            CountryData.getInstance().initializePrcdaUihoData(loadPrcdaUihoData());
+        if (!CountryData.getInstance().isUihoDataInitialized())
+            CountryData.getInstance().initializeUihoData(loadUihoData());
 
-        StateData stateData = CountryData.getInstance().getPrcdaUihoData(state);
+        StateData stateData = CountryData.getInstance().getUihoData(state);
         if (stateData == null)
             return UIHO_FACILITY_NONE;
         CountyData countyData = stateData.getCountyData(county);
@@ -106,14 +106,28 @@ public class PrcdaUihoCsvData implements PrcdaUihoDataProvider {
     }
 
     @SuppressWarnings("ConstantConditions")
-    private Map<String, Map<String, CountyData>> loadPrcdaUihoData() {
+    private Map<String, Map<String, CountyData>> loadPrcdaData() {
         Map<String, Map<String, CountyData>> result = new HashMap<>();
-        try (Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("prcdauiho/prcda-uiho-2017.csv"), StandardCharsets.US_ASCII)) {
+        try (Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("prcdauiho/prcda-2018.csv"), StandardCharsets.US_ASCII)) {
             for (String[] row : new CSVReaderBuilder(reader).withSkipLines(1).build().readAll()) {
-                String state = row[0], county = row[1], prcda = row[2], uiho = row[3], uihoFacility = row[4];
-
+                String state = row[0], county = row[1], prcda = row[2];
                 CountyData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new CountyData());
                 dto.setPRCDA(StringUtils.leftPad(prcda, 1, '0'));
+            }
+        }
+        catch (CsvException | IOException e) {
+            throw new RuntimeException(e);
+        }
+        return result;
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    private Map<String, Map<String, CountyData>> loadUihoData() {
+        Map<String, Map<String, CountyData>> result = new HashMap<>();
+        try (Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("prcdauiho/uiho-2020.csv"), StandardCharsets.US_ASCII)) {
+            for (String[] row : new CSVReaderBuilder(reader).withSkipLines(1).build().readAll()) {
+                String state = row[0], county = row[1], uiho = row[2], uihoFacility = row[3];
+                CountyData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new CountyData());
                 dto.setUIHO(StringUtils.leftPad(uiho, 1, '0'));
                 dto.setUIHOFacility(StringUtils.leftPad(uihoFacility, 2, '0'));
             }

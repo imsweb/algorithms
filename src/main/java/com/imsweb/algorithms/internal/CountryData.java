@@ -321,6 +321,7 @@ public class CountryData {
         }
     }
 
+
     /**
      * Returns requested state data to be used by the PRCDA/UIHO algorithm.
      */
@@ -371,7 +372,6 @@ public class CountryData {
         finally {
             _lock.writeLock().unlock();
         }
-    }
 
     /**
      * Returns requested state data to be used by the Yost/ACS Poverty algorithm.

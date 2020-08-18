@@ -16,8 +16,8 @@ import org.apache.commons.lang3.math.NumberUtils;
 public final class CensusTractPovertyIndicatorUtils {
 
     public static final String ALG_NAME = "NAACCR Poverty Linkage Program";
-    public static final String ALG_VERSION = "9.0";
-    public static final String ALG_INFO = "NAACCR Poverty Linkage Program version 9.0, released in August 2019";
+    public static final String ALG_VERSION = "10.0";
+    public static final String ALG_INFO = "NAACCR Poverty Linkage Program version 10.0, released in August 2020";
 
     //Naaccr Items Used for calculation
     public static final String PROP_STATE_DX = "addressAtDxState";
@@ -207,8 +207,12 @@ public final class CensusTractPovertyIndicatorUtils {
             yearCategory = CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_9;
             censusTract = input.getCensusTract2010();
         }
-        else if (year >= 2015 && (year <= 2017 || (includeRecentYears && year <= LocalDate.now().getYear()))) {
+        else if (year == 2015) {
             yearCategory = CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_10;
+            censusTract = input.getCensusTract2010();
+        }
+        else if (year >= 2016 && (year <= 2018 || (includeRecentYears && year <= LocalDate.now().getYear()))) {
+            yearCategory = CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_11;
             censusTract = input.getCensusTract2010();
         }
         else
