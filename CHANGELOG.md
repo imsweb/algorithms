@@ -2,6 +2,7 @@
 
 **Changes in version 2.15**
 
+- Added an algorithm to retrieve Yost quintiles and area-based social measures for a state/county/tract.
 - Fixed an issue with NHIA where individuals who were born in predominantly non-Hispanic countries were being wrongly set to non-Hispanic.
 - Renamed output variable names for PRCDA and UIHO algorithms to match official NAACCR XML IDs.
 - The lookup tables used by the PRCDA and UIHO algorithms were updated with the latest information.
