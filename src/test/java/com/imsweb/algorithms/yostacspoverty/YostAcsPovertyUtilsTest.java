@@ -3,16 +3,9 @@
  */
 package com.imsweb.algorithms.yostacspoverty;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.imsweb.algorithms.ruralurban.RuralUrbanInputDto;
-import com.imsweb.algorithms.ruralurban.RuralUrbanOutputDto;
 import com.imsweb.algorithms.ruralurban.RuralUrbanUtils;
 
 public class YostAcsPovertyUtilsTest {

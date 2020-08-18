@@ -17,8 +17,6 @@ import com.imsweb.algorithms.internal.CountryData;
 import com.imsweb.algorithms.internal.CountyData;
 import com.imsweb.algorithms.internal.StateData;
 
-import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.URBAN_RURAL_INDICATOR_CODE_UNKNOWN;
-
 /**
  * The purpose of this class is to get the ACS Data for the provided state of dx, county of dx, and census tract
  * from the csv file lookup.  This implementation is a memory consumer. If there is a database, it is better to use another implementation.
