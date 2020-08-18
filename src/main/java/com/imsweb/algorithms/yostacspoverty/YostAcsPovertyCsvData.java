@@ -6,7 +6,6 @@ import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.zip.GZIPInputStream;
 
 import com.opencsv.CSVReaderBuilder;
@@ -24,9 +23,6 @@ import com.imsweb.algorithms.internal.StateData;
  * @author howew
  */
 public class YostAcsPovertyCsvData implements YostAcsPovertyDataProvider {
-
-    // keys are combination of state/county/census; values are maps where keys are the year range categories and the values are the resulting indicator
-    private static Map<String, Map<String, Map<String, YostAcsPovertyOutputDto>>> _YOST_ACS_POVERTY_DATA_LOOKUP = new ConcurrentHashMap<>();
 
     @Override
     public YostAcsPovertyOutputDto getYostAcsPovertyData(String state, String county, String censusTract) {
