@@ -13,38 +13,6 @@ public class YostAcsPovertyOutputDto {
             _acsPctPov1418AIAN, _acsPctPov1418AsianNHOPI, _acsPctPov1418OtherMulti, _acsPctPov1418WhiteNonHisp, _acsPctPov1418Hispanic;
 
     public YostAcsPovertyOutputDto() {
-        _yostQuintile0610US = "";
-        _yostQuintile0610State = "";
-        _acsPctPov0610AllRaces = "";
-        _acsPctPov0610White = "";
-        _acsPctPov0610Black = "";
-        _acsPctPov0610AIAN = "";
-        _acsPctPov0610AsianNHOPI = "";
-        _acsPctPov0610OtherMulti = "";
-        _acsPctPov0610WhiteNonHisp = "";
-        _acsPctPov0610Hispanic = "";
-
-        _yostQuintile1014US = "";
-        _yostQuintile1014State = "";
-        _acsPctPov1014AllRaces = "";
-        _acsPctPov1014White = "";
-        _acsPctPov1014Black = "";
-        _acsPctPov1014AIAN = "";
-        _acsPctPov1014AsianNHOPI = "";
-        _acsPctPov1014OtherMulti = "";
-        _acsPctPov1014WhiteNonHisp = "";
-        _acsPctPov1014Hispanic = "";
-
-        _yostQuintile1418US = "";
-        _yostQuintile1418State = "";
-        _acsPctPov1418AllRaces = "";
-        _acsPctPov1418White = "";
-        _acsPctPov1418Black = "";
-        _acsPctPov1418AIAN = "";
-        _acsPctPov1418AsianNHOPI = "";
-        _acsPctPov1418OtherMulti = "";
-        _acsPctPov1418WhiteNonHisp = "";
-        _acsPctPov1418Hispanic = "";
     }
 
     public String getYostQuintile0610US() {
