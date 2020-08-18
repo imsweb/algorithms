@@ -13,7 +13,9 @@ public class YostAcsPovertyInputDto {
     public YostAcsPovertyInputDto() {
     }
 
-    public String getAddressAtDxState() { return _addressAtDxState; }
+    public String getAddressAtDxState() {
+        return _addressAtDxState;
+    }
 
     public String getCensusTract2010() {
         return _censusTract2010;
@@ -23,7 +25,9 @@ public class YostAcsPovertyInputDto {
         return _countyAtDxAnalysis;
     }
 
-    public String getDateOfDiagnosis() { return _dateOfDiagnosis; }
+    public String getDateOfDiagnosis() {
+        return _dateOfDiagnosis;
+    }
 
     public void setAddressAtDxState(String addressAtDxState) {
         _addressAtDxState = addressAtDxState;
@@ -33,11 +37,13 @@ public class YostAcsPovertyInputDto {
         _censusTract2010 = censusTract2010;
     }
 
-    public void setCountyAtDxAnalysis(String countyAtDxAnalysis) {
+    public void setCountyAtDxAnalysis(String countyAtDxAnalysis){
         _countyAtDxAnalysis = countyAtDxAnalysis;
     }
 
-    public void setDateOfDiagnosis(String dateOfDiagnosis) { _dateOfDiagnosis = dateOfDiagnosis; }
+    public void setDateOfDiagnosis(String dateOfDiagnosis) {
+        _dateOfDiagnosis = dateOfDiagnosis;
+    }
 
     public boolean isFullyInitialized() {
         return _addressAtDxState != null && _countyAtDxAnalysis != null && _censusTract2010 != null && _dateOfDiagnosis != null;
