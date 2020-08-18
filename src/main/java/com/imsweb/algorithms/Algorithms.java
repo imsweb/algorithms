@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import com.imsweb.algorithms.yostacspoverty.YostAcsPovertyAlgorithm;
 import com.imsweb.algorithms.behavrecode.SeerBehaviorRecodeAlgorithm;
 import com.imsweb.algorithms.causespecific.DeathClassificationAlgorithm;
 import com.imsweb.algorithms.censustractpovertyindicator.CensusTractPovertyIndicatorAlgorithm;
@@ -26,6 +25,7 @@ import com.imsweb.algorithms.ruralurban.UrbanContinuumAlgorithm;
 import com.imsweb.algorithms.ruralurban.UricAlgorithm;
 import com.imsweb.algorithms.seersiterecode.SeerSiteRecodeAlgorithm;
 import com.imsweb.algorithms.survival.SurvivalTimeAlgorithm;
+import com.imsweb.algorithms.yostacspoverty.YostAcsPovertyAlgorithm;
 
 import static com.imsweb.algorithms.AlgorithmField.DATA_LEVEL_PATIENT;
 import static com.imsweb.algorithms.AlgorithmField.DATA_LEVEL_TUMOR;
@@ -137,9 +137,9 @@ public class Algorithms {
     public static final String FIELD_IARC_MP_HIST_GROUP = "iarcMpHistGroup";
     public static final String FIELD_IARC_MP_HISTOLOGY = "iarcMpHistologicTypeIcdO3";
     public static final String FIELD_COUNTY_AT_DX_ANALYSIS_FLAG = "countyAtDxAnalysisFlag";
-    public static final String FIELD_PRCDA_COUNTY_2017 = "prcdaCounty2017";
-    public static final String FIELD_UIHO_COUNTY_2017 = "uihoCounty2017";
-    public static final String FIELD_UIHO_FACILITY_2017 = "uihoFacility2017";
+    public static final String FIELD_IHS_PRCDA = "ihsPurchRefCareDeliveryArea";
+    public static final String FIELD_UIHO = "urbanIndianHealthOrganization";
+    public static final String FIELD_UIHO_FACILITY = "uihoFacility";
     public static final String FIELD_ACS_YOST_Q0610_US = "yostQuintile0610US";
     public static final String FIELD_ACS_YOST_Q0610_STATE = "yostQuintile0610State";
     public static final String FIELD_ACS_POV0610_ALL_RACES = "acsPctPov0610AllRaces";
@@ -268,9 +268,9 @@ public class Algorithms {
             addField(AlgorithmField.of(FIELD_IARC_MP_HIST_GROUP, null, 2, "IARC Multiple Primary Histology Group", "IARC MP Hist Grp", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_IARC_MP_HISTOLOGY, null, 4, "IARC Multiple Primary Histology", "IARC MP Hist", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_COUNTY_AT_DX_ANALYSIS_FLAG, null, 4, "County at DX Analysis Flag", "DX Anlys Cty Fg", DATA_LEVEL_TUMOR));
-            addField(AlgorithmField.of(FIELD_PRCDA_COUNTY_2017, null, 1, "PRCDA County 2017", "PRCDA Cty 17", DATA_LEVEL_TUMOR));
-            addField(AlgorithmField.of(FIELD_UIHO_COUNTY_2017, null, 1, "UIHO County 2017", "UIHO Cty 17", DATA_LEVEL_TUMOR));
-            addField(AlgorithmField.of(FIELD_UIHO_FACILITY_2017, null, 2, "UIHO Facility 2017", "UIHO Fac 17", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_IHS_PRCDA, null, 1, "IHS Purchased/Referred Care Delivery Area (PRCDA)", "IHS PRCDA", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_UIHO, null, 1, "Urban Indian Health Organization (UIHO)", "UIHO", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_UIHO_FACILITY, null, 2, "Urban Indian Health Organization (UIHO) Facility", "UIHO Facility", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_ACS_YOST_Q0610_US, null, 1, "Yost Quintile (2006-2010, Across States)", "Yost 0610 US", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_ACS_YOST_Q0610_STATE, null, 1, "Yost Quintile (2006-2010, State Specific)", "Yost 0610 State", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_ACS_POV0610_ALL_RACES, null, 6, "ACS Pct Poverty (2006-2010, All Races)", "ACS Pov 0610 All", DATA_LEVEL_TUMOR));
