@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 Information Management Services, Inc.
+ * Copyright (C) 2020 Information Management Services, Inc.
  */
 package com.imsweb.algorithms.yostacspoverty;
 
@@ -9,11 +9,6 @@ import org.junit.Test;
 import com.imsweb.algorithms.ruralurban.RuralUrbanUtils;
 
 public class YostAcsPovertyUtilsTest {
-
-    // this properties have been deprecated in the main class but so many tests use them that it was easier to copy them here
-    private static final String _PROP_STATE_DX = "addressAtDxState";
-    private static final String _PROP_COUNTY_DX_ANALYSIS = "countyAtDxAnalysis";
-    private static final String _PROP_CENSUS_TRACT_2010 = "censusTract2010";
 
     @Test
     public void assertInfo() {
