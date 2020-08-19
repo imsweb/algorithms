@@ -2,7 +2,7 @@
 
 **Changes in version 2.16**
 
-- Added new algorithm for Adolescents and Young Adults (AYA) Site Recode.
+- Added new algorithm for SEER Adolescents and Young Adults (AYA) Site Recode.
 
 **Changes in version 2.15**
 
