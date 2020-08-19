@@ -19,9 +19,9 @@ import com.opencsv.exceptions.CsvException;
 
 public class AyaSiteRecodeUtils {
 
-    public static final String ALG_NAME = "AYA Site Recode/WHO 2008 Definition";
+    public static final String ALG_NAME = "SEER AYA Site Recode/WHO 2008 Definition";
     public static final String ALG_VERSION = "WHO2008";
-    public static final String ALG_INFO = "Adolescents and Young Adults (AYA) Site Recode with WHO 2008 Definition.";
+    public static final String ALG_INFO = "SEER Adolescents and Young Adults (AYA) Site Recode with WHO 2008 Definition.";
 
     public static final String AYA_SITE_RECODE_UNKNOWN = "99";
 
