@@ -1,0 +1,104 @@
+SEER AYA Site Recode/WHO 2008 Definition
+Site Group;ICD-O-3 Behavior Recode;Primary Site;ICD-O-3 Histology;Recode
+1 Leukemias; ; ; ;
+   1.1 Acute lymphoid leukemia;3;C000-C809;9826,9835-9836;01
+;3;C420-C421,C424;9811-9818,9837;01
+   1.2 Acute myeloid leukemia;3;C000-C809;9840,9861,9865-9867,9869,9871-9874,9891,9895-9898,9910-9911,9920;02
+   1.3 Chronic myeloid leukemia;3;C000-C809;9863,9875-9876,9945-9946;03
+   1.4 Other and unspecified leukemia;3;C000-C809;9742,9800-9801,9805-9809,9820,9831-9834,9860,9870,9930-9931,9940,9948,9963-9964;04
+;3;C420-C421,C424;9823,9827;04
+2 Lymphomas; ; ; ;
+   2.1 Non-Hodgkin lymphoma;3;C000-C809;9590-9591,9596-9597,9670-9671,9673,9675,9678-9680,9684,9687-9691,9695,9698-9702,9705,9708-9709,9712,9714,9716-9719,9725-9729,9735,9737-9738;05
+;3;C000-C419,C422-C423,C425-C809;9811-9818,9823,9827,9837;05
+   2.2 Hodgkin lymphoma;3;C000-C809;9650-9655,9659,9661-9665,9667;06
+3 CNS and Other Intracranial and Intraspinal Neoplasms (all behaviors); ; ; ;
+   3.1. Astrocytoma; ; ; ;
+      3.1.1 Specified low-grade astrocytic tumors;0,1,3;C723;9380;07
+;0,1,3;C000-C809;9410-9411,9420-9421,9424;07
+      3.1.2 Glioblastoma and anaplastic astrocytoma;0,1,3;C000-C809;9401,9440-9442;08
+      3.1.3 Astrocytoma, NOS;0,1,3;C000-C809;9400;09
+   3.2 Other glioma;0,1,3;C000-C722,C724-C809;9380;10
+;0,1,3;C000-C809;9381-9384,9423,9430,9450-9451,9460;10
+   3.3 Ependymoma;0,1,3;C000-C809;9391-9394;11
+   3.4. Medulloblastoma and other PNET; ; ; ;
+      3.4.1 Medulloblastoma;0,1,3;C716;9470-9474;12
+      3.4.2 Supratentorial PNET;0,1,3;C000-C715,C717-C809;9470-9474;13
+"   3.5 Other specified intracranial and intraspinal
+          neoplasms";0,1,3;C000-C699,C730-C750,C754-C809;9350-9351,9360-9362,9390,9480,9530-9535,9537-9539,9541,9550,9562,9570;14
+;0,1,3;C700-C729,C751-C753;9161,9361-9362,9390,9530-9531,9535,9538,9540,9560,9571;14
+;0,1,3;C700;9532,9534,9537,9539;14
+;0,1,3;C753;9360;14
+;0,1,3;C711;9480,9539;14
+;0,1,3;C713;9480,9533;14
+;0,1,3;C719;9350;14
+;0,1,3;C714,C717;9480;14
+;0,1,3;C709;9539;14
+   3.6 Unspecified intracranial and intraspinal neoplasms; ; ; ;
+      3.6.1 Unspecified malignant intracranial and intraspinal neoplasms;3;C700-C729,C751-C753;8000-8005;15
+      3.6.2 Unspec. ben/border intracran. and intraspin. Neo.;0,1;C700-C729,C751-C753;8000-8005;16
+4 Osseous & Chondromatous Neoplasms; ; ; ;
+   4.1 Osteosarcoma;3;C000-C809;9180-9187,9192-9194;17
+   4.2 Chondrosarcoma;3;C000-C809;9220-9221,9230-9231,9240,9242-9243;18
+   4.3 Ewing tumor;3;C000-C809;9260,9364-9365;19
+   4.4 Other specified and unspecified bone tumors;3;C000-C809;8812,9250,9261,9370-9372;20
+;3;C400-C419;8000-8005,8800-8803,8805-8806,9200;20
+5 Soft Tissue Sarcomas; ; ; ;
+   5.1 Fibromatous neoplasms;3;C000-C809;8810-8811,8813-8815,8820-8824,8830,8832-8833,8835-8836,9252;21
+   5.2 Rhabdomyosarcoma;3;C000-C809;8900-8904,8910,8912,8920-8921,8991;22
+   5.3 Other soft tissue sarcoma; ; ; ;
+      5.3.1 Specified soft tissue sarcoma; ; ; ;
+         5.3.1.1 Specified (excluding Kaposi sarcoma);3;C000-C809;8804,8825,8840-8897,8982-8983,8990,9040-9044,9120-9139,9141-9150,9170,9251,9561,9580-9581;23
+;3;C000-C699,C730-C750,C754-C809;9540,9560,9571;23
+         5.3.1.2 Kaposi sarcoma;3;C000-C809;9140;24
+      5.3.2 Unspecified soft tissue sarcoma;3;C000-C399,C420-C809;8800-8803,8805-8806;25
+6 Germ Cell and Trophoblastic Neoplasms; ; ; ;
+   6.1 Germ cell and trophoblastic neoplasms of gonads;3;C569,C620-C629;9060-9065,9070-9073,9080-9085,9090-9091,9100-9102,9105;26
+   6.2 Germ cell and trophoblastic neoplasms of nongonadal sites; ; ; ;
+      6.2.1 Intracranial (all behaviors);0,1,3;C700-C729,C751-C753;9060-9065,9070-9073,9080-9085,9090-9091,9100-9102,9105;27
+      6.2.2 Other nongonadal;3;C000-C568,C570-C619,C630-C699,C730-C750,C754-C809;9060-9065,9070-9073,9080-9085,9090-9091,9100-9102,9104-9105;28
+7 Melanoma and Skin Carcinomas; ; ; ;
+   7.1 Melanoma;3;C000-C809;8720-8723,8726,8728,8730,8740-8746,8761,8770-8774,8780;29
+   7.2 Skin carcinomas;3;C440-C449;8010-8589;30
+8 Carcinomas; ; ; ;
+   8.1 Thyroid carcinoma;3;C739;8010-8589;31
+   8.2 Other carcinoma of head and neck; ; ; ;
+      8.2.1 Nasopharyngeal carcinoma;3;C110-C119;8010-8589;32
+      8.2.2 Other sites in lip, oral cavity and pharynx;3;C000-C109,C120-C148;8010-8589;33
+      8.2.3 Nasal cav,mid ear,sinuses,larynx,oth ill-def head/neck;3;C300-C329,C760;8010-8589;34
+   8.3 Carcinoma of trachea,bronchus, and lung;3;C330-C349;8010-8589;35
+   8.4 Carcinoma of breast;3;C500-C509;8010-8589;36
+   8.5 Carcinoma of genitourinary tract; ; ; ;
+      8.5.1 Carcinoma of kidney;3;C649;8010-8589;37
+      8.5.2 Carcinoma of bladder;3;C670-C679;8010-8589;38
+      8.5.3 Carcinoma of gonads;3;C569,C620-C629;8010-8589;39
+;3;C000-C809;8590-8593;39
+      8.5.4 Carcinoma of cervix and uterus;3;C530-C559;8010-8589;40
+"      8.5.5 Carc of other and ill-def sites,
+                    geniourinary tract";3;C510-C529,C570-C579,C600-C619,C630-C639,C659,C669,C680-C689;8010-8589;41
+   8.6 Carcinoma of gastrointestinal tract; ; ; ;
+      8.6.1 Carcinoma of colon and rectum;3;C180-C218;8010-8589;42
+      8.6.2 Carcinoma of stomach;3;C160-C169;8010-8589;43
+      8.6.3 Carcinoma of liver and intrahepatic bile ducts;3;C220-C221;8010-8589;44
+      8.6.4 Carcinoma of pancreas;3;C250-C259;8010-8589;45
+"      8.6.5 Carc other and ill-def sites,
+                 gastrointestinal tract";3;C150-C159,C170-C179,C230-C249,C260-C269;8010-8589;46
+   8.7 Carcinoma of other and ill-def sites; ; ; ;
+      8.7.1 Adrenocortical carcinoma;3;C740-C749;8010-8589;47
+      8.7.2 Carcinoma of other and ill-defined sites, NOS;3;C149,C219,C222-C229,C270-C299,C350-C439,C450-C499,C561-C568,C580-C599,C640-C648,C650-C658,C660-C668,C690-C738,C750-C759,C761-C809;8010-8589;48
+;3;C809;9010;48
+9 Miscellaneous specified neoplasms, NOS; ; ; ;
+   9.1 Other pediatric and embryonal tumors, NOS; ; ; ;
+      9.1.1 Wilms tumor;3;C000-C809;8959-8960;49
+      9.1.2 Neuroblastoma;3;C000-C809;9490,9500;50
+      9.1.3 Other pediatric and embryonal tumors, NOS;3;C000-C809;8963-8964,8970-8973,8981,9363,9501-9523;51
+   9.2 Other specified and embryonal tumors, NOS; ; ; ;
+      9.2.1 Paraganglioma and glomus tumors;3;C000-C809;8680-8711;52
+      9.2.2 Other specified gonadal tumors;3;C000-C809;8600-8650,9000;53
+;3;C569;8670,9013-9015,9054;53
+"      9.2.3 Myeloma, mast cell, misc. lymphoreticular
+                 neo., NOS";3;C000-C809;9724,9731-9734,9740-9741,9743-9764,9766,9769,9960,9965-9967,9970-9971;54
+      9.2.4 Other specified neoplasms, NOS;3;C000-C809;8930-8951,8980,9020,9050-9053,9110,9160,9270-9330,9950,9961-9962,9975,9980,9982,9989,9991-9992;55
+;3;C000-C699,C730-C750,C754-C809;9161;55
+10 Unspecified Malignant Neoplasms;3;C000-C399,C420-C699,C730-C750,C754-C809;8000-8005;56
+Unclassified; ; ; ;99
+;;;;

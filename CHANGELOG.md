@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 2.16**
+
+- Added new algorithm for Adolescents and Young Adults (AYA) Site Recode.
+
 **Changes in version 2.15**
 
 - Added an algorithm to retrieve Yost quintiles and area-based social measures for a state/county/tract.
