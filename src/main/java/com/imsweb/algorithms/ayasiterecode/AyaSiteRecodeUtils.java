@@ -23,7 +23,7 @@ public class AyaSiteRecodeUtils {
     public static final String ALG_VERSION = "WHO2008";
     public static final String ALG_INFO = "Adolescents and Young Adults (AYA) Site Recode with WHO 2008 Definition.";
 
-    public static String AYA_SITE_RECODE_UNKNOWN = "99";
+    public static final String AYA_SITE_RECODE_UNKNOWN = "99";
 
     private static List<AyaSiteRecodeData> _DATA;
 
