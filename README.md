@@ -44,20 +44,12 @@ This library does not support several versions of a given algorithm; it only con
 
 ## Usage
 
-### Input
+There two ways to use this library: 
 
-Most algorithms allow two types of input:
+1. Every algorithm has a utility class that exposes one or several computation methods; those methods can be called directly.
+2. Every algorithm also has an implementation of the Algorithm class which exposes a unified execute method.
 
-1. A specific input Java object containing all the variables used in the algorithm.
-
-2. A map of NAACCR items where the keys are the item names defined in the [layout framework](https://github.com/imsweb/layout).
-
-The second method makes it very simple to process NAACCR data file; the layout framework can be used to read the record from the file and
-those can then be provided as-is to the algorithms.
-
-### Output
-
-Most algorithms define a specific output Java object.
+The Algorithms class acts as a repository of all the algorithms and their input/output fields.
 
 ## About SEER
 
