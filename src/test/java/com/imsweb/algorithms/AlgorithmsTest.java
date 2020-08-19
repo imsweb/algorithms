@@ -291,12 +291,6 @@ public class AlgorithmsTest {
         Assert.assertEquals("0", tumor.get(FIELD_IHS_PRCDA));
         Assert.assertEquals("1", tumor.get(FIELD_UIHO));
         Assert.assertEquals("07", tumor.get(FIELD_UIHO_FACILITY));
-
-
-        for (Algorithm algorithm : Algorithms.getAlgorithms()) {
-            algorithm.execute()
-        }
-
     }
 
     @Test
