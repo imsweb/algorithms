@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.imsweb.algorithms.countyatdiagnosisanalysis.CountyAtDxAnalysisUtils;
@@ -26,15 +27,22 @@ import static com.imsweb.algorithms.Algorithms.FIELD_UIHO_FACILITY;
 
 public class AlgorithmsTest {
 
+    @BeforeClass
+    public static void setup() {
+        Algorithms.initialize();
+    }
+
     @Test
     public void testFields() {
         NaaccrDictionary dictionary = NaaccrXmlDictionaryUtils.getMergedDictionaries(NaaccrFormat.NAACCR_VERSION_180);
         for (AlgorithmField field : Algorithms.getAllFields()) {
             Assert.assertNotNull(field.getId());
+            Assert.assertTrue(field.getId() + " is too long!", field.getId().length() <= 32);
             Assert.assertNotNull(field.getId(), field.getName());
-            Assert.assertNotNull(field.getId(), field.getShortName());
-            Assert.assertNotNull(field.getId(), field.getLength());
-            Assert.assertNotNull(field.getId(), field.getDataLevel());
+            Assert.assertTrue(field.getId() + " has its name too long!", field.getName().length() <= 50);
+            Assert.assertNotNull(field.getId() + " requires a short name!", field.getShortName());
+            Assert.assertNotNull(field.getId() + " requires a length!", field.getLength());
+            Assert.assertNotNull(field.getId() + " requires a data level!", field.getDataLevel());
 
             if (field.getNumber() != null) {
                 Assert.assertEquals(dictionary.getItemByNaaccrNum(field.getNumber()).getNaaccrId(), field.getId());
@@ -46,11 +54,8 @@ public class AlgorithmsTest {
 
     @Test
     public void testDefaultAlgorithms() {
-        Assert.assertTrue(Algorithms.getAlgorithms().isEmpty());
-        Algorithms.initialize();
-        Assert.assertFalse(Algorithms.getAlgorithms().isEmpty());
-
         Assert.assertTrue(Algorithms.isInitialized());
+        Assert.assertFalse(Algorithms.getAlgorithms().isEmpty());
 
         // NHIA
         Algorithm alg = Algorithms.getAlgorithm(Algorithms.ALG_NHIA);

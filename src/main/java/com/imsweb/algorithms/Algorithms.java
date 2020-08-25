@@ -265,7 +265,7 @@ public class Algorithms {
             addField(AlgorithmField.of(FIELD_SEER_SITE_RECODE, null, 5, "SEER Site Recode ICD-O-3", "Site Recode", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_SEER_BEHAV_RECODE, null, 1, "SEER Site Behavior Recode ICD-O-3", "SEER Behav", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_AYA_SITE_RECODE, null, 2, "AYA Site Recode", "AYA", DATA_LEVEL_TUMOR));
-            addField(AlgorithmField.of(FIELD_ICCC, null, 3, "International Classification of Childhood Cancer (ICCC)", "ICCC", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_ICCC, null, 3, "Int Classification of Childhood Cancer (ICCC)", "ICCC", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_ICCC_MAJOR_CATEGORY, null, 2, "ICCC Major Category", "ICCC Cat", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_IARC_MP_INDICATOR, null, 1, "IARC Multiple Primary Indicator", "IARC MP", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_IARC_MP_SITE_GROUP, null, 4, "IARC Multiple Primary Site Group", "IARC MP Site Gr", DATA_LEVEL_TUMOR));
