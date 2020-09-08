@@ -2,6 +2,8 @@
 
 **Changes in version 2.16**
 
+- Fixed ICCC field name being more than 50 characters, making it invalid for NAACCR XML dictionaries.
+- Added new algorithm for SEER Adolescents and Young Adults (AYA) Site Recode.
 - The UIHO lookup table was revised.
 
 **Changes in version 2.15**
