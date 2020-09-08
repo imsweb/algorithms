@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 2.16**
+
+- The UIHO lookup table was revised.
+
 **Changes in version 2.15**
 
 - The lookup tables used by the PRCDA and UIHO algorithms were updated with the latest information.
