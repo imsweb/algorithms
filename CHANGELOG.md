@@ -1,8 +1,12 @@
 ## Algorithms Version History
 
-**Changes in version 2.17**
+**Changes in version 2.18**
 
 - The UIHO lookup table was revised.
+
+**Changes in version 2.18**
+
+- This version was never released.
 
 **Changes in version 2.16**
 
