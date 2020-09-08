@@ -7,20 +7,23 @@ This library contains the Java implementations of algorithms used in cancer-rela
 ## Features
 
 The following algorithms are available:
- 
- * Death Classification ([CauseSpecificUtils](https://github.com/imsweb/algorithms/tree/master/src/main/java/com/imsweb/algorithms/causespecific/CauseSpecificUtils.java))
- * Census Tract Poverty Indicator ([CensusTractPovertyIndicatorUtils](https://github.com/imsweb/algorithms/tree/master/src/main/java/com/imsweb/algorithms/censustractpovertyindicator/CensusTractPovertyIndicatorUtils.java))
- * Historic Stage ([HistoricStageUtils](https://github.com/imsweb/algorithms/tree/master/src/main/java/com/imsweb/algorithms/historicstage/HistoricStageUtils.java))
- * ICCC Site Recode ([IcccRecodeUtils](https://github.com/imsweb/algorithms/tree/master/src/main/java/com/imsweb/algorithms/iccc/IcccRecodeUtils.java))
- * NAPIIA ([NapiiaUtils](https://github.com/imsweb/algorithms/tree/master/src/main/java/com/imsweb/algorithms/napiia/NapiiaUtils.java))
- * NHIA ([NhiaUtils](https://github.com/imsweb/algorithms/tree/master/src/main/java/com/imsweb/algorithms/nhia/NhiaUtils.java))
- * Rural Urban ([RuralUrbanUtils](https://github.com/imsweb/algorithms/tree/master/src/main/java/com/imsweb/algorithms/ruralurban/RuralUrbanUtils.java))
+
+ * County at Diagnosis Analysis ([CountyAtDxAnalysisUtils](https://github.com/imsweb/algorithms/tree/master/src/main/java/com/imsweb/algorithms/countyatdiagnosisanalysis/CountyAtDxAnalysisUtils.java))
+ * IARC Multiple Primary Algorithm ([IarcUtils](https://github.com/imsweb/algorithms/tree/master/src/main/java/com/imsweb/algorithms/iarc/IarcUtils.java))
+ * ICD Conversions ([IcdUtils](https://github.com/imsweb/algorithms/tree/master/src/main/java/com/imsweb/algorithms/icd/IcdUtils.java))
+ * International Classification of Childhood Cancer ([IcccRecodeUtils](https://github.com/imsweb/algorithms/tree/master/src/main/java/com/imsweb/algorithms/iccc/IcccRecodeUtils.java))
+ * NAACCR Asian/Pacific Islander Identification Algorithm ([NapiiaUtils](https://github.com/imsweb/algorithms/tree/master/src/main/java/com/imsweb/algorithms/napiia/NapiiaUtils.java))
+ * NAACCR Hispanic Identification Algorithm ([NhiaUtils](https://github.com/imsweb/algorithms/tree/master/src/main/java/com/imsweb/algorithms/nhia/NhiaUtils.java))
+ * NAACCR Poverty Linkage Program ([CensusTractPovertyIndicatorUtils](https://github.com/imsweb/algorithms/tree/master/src/main/java/com/imsweb/algorithms/censustractpovertyindicator/CensusTractPovertyIndicatorUtils.java))
+ * NAACCR Rural Urban Program (RUCA/URIC/Continuum) ([RuralUrbanUtils](https://github.com/imsweb/algorithms/tree/master/src/main/java/com/imsweb/algorithms/ruralurban/RuralUrbanUtils.java))
+ * NAACCR Yost Quintile & Area-Based Social Measures Linkage Program ([YostAcsPovertyUtils](https://github.com/imsweb/algorithms/tree/master/src/main/java/com/imsweb/algorithms/yostacspoverty/YostAcsPovertyUtils.java))
+ * NPCR PRCDA & UIHO Linkage Program ([PrcdaUihoUtils](https://github.com/imsweb/algorithms/tree/master/src/main/java/com/imsweb/algorithms/prcdauiho/PrcdaUihoUtils.java))
+ * SEER AYA Site Recode ([AyaSiteRecodeUtils](https://github.com/imsweb/algorithms/tree/master/src/main/java/com/imsweb/algorithms/ayasiterecode/AyaSiteRecodeUtils.java))
+ * SEER Behavior Recode ([BehaviorRecodeUtils](https://github.com/imsweb/algorithms/tree/master/src/main/java/com/imsweb/algorithms/behavrecode/BehaviorRecodeUtils.java))
+ * SEER Cause-specific Death Classification ([CauseSpecificUtils](https://github.com/imsweb/algorithms/tree/master/src/main/java/com/imsweb/algorithms/causespecific/CauseSpecificUtils.java))
  * SEER Site Recode ([SeerSiteRecodeUtils](https://github.com/imsweb/algorithms/tree/master/src/main/java/com/imsweb/algorithms/seersiterecode/SeerSiteRecodeUtils.java))
  * Site-specific Surgery tables ([SiteSpecificSurgeryUtils](https://github.com/imsweb/algorithms/tree/master/src/main/java/com/imsweb/algorithms/surgery/SiteSpecificSurgeryUtils.java))
- * Survival Time ([SurvivalTimeUtils](https://github.com/imsweb/algorithms/tree/master/src/main/java/com/imsweb/algorithms/survival/SurvivalTimeUtils.java))
- * ICD Codes ([IcdUtils](https://github.com/imsweb/algorithms/tree/master/src/main/java/com/imsweb/algorithms/icd/IcdUtils.java))
- * Behavior recode ([BehaviorRecodeUtils](https://github.com/imsweb/algorithms/tree/master/src/main/java/com/imsweb/algorithms/behavrecode/BehaviorRecodeUtils.java))
- * IARC Multiple Primary Algorithm ([IarcUtils](https://github.com/imsweb/algorithms/tree/master/src/main/java/com/imsweb/algorithms/iarc/IarcUtils.java))
+ * Survival Time in Months ([SurvivalTimeUtils](https://github.com/imsweb/algorithms/tree/master/src/main/java/com/imsweb/algorithms/survival/SurvivalTimeUtils.java))
 
 ## Download
 
@@ -41,20 +44,12 @@ This library does not support several versions of a given algorithm; it only con
 
 ## Usage
 
-### Input
+There two ways to use this library: 
 
-Most algorithms allow two types of input:
+1. Every algorithm has a utility class that exposes one or several computation methods; those methods can be called directly.
+2. Every algorithm also has an implementation of the Algorithm class which exposes a unified execute method.
 
-1. A specific input Java object containing all the variables used in the algorithm.
-
-2. A map of NAACCR items where the keys are the item names defined in the [layout framework](https://github.com/imsweb/layout).
-
-The second method makes it very simple to process NAACCR data file; the layout framework can be used to read the record from the file and
-those can then be provided as-is to the algorithms.
-
-### Output
-
-Most algorithms define a specific output Java object.
+The Algorithms class acts as a repository of all the algorithms and their input/output fields.
 
 ## About SEER
 

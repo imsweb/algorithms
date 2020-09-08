@@ -11,7 +11,12 @@
 
 **Changes in version 2.15**
 
+- Added an algorithm to retrieve Yost quintiles and area-based social measures for a state/county/tract.
+- Fixed an issue with NHIA where individuals who were born in predominantly non-Hispanic countries were being wrongly set to non-Hispanic.
+- Renamed output variable names for PRCDA and UIHO algorithms to match official NAACCR XML IDs.
 - The lookup tables used by the PRCDA and UIHO algorithms were updated with the latest information.
+- Census revised the 2010 RUCA lookup table to correct a programming error affecting the secondary RUCA codes. The revision corrected the secondary RUCA codes of 10,909 census tracts. The revised secondary codes will result in an increase in the number of census tracts classified as rural. Our lookup table was revised to be in line with Census.
+- Updated the census tract poverty indicator algorithm by adding a lookup table for 2014-2018 data and modifying the logic to take the new table into account.
 
 **Changes in version 2.14**
 

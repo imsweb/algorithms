@@ -122,6 +122,14 @@ public class RuralUrbanUtilsTest {
                         Assert.assertEquals("4", computeUrbanRuralIndicatorCode(record).getUrbanRuralIndicatorCode2010());
                         Assert.assertEquals("2", computeRuralUrbanCommutingArea(record).getRuralUrbanCommutingArea2000());
                         Assert.assertEquals("1", computeRuralUrbanCommutingArea(record).getRuralUrbanCommutingArea2010());
+                        record.put(_PROP_STATE_DX, "WY");
+                        record.put(_PROP_COUNTY_DX_ANALYSIS, "041");
+                        record.put(_PROP_CENSUS_TRACT_2010, "975200");
+                        Assert.assertEquals("2", computeRuralUrbanCommutingArea(record).getRuralUrbanCommutingArea2010());
+                        record.put(_PROP_STATE_DX, "WA");
+                        record.put(_PROP_COUNTY_DX_ANALYSIS, "067");
+                        record.put(_PROP_CENSUS_TRACT_2010, "010200");
+                        Assert.assertEquals("1", computeRuralUrbanCommutingArea(record).getRuralUrbanCommutingArea2010());
                     }
                 }
             }

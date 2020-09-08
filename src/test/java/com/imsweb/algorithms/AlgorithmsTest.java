@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.imsweb.algorithms.countyatdiagnosisanalysis.CountyAtDxAnalysisUtils;
@@ -26,15 +27,22 @@ import static com.imsweb.algorithms.Algorithms.FIELD_UIHO_FACILITY;
 
 public class AlgorithmsTest {
 
+    @BeforeClass
+    public static void setup() {
+        Algorithms.initialize();
+    }
+
     @Test
     public void testFields() {
         NaaccrDictionary dictionary = NaaccrXmlDictionaryUtils.getMergedDictionaries(NaaccrFormat.NAACCR_VERSION_180);
         for (AlgorithmField field : Algorithms.getAllFields()) {
             Assert.assertNotNull(field.getId());
+            Assert.assertTrue(field.getId() + " is too long!", field.getId().length() <= 32);
             Assert.assertNotNull(field.getId(), field.getName());
-            Assert.assertNotNull(field.getId(), field.getShortName());
-            Assert.assertNotNull(field.getId(), field.getLength());
-            Assert.assertNotNull(field.getId(), field.getDataLevel());
+            Assert.assertTrue(field.getId() + " has its name too long!", field.getName().length() <= 50);
+            Assert.assertNotNull(field.getId() + " requires a short name!", field.getShortName());
+            Assert.assertNotNull(field.getId() + " requires a length!", field.getLength());
+            Assert.assertNotNull(field.getId() + " requires a data level!", field.getDataLevel());
 
             if (field.getNumber() != null) {
                 Assert.assertEquals(dictionary.getItemByNaaccrNum(field.getNumber()).getNaaccrId(), field.getId());
@@ -42,16 +50,12 @@ public class AlgorithmsTest {
             }
         }
 
-
     }
 
     @Test
     public void testDefaultAlgorithms() {
-        Assert.assertTrue(Algorithms.getAlgorithms().isEmpty());
-        Algorithms.initialize();
-        Assert.assertFalse(Algorithms.getAlgorithms().isEmpty());
-
         Assert.assertTrue(Algorithms.isInitialized());
+        Assert.assertFalse(Algorithms.getAlgorithms().isEmpty());
 
         // NHIA
         Algorithm alg = Algorithms.getAlgorithm(Algorithms.ALG_NHIA);
@@ -210,6 +214,20 @@ public class AlgorithmsTest {
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
         Assert.assertEquals("3", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_SEER_BEHAV_RECODE));
 
+        // AYA Site Recode
+        alg = Algorithms.getAlgorithm(Algorithms.ALG_AYA_SITE_RECODE);
+        Assert.assertTrue(alg.getParameters().isEmpty());
+        Assert.assertFalse(alg.getUnknownValues().isEmpty());
+        input = new AlgorithmInput();
+        patMap = new HashMap<>();
+        input.setPatient(patMap);
+        tumMap = new HashMap<>();
+        tumMap.put(Algorithms.FIELD_PRIMARY_SITE, "C700");
+        tumMap.put(Algorithms.FIELD_HIST_O3, "9532");
+        tumMap.put(Algorithms.FIELD_BEHAV_O3, "1");
+        patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
+        Assert.assertEquals("14", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_AYA_SITE_RECODE));
+
         // ICCC
         alg = Algorithms.getAlgorithm(Algorithms.ALG_ICCC);
         Assert.assertTrue(alg.getParameters().isEmpty());
@@ -278,7 +296,6 @@ public class AlgorithmsTest {
         Assert.assertEquals("0", tumor.get(FIELD_IHS_PRCDA));
         Assert.assertEquals("1", tumor.get(FIELD_UIHO));
         Assert.assertEquals("07", tumor.get(FIELD_UIHO_FACILITY));
-
     }
 
     @Test

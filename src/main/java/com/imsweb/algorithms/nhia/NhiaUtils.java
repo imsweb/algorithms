@@ -347,9 +347,7 @@ public final class NhiaUtils {
         if (_INDIRECT_IDENTIFICATION_ORIGINS.contains(spanishOrigin) || _RACE_PACIFIC.contains(race1)) {
             // try to use birthplace
             String birthplaceCountry = input.getBirthplaceCountry();
-            if (_BPC_NON_HISP.contains(birthplaceCountry))
-                nhia.setNhia(_SPAN_HISP_ORIG_SPANISH_NOS.equals(spanishOrigin) ? NHIA_SPANISH_NOS : NHIA_NON_HISPANIC);
-            else if (_BPC_MEXICAN.contains(birthplaceCountry))
+            if (_BPC_MEXICAN.contains(birthplaceCountry))
                 nhia.setNhia(NHIA_MEXICAN);
             else if (_BPC_PUERTO_RICAN.contains(birthplaceCountry))
                 nhia.setNhia(NHIA_PUERTO_RICAN);
