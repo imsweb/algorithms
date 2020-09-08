@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 2.17**
+
+- The UIHO lookup table was revised.
+
 **Changes in version 2.16**
 
 - Fixed ICCC field name being more than 50 characters, making it invalid for NAACCR XML dictionaries.
