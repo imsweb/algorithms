@@ -15,7 +15,12 @@ import com.imsweb.algorithms.AlgorithmOutput;
 import com.imsweb.algorithms.Algorithms;
 import com.imsweb.algorithms.internal.Utils;
 
-import static com.imsweb.algorithms.Algorithms.*;
+import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_DX;
+import static com.imsweb.algorithms.Algorithms.FIELD_IHS_PRCDA;
+import static com.imsweb.algorithms.Algorithms.FIELD_STATE_DX;
+import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
+import static com.imsweb.algorithms.Algorithms.FIELD_UIHO;
+import static com.imsweb.algorithms.Algorithms.FIELD_UIHO_FACILITY;
 import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.PRCDA_UNKNOWN;
 import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.UIHO_FACILITY_UNKNOWN;
 import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.UIHO_UNKNOWN;
