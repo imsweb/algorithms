@@ -4,7 +4,7 @@
 
 - The UIHO lookup table was revised.
 
-**Changes in version 2.18**
+**Changes in version 2.17**
 
 - This version was never released.
 
