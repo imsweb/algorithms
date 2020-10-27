@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 2.19**
+
+- Fixed IARC algorithms that sometimes returned the full histology code instead of the computed histology group; changed site group field to be 3 characters long instead of 4.
+
 **Changes in version 2.18**
 
 - The UIHO lookup table was revised.
