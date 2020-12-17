@@ -11,6 +11,8 @@ public class NhiaInputRecordDto {
 
     private String _nameMaiden;
 
+    private String _nameBirthSurname;
+
     private String _birthplaceCountry;
 
     private String _race1;
@@ -45,6 +47,14 @@ public class NhiaInputRecordDto {
 
     public void setNameMaiden(String nameMaiden) {
         _nameMaiden = nameMaiden;
+    }
+
+    public String getNameBirthSurname() {
+        return _nameBirthSurname;
+    }
+
+    public void setNameBirthSurname(String nameBirthSurname) {
+        _nameBirthSurname = nameBirthSurname;
     }
 
     public String getBirthplaceCountry() {

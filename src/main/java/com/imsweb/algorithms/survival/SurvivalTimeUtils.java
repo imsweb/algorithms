@@ -10,7 +10,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -27,19 +26,6 @@ public class SurvivalTimeUtils {
     public static final String VERSION = "2.2";
     public static final String ALG_INFO = "Survival Time in Months version 2.2 released in September 2014";
 
-    public static final String PROP_DX_YEAR = "dateOfDiagnosisYear";
-    public static final String PROP_DX_MONTH = "dateOfDiagnosisMonth";
-    public static final String PROP_DX_DAY = "dateOfDiagnosisDay";
-    public static final String PROP_DOLC_YEAR = "dateOfLastContactYear";
-    public static final String PROP_DOLC_MONTH = "dateOfLastContactMonth";
-    public static final String PROP_DOLC_DAY = "dateOfLastContactDay";
-    public static final String PROP_BIRTH_YEAR = "birthDateYear";
-    public static final String PROP_BIRTH_MONTH = "birthDateMonth";
-    public static final String PROP_BIRTH_DAY = "birthDateDay";
-    public static final String PROP_VITAL_STATUS = "vitalStatus";
-    public static final String PROP_SEQUENCE_NUMBER = "sequenceNumberCentral";
-    public static final String PROP_REPORTING_SOURCE = "typeOfReportingSource";
-
     public static final String SURVIVAL_FLAG_COMPLETE_INFO_NO_SURVIVAL = "0";
     public static final String SURVIVAL_FLAG_COMPLETE_INFO_SOME_SURVIVAL = "1";
     public static final String SURVIVAL_FLAG_MISSING_INFO_NO_SURVIVAL_POSSIBLE = "2";
@@ -53,56 +39,6 @@ public class SurvivalTimeUtils {
     public static final String BLANK_YEAR = null;
     public static final String BLANK_MONTH = null;
     public static final String BLANK_DAY = null;
-
-    /**
-     * Calculates the survival time for the provided list of records representing a patient.
-     * It also calculates the vital status of the patient at the study cutoff date.
-     * <br/><br/>
-     * See <a href="http://seer.cancer.gov/survivaltime/">http://seer.cancer.gov/survivaltime/</a>
-     * <br/><br/>
-     * The provided record doesn't need to contain all the input variables, but the algorithm wil use the following ones:
-     * <ul>
-     * <li>dateOfDiagnosisYear, dateOfDiagnosisMonth, dateOfDiagnosisDay (#390)</li>
-     * <li>dateOfLastContactYear, dateOfLastContactMonth, dateOfLastContactDay (#1750)</li>
-     * <li>birthDateYear, birthDateMont, birthDateDay (#240)</li>
-     * <li>vitalStatus (#1760)</li>
-     * <li>sequenceNumberCentral (#380)</li>
-     * <li>typeOfReportingSource (#500)</li>
-     * </ul>
-     * All those properties are defined as constants in this class.
-     * @param input list of records representing a patient
-     * @param endPointYear end point year (also called end study year, or current reporting year)
-     * @return SurvivalTimeOutputPatientDto
-     * @deprecated use the method that takes a <code>SurvivalTimeInputPatientDto</code> object as parameter
-     */
-    @Deprecated
-    public static SurvivalTimeOutputPatientDto calculateSurvivalTime(List<Map<String, String>> input, int endPointYear) {
-        SurvivalTimeOutputPatientDto patientResultsDto = new SurvivalTimeOutputPatientDto();
-        if (input == null || input.isEmpty())
-            return patientResultsDto;
-        List<SurvivalTimeInputRecordDto> list = new ArrayList<>();
-        for (Map<String, String> record : input) {
-            SurvivalTimeInputRecordDto inputDto = new SurvivalTimeInputRecordDto();
-            inputDto.setDateOfDiagnosisDay(record.get(PROP_DX_DAY));
-            inputDto.setDateOfDiagnosisMonth(record.get(PROP_DX_MONTH));
-            inputDto.setDateOfDiagnosisYear(record.get(PROP_DX_YEAR));
-            inputDto.setDateOfLastContactDay(record.get(PROP_DOLC_DAY));
-            inputDto.setDateOfLastContactMonth(record.get(PROP_DOLC_MONTH));
-            inputDto.setDateOfLastContactYear(record.get(PROP_DOLC_YEAR));
-            inputDto.setBirthDay(record.get(PROP_BIRTH_DAY));
-            inputDto.setBirthMonth(record.get(PROP_BIRTH_MONTH));
-            inputDto.setBirthYear(record.get(PROP_BIRTH_YEAR));
-            inputDto.setVitalStatus(record.get(PROP_VITAL_STATUS));
-            inputDto.setSequenceNumberCentral(record.get(PROP_SEQUENCE_NUMBER));
-            inputDto.setTypeOfReportingSource(record.get(PROP_REPORTING_SOURCE));
-            list.add(inputDto);
-        }
-        SurvivalTimeInputPatientDto inputsDto = new SurvivalTimeInputPatientDto();
-        inputsDto.setSurvivalTimeInputPatientDtoList(list);
-        patientResultsDto = calculateSurvivalTime(inputsDto, endPointYear);
-
-        return patientResultsDto;
-    }
 
     /**
      * Calculates the survival time for the provided list of records representing a patient.

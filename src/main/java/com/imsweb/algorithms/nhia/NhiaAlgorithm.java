@@ -18,6 +18,7 @@ import com.imsweb.algorithms.internal.Utils;
 import static com.imsweb.algorithms.Algorithms.FIELD_COUNTRY_BIRTH;
 import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS;
 import static com.imsweb.algorithms.Algorithms.FIELD_IHS;
+import static com.imsweb.algorithms.Algorithms.FIELD_NAME_BIRTH_SURNAME;
 import static com.imsweb.algorithms.Algorithms.FIELD_NAME_LAST;
 import static com.imsweb.algorithms.Algorithms.FIELD_NAME_MAIDEN;
 import static com.imsweb.algorithms.Algorithms.FIELD_NHIA;
@@ -42,6 +43,7 @@ public class NhiaAlgorithm extends AbstractAlgorithm {
         _inputFields.add(Algorithms.getField(FIELD_SPAN_HISP_OR));
         _inputFields.add(Algorithms.getField(FIELD_NAME_LAST));
         _inputFields.add(Algorithms.getField(FIELD_NAME_MAIDEN));
+        _inputFields.add(Algorithms.getField(FIELD_NAME_BIRTH_SURNAME));
         _inputFields.add(Algorithms.getField(FIELD_COUNTRY_BIRTH));
         _inputFields.add(Algorithms.getField(FIELD_RACE1));
         _inputFields.add(Algorithms.getField(FIELD_SEX));
@@ -66,6 +68,7 @@ public class NhiaAlgorithm extends AbstractAlgorithm {
             dto.setIhs((String)patientMap.get(FIELD_IHS));
             dto.setNameLast((String)patientMap.get(FIELD_NAME_LAST));
             dto.setNameMaiden((String)patientMap.get(FIELD_NAME_MAIDEN));
+            dto.setNameBirthSurname((String)patientMap.get(FIELD_NAME_BIRTH_SURNAME));
             dto.setCountyAtDxAnalysis((String)tumorMap.get(FIELD_COUNTY_AT_DX_ANALYSIS));
             dto.setStateAtDx((String)tumorMap.get(FIELD_STATE_DX));
             inputPatient.getNhiaInputPatientDtoList().add(dto);

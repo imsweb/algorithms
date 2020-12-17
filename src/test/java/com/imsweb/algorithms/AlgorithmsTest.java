@@ -34,7 +34,7 @@ public class AlgorithmsTest {
 
     @Test
     public void testFields() {
-        NaaccrDictionary dictionary = NaaccrXmlDictionaryUtils.getMergedDictionaries(NaaccrFormat.NAACCR_VERSION_180);
+        NaaccrDictionary dictionary = NaaccrXmlDictionaryUtils.getMergedDictionaries(NaaccrFormat.NAACCR_VERSION_210);
         for (AlgorithmField field : Algorithms.getAllFields()) {
             Assert.assertNotNull(field.getId());
             Assert.assertTrue(field.getId() + " is too long!", field.getId().length() <= 32);
@@ -45,8 +45,8 @@ public class AlgorithmsTest {
             Assert.assertNotNull(field.getId() + " requires a data level!", field.getDataLevel());
 
             if (field.getNumber() != null) {
-                Assert.assertEquals(dictionary.getItemByNaaccrNum(field.getNumber()).getNaaccrId(), field.getId());
-                Assert.assertEquals(dictionary.getItemByNaaccrNum(field.getNumber()).getNaaccrName(), field.getName());
+                Assert.assertEquals(field.getId(), dictionary.getItemByNaaccrNum(field.getNumber()).getNaaccrId(), field.getId());
+                Assert.assertEquals(field.getId(), dictionary.getItemByNaaccrNum(field.getNumber()).getNaaccrName(), field.getName());
             }
         }
 

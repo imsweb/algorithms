@@ -3,8 +3,6 @@
  */
 package com.imsweb.algorithms.ruralurban;
 
-import java.util.Map;
-
 import static com.imsweb.algorithms.ruralurban.RuralUrbanDataProvider.TRACT_CATEGORY_1;
 import static com.imsweb.algorithms.ruralurban.RuralUrbanDataProvider.TRACT_CATEGORY_2;
 
@@ -17,12 +15,6 @@ public final class RuralUrbanUtils {
     public static final String ALG_NAME = "NAACCR Rural Urban Program";
     public static final String ALG_VERSION = "2018";
     public static final String ALG_INFO = "NAACCR Rural Urban Program released in September 2018";
-
-    //NAACCR Items Used for calculation
-    public static final String PROP_STATE_DX = "addressAtDxState";
-    public static final String PROP_COUNTY_DX_ANALYSIS = "countyAtDxAnalysis";
-    public static final String PROP_CENSUS_TRACT_2000 = "censusTract2000";
-    public static final String PROP_CENSUS_TRACT_2010 = "censusTract2010";
 
     //Unknown values for each code
     public static final String URBAN_RURAL_INDICATOR_CODE_UNKNOWN = "C";
@@ -42,45 +34,6 @@ public final class RuralUrbanUtils {
 
     // data provider
     private static RuralUrbanDataProvider _PROVIDER;
-
-    /**
-     * Calculates the urban rural indicator code (uric2000, uric2010) for the provided record.
-     * <br/><br/>
-     * The provided record doesn't need to contain all the input variables, but the algorithm will use the following ones:
-     * <ul>
-     * <li>addressAtDxState (#80)</li>
-     * <li>countyAtDxAnalysis (#89)</li>
-     * <li>censusTract2000 (#130)</li>
-     * <li>censusTract2010 (#135)</li>
-     * </ul>
-     * All those properties are defined as constants in this class.
-     * <br/><br/>
-     * The returned urban rural census will have the following values depending on the census tract (2000, or 2010):
-     * <ul>
-     * <li>1 = All urban - the percentage of the population in an urban area is 100%</li>
-     * <li>2 = Mostly urban - the percentage of the population in an urban area is between >=50% and <100%</li>
-     * <li>3 = Mostly rural - the percentage of the population in an urban area is between >0% and <50%</li>
-     * <li>4 = All rural - the percentage of the population in an urban area is 0%</li>
-     * <li>9 = The percentage of the population in an urban or rural area is unknown</li>
-     * <li>A = State, county, or tract are invalid</li>
-     * <li>B = State and tract are valid, but county was not reported</li>
-     * <li>C = State + county + tract combination was not found</li>
-     * <li>D = State, county, or tract are blank or unknown</li>
-     * </ul>
-     * <br/><br/>
-     * @param record a map of properties representing a NAACCR line
-     * @return the computed rural urban census value
-     * @deprecated use the method that takes a <code>RuralUrbanInputDto</code> object as parameter
-     */
-    @Deprecated
-    public static RuralUrbanOutputDto computeUrbanRuralIndicatorCode(Map<String, String> record) {
-        RuralUrbanInputDto input = new RuralUrbanInputDto();
-        input.setAddressAtDxState(record.get(PROP_STATE_DX));
-        input.setCountyAtDxAnalysis(record.get(PROP_COUNTY_DX_ANALYSIS));
-        input.setCensusTract2000(record.get(PROP_CENSUS_TRACT_2000));
-        input.setCensusTract2010(record.get(PROP_CENSUS_TRACT_2010));
-        return computeUrbanRuralIndicatorCode(input);
-    }
 
     /**
      * Calculates the urban rural indicator code (uric2000, uric2010) for the provided input DTO
@@ -153,43 +106,6 @@ public final class RuralUrbanUtils {
     }
 
     /**
-     * Calculates the rural urban commuting area (ruca2000, ruca2010) for the provided record.
-     * <br/><br/>
-     * The provided record doesn't need to contain all the input variables, but the algorithm will use the following ones:
-     * <ul>
-     * <li>addressAtDxState (#80)</li>
-     * <li>countyAtDxAnalysis (#89)</li>
-     * <li>censusTract2000 (#130)</li>
-     * <li>censusTract2010 (#135)</li>
-     * </ul>
-     * All those properties are defined as constants in this class.
-     * <br/><br/>
-     * The returned urban rural commuting area will have the following values depending on the census tract (2000, or 2010):
-     * <ul>
-     * <li>1 = Urban commuting area - RUCA codes 1.0, 1.1, 2.0, 2.1, 3.0, 4.1, 5.1, 7.1, 8.1, and 10.1</li>
-     * <li>2 = Not an urban commuting area - all other RUCA codes except 99</li>
-     * <li>9 = RUCA code is 99</li>
-     * <li>A = State, county, or tract are invalid</li>
-     * <li>B = State and tract are valid, but county was not reported</li>
-     * <li>C = State + county + tract combination was not found</li>
-     * <li>D = State, county, or tract are blank or unknown</li>
-     * </ul>
-     * <br/><br/>
-     * @param record a map of properties representing a NAACCR line
-     * @return the computed rural urban commuting area value
-     * @deprecated use the method that takes a <code>RuralUrbanInputDto</code> object as parameter
-     */
-    @Deprecated
-    public static RuralUrbanOutputDto computeRuralUrbanCommutingArea(Map<String, String> record) {
-        RuralUrbanInputDto input = new RuralUrbanInputDto();
-        input.setAddressAtDxState(record.get(PROP_STATE_DX));
-        input.setCountyAtDxAnalysis(record.get(PROP_COUNTY_DX_ANALYSIS));
-        input.setCensusTract2000(record.get(PROP_CENSUS_TRACT_2000));
-        input.setCensusTract2010(record.get(PROP_CENSUS_TRACT_2010));
-        return computeRuralUrbanCommutingArea(input);
-    }
-
-    /**
      * Calculates the rural urban commuting area (ruca2000, ruca2010) for the provided input DTO.
      * <br/><br/>
      * The provided input dto has the following parameters used in the calculation:
@@ -252,46 +168,6 @@ public final class RuralUrbanUtils {
             result.setRuralUrbanCommutingArea2010(RURAL_URBAN_COMMUTING_AREA_UNKNOWN);
 
         return result;
-    }
-
-    /**
-     * Calculates the rural urban continuum (ruralUrbanContinuum1993, ruralUrbanContinuum2003, ruralUrbanContinuum2013) for the provided record.
-     * <br/><br/>
-     * The provided record doesn't need to contain all the input variables, but the algorithm will use the following ones:
-     * <ul>
-     * <li>addressAtDxState (#80)</li>
-     * <li>countyAtDxAnalysis (#89)</li>
-     * </ul>
-     * All those properties are defined as constants in this class.
-     * <br/><br/>
-     * The returned urban rural continuum will have the following values depending on the year (1993, 2003, or 2013):
-     * <ul>
-     * <li>00 = Central counties of metro areas of 1 million population or more (1993 only)</li>
-     * <li>01 = Counties of metro areas of 1 million population or more</li>
-     * <li>02 = Counties in metro areas of 250,000 to 1 million population</li>
-     * <li>03 = Counties in metro areas of fewer than 250,000 population</li>
-     * <li>04 = Urban population of 20,000 or more, adjacent to a metro area</li>
-     * <li>05 = Urban population of 20,000 or more, not adjacent to a metro area</li>
-     * <li>06 = Urban population of 2,500 to 19,999, adjacent to a metro area</li>
-     * <li>07 = Urban population of 2,500 to 19,999, not adjacent to a metro area</li>
-     * <li>08 = Completely rural or less than 2,500 urban population, adjacent to a metro area</li>
-     * <li>09 = Completely rural or less than 2,500 urban population, not adjacent to a metro area</li>
-     * <li>96 = Invalid state abbreviation or county code</li>
-     * <li>97 = Insufficient population data for county to determine rural urban code</li>
-     * <li>98 = Valid state/county combination but rural urban code not found</li>
-     * <li>99 = Missing or unknown state or county</li>
-     * </ul>
-     * <br/><br/>
-     * @param record a map of properties representing a NAACCR line
-     * @return the computed rural urban continuum value
-     * @deprecated use the method that takes a <code>RuralUrbanInputDto</code> object as parameter
-     */
-    @Deprecated
-    public static RuralUrbanOutputDto computeRuralUrbanContinuum(Map<String, String> record) {
-        RuralUrbanInputDto input = new RuralUrbanInputDto();
-        input.setAddressAtDxState(record.get(PROP_STATE_DX));
-        input.setCountyAtDxAnalysis(record.get(PROP_COUNTY_DX_ANALYSIS));
-        return computeRuralUrbanContinuum(input);
     }
 
     /**

@@ -3,8 +3,6 @@
  */
 package com.imsweb.algorithms.behavrecode;
 
-import java.util.Map;
-
 import org.apache.commons.lang3.math.NumberUtils;
 
 /**
@@ -29,20 +27,7 @@ public class BehaviorRecodeUtils {
     public static final String ONLY_MALIGNANT_2010_AND_AFTER = "6";
     public static final String UNKNOWN = "9";
 
-    //Properties used for calculation
-    public static final String PROP_PRIMARY_SITE = "primarySite";
-    public static final String PROP_HISTOLOGY_3 = "histologyIcdO3";
-    public static final String PROP_BEHAVIOR_3 = "behaviorIcdO3";
-    public static final String PROP_DATE_OF_DIAGNOSIS_YEAR = "dateOfDiagnosisYear";
-
     public BehaviorRecodeUtils() {
-    }
-
-    @Deprecated
-    public static String computeBehaviorRecode(Map<String, String> record) {
-        if (record == null || record.isEmpty())
-            return UNKNOWN;
-        return computeBehaviorRecode(record.get(PROP_PRIMARY_SITE), record.get(PROP_HISTOLOGY_3), record.get(PROP_BEHAVIOR_3), record.get(PROP_DATE_OF_DIAGNOSIS_YEAR));
     }
 
     public static String computeBehaviorRecode(String site, String hist, String behavior, String dxYear) {

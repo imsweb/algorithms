@@ -24,7 +24,7 @@ dependencies {
     implementation 'com.thoughtworks.xstream:xstream:1.4.11.1'
 
     testImplementation 'junit:junit:4.13'
-    testImplementation 'com.imsweb:layout:2.0'
+    testImplementation 'com.imsweb:layout:3.1'
     testImplementation 'com.imsweb:seerutils:5.6'
     testImplementation 'com.imsweb:seerutils-gui:1.15'
 }

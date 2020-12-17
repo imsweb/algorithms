@@ -28,11 +28,6 @@ public final class IcccRecodeUtils {
     // algorithm name
     public static final String ALG_NAME = "International Classification of Childhood Cancer";
 
-    // properties used by the algorithm
-    public static final String PROP_PRIMARY_SITE = "primarySite";
-    public static final String PROP_HISTOLOGY_3 = "histologyIcdO3";
-    public static final String PROP_BEHAVIOR_3 = "behaviorIcdO3";
-
     // version for the 2010+ data (http://seer.cancer.gov/iccc/iccc3.html)
     public static final String VERSION_THIRD_EDITION = "Third Edition";
     public static final String VERSION_THIRD_EDITION_INFO = "International Classification of Childhood Cancer, Third edition (ICCC-3) based on ICD-O-3";
@@ -100,54 +95,6 @@ public final class IcccRecodeUtils {
      */
     public static Map<String, String> getAvailableVersions() {
         return Collections.unmodifiableMap(_VERSIONS);
-    }
-
-    /**
-     * Returns the calculated site recode for the provided record, unknown if it can't be calculated.
-     * @param record record
-     * @return the calculated site recode for the provided record, unknown if it can't be calculated
-     * @deprecated use the methods that takes the explicit site/hist/behav parameters
-     */
-    @Deprecated
-    public static String calculateSiteRecode(Map<String, String> record) {
-        return calculateSiteRecode(VERSION_DEFAULT, record.get(PROP_PRIMARY_SITE), record.get(PROP_HISTOLOGY_3), record.get(PROP_BEHAVIOR_3));
-    }
-
-    /**
-     * Returns the calculated site recode for the provided version and record, unknown if it can't be calculated.
-     * @param version data version
-     * @param record record
-     * @return the calculated site recode for the provided version and record, unknown if it can't be calculated
-     * @deprecated use the methods that takes the explicit site/hist/behav parameters
-     */
-    @Deprecated
-    public static String calculateSiteRecode(String version, Map<String, String> record) {
-        return calculateSiteRecode(version, record.get(PROP_PRIMARY_SITE), record.get(PROP_HISTOLOGY_3), record.get(PROP_BEHAVIOR_3));
-    }
-
-    /**
-     * Returns the calculated site recode for the provided parameters, unknown if it can't be calculated.
-     * @param site site
-     * @param histology histology
-     * @return the calculated site recode for the provided parameters, unknown if it can't be calculated
-     * @deprecated use the version that takes a version as first parameter along with the VERSION_DEFAULT constant.
-     */
-    @Deprecated
-    public static String calculateSiteRecode(String site, String histology) {
-        return calculateSiteRecode(VERSION_DEFAULT, site, histology, null);
-    }
-
-    /**
-     * Returns the calculated site recode for the provided parameters, unknown if it can't be calculated.
-     * @param version data version
-     * @param site site
-     * @param histology histology
-     * @return the calculated site recode for the provided parameters, unknown if it can't be calculated
-     * @deprecated use the method that takes the bhavior and pass null for that parameter
-     */
-    @Deprecated
-    public static String calculateSiteRecode(String version, String site, String histology) {
-        return calculateSiteRecode(version, site, histology, null);
     }
 
     /**

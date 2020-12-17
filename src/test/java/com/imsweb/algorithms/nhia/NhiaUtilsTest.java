@@ -21,9 +21,11 @@ import com.opencsv.exceptions.CsvException;
 
 public class NhiaUtilsTest {
 
+    // using the properties as map keys is deprecated, but it would be too much work to properly fix these tests, so it uses a method to translate the maps into proper input objects...
     private static final String _PROP_SPANISH_HISPANIC_ORIGIN = "spanishHispanicOrigin";
     private static final String _PROP_NAME_LAST = "nameLast";
     private static final String _PROP_NAME_MAIDEN = "nameMaiden";
+    private static final String _PROP_NAME_BIRTH_SURNAME = "nameBirthSurname";
     private static final String _PROP_BIRTH_PLACE_COUNTRY = "birthplaceCountry";
     private static final String _PROP_RACE1 = "race1";
     private static final String _PROP_SEX = "sex";
@@ -165,10 +167,17 @@ public class NhiaUtilsTest {
         Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
         record.put(_PROP_NAME_LAST, "FLINT");
         Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
-        record.put(_PROP_NAME_MAIDEN, "FLINT");
+        record.put(_PROP_NAME_BIRTH_SURNAME, "FLINT");
         Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        record.put(_PROP_NAME_BIRTH_SURNAME, "ADORNO");
+        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        // *** following tests that maiden name can still be used...
+        record.put(_PROP_NAME_BIRTH_SURNAME, null);
         record.put(_PROP_NAME_MAIDEN, "ADORNO");
         Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        record.put(_PROP_NAME_MAIDEN, null);
+        record.put(_PROP_NAME_BIRTH_SURNAME, "ADORNO");
+        // end maiden name check
         record.put(_PROP_NAME_LAST, "FLINT");
         Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
         record.put(_PROP_SEX, "1");
@@ -185,7 +194,7 @@ public class NhiaUtilsTest {
         record.put(_PROP_COUNTY_DX_ANALYSIS, "009");
         record.put(_PROP_SEX, "2");
         record.put(_PROP_NAME_LAST, "flint");
-        record.put(_PROP_NAME_MAIDEN, "ADORNO");
+        record.put(_PROP_NAME_BIRTH_SURNAME, "ADORNO");
         Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
         record.put(_PROP_IHS, "1");
         Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
@@ -211,7 +220,7 @@ public class NhiaUtilsTest {
         Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(record, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
         Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(record, NhiaUtils.NHIA_OPTION_SEVEN_ONLY).getNhia());
         record.put(_PROP_SEX, "2");
-        record.put(_PROP_NAME_MAIDEN, "FLINT");
+        record.put(_PROP_NAME_BIRTH_SURNAME, "FLINT");
         Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
         record.put(_PROP_BIRTH_PLACE_COUNTRY, "GUY");
         Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
@@ -358,7 +367,7 @@ public class NhiaUtilsTest {
                 rec.put(_PROP_COUNTY_DX_ANALYSIS, row[5]);
                 rec.put(_PROP_SEX, row[6]);
                 rec.put(_PROP_NAME_LAST, row[7]);
-                rec.put(_PROP_NAME_MAIDEN, row[8]);
+                rec.put(_PROP_NAME_BIRTH_SURNAME, row[8]);
 
                 String option = row[9];
                 String nhia = row[10];
@@ -386,6 +395,7 @@ public class NhiaUtilsTest {
         input.setIhs(record.get(_PROP_IHS));
         input.setNameLast(record.get(_PROP_NAME_LAST));
         input.setNameMaiden(record.get(_PROP_NAME_MAIDEN));
+        input.setNameBirthSurname(record.get(_PROP_NAME_BIRTH_SURNAME));
         input.setCountyAtDxAnalysis(record.get(_PROP_COUNTY_DX_ANALYSIS));
         input.setStateAtDx(record.get(_PROP_STATE_DX));
         return NhiaUtils.computeNhia(input, option);
@@ -404,6 +414,7 @@ public class NhiaUtilsTest {
             dto.setIhs(record.get(_PROP_IHS));
             dto.setNameLast(record.get(_PROP_NAME_LAST));
             dto.setNameMaiden(record.get(_PROP_NAME_MAIDEN));
+            dto.setNameBirthSurname(record.get(_PROP_NAME_BIRTH_SURNAME));
             dto.setCountyAtDxAnalysis(record.get(_PROP_COUNTY_DX_ANALYSIS));
             dto.setStateAtDx(record.get(_PROP_STATE_DX));
             input.getNhiaInputPatientDtoList().add(dto);

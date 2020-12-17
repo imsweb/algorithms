@@ -11,7 +11,6 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
@@ -49,26 +48,6 @@ import com.imsweb.algorithms.historicstage.internal.HistStageDataSchemaDto;
 
 public final class HistoricStageUtils {
 
-    public static final String PROP_DATE_OF_DIAGNOSIS_YEAR = "dateOfDiagnosisYear";
-    public static final String PROP_PRIMARY_SITE = "primarySite";
-    public static final String PROP_HISTOLOGY_3 = "histologyIcdO3";
-    public static final String PROP_BEHAVIOR_3 = "behaviorIcdO3";
-    public static final String PROP_TYPE_OF_REPORTING_SOURCE = "typeOfReportingSource";
-    public static final String PROP_REGISTRY_ID = "registryId";
-    public static final String PROP_CS_EXTENSION = "csExtension";
-    public static final String PROP_CS_LYMPH_NODES = "csLymphNodes";
-    public static final String PROP_CS_METS_AT_DX = "csMetsAtDx";
-    public static final String PROP_CS_SITE_SPECIFIC_FACTOR1 = "csSiteSpecificFactor1";
-    public static final String PROP_CS_SITE_SPECIFIC_FACTOR2 = "csSiteSpecificFactor2";
-    public static final String PROP_EOD_CODING_SYSTEM = "eodCodingSys";
-    public static final String PROP_EOD10_LYMPH_NODES = "eodLymphNodeInvolv";
-    public static final String PROP_EOD10_EXTENSION = "eodExtension";
-    public static final String PROP_EOD4_DIGIT_EXTENSION = "eodOld4DigitExtent";
-    public static final String PROP_EOD4_DIGIT_NODES = "eodOld4DigitNodes";
-    public static final String PROP_EOD4_DIGIT_SIZE = "eodOld4DigitSize";
-    public static final String PROP_EOD13_DIGIT = "eodOld13Digit";
-    public static final String PROP_EOD2_DIGIT = "eodOld2Digit";
-
     public static final String IN_SITU = "0";
     public static final String LOCALIZED = "1";
     public static final String REGIONAL = "2";
@@ -78,99 +57,33 @@ public final class HistoricStageUtils {
     public static final String NOT_APPLICABLE = "7";
 
     //lookups for tables used in calculation of historic stage
-    private static List<HistStageDataEod10ExtDto> _DATA_EOD10_EXT = new ArrayList<>();
-    private static List<HistStageDataEod10NodeDto> _DATA_EOD10_NODE = new ArrayList<>();
-    private static List<HistStageDataEod10StageDto> _DATA_EOD10_STAGE = new ArrayList<>();
-    private static List<HistStageDataSchemaDto> _DATA_HISTORIC_STAGE_SCHEMA = new ArrayList<>();
-    private static List<HistStageDataCsExtDto> _DATA_CS_EXT = new ArrayList<>();
-    private static List<HistStageDataCsNodeDto> _DATA_CS_NODE = new ArrayList<>();
-    private static List<HistStageDataCsMetsDto> _DATA_CS_METS = new ArrayList<>();
-    private static List<HistStageDataCsStageDto> _DATA_CS_STAGE = new ArrayList<>();
-    private static List<HistStageDataLeukemiaDto> _DATA_LEUKEMIA = new ArrayList<>();
-    private static List<HistStageDataEodPatchDto> _DATA_EOD_PATCH = new ArrayList<>();
-    private static List<HistStageDataEod4digStageDto> _DATA_EOD_4DIG_STAGE = new ArrayList<>();
-    private static List<HistStageDataEod13digExtDto> _DATA_EOD_13DIG_EXT = new ArrayList<>();
-    private static List<HistStageDataEod13digNodeDto> _DATA_EOD_13DIG_NODE = new ArrayList<>();
-    private static List<HistStageDataEod13digLungDto> _DATA_EOD_13DIG_LUNG = new ArrayList<>();
-    private static List<HistStageDataEod13digMelanomaDto> _DATA_EOD_13DIG_MELANOMA = new ArrayList<>();
-    private static List<HistStageDataEod13digBladderDto> _DATA_EOD_13DIG_BLADDER = new ArrayList<>();
-    private static List<HistStageDataEod13digGeneralStageDto> _DATA_EOD_13DIG_GENERAL_STAGE = new ArrayList<>();
-    private static List<HistStageDataEod2digExtDto> _DATA_EOD_2DIG_EXT = new ArrayList<>();
-    private static List<HistStageDataEod2digNodeDto> _DATA_EOD_2DIG_NODE = new ArrayList<>();
-    private static List<HistStageDataEod2digExtNodeStageDto> _DATA_EOD_2DIG_EXTENSION_NODE_STAGE = new ArrayList<>();
-    private static List<HistStageDataEod2digDirectStageDto> _DATA_EOD_2DIG_DIRECT_STAGE = new ArrayList<>();
-    private static List<HistStageDataEod0StageDto> _DATA_EOD0_STAGE = new ArrayList<>();
+    private static final List<HistStageDataEod10ExtDto> _DATA_EOD10_EXT = new ArrayList<>();
+    private static final List<HistStageDataEod10NodeDto> _DATA_EOD10_NODE = new ArrayList<>();
+    private static final List<HistStageDataEod10StageDto> _DATA_EOD10_STAGE = new ArrayList<>();
+    private static final List<HistStageDataSchemaDto> _DATA_HISTORIC_STAGE_SCHEMA = new ArrayList<>();
+    private static final List<HistStageDataCsExtDto> _DATA_CS_EXT = new ArrayList<>();
+    private static final List<HistStageDataCsNodeDto> _DATA_CS_NODE = new ArrayList<>();
+    private static final List<HistStageDataCsMetsDto> _DATA_CS_METS = new ArrayList<>();
+    private static final List<HistStageDataCsStageDto> _DATA_CS_STAGE = new ArrayList<>();
+    private static final List<HistStageDataLeukemiaDto> _DATA_LEUKEMIA = new ArrayList<>();
+    private static final List<HistStageDataEodPatchDto> _DATA_EOD_PATCH = new ArrayList<>();
+    private static final List<HistStageDataEod4digStageDto> _DATA_EOD_4DIG_STAGE = new ArrayList<>();
+    private static final List<HistStageDataEod13digExtDto> _DATA_EOD_13DIG_EXT = new ArrayList<>();
+    private static final List<HistStageDataEod13digNodeDto> _DATA_EOD_13DIG_NODE = new ArrayList<>();
+    private static final List<HistStageDataEod13digLungDto> _DATA_EOD_13DIG_LUNG = new ArrayList<>();
+    private static final List<HistStageDataEod13digMelanomaDto> _DATA_EOD_13DIG_MELANOMA = new ArrayList<>();
+    private static final List<HistStageDataEod13digBladderDto> _DATA_EOD_13DIG_BLADDER = new ArrayList<>();
+    private static final List<HistStageDataEod13digGeneralStageDto> _DATA_EOD_13DIG_GENERAL_STAGE = new ArrayList<>();
+    private static final List<HistStageDataEod2digExtDto> _DATA_EOD_2DIG_EXT = new ArrayList<>();
+    private static final List<HistStageDataEod2digNodeDto> _DATA_EOD_2DIG_NODE = new ArrayList<>();
+    private static final List<HistStageDataEod2digExtNodeStageDto> _DATA_EOD_2DIG_EXTENSION_NODE_STAGE = new ArrayList<>();
+    private static final List<HistStageDataEod2digDirectStageDto> _DATA_EOD_2DIG_DIRECT_STAGE = new ArrayList<>();
+    private static final List<HistStageDataEod0StageDto> _DATA_EOD0_STAGE = new ArrayList<>();
 
     /**
      * Private constructor, no instantiation...
      */
     private HistoricStageUtils() {
-    }
-
-    /**
-     * Calculates the Historic Stage for the provided record.
-     * <br/><br/>
-     * The provided record doesn't need to contain all the input variables, but the algorithm wil use the following ones:
-     * <ul>
-     * <li>primarySite (#400)</li>
-     * <li>histologyIcdO3 (#522)</li>
-     * <li>behaviorIcdO3 (#523)</li>
-     * <li>csExtension (#2810)</li>
-     * <li>cSLymphNodes (#2830)</li>
-     * <li>csMetsAtDx (#2850)</li>
-     * <li>dateOfDiagnosisYear (#390)</li>
-     * <li>eodLymphNodeInvolv (#810)</li>
-     * <li>eodExtension (#790)</li>
-     * <li>typeOfReportingSource (#500)</li>
-     * <li>eodOld4DigitExtent (#860)</li>
-     * <li>eodOld4DigitNodes (#860)</li>
-     * <li>eodOld4DigitSize (#860)</li>
-     * <li>registryId (#40)</li>
-     * <li>eodCodingSys (#870)</li>
-     * <li>eodOld13Digit (#840)</li>
-     * <li>eodOld2Digit (#850)</li>
-     * <li>csSiteSpecificFactor1 (#2880)</li>
-     * <li>csSiteSpecificFactor2 (#2890)</li>
-     * </ul>
-     * All those properties are defined as constants in this class.
-     * <br/><br/>
-     * @param record a map of properties representing a NAACCR line
-     * @return the computed historic stage. The out put values are:
-     * <ul>
-     * <li>IN_SITU = "0"</li>
-     * <li>LOCALIZED = "1"</li>
-     * <li>REGIONAL = "2"</li>
-     * <li>DISTANT = "4"</li>
-     * <li>UNSTAGED = "9"</li>
-     * <li>NEED_REVIEW = "6"</li>
-     * <li>NOT_APPLICABLE = "7"</li>
-     * </ul>
-     * @deprecated use the method that takes a <code>HistoricStageInputDto</code> parameter
-     */
-    @Deprecated
-    public static HistoricStageResultsDto computeHistoricStage(Map<String, String> record) {
-        HistoricStageInputDto input = new HistoricStageInputDto();
-        input.setDateOfDiagnosisYear(record.get(PROP_DATE_OF_DIAGNOSIS_YEAR));
-        input.setPrimarysite(record.get(PROP_PRIMARY_SITE));
-        input.setHistologyIcdO3(record.get(PROP_HISTOLOGY_3));
-        input.setBehaviorIcdO3(record.get(PROP_BEHAVIOR_3));
-        input.setTypeOfReportingSource(record.get(PROP_TYPE_OF_REPORTING_SOURCE));
-        input.setRegistryId(record.get(PROP_REGISTRY_ID));
-        input.setCsExtension(record.get(PROP_CS_EXTENSION));
-        input.setCsLymphNodes(record.get(PROP_CS_LYMPH_NODES));
-        input.setCsMetsAtDx(record.get(PROP_CS_METS_AT_DX));
-        input.setCsSiteSpecificFactor1(record.get(PROP_CS_SITE_SPECIFIC_FACTOR1));
-        input.setCsSiteSpecificFactor2(record.get(PROP_CS_SITE_SPECIFIC_FACTOR2));
-        input.setEodCodingSys(record.get(PROP_EOD_CODING_SYSTEM));
-        input.setEodExtension(record.get(PROP_EOD10_EXTENSION));
-        input.setEodLymphNodeInvolv(record.get(PROP_EOD10_LYMPH_NODES));
-        input.setEodOld4DigitExtent(record.get(PROP_EOD4_DIGIT_EXTENSION));
-        input.setEodOld4DigitNodes(record.get(PROP_EOD4_DIGIT_NODES));
-        input.setEodOld4DigitSize(record.get(PROP_EOD4_DIGIT_SIZE));
-        input.setEodOld13Digit(record.get(PROP_EOD13_DIGIT));
-        input.setEodOld2Digit(record.get(PROP_EOD2_DIGIT));
-        return computeHistoricStage(input);
-
     }
 
     //This method uses special object of input which contains only the necessary properties to calculate historic stage

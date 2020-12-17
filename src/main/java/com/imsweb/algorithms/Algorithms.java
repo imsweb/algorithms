@@ -69,6 +69,7 @@ public class Algorithms {
     public static final String FIELD_NAME_LAST = "nameLast";
     public static final String FIELD_NAME_FIRST = "nameFirst";
     public static final String FIELD_NAME_MAIDEN = "nameMaiden";
+    public static final String FIELD_NAME_BIRTH_SURNAME = "nameBirthSurname";
     public static final String FIELD_COUNTRY_BIRTH = "birthplaceCountry";
     public static final String FIELD_DATE_OF_BIRTH = "dateOfBirth";
     public static final String FIELD_RACE1 = "race1";
@@ -200,6 +201,7 @@ public class Algorithms {
             addField(AlgorithmField.of(FIELD_NAME_LAST, 2230, 50, "Name--Last", "Last", DATA_LEVEL_PATIENT));
             addField(AlgorithmField.of(FIELD_NAME_FIRST, 2240, 50, "Name--First", "First", DATA_LEVEL_PATIENT));
             addField(AlgorithmField.of(FIELD_NAME_MAIDEN, 2390, 50, "Name--Maiden", "Maiden", DATA_LEVEL_PATIENT));
+            addField(AlgorithmField.of(FIELD_NAME_BIRTH_SURNAME, 2232, 40, "Name--Birth Surname", "Birth Sur", DATA_LEVEL_PATIENT));
             addField(AlgorithmField.of(FIELD_COUNTRY_BIRTH, 254, 3, "Birthplace--Country", "Birth Country", DATA_LEVEL_PATIENT));
             addField(AlgorithmField.of(FIELD_DATE_OF_BIRTH, 240, 8, "Date of Birth", "Birth Dt", DATA_LEVEL_PATIENT));
             addField(AlgorithmField.of(FIELD_SEX, 220, 1, "Sex", "Sex", DATA_LEVEL_PATIENT));

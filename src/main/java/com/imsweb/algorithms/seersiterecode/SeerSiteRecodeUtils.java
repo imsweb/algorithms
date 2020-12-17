@@ -32,10 +32,6 @@ public final class SeerSiteRecodeUtils {
     // algorithm name
     public static final String ALG_NAME = "SEER Site Recode";
 
-    // properties used by the algorithm
-    public static final String PROP_PRIMARY_SITE = "primarySite";
-    public static final String PROP_HISTOLOGY_3 = "histologyIcdO3";
-
     // version for the 2010+ data (http://seer.cancer.gov/siterecode/icdo3_dwhoheme/index.html)
     public static final String VERSION_2010 = "2010+";
     public static final String VERSION_2010_INFO = "SEER Site Recode ICD-O-3 2010+ Cases WHO Heme Definition";
@@ -73,7 +69,7 @@ public final class SeerSiteRecodeUtils {
     private static final Map<String, List<SeerExecutableSiteGroupDto>> _INTERNAL_DATA = new HashMap<>();
 
     // cached site regex
-    private static Pattern _SITE_PATTERN = Pattern.compile("C\\d+");
+    private static final Pattern _SITE_PATTERN = Pattern.compile("C\\d+");
 
     /**
      * Private constructor, no instantiation of this class!
@@ -86,41 +82,6 @@ public final class SeerSiteRecodeUtils {
      */
     public static Map<String, String> getAvailableVersions() {
         return Collections.unmodifiableMap(_VERSIONS);
-    }
-
-    /**
-     * Returns the calculated site recode for the provided record, unknown if it can't be calculated.
-     * @param record record
-     * @return the calculated site recode for the provided record, unknown if it can't be calculated
-     * @deprecated use the method that takes a version/site/hist
-     */
-    @Deprecated
-    public static String calculateSiteRecode(Map<String, String> record) {
-        return calculateSiteRecode(VERSION_DEFAULT, record.get(PROP_PRIMARY_SITE), record.get(PROP_HISTOLOGY_3));
-    }
-
-    /**
-     * Returns the calculated site recode for the provided version and record, unknown if it can't be calculated.
-     * @param version data version
-     * @param record record
-     * @return the calculated site recode for the provided version and record, unknown if it can't be calculated
-     * @deprecated use the method that takes a version/site/hist
-     */
-    @Deprecated
-    public static String calculateSiteRecode(String version, Map<String, String> record) {
-        return calculateSiteRecode(version, record.get(PROP_PRIMARY_SITE), record.get(PROP_HISTOLOGY_3));
-    }
-
-    /**
-     * Returns the calculated site recode for the provided parameters, unknown if it can't be calculated.
-     * @param site site
-     * @param histology histology
-     * @return the calculated site recode for the provided parameters, unknown if it can't be calculated
-     * @deprecated use the method that takes a version/site/hist and pass the VERSION_DEFAULT constant
-     */
-    @Deprecated
-    public static String calculateSiteRecode(String site, String histology) {
-        return calculateSiteRecode(VERSION_DEFAULT, site, histology);
     }
 
     /**

@@ -4,7 +4,6 @@
 package com.imsweb.algorithms.censustractpovertyindicator;
 
 import java.time.LocalDate;
-import java.util.Map;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
@@ -19,93 +18,10 @@ public final class CensusTractPovertyIndicatorUtils {
     public static final String ALG_VERSION = "10.0";
     public static final String ALG_INFO = "NAACCR Poverty Linkage Program version 10.0, released in August 2020";
 
-    //Naaccr Items Used for calculation
-    public static final String PROP_STATE_DX = "addressAtDxState";
-    public static final String PROP_COUNTY_DX_ANALYSIS = "countyAtDxAnalysis";
-    public static final String PROP_DIAGNOSIS_YEAR = "dateOfDiagnosisYear";
-    public static final String PROP_CENSUS_TRACT_2000 = "censusTract2000";
-    public static final String PROP_CENSUS_TRACT_2010 = "censusTract2010";
-
     //Unknown value for census tract poverty indicator
     public static final String POVERTY_INDICATOR_UNKNOWN = "9";
 
     private static CensusTractPovertyIndicatorDataProvider _PROVIDER;
-
-    /**
-     * Calculates the census tract poverty indicator for the provided record
-     * <br/><br/>
-     * The provided record doesn't need to contain all the input variables, but the algorithm will use the following ones:
-     * <ul>
-     * <li>addressAtDxState (#80)</li>
-     * <li>countyAtDxAnalysis (#89)</li>
-     * <li>dateOfDiagnosisYear (#390)</li>
-     * <li>censusTract2000 (#130)</li>
-     * <li>censusTract2010 (#135)</li>
-     * </ul>
-     * All those properties are defined as constants in this class.
-     * <br/><br/>
-     * The returned poverty indicator will have the following values:
-     * 1 = less than 5%
-     * 2 = greater or equal to 5%, but less than 10%
-     * 3 = greater or equal to 10%, but less than 20%
-     * 4 = greater or equal to 20%
-     * 9 = Unknown
-     * <br/><br/>
-     * @param record a map of properties representing a NAACCR line
-     * @return the computed poverty indicator value
-     * @deprecated use the method that takes a <code>CensusTractPovertyIndicatorInputDto</code> parameter
-     */
-    @Deprecated
-    public static CensusTractPovertyIndicatorOutputDto computePovertyIndicator(Map<String, String> record) {
-
-        CensusTractPovertyIndicatorInputDto input = new CensusTractPovertyIndicatorInputDto();
-        input.setAddressAtDxState(record.get(PROP_STATE_DX));
-        input.setCountyAtDxAnalysis(record.get(PROP_COUNTY_DX_ANALYSIS));
-        input.setDateOfDiagnosisYear(record.get(PROP_DIAGNOSIS_YEAR));
-        input.setCensusTract2000(record.get(PROP_CENSUS_TRACT_2000));
-        input.setCensusTract2010(record.get(PROP_CENSUS_TRACT_2010));
-
-        return computePovertyIndicator(input, true);
-    }
-
-    /**
-     * Calculates the census tract poverty indicator for the provided record.
-     * If the boolean includeRecentYears is set to true, The algorithm uses 2009-2011 data for 2012+ diagnosis years.
-     * <br/><br/>
-     * The provided record doesn't need to contain all the input variables, but the algorithm will use the following ones:
-     * <ul>
-     * <li>addressAtDxState (#80)</li>
-     * <li>countyAtDxAnalysis (#89)</li>
-     * <li>dateOfDiagnosisYear (#390)</li>
-     * <li>censusTract2000 (#130)</li>
-     * <li>censusTract2010 (#135)</li>
-     * </ul>
-     * All those properties are defined as constants in this class.
-     * <br/><br/>
-     * The returned poverty indicator will have the following values:
-     * 1 = less than 5%
-     * 2 = greater or equal to 5%, but less than 10%
-     * 3 = greater or equal to 10%, but less than 20%
-     * 4 = greater or equal to 20%
-     * 9 = Unknown
-     * <br/><br/>
-     * @param record a map of properties representing a NAACCR line
-     * @param includeRecentYears if true, the years 2012+ will be calculated using the year category 4 logic, otherwise they will be set to 9
-     * @return the computed poverty indicator value
-     * @deprecated use the method that takes a <code>CensusTractPovertyIndicatorInputDto</code> parameter
-     */
-    @Deprecated
-    public static CensusTractPovertyIndicatorOutputDto computePovertyIndicator(Map<String, String> record, boolean includeRecentYears) {
-
-        CensusTractPovertyIndicatorInputDto input = new CensusTractPovertyIndicatorInputDto();
-        input.setAddressAtDxState(record.get(PROP_STATE_DX));
-        input.setCountyAtDxAnalysis(record.get(PROP_COUNTY_DX_ANALYSIS));
-        input.setDateOfDiagnosisYear(record.get(PROP_DIAGNOSIS_YEAR));
-        input.setCensusTract2000(record.get(PROP_CENSUS_TRACT_2000));
-        input.setCensusTract2010(record.get(PROP_CENSUS_TRACT_2010));
-
-        return computePovertyIndicator(input, includeRecentYears);
-    }
 
     /**
      * Calculates the census tract poverty indicator for the provided census tract poverty indicator input dto

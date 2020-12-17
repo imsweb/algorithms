@@ -11,7 +11,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -27,13 +26,6 @@ import com.imsweb.algorithms.seersiterecode.SeerSiteRecodeUtils;
  */
 public final class CauseSpecificUtils {
 
-    public static final String PROP_PRIMARY_SITE = "primarySite";
-    public static final String PROP_SEQ_NUM_CENTRAL = "sequenceNumberCentral";
-    public static final String PROP_HISTOLOGY_ICDO3 = "histologyIcdO3";
-    public static final String PROP_DOLC_YEAR = "dateOfLastContactYear";
-    public static final String PROP_COD = "causeOfDeath";
-    public static final String PROP_ICD_REVISION_NUM = "icdRevisionNumber";
-
     //values for cause specific and cause others
     public static final String ALIVE_OR_DEAD_OF_OTHER_CAUSES = "0";
     public static final String DEAD = "1";
@@ -42,35 +34,6 @@ public final class CauseSpecificUtils {
 
     //lookup for tables
     private static final List<CauseSpecificDataDto> _DATA_SITE_SPECIFIC = new ArrayList<>();
-
-    /**
-     * Calculates cause specific and cause other death classification values for the provided record.
-     * <br/><br/>
-     * The provided record doesn't need to contain all the input variables, but the algorithm wil use the following ones:
-     * <ul>
-     * <li>sequenceNumberCentral (#380)</li>
-     * <li>icdRevisionNumber (#1920)</li>
-     * <li>causeOfDeath (#1910)</li>
-     * <li>primarySite (#400)</li>
-     * <li>histologyIcdO3 (#522)</li>
-     * <li>dateOfLastContactYear (#1750)</li>
-     * </ul>
-     * All those properties are defined as constants in this class.
-     * <br/><br/>
-     * @param record a map of properties representing a NAACCR line
-     * @return the computed cause specific and cause other death classification values. The out put values are:
-     * <ul>
-     * <li>ALIVE OR DEAD OF OTHER CAUSES = "0"</li>
-     * <li>DEAD = "1"</li>
-     * <li>MISSING UNKNOWN DEATH CODE = "8"</li>
-     * <li>SEQUENCE NOT APPLICABLE = "9"</li>
-     * </ul>
-     * @deprecated use the method that takes a <code>CauseSpecificInputDto</code> object as parameter
-     */
-    @Deprecated
-    public static CauseSpecificResultDto computeCauseSpecific(Map<String, String> record) {
-        return computeCauseSpecific(record, Calendar.getInstance().get(Calendar.YEAR));
-    }
 
     /**
      * Calculates cause specific and cause other death classification values for the provided input dto.
@@ -97,43 +60,6 @@ public final class CauseSpecificUtils {
 
     public static CauseSpecificResultDto computeCauseSpecific(CauseSpecificInputDto input) {
         return computeCauseSpecific(input, Calendar.getInstance().get(Calendar.YEAR));
-    }
-
-    /**
-     * Calculates cause specific and cause other death classification values for the provided record and cut off year.
-     * <br/><br/>
-     * The provided record doesn't need to contain all the input variables, but the algorithm wil use the following ones:
-     * <ul>
-     * <li>sequenceNumberCentral (#380)</li>
-     * <li>icdRevisionNumber (#1920)</li>
-     * <li>causeOfDeath (#1910)</li>
-     * <li>primarySite (#400)</li>
-     * <li>histologyIcdO3 (#523)</li>
-     * <li>dateOfLastContactYear (#1750)</li>
-     * </ul>
-     * All those properties are defined as constants in this class.
-     * <br/><br/>
-     * @param record a map of properties representing a NAACCR line
-     * @param cutOffYear submission year, if date of last contact is beyond this year, patient is assumed alive.
-     * @return the computed cause specific and cause other death classification values. The out put values are:
-     * <ul>
-     * <li>ALIVE OR DEAD OF OTHER CAUSES = "0"</li>
-     * <li>DEAD = "1"</li>
-     * <li>MISSING UNKNOWN DEATH CODE = "8"</li>
-     * <li>SEQUENCE NOT APPLICABLE = "9"</li>
-     * </ul>
-     * @deprecated use the method that takes a <code>CauseSpecificInputDto</code> object as parameter
-     */
-    @Deprecated
-    public static CauseSpecificResultDto computeCauseSpecific(Map<String, String> record, int cutOffYear) {
-        CauseSpecificInputDto input = new CauseSpecificInputDto();
-        input.setPrimarySite(record.get(PROP_PRIMARY_SITE));
-        input.setSequenceNumberCentral(record.get(PROP_SEQ_NUM_CENTRAL));
-        input.setHistologyIcdO3(record.get(PROP_HISTOLOGY_ICDO3));
-        input.setDateOfLastContactYear(record.get(PROP_DOLC_YEAR));
-        input.setCauseOfDeath(record.get(PROP_COD));
-        input.setIcdRevisionNumber(record.get(PROP_ICD_REVISION_NUM));
-        return computeCauseSpecific(input, cutOffYear);
     }
 
     /**

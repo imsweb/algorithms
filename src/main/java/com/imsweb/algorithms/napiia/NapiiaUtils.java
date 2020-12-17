@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 
@@ -29,18 +31,6 @@ public final class NapiiaUtils {
     public static final String ALG_NAME = "NAACCR Asian/Pacific Islander Identification Algorithm";
     public static final String ALG_VERSION = "17";
     public static final String ALG_INFO = "NHAPIIA v17 released in April 2017";
-
-    public static final String PROP_RACE1 = "race1";
-    public static final String PROP_RACE2 = "race2";
-    public static final String PROP_RACE3 = "race3";
-    public static final String PROP_RACE4 = "race4";
-    public static final String PROP_RACE5 = "race5";
-    public static final String PROP_SPANISH_HISPANIC_ORIGIN = "spanishHispanicOrigin";
-    public static final String PROP_BIRTH_PLACE_COUNTRY = "birthplaceCountry";
-    public static final String PROP_SEX = "sex";
-    public static final String PROP_NAME_LAST = "nameLast";
-    public static final String PROP_NAME_MAIDEN = "nameMaiden";
-    public static final String PROP_NAME_FIRST = "nameFirst";
 
     public static final String REASON_1_3_3 = "More than one race 04-32 and one race 96 or 97 (step 1.3.3).";
     public static final String REASON_1_3_5 = "One or more races 02-03 and one race 96 (step 1.3.5).";
@@ -107,126 +97,34 @@ public final class NapiiaUtils {
     private static final List<String> _SPANISH_ORIGIN_IS_SPANISH = Arrays.asList("1", "2", "3", "4", "5", "6", "8");
 
     //lookups
-    private static Map<String, Short> _LKUP_NAPIIA_SURNAME_CENSUS_ASIAN = new HashMap<>();
-    private static Map<String, Short> _LKUP_NAPIIA_SURNAME_CENSUS_PI = new HashMap<>();
-    private static Map<String, Short> _LKUP_NAPIIA_SURNAME_LAUD = new HashMap<>();
-    private static Map<String, Short> _LKUP_NAPIIA_GIVEN_LAUD_MALE = new HashMap<>();
-    private static Map<String, Short> _LKUP_NAPIIA_GIVEN_LAUD_FEMALE = new HashMap<>();
-    private static Map<String, Short> _LKUP_NAPIIA_SURNAME_NAACCR = new HashMap<>();
-    private static Map<String, Short> _LKUP_NAPIIA_GIVEN_NAACCR = new HashMap<>();
+    private static final Map<String, Short> _LKUP_NAPIIA_SURNAME_CENSUS_ASIAN = new HashMap<>();
+    private static final Map<String, Short> _LKUP_NAPIIA_SURNAME_CENSUS_PI = new HashMap<>();
+    private static final Map<String, Short> _LKUP_NAPIIA_SURNAME_LAUD = new HashMap<>();
+    private static final Map<String, Short> _LKUP_NAPIIA_GIVEN_LAUD_MALE = new HashMap<>();
+    private static final Map<String, Short> _LKUP_NAPIIA_GIVEN_LAUD_FEMALE = new HashMap<>();
+    private static final Map<String, Short> _LKUP_NAPIIA_SURNAME_NAACCR = new HashMap<>();
+    private static final Map<String, Short> _LKUP_NAPIIA_GIVEN_NAACCR = new HashMap<>();
 
     // internal lock to control concurrency to the data
-    private static ReentrantReadWriteLock _LOCK = new ReentrantReadWriteLock();
-
-    /**
-     * Calculates the NAPIIA value for the provided record.
-     * <br/><br/>
-     * The provided record doesn't need to contain all the input variables, but the algorithm wil use the following ones:
-     * <ul>
-     * <li>race1 (#160)</li>
-     * <li>race2 (#160)</li>
-     * <li>race3 (#160)</li>
-     * <li>race4 (#160)</li>
-     * <li>race5 (#160)</li>
-     * <li>spanishHispanicOrigin (#190)</li>
-     * <li>birthplaceCountry (#254)</li>
-     * <li>sex (#220)</li>
-     * <li>nameLast (#2230)</li>
-     * <li>nameMaiden (#2390)</li>
-     * <li>nameFirst (#2240)</li>
-     * </ul>
-     * All those properties are defined as constants in this class.
-     * <br/><br/>
-     * Note that some of those properties are part of the full NAACCR Abstract; providing only Indicence information is not enough
-     * for this algorithm.
-     * <br/><br/>
-     * This algorithm returns a result containing the calculated value, a boolean indication whether a human review is required, in which case
-     * a reason is also provided.
-     * @param record a map of properties representing a NAACCR line
-     * @return the computed NAPIIA Results Dto, which has a calculated napiia value, a boolean which indicates whether a human review is needed or not and a reason if human review is required
-     * @deprecated use the method that takes a <code>NapiiaInputRecordDto</code> object as parameter
-     */
-    @Deprecated
-    public static NapiiaResultsDto computeNapiia(Map<String, String> record) {
-        NapiiaInputRecordDto input = new NapiiaInputRecordDto();
-        input.setRace1(record.get(PROP_RACE1));
-        input.setRace2(record.get(PROP_RACE2));
-        input.setRace3(record.get(PROP_RACE3));
-        input.setRace4(record.get(PROP_RACE4));
-        input.setRace5(record.get(PROP_RACE5));
-        input.setSpanishHispanicOrigin(record.get(PROP_SPANISH_HISPANIC_ORIGIN));
-        input.setBirthplaceCountry(record.get(PROP_BIRTH_PLACE_COUNTRY));
-        input.setSex(record.get(PROP_SEX));
-        input.setNameLast(record.get(PROP_NAME_LAST));
-        input.setNameMaiden(record.get(PROP_NAME_MAIDEN));
-        input.setNameFirst(record.get(PROP_NAME_FIRST));
-        return computeNapiia(input);
-    }
-
-    /**
-     * Calculates the NAPIIA value for the provided Patient.
-     * <br/><br/>
-     * The provided patient doesn't need to contain all the input variables, but the algorithm wil use the following ones:
-     * <ul>
-     * <li>race1 (#160)</li>
-     * <li>race2 (#160)</li>
-     * <li>race3 (#160)</li>
-     * <li>race4 (#160)</li>
-     * <li>race5 (#160)</li>
-     * <li>spanishHispanicOrigin (#190)</li>
-     * <li>birthplaceCountry (#254)</li>
-     * <li>sex (#220)</li>
-     * <li>nameLast (#2230)</li>
-     * <li>nameMaiden (#2390)</li>
-     * <li>nameFirst (#2240)</li>
-     * </ul>
-     * All those properties are defined as constants in this class.
-     * <br/><br/>
-     * Note that some of those properties are part of the full NAACCR Abstract; providing only Indicence information is not enough
-     * for this algorithm.
-     * <br/><br/>
-     * This algorithm returns a result containing the calculated value, a boolean indication whether a human review is required, in which case
-     * a reason is also provided.
-     * @param patient a list of map of properties representing a NAACCR line
-     * @return the computed NAPIIA Results Dto, which has a calculated napiia value, a boolean which indicates whether a human review is needed or not and a reason if human review is required
-     * @deprecated use the method that takes a <code>NapiiaInputPatientDto</code> object as parameter
-     */
-    @Deprecated
-    public static NapiiaResultsDto computeNapiia(List<Map<String, String>> patient) {
-        NapiiaInputRecordDto input = new NapiiaInputRecordDto();
-        //Since the following properties are the same for all records lets use one of them and build a record input dto
-        if (patient != null && !patient.isEmpty()) {
-            input.setRace1(patient.get(0).get(PROP_RACE1));
-            input.setRace2(patient.get(0).get(PROP_RACE2));
-            input.setRace3(patient.get(0).get(PROP_RACE3));
-            input.setRace4(patient.get(0).get(PROP_RACE4));
-            input.setRace5(patient.get(0).get(PROP_RACE5));
-            input.setSpanishHispanicOrigin(patient.get(0).get(PROP_SPANISH_HISPANIC_ORIGIN));
-            input.setBirthplaceCountry(patient.get(0).get(PROP_BIRTH_PLACE_COUNTRY));
-            input.setSex(patient.get(0).get(PROP_SEX));
-            input.setNameLast(patient.get(0).get(PROP_NAME_LAST));
-            input.setNameMaiden(patient.get(0).get(PROP_NAME_MAIDEN));
-            input.setNameFirst(patient.get(0).get(PROP_NAME_FIRST));
-        }
-        return computeNapiia(input);
-    }
+    private static final ReentrantReadWriteLock _LOCK = new ReentrantReadWriteLock();
 
     /**
      * Calculates the NAPIIA value for the provided Patient DTO.
      * <br/><br/>
      * The provided patient dto has a list of record input dto. The record Dto has the following parameters.
      * <ul>
-     * <li>_race1</li>
-     * <li>_race2</li>
-     * <li>_race3</li>
-     * <li>_race4</li>
-     * <li>_race5</li>
-     * <li>_spanishHispanicOrigin</li>
-     * <li>_birthplaceCountry</li>
-     * <li>_sex</li>
-     * <li>_nameLast</li>
-     * <li>_nameMaiden</li>
-     * <li>_nameFirst</li>
+     * <li>race1</li>
+     * <li>race2</li>
+     * <li>race3</li>
+     * <li>race4</li>
+     * <li>race5</li>
+     * <li>spanishHispanicOrigin</li>
+     * <li>birthplaceCountry</li>
+     * <li>sex</li>
+     * <li>nameLast</li>
+     * <li>nameMaiden</li>
+     * <li>nameBirthSurname</li>
+     * <li>nameFirst</li>
      * </ul>
      * <br/><br/>
      * This algorithm returns a result containing the calculated value, a boolean indication whether a human review is required, in which case
@@ -247,17 +145,18 @@ public final class NapiiaUtils {
      * <br/><br/>
      * The provided record Dto has the following parameters.
      * <ul>
-     * <li>_race1</li>
-     * <li>_race2</li>
-     * <li>_race3</li>
-     * <li>_race4</li>
-     * <li>_race5</li>
-     * <li>_spanishHispanicOrigin</li>
-     * <li>_birthplaceCountry</li>
-     * <li>_sex</li>
-     * <li>_nameLast</li>
-     * <li>_nameMaiden</li>
-     * <li>_nameFirst</li>
+     * <li>race1</li>
+     * <li>race2</li>
+     * <li>race3</li>
+     * <li>race4</li>
+     * <li>race5</li>
+     * <li>spanishHispanicOrigin</li>
+     * <li>birthplaceCountry</li>
+     * <li>sex</li>
+     * <li>nameLast</li>
+     * <li>nameMaiden</li>
+     * <li>nameBirthSurname</li>
+     * <li>nameFirst</li>
      * </ul>
      * <br/><br/>
      * This algorithm returns a result containing the calculated value, a boolean indication whether a human review is required, in which case
@@ -474,9 +373,9 @@ public final class NapiiaUtils {
         Short result = null;
         String lastname = input.getNameLast();
         String firstname = input.getNameFirst();
-        String maidenname = input.getNameMaiden();
+        String birthSurname = StringUtils.isEmpty(input.getNameBirthSurname()) ? input.getNameMaiden() : input.getNameBirthSurname();
 
-        if (maidenname == null || maidenname.trim().isEmpty()) {
+        if (birthSurname == null || birthSurname.trim().isEmpty()) {
             if (lastname != null && !lastname.trim().isEmpty()) {
                 // F2a - Surname in Census surname
                 if (asianNOS)
@@ -506,17 +405,17 @@ public final class NapiiaUtils {
         else {
             // F2b - Maiden in Census surname
             if (asianNOS)
-                result = codeName(maidenname, _LKUP_NAPIIA_SURNAME_CENSUS_ASIAN);
+                result = codeName(birthSurname, _LKUP_NAPIIA_SURNAME_CENSUS_ASIAN);
             if (pacificIslanderNOS && result == null)
-                result = codeName(maidenname, _LKUP_NAPIIA_SURNAME_CENSUS_PI);
+                result = codeName(birthSurname, _LKUP_NAPIIA_SURNAME_CENSUS_PI);
 
             // F3b - Maiden name in Lauderdale surname
             if (asianNOS && result == null)
-                result = codeName(truncateName(maidenname), _LKUP_NAPIIA_SURNAME_LAUD);
+                result = codeName(truncateName(birthSurname), _LKUP_NAPIIA_SURNAME_LAUD);
 
             // F4b - Maiden name in NAACCR surname
             if (asianNOS && result == null)
-                result = codeName(maidenname, _LKUP_NAPIIA_SURNAME_NAACCR);
+                result = codeName(birthSurname, _LKUP_NAPIIA_SURNAME_NAACCR);
 
             if (firstname != null && !firstname.trim().isEmpty()) {
                 // F5b - Given name in Lauderdale given name

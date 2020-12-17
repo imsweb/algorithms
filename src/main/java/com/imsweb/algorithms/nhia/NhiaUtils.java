@@ -17,6 +17,8 @@ import java.util.TreeMap;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 
@@ -32,16 +34,6 @@ public final class NhiaUtils {
     public static final String ALG_NAME = "NAACCR Hispanic Identification Algorithm";
     public static final String ALG_VERSION = "17";
     public static final String ALG_INFO = "NHAPIIA v17 released in April 2017";
-
-    public static final String PROP_SPANISH_HISPANIC_ORIGIN = "spanishHispanicOrigin";
-    public static final String PROP_NAME_LAST = "nameLast";
-    public static final String PROP_NAME_MAIDEN = "nameMaiden";
-    public static final String PROP_BIRTH_PLACE_COUNTRY = "birthplaceCountry";
-    public static final String PROP_RACE1 = "race1";
-    public static final String PROP_SEX = "sex";
-    public static final String PROP_IHS = "ihs";
-    public static final String PROP_COUNTY_DX_ANALYSIS = "countyAtDxAnalysis";
-    public static final String PROP_STATE_DX = "addressAtDxState";
 
     public static final String NHIA_NON_HISPANIC = "0";
     public static final String NHIA_MEXICAN = "1";
@@ -77,12 +69,6 @@ public final class NhiaUtils {
     // spanish/Hispanic origins for indirect identification
     private static final List<String> _INDIRECT_IDENTIFICATION_ORIGINS = Arrays.asList("0", "6", "7", "9");
 
-    // birthplace countries corresponding to NHIA of NON-HISPANIC (called Low Probability of Hispanic Ethnicity in documentation)
-    private static final List<String> _BPC_NON_HISP = Arrays.asList("VIR", "ASM", "KIR", "FSM", "COK", "TUV", "GUM", "MNP", "MHL", "TKL", "UMI", "BRA", "GUY", "SUR", "GUF", "GBR", "XEN", "ENG", "GGY",
-            "JEY", "IMN", "WLS", "SCT", "NIR", "IRL", "XSC", "ISL", "NOR", "SJM", "DNK", "FRO", "SWE", "FIN", "ALA", "XGR", "DEU", "NLD", "BEL", "LUX", "CHE", "AUT", "LIE", "FRA", "MCO", "PRT", "CPV",
-            "ITA", "SMR", "VAT", "ROU", "XSL", "POL", "XCZ", "CSK", "CZE", "SWK", "SVK", "XYG", "YUG", "BIH", "HRV", "MKD", "MNE", "SRB", "SVN", "BGR", "RUS", "XUM", "UKR", "MDA", "BLR", "EST", "LVA",
-            "LTU", "GRC", "HUN", "ALB", "GIB", "MLT", "CYP", "ZZE", "PHL");
-
     // Birthplace countries corresponding to NHIA of MEXICAN (under the High Probability of Hispanic Ethnicity in documentation)
     private static final List<String> _BPC_MEXICAN = Collections.singletonList("MEX");
 
@@ -113,139 +99,23 @@ public final class NhiaUtils {
     private static Set<String> _RARELY_HISPANIC_NAMES;
 
     // internal lock to control concurrency to the data
-    private static ReentrantReadWriteLock _LOCK = new ReentrantReadWriteLock();
-
-    /**
-     * Calculates the NHIA value for the provided record and option.
-     * <br/><br/>
-     * The provided record doesn't need to contain all the input variables, but the algorithm wil use the following ones:
-     * <ul>
-     * <li>spanishHispanicOrigin (#190)</li>
-     * <li>birthplaceCountry (#254)</li>
-     * <li>race1 (#160)</li>
-     * <li>ihs (#192)</li>
-     * <li>addressAtDxState (#80)</li>
-     * <li>countyAtDxAnalysis (#89)</li>
-     * <li>sex (#220)</li>
-     * <li>nameLast (#2230)</li>
-     * <li>nameMaiden (#2390)</li>
-     * </ul>
-     * All those properties are defined as constants in this class.
-     * <br/><br/>
-     * Note that some of those properties are part of the full NAACCR Abstract; providing only Indicence information is not enough
-     * for this algorithm.
-     * <br/><br/>
-     * The optiosn are also defined as constants in this class:
-     * <ul>
-     * <li>O: always apply the surname portion of the algorithm (corresponds to the 'All Records' option in the SAS algorithm</li>
-     * <li>1: run the surname portion only if Spanish/Hispanic Origin is 7 or 9 (corresponds to the 'OPTION1' option in the SAS algorithm)</li>
-     * <li>2: run the surname portion only if Spanish/Hispanic Origin is 7 and convert cases with a Spanish/Hispanic Origin of 9 to 0
-     * (corresponds to the 'OPTION2' option in the SAS algorithm)</li>
-     * </ul>
-     * If you are not sure which option to provide, use NHIA_OPTION_SEVEN_AND_NINE since this is the default that the SAS algorithm uses.
-     * @param record a map of properties representing a NAACCR line
-     * @param option option indicating when to apply the Indirect Identification based on names for spanish/hispanic original values of 0, 7 and 9
-     * @return the computed NHIA value
-     * @deprecated use the method that takes a <code>NhiaInputPatientDto</code> or a <code>NhiaInputRecordDto</code> parameter.
-     */
-    @Deprecated
-    public static NhiaResultsDto computeNhia(Map<String, String> record, String option) {
-        NhiaInputRecordDto input = new NhiaInputRecordDto();
-        input.setSpanishHispanicOrigin(record.get(PROP_SPANISH_HISPANIC_ORIGIN));
-        input.setBirthplaceCountry(record.get(PROP_BIRTH_PLACE_COUNTRY));
-        input.setSex(record.get(PROP_SEX));
-        input.setRace1(record.get(PROP_RACE1));
-        input.setIhs(record.get(PROP_IHS));
-        input.setNameLast(record.get(PROP_NAME_LAST));
-        input.setNameMaiden(record.get(PROP_NAME_MAIDEN));
-        input.setCountyAtDxAnalysis(record.get(PROP_COUNTY_DX_ANALYSIS));
-        input.setStateAtDx(record.get(PROP_STATE_DX));
-        return computeNhia(input, option);
-    }
-
-    /**
-     * Calculates the NHIA value for the provided patient and option.
-     * <br/><br/>
-     * The provided patient doesn't need to contain all the input variables, but the algorithm wil use the following ones:
-     * <ul>
-     * <li>spanishHispanicOrigin (#190)</li>
-     * <li>birthplaceCountry (#254)</li>
-     * <li>race1 (#160)</li>
-     * <li>ihs (#192)</li>
-     * <li>addressAtDxState (#80)</li>
-     * <li>countyAtDxAnalysis (#89)</li>
-     * <li>sex (#220)</li>
-     * <li>nameLast (#2230)</li>
-     * <li>nameMaiden (#2390)</li>
-     * </ul>
-     * All those properties are defined as constants in this class.
-     * <br/><br/>
-     * Note that some of those properties are part of the full NAACCR Abstract; providing only Indicence information is not enough
-     * for this algorithm.
-     * <br/><br/>
-     * The optiosn are also defined as constants in this class:
-     * <ul>
-     * <li>O: always apply the surname portion of the algorithm (corresponds to the 'All Records' option in the SAS algorithm</li>
-     * <li>1: run the surname portion only if Spanish/Hispanic Origin is 7 or 9 (corresponds to the 'OPTION1' option in the SAS algorithm)</li>
-     * <li>2: run the surname portion only if Spanish/Hispanic Origin is 7 and convert cases with a Spanish/Hispanic Origin of 9 to 0
-     * (corresponds to the 'OPTION2' option in the SAS algorithm)</li>
-     * </ul>
-     * If you are not sure which option to provide, use NHIA_OPTION_SEVEN_AND_NINE since this is the default that the SAS algorithm uses.
-     * @param patient a List of map of properties representing a NAACCR line
-     * @param option option indicating when to apply the Indirect Identification based on names for spanish/hispanic original values of 0, 7 and 9
-     * @return the computed NHIA value
-     * @deprecated use the method that takes a <code>NhiaInputPatientDto</code> or a <code>NhiaInputRecordDto</code> parameter.
-     */
-    @Deprecated
-    public static NhiaResultsDto computeNhia(List<Map<String, String>> patient, String option) {
-        NhiaInputRecordDto input = new NhiaInputRecordDto();
-        //since the following properties are the same for all records, lets get the first one
-        if (patient != null && !patient.isEmpty()) {
-            input.setSpanishHispanicOrigin(patient.get(0).get(PROP_SPANISH_HISPANIC_ORIGIN));
-            input.setBirthplaceCountry(patient.get(0).get(PROP_BIRTH_PLACE_COUNTRY));
-            input.setSex(patient.get(0).get(PROP_SEX));
-            input.setRace1(patient.get(0).get(PROP_RACE1));
-            input.setIhs(patient.get(0).get(PROP_IHS));
-            input.setNameLast(patient.get(0).get(PROP_NAME_LAST));
-            input.setNameMaiden(patient.get(0).get(PROP_NAME_MAIDEN));
-            //The following 2 properties are specific to each record, lets get the first one for now.
-            input.setCountyAtDxAnalysis(patient.get(0).get(PROP_COUNTY_DX_ANALYSIS));
-            input.setStateAtDx(patient.get(0).get(PROP_STATE_DX));
-            //The option (to run the surname portion) is applied for a patient if hispanic percentage is < 5 % for all of the counties of DX.
-            //Lets first assume all counties are less than 5% hispanic.
-            boolean lowHispanicCounty = true;
-            //Then lets go through all records and see if there are counties with hispanic percentage greater than 5%, if we get one consider the countyDx of the patient as high hispanic
-            for (Map<String, String> record : patient)
-                if (!isLowHispanicEthnicityCounty(record.get(PROP_COUNTY_DX_ANALYSIS), record.get(PROP_STATE_DX))) {
-                    lowHispanicCounty = false;
-                    //Lets use that county which is more than 5%
-                    input.setStateAtDx(record.get(PROP_STATE_DX));
-                    input.setCountyAtDxAnalysis(record.get(PROP_COUNTY_DX_ANALYSIS));
-                    break;
-                }
-            //if lowHispanicCounty is still true, that means all counties of Dx are low hispanic, So we should consider the patient is in low hispanic county.
-            //lets use unknown county which is always considered as low hispanic
-            if (lowHispanicCounty)
-                input.setCountyAtDxAnalysis("999");
-        }
-
-        return computeNhia(input, option);
-    }
+    private static final ReentrantReadWriteLock _LOCK = new ReentrantReadWriteLock();
 
     /**
      * Calculates the NHIA value for the provided patient DTO and option.
      * <br/><br/>
      * The provided patient dto should have a list of record input dto which has the following parameters:
      * <ul>
-     * <li>_spanishHispanicOrigin</li>
-     * <li>_birthplaceCountry</li>
-     * <li>_race1</li>
-     * <li>_ihs</li>
-     * <li>_addressAtDxState</li>
-     * <li>_countyAtDxAnalysis</li>
-     * <li>_sex</li>
-     * <li>_nameLast</li>
-     * <li>_nameMaiden</li>
+     * <li>spanishHispanicOrigin</li>
+     * <li>birthplaceCountry</li>
+     * <li>race1</li>
+     * <li>ihs</li>
+     * <li>addressAtDxState</li>
+     * <li>countyAtDxAnalysis</li>
+     * <li>sex</li>
+     * <li>nameLast</li>
+     * <li>nameMaiden</li>
+     * <li>nameBirthSurname</li>
      * </ul>
      * <br/><br/>
      * The optiosn are also defined as constants in this class:
@@ -272,6 +142,7 @@ public final class NhiaUtils {
             input.setIhs(firstRecord.getIhs());
             input.setNameLast(firstRecord.getNameLast());
             input.setNameMaiden(firstRecord.getNameMaiden());
+            input.setNameBirthSurname(firstRecord.getNameBirthSurname());
             //The following 2 properties are specific to each record, lets get the first one for now.
             input.setCountyAtDxAnalysis(firstRecord.getCountyAtDxAnalysis());
             input.setStateAtDx(firstRecord.getStateAtDx());
@@ -300,15 +171,16 @@ public final class NhiaUtils {
      * <br/><br/>
      * The provided record dto has the following parameters:
      * <ul>
-     * <li>_spanishHispanicOrigin</li>
-     * <li>_birthplaceCountry</li>
-     * <li>_race1</li>
-     * <li>_ihs</li>
-     * <li>_addressAtDxState</li>
-     * <li>_countyAtDxAnalysis</li>
-     * <li>_sex</li>
-     * <li>_nameLast</li>
-     * <li>_nameMaiden</li>
+     * <li>spanishHispanicOrigin</li>
+     * <li>birthplaceCountry</li>
+     * <li>race1</li>
+     * <li>ihs</li>
+     * <li>addressAtDxState</li>
+     * <li>countyAtDxAnalysis</li>
+     * <li>sex</li>
+     * <li>nameLast</li>
+     * <li>nameMaiden</li>
+     * <li>nameBirthSurname</li>
      * </ul>
      * <br/><br/>
      * The optiosn are also defined as constants in this class:
@@ -416,7 +288,7 @@ public final class NhiaUtils {
         String sex = input.getSex();
         String ihs = input.getIhs();
         String nameLast = input.getNameLast();
-        String nameMaiden = input.getNameMaiden();
+        String birthSurname = StringUtils.isEmpty(input.getNameBirthSurname()) ? input.getNameMaiden() : input.getNameBirthSurname();
 
         // try to use race (if it is in excluded race, no need to apply surname)
         if (_RACE_EXCLUDED.contains(race1) || "1".equals(ihs))
@@ -431,9 +303,9 @@ public final class NhiaUtils {
                     result = NHIA_NON_HISPANIC;
             }
             else if (_GENDER_FEMALE.equals(sex)) {
-                if (isHeavilyHispanic(nameMaiden))
+                if (isHeavilyHispanic(birthSurname))
                     result = NHIA_SURNAME_ONLY;
-                else if (isRarelyHispanic(nameMaiden))
+                else if (isRarelyHispanic(birthSurname))
                     result = NHIA_NON_HISPANIC;
                 else {
                     if (isHeavilyHispanic(nameLast))
