@@ -1,8 +1,11 @@
 ## Algorithms Version History
 
-**Changes in version 2.19**
+**Changes in version 3.0**
 
+- Changed NHIA and NAPIIA algorithms to use the new birth surname field, the old maiden name field is still used if the new one is blank.
 - Fixed IARC algorithms that sometimes returned the full histology code instead of the computed histology group; changed site group field to be 3 characters long instead of 4.
+- Removed all deprecated methods.
+- Updated CSV library from version 5.1 to version 5.2.
 
 **Changes in version 2.18**
 
