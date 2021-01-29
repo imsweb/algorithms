@@ -27,7 +27,7 @@ public class IcccAlgorithm extends AbstractAlgorithm {
     public IcccAlgorithm() {
         super(Algorithms.ALG_ICCC, IcccRecodeUtils.ALG_NAME, IcccRecodeUtils.VERSION_WHO_2008, IcccRecodeUtils.VERSION_WHO_2008_INFO);
 
-        _url = "http://seer.cancer.gov/iccc";
+        _url = "https://seer.cancer.gov/iccc/iccc-who2008.html";
 
         _inputFields.add(Algorithms.getField(FIELD_PRIMARY_SITE));
         _inputFields.add(Algorithms.getField(FIELD_HIST_O3));

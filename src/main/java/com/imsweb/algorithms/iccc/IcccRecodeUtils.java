@@ -36,6 +36,10 @@ public final class IcccRecodeUtils {
     public static final String VERSION_WHO_2008 = "ICD-O-3/WHO 2008";
     public static final String VERSION_WHO_2008_INFO = "International Classification of Childhood Cancer based on ICD-O-3/WHO 2008";
 
+    // version for the 2010+ data/IARC 2017 (https://seer.cancer.gov/iccc/iccc-iarc-2017.html)
+    public static final String VERSION_THIRD_EDITION_IARC_2017 = "Third Edition/IARC 2017";
+    public static final String VERSION_THIRD_EDITION_IARC_2017_INFO = "International Classification of Childhood Cancer, Third edition based on ICD-O-3/IARC 2017";
+
     // cached versions
     private static final Map<String, String> _VERSIONS = new HashMap<>();
 
@@ -45,6 +49,7 @@ public final class IcccRecodeUtils {
     static {
         _VERSIONS.put(VERSION_THIRD_EDITION, VERSION_THIRD_EDITION_INFO);
         _VERSIONS.put(VERSION_WHO_2008, VERSION_WHO_2008_INFO);
+        _VERSIONS.put(VERSION_THIRD_EDITION_IARC_2017, VERSION_THIRD_EDITION_IARC_2017_INFO);
     }
 
     // unknown value
@@ -160,6 +165,8 @@ public final class IcccRecodeUtils {
             url = Thread.currentThread().getContextClassLoader().getResource("iccc/iccc-data-third-edition.csv");
         else if (VERSION_WHO_2008.equals(version))
             url = Thread.currentThread().getContextClassLoader().getResource("iccc/iccc-data-who-2008.csv");
+        else if (VERSION_THIRD_EDITION_IARC_2017.equals(version))
+            url = Thread.currentThread().getContextClassLoader().getResource("iccc/iccc-data-third-edition-iarc-2017.csv");
         else
             throw new RuntimeException("Unsupported version: " + version);
 
