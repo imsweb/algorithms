@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 3.1**
+
+- Added new utility class to return schema-specific lookup for neoadjuvTherapyTreatmentEffect (#1634) field.
+
 **Changes in version 3.0**
 
 - Changed NHIA and NAPIIA algorithms to use the new birth surname field, the old maiden name field is still used if the new one is blank.
