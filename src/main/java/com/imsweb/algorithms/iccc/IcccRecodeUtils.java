@@ -10,8 +10,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
@@ -61,6 +63,9 @@ public final class IcccRecodeUtils {
 
     // cached runtime data
     private static final Map<String, List<IcccExecutableSiteGroupDto>> _INTERNAL_DATA = new HashMap<>();
+
+    // cached regexes
+    private static final Pattern _SITE_REGEX = Pattern.compile("C\\d+");
 
     /**
      * Private constructor, no instanciation of this class!
@@ -126,11 +131,11 @@ public final class IcccRecodeUtils {
     public static String calculateSiteRecode(String version, String site, String histology, String behavior, boolean recodeExtended) {
         String result = ICCC_UNKNOWN_RECODE;
 
-        if (StringUtils.isBlank(site) || !site.matches("C\\d+") || StringUtils.isBlank(histology) || !histology.matches("\\d+"))
+        if (StringUtils.isBlank(site) || !_SITE_REGEX.matcher(site).matches() || StringUtils.isBlank(histology) || !NumberUtils.isDigits(histology))
             return result;
 
-        //Only the WHO 2008 version requires behavior
-        if (VERSION_WHO_2008.equals(version) && (StringUtils.isBlank(behavior) || !behavior.matches("\\d+")))
+        // behavior is not required for all versions...
+        if (!VERSION_THIRD_EDITION.equals(version) && (StringUtils.isBlank(behavior) || !NumberUtils.isDigits(behavior)))
             return result;
 
         ensureVersion(version);
@@ -142,7 +147,7 @@ public final class IcccRecodeUtils {
 
         for (IcccExecutableSiteGroupDto dto : _INTERNAL_DATA.get(version)) {
             if (dto.matches(s, h, b)) {
-                result = recodeExtended ? (StringUtils.isEmpty(dto.getRecodeExtended()) ? "999" : dto.getRecodeExtended()) : dto.getRecode();
+                result = recodeExtended ? (StringUtils.isEmpty(dto.getRecodeExtended()) ? ICCC_UNKNOWN_RECODE : dto.getRecodeExtended()) : dto.getRecode();
                 break;
             }
         }
@@ -195,7 +200,7 @@ public final class IcccRecodeUtils {
                 String children = data[8];
                 String recodeExtended = "";
                 String behaviorInclusions = "";
-                if (VERSION_WHO_2008.equals(version)) {
+                if (!VERSION_THIRD_EDITION.equals(version)) {
                     recodeExtended = data[9];
                     behaviorInclusions = data[10];
                 }
@@ -220,7 +225,7 @@ public final class IcccRecodeUtils {
                 if (!StringUtils.isBlank(recode)) {
                     if (!recode.matches("\\d{3}"))
                         throw new RuntimeException("Invalid recode: " + recode + " for id " + id);
-                    if (VERSION_WHO_2008.equals(version) && !recodeExtended.matches("\\d{3}"))
+                    if (!VERSION_THIRD_EDITION.equals(version) && !recodeExtended.matches("\\d{3}"))
                         throw new RuntimeException("Invalid recode extended: " + recodeExtended + " for id " + id);
 
                     IcccExecutableSiteGroupDto executable = new IcccExecutableSiteGroupDto();
