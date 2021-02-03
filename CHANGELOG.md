@@ -2,6 +2,7 @@
 
 **Changes in version 3.1**
 
+- Added new version of the ICCC algorithm and switched the default algorithm to that version.
 - Added new utility class to return schema-specific lookup for neoadjuvTherapyTreatmentEffect (#1634) field.
 
 **Changes in version 3.0**

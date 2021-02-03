@@ -25,9 +25,9 @@ import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
 public class IcccAlgorithm extends AbstractAlgorithm {
 
     public IcccAlgorithm() {
-        super(Algorithms.ALG_ICCC, IcccRecodeUtils.ALG_NAME, IcccRecodeUtils.VERSION_WHO_2008, IcccRecodeUtils.VERSION_WHO_2008_INFO);
+        super(Algorithms.ALG_ICCC, IcccRecodeUtils.ALG_NAME, IcccRecodeUtils.VERSION_THIRD_EDITION_IARC_2017, IcccRecodeUtils.VERSION_THIRD_EDITION_IARC_2017_INFO);
 
-        _url = "https://seer.cancer.gov/iccc/iccc-who2008.html";
+        _url = "https://seer.cancer.gov/iccc/iccc-iarc-2017.html";
 
         _inputFields.add(Algorithms.getField(FIELD_PRIMARY_SITE));
         _inputFields.add(Algorithms.getField(FIELD_HIST_O3));
