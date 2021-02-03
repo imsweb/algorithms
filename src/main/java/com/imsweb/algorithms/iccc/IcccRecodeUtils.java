@@ -46,7 +46,7 @@ public final class IcccRecodeUtils {
     private static final Map<String, String> _VERSIONS = new HashMap<>();
 
     // default version
-    public static final String VERSION_DEFAULT = VERSION_WHO_2008;
+    public static final String VERSION_DEFAULT = VERSION_THIRD_EDITION_IARC_2017;
 
     static {
         _VERSIONS.put(VERSION_THIRD_EDITION, VERSION_THIRD_EDITION_INFO);

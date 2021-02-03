@@ -23,6 +23,8 @@ public class IcccRecodeUtilsTest {
         Assert.assertFalse(IcccRecodeUtils.getRawData(VERSION_WHO_2008).isEmpty());
         Assert.assertFalse(IcccRecodeUtils.getRawData(VERSION_THIRD_EDITION).isEmpty());
         Assert.assertFalse(IcccRecodeUtils.getRawData(VERSION_THIRD_EDITION_IARC_2017).isEmpty());
+
+        Assert.assertTrue(IcccRecodeUtils.getAvailableVersions().containsKey(IcccRecodeUtils.VERSION_DEFAULT));
     }
 
     @Test
@@ -117,17 +119,17 @@ public class IcccRecodeUtilsTest {
         Assert.assertEquals("999", IcccRecodeUtils.calculateSiteRecode(VERSION_THIRD_EDITION_IARC_2017, "C182", "8000", "", true));
         Assert.assertEquals("999", IcccRecodeUtils.calculateSiteRecode(VERSION_THIRD_EDITION_IARC_2017, null, null, null, true));
         Assert.assertEquals("999", IcccRecodeUtils.calculateSiteRecode(VERSION_THIRD_EDITION_IARC_2017, "C182", "8000", null, true));
-        Assert.assertEquals("114", IcccRecodeUtils.calculateSiteRecode(VERSION_THIRD_EDITION_IARC_2017, "C182", "8000", "3", true));
-        Assert.assertEquals("114", IcccRecodeUtils.calculateSiteRecode(VERSION_THIRD_EDITION_IARC_2017, "C239", "8000", "3", true));
+        Assert.assertEquals("115", IcccRecodeUtils.calculateSiteRecode(VERSION_THIRD_EDITION_IARC_2017, "C182", "8000", "3", true));
+        Assert.assertEquals("115", IcccRecodeUtils.calculateSiteRecode(VERSION_THIRD_EDITION_IARC_2017, "C239", "8000", "3", true));
         Assert.assertEquals("011", IcccRecodeUtils.calculateSiteRecode(VERSION_THIRD_EDITION_IARC_2017, "C239", "9673", "3", true));
         Assert.assertEquals("999", IcccRecodeUtils.calculateSiteRecode(VERSION_THIRD_EDITION_IARC_2017, "C239", "9673", "1", true));
-        Assert.assertEquals("072", IcccRecodeUtils.calculateSiteRecode(VERSION_THIRD_EDITION_IARC_2017, "C700", "9080", "0", true));
+        Assert.assertEquals("073", IcccRecodeUtils.calculateSiteRecode(VERSION_THIRD_EDITION_IARC_2017, "C700", "9080", "0", true));
         Assert.assertEquals("011", IcccRecodeUtils.calculateSiteRecode(VERSION_THIRD_EDITION_IARC_2017, "C098", "9673", "3", true));
-        Assert.assertEquals("058", IcccRecodeUtils.calculateSiteRecode(VERSION_THIRD_EDITION_IARC_2017, "C239", "9140", "3", true));
-        Assert.assertEquals("112", IcccRecodeUtils.calculateSiteRecode(VERSION_THIRD_EDITION_IARC_2017, "C239", "9055", "3", true));
-        Assert.assertEquals("114", IcccRecodeUtils.calculateSiteRecode(VERSION_THIRD_EDITION_IARC_2017, "C008", "8000", "3", true));
+        Assert.assertEquals("059", IcccRecodeUtils.calculateSiteRecode(VERSION_THIRD_EDITION_IARC_2017, "C239", "9140", "3", true));
+        Assert.assertEquals("113", IcccRecodeUtils.calculateSiteRecode(VERSION_THIRD_EDITION_IARC_2017, "C239", "9055", "3", true));
+        Assert.assertEquals("115", IcccRecodeUtils.calculateSiteRecode(VERSION_THIRD_EDITION_IARC_2017, "C008", "8000", "3", true));
         Assert.assertEquals("002", IcccRecodeUtils.calculateSiteRecode(VERSION_THIRD_EDITION_IARC_2017, "C424", "9823", "3", true));
-        Assert.assertEquals("114", IcccRecodeUtils.calculateSiteRecode(VERSION_THIRD_EDITION_IARC_2017, "C809", "8000", "3", true));
+        Assert.assertEquals("115", IcccRecodeUtils.calculateSiteRecode(VERSION_THIRD_EDITION_IARC_2017, "C809", "8000", "3", true));
     }
 
     @Test
