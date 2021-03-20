@@ -44,9 +44,9 @@ public class BehaviorRecodeUtils {
         //Step 2, The behavior code for all the urinary bladder cases is set to a value of 3 (malignant).
         if (iSite >= 670 && iSite <= 679)
             iBehavior = 3;
-        //Step 3, Any case with an ICD-O-3 behavior of 1 and ICD-O-3 histology of 9421-9422 will have the behavior set to 3.
-        if (iBehavior == 1 && (iHist == 9421 || iHist == 9422))
-            iBehavior = 3;
+
+        //Step 3, Any case with an ICD-O-3 behavior of 1 and ICD-O-3 histology of 9421-9422 will have the behavior set to 3
+        //   - this step was removed
 
         //Step 4, The recode is created based on  primary site, ICD-O-3 histology, and ICD-O-3 behavior:
 

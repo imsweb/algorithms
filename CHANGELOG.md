@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 3.2**
+
+- Changed Behavior recode logic for 9421-9422 histology codes.
+
 **Changes in version 3.1**
 
 - Added new version of the ICCC algorithm and switched the default algorithm to that version.

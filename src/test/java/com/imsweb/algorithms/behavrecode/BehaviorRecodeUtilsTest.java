@@ -66,7 +66,7 @@ public class BehaviorRecodeUtilsTest {
         rec.put(_PROP_HISTOLOGY_3, "9421");
         rec.put(_PROP_DATE_OF_DIAGNOSIS_YEAR, "2005");
         //All cases not covered above, with an ICD-O-3 behavior code of 3 (malignant) are coded to 3 (malignant) in the new variable.
-        Assert.assertEquals("3", computeBehaviorRecode(rec)); //behavior is changed from 1 to 3
+        Assert.assertEquals("5", computeBehaviorRecode(rec)); //behavior NO LONGER changed from 1 to 3
         //Not in the special histology 9421 & 9422
         rec.put(_PROP_HISTOLOGY_3, "9420");
         Assert.assertEquals("5", computeBehaviorRecode(rec));
@@ -86,8 +86,6 @@ public class BehaviorRecodeUtilsTest {
         rec.put(_PROP_HISTOLOGY_3, "8000");
         rec.put(_PROP_DATE_OF_DIAGNOSIS_YEAR, "2005");
         Assert.assertEquals("1", computeBehaviorRecode(rec));
-        rec.put(_PROP_HISTOLOGY_3, "9422");
-        Assert.assertEquals("3", computeBehaviorRecode(rec));
 
         //Cases with ICD-O-3 behavior code of 2 (in situ) are coded as 2 (in situ) in the new variable.
         rec.put(_PROP_PRIMARY_SITE, "C669");
