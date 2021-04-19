@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 3.3**
+
+- Fixed PRCDA and UIHO algorithms that were ignoring first line of their internal CSV data file.
+
 **Changes in version 3.2**
 
 - Changed Behavior recode logic for 9421-9422 histology codes.
