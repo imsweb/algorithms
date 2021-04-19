@@ -109,7 +109,7 @@ public class PrcdaUihoCsvData implements PrcdaUihoDataProvider {
     private Map<String, Map<String, CountyData>> loadPrcdaData() {
         Map<String, Map<String, CountyData>> result = new HashMap<>();
         try (Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("prcdauiho/prcda-2018.csv"), StandardCharsets.US_ASCII)) {
-            for (String[] row : new CSVReaderBuilder(reader).withSkipLines(1).build().readAll()) {
+            for (String[] row : new CSVReaderBuilder(reader).build().readAll()) {
                 String state = row[0], county = row[1], prcda = row[2];
                 CountyData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new CountyData());
                 dto.setPRCDA(StringUtils.leftPad(prcda, 1, '0'));
@@ -125,7 +125,7 @@ public class PrcdaUihoCsvData implements PrcdaUihoDataProvider {
     private Map<String, Map<String, CountyData>> loadUihoData() {
         Map<String, Map<String, CountyData>> result = new HashMap<>();
         try (Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("prcdauiho/uiho-2020.csv"), StandardCharsets.US_ASCII)) {
-            for (String[] row : new CSVReaderBuilder(reader).withSkipLines(1).build().readAll()) {
+            for (String[] row : new CSVReaderBuilder(reader).build().readAll()) {
                 String state = row[0], county = row[1], uiho = row[2], uihoFacility = row[3];
                 CountyData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new CountyData());
                 dto.setUIHO(StringUtils.leftPad(uiho, 1, '0'));
