@@ -2,6 +2,7 @@
 
 **Changes in version 3.3**
 
+- Added site-specific surgery tables for 2021 DX year.
 - Fixed PRCDA and UIHO algorithms that were ignoring first line of their internal CSV data file.
 
 **Changes in version 3.2**
