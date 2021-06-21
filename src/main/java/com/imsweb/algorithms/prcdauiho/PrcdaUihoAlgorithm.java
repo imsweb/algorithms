@@ -15,7 +15,7 @@ import com.imsweb.algorithms.AlgorithmOutput;
 import com.imsweb.algorithms.Algorithms;
 import com.imsweb.algorithms.internal.Utils;
 
-import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_DX;
+import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS;
 import static com.imsweb.algorithms.Algorithms.FIELD_IHS_PRCDA;
 import static com.imsweb.algorithms.Algorithms.FIELD_STATE_DX;
 import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
@@ -31,7 +31,7 @@ public class PrcdaUihoAlgorithm extends AbstractAlgorithm {
         super(Algorithms.ALG_PRCDA_UIHO, PrcdaUihoUtils.ALG_NAME, PrcdaUihoUtils.ALG_VERSION, PrcdaUihoUtils.ALG_INFO);
 
         _inputFields.add(Algorithms.getField(FIELD_STATE_DX));
-        _inputFields.add(Algorithms.getField(FIELD_COUNTY_DX));
+        _inputFields.add(Algorithms.getField(FIELD_COUNTY_AT_DX_ANALYSIS));
 
         _outputFields.add(Algorithms.getField(FIELD_IHS_PRCDA));
         _outputFields.add(Algorithms.getField(FIELD_UIHO));
@@ -51,7 +51,7 @@ public class PrcdaUihoAlgorithm extends AbstractAlgorithm {
         for (Map<String, Object> inputTumor : Utils.extractTumors(Utils.extractPatient(input))) {
             PrcdaUihoInputDto inputDto = new PrcdaUihoInputDto();
             inputDto.setAddressAtDxState((String)inputTumor.get(FIELD_STATE_DX));
-            inputDto.setAddressAtDxCounty((String)inputTumor.get(FIELD_COUNTY_DX));
+            inputDto.setAddressAtDxCounty((String)inputTumor.get(FIELD_COUNTY_AT_DX_ANALYSIS));
 
             PrcdaUihoOutputDto outputDto = PrcdaUihoUtils.computePrcdaUiho(inputDto);
 

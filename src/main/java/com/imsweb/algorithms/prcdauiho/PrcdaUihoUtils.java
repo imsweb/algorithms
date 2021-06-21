@@ -21,8 +21,8 @@ import org.apache.commons.lang3.math.NumberUtils;
 public final class PrcdaUihoUtils {
 
     public static final String ALG_NAME = "NPCR PRCDA & UIHO Linkage Program";
-    public static final String ALG_VERSION = "2.0";
-    public static final String ALG_INFO = "NPCR PRCDA & UIHO Linkage Program version 2.0, released in July 2020";
+    public static final String ALG_VERSION = "2.1";
+    public static final String ALG_INFO = "NPCR PRCDA & UIHO Linkage Program version 2.1, released in June 2021";
 
     private static final List<String> _STATES = Arrays.asList("AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "GA", "HI", "ID", "IL",
             "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH",
@@ -67,8 +67,8 @@ public final class PrcdaUihoUtils {
      * <br/><br/>
      * The provided record doesn't need to contain all the input variables, but the algorithm will use the following ones:
      * <ul>
-     * <li>addressAtDxState (#80)</li>
-     * <li>addressAtDxCounty (#90)</li>
+     * <li>addrAtDxState (#80)</li>
+     * <li>countyAtDxAnalysis (#89)</li>
      * </ul>
      * All those properties are defined as constants in this class.
      * <br/><br/>

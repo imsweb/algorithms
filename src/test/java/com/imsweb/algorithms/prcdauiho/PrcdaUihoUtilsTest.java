@@ -13,15 +13,16 @@ import org.junit.Test;
 import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.ENTIRE_STATE_NON_PRCDA;
 import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.ENTIRE_STATE_PRCDA;
 import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.MIXED_PRCDA;
-import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.PRCDA_UNKNOWN;
 import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.PRCDA_NO;
+import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.PRCDA_UNKNOWN;
 import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.PRCDA_YES;
-import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.UIHO_FACILITY_UNKNOWN;
 import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.UIHO_FACILITY_NONE;
+import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.UIHO_FACILITY_UNKNOWN;
 import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.UIHO_NO;
 import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.UIHO_UNKNOWN;
 
 public class PrcdaUihoUtilsTest {
+
     @Test
     public void assertInfo() {
         Assert.assertNotNull(PrcdaUihoUtils.ALG_VERSION);
@@ -37,33 +38,13 @@ public class PrcdaUihoUtilsTest {
         List<String> validCounty = Arrays.asList("001", "003", "005", "007", "017", "097", "999");
         List<String> invalCounty = Arrays.asList("", "ABC", "01", null);
 
-        List<String> prcdaYes = Arrays.asList(
-                "AZ001", "AZ003", "AZ005", "AZ007", "AZ017",
-                                           "CO007",
-                "MN001",          "MN005", "MN007", "MN017",
-                "NV001", "NV003", "NV005", "NV007", "NV017",
-                                           "SE007", "SE017",
-                                                             "VA097"
-        );
-        List<String> prcdaNo = Arrays.asList(
-                                                             "AZ097",
-                "CO001", "CO003", "CO005",          "CO017", "CO097",
-                         "MN003",                            "MN097",
-                                                             "NV097",
-                "SE001", "SE003", "SE005",                   "SE097",
-                "VA001", "VA003", "VA005", "VA007", "VA017"
-        );
-
-        List<String> uihoNo = Arrays.asList(
-                "AK001", "AK003", "AK005", "AK007", "AK017", "AK097",
-                "AZ001", "AZ003",          "AZ007", "AZ017", "AZ097",
-                         "CO003",          "CO007", "CO017", "CO097",
-                "GA001", "GA003", "GA005", "GA007", "GA017", "GA097",
-                "MN001", "MN003", "MN005", "MN007",          "MN097",
-                         "NV003",          "NV007", "NV017", "NV097",
-                "SE001", "SE003", "SE005", "SE007", "SE017", "SE097",
-                "VA001", "VA003", "VA005", "VA007", "VA017", "VA097"
-        );
+        List<String> prcdaYes = Arrays.asList("AZ001", "AZ003", "AZ005", "AZ007", "AZ017", "CO007", "MN001", "MN005", "MN007", "MN017", "NV001", "NV003", "NV005", "NV007", "NV017", "SE007", "SE017",
+                "VA097");
+        List<String> prcdaNo = Arrays.asList("AZ097", "CO001", "CO003", "CO005", "CO017", "CO097", "MN003", "MN097", "NV097", "SE001", "SE003", "SE005", "SE097", "VA001", "VA003", "VA005", "VA007",
+                "VA017");
+        List<String> uihoNo = Arrays.asList("AK001", "AK003", "AK005", "AK007", "AK017", "AK097", "AZ001", "AZ003", "AZ007", "AZ017", "AZ097", "CO003", "CO007", "CO017", "CO097", "GA001", "GA003",
+                "GA005", "GA007", "GA017", "GA097", "MN001", "MN003", "MN005", "MN007", "MN097", "NV003", "NV007", "NV017", "NV097", "SE001", "SE003", "SE005", "SE007", "SE017", "SE097", "VA001",
+                "VA003", "VA005", "VA007", "VA017", "VA097");
 
         List<String> states = new ArrayList<>();
         states.addAll(validStates);
@@ -107,7 +88,7 @@ public class PrcdaUihoUtilsTest {
                             Assert.assertEquals(PRCDA_NO, output.getPRCDA());
                         }
                         // note: if AK or GA ever change to "MIXED_PRCDA" add them here
-                        else if ("AZ999".equals(stCnty) || "CO999".equals(stCnty) || "MN999".equals(stCnty) || "SE999".equals(stCnty) || "VA999".equals(stCnty) ) {
+                        else if ("AZ999".equals(stCnty) || "CO999".equals(stCnty) || "MN999".equals(stCnty) || "SE999".equals(stCnty) || "VA999".equals(stCnty)) {
                             Assert.assertEquals(PRCDA_UNKNOWN, output.getPRCDA());
                         }
                     }
