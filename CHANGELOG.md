@@ -1,5 +1,11 @@
 ## Algorithms Version History
 
+**Changes in version 3.4**
+
+- Updated NAACCR XML library from version 1.4.10 to version 1.4.17
+- Updated CSV library from version 5.2 to version 5.4.
+- Updated Apache commons-lang library from version 3.9 to version 3.11.
+
 **Changes in version 3.3**
 
 - Added site-specific surgery tables for 2021 DX year.
