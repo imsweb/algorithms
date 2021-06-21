@@ -290,7 +290,7 @@ public class AlgorithmsTest {
         input.setPatient(patMap);
         tumMap = new HashMap<>();
         tumMap.put(Algorithms.FIELD_STATE_DX, "CA");
-        tumMap.put(Algorithms.FIELD_COUNTY_DX, "013");
+        tumMap.put(Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS, "013");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
         tumor = Utils.extractTumors(alg.execute(input).getPatient()).get(0);
         Assert.assertEquals("0", tumor.get(FIELD_IHS_PRCDA));
