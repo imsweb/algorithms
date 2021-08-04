@@ -20,7 +20,7 @@ import com.imsweb.algorithms.internal.CountryData;
 import com.imsweb.algorithms.internal.CountyData;
 import com.imsweb.algorithms.internal.StateData;
 
-import static com.imsweb.algorithms.ephtsubcounty.EphtSubCountyUtils.EPHT_2010_GEO_ID_NOT_FOUND;
+import static com.imsweb.algorithms.ephtsubcounty.EphtSubCountyUtils.EPHT_2010_GEO_ID_UNKNOWN;
 
 /**
  * The purpose of this class is to get the EPHT 2010 GEO ID 5K and EPHT 2010 GEO ID 20K for the provided
@@ -38,13 +38,13 @@ public class EphtSubCountyCsvData implements EphtSubCountyDataProvider {
 
         StateData stateData = CountryData.getInstance().getEphtSubCountyData(state);
         if (stateData == null)
-            return EPHT_2010_GEO_ID_NOT_FOUND;
+            return EPHT_2010_GEO_ID_UNKNOWN;
         CountyData countyData = stateData.getCountyData(county);
         if (countyData == null)
-            return EPHT_2010_GEO_ID_NOT_FOUND;
+            return EPHT_2010_GEO_ID_UNKNOWN;
         CensusData censusData = countyData.getCensusData(censusTract);
         if (censusData == null)
-            return EPHT_2010_GEO_ID_NOT_FOUND;
+            return EPHT_2010_GEO_ID_UNKNOWN;
 
         return censusData.getEpht2010GeoId5k();
     }
@@ -56,13 +56,13 @@ public class EphtSubCountyCsvData implements EphtSubCountyDataProvider {
 
         StateData stateData = CountryData.getInstance().getEphtSubCountyData(state);
         if (stateData == null)
-            return EPHT_2010_GEO_ID_NOT_FOUND;
+            return EPHT_2010_GEO_ID_UNKNOWN;
         CountyData countyData = stateData.getCountyData(county);
         if (countyData == null)
-            return EPHT_2010_GEO_ID_NOT_FOUND;
+            return EPHT_2010_GEO_ID_UNKNOWN;
         CensusData censusData = countyData.getCensusData(censusTract);
         if (censusData == null)
-            return EPHT_2010_GEO_ID_NOT_FOUND;
+            return EPHT_2010_GEO_ID_UNKNOWN;
 
         return censusData.getEpht2010GeoId20k();
     }
@@ -72,7 +72,7 @@ public class EphtSubCountyCsvData implements EphtSubCountyDataProvider {
         Map<String, Map<String, Map<String, CensusData>>> result = new HashMap<>();
         try (Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("ephtsubcounty/epht-sub-counties.csv"), StandardCharsets.US_ASCII)) {
             for (String[] row : new CSVReaderBuilder(reader).withSkipLines(1).build().readAll()) {
-                String state = row[0], county = row[1], censusTract = row[2], epht5k = row[2], epht20k = row[3];
+                String state = row[0], county = row[1], censusTract = row[2], epht5k = row[3], epht20k = row[4];
                 CensusData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new HashMap<>()).computeIfAbsent(censusTract, k -> new CensusData());
                 dto.setEpht2010GeoId20k(StringUtils.leftPad(epht20k, 11, '0'));
                 dto.setEpht2010GeoId5k(StringUtils.leftPad(epht5k, 11, '0'));

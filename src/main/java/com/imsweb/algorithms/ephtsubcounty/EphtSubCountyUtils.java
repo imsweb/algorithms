@@ -3,15 +3,6 @@
  */
 package com.imsweb.algorithms.ephtsubcounty;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
-import org.apache.commons.lang3.math.NumberUtils;
-
-import static com.imsweb.algorithms.ruralurban.RuralUrbanDataProvider.TRACT_CATEGORY_2;
-
 /**
  * This class can be used to calculate PRCDA, UIHO, and UIHO facility.
  * <br/><br/>
@@ -25,9 +16,8 @@ public final class EphtSubCountyUtils {
     public static final String ALG_NAME = "EPHT SubCounty";
     public static final String ALG_VERSION = "1.0";
     public static final String ALG_INFO = "EPHT SubCounty version 1.0, released in June 2021";
-
-    public static final String EPHT_2010_GEO_ID_UNKNOWN = "99999999999";
-    public static final String EPHT_2010_GEO_ID_NOT_FOUND = "C";
+    
+    public static final String EPHT_2010_GEO_ID_UNKNOWN = "C";
 
     private static EphtSubCountyDataProvider _PROVIDER;
 
