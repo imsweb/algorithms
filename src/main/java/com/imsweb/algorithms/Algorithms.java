@@ -59,6 +59,7 @@ public class Algorithms {
     public static final String ALG_COUNTY_AT_DIAGNOSIS_ANALYSIS = "county-at-diagnosis-analysis";
     public static final String ALG_PRCDA_UIHO = "prcda-uiho";
     public static final String ALG_ACS_LINKAGE = "acs-linkage";
+    public static final String ALG_EPHT_SUBCOUNTY = "epht-subcounty";
 
     // special properties
     public static final String FIELD_TUMORS = "tumors";
@@ -174,6 +175,8 @@ public class Algorithms {
     public static final String FIELD_ACS_POV1418_OTHER_MULTI = "acsPctPov1418OtherMulti";
     public static final String FIELD_ACS_POV1418_WHITE_NON_HISP = "acsPctPov1418WhiteNonHisp";
     public static final String FIELD_ACS_POV1418_HISPANIC = "acsPctPov1418Hispanic";
+    public static final String FIELD_EPHT_2010_GEOID_5K = "epht2010GeoId5k";
+    public static final String FIELD_EPHT_2010_GEOID_20K = "epht2010GeoId20k";
 
     // options
     public static final String PARAM_NHIA_OPTION = "nhiaOption";

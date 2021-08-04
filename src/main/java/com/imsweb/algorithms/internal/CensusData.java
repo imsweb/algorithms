@@ -53,6 +53,10 @@ public class CensusData {
     private String _acsPctPov1418OtherMulti;
     private String _acsPctPov1418White;
     private String _acsPctPov1418WhiteNonHisp;
+    
+    // EPHT SubCounty
+    private String _epht2010GeoId5k;
+    private String _epht2010GeoId20k;
 
     public String getAcsPctPov0610AIAN() {
         return _acsPctPov0610AIAN;
@@ -348,5 +352,21 @@ public class CensusData {
 
     public void setYostQuintile1418US(String str) {
         _yostQuintile1418US = str;
+    }
+
+    public String getEpht2010GeoId20k() {
+        return _epht2010GeoId20k;
+    }
+
+    public void setEpht2010GeoId20k(String epht2010GeoId20k) {
+        _epht2010GeoId20k = epht2010GeoId20k;
+    }
+
+    public String getEpht2010GeoId5k() {
+        return _epht2010GeoId5k;
+    }
+
+    public void setEpht2010GeoId5k(String epht2010GeoId5k) {
+        _epht2010GeoId5k = epht2010GeoId5k;
     }
 }
