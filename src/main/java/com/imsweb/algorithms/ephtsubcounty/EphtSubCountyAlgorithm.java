@@ -21,12 +21,11 @@ import static com.imsweb.algorithms.Algorithms.FIELD_EPHT_2010_GEOID_20K;
 import static com.imsweb.algorithms.Algorithms.FIELD_EPHT_2010_GEOID_5K;
 import static com.imsweb.algorithms.Algorithms.FIELD_STATE_DX;
 import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
-import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.PRCDA_UNKNOWN;
-import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.UIHO_UNKNOWN;
+import static com.imsweb.algorithms.ephtsubcounty.EphtSubCountyUtils.EPHT_2010_GEO_ID_UNKNOWN;
 
-public class EhptSubCountyAlgorithm extends AbstractAlgorithm {
+public class EphtSubCountyAlgorithm extends AbstractAlgorithm {
 
-    public EhptSubCountyAlgorithm() {
+    public EphtSubCountyAlgorithm() {
         super(Algorithms.ALG_EPHT_SUBCOUNTY, EphtSubCountyUtils.ALG_NAME, EphtSubCountyUtils.ALG_VERSION, EphtSubCountyUtils.ALG_INFO);
 
         _inputFields.add(Algorithms.getField(FIELD_STATE_DX));
@@ -36,8 +35,8 @@ public class EhptSubCountyAlgorithm extends AbstractAlgorithm {
         _outputFields.add(Algorithms.getField(FIELD_EPHT_2010_GEOID_5K));
         _outputFields.add(Algorithms.getField(FIELD_EPHT_2010_GEOID_20K));
 
-        _unknownValues.put(FIELD_EPHT_2010_GEOID_5K, Collections.singletonList(PRCDA_UNKNOWN));
-        _unknownValues.put(FIELD_EPHT_2010_GEOID_20K, Collections.singletonList(UIHO_UNKNOWN));
+        _unknownValues.put(FIELD_EPHT_2010_GEOID_5K, Collections.singletonList(EPHT_2010_GEO_ID_UNKNOWN));
+        _unknownValues.put(FIELD_EPHT_2010_GEOID_20K, Collections.singletonList(EPHT_2010_GEO_ID_UNKNOWN));
     }
 
     @Override

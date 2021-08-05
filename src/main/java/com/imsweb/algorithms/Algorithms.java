@@ -16,7 +16,7 @@ import com.imsweb.algorithms.behavrecode.SeerBehaviorRecodeAlgorithm;
 import com.imsweb.algorithms.causespecific.DeathClassificationAlgorithm;
 import com.imsweb.algorithms.censustractpovertyindicator.CensusTractPovertyIndicatorAlgorithm;
 import com.imsweb.algorithms.countyatdiagnosisanalysis.CountyAtDxAnalysisAlgorithm;
-import com.imsweb.algorithms.ephtsubcounty.EhptSubCountyAlgorithm;
+import com.imsweb.algorithms.ephtsubcounty.EphtSubCountyAlgorithm;
 import com.imsweb.algorithms.iarc.IarcAlgorithm;
 import com.imsweb.algorithms.iccc.IcccAlgorithm;
 import com.imsweb.algorithms.napiia.NapiiaAlgorithm;
@@ -331,7 +331,7 @@ public class Algorithms {
             addAlgorithm(new CountyAtDxAnalysisAlgorithm());
             addAlgorithm(new PrcdaUihoAlgorithm());
             addAlgorithm(new YostAcsPovertyAlgorithm());
-            addAlgorithm(new EhptSubCountyAlgorithm());
+            addAlgorithm(new EphtSubCountyAlgorithm());
         }
         finally {
             _LOCK.writeLock().unlock();
