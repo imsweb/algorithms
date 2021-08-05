@@ -1,0 +1,17 @@
+/*
+ * Copyright (C) 2021 Information Management Services, Inc.
+ */
+package com.imsweb.algorithms.tractestcongressdist;
+
+public interface TractEstCongressDistDataProvider {
+
+    /**
+     * Returns rural urban commuting area (RUCA) code for provided year category, state of dx, county of dx for analysis, and census tract.
+     * <p/>
+     * @param state state at DX
+     * @param county county at DX for analysis
+     * @param censusTract census tract
+     * @return the corresponding rural urban commuting area code
+     */
+    String getTractEstCongressDist(String state, String county, String censusTract);
+}

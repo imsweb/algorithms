@@ -42,6 +42,7 @@ public class CountryData {
     private boolean _prcdaInitialized = false;
     private boolean _uihoInitialized = false;
     private boolean _yostAcsPovertyInitialized = false;
+    private boolean _tractEstCongressDistInitialized = false;
 
     // internal lock to control concurrency
     private final ReentrantReadWriteLock _lock = new ReentrantReadWriteLock();
@@ -419,6 +420,59 @@ public class CountryData {
                 }
             }
             _uihoInitialized = true;
+        }
+        finally {
+            _lock.writeLock().unlock();
+        }
+    }
+
+    /**
+     * Returns requested state data to be used by the Tract-Estimated Congressional District algorithm.
+     */
+    public StateData getTractEstCongressDistStateData(String state) {
+        _lock.readLock().lock();
+        try {
+            if (!_tractEstCongressDistInitialized)
+                throw new RuntimeException("Tract-Estimated Congressional District data cannot be access before it has been initialized!");
+            return _stateData.get(state);
+        }
+        finally {
+            _lock.readLock().unlock();
+        }
+    }
+
+    /**
+     * Returns true if the Tract-Estimated Congressional District data has been initialized, false otherwise.
+     */
+    public boolean isTractEstCongressDistDataInitialized() {
+        _lock.readLock().lock();
+        try {
+            return _tractEstCongressDistInitialized;
+        }
+        finally {
+            _lock.readLock().unlock();
+        }
+    }
+
+    /**
+     * Initializes the given Tract-Estimated Congressional District data (this call will make all other access to the data structure block).
+     */
+    public void initializeTractEstCongressDistData(Map<String, Map<String, Map<String, CensusData>>> data) {
+        _lock.writeLock().lock();
+        try {
+            if (!_tractEstCongressDistInitialized) {
+                for (Map.Entry<String, Map<String, Map<String, CensusData>>> stateEntry : data.entrySet()) {
+                    StateData stateData = _stateData.computeIfAbsent(stateEntry.getKey(), k -> new StateData());
+                    for (Map.Entry<String, Map<String, CensusData>> countyEntry : stateEntry.getValue().entrySet()) {
+                        CountyData countyData = stateData.getData().computeIfAbsent(countyEntry.getKey(), k -> new CountyData());
+                        for (Map.Entry<String, CensusData> censusEntry : countyEntry.getValue().entrySet()) {
+                            CensusData censusData = countyData.getData().computeIfAbsent(censusEntry.getKey(), k -> new CensusData());
+                            censusData.setTractEstCongressDist(censusEntry.getValue().getTractEstCongressDist());
+                        }
+                    }
+                }
+            }
+            _tractEstCongressDistInitialized = true;
         }
         finally {
             _lock.writeLock().unlock();
