@@ -16,7 +16,7 @@ public class TractEstCongressDistUtils {
     private static TractEstCongressDistDataProvider _PROVIDER;
 
     /**
-     * Calculates the urban rural indicator code (uric2000, uric2010) for the provided input DTO
+     * Calculates the Tract Estimated Congressional Districts code for the provided input DTO
      * <br/><br/>
      * The provided input dto has the following parameters used in the calculation:
      * <ul>
@@ -26,13 +26,11 @@ public class TractEstCongressDistUtils {
      * </ul>
      * All those properties are defined as constants in this class.
      * <br/><br/>
-     * The returned urban rural census will have the following values depending on the census tract (2000, or 2010):
+     * The returned Tract Estimated Congressional Districts will have the following values :
      * <ul>
-     * <li>1 = All urban - the percentage of the population in an urban area is 100%</li>
-     * <li>2 = Mostly urban - the percentage of the population in an urban area is between >=50% and <100%</li>
-     * <li>3 = Mostly rural - the percentage of the population in an urban area is between >0% and <50%</li>
-     * <li>4 = All rural - the percentage of the population in an urban area is 0%</li>
-     * <li>9 = The percentage of the population in an urban or rural area is unknown</li>
+     * <li>00-53 = The percentage of the population in an urban or rural area is unknown</li>
+     * <li>98 = Unknown value</li>
+     * <li>ZZ = </li>
      * <li>A = State, county, or tract are invalid</li>
      * <li>B = State and tract are valid, but county was not reported</li>
      * <li>C = State + county + tract combination was not found</li>
@@ -40,7 +38,7 @@ public class TractEstCongressDistUtils {
      * </ul>
      * <br/><br/>
      * @param input a <code>TractEstCongressDistInputDto</code> input object
-     * @return the computed rural urban census value
+     * @return the computed Tract Estimated Congressional Districts value
      */
     public static TractEstCongressDistOutputDto computeTractEstCongressDist(TractEstCongressDistInputDto input) {
         TractEstCongressDistOutputDto result = new TractEstCongressDistOutputDto();
