@@ -13,6 +13,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import com.imsweb.algorithms.ayasiterecode.AyaSiteRecodeAlgorithm;
 import com.imsweb.algorithms.behavrecode.SeerBehaviorRecodeAlgorithm;
+import com.imsweb.algorithms.cancerreportingzone.CancerReportingZoneAlgorithm;
 import com.imsweb.algorithms.causespecific.DeathClassificationAlgorithm;
 import com.imsweb.algorithms.censustractpovertyindicator.CensusTractPovertyIndicatorAlgorithm;
 import com.imsweb.algorithms.countyatdiagnosisanalysis.CountyAtDxAnalysisAlgorithm;
@@ -59,6 +60,7 @@ public class Algorithms {
     public static final String ALG_COUNTY_AT_DIAGNOSIS_ANALYSIS = "county-at-diagnosis-analysis";
     public static final String ALG_PRCDA_UIHO = "prcda-uiho";
     public static final String ALG_ACS_LINKAGE = "acs-linkage";
+    public static final String ALG_CANCER_REPORTING_ZONE = "cancre-reporting-zone";
 
     // special properties
     public static final String FIELD_TUMORS = "tumors";
@@ -174,6 +176,7 @@ public class Algorithms {
     public static final String FIELD_ACS_POV1418_OTHER_MULTI = "acsPctPov1418OtherMulti";
     public static final String FIELD_ACS_POV1418_WHITE_NON_HISP = "acsPctPov1418WhiteNonHisp";
     public static final String FIELD_ACS_POV1418_HISPANIC = "acsPctPov1418Hispanic";
+    public static final String FIELD_CANCER_REPORTING_ZONE = "cancerReportingZone";
 
     // options
     public static final String PARAM_NHIA_OPTION = "nhiaOption";
@@ -307,6 +310,7 @@ public class Algorithms {
             addField(AlgorithmField.of(FIELD_ACS_POV1418_OTHER_MULTI, null, 6, "ACS Pct Poverty (2014-2018, Other/Multiracial)", "ACS Pov 1418 Other/Multiracial", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_ACS_POV1418_WHITE_NON_HISP, null, 6, "ACS Pct Poverty (2014-2018, White, Non-Hispanic)", "ACS Pov 1418 Non-Hispanic", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_ACS_POV1418_HISPANIC, null, 6, "ACS Pct Poverty (2014-2018, Hispanic)", "ACS Pov 1418 Hispanic", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_CANCER_REPORTING_ZONE, null, 8, "Cancer Reporting Zone", "Cancer Reporting Zone", DATA_LEVEL_TUMOR));
 
             // algorithms
             addAlgorithm(new NhiaAlgorithm());
@@ -325,6 +329,7 @@ public class Algorithms {
             addAlgorithm(new CountyAtDxAnalysisAlgorithm());
             addAlgorithm(new PrcdaUihoAlgorithm());
             addAlgorithm(new YostAcsPovertyAlgorithm());
+            addAlgorithm(new CancerReportingZoneAlgorithm());
         }
         finally {
             _LOCK.writeLock().unlock();

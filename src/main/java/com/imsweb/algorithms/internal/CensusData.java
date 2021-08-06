@@ -53,6 +53,9 @@ public class CensusData {
     private String _acsPctPov1418OtherMulti;
     private String _acsPctPov1418White;
     private String _acsPctPov1418WhiteNonHisp;
+    
+    // Cancer Reporting Zone
+    private String _cancerReportingZone;
 
     public String getAcsPctPov0610AIAN() {
         return _acsPctPov0610AIAN;
@@ -348,5 +351,13 @@ public class CensusData {
 
     public void setYostQuintile1418US(String str) {
         _yostQuintile1418US = str;
+    }
+
+    public String getCancerReportingZone() {
+        return _cancerReportingZone;
+    }
+
+    public void setCancerReportingZone(String cancerReportingZone) {
+        _cancerReportingZone = cancerReportingZone;
     }
 }
