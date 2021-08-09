@@ -60,7 +60,7 @@ public class Algorithms {
     public static final String ALG_COUNTY_AT_DIAGNOSIS_ANALYSIS = "county-at-diagnosis-analysis";
     public static final String ALG_PRCDA_UIHO = "prcda-uiho";
     public static final String ALG_ACS_LINKAGE = "acs-linkage";
-    public static final String ALG_CANCER_REPORTING_ZONE = "cancre-reporting-zone";
+    public static final String ALG_CANCER_REPORTING_ZONE = "cancer-reporting-zone";
 
     // special properties
     public static final String FIELD_TUMORS = "tumors";
