@@ -4,7 +4,7 @@
 package com.imsweb.algorithms.ephtsubcounty;
 
 /**
- * This class can be used to calculate PRCDA, UIHO, and UIHO facility.
+ * This class can be used to calculate EPHT 2010 GEO ID 5K and EPHT 2010 GEO ID 20K.
  * <br/><br/>
  * https://seer.cancer.gov/seerstat/variables/countyattribs/static.html#chsda
  * <br/><br/>
@@ -15,7 +15,7 @@ public final class EphtSubCountyUtils {
 
     public static final String ALG_NAME = "EPHT SubCounty";
     public static final String ALG_VERSION = "1.0";
-    public static final String ALG_INFO = "EPHT SubCounty version 1.0, released in June 2021";
+    public static final String ALG_INFO = "EPHT SubCounty version 1.0, released in August 2021";
     
     public static final String EPHT_2010_GEO_ID_UNKNOWN = "C";
 
