@@ -7,7 +7,7 @@ public class TractEstCongressDistUtils {
 
     public static final String ALG_NAME = "Tract-Estimated Congressional Districts";
     public static final String ALG_VERSION = "1.0";
-    public static final String ALG_INFO = "Tract-Estimated Congressional Districts version 1.0 released in September 2018";
+    public static final String ALG_INFO = "Tract-Estimated Congressional Districts version 1.0 released in August 2021";
 
     //Unknown values for each code
     public static final String TRACT_EST_CONGRESS_DIST_UNKNOWN = "C";
@@ -28,9 +28,9 @@ public class TractEstCongressDistUtils {
      * <br/><br/>
      * The returned Tract Estimated Congressional Districts will have the following values :
      * <ul>
-     * <li>00-53 = The percentage of the population in an urban or rural area is unknown</li>
+     * <li>00-53 = the Tract Estimated Congressional District value</li>
      * <li>98 = Unknown value</li>
-     * <li>ZZ = </li>
+     * <li>ZZ = Unknown value</li>
      * <li>A = State, county, or tract are invalid</li>
      * <li>B = State and tract are valid, but county was not reported</li>
      * <li>C = State + county + tract combination was not found</li>
