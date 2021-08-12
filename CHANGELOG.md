@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 3.5**
+
+- Added new algorithm to calculate Tract Estimated Congressional Districts.
+
 **Changes in version 3.4**
 
 - Changed PRCDA and UIHO algorithms to use County at DX Analysis instead of reported County at DX.
