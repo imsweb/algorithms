@@ -18,27 +18,27 @@ import com.imsweb.algorithms.internal.CountryData;
 import com.imsweb.algorithms.internal.CountyData;
 import com.imsweb.algorithms.internal.StateData;
 
-import static com.imsweb.algorithms.cancerreportingzone.CancerReportingZoneUtils.CANCER_REPORTING_ZONE_UNKNOWN;
+import static com.imsweb.algorithms.cancerreportingzone.CancerReportingZoneUtils.CANCER_REPORTING_ZONE_UNK_C;
 
 public class CancerReportingZoneCsvData implements CancerReportingZoneDataProvider {
 
     @Override
     public String getCancerReportingZone(String state, String county, String censusTract) {
         if (state == null || county == null || censusTract == null)
-            return CANCER_REPORTING_ZONE_UNKNOWN;
+            return CANCER_REPORTING_ZONE_UNK_C;
 
         if (!CountryData.getInstance().isCancerReportingZoneDataInitialized())
             CountryData.getInstance().initializeCancerReportingZoneData(loadCancerReportingZoneData());
 
         StateData stateData = CountryData.getInstance().getCancerReportingZoneData(state);
         if (stateData == null)
-            return CANCER_REPORTING_ZONE_UNKNOWN;
+            return CANCER_REPORTING_ZONE_UNK_C;
         CountyData countyData = stateData.getCountyData(county);
         if (countyData == null)
-            return CANCER_REPORTING_ZONE_UNKNOWN;
+            return CANCER_REPORTING_ZONE_UNK_C;
         CensusData censusData = countyData.getCensusData(censusTract);
         if (censusData == null)
-            return CANCER_REPORTING_ZONE_UNKNOWN;
+            return CANCER_REPORTING_ZONE_UNK_C;
 
         return censusData.getCancerReportingZone();
     }

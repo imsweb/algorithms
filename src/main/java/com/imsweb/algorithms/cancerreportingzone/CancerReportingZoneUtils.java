@@ -10,7 +10,9 @@ public class CancerReportingZoneUtils {
     public static final String ALG_INFO = "Cancer Reporting Zones version 1.0 released in August 2021";
 
     //Unknown values for each code
-    public static final String CANCER_REPORTING_ZONE_UNKNOWN = "C";
+    public static final String CANCER_REPORTING_ZONE_UNK_A = "A";
+    public static final String CANCER_REPORTING_ZONE_UNK_C = "C";
+    public static final String CANCER_REPORTING_ZONE_UNK_D = "D";
 
     // data provider
     private static CancerReportingZoneDataProvider _PROVIDER;
@@ -42,9 +44,9 @@ public class CancerReportingZoneUtils {
         input.applyRecodes();
 
         if (!input.isStateValidOrMissingOrUnknown() || !input.isCountyValidOrMissingOrUnknown() || !input.isCensusTract2010ValidOrMissingOrUnknown())
-            result.setCancerReportingZone("A");
+            result.setCancerReportingZone(CANCER_REPORTING_ZONE_UNK_A);
         else if (input.isStateMissingOrUnknown() || input.isCountyMissingOrUnknown() || input.isCensusTract2010MissingOrUnknown())
-            result.setCancerReportingZone("D");
+            result.setCancerReportingZone(CANCER_REPORTING_ZONE_UNK_D);
         else if ("000".equals(input.getCountyAtDxAnalysis()))
             result.setCancerReportingZone("B");
         else {
@@ -53,7 +55,7 @@ public class CancerReportingZoneUtils {
             result.setCancerReportingZone(_PROVIDER.getCancerReportingZone(input.getAddressAtDxState(), input.getCountyAtDxAnalysis(), input.getCensusTract2010()));
         }
         if (result.getCancerReportingZone() == null)
-            result.setCancerReportingZone(CANCER_REPORTING_ZONE_UNKNOWN);
+            result.setCancerReportingZone(CANCER_REPORTING_ZONE_UNK_C);
 
         return result;
     }

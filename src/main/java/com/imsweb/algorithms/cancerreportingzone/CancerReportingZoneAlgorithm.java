@@ -4,7 +4,7 @@
 package com.imsweb.algorithms.cancerreportingzone;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +20,8 @@ import static com.imsweb.algorithms.Algorithms.FIELD_CENSUS_2010;
 import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS;
 import static com.imsweb.algorithms.Algorithms.FIELD_STATE_DX;
 import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
-import static com.imsweb.algorithms.cancerreportingzone.CancerReportingZoneUtils.CANCER_REPORTING_ZONE_UNKNOWN;
+import static com.imsweb.algorithms.cancerreportingzone.CancerReportingZoneUtils.CANCER_REPORTING_ZONE_UNK_A;
+import static com.imsweb.algorithms.cancerreportingzone.CancerReportingZoneUtils.CANCER_REPORTING_ZONE_UNK_D;
 
 public class CancerReportingZoneAlgorithm extends AbstractAlgorithm {
 
@@ -33,7 +34,7 @@ public class CancerReportingZoneAlgorithm extends AbstractAlgorithm {
 
         _outputFields.add(Algorithms.getField(FIELD_CANCER_REPORTING_ZONE));
 
-        _unknownValues.put(FIELD_CANCER_REPORTING_ZONE, Collections.singletonList(CANCER_REPORTING_ZONE_UNKNOWN));
+        _unknownValues.put(FIELD_CANCER_REPORTING_ZONE, Arrays.asList(CANCER_REPORTING_ZONE_UNK_A, CANCER_REPORTING_ZONE_UNK_D));
     }
 
     @Override
