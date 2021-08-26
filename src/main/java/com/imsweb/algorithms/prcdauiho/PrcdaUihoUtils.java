@@ -41,8 +41,6 @@ public final class PrcdaUihoUtils {
     public static final String PRCDA_UNKNOWN = "9";
     public static final String UIHO_NO = "0";
     public static final String UIHO_UNKNOWN = "9";
-    public static final String UIHO_FACILITY_NONE = "00";
-    public static final String UIHO_FACILITY_UNKNOWN = "99";
 
     // States where every county is PRCDA
     public static final List<String> ENTIRE_STATE_PRCDA = Collections.unmodifiableList(Arrays.asList("AK", "CT", "NV", "OK", "SC"));
@@ -97,7 +95,6 @@ public final class PrcdaUihoUtils {
         if (!isStateAtDxValid(input.getAddressAtDxState())) {
             result.setPRCDA(PRCDA_UNKNOWN);
             result.setUIHO(UIHO_UNKNOWN);
-            result.setUIHOFacility(UIHO_FACILITY_UNKNOWN);
         }
         else {
             if (_PROVIDER == null)
@@ -116,14 +113,10 @@ public final class PrcdaUihoUtils {
                 result.setPRCDA(_PROVIDER.getPRCDA(input.getAddressAtDxState(), input.getAddressAtDxCounty()));
             }
             // UIHO, UIHO FACILITY
-            if (!isCountyAtDxValid(input.getAddressAtDxCounty())) {
+            if (!isCountyAtDxValid(input.getAddressAtDxCounty()))
                 result.setUIHO(UIHO_UNKNOWN);
-                result.setUIHOFacility(UIHO_FACILITY_UNKNOWN);
-            }
-            else {
+            else
                 result.setUIHO(_PROVIDER.getUIHO(input.getAddressAtDxState(), input.getAddressAtDxCounty()));
-                result.setUIHOFacility(_PROVIDER.getUIHOFacility(input.getAddressAtDxState(), input.getAddressAtDxCounty()));
-            }
         }
 
         // get methods should never return null, but lets make sure we don't return null value anyways
@@ -131,8 +124,6 @@ public final class PrcdaUihoUtils {
             result.setPRCDA(PRCDA_NO);
         if (result.getUIHO() == null)
             result.setUIHO(UIHO_NO);
-        if (result.getUIHOFacility() == null)
-            result.setUIHOFacility(UIHO_FACILITY_NONE);
 
         return result;
     }

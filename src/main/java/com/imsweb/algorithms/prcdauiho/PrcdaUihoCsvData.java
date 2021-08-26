@@ -25,8 +25,6 @@ import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.MIXED_PRCDA;
 import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.PRCDA_NO;
 import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.PRCDA_UNKNOWN;
 import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.PRCDA_YES;
-import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.UIHO_FACILITY_NONE;
-import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.UIHO_FACILITY_UNKNOWN;
 import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.UIHO_NO;
 import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.UIHO_UNKNOWN;
 import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.isCountyAtDxValid;
@@ -86,29 +84,10 @@ public class PrcdaUihoCsvData implements PrcdaUihoDataProvider {
         return countyData.getUIHO();
     }
 
-    @Override
-    public String getUIHOFacility(String state, String county) {
-
-        if (!isStateAtDxValid(state) || !isCountyAtDxValid(county))
-            return UIHO_FACILITY_UNKNOWN;
-
-        if (!CountryData.getInstance().isUihoDataInitialized())
-            CountryData.getInstance().initializeUihoData(loadUihoData());
-
-        StateData stateData = CountryData.getInstance().getUihoData(state);
-        if (stateData == null)
-            return UIHO_FACILITY_NONE;
-        CountyData countyData = stateData.getCountyData(county);
-        if (countyData == null)
-            return UIHO_FACILITY_NONE;
-
-        return countyData.getUIHOFacility();
-    }
-
     @SuppressWarnings("ConstantConditions")
     private Map<String, Map<String, CountyData>> loadPrcdaData() {
         Map<String, Map<String, CountyData>> result = new HashMap<>();
-        try (Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("prcdauiho/prcda-2018.csv"), StandardCharsets.US_ASCII)) {
+        try (Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("prcdauiho/prcda20.csv"), StandardCharsets.US_ASCII)) {
             for (String[] row : new CSVReaderBuilder(reader).build().readAll()) {
                 String state = row[0], county = row[1], prcda = row[2];
                 CountyData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new CountyData());
@@ -124,12 +103,11 @@ public class PrcdaUihoCsvData implements PrcdaUihoDataProvider {
     @SuppressWarnings("ConstantConditions")
     private Map<String, Map<String, CountyData>> loadUihoData() {
         Map<String, Map<String, CountyData>> result = new HashMap<>();
-        try (Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("prcdauiho/uiho-2020.csv"), StandardCharsets.US_ASCII)) {
+        try (Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("prcdauiho/uiho20.csv"), StandardCharsets.US_ASCII)) {
             for (String[] row : new CSVReaderBuilder(reader).build().readAll()) {
-                String state = row[0], county = row[1], uiho = row[2], uihoFacility = row[3];
+                String state = row[0], county = row[1], uiho = row[2];
                 CountyData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new CountyData());
                 dto.setUIHO(StringUtils.leftPad(uiho, 1, '0'));
-                dto.setUIHOFacility(StringUtils.leftPad(uihoFacility, 2, '0'));
             }
         }
         catch (CsvException | IOException e) {

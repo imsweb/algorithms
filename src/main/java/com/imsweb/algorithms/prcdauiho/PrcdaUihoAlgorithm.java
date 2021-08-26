@@ -20,9 +20,7 @@ import static com.imsweb.algorithms.Algorithms.FIELD_IHS_PRCDA;
 import static com.imsweb.algorithms.Algorithms.FIELD_STATE_DX;
 import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
 import static com.imsweb.algorithms.Algorithms.FIELD_UIHO;
-import static com.imsweb.algorithms.Algorithms.FIELD_UIHO_FACILITY;
 import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.PRCDA_UNKNOWN;
-import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.UIHO_FACILITY_UNKNOWN;
 import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.UIHO_UNKNOWN;
 
 public class PrcdaUihoAlgorithm extends AbstractAlgorithm {
@@ -35,11 +33,9 @@ public class PrcdaUihoAlgorithm extends AbstractAlgorithm {
 
         _outputFields.add(Algorithms.getField(FIELD_IHS_PRCDA));
         _outputFields.add(Algorithms.getField(FIELD_UIHO));
-        _outputFields.add(Algorithms.getField(FIELD_UIHO_FACILITY));
 
         _unknownValues.put(FIELD_IHS_PRCDA, Collections.singletonList(PRCDA_UNKNOWN));
         _unknownValues.put(FIELD_UIHO, Collections.singletonList(UIHO_UNKNOWN));
-        _unknownValues.put(FIELD_UIHO_FACILITY, Collections.singletonList(UIHO_FACILITY_UNKNOWN));
     }
 
     @Override
@@ -58,7 +54,6 @@ public class PrcdaUihoAlgorithm extends AbstractAlgorithm {
             Map<String, Object> outputTumor = new HashMap<>();
             outputTumor.put(FIELD_IHS_PRCDA, outputDto.getPRCDA());
             outputTumor.put(FIELD_UIHO, outputDto.getUIHO());
-            outputTumor.put(FIELD_UIHO_FACILITY, outputDto.getUIHOFacility());
 
             outputTumors.add(outputTumor);
         }

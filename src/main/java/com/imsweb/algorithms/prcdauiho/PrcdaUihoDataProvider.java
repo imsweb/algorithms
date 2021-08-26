@@ -32,14 +32,4 @@ public interface PrcdaUihoDataProvider {
      * @return the corresponding UIHO value
      */
     String getUIHO(String state, String county);
-
-    /**
-     * Returns UIHO Facility for provided state of dx and county of dx.
-     * <p/>
-     * Created Aug 12, 2019 by howew
-     * @param state state at DX
-     * @param county county at DX
-     * @return the corresponding UIHO Facility
-     */
-    String getUIHOFacility(String state, String county);
 }

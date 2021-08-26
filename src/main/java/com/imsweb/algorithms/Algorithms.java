@@ -145,7 +145,6 @@ public class Algorithms {
     public static final String FIELD_COUNTY_AT_DX_ANALYSIS_FLAG = "countyAtDxAnalysisFlag";
     public static final String FIELD_IHS_PRCDA = "ihsPurchRefCareDeliveryArea";
     public static final String FIELD_UIHO = "urbanIndianHealthOrganization";
-    public static final String FIELD_UIHO_FACILITY = "uihoFacility";
     public static final String FIELD_ACS_YOST_Q0610_US = "yostQuintile0610US";
     public static final String FIELD_ACS_YOST_Q0610_STATE = "yostQuintile0610State";
     public static final String FIELD_ACS_POV0610_ALL_RACES = "acsPctPov0610AllRaces";
@@ -280,7 +279,6 @@ public class Algorithms {
             addField(AlgorithmField.of(FIELD_COUNTY_AT_DX_ANALYSIS_FLAG, null, 4, "County at DX Analysis Flag", "DX Anlys Cty Fg", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_IHS_PRCDA, null, 1, "IHS Purchased/Referred Care Delivery Area (PRCDA)", "IHS PRCDA", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_UIHO, null, 1, "Urban Indian Health Organization (UIHO)", "UIHO", DATA_LEVEL_TUMOR));
-            addField(AlgorithmField.of(FIELD_UIHO_FACILITY, null, 2, "Urban Indian Health Organization (UIHO) Facility", "UIHO Facility", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_ACS_YOST_Q0610_US, null, 1, "Yost Quintile (2006-2010, Across States)", "Yost 0610 US", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_ACS_YOST_Q0610_STATE, null, 1, "Yost Quintile (2006-2010, State Specific)", "Yost 0610 State", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_ACS_POV0610_ALL_RACES, null, 6, "ACS Pct Poverty (2006-2010, All Races)", "ACS Pov 0610 All", DATA_LEVEL_TUMOR));

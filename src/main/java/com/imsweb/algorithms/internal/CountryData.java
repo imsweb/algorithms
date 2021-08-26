@@ -415,7 +415,6 @@ public class CountryData {
                     for (Map.Entry<String, CountyData> countyEntry : stateEntry.getValue().entrySet()) {
                         CountyData countyData = stateData.getData().computeIfAbsent(countyEntry.getKey(), k -> new CountyData());
                         countyData.setUIHO(countyEntry.getValue().getUIHO());
-                        countyData.setUIHOFacility(countyEntry.getValue().getUIHOFacility());
                     }
                 }
             }
