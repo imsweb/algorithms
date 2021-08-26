@@ -10,7 +10,9 @@ public class TractEstCongressDistUtils {
     public static final String ALG_INFO = "Tract-Estimated Congressional Districts version 1.0 released in August 2021";
 
     //Unknown values for each code
-    public static final String TRACT_EST_CONGRESS_DIST_UNKNOWN = "C";
+    public static final String TRACT_EST_CONGRESS_DIST_UNK_A = "A";
+    public static final String TRACT_EST_CONGRESS_DIST_UNK_C = "C";
+    public static final String TRACT_EST_CONGRESS_DIST_UNK_D = "D";
 
     // data provider
     private static TractEstCongressDistDataProvider _PROVIDER;
@@ -45,9 +47,9 @@ public class TractEstCongressDistUtils {
         input.applyRecodes();
         
         if (!input.isStateValidOrMissingOrUnknown() || !input.isCountyValidOrMissingOrUnknown() || !input.isCensusTract2010ValidOrMissingOrUnknown())
-            result.setTractEstCongressDist("A");
+            result.setTractEstCongressDist(TRACT_EST_CONGRESS_DIST_UNK_A);
         else if (input.isStateMissingOrUnknown() || input.isCountyMissingOrUnknown() || input.isCensusTract2010MissingOrUnknown())
-            result.setTractEstCongressDist("D");
+            result.setTractEstCongressDist(TRACT_EST_CONGRESS_DIST_UNK_D);
         else if ("000".equals(input.getCountyAtDxAnalysis()))
             result.setTractEstCongressDist("B");
         else {
@@ -56,7 +58,7 @@ public class TractEstCongressDistUtils {
             result.setTractEstCongressDist(_PROVIDER.getTractEstCongressDist(input.getAddressAtDxState(), input.getCountyAtDxAnalysis(), input.getCensusTract2010()));
         }
         if (result.getTractEstCongressDist() == null)
-            result.setTractEstCongressDist(TRACT_EST_CONGRESS_DIST_UNKNOWN);
+            result.setTractEstCongressDist(TRACT_EST_CONGRESS_DIST_UNK_C);
 
         return result;
     }

@@ -18,27 +18,27 @@ import com.imsweb.algorithms.internal.CountryData;
 import com.imsweb.algorithms.internal.CountyData;
 import com.imsweb.algorithms.internal.StateData;
 
-import static com.imsweb.algorithms.tractestcongressdist.TractEstCongressDistUtils.TRACT_EST_CONGRESS_DIST_UNKNOWN;
+import static com.imsweb.algorithms.tractestcongressdist.TractEstCongressDistUtils.TRACT_EST_CONGRESS_DIST_UNK_C;
 
 public class TractEstCongressDistCsvData implements TractEstCongressDistDataProvider {
 
     @Override
     public String getTractEstCongressDist(String state, String county, String censusTract) {
         if (state == null || county == null || censusTract == null)
-            return TRACT_EST_CONGRESS_DIST_UNKNOWN;
+            return TRACT_EST_CONGRESS_DIST_UNK_C;
 
         if (!CountryData.getInstance().isTractEstCongressDistDataInitialized())
             CountryData.getInstance().initializeTractEstCongressDistData(loadTractEstCongressDistData());
 
         StateData stateData = CountryData.getInstance().getTractEstCongressDistStateData(state);
         if (stateData == null)
-            return TRACT_EST_CONGRESS_DIST_UNKNOWN;
+            return TRACT_EST_CONGRESS_DIST_UNK_C;
         CountyData countyData = stateData.getCountyData(county);
         if (countyData == null)
-            return TRACT_EST_CONGRESS_DIST_UNKNOWN;
+            return TRACT_EST_CONGRESS_DIST_UNK_C;
         CensusData censusData = countyData.getCensusData(censusTract);
         if (censusData == null)
-            return TRACT_EST_CONGRESS_DIST_UNKNOWN;
+            return TRACT_EST_CONGRESS_DIST_UNK_C;
 
         return censusData.getTractEstCongressDist();
     }
