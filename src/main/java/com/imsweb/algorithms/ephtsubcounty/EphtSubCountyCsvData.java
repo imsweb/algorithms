@@ -20,7 +20,7 @@ import com.imsweb.algorithms.internal.CountryData;
 import com.imsweb.algorithms.internal.CountyData;
 import com.imsweb.algorithms.internal.StateData;
 
-import static com.imsweb.algorithms.ephtsubcounty.EphtSubCountyUtils.EPHT_2010_GEO_ID_UNKNOWN;
+import static com.imsweb.algorithms.ephtsubcounty.EphtSubCountyUtils.EPHT_2010_GEO_ID_UNK_C;
 
 /**
  * The purpose of this class is to get the EPHT 2010 GEO ID 5K and EPHT 2010 GEO ID 20K for the provided
@@ -38,13 +38,13 @@ public class EphtSubCountyCsvData implements EphtSubCountyDataProvider {
 
         StateData stateData = CountryData.getInstance().getEphtSubCountyData(state);
         if (stateData == null)
-            return EPHT_2010_GEO_ID_UNKNOWN;
+            return EPHT_2010_GEO_ID_UNK_C;
         CountyData countyData = stateData.getCountyData(county);
         if (countyData == null)
-            return EPHT_2010_GEO_ID_UNKNOWN;
+            return EPHT_2010_GEO_ID_UNK_C;
         CensusData censusData = countyData.getCensusData(censusTract);
         if (censusData == null)
-            return EPHT_2010_GEO_ID_UNKNOWN;
+            return EPHT_2010_GEO_ID_UNK_C;
 
         return censusData.getEpht2010GeoId5k();
     }
@@ -56,13 +56,13 @@ public class EphtSubCountyCsvData implements EphtSubCountyDataProvider {
 
         StateData stateData = CountryData.getInstance().getEphtSubCountyData(state);
         if (stateData == null)
-            return EPHT_2010_GEO_ID_UNKNOWN;
+            return EPHT_2010_GEO_ID_UNK_C;
         CountyData countyData = stateData.getCountyData(county);
         if (countyData == null)
-            return EPHT_2010_GEO_ID_UNKNOWN;
+            return EPHT_2010_GEO_ID_UNK_C;
         CensusData censusData = countyData.getCensusData(censusTract);
         if (censusData == null)
-            return EPHT_2010_GEO_ID_UNKNOWN;
+            return EPHT_2010_GEO_ID_UNK_C;
 
         return censusData.getEpht2010GeoId20k();
     }

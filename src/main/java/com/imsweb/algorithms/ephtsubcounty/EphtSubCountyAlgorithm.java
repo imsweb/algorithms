@@ -4,6 +4,7 @@
 package com.imsweb.algorithms.ephtsubcounty;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +22,8 @@ import static com.imsweb.algorithms.Algorithms.FIELD_EPHT_2010_GEOID_20K;
 import static com.imsweb.algorithms.Algorithms.FIELD_EPHT_2010_GEOID_5K;
 import static com.imsweb.algorithms.Algorithms.FIELD_STATE_DX;
 import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
-import static com.imsweb.algorithms.ephtsubcounty.EphtSubCountyUtils.EPHT_2010_GEO_ID_UNKNOWN;
+import static com.imsweb.algorithms.ephtsubcounty.EphtSubCountyUtils.EPHT_2010_GEO_ID_UNK_A;
+import static com.imsweb.algorithms.ephtsubcounty.EphtSubCountyUtils.EPHT_2010_GEO_ID_UNK_D;
 
 public class EphtSubCountyAlgorithm extends AbstractAlgorithm {
 
@@ -35,8 +37,8 @@ public class EphtSubCountyAlgorithm extends AbstractAlgorithm {
         _outputFields.add(Algorithms.getField(FIELD_EPHT_2010_GEOID_5K));
         _outputFields.add(Algorithms.getField(FIELD_EPHT_2010_GEOID_20K));
 
-        _unknownValues.put(FIELD_EPHT_2010_GEOID_5K, Collections.singletonList(EPHT_2010_GEO_ID_UNKNOWN));
-        _unknownValues.put(FIELD_EPHT_2010_GEOID_20K, Collections.singletonList(EPHT_2010_GEO_ID_UNKNOWN));
+        _unknownValues.put(FIELD_EPHT_2010_GEOID_5K, Arrays.asList(EPHT_2010_GEO_ID_UNK_A, EPHT_2010_GEO_ID_UNK_D));
+        _unknownValues.put(FIELD_EPHT_2010_GEOID_20K, Arrays.asList(EPHT_2010_GEO_ID_UNK_A, EPHT_2010_GEO_ID_UNK_D));
     }
 
     @Override
