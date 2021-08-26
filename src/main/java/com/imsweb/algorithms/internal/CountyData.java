@@ -14,7 +14,6 @@ public class CountyData {
     // prcda, uiho data
     private String _prcda;
     private String _uiho;
-    private String _uihoFacility;
 
     // urban continuum data
     private String _urbanContinuum1993;
@@ -38,14 +37,6 @@ public class CountyData {
 
     public void setUIHO(String uiho) {
         _uiho = uiho;
-    }
-
-    public String getUIHOFacility() {
-        return _uihoFacility;
-    }
-
-    public void setUIHOFacility(String uihoFacility) {
-        _uihoFacility = uihoFacility;
     }
 
     public String getUrbanContinuum1993() {
