@@ -16,6 +16,7 @@ import com.imsweb.algorithms.behavrecode.SeerBehaviorRecodeAlgorithm;
 import com.imsweb.algorithms.causespecific.DeathClassificationAlgorithm;
 import com.imsweb.algorithms.censustractpovertyindicator.CensusTractPovertyIndicatorAlgorithm;
 import com.imsweb.algorithms.countyatdiagnosisanalysis.CountyAtDxAnalysisAlgorithm;
+import com.imsweb.algorithms.ephtsubcounty.EphtSubCountyAlgorithm;
 import com.imsweb.algorithms.iarc.IarcAlgorithm;
 import com.imsweb.algorithms.iccc.IcccAlgorithm;
 import com.imsweb.algorithms.napiia.NapiiaAlgorithm;
@@ -59,6 +60,7 @@ public class Algorithms {
     public static final String ALG_COUNTY_AT_DIAGNOSIS_ANALYSIS = "county-at-diagnosis-analysis";
     public static final String ALG_PRCDA_UIHO = "prcda-uiho";
     public static final String ALG_ACS_LINKAGE = "acs-linkage";
+    public static final String ALG_EPHT_SUBCOUNTY = "epht-subcounty";
 
     // special properties
     public static final String FIELD_TUMORS = "tumors";
@@ -173,6 +175,8 @@ public class Algorithms {
     public static final String FIELD_ACS_POV1418_OTHER_MULTI = "acsPctPov1418OtherMulti";
     public static final String FIELD_ACS_POV1418_WHITE_NON_HISP = "acsPctPov1418WhiteNonHisp";
     public static final String FIELD_ACS_POV1418_HISPANIC = "acsPctPov1418Hispanic";
+    public static final String FIELD_EPHT_2010_GEOID_5K = "epht2010GeoId5k";
+    public static final String FIELD_EPHT_2010_GEOID_20K = "epht2010GeoId20k";
 
     // options
     public static final String PARAM_NHIA_OPTION = "nhiaOption";
@@ -305,7 +309,9 @@ public class Algorithms {
             addField(AlgorithmField.of(FIELD_ACS_POV1418_OTHER_MULTI, null, 6, "ACS Pct Poverty (2014-2018, Other/Multiracial)", "ACS Pov 1418 Other/Multiracial", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_ACS_POV1418_WHITE_NON_HISP, null, 6, "ACS Pct Poverty (2014-2018, White, Non-Hispanic)", "ACS Pov 1418 Non-Hispanic", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_ACS_POV1418_HISPANIC, null, 6, "ACS Pct Poverty (2014-2018, Hispanic)", "ACS Pov 1418 Hispanic", DATA_LEVEL_TUMOR));
-
+            addField(AlgorithmField.of(FIELD_EPHT_2010_GEOID_5K, null, 11, "EPHT 2010 GEO ID 5K", "EPHT 5K", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_EPHT_2010_GEOID_20K, null, 11, "EPHT 2010 GEO ID 20K", "EPHT 20K", DATA_LEVEL_TUMOR));
+            
             // algorithms
             addAlgorithm(new NhiaAlgorithm());
             addAlgorithm(new NapiiaAlgorithm());
@@ -323,6 +329,7 @@ public class Algorithms {
             addAlgorithm(new CountyAtDxAnalysisAlgorithm());
             addAlgorithm(new PrcdaUihoAlgorithm());
             addAlgorithm(new YostAcsPovertyAlgorithm());
+            addAlgorithm(new EphtSubCountyAlgorithm());
         }
         finally {
             _LOCK.writeLock().unlock();
