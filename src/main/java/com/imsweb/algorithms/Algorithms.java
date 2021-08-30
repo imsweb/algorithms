@@ -17,6 +17,7 @@ import com.imsweb.algorithms.cancerreportingzone.CancerReportingZoneAlgorithm;
 import com.imsweb.algorithms.causespecific.DeathClassificationAlgorithm;
 import com.imsweb.algorithms.censustractpovertyindicator.CensusTractPovertyIndicatorAlgorithm;
 import com.imsweb.algorithms.countyatdiagnosisanalysis.CountyAtDxAnalysisAlgorithm;
+import com.imsweb.algorithms.ephtsubcounty.EphtSubCountyAlgorithm;
 import com.imsweb.algorithms.iarc.IarcAlgorithm;
 import com.imsweb.algorithms.iccc.IcccAlgorithm;
 import com.imsweb.algorithms.napiia.NapiiaAlgorithm;
@@ -27,6 +28,7 @@ import com.imsweb.algorithms.ruralurban.UrbanContinuumAlgorithm;
 import com.imsweb.algorithms.ruralurban.UricAlgorithm;
 import com.imsweb.algorithms.seersiterecode.SeerSiteRecodeAlgorithm;
 import com.imsweb.algorithms.survival.SurvivalTimeAlgorithm;
+import com.imsweb.algorithms.tractestcongressdist.TractEstCongressDistAlgorithm;
 import com.imsweb.algorithms.yostacspoverty.YostAcsPovertyAlgorithm;
 
 import static com.imsweb.algorithms.AlgorithmField.DATA_LEVEL_PATIENT;
@@ -60,6 +62,8 @@ public class Algorithms {
     public static final String ALG_COUNTY_AT_DIAGNOSIS_ANALYSIS = "county-at-diagnosis-analysis";
     public static final String ALG_PRCDA_UIHO = "prcda-uiho";
     public static final String ALG_ACS_LINKAGE = "acs-linkage";
+    public static final String ALG_EPHT_SUBCOUNTY = "epht-subcounty";
+    public static final String ALG_TRACT_EST_CONGRESS_DIST = "tract-est-congress-dist";
     public static final String ALG_CANCER_REPORTING_ZONE = "cancer-reporting-zone";
 
     // special properties
@@ -145,7 +149,6 @@ public class Algorithms {
     public static final String FIELD_COUNTY_AT_DX_ANALYSIS_FLAG = "countyAtDxAnalysisFlag";
     public static final String FIELD_IHS_PRCDA = "ihsPurchRefCareDeliveryArea";
     public static final String FIELD_UIHO = "urbanIndianHealthOrganization";
-    public static final String FIELD_UIHO_FACILITY = "uihoFacility";
     public static final String FIELD_ACS_YOST_Q0610_US = "yostQuintile0610US";
     public static final String FIELD_ACS_YOST_Q0610_STATE = "yostQuintile0610State";
     public static final String FIELD_ACS_POV0610_ALL_RACES = "acsPctPov0610AllRaces";
@@ -176,6 +179,9 @@ public class Algorithms {
     public static final String FIELD_ACS_POV1418_OTHER_MULTI = "acsPctPov1418OtherMulti";
     public static final String FIELD_ACS_POV1418_WHITE_NON_HISP = "acsPctPov1418WhiteNonHisp";
     public static final String FIELD_ACS_POV1418_HISPANIC = "acsPctPov1418Hispanic";
+    public static final String FIELD_EPHT_2010_GEOID_5K = "epht2010GeoId5k";
+    public static final String FIELD_EPHT_2010_GEOID_20K = "epht2010GeoId20k";
+    public static final String FIELD_TRACT_EST_CONGRESS_DIST = "tractEstCongressDist";
     public static final String FIELD_CANCER_REPORTING_ZONE = "cancerReportingZone";
 
     // options
@@ -279,7 +285,6 @@ public class Algorithms {
             addField(AlgorithmField.of(FIELD_COUNTY_AT_DX_ANALYSIS_FLAG, null, 4, "County at DX Analysis Flag", "DX Anlys Cty Fg", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_IHS_PRCDA, null, 1, "IHS Purchased/Referred Care Delivery Area (PRCDA)", "IHS PRCDA", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_UIHO, null, 1, "Urban Indian Health Organization (UIHO)", "UIHO", DATA_LEVEL_TUMOR));
-            addField(AlgorithmField.of(FIELD_UIHO_FACILITY, null, 2, "Urban Indian Health Organization (UIHO) Facility", "UIHO Facility", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_ACS_YOST_Q0610_US, null, 1, "Yost Quintile (2006-2010, Across States)", "Yost 0610 US", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_ACS_YOST_Q0610_STATE, null, 1, "Yost Quintile (2006-2010, State Specific)", "Yost 0610 State", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_ACS_POV0610_ALL_RACES, null, 6, "ACS Pct Poverty (2006-2010, All Races)", "ACS Pov 0610 All", DATA_LEVEL_TUMOR));
@@ -310,6 +315,10 @@ public class Algorithms {
             addField(AlgorithmField.of(FIELD_ACS_POV1418_OTHER_MULTI, null, 6, "ACS Pct Poverty (2014-2018, Other/Multiracial)", "ACS Pov 1418 Other/Multiracial", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_ACS_POV1418_WHITE_NON_HISP, null, 6, "ACS Pct Poverty (2014-2018, White, Non-Hispanic)", "ACS Pov 1418 Non-Hispanic", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_ACS_POV1418_HISPANIC, null, 6, "ACS Pct Poverty (2014-2018, Hispanic)", "ACS Pov 1418 Hispanic", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_EPHT_2010_GEOID_5K, null, 11, "EPHT 2010 GEO ID 5K", "EPHT 5K", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_EPHT_2010_GEOID_20K, null, 11, "EPHT 2010 GEO ID 20K", "EPHT 20K", DATA_LEVEL_TUMOR));
+
+            addField(AlgorithmField.of(FIELD_TRACT_EST_CONGRESS_DIST, null, 2, "Tract-Estimated Congressional District", "Tract-Est Congress Dist", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_CANCER_REPORTING_ZONE, null, 8, "Cancer Reporting Zone", "Cancer Reporting Zone", DATA_LEVEL_TUMOR));
 
             // algorithms
@@ -329,6 +338,8 @@ public class Algorithms {
             addAlgorithm(new CountyAtDxAnalysisAlgorithm());
             addAlgorithm(new PrcdaUihoAlgorithm());
             addAlgorithm(new YostAcsPovertyAlgorithm());
+            addAlgorithm(new EphtSubCountyAlgorithm());
+            addAlgorithm(new TractEstCongressDistAlgorithm());
             addAlgorithm(new CancerReportingZoneAlgorithm());
         }
         finally {

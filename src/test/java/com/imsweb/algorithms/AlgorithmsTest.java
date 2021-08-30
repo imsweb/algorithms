@@ -23,7 +23,6 @@ import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS;
 import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS_FLAG;
 import static com.imsweb.algorithms.Algorithms.FIELD_IHS_PRCDA;
 import static com.imsweb.algorithms.Algorithms.FIELD_UIHO;
-import static com.imsweb.algorithms.Algorithms.FIELD_UIHO_FACILITY;
 
 public class AlgorithmsTest {
 
@@ -295,7 +294,6 @@ public class AlgorithmsTest {
         tumor = Utils.extractTumors(alg.execute(input).getPatient()).get(0);
         Assert.assertEquals("0", tumor.get(FIELD_IHS_PRCDA));
         Assert.assertEquals("1", tumor.get(FIELD_UIHO));
-        Assert.assertEquals("07", tumor.get(FIELD_UIHO_FACILITY));
     }
 
     @Test
