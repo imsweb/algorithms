@@ -2,6 +2,8 @@
 
 **Changes in version 3.5**
 
+- Updated PRCDA and UIHO algorithms with 2020 data tables.
+- Added new algorithm EPHT SubCounty.
 - Added new algorithm to calculate Tract Estimated Congressional Districts.
 
 **Changes in version 3.4**

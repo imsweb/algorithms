@@ -43,6 +43,7 @@ public class CountryData {
     private boolean _uihoInitialized = false;
     private boolean _yostAcsPovertyInitialized = false;
     private boolean _tractEstCongressDistInitialized = false;
+    private boolean _ephtSubCountyInitialized = false;
 
     // internal lock to control concurrency
     private final ReentrantReadWriteLock _lock = new ReentrantReadWriteLock();
@@ -415,7 +416,6 @@ public class CountryData {
                     for (Map.Entry<String, CountyData> countyEntry : stateEntry.getValue().entrySet()) {
                         CountyData countyData = stateData.getData().computeIfAbsent(countyEntry.getKey(), k -> new CountyData());
                         countyData.setUIHO(countyEntry.getValue().getUIHO());
-                        countyData.setUIHOFacility(countyEntry.getValue().getUIHOFacility());
                     }
                 }
             }
@@ -558,6 +558,60 @@ public class CountryData {
                 }
             }
             _yostAcsPovertyInitialized = true;
+        }
+        finally {
+            _lock.writeLock().unlock();
+        }
+    }
+
+    /**
+     * Returns requested state data to be used by the EPHT SubCounty algorithm.
+     */
+    public StateData getEphtSubCountyData(String state) {
+        _lock.readLock().lock();
+        try {
+            if (!_ephtSubCountyInitialized)
+                throw new RuntimeException("EPHT SubCounty data cannot be access before it has been initialized!");
+            return _stateData.get(state);
+        }
+        finally {
+            _lock.readLock().unlock();
+        }
+    }
+
+    /**
+     * Returns true if the EPHT SubCounty data has been initialized, false otherwise.
+     */
+    public boolean isEphtSubCountyDataInitialized() {
+        _lock.readLock().lock();
+        try {
+            return _ephtSubCountyInitialized;
+        }
+        finally {
+            _lock.readLock().unlock();
+        }
+    }
+
+    /**
+     * Initializes the given EPHT SubCounty data (this call will make all other access to the data structure block).
+     */
+    public void initializeEphtSubCountyData(Map<String, Map<String, Map<String, CensusData>>> data) {
+        _lock.writeLock().lock();
+        try {
+            if (!_ephtSubCountyInitialized) {
+                for (Map.Entry<String, Map<String, Map<String, CensusData>>> stateEntry : data.entrySet()) {
+                    StateData stateData = _stateData.computeIfAbsent(stateEntry.getKey(), k -> new StateData());
+                    for (Map.Entry<String, Map<String, CensusData>> countyEntry : stateEntry.getValue().entrySet()) {
+                        CountyData countyData = stateData.getData().computeIfAbsent(countyEntry.getKey(), k -> new CountyData());
+                        for (Map.Entry<String, CensusData> censusEntry : countyEntry.getValue().entrySet()) {
+                            CensusData censusData = countyData.getData().computeIfAbsent(censusEntry.getKey(), k -> new CensusData());
+                            censusData.setEpht2010GeoId5k(censusEntry.getValue().getEpht2010GeoId5k());
+                            censusData.setEpht2010GeoId20k(censusEntry.getValue().getEpht2010GeoId20k());
+                        }
+                    }
+                }
+            }
+            _ephtSubCountyInitialized = true;
         }
         finally {
             _lock.writeLock().unlock();
