@@ -54,6 +54,9 @@ public class CensusData {
     private String _acsPctPov1418White;
     private String _acsPctPov1418WhiteNonHisp;
 
+    // Cancer Reporting Zone
+    private String _cancerReportingZone;
+
     // EPHT SubCounty
     private String _epht2010GeoId5k;
     private String _epht2010GeoId20k;
@@ -379,5 +382,13 @@ public class CensusData {
 
     public void setTractEstCongressDist(String tractEstCongressDist) {
         _tractEstCongressDist = tractEstCongressDist;
+    }
+
+    public String getCancerReportingZone() {
+        return _cancerReportingZone;
+    }
+
+    public void setCancerReportingZone(String cancerReportingZone) {
+        _cancerReportingZone = cancerReportingZone;
     }
 }

@@ -13,6 +13,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import com.imsweb.algorithms.ayasiterecode.AyaSiteRecodeAlgorithm;
 import com.imsweb.algorithms.behavrecode.SeerBehaviorRecodeAlgorithm;
+import com.imsweb.algorithms.cancerreportingzone.CancerReportingZoneAlgorithm;
 import com.imsweb.algorithms.causespecific.DeathClassificationAlgorithm;
 import com.imsweb.algorithms.censustractpovertyindicator.CensusTractPovertyIndicatorAlgorithm;
 import com.imsweb.algorithms.countyatdiagnosisanalysis.CountyAtDxAnalysisAlgorithm;
@@ -63,6 +64,7 @@ public class Algorithms {
     public static final String ALG_ACS_LINKAGE = "acs-linkage";
     public static final String ALG_EPHT_SUBCOUNTY = "epht-subcounty";
     public static final String ALG_TRACT_EST_CONGRESS_DIST = "tract-est-congress-dist";
+    public static final String ALG_CANCER_REPORTING_ZONE = "cancer-reporting-zone";
 
     // special properties
     public static final String FIELD_TUMORS = "tumors";
@@ -180,6 +182,7 @@ public class Algorithms {
     public static final String FIELD_EPHT_2010_GEOID_5K = "epht2010GeoId5k";
     public static final String FIELD_EPHT_2010_GEOID_20K = "epht2010GeoId20k";
     public static final String FIELD_TRACT_EST_CONGRESS_DIST = "tractEstCongressDist";
+    public static final String FIELD_CANCER_REPORTING_ZONE = "cancerReportingZone";
 
     // options
     public static final String PARAM_NHIA_OPTION = "nhiaOption";
@@ -316,6 +319,7 @@ public class Algorithms {
             addField(AlgorithmField.of(FIELD_EPHT_2010_GEOID_20K, null, 11, "EPHT 2010 GEO ID 20K", "EPHT 20K", DATA_LEVEL_TUMOR));
 
             addField(AlgorithmField.of(FIELD_TRACT_EST_CONGRESS_DIST, null, 2, "Tract-Estimated Congressional District", "Tract-Est Congress Dist", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_CANCER_REPORTING_ZONE, null, 8, "Cancer Reporting Zone", "Cancer Reporting Zone", DATA_LEVEL_TUMOR));
 
             // algorithms
             addAlgorithm(new NhiaAlgorithm());
@@ -336,6 +340,7 @@ public class Algorithms {
             addAlgorithm(new YostAcsPovertyAlgorithm());
             addAlgorithm(new EphtSubCountyAlgorithm());
             addAlgorithm(new TractEstCongressDistAlgorithm());
+            addAlgorithm(new CancerReportingZoneAlgorithm());
         }
         finally {
             _LOCK.writeLock().unlock();
