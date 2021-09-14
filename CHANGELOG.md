@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 3.6**
+
+- Fixed ICCC algorithm Third Edition/IARC 2017 that generated wrong output.
+
 **Changes in version 3.5**
 
 - Updated PRCDA and UIHO algorithms with 2020 data tables.

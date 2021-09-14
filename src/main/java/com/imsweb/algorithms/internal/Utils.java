@@ -20,6 +20,11 @@ import com.imsweb.algorithms.Algorithms;
 public class Utils {
 
     private static final Pattern _SITE_PATTERN = Pattern.compile("[A-Z](\\d){0,3}");
+    private static final Pattern _HIST_PATTERN = Pattern.compile("\\d{4}");
+    private static final Pattern _HIST_RANGE_PATTERN = Pattern.compile("\\d{4}-\\d{4}");
+    private static final Pattern _BEH_PATTERN = Pattern.compile("\\d");
+    private static final Pattern _BEH_RANGE_PATTERN = Pattern.compile("\\d-\\d");
+
 
     /**
      * Expands the provided string of sites into a list of sites, individual elements or ranges should be comma separated.
@@ -114,9 +119,14 @@ public class Utils {
             return null;
         List<Object> result = new ArrayList<>();
         for (String s : StringUtils.split(toExpand, ',')) {
-            if (!s.contains("-"))
+            if (!s.contains("-")) {
+                if (!_HIST_PATTERN.matcher(s).matches())
+                    throw new RuntimeException("Invalid histology code: " + s);
                 result.add(Integer.valueOf(s));
+            }
             else {
+                if (!_HIST_RANGE_PATTERN.matcher(s).matches())
+                    throw new RuntimeException("Invalid histology range: " + s);
                 String[] parts = StringUtils.split(s, '-');
                 result.add(Range.between(Integer.valueOf(parts[0]), Integer.valueOf(parts[1])));
             }
@@ -130,7 +140,23 @@ public class Utils {
      * @return expanded behaviors
      */
     public static List<Object> expandBehaviorsAsIntegers(String toExpand) {
-        return expandHistologiesAsIntegers(toExpand);
+        if (StringUtils.isBlank(toExpand))
+            return null;
+        List<Object> result = new ArrayList<>();
+        for (String s : StringUtils.split(toExpand, ',')) {
+            if (!s.contains("-")) {
+                if (!_BEH_PATTERN.matcher(s).matches())
+                    throw new RuntimeException("Invalid behavior code: " + s);
+                result.add(Integer.valueOf(s));
+            }
+            else {
+                if (!_BEH_RANGE_PATTERN.matcher(s).matches())
+                    throw new RuntimeException("Invalid behavior range: " + s);
+                String[] parts = StringUtils.split(s, '-');
+                result.add(Range.between(Integer.valueOf(parts[0]), Integer.valueOf(parts[1])));
+            }
+        }
+        return result;
     }
 
     @SuppressWarnings("unchecked")

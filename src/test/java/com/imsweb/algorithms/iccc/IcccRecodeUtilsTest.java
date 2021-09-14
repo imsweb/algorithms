@@ -130,6 +130,9 @@ public class IcccRecodeUtilsTest {
         Assert.assertEquals("115", IcccRecodeUtils.calculateSiteRecode(VERSION_THIRD_EDITION_IARC_2017, "C008", "8000", "3", true));
         Assert.assertEquals("002", IcccRecodeUtils.calculateSiteRecode(VERSION_THIRD_EDITION_IARC_2017, "C424", "9823", "3", true));
         Assert.assertEquals("115", IcccRecodeUtils.calculateSiteRecode(VERSION_THIRD_EDITION_IARC_2017, "C809", "8000", "3", true));
+
+        // real case not working properly
+        Assert.assertEquals("011", IcccRecodeUtils.calculateSiteRecode(VERSION_THIRD_EDITION_IARC_2017, "C421", "9836", "3", false));
     }
 
     @Test

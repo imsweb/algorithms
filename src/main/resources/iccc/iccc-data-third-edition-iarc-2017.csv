@@ -2,11 +2,11 @@ ID,Group Name,Indentation,Sites IN,Sites OUT,Hist IN,Hist OUT,Group code,Group c
 1,"Leukemias, Myeloproliferative And Myelodysplastic Diseases",0,,,,,,"011,012,013,014,015",,
 2,Lymphoid leukemias,1,,,,,,011,,
 3,Precursor cell leukemias,2,"C420,C421,C423,C424,C809",,"9811-9818,9837",,011,,001,3
-4,Precursor cell leukemias,2,C000-C809,,"98,359,836",,011,,001,3
+4,Precursor cell leukemias,2,C000-C809,,"9835,9836",,011,,001,3
 5,Mature B-cell leukemias,2,"C420,C421,C423,C424,C809",,9823,,011,,002,3
-6,Mature B-cell leukemias,2,C000-C809,,"9,826,983,298,339,940",,011,,002,3
+6,Mature B-cell leukemias,2,C000-C809,,"9826,9832,9833,9940",,011,,002,3
 7,Mature T-cell and NK cell leukemias,2,"C420,C421,C423,C424,C809",,9827,,011,,003,3
-8,Mature T-cell and NK cell leukemias,2,C000-C809,,"983,198,349,948",,011,,003,3
+8,Mature T-cell and NK cell leukemias,2,C000-C809,,"9831,9834,9948",,011,,003,3
 9,"Lymphoid leukemia, NOS",2,"C420,C421,C423,C424",,9591,,011,,004,3
 10,"Lymphoid leukemia, NOS",2,C000-C809,,9820,,011,,004,3
 11,Acute myeloid leukemias,1,C000-C809,,"9840,9861,9865-9867,9869-9874,9891,9895-9897,9898,9910,9911,9920,9930,9931",,012,,005,3
@@ -26,7 +26,7 @@ ID,Group Name,Indentation,Sites IN,Sites OUT,Hist IN,Hist OUT,Group code,Group c
 25,"Non-Hodgkin lymphomas, NOS",2,C000-C809,,9760,,022,,013,3
 26,Burkitt lymphoma,1,C000-C809,,9687,,023,,014,3
 27,Miscellaneous lymphoreticular neoplasms,1,C000-C809,,"9740-9742,9750,9751,9754-9759",,024,,015,3
-28,Unspecified lymphomas,1,C000-C809,,"95,909,596",,025,,016,3
+28,Unspecified lymphomas,1,C000-C809,,"9590,9596",,025,,016,3
 29,Cns And Miscellaneous Intracranial And Intraspinal Neoplasms,0,,,,,,"031,032,033,034,035,036",,
 30,Ependymomas and choroid plexus tumor,1,,,,,,031,,
 31,Ependymomas,2,C000-C809,,"9383,9391-9394,9396",,031,,017,"0-1,3"
@@ -39,12 +39,12 @@ ID,Group Name,Indentation,Sites IN,Sites OUT,Hist IN,Hist OUT,Group code,Group c
 38,Medulloepithelioma,2,C700-C729,,9501-9504,,033,,022,"0-1,3"
 39,Atypical teratoid/rhabdoid tumor,2,C000-C809,,9508,,033,,023,"0-1,3"
 40,Other gliomas,1,,,,,,034,,
-41,Oligodendrogliomas,2,C000-C809,,"945,094,519,460",,034,,024,"0-1,3"
+41,Oligodendrogliomas,2,C000-C809,,"9450,9451,9460",,034,,024,"0-1,3"
 42,Mixed and unspecified gliomas,2,"C700-C722,C724-C729,C751,C753",,9380,,034,,025,"0-1,3"
-43,Mixed and unspecified gliomas,2,C000-C809,,"93,829,385",,034,,025,"0-1,3"
-44,Neuroepithelial glial tumors of uncertain origin,2,C000-C809,,"93,819,430,943,194,400,000",,034,,026,"0-1,3"
+43,Mixed and unspecified gliomas,2,C000-C809,,"9382,9385",,034,,025,"0-1,3"
+44,Neuroepithelial glial tumors of uncertain origin,2,C000-C809,,"9381,9430,9431,9444,9445",,034,,026,"0-1,3"
 45,Other specified intracranial and intraspinal neoplasms,1,,,,,,035,,
-46,Pituitary adenomas and carcinomas,2,C751,,"81,588,290",,035,,027,"0-1,3"
+46,Pituitary adenomas and carcinomas,2,C751,,"8158,8290",,035,,027,"0-1,3"
 47,Pituitary adenomas and carcinomas,2,C000-C809,,"8270-8281,8300",,035,,027,"0-1,3"
 48,Tumours of the sellar region (craniopharyngiomas),2,C000-C809,,"9350-9352,9432,9582",,035,,028,"0-1,3"
 49,Pineal parenchymal tumors,2,C000-C809,,"9360-9362,9395",,035,,029,"0-1,3"
@@ -52,13 +52,13 @@ ID,Group Name,Indentation,Sites IN,Sites OUT,Hist IN,Hist OUT,Group code,Group c
 51,Meningiomas,2,C000-C809,,9530-9539,,035,,031,"0-1,3"
 52,Unspecified intracranial and intraspinal neoplasms,1,"C700-C729,C751-C753",,8000-8005,,036,,032,"0-1,3"
 53,Neuroblastoma And Other Peripheral Nervous Cell Tumors,0,,,,,,"041,042",,
-54,Neuroblastoma and ganglioneuroblastoma,1,C000-C809,,"94,909,500",,041,,033,3
+54,Neuroblastoma and ganglioneuroblastoma,1,C000-C809,,"9490,9500",,041,,033,3
 55,Other peripheral nervous cell tumors,1,C000-C809,,"8680-8683,8690-8693,8700,9520-9523",,042,,034,3
 56,Other peripheral nervous cell tumors,1,"C000-C699,C739-C768,C809",,9501-9504,,042,,034,3
 57,Retinoblastoma,0,C000-C809,,9510-9514,,050,,035,3
 58,Renal Tumors,0,,,,,,"061,062",,
 59,Nephroblastoma and other non-epithelial renal tumors,1,,,,,,061,,
-60,Nephroblastoma,2,C000-C809,,"89,598,960",,061,,036,3
+60,Nephroblastoma,2,C000-C809,,"8959,8960",,061,,036,3
 61,Rhabdoid renal tumor,2,C649,,8963,,061,,037,3
 62,Kidney sarcomas,2,C000-C809,,8964-8967,,061,,038,3
 63,Renal carcinomas,1,C649,,"8010-8041,8050-8075,8082,8120-8122,8130-8141,8143,8155,8190-8201,8210,8211,8221-8231,8240,8241,8244-8246,8260-8263,8290,8310,8320,8323,8325,8401,8430,8440,8480-8490,8504,8510,8550,8560-8562,8570-8573,9013",,062,,039,3
@@ -66,7 +66,7 @@ ID,Group Name,Indentation,Sites IN,Sites OUT,Hist IN,Hist OUT,Group code,Group c
 65,Unspecified malignant renal tumors,1,C649,,8000-8005,,063,,040,3
 66,Hepatic Tumors,0,,,,,,"071,072,073",,
 67,Hepatoblastoma and mesenchymal tumors of liver,1,,,,,,71,,
-68,Hepatoblastoma,2,C000-C809,,"89,708,975",,071,,041,3
+68,Hepatoblastoma,2,C000-C809,,"8970,8975",,071,,041,3
 69,Rhabdoid hepatic tumor,2,"C220,C221",,8963,,071,,042,3
 70,Embryonal sarcoma of liver,2,"C220,C221",,8991,,071,,043,3
 71,Hepatic carcinomas,1,"C220,C221",,"8010-8041,8050-8075,8082,8120-8122,8140,8141,8143,8148,8155,8158,8190-8201,8202,8210,8211,8230,8231,8240,8241,8244-8246,8260-8264,8310,8320,8323,8401,8430,8440,8470,8480-8490,8503,8504,8510,8550,8560-8562,8570-8573,9013",,072,,044,3
@@ -82,11 +82,11 @@ ID,Group Name,Indentation,Sites IN,Sites OUT,Hist IN,Hist OUT,Group code,Group c
 81,Ewing tumor and Askin tumor of bone,2,C400-C419,,9365,,083,,048,3
 82,Peripheral neuroectodermal tumor (pPNET) of bone,2,C400-C419,,9364,,083,,049,3
 83,Other specified malignant bone tumors,1,,,,,,084,,
-84,Malignant fibrous neoplasms of bone,2,C400-C419,,"88,108,811,881,888,200,000",,084,,050,3
-85,Malignant fibrous neoplasms of bone,2,C000-C809,,"88,129,262",,084,,050,3
+84,Malignant fibrous neoplasms of bone,2,C400-C419,,"8810,8811,8818,8823,8830",,084,,050,3
+85,Malignant fibrous neoplasms of bone,2,C000-C809,,"8812,9262",,084,,050,3
 86,Malignant chordomas,2,C000-C809,,9370-9372,,084,,051,3
 87,Odontogenic malignant tumors,2,C000-C809,,"9270-9275,9280-9282,9290,9300-9302,9310-9312,9320-9322,9330,9340-9342",,084,,052,3
-88,Miscellaneous malignant bone tumors,2,C000-C809,,"92,509,261",,084,,053,3
+88,Miscellaneous malignant bone tumors,2,C000-C809,,"9250,9261",,084,,053,3
 89,Unspecified malignant bone tumors,1,C400-C419,,"8000-8005,8800,8801,8803-8805",,085,,054,3
 90,Soft Tissue And Other Extraosseous Sarcomas,0,,,,,,"091,092,093,094,095",,
 91,Rhabdomyosarcomas,1,C000-C809,,"8900-8905,8910,8912,8920",,091,,055,3
@@ -95,7 +95,7 @@ ID,Group Name,Indentation,Sites IN,Sites OUT,Hist IN,Hist OUT,Group code,Group c
 94,Fibroblastic and myofibroblastic tumors,2,"C000-C399,C440-C768,C809",,"8810,8811,8813-8817,8821,8823,8834-8835",,092,,056,3
 95,Fibroblastic and myofibroblastic tumors,2,C000-C809,,"8820,8822,8824-8828,9150,9160",,092,,056,3
 96,Nerve sheath tumors,2,C000-C809,,9540-9571,,092,,057,3
-97,Other fibromatous neoplasms,2,C000-C809,,"94,919,580",,092,,058,3
+97,Other fibromatous neoplasms,2,C000-C809,,"9491,9580",,092,,058,3
 98,Kaposi sarcoma,1,C000-C809,,9140,,093,,059,3
 99,Other specified soft tissue sarcomas,1,,,,,,094,,
 100,Ewing tumor and Askin tumor of soft tissue,2,"C000-C399,C440-C449,C470-C759",,9260,,094,,060,3
@@ -117,27 +117,27 @@ ID,Group Name,Indentation,Sites IN,Sites OUT,Hist IN,Hist OUT,Group code,Group c
 116,Intracranial and intraspinal germ cell tumors,1,,,,,,101,,
 117,Intracranial and intraspinal germinomas,2,"C700-C729,C751-C753",,9060-9065,,101,,072,"0-1,3"
 118,Intracranial and intraspinal teratomas,2,"C700-C729,C751-C753",,9080-9084,,101,,073,"0-1,3"
-119,Intracranial and intraspinal embryonal carcinomas,2,"C700-C729,C751-C753",,"90,709,072",,101,,074,"0-1,3"
+119,Intracranial and intraspinal embryonal carcinomas,2,"C700-C729,C751-C753",,"9070,9072",,101,,074,"0-1,3"
 120,Intracranial and intraspinal yolk sac tumor,2,"C700-C729,C751-C753",,9071,,101,,075,"0-1,3"
-121,Intracranial and intraspinal choriocarcinoma,2,"C700-C729,C751-C753",,"91,009,101",,101,,076,"0-1,3"
+121,Intracranial and intraspinal choriocarcinoma,2,"C700-C729,C751-C753",,"9100,9101",,101,,076,"0-1,3"
 122,Intracranial and intraspinal tumors of mixed forms,2,"C700-C729,C751-C753",,9085,,101,,077,"0-1,3"
 123,Malignant extracranial and extragonadal germ cell tumors,1,,,,,,102,,
 124,Malignant germinomas of extracranial and extragonadal sites,2,"C000-C559,C570-C619,C630-C699,C739-C750,C754-C768,C809",,9060-9065,,102,,078,3
 125,Malignant teratomas of extracranial and extragonadal sites,2,"C000-C559,C570-C619,C630-C699,C739-C750,C754-C768,C809",,9080-9084,,102,,079,3
-126,Embryonal carcinomas of extracranial and extragonadal sites,2,"C000-C559,C570-C619,C630-C699,C739-C750,C754-C768,C809",,"90,709,072",,102,,080,3
+126,Embryonal carcinomas of extracranial and extragonadal sites,2,"C000-C559,C570-C619,C630-C699,C739-C750,C754-C768,C809",,"9070,9072",,102,,080,3
 127,Yolk sac tumor of extracranial and extragonadal sites,2,"C000-C559,C570-C619,C630-C699,C739-C750,C754-C768,C809",,9071,,102,,081,3
 128,Choriocarcinomas of extracranial and extragonadal sites,2,"C000-C559,C570-C619,C630-C699,C739-C750,C754-C768,C809",,"9100,9101,9103-9105",,102,,082,3
-129,Oth/unspec malig mixed germ cell tumors of extracranial/extragonadal,2,"C000-C559,C570-C619,C630-C699,C739-C750,C754-C768,C809",,"90,859,086",,102,,083,3
+129,Oth/unspec malig mixed germ cell tumors of extracranial/extragonadal,2,"C000-C559,C570-C619,C630-C699,C739-C750,C754-C768,C809",,"9085,9086",,102,,083,3
 130,Malignant gonadal germ cell tumors,1,,,,,,103,,
 131,Malignant gonadal germinomas,2,"C569,C620-C629",,9060-9065,,103,,084,3
 132,Malignant gonadal teratomas,2,"C569,C620-C629",,"9080-9084,9090,9091",,103,,085,3
-133,Gonadal embryonal carcinomas,2,"C569,C620-C629",,"90,709,072",,103,,086,3
+133,Gonadal embryonal carcinomas,2,"C569,C620-C629",,"9070,9072",,103,,086,3
 134,Gonadal yolk sac tumor,2,"C569,C620-C629",,9071,,103,,087,3
 135,Gonadal choriocarcinoma,2,"C569,C620-C629",,9100-9105,,103,,088,3
 136,Malignant gonadal tumors of mixed forms,2,"C569,C620-C629",,9085,,103,,089,3
 137,Malignant gonadal gonadoblastoma,2,"C569,C620-C629",,9073,,103,,090,3
 138,Gonadal carcinomas,1,"C569,C620-C629",,"8010-8041,8044,8050-8075,8082,8120-8123,8130-8141,8143,8153,8190-8201,8210,8211,8213,8221-8241,8244-8246,8260-8263,8290,8310,8320,8323,8380-8384,8430,8440-8442,8450,8470,8480-8490,8504,8510,8550,8560-8562,8570-8573,9000,9014",,104,,091,3
-139,Gonadal carcinomas,1,C000-C809,,"831,384,438,444,845,000,000,000",,104,,091,3
+139,Gonadal carcinomas,1,C000-C809,,"8313,8443,8444,8451,8474,9015",,104,,091,3
 140,Gonadal carcinomas,1,C569,,"8158,8243,8410,8452,8460-8463,8471-8473,8576",,104,,091,3
 141,Other and unspecified malignant gonadal tumors,1,C000-C809,,8590-8671,,105,,092,3
 142,Other and unspecified malignant gonadal tumors,1,"C569,C620-C629",,8000-8005,,105,,092,3
@@ -160,15 +160,15 @@ ID,Group Name,Indentation,Sites IN,Sites OUT,Hist IN,Hist OUT,Group code,Group c
 159,Carcinomas of bladder,2,C670-C679,,"8010-8077,8080-8086,8098,8120-8158,8163,8190-8265,8290,8310,8314-8315,8320-8324,8333,8360,8380-8384,8401,8402,8405,8406,8410,8430-8442,8450,8452-8454,8460,8461,8470,8480-8586,8589,8941,8983,9000,9010-9014,9016,9020,9030",,116,,105,3
 160,Carcinomas of eye,2,C690-C699,,"8010-8077,8080-8086,8098,8120-8158,8163,8190-8265,8290,8310,8314-8315,8320-8324,8333,8360,8380-8384,8401,8402,8405,8406,8410,8430-8442,8450,8452-8454,8460,8461,8470,8480-8586,8589,8941,8983,9000,9010-9014,9016,9020,9030",,116,,106,3
 161,Carcinomas of other specified sites,2,"C000-C069,C090-C109,C129-C179,C239-C339,C380-C399,C480-C488,C510-C518,C529,C540-C559,C570-C608,C619,C630-C631,C637-C639,C659-C669,C680-C689,C700-C729,C750-C759",,"8010-8077,8080-8086,8098,8120-8157,8163,8190-8265,8310,8314-8315,8320-8324,8333,8360,8380-8384,8401,8402,8405,8406,8410,8430-8442,8450,8452-8454,8460,8461,8470,8480-8586,8589,8941,8983,9000,9010-9014,9016,9020,9030",,116,,107,3
-162,Carcinomas of other specified sites,2,"C000-C069,C090-C109,C129-C179,C239-C339,C380-C399,C480-C488,C510-C529,C540-C559,C570-C619,C630-C639,C659-C669,C680-C689,C750,C752-C759",,"81,588,290",,116,,107,3
+162,Carcinomas of other specified sites,2,"C000-C069,C090-C109,C129-C179,C239-C339,C380-C399,C480-C488,C510-C529,C540-C559,C570-C619,C630-C639,C659-C669,C680-C689,C750,C752-C759",,"8158,8290",,116,,107,3
 163,Carcinomas of unspecified site,2,"C760-C768,C809",,"8010-8077,8080-8086,8098,8120-8158,8163,8190-8265,8290,8310,8314-8315,8320-8324,8333,8360,8380-8384,8401,8402,8405,8406,8410,8430-8442,8450,8452-8454,8460,8461,8470,8480-8586,8589,8941,8983,9000,9010-9014,9016,9020,9030",,116,,108,3
 164,Other And Unspecified Malignant Neoplasms,0,,,,,,"121,122",,
 165,Other specified malignant tumors,1,,,,,,121,,
 166,Malignant gastrointestinal stromal tumor,2,C000-C809,,8936,,121,,109,3
 167,Pancreatoblastoma,2,C000-C809,,8971,,121,,110,3
-168,Pulmonary blastoma and pleuropulmonary blastoma,2,C000-C809,,"89,728,973",,121,,111,3
+168,Pulmonary blastoma and pleuropulmonary blastoma,2,C000-C809,,"8972,8973",,121,,111,3
 169,Other complex mixed and stromal neoplasms,2,C000-C809,,"8930-8935,8940,8950,8951,8974,8980-8982",,121,,112,3
 170,Mesothelioma,2,C000-C809,,9050-9055,,121,,113,3
-171,Other specified malignant tumors,2,C000-C809,,"91,109,363",,121,,114,3
+171,Other specified malignant tumors,2,C000-C809,,"9110,9363",,121,,114,3
 172,Other unspecified malignant tumors,1,"C000-C218,C239-C399,C420-C559,C570-C619,C630-C639,C659-C699,C739-C750,C754-C809",,8000-8005,,122,,115,3
 173,classified by SEER or in situ,0,,,,,999,,999,
