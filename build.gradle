@@ -44,6 +44,12 @@ tasks.withType(Javadoc) {
     options.addStringOption('Xdoclint:none', '-quiet')
 }
 
+// generate javadoc and sources (required by Nexus)
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
 // customize the manifest
 jar {
     manifest {
