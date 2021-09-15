@@ -65,7 +65,7 @@ ID,Group Name,Indentation,Sites IN,Sites OUT,Hist IN,Hist OUT,Group code,Group c
 64,Renal carcinomas,1,C000-C809,,"8311,8312,8316-8319,8361",,062,,039,3
 65,Unspecified malignant renal tumors,1,C649,,8000-8005,,063,,040,3
 66,Hepatic Tumors,0,,,,,,"071,072,073",,
-67,Hepatoblastoma and mesenchymal tumors of liver,1,,,,,,71,,
+67,Hepatoblastoma and mesenchymal tumors of liver,1,,,,,,071,,
 68,Hepatoblastoma,2,C000-C809,,"8970,8975",,071,,041,3
 69,Rhabdoid hepatic tumor,2,"C220,C221",,8963,,071,,042,3
 70,Embryonal sarcoma of liver,2,"C220,C221",,8991,,071,,043,3

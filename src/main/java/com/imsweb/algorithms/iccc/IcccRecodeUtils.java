@@ -184,6 +184,8 @@ public final class IcccRecodeUtils {
         List<IcccExecutableSiteGroupDto> executables = new ArrayList<>();
         _INTERNAL_DATA.put(version, executables);
 
+        Pattern codePattern = Pattern.compile("\\d{3}");
+
         try {
             List<String[]> allData = new CSVReader(new InputStreamReader(url.openStream(), StandardCharsets.US_ASCII)).readAll();
             for (int i = 1; i < allData.size(); i++) {
@@ -216,16 +218,20 @@ public final class IcccRecodeUtils {
                 group.setBehaviorInclusions(behaviorInclusions);
                 group.setRecode(recode);
                 group.setRecodeExtended(recodeExtended);
-                if (!StringUtils.isBlank(children))
+                if (!StringUtils.isBlank(children)) {
                     group.setChildrenRecodes(Arrays.asList(children.split(",")));
+                    for (String s : group.getChildrenRecodes())
+                        if (!codePattern.matcher(s).matches())
+                            throw new RuntimeException("Invalid recode reference for " + group.getName() + ": " + s);
+                }
 
                 if (!groups.contains(group))
                     groups.add(group);
 
                 if (!StringUtils.isBlank(recode)) {
-                    if (!recode.matches("\\d{3}"))
+                    if (!codePattern.matcher(recode).matches())
                         throw new RuntimeException("Invalid recode: " + recode + " for id " + id);
-                    if (!VERSION_THIRD_EDITION.equals(version) && !recodeExtended.matches("\\d{3}"))
+                    if (!VERSION_THIRD_EDITION.equals(version) && !codePattern.matcher(recodeExtended).matches())
                         throw new RuntimeException("Invalid recode extended: " + recodeExtended + " for id " + id);
 
                     IcccExecutableSiteGroupDto executable = new IcccExecutableSiteGroupDto();
