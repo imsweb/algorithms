@@ -2,8 +2,12 @@ plugins {
     id 'java-library'
     id 'checkstyle'
     id 'com.github.spotbugs' version '3.0.0'
-    id 'com.bmuschko.nexus' version '2.3.1'
-    id 'io.codearte.nexus-staging' version '0.21.2'
+    id 'maven-publish'
+    id 'signing'
+    id "io.codearte.nexus-staging" version '0.30.0'
+    id 'org.sonatype.gradle.plugins.scan' version '2.0.9'
+    id 'com.adarshr.test-logger' version '3.0.0'
+    id "com.github.ben-manes.versions" version '0.38.0'
 }
 
 group = 'com.imsweb'
@@ -20,7 +24,7 @@ repositories {
 
 dependencies {
     implementation 'org.apache.commons:commons-lang3:3.12.0'
-    implementation 'com.opencsv:opencsv:5.5.1'
+    implementation 'com.opencsv:opencsv:5.5.2'
     implementation 'com.thoughtworks.xstream:xstream:1.4.18'
 
     testImplementation 'junit:junit:4.13.2'
@@ -55,6 +59,22 @@ jar {
     }
 }
 
+// Nexus vulnerability scan (https://github.com/sonatype-nexus-community/scan-gradle-plugin)
+ossIndexAudit {
+    dependencyGraph = true
+    printBanner = false
+
+    // only set proxy if running outside of Github Actions
+    if (!System.getenv().GITHUB_ACTIONS) {
+        proxyConfiguration {
+            protocol = 'http'
+            host = 'webproxy-btp.imsweb.com'
+            port = 8080
+        }
+    }
+}
+check.dependsOn 'ossIndexAudit'
+
 // checkstyle plugin settings
 checkstyle {
     ignoreFailures = true
@@ -75,44 +95,82 @@ nexusStaging {
 }
 
 // needed to deploy to Maven Central
-modifyPom {
-    project {
-        name 'Algorithms'
-        description 'Java implementation of cancer-related algorithms (NHIA, NAPIIA, Survival Time, etc...)'
-        url 'https://github.com/imsweb/algorithms'
-        inceptionYear '2015'
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = 'algorithms'
+            from components.java
+            versionMapping {
+                usage('java-api') {
+                    fromResolutionOf('runtimeClasspath')
+                }
+                usage('java-runtime') {
+                    fromResolutionResult()
+                }
+            }
+            pom {
+                name = 'Algorithms'
+                description = 'Java implementation of cancer-related algorithms (NHIA, NAPIIA, Survival Time, etc...)'
+                url = 'https://github.com/imsweb/algorithms'
+                inceptionYear = '2015'
 
-        scm {
-            url 'https://github.com/imsweb/algorithms'
-            connection 'scm:https://github.com/imsweb/algorithms.git'
-            developerConnection 'scm:git@github.com:imsweb/algorithms.git'
-        }
+                licenses {
+                    license {
+                        name = 'A modified BSD License (BSD)'
+                        url = 'https://github.com/imsweb/algorithms/blob/master/LICENSE'
+                        distribution = 'repo'
+                    }
+                }
 
-        licenses {
-            license {
-                name 'A modified BSD License (BSD)'
-                url 'https://github.com/imsweb/algorithms/blob/master/LICENSE'
-                distribution 'repo'
+                developers {
+                    developer {
+                        id = 'depryf'
+                        name = 'Fabian Depry'
+                        email = 'depryf@imsweb.com'
+                    }
+                }
+
+                scm {
+                    url = 'https://github.com/imsweb/algorithms'
+                    connection = 'scm:https://github.com/imsweb/algorithms.git'
+                    developerConnection = 'scm:git@github.com:imsweb/algorithms.git'
+                }
             }
         }
+    }
+    repositories {
+        maven {
+            def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+            def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots"
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
 
-        developers {
-            developer {
-                id 'depryf'
-                name 'Fabian Depry'
-                email 'depryf@imsweb.com'
+            credentials {
+                username = project.findProperty('nexusUsername') ?: ''
+                password = project.findProperty('nexusPassword') ?: ''
             }
         }
     }
 }
 
+// setup JAR signing
+signing {
+    def signingKey = project.findProperty('signing.armored.key') ?: ''
+    def signingPassword = project.findProperty('signing.armored.password') ?: ''
+
+    useInMemoryPgpKeys(signingKey, signingPassword)
+
+    sign publishing.publications.mavenJava
+}
+
 // don't try to release a snapshot to a non-snapshot repository, that won't work anyway
-if (version.endsWith('-SNAPSHOT'))
+if (version.endsWith('-SNAPSHOT')) {
+    gradle.startParameter.excludedTaskNames += 'signMavenJavaPublication'
     gradle.startParameter.excludedTaskNames += 'closeAndReleaseRepository'
+}
 
 // Gradle wrapper, this allows to build the project without having to install Gradle!
 wrapper {
-    gradleVersion = '6.0.1'
+    gradleVersion = '7.1.1'
     distributionType = Wrapper.DistributionType.ALL
 }
 
