@@ -2,12 +2,9 @@
 
 **Changes in version 3.7**
 
+- Fixed ICCC algorithm Third Edition/IARC 2017 that generated wrong output.
 - Updated XStream library to version 1.4.18; it had previously been updated to version 1.4.8 by mistake.
 - Updated CSV library from version 5.5.1 to version 5.5.2.
-
-**Changes in version 3.6**
-
-- Fixed ICCC algorithm Third Edition/IARC 2017 that generated wrong output.
 
 **Changes in version 3.5**
 
