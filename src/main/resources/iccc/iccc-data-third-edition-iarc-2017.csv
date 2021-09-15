@@ -171,4 +171,4 @@ ID,Group Name,Indentation,Sites IN,Sites OUT,Hist IN,Hist OUT,Group code,Group c
 170,Mesothelioma,2,C000-C809,,9050-9055,,121,,113,3
 171,Other specified malignant tumors,2,C000-C809,,"9110,9363",,121,,114,3
 172,Other unspecified malignant tumors,1,"C000-C218,C239-C399,C420-C559,C570-C619,C630-C639,C659-C699,C739-C750,C754-C809",,8000-8005,,122,,115,3
-173,classified by SEER or in situ,0,,,,,999,,999,
+173,Not classified by SEER or in situ,0,,,,,999,,999,
