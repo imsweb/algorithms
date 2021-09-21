@@ -105,26 +105,29 @@ public final class NeoAdjuvantTherapyTxEffectUtils {
         if (StringUtils.isBlank(schemaId))
             return null;
 
+        Map<String, String> result;
         if (_A_SCHEMA.contains(schemaId))
-            return _A;
-        if (_B_SCHEMA.contains(schemaId))
-            return _B;
-        if (_C_SCHEMA.contains(schemaId))
-            return _C;
-        if (_D_SCHEMA.contains(schemaId))
-            return _D;
-        if (_E_SCHEMA.contains(schemaId))
-            return _E;
-        if (_G_SCHEMA.contains(schemaId))
-            return _G;
+            result = _A;
+        else if (_B_SCHEMA.contains(schemaId))
+            result = _B;
+        else if (_C_SCHEMA.contains(schemaId))
+            result = _C;
+        else if (_D_SCHEMA.contains(schemaId))
+            result = _D;
+        else if (_E_SCHEMA.contains(schemaId))
+            result = _E;
+        else if (_G_SCHEMA.contains(schemaId))
+            result = _G;
+        else
+            result = _F;
 
-        return _F;
+        return Collections.unmodifiableMap(result);
     }
 
     /**
      * Returns all the possible values for neoadjuvTherapyTreatmentEffect (#1634) in the different lookups.
      */
     public static Set<String> getAllAllowedValues() {
-        return _ALL_ALLOWED_VALUES;
+        return Collections.unmodifiableSet(_ALL_ALLOWED_VALUES);
     }
 }
