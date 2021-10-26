@@ -1,5 +1,4 @@
-The original data for the poverty indicator algorithms came from the American factfinder site on the Census website.
-That old site is no loner available; the new Census website is now https://data.census.gov.
+The poverty indicator algorithm data comes from the Census public website: https://data.census.gov/cedsci/
 
 For example, here is a link to table S1701 for 2013-17 data: https://data.census.gov/cedsci/table?q=s1701&tid=ACSST5Y2018.S1701
 

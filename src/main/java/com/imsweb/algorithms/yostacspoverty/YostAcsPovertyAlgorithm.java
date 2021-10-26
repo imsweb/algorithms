@@ -51,6 +51,8 @@ public class YostAcsPovertyAlgorithm extends AbstractAlgorithm {
     public YostAcsPovertyAlgorithm() {
         super(Algorithms.ALG_ACS_LINKAGE, YostAcsPovertyUtils.ALG_NAME, YostAcsPovertyUtils.ALG_VERSION, YostAcsPovertyUtils.ALG_INFO);
 
+        _dataUrl = "https://data.census.gov/cedsci/";
+
         _inputFields.add(Algorithms.getField(FIELD_DX_DATE));
         _inputFields.add(Algorithms.getField(FIELD_STATE_DX));
         _inputFields.add(Algorithms.getField(FIELD_COUNTY_AT_DX_ANALYSIS));
