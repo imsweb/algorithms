@@ -31,6 +31,7 @@ public class CensusTractPovertyIndicatorAlgorithm extends AbstractAlgorithm {
         super(Algorithms.ALG_CENSUS_POVERTY, CensusTractPovertyIndicatorUtils.ALG_NAME, CensusTractPovertyIndicatorUtils.ALG_VERSION, CensusTractPovertyIndicatorUtils.ALG_INFO);
         
         _url = "https://www.naaccr.org/analysis-and-data-improvement-tools/#POVERTY";
+        _dataUrl = "https://data.census.gov/cedsci/";
         
         _params.add(AlgorithmParam.of(PARAM_CENSUS_POVERTY_INC_RECENT_YEARS, "Include Recent Years", Boolean.class));
 
