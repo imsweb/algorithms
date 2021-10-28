@@ -33,7 +33,7 @@ public class DeathClassificationAlgorithm extends AbstractAlgorithm {
     public DeathClassificationAlgorithm() {
         super(Algorithms.ALG_DEATH_CLASSIFICATION, "SEER Cause-specific Death Classification", "N/A");
 
-        _url = "http://seer.cancer.gov/causespecific/";
+        _url = "https://seer.cancer.gov/causespecific/";
 
         _params.add(AlgorithmParam.of(PARAM_SEER_COD_CLASS_CUTOFF_YEAR, "Cutoff Year", Integer.class));
 

@@ -30,11 +30,11 @@ public final class IcccRecodeUtils {
     // algorithm name
     public static final String ALG_NAME = "International Classification of Childhood Cancer";
 
-    // version for the 2010+ data (http://seer.cancer.gov/iccc/iccc3.html)
+    // version for the 2010+ data (https://seer.cancer.gov/iccc/iccc3.html)
     public static final String VERSION_THIRD_EDITION = "Third Edition";
     public static final String VERSION_THIRD_EDITION_INFO = "International Classification of Childhood Cancer, Third edition (ICCC-3) based on ICD-O-3";
 
-    // version based on the WHO 2008 classification (http://seer.cancer.gov/iccc/iccc-who2008.html)
+    // version based on the WHO 2008 classification (https://seer.cancer.gov/iccc/iccc-who2008.html)
     public static final String VERSION_WHO_2008 = "ICD-O-3/WHO 2008";
     public static final String VERSION_WHO_2008_INFO = "International Classification of Childhood Cancer based on ICD-O-3/WHO 2008";
 

@@ -41,13 +41,6 @@ public interface Algorithm {
     }
 
     /**
-     * Returns a URL (a website address) to the website that was used to create the data used by this algorithm.
-     */
-    default String getDataSourceUrl() {
-        return null;
-    }
-
-    /**
      * Returns the list of parameters (options) for this algorithm.
      */
     List<AlgorithmParam<?>> getParameters();

@@ -32,11 +32,11 @@ public final class SeerSiteRecodeUtils {
     // algorithm name
     public static final String ALG_NAME = "SEER Site Recode";
 
-    // version for the 2010+ data (http://seer.cancer.gov/siterecode/icdo3_dwhoheme/index.html)
+    // version for the 2010+ data (https://seer.cancer.gov/siterecode/icdo3_dwhoheme/index.html)
     public static final String VERSION_2010 = "2010+";
     public static final String VERSION_2010_INFO = "SEER Site Recode ICD-O-3 2010+ Cases WHO Heme Definition";
 
-    // version for the 2003 data (http://seer.cancer.gov/siterecode/icdo3_d01272003/)
+    // version for the 2003 data (https://seer.cancer.gov/siterecode/icdo3_d01272003/)
     public static final String VERSION_2003 = "2003-27-01";
     public static final String VERSION_2003_INFO = "SEER Site Recode ICD-O-3 (1/27/2003) Definition";
 

@@ -15,7 +15,6 @@ public abstract class AbstractAlgorithm implements Algorithm {
     protected String _version;
     protected String _info;
     protected String _url;
-    protected String _dataUrl;
 
     protected List<AlgorithmParam<?>> _params;
 
@@ -74,11 +73,6 @@ public abstract class AbstractAlgorithm implements Algorithm {
     @Override
     public String getDocumentationUrl() {
         return _url;
-    }
-
-    @Override
-    public String getDataSourceUrl() {
-        return _dataUrl;
     }
 
     @Override

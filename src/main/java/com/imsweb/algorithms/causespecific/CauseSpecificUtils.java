@@ -19,7 +19,7 @@ import com.imsweb.algorithms.seersiterecode.SeerSiteRecodeUtils;
 
 /**
  * This class is used to calculate the cause specific death classification variables. More information can be found here:
- * <a href="http://seer.cancer.gov/causespecific">http://seer.cancer.gov/causespecific/</a>
+ * <a href="http://seer.cancer.gov/causespecific">https://seer.cancer.gov/causespecific/</a>
  * <br/><br/>
  * Author: Sewbesew Bekele
  * Date: Feb 7, 2014

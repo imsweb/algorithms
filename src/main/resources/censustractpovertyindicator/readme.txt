@@ -1,4 +1,6 @@
-The poverty indicator algorithm data comes from the Census public website: https://data.census.gov/cedsci/
+The data for the "NAACCR Poverty Linkage Program" algorithm comes from the Census public website:
+
+https://data.census.gov/cedsci/
 
 For example, here is a link to table S1701 for 2013-17 data: https://data.census.gov/cedsci/table?q=s1701&tid=ACSST5Y2018.S1701
 
