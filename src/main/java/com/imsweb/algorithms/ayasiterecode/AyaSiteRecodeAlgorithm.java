@@ -20,11 +20,12 @@ import static com.imsweb.algorithms.Algorithms.FIELD_BEHAV_O3;
 import static com.imsweb.algorithms.Algorithms.FIELD_HIST_O3;
 import static com.imsweb.algorithms.Algorithms.FIELD_PRIMARY_SITE;
 import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
+import static com.imsweb.algorithms.ayasiterecode.AyaSiteRecodeUtils.ALG_VERSION_2008;
 
 public class AyaSiteRecodeAlgorithm extends AbstractAlgorithm {
 
     public AyaSiteRecodeAlgorithm() {
-        super(Algorithms.ALG_AYA_SITE_RECODE, AyaSiteRecodeUtils.ALG_NAME, AyaSiteRecodeUtils.ALG_VERSION, AyaSiteRecodeUtils.ALG_INFO);
+        super(Algorithms.ALG_AYA_SITE_RECODE, AyaSiteRecodeUtils.ALG_NAME, AbstractAlgorithm.MULTIPLE_VERSIONS, AyaSiteRecodeUtils.ALG_INFO);
 
         _url = "https://seer.cancer.gov/ayarecode/aya-who2008.html";
 
@@ -47,7 +48,7 @@ public class AyaSiteRecodeAlgorithm extends AbstractAlgorithm {
             String site = (String)inputTumor.get(FIELD_PRIMARY_SITE);
             String hist = (String)inputTumor.get(FIELD_HIST_O3);
             String beh = (String)inputTumor.get(FIELD_BEHAV_O3);
-            outputTumors.add(Collections.singletonMap(FIELD_AYA_SITE_RECODE, AyaSiteRecodeUtils.calculateSiteRecode(site, hist, beh)));
+            outputTumors.add(Collections.singletonMap(FIELD_AYA_SITE_RECODE, AyaSiteRecodeUtils.calculateSiteRecode(ALG_VERSION_2008, site, hist, beh)));
         }
 
         return AlgorithmOutput.of(outputPatient);
