@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 3.8**
+
+- Added new version of AYA Site Recode algorithm, had to rename previous AYA algorithm ID and output field.
+
 **Changes in version 3.7**
 
 - Fixed ICCC algorithm Third Edition/IARC 2017 that generated wrong output.
