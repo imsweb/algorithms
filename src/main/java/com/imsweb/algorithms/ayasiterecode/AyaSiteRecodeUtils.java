@@ -25,13 +25,14 @@ public class AyaSiteRecodeUtils {
     public static final String ALG_VERSION_2008 = "WHO 2008";
     public static final String ALG_VERSION_2020 = "2020 Revision";
 
-    public static final String AYA_SITE_RECODE_UNKNOWN = "99";
+    public static final String AYA_SITE_RECODE_UNKNOWN_2008 = "99";
+    public static final String AYA_SITE_RECODE_UNKNOWN_2020 = "999";
 
     private static List<AyaSiteRecodeData> _DATA_2008, _DATA_2020;
 
     /**
      * Returns the coded AYA Site Recode from the provided input fields.
-     * @param version the algorihtm version
+     * @param version the algorithm version (see constants)
      * @param site primary site
      * @param histology histology ICD-O-3
      * @param behavior beahvior ICD-O-3
@@ -39,8 +40,16 @@ public class AyaSiteRecodeUtils {
      */
     public static String calculateSiteRecode(String version, String site, String histology, String behavior) {
 
+        String unknownValue;
+        if (ALG_VERSION_2008.equals(version))
+            unknownValue = AYA_SITE_RECODE_UNKNOWN_2008;
+        else if (ALG_VERSION_2020.equals(version))
+            unknownValue = AYA_SITE_RECODE_UNKNOWN_2020;
+        else
+            throw new RuntimeException("Invalid version: " + version);
+
         if (StringUtils.isBlank(site) || StringUtils.isBlank(histology) || StringUtils.isBlank(behavior))
-            return AYA_SITE_RECODE_UNKNOWN;
+            return unknownValue;
 
         if (!isDataInitialized())
             initializeData();
@@ -48,25 +57,23 @@ public class AyaSiteRecodeUtils {
         List<AyaSiteRecodeData> data;
         if (ALG_VERSION_2008.equals(version))
             data = _DATA_2008;
-        else if (ALG_VERSION_2020.equals(version))
-            data = _DATA_2020;
         else
-            throw new RuntimeException("Invalid version: " + version);
+            data = _DATA_2020;
 
         for (AyaSiteRecodeData row : data)
             if (row.matches(site, histology, behavior))
                 return row.getRecode();
 
-        return AYA_SITE_RECODE_UNKNOWN;
+        return unknownValue;
 
     }
 
     private static boolean isDataInitialized() {
-        return _DATA_2008 != null;
+        return _DATA_2020 != null;
     }
 
     private static synchronized void initializeData() {
-        if (_DATA_2008 != null)
+        if (_DATA_2020 != null)
             return;
 
         _DATA_2008 = readData("ayarecodewho2008.txt");
@@ -89,7 +96,7 @@ public class AyaSiteRecodeUtils {
                     String hist = StringUtils.trimToNull(row[txt ? 3 : 1]);
                     String recode = StringUtils.trimToNull(row[4]);
                     if (beh != null && site != null && hist != null && recode != null)
-                        result.add(new AyaSiteRecodeData(site, hist, beh, StringUtils.leftPad(recode, 2, "0")));
+                        result.add(new AyaSiteRecodeData(site, hist, beh, StringUtils.leftPad(recode, txt ? 2 : 3, "0")));
                 }
             }
         }
