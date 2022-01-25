@@ -11,7 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import com.imsweb.algorithms.ayasiterecode.AyaSiteRecodeAlgorithm;
+import com.imsweb.algorithms.ayasiterecode.AyaSiteRecodeAlgorithm2008;
+import com.imsweb.algorithms.ayasiterecode.AyaSiteRecodeAlgorithm2020;
 import com.imsweb.algorithms.behavrecode.SeerBehaviorRecodeAlgorithm;
 import com.imsweb.algorithms.cancerreportingzone.CancerReportingZoneAlgorithm;
 import com.imsweb.algorithms.causespecific.DeathClassificationAlgorithm;
@@ -55,7 +56,8 @@ public class Algorithms {
     public static final String ALG_URBAN_CONTINUUM = "urban-continuum";
     public static final String ALG_SURVIVAL_TIME = "survival-time";
     public static final String ALG_SEER_SITE_RECODE = "seer-site-recode";
-    public static final String ALG_AYA_SITE_RECODE = "aya-site-recode";
+    public static final String ALG_AYA_SITE_RECODE_2008 = "aya-site-recode-2008";
+    public static final String ALG_AYA_SITE_RECODE_2020 = "aya-site-recode-2020";
     public static final String ALG_SEER_BEHAVIOR_RECODE = "seer-behavior-recode";
     public static final String ALG_ICCC = "iccc";
     public static final String ALG_IARC = "iarc-multiple-primary";
@@ -139,7 +141,8 @@ public class Algorithms {
     public static final String FIELD_NAPIIA_REVIEW_REASON = "napiiaReasonForReview";
     public static final String FIELD_SEER_SITE_RECODE = "seerSiteRecode";
     public static final String FIELD_SEER_BEHAV_RECODE = "seerBehaviorRecode";
-    public static final String FIELD_AYA_SITE_RECODE = "ayaSiteRecode";
+    public static final String FIELD_AYA_SITE_RECODE_2008 = "ayaSiteRecode2008";
+    public static final String FIELD_AYA_SITE_RECODE_2020 = "ayaSiteRecode2020";
     public static final String FIELD_ICCC = "iccc";
     public static final String FIELD_ICCC_MAJOR_CATEGORY = "icccMajorCategory";
     public static final String FIELD_IARC_MP_INDICATOR = "iarcMpIndicator";
@@ -275,7 +278,8 @@ public class Algorithms {
             addField(AlgorithmField.of(FIELD_NAPIIA_REVIEW_REASON, null, 256, "NAPIIA Review Reason", "NAPIIA Rev Res", DATA_LEVEL_PATIENT));
             addField(AlgorithmField.of(FIELD_SEER_SITE_RECODE, null, 5, "SEER Site Recode ICD-O-3", "Site Recode", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_SEER_BEHAV_RECODE, null, 1, "SEER Site Behavior Recode ICD-O-3", "SEER Behav", DATA_LEVEL_TUMOR));
-            addField(AlgorithmField.of(FIELD_AYA_SITE_RECODE, null, 2, "AYA Site Recode", "AYA", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_AYA_SITE_RECODE_2008, null, 2, "AYA Site Recode 2008", "AYA 08", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_AYA_SITE_RECODE_2020, null, 3, "AYA Site Recode 2020", "AYA 20", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_ICCC, null, 3, "Int Classification of Childhood Cancer (ICCC)", "ICCC", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_ICCC_MAJOR_CATEGORY, null, 2, "ICCC Major Category", "ICCC Cat", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_IARC_MP_INDICATOR, null, 1, "IARC Multiple Primary Indicator", "IARC MP", DATA_LEVEL_TUMOR));
@@ -332,7 +336,8 @@ public class Algorithms {
             addAlgorithm(new UrbanContinuumAlgorithm());
             addAlgorithm(new SeerSiteRecodeAlgorithm());
             addAlgorithm(new SeerBehaviorRecodeAlgorithm());
-            addAlgorithm(new AyaSiteRecodeAlgorithm());
+            addAlgorithm(new AyaSiteRecodeAlgorithm2008());
+            addAlgorithm(new AyaSiteRecodeAlgorithm2020());
             addAlgorithm(new IcccAlgorithm());
             addAlgorithm(new IarcAlgorithm());
             addAlgorithm(new CountyAtDxAnalysisAlgorithm());

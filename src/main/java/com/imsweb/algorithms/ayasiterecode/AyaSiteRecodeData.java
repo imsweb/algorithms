@@ -63,7 +63,7 @@ public class AyaSiteRecodeData {
 
     private List<Object> parseValue(String value) {
         List<Object> result = new ArrayList<>();
-        for (String val : StringUtils.split(value, ',')) {
+        for (String val : StringUtils.split(value.replace(".", ""), ',')) {
             String[] parts = StringUtils.split(val, '-');
             if (parts.length == 2)
                 result.add(Range.between(parts[0], parts[1]));
