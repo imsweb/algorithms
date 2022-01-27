@@ -2,7 +2,7 @@
 
 **Changes in version 3.8**
 
-- Added new version of AYA Site Recode algorithm, had to rename previous AYA algorithm ID and output field.
+- Added new version of AYA Site Recode algorithm, with a new computed AYA variable.
 
 **Changes in version 3.7**
 

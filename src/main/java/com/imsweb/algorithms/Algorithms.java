@@ -56,7 +56,7 @@ public class Algorithms {
     public static final String ALG_URBAN_CONTINUUM = "urban-continuum";
     public static final String ALG_SURVIVAL_TIME = "survival-time";
     public static final String ALG_SEER_SITE_RECODE = "seer-site-recode";
-    public static final String ALG_AYA_SITE_RECODE_2008 = "aya-site-recode-2008";
+    public static final String ALG_AYA_SITE_RECODE_2008 = "aya-site-recode"; // keep old name since it might be referenced in dictionaries
     public static final String ALG_AYA_SITE_RECODE_2020 = "aya-site-recode-2020";
     public static final String ALG_SEER_BEHAVIOR_RECODE = "seer-behavior-recode";
     public static final String ALG_ICCC = "iccc";
