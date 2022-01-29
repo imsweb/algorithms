@@ -14,6 +14,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import com.imsweb.algorithms.ayasiterecode.AyaSiteRecodeAlgorithm2008;
 import com.imsweb.algorithms.ayasiterecode.AyaSiteRecodeAlgorithm2020;
 import com.imsweb.algorithms.behavrecode.SeerBehaviorRecodeAlgorithm;
+import com.imsweb.algorithms.braincnsrecode.BainCnsRecodeAlgorithm2020;
 import com.imsweb.algorithms.cancerreportingzone.CancerReportingZoneAlgorithm;
 import com.imsweb.algorithms.causespecific.DeathClassificationAlgorithm;
 import com.imsweb.algorithms.censustractpovertyindicator.CensusTractPovertyIndicatorAlgorithm;
@@ -67,6 +68,7 @@ public class Algorithms {
     public static final String ALG_EPHT_SUBCOUNTY = "epht-subcounty";
     public static final String ALG_TRACT_EST_CONGRESS_DIST = "tract-est-congress-dist";
     public static final String ALG_CANCER_REPORTING_ZONE = "cancer-reporting-zone";
+    public static final String ALG_SEER_BRAIN_CNS_RECODE = "seer-brain-cns-recode";
 
     // special properties
     public static final String FIELD_TUMORS = "tumors";
@@ -186,6 +188,7 @@ public class Algorithms {
     public static final String FIELD_EPHT_2010_GEOID_20K = "epht2010GeoId20k";
     public static final String FIELD_TRACT_EST_CONGRESS_DIST = "tractEstCongressDist";
     public static final String FIELD_CANCER_REPORTING_ZONE = "cancerReportingZone";
+    public static final String FIELD_SEER_BRAIN_CSN_RECODE_2020 = "seerBrainCnsRecode2020";
 
     // options
     public static final String PARAM_NHIA_OPTION = "nhiaOption";
@@ -321,9 +324,9 @@ public class Algorithms {
             addField(AlgorithmField.of(FIELD_ACS_POV1418_HISPANIC, null, 6, "ACS Pct Poverty (2014-2018, Hispanic)", "ACS Pov 1418 Hispanic", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_EPHT_2010_GEOID_5K, null, 11, "EPHT 2010 GEO ID 5K", "EPHT 5K", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_EPHT_2010_GEOID_20K, null, 11, "EPHT 2010 GEO ID 20K", "EPHT 20K", DATA_LEVEL_TUMOR));
-
             addField(AlgorithmField.of(FIELD_TRACT_EST_CONGRESS_DIST, null, 2, "Tract-Estimated Congressional District", "Tract-Est Congress Dist", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_CANCER_REPORTING_ZONE, null, 8, "Cancer Reporting Zone", "Cancer Reporting Zone", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_SEER_BRAIN_CSN_RECODE_2020, null, 2, "SEER Brain/CNS Recode 2020", "Brain/CNS", DATA_LEVEL_TUMOR));
 
             // algorithms
             addAlgorithm(new NhiaAlgorithm());
@@ -336,6 +339,7 @@ public class Algorithms {
             addAlgorithm(new UrbanContinuumAlgorithm());
             addAlgorithm(new SeerSiteRecodeAlgorithm());
             addAlgorithm(new SeerBehaviorRecodeAlgorithm());
+            addAlgorithm(new BainCnsRecodeAlgorithm2020());
             addAlgorithm(new AyaSiteRecodeAlgorithm2008());
             addAlgorithm(new AyaSiteRecodeAlgorithm2020());
             addAlgorithm(new IcccAlgorithm());
