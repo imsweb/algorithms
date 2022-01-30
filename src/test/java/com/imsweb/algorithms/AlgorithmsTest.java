@@ -295,6 +295,7 @@ public class AlgorithmsTest {
         Assert.assertEquals("005", tumor.get(FIELD_COUNTY_AT_DX_ANALYSIS));
         Assert.assertEquals(CountyAtDxAnalysisUtils.REP_REP_GEO_EQUAL, tumor.get(FIELD_COUNTY_AT_DX_ANALYSIS_FLAG));
 
+        // PRCDA/UIHO
         alg = Algorithms.getAlgorithm(Algorithms.ALG_PRCDA_UIHO);
         Assert.assertTrue(alg.getParameters().isEmpty());
         Assert.assertFalse(alg.getUnknownValues().isEmpty());
@@ -308,6 +309,20 @@ public class AlgorithmsTest {
         tumor = Utils.extractTumors(alg.execute(input).getPatient()).get(0);
         Assert.assertEquals("0", tumor.get(FIELD_IHS_PRCDA));
         Assert.assertEquals("1", tumor.get(FIELD_UIHO));
+
+        // Brain/CNS
+        alg = Algorithms.getAlgorithm(Algorithms.ALG_SEER_BRAIN_CNS_RECODE);
+        Assert.assertTrue(alg.getParameters().isEmpty());
+        Assert.assertFalse(alg.getUnknownValues().isEmpty());
+        input = new AlgorithmInput();
+        patMap = new HashMap<>();
+        input.setPatient(patMap);
+        tumMap = new HashMap<>();
+        tumMap.put(Algorithms.FIELD_PRIMARY_SITE, "C700");
+        tumMap.put(Algorithms.FIELD_HIST_O3, "9385");
+        tumMap.put(Algorithms.FIELD_BEHAV_O3, "3");
+        patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
+        Assert.assertEquals("03", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_SEER_BRAIN_CSN_RECODE_2020));
     }
 
     @Test
