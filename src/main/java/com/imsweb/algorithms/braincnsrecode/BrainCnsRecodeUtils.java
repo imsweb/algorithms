@@ -67,14 +67,12 @@ public class BrainCnsRecodeUtils {
             if (is == null)
                 throw new RuntimeException("Unable to find " + filename);
 
-            boolean txt = filename.endsWith(".txt");
-
             try (Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8)) {
-                for (String[] row : new CSVReaderBuilder(reader).withCSVParser(new CSVParserBuilder().withSeparator(txt ? ';' : ',').build()).withSkipLines(txt ? 2 : 1).build().readAll()) {
-                    String site = StringUtils.trimToNull(row[1]);
-                    String beh = StringUtils.trimToNull(row[2]);
-                    String histInc = StringUtils.trimToNull(row[3]);
-                    String histExc = StringUtils.trimToNull(row[4]);
+                for (String[] row : new CSVReaderBuilder(reader).withCSVParser(new CSVParserBuilder().build()).withSkipLines(1).build().readAll()) {
+                    String site = StringUtils.trim(row[1]).replace(" ", "");
+                    String beh = StringUtils.trim(row[2]).replace(" ", "");
+                    String histInc = StringUtils.trim(row[3]).replace(" ", "");
+                    String histExc = StringUtils.trim(row[4]).replace(" ", "");
                     String recode = StringUtils.trimToNull(row[5]);
                     if (recode != null && !recode.contains("-"))
                         result.add(new BrainCnsRecodeData(site, beh, histInc, histExc, StringUtils.leftPad(recode, 2, "0")));
