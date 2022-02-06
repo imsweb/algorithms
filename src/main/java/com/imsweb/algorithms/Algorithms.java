@@ -22,6 +22,7 @@ import com.imsweb.algorithms.countyatdiagnosisanalysis.CountyAtDxAnalysisAlgorit
 import com.imsweb.algorithms.ephtsubcounty.EphtSubCountyAlgorithm;
 import com.imsweb.algorithms.iarc.IarcAlgorithm;
 import com.imsweb.algorithms.iccc.IcccAlgorithm;
+import com.imsweb.algorithms.lymphoma.LymphoidNeoplasmRecodeAlgorithm2021;
 import com.imsweb.algorithms.napiia.NapiiaAlgorithm;
 import com.imsweb.algorithms.nhia.NhiaAlgorithm;
 import com.imsweb.algorithms.prcdauiho.PrcdaUihoAlgorithm;
@@ -69,6 +70,7 @@ public class Algorithms {
     public static final String ALG_TRACT_EST_CONGRESS_DIST = "tract-est-congress-dist";
     public static final String ALG_CANCER_REPORTING_ZONE = "cancer-reporting-zone";
     public static final String ALG_SEER_BRAIN_CNS_RECODE = "seer-brain-cns-recode";
+    public static final String ALG_SEER_LYMPH_NEO_RECODE_2021 = "seer-lymphoid-neoplasm-recode-2021";
 
     // special properties
     public static final String FIELD_TUMORS = "tumors";
@@ -189,6 +191,7 @@ public class Algorithms {
     public static final String FIELD_TRACT_EST_CONGRESS_DIST = "tractEstCongressDist";
     public static final String FIELD_CANCER_REPORTING_ZONE = "cancerReportingZone";
     public static final String FIELD_SEER_BRAIN_CSN_RECODE_2020 = "seerBrainCnsRecode2020";
+    public static final String FIELD_SEER_LYMPH_NEO_RECODE_2021 = "seerLymphNeoplasmRecode2021";
 
     // options
     public static final String PARAM_NHIA_OPTION = "nhiaOption";
@@ -327,6 +330,7 @@ public class Algorithms {
             addField(AlgorithmField.of(FIELD_TRACT_EST_CONGRESS_DIST, null, 2, "Tract-Estimated Congressional District", "Tract-Est Congress Dist", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_CANCER_REPORTING_ZONE, null, 8, "Cancer Reporting Zone", "Cancer Reporting Zone", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_SEER_BRAIN_CSN_RECODE_2020, null, 2, "SEER Brain/CNS Recode 2020", "Brain/CNS", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_SEER_LYMPH_NEO_RECODE_2021, null, 2, "SEER Lymphoid Neoplasm Recode 2021", "Lymph 21", DATA_LEVEL_TUMOR));
 
             // algorithms
             addAlgorithm(new NhiaAlgorithm());
@@ -350,6 +354,7 @@ public class Algorithms {
             addAlgorithm(new EphtSubCountyAlgorithm());
             addAlgorithm(new TractEstCongressDistAlgorithm());
             addAlgorithm(new CancerReportingZoneAlgorithm());
+            addAlgorithm(new LymphoidNeoplasmRecodeAlgorithm2021());
         }
         finally {
             _LOCK.writeLock().unlock();

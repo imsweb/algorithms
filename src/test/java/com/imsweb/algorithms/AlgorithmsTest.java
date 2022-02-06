@@ -323,6 +323,19 @@ public class AlgorithmsTest {
         tumMap.put(Algorithms.FIELD_BEHAV_O3, "3");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
         Assert.assertEquals("03", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_SEER_BRAIN_CSN_RECODE_2020));
+
+        // Lymphoid Neoplasm 2021
+        alg = Algorithms.getAlgorithm(Algorithms.ALG_SEER_LYMPH_NEO_RECODE_2021);
+        Assert.assertTrue(alg.getParameters().isEmpty());
+        Assert.assertFalse(alg.getUnknownValues().isEmpty());
+        input = new AlgorithmInput();
+        patMap = new HashMap<>();
+        input.setPatient(patMap);
+        tumMap = new HashMap<>();
+        tumMap.put(Algorithms.FIELD_PRIMARY_SITE, "C700");
+        tumMap.put(Algorithms.FIELD_HIST_O3, "9651");
+        patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
+        Assert.assertEquals("01", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_SEER_LYMPH_NEO_RECODE_2021));
     }
 
     @Test
