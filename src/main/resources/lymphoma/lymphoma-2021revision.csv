@@ -1,0 +1,65 @@
+Label, Site, Hist,Recode Value
+Lymphoid Neoplasm,,,01-44
+  1 Hodgkin Lymphoma,,,01-06
+    1(a) Classical Hodgkin lymphoma,,,01-05
+      1(a)1 Lymphocyte-rich/mixed cell/lymphocyte depleted,,,01-03
+        1(a)1.1 Lymphocyte-rich,000-809,9651,01
+        1(a)1.2 Mixed cellularity,000-809,9652,02
+        1(a)1.3 Lymphocyte-depleted,000-809,9653-9655,03
+      1(a)2 Nodular sclerosis,000-809,9663-9667,04
+"      1(a)3 Classical Hodgkin lymphoma, NOS",000-809,"9650,9661-9662",05
+    1(b) Nodular lymphocyte predominant Hodgkin lymphoma,000-809,9659,06
+  2 Non-Hodgkin lymphoma,,,07-42
+"    2(a) Non-Hodgkin lymphoma, B-cell",,,07-26
+"      2(a)1 Precursor Non-Hodgkin lymphoma, B-cell",000-809,"9728,9811-9818,9835-9836",07
+"      2(a)2 Mature Non-Hodgkin lymphoma, B-cell",,,08-25
+        2(a)2.1 Chronic/Sm/Prolymphocytic/Mantle B-cell NHL,,,08-10
+          2(a)2.1.1 Chronic/Small lymphocytic leuk/lymph,000-809,"9670,9823",08
+"          2(a)2.1.2 Prolymphocytic leukemia, B-cell",000-809,9833,09
+          2(a)2.1.3 Mantle-cell lymphoma,000-809,9673,10
+        2(a)2.2 Lymphoplasmacytic lymphoma/Waldenstrom,,,11-12
+          2(a)2.2.1 Lymphoplasmacytic lymphoma,000-809,9671,11
+          2(a)2.2.2 Waldenstrom macroglubulinemia,000-809,9761,12
+        2(a)2.3 Diffuse large B-cell lymphoma (DLBCL),,,13-16
+"          2(a)2.3.1 DLBCL, NOS","000-498,500-809","9680,9688,9737,9738",13
+,000-809,"9684,9735",13
+          2(a)2.3.2 Intravascular large B-cell lymphoma,499,"9680,9688,9737,9738",14
+,000-809,9712,14
+          2(a)2.3.3 Primary effusion lymphoma,000-809,9678,15
+          2(a)2.3.4 Mediastinal large B-cell lymphoma,000-809,9679,16
+        2(a)2.4 Burkitt lymphoma/leukemia,000-809,"9687,9826",17
+        2(a)2.5 Marginal-zone lymphoma (MZL),,,18-20
+          2(a)2.5.1 Splenic MZL,000-809,9689,18
+"          2(a)2.5.2 Extranodal MZL, MALT type","000-769,780-809",9699,19
+,000-809,"9760,9764",19
+          2(a)2.5.3 Nodal MZL,770-779,9699,20
+        2(a)2.6 Follicular lymphoma,000-809,"9675,9690-9691,9695,9698",21
+        2(a)2.7 Hairy-cell leukemia,000-809,9940,22
+        2(a)2.8 Plasma cell neoplasms,,,23-24
+          2(a)2.8.1 Plasmacytoma,000-809,"9731,9734",23
+          2(a)2.8.2 Multiple myeloma/plasma-cell leuk,000-809,9732-9733,24
+        2(a)2.9 Heavy chain disease,000-809,9762,25
+"      2(a)3 Non-Hodgkin lymphoma, B-cell, NOS",000-809,"9591,9597",26
+"    2(b) Non-Hodgkin lymphoma, T-cell",,,27-41
+"      2(b)1 Precursor Non-Hodgkin lymphoma, T-cell",000-809,"9729,9837",27
+"      2(b)2 Mature Non-Hodgkin lymphoma, T-cell",,,28-41
+        2(b)2.1 Mycosis fungoides/Sezary syndrome,,,28-29
+          2(b)2.1.1 Mycosis fungoides,000-809,9700,28
+          2(b)2.1.2 Sezary syndrome,000-809,9701,29
+        2(b)2.2 Peripheral T-cell lymphoma,,,30-37
+"          2(b)2.2.1 Peripheral T-cell lymphoma, NOS",000-809,9702,30
+          2(b)2.2.2 Angioimmunoblastic T-cell lymphoma,000-809,9705,31
+          2(b)2.2.3 Subcutan panniculitis-like T-cell lymph,000-809,9708,32
+"          2(b)2.2.4 Anaplastic lar cell lymph, T-/Null-cell",000-809,9714,33
+          2(b)2.2.5 Hepatosplenic T-cell lymphoma,000-809,9716,34
+          2(b)2.2.6 Enteropathy-type T-cell lymphoma,000-809,9717,35
+"          2(b)2.2.7 Cutaneous T-cell lymphoma, NOS",000-809,"9709,9726",36
+          2(b)2.2.8 Prim cutaneous anaplastic lar cell lymph,000-809,9718,37
+        2(b)2.3 Adult T-cell leukemia/lymphoma,000-809,9827,38
+"        2(b)2.4 NK/T-cell lymph, nasal-type/aggres NK leuk",000-809,"9719,9948",39
+        2(b)2.5 T-cell large granular lymphocytic leukemia,000-809,9831,40
+"        2(b)2.6 Prolymphocytic leukemia, T-cell",000-809,9834,41
+"    2(c) Non-Hodgkin lymphoma, unknown lineage",000-809,"9727,9832",42
+  3 Composite Hodgkin lymphoma and NHL,000-809,9596,43
+"  4 Lymphoid neoplasm, NOS",000-809,"9590,9594,9724,9725,9820,9970,9971",44
+Unclassified,Other Combination,,99

@@ -2,6 +2,7 @@
 
 **Changes in version 3.8**
 
+- Added new Lymphoid Neoplasm recode algorithm based on 2021 revision data.
 - Added new SEER Brain/CNS recode algorithm based on 2020 revision data.
 - Added new version of AYA Site Recode algorithm, with a new computed AYA variable.
 
