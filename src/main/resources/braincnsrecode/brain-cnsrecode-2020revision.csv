@@ -3,7 +3,7 @@ Malignant Brain/ONS,C700-C729,3,,"9050-9055, 9140, 9590-9992",1-15
 1. Glioma,C700-C729,3,"9380-9385, 9391-9460",,1-10
 1.1 Diffuse astrocytoma and anaplastic astrocytoma,C700-C729,3,"9400-9401,9410-9411,9420",,1
 1.2 Glioblastoma,C700-C729,3,"9440-9442,9445",,2
-"1.3 Diffuse mideline glioma, H3 K27M-mutant",C700-C729,3,9385,,3
+"1.3 Diffuse midline glioma, H3 K27M-mutant",C700-C729,3,9385,,3
 1.4 Oligodendroglioma,C700-C729,3,9450-9451,,4
 1.5 Oligoastrocytoma,C700-C729,3,9382,,5
 1.6 Other astrocytic tumors,C700-C729,3,"9421,9424-9425",,6
