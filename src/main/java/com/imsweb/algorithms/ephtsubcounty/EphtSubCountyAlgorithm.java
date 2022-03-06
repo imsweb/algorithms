@@ -27,7 +27,7 @@ import static com.imsweb.algorithms.ephtsubcounty.EphtSubCountyUtils.EPHT_2010_G
 public class EphtSubCountyAlgorithm extends AbstractAlgorithm {
 
     public EphtSubCountyAlgorithm() {
-        super(Algorithms.ALG_EPHT_SUBCOUNTY, EphtSubCountyUtils.ALG_NAME, EphtSubCountyUtils.ALG_VERSION, EphtSubCountyUtils.ALG_INFO);
+        super(Algorithms.ALG_EPHT_SUBCOUNTY, EphtSubCountyUtils.ALG_NAME, EphtSubCountyUtils.ALG_VERSION);
 
         _inputFields.add(Algorithms.getField(FIELD_STATE_DX));
         _inputFields.add(Algorithms.getField(FIELD_COUNTY_AT_DX_ANALYSIS));

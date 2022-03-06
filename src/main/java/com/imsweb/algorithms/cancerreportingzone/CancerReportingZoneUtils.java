@@ -5,9 +5,8 @@ package com.imsweb.algorithms.cancerreportingzone;
 
 public class CancerReportingZoneUtils {
 
-    public static final String ALG_NAME = "Cancer Reporting Zones";
-    public static final String ALG_VERSION = "1.0";
-    public static final String ALG_INFO = "Cancer Reporting Zones version 1.0 released in August 2021";
+    public static final String ALG_NAME = "NAACCR Cancer Reporting Zones";
+    public static final String ALG_VERSION = "version 1.0 released in August 2021";
 
     //Unknown values for each code
     public static final String CANCER_REPORTING_ZONE_UNK_A = "A";

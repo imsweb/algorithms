@@ -29,7 +29,7 @@ import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.CONTINUUM_UNK_99;
 public class UrbanContinuumAlgorithm extends AbstractAlgorithm {
 
     public UrbanContinuumAlgorithm() {
-        super(Algorithms.ALG_URBAN_CONTINUUM, RuralUrbanUtils.ALG_NAME + " - Urban Continuum", RuralUrbanUtils.ALG_VERSION, RuralUrbanUtils.ALG_INFO);
+        super(Algorithms.ALG_URBAN_CONTINUUM, RuralUrbanUtils.ALG_NAME_CONTINUUM, RuralUrbanUtils.ALG_VERSION);
 
         _url = "https://www.naaccr.org/analysis-and-data-improvement-tools/#RURAL";
 

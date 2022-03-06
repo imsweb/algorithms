@@ -21,15 +21,13 @@ import static com.imsweb.algorithms.Algorithms.FIELD_BEHAV_O3;
 import static com.imsweb.algorithms.Algorithms.FIELD_HIST_O3;
 import static com.imsweb.algorithms.Algorithms.FIELD_PRIMARY_SITE;
 import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
-import static com.imsweb.algorithms.ayasiterecode.AyaSiteRecodeUtils.ALG_INFO;
 import static com.imsweb.algorithms.ayasiterecode.AyaSiteRecodeUtils.ALG_NAME;
 import static com.imsweb.algorithms.ayasiterecode.AyaSiteRecodeUtils.ALG_VERSION_2020;
-import static com.imsweb.algorithms.ayasiterecode.AyaSiteRecodeUtils.AYA_SITE_RECODE_UNKNOWN_2020;
 
 public class AyaSiteRecodeAlgorithm2020 extends AbstractAlgorithm {
 
     public AyaSiteRecodeAlgorithm2020() {
-        super(Algorithms.ALG_AYA_SITE_RECODE_2020, ALG_NAME + " " + ALG_VERSION_2020, AYA_SITE_RECODE_UNKNOWN_2020, ALG_INFO + " " + ALG_VERSION_2020);
+        super(Algorithms.ALG_AYA_SITE_RECODE_2020, ALG_NAME, ALG_VERSION_2020);
 
         _url = "https://seer.cancer.gov/ayarecode/aya-2020.html";
 

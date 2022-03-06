@@ -49,7 +49,7 @@ import static com.imsweb.algorithms.Algorithms.FIELD_STATE_DX;
 public class YostAcsPovertyAlgorithm extends AbstractAlgorithm {
 
     public YostAcsPovertyAlgorithm() {
-        super(Algorithms.ALG_ACS_LINKAGE, YostAcsPovertyUtils.ALG_NAME, YostAcsPovertyUtils.ALG_VERSION, YostAcsPovertyUtils.ALG_INFO);
+        super(Algorithms.ALG_ACS_LINKAGE, YostAcsPovertyUtils.ALG_NAME, YostAcsPovertyUtils.ALG_VERSION);
 
         _inputFields.add(Algorithms.getField(FIELD_DX_DATE));
         _inputFields.add(Algorithms.getField(FIELD_STATE_DX));

@@ -20,7 +20,6 @@ public class BehaviorRecodeUtilsTest {
     public void assertAlgInfo() {
         Assert.assertNotNull(BehaviorRecodeUtils.ALG_NAME);
         Assert.assertNotNull(BehaviorRecodeUtils.ALG_VERSION);
-        Assert.assertNotNull(BehaviorRecodeUtils.ALG_INFO);
     }
 
     @Test

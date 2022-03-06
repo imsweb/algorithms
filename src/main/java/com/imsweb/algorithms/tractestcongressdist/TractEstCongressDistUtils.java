@@ -5,9 +5,8 @@ package com.imsweb.algorithms.tractestcongressdist;
 
 public class TractEstCongressDistUtils {
 
-    public static final String ALG_NAME = "Tract-Estimated Congressional Districts";
-    public static final String ALG_VERSION = "1.0";
-    public static final String ALG_INFO = "Tract-Estimated Congressional Districts version 1.0 released in August 2021";
+    public static final String ALG_NAME = "NAACCR Tract-Estimated Congressional Districts";
+    public static final String ALG_VERSION = "version 1.0 released in August 2021";
 
     //Unknown values for each code
     public static final String TRACT_EST_CONGRESS_DIST_UNK_A = "A";

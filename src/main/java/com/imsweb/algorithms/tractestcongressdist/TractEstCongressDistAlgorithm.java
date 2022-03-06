@@ -26,7 +26,7 @@ import static com.imsweb.algorithms.tractestcongressdist.TractEstCongressDistUti
 public class TractEstCongressDistAlgorithm extends AbstractAlgorithm {
 
     public TractEstCongressDistAlgorithm() {
-        super(Algorithms.ALG_TRACT_EST_CONGRESS_DIST, TractEstCongressDistUtils.ALG_NAME, TractEstCongressDistUtils.ALG_VERSION, TractEstCongressDistUtils.ALG_INFO);
+        super(Algorithms.ALG_TRACT_EST_CONGRESS_DIST, TractEstCongressDistUtils.ALG_NAME, TractEstCongressDistUtils.ALG_VERSION);
 
         _inputFields.add(Algorithms.getField(FIELD_STATE_DX));
         _inputFields.add(Algorithms.getField(FIELD_COUNTY_AT_DX_ANALYSIS));

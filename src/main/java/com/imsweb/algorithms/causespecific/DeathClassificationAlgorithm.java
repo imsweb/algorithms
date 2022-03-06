@@ -31,7 +31,7 @@ import static com.imsweb.algorithms.Algorithms.PARAM_SEER_COD_CLASS_CUTOFF_YEAR;
 public class DeathClassificationAlgorithm extends AbstractAlgorithm {
 
     public DeathClassificationAlgorithm() {
-        super(Algorithms.ALG_DEATH_CLASSIFICATION, "SEER Cause-specific Death Classification", "N/A");
+        super(Algorithms.ALG_DEATH_CLASSIFICATION, CauseSpecificUtils.ALG_NAME, CauseSpecificUtils.ALG_VERSION);
 
         _url = "https://seer.cancer.gov/causespecific/";
 

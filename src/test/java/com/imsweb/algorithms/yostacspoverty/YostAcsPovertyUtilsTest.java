@@ -6,15 +6,12 @@ package com.imsweb.algorithms.yostacspoverty;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.imsweb.algorithms.ruralurban.RuralUrbanUtils;
-
 public class YostAcsPovertyUtilsTest {
 
     @Test
     public void assertInfo() {
-        Assert.assertNotNull(RuralUrbanUtils.ALG_VERSION);
-        Assert.assertNotNull(RuralUrbanUtils.ALG_NAME);
-        Assert.assertNotNull(RuralUrbanUtils.ALG_INFO);
+        Assert.assertNotNull(YostAcsPovertyUtils.ALG_VERSION);
+        Assert.assertNotNull(YostAcsPovertyUtils.ALG_NAME);
     }
 
     @Test

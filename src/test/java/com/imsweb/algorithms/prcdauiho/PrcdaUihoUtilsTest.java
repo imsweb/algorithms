@@ -25,7 +25,6 @@ public class PrcdaUihoUtilsTest {
     public void assertInfo() {
         Assert.assertNotNull(PrcdaUihoUtils.ALG_VERSION);
         Assert.assertNotNull(PrcdaUihoUtils.ALG_NAME);
-        Assert.assertNotNull(PrcdaUihoUtils.ALG_INFO);
     }
 
     @Test

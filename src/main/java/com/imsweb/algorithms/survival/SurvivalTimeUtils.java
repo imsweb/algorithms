@@ -22,9 +22,8 @@ import org.apache.commons.lang3.math.NumberUtils;
  */
 public class SurvivalTimeUtils {
 
-    public static final String ALG_NAME = "Survival Time in Months";
-    public static final String VERSION = "2.2";
-    public static final String ALG_INFO = "Survival Time in Months version 2.2 released in September 2014";
+    public static final String ALG_NAME = "SEER Survival Time in Months";
+    public static final String VERSION = "version 2.2 released in September 2014";
 
     public static final String SURVIVAL_FLAG_COMPLETE_INFO_NO_SURVIVAL = "0";
     public static final String SURVIVAL_FLAG_COMPLETE_INFO_SOME_SURVIVAL = "1";

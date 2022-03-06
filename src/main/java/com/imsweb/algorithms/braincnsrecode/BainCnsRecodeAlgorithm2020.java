@@ -24,7 +24,7 @@ import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
 public class BainCnsRecodeAlgorithm2020 extends AbstractAlgorithm {
 
     public BainCnsRecodeAlgorithm2020() {
-        super(Algorithms.ALG_SEER_BRAIN_CNS_RECODE, BrainCnsRecodeUtils.ALG_NAME, BrainCnsRecodeUtils.ALG_VERSION_2020, BrainCnsRecodeUtils.ALG_INFO);
+        super(Algorithms.ALG_SEER_BRAIN_CNS_RECODE, BrainCnsRecodeUtils.ALG_NAME, BrainCnsRecodeUtils.ALG_VERSION_2020);
 
         _url = "https://seer.cancer.gov/seerstat/variables/seer/brain_cns-recode/";
 

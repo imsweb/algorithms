@@ -25,7 +25,7 @@ import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
 public class SeerBehaviorRecodeAlgorithm extends AbstractAlgorithm {
 
     public SeerBehaviorRecodeAlgorithm() {
-        super(Algorithms.ALG_SEER_BEHAVIOR_RECODE, BehaviorRecodeUtils.ALG_NAME, BehaviorRecodeUtils.ALG_VERSION, BehaviorRecodeUtils.ALG_INFO);
+        super(Algorithms.ALG_SEER_BEHAVIOR_RECODE, BehaviorRecodeUtils.ALG_NAME, BehaviorRecodeUtils.ALG_VERSION);
 
         _url = "https://seer.cancer.gov/behavrecode/";
 

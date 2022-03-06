@@ -31,7 +31,7 @@ import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
 public class IarcAlgorithm extends AbstractAlgorithm {
 
     public IarcAlgorithm() {
-        super(Algorithms.ALG_IARC, IarcUtils.ALG_NAME, IarcUtils.VERSION, IarcUtils.ALG_INFO);
+        super(Algorithms.ALG_IARC, IarcUtils.ALG_NAME, IarcUtils.VERSION);
 
         _url = "http://www.iacr.com.fr/images/doc/MPrules_july2004.pdf";
 

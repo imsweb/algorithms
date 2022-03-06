@@ -20,7 +20,6 @@ public class TractEstCongressDistUtilsTest {
     public void assertInfo() {
         Assert.assertNotNull(TractEstCongressDistUtils.ALG_VERSION);
         Assert.assertNotNull(TractEstCongressDistUtils.ALG_NAME);
-        Assert.assertNotNull(TractEstCongressDistUtils.ALG_INFO);
     }
 
     @Test

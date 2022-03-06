@@ -26,7 +26,7 @@ import static com.imsweb.algorithms.cancerreportingzone.CancerReportingZoneUtils
 public class CancerReportingZoneAlgorithm extends AbstractAlgorithm {
 
     public CancerReportingZoneAlgorithm() {
-        super(Algorithms.ALG_CANCER_REPORTING_ZONE, CancerReportingZoneUtils.ALG_NAME, CancerReportingZoneUtils.ALG_VERSION, CancerReportingZoneUtils.ALG_INFO);
+        super(Algorithms.ALG_CANCER_REPORTING_ZONE, CancerReportingZoneUtils.ALG_NAME, CancerReportingZoneUtils.ALG_VERSION);
 
         _inputFields.add(Algorithms.getField(FIELD_STATE_DX));
         _inputFields.add(Algorithms.getField(FIELD_COUNTY_AT_DX_ANALYSIS));

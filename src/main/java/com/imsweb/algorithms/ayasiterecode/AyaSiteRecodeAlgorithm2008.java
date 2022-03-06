@@ -20,15 +20,13 @@ import static com.imsweb.algorithms.Algorithms.FIELD_BEHAV_O3;
 import static com.imsweb.algorithms.Algorithms.FIELD_HIST_O3;
 import static com.imsweb.algorithms.Algorithms.FIELD_PRIMARY_SITE;
 import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
-import static com.imsweb.algorithms.ayasiterecode.AyaSiteRecodeUtils.ALG_INFO;
 import static com.imsweb.algorithms.ayasiterecode.AyaSiteRecodeUtils.ALG_NAME;
 import static com.imsweb.algorithms.ayasiterecode.AyaSiteRecodeUtils.ALG_VERSION_2008;
-import static com.imsweb.algorithms.ayasiterecode.AyaSiteRecodeUtils.AYA_SITE_RECODE_UNKNOWN_2008;
 
 public class AyaSiteRecodeAlgorithm2008 extends AbstractAlgorithm {
 
     public AyaSiteRecodeAlgorithm2008() {
-        super(Algorithms.ALG_AYA_SITE_RECODE_2008, ALG_NAME + " " + ALG_VERSION_2008, AYA_SITE_RECODE_UNKNOWN_2008, ALG_INFO + " " + ALG_VERSION_2008);
+        super(Algorithms.ALG_AYA_SITE_RECODE_2008, ALG_NAME, ALG_VERSION_2008);
 
         _url = "https://seer.cancer.gov/ayarecode/aya-who2008.html";
 

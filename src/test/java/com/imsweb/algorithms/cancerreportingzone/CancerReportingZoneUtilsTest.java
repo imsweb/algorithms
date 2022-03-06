@@ -19,7 +19,6 @@ public class CancerReportingZoneUtilsTest {
     public void assertInfo() {
         Assert.assertNotNull(CancerReportingZoneUtils.ALG_VERSION);
         Assert.assertNotNull(CancerReportingZoneUtils.ALG_NAME);
-        Assert.assertNotNull(CancerReportingZoneUtils.ALG_INFO);
     }
 
     @Test

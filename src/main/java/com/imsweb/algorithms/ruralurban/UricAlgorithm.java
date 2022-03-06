@@ -28,7 +28,7 @@ import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.URIC_VAL_UNK_D;
 public class UricAlgorithm extends AbstractAlgorithm {
 
     public UricAlgorithm() {
-        super(Algorithms.ALG_URIC, RuralUrbanUtils.ALG_NAME + " - URIC", RuralUrbanUtils.ALG_VERSION, RuralUrbanUtils.ALG_INFO);
+        super(Algorithms.ALG_URIC, RuralUrbanUtils.ALG_NAME_URIC, RuralUrbanUtils.ALG_VERSION);
 
         _url = "https://www.naaccr.org/analysis-and-data-improvement-tools/#RURAL";
 

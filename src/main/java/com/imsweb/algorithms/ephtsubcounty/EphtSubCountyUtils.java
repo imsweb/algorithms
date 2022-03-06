@@ -8,9 +8,8 @@ package com.imsweb.algorithms.ephtsubcounty;
  */
 public final class EphtSubCountyUtils {
 
-    public static final String ALG_NAME = "EPHT SubCounty";
-    public static final String ALG_VERSION = "1.0";
-    public static final String ALG_INFO = "EPHT SubCounty version 1.0, released in August 2021";
+    public static final String ALG_NAME = "NPCR EPHT SubCounty";
+    public static final String ALG_VERSION = "version 1.0 released in August 2021";
 
     public static final String EPHT_2010_GEO_ID_UNK_A = "A";
     public static final String EPHT_2010_GEO_ID_UNK_C = "C";

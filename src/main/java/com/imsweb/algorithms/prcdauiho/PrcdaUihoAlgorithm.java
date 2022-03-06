@@ -26,7 +26,7 @@ import static com.imsweb.algorithms.prcdauiho.PrcdaUihoUtils.UIHO_UNKNOWN;
 public class PrcdaUihoAlgorithm extends AbstractAlgorithm {
 
     public PrcdaUihoAlgorithm() {
-        super(Algorithms.ALG_PRCDA_UIHO, PrcdaUihoUtils.ALG_NAME, PrcdaUihoUtils.ALG_VERSION, PrcdaUihoUtils.ALG_INFO);
+        super(Algorithms.ALG_PRCDA_UIHO, PrcdaUihoUtils.ALG_NAME, PrcdaUihoUtils.ALG_VERSION);
 
         _inputFields.add(Algorithms.getField(FIELD_STATE_DX));
         _inputFields.add(Algorithms.getField(FIELD_COUNTY_AT_DX_ANALYSIS));

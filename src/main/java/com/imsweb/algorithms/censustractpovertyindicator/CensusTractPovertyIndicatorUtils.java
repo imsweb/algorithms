@@ -15,8 +15,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 public final class CensusTractPovertyIndicatorUtils {
 
     public static final String ALG_NAME = "NAACCR Poverty Linkage Program";
-    public static final String ALG_VERSION = "10.0";
-    public static final String ALG_INFO = "NAACCR Poverty Linkage Program version 10.0, released in August 2020";
+    public static final String ALG_VERSION = "version 10.0 released in August 2020";
 
     //Unknown value for census tract poverty indicator
     public static final String POVERTY_INDICATOR_UNKNOWN = "9";

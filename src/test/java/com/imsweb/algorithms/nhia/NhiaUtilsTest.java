@@ -37,7 +37,6 @@ public class NhiaUtilsTest {
     public void assertInfo() {
         Assert.assertNotNull(NhiaUtils.ALG_VERSION);
         Assert.assertNotNull(NhiaUtils.ALG_NAME);
-        Assert.assertNotNull(NhiaUtils.ALG_INFO);
     }
 
     @Test

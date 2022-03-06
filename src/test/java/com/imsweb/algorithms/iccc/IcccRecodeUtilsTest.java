@@ -24,7 +24,7 @@ public class IcccRecodeUtilsTest {
         Assert.assertFalse(IcccRecodeUtils.getRawData(VERSION_THIRD_EDITION).isEmpty());
         Assert.assertFalse(IcccRecodeUtils.getRawData(VERSION_THIRD_EDITION_IARC_2017).isEmpty());
 
-        Assert.assertTrue(IcccRecodeUtils.getAvailableVersions().containsKey(IcccRecodeUtils.VERSION_DEFAULT));
+        Assert.assertTrue(IcccRecodeUtils.getAvailableVersions().contains(IcccRecodeUtils.VERSION_DEFAULT));
     }
 
     @Test

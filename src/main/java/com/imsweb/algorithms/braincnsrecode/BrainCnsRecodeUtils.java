@@ -20,7 +20,6 @@ import com.opencsv.exceptions.CsvException;
 public class BrainCnsRecodeUtils {
 
     public static final String ALG_NAME = "SEER Brain/CNS Recode";
-    public static final String ALG_INFO = "Brain/CNS Recode based on the 2016 WHO Classification of Tumors of the Central Nervous System";
 
     public static final String ALG_VERSION_2020 = "2020 Revision";
 

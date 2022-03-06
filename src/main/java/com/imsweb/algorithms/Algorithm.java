@@ -29,11 +29,6 @@ public interface Algorithm {
     String getVersion();
 
     /**
-     * Returns a short sentence describing the algorithm (if you don't have one, you can just return the algorithm name).
-     */
-    String getInfo();
-
-    /**
      * Returns a URL (a website address) to online documentation resource (optional).
      */
     default String getDocumentationUrl() {

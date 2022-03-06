@@ -8,8 +8,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
@@ -28,30 +30,27 @@ import com.imsweb.algorithms.internal.Utils;
 public final class IcccRecodeUtils {
 
     // algorithm name
-    public static final String ALG_NAME = "International Classification of Childhood Cancer";
+    public static final String ALG_NAME = "SEER International Classification of Childhood Cancer";
 
     // version for the 2010+ data (https://seer.cancer.gov/iccc/iccc3.html)
-    public static final String VERSION_THIRD_EDITION = "Third Edition";
-    public static final String VERSION_THIRD_EDITION_INFO = "International Classification of Childhood Cancer, Third edition (ICCC-3) based on ICD-O-3";
+    public static final String VERSION_THIRD_EDITION = "Third edition (ICCC-3) based on ICD-O-3";
 
     // version based on the WHO 2008 classification (https://seer.cancer.gov/iccc/iccc-who2008.html)
-    public static final String VERSION_WHO_2008 = "ICD-O-3/WHO 2008";
-    public static final String VERSION_WHO_2008_INFO = "International Classification of Childhood Cancer based on ICD-O-3/WHO 2008";
+    public static final String VERSION_WHO_2008 = "ICD-O-3/WHO 200";
 
     // version for the 2010+ data/IARC 2017 (https://seer.cancer.gov/iccc/iccc-iarc-2017.html)
-    public static final String VERSION_THIRD_EDITION_IARC_2017 = "Third Edition/IARC 2017";
-    public static final String VERSION_THIRD_EDITION_IARC_2017_INFO = "International Classification of Childhood Cancer, Third edition based on ICD-O-3/IARC 2017";
-
-    // cached versions
-    private static final Map<String, String> _VERSIONS = new HashMap<>();
+    public static final String VERSION_THIRD_EDITION_IARC_2017 = "Third edition based on ICD-O-3/IARC 2017";
 
     // default version
     public static final String VERSION_DEFAULT = VERSION_THIRD_EDITION_IARC_2017;
 
+    // cached versions
+    private static final Set<String> _VERSIONS = new HashSet<>();
+
     static {
-        _VERSIONS.put(VERSION_THIRD_EDITION, VERSION_THIRD_EDITION_INFO);
-        _VERSIONS.put(VERSION_WHO_2008, VERSION_WHO_2008_INFO);
-        _VERSIONS.put(VERSION_THIRD_EDITION_IARC_2017, VERSION_THIRD_EDITION_IARC_2017_INFO);
+        _VERSIONS.add(VERSION_THIRD_EDITION);
+        _VERSIONS.add(VERSION_WHO_2008);
+        _VERSIONS.add(VERSION_THIRD_EDITION_IARC_2017);
     }
 
     // unknown value
@@ -103,8 +102,8 @@ public final class IcccRecodeUtils {
      * Returns the available versions, ID is the version key, value is the version description.
      * @return the available versions
      */
-    public static Map<String, String> getAvailableVersions() {
-        return Collections.unmodifiableMap(_VERSIONS);
+    public static Set<String> getAvailableVersions() {
+        return Collections.unmodifiableSet(_VERSIONS);
     }
 
     /**

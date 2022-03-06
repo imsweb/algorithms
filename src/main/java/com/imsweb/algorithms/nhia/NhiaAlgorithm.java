@@ -34,7 +34,7 @@ import static com.imsweb.algorithms.nhia.NhiaUtils.NHIA_OPTION_SEVEN_ONLY;
 public class NhiaAlgorithm extends AbstractAlgorithm {
 
     public NhiaAlgorithm() {
-        super(Algorithms.ALG_NHIA, NhiaUtils.ALG_NAME, NhiaUtils.ALG_VERSION, NhiaUtils.ALG_INFO);
+        super(Algorithms.ALG_NHIA, NhiaUtils.ALG_NAME, NhiaUtils.ALG_VERSION);
 
         _url = "https://www.naaccr.org/analysis-and-data-improvement-tools/#NHAPIIA";
 

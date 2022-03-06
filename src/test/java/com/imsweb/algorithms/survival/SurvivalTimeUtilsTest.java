@@ -17,7 +17,6 @@ public class SurvivalTimeUtilsTest {
     public void assertAlgInfo() {
         Assert.assertNotNull(SurvivalTimeUtils.VERSION);
         Assert.assertNotNull(SurvivalTimeUtils.ALG_NAME);
-        Assert.assertNotNull(SurvivalTimeUtils.ALG_INFO);
     }
 
     @Test

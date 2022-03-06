@@ -14,8 +14,7 @@ public class BehaviorRecodeUtils {
 
     //Algorithm info
     public static final String ALG_NAME = "SEER Behavior Recode for Analysis";
-    public static final String ALG_VERSION = "2006+";
-    public static final String ALG_INFO = "SEER behavior recode for November 2006 submission and later releases.";
+    public static final String ALG_VERSION = "for 2006+ submissions";
 
     //Behavior recode for analysis values
     public static final String BENIGN = "0";

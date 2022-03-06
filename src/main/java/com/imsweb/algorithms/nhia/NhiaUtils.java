@@ -31,9 +31,8 @@ import com.opencsv.exceptions.CsvException;
  */
 public final class NhiaUtils {
 
-    public static final String ALG_NAME = "NAACCR Hispanic Identification Algorithm";
-    public static final String ALG_VERSION = "17";
-    public static final String ALG_INFO = "NHAPIIA v17 released in April 2017";
+    public static final String ALG_NAME = "NAACCR Hispanic Identification Algorithm (NHIA)";
+    public static final String ALG_VERSION = "v17 released in April 2017";
 
     public static final String NHIA_NON_HISPANIC = "0";
     public static final String NHIA_MEXICAN = "1";

@@ -22,8 +22,7 @@ public class RuralUrbanUtilsTest {
     @Test
     public void assertInfo() {
         Assert.assertNotNull(RuralUrbanUtils.ALG_VERSION);
-        Assert.assertNotNull(RuralUrbanUtils.ALG_NAME);
-        Assert.assertNotNull(RuralUrbanUtils.ALG_INFO);
+        Assert.assertNotNull(RuralUrbanUtils.ALG_NAME_RUCA);
     }
 
     @Test

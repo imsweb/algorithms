@@ -30,27 +30,24 @@ import com.imsweb.algorithms.internal.Utils;
 public final class SeerSiteRecodeUtils {
 
     // algorithm name
-    public static final String ALG_NAME = "SEER Site Recode";
+    public static final String ALG_NAME = "SEER Site Recode ICD-O-3";
 
     // version for the 2010+ data (https://seer.cancer.gov/siterecode/icdo3_dwhoheme/index.html)
-    public static final String VERSION_2010 = "2010+";
-    public static final String VERSION_2010_INFO = "SEER Site Recode ICD-O-3 2010+ Cases WHO Heme Definition";
+    public static final String VERSION_2010 = "WHO 2008 Definition";
 
     // version for the 2003 data (https://seer.cancer.gov/siterecode/icdo3_d01272003/)
-    public static final String VERSION_2003 = "2003-27-01";
-    public static final String VERSION_2003_INFO = "SEER Site Recode ICD-O-3 (1/27/2003) Definition";
+    public static final String VERSION_2003 = "2003 Definition";
 
     // version for the 2003 data without Mesothelioma (9050-9055) and Kaposi Sarcoma (9140) as separate groupings
-    public static final String VERSION_2003_WITHOUT_KSM = "2003-27-01 (no Meso and Kapo)";
-    public static final String VERSION_2003_WITHOUT_KSM_INFO = "SEER Site Recode ICD-O-3 (1/27/2003) Definition without Mesothelioma (9050-9055) and Kaposi Sarcoma (9140)";
+    public static final String VERSION_2003_WITHOUT_KSM = "2003 Definition without Mesothelioma and Kaposi Sarcoma";
 
     // cached versions
-    private static final Map<String, String> _VERSIONS = new HashMap<>();
+    private static final Set<String> _VERSIONS = new HashSet<>();
 
     static {
-        _VERSIONS.put(VERSION_2010, VERSION_2010_INFO);
-        _VERSIONS.put(VERSION_2003, VERSION_2003_INFO);
-        _VERSIONS.put(VERSION_2003_WITHOUT_KSM, VERSION_2003_WITHOUT_KSM_INFO);
+        _VERSIONS.add(VERSION_2010);
+        _VERSIONS.add(VERSION_2003);
+        _VERSIONS.add(VERSION_2003_WITHOUT_KSM);
     }
 
     // default version
@@ -80,8 +77,8 @@ public final class SeerSiteRecodeUtils {
      * Returns the available versions, ID is the version key, value is the version description.
      * @return the available versions
      */
-    public static Map<String, String> getAvailableVersions() {
-        return Collections.unmodifiableMap(_VERSIONS);
+    public static Set<String> getAvailableVersions() {
+        return Collections.unmodifiableSet(_VERSIONS);
     }
 
     /**

@@ -21,7 +21,6 @@ import com.opencsv.exceptions.CsvException;
 public class LymphoidNeoplasmRecodeUtils {
 
     public static final String ALG_NAME = "SEER Lymphoid Neoplasm Recode";
-    public static final String ALG_INFO = "SEER Lymphoid Neoplasm Recode";
 
     public static final String ALG_VERSION_2021 = "2021 Revision";
 

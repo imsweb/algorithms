@@ -32,8 +32,8 @@ import static com.imsweb.algorithms.Algorithms.FIELD_SPAN_HISP_OR;
 public class NapiiaAlgorithm extends AbstractAlgorithm {
 
     public NapiiaAlgorithm() {
-        super(Algorithms.ALG_NAPIIA, NapiiaUtils.ALG_NAME, NapiiaUtils.ALG_VERSION, NapiiaUtils.ALG_INFO);
-        
+        super(Algorithms.ALG_NAPIIA, NapiiaUtils.ALG_NAME, NapiiaUtils.ALG_VERSION);
+
         _url = "https://www.naaccr.org/analysis-and-data-improvement-tools/#NHAPIIA";
 
         _inputFields.add(Algorithms.getField(FIELD_SPAN_HISP_OR));

@@ -12,9 +12,13 @@ import static com.imsweb.algorithms.ruralurban.RuralUrbanDataProvider.TRACT_CATE
  */
 public final class RuralUrbanUtils {
 
-    public static final String ALG_NAME = "NAACCR Rural Urban Program";
-    public static final String ALG_VERSION = "2018";
-    public static final String ALG_INFO = "NAACCR Rural Urban Program released in September 2018";
+    // TODO FD I think the 3 algorithms should actually just be one
+
+    public static final String ALG_NAME_RUCA = "NAACCR Rural Urban Program (RUCA)";
+    public static final String ALG_NAME_URIC = "NAACCR Rural Urban Program (URIC)";
+    public static final String ALG_NAME_CONTINUUM = "NAACCR Rural Urban Program (Continuum)";
+
+    public static final String ALG_VERSION = "released in August 2019";
 
     //Unknown values for each code
     public static final String URBAN_RURAL_INDICATOR_CODE_UNKNOWN = "C";

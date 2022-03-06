@@ -31,6 +31,24 @@ public class AlgorithmsTest {
         Algorithms.initialize();
     }
 
+    //    @Test
+    //    public void printAllAlgorithms() {
+    //        List<String> list = new ArrayList<>();
+    //        for (Algorithm alg : Algorithms.getAlgorithms()) {
+    //            StringBuilder buf = new StringBuilder("\n");
+    //
+    //            buf.append(alg.getName());
+    //            buf.append("\n  version = ").append(alg.getVersion());
+    //            buf.append("\n  info = ").append(alg.getName()).append(" ").append(alg.getVersion());
+    //
+    //            list.add(buf.toString());
+    //        }
+    //
+    //        Collections.sort(list);
+    //
+    //        list.forEach(System.out::println);
+    //    }
+
     @Test
     public void testFields() {
         NaaccrDictionary dictionary = NaaccrXmlDictionaryUtils.getMergedDictionaries(NaaccrFormat.NAACCR_VERSION_210);
@@ -356,11 +374,6 @@ public class AlgorithmsTest {
             @Override
             public String getVersion() {
                 return "1.0";
-            }
-
-            @Override
-            public String getInfo() {
-                return "Some fake algorithm...";
             }
 
             @Override

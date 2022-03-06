@@ -16,7 +16,6 @@ public class IarcUtilsTest {
     public void testAlgorithmInfo() {
         Assert.assertNotNull(IarcUtils.VERSION);
         Assert.assertNotNull(IarcUtils.ALG_NAME);
-        Assert.assertNotNull(IarcUtils.ALG_INFO);
     }
 
     @Test

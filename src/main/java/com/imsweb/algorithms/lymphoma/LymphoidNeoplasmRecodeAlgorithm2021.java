@@ -19,14 +19,13 @@ import static com.imsweb.algorithms.Algorithms.FIELD_HIST_O3;
 import static com.imsweb.algorithms.Algorithms.FIELD_PRIMARY_SITE;
 import static com.imsweb.algorithms.Algorithms.FIELD_SEER_LYMPH_NEO_RECODE_2021;
 import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
-import static com.imsweb.algorithms.lymphoma.LymphoidNeoplasmRecodeUtils.ALG_INFO;
 import static com.imsweb.algorithms.lymphoma.LymphoidNeoplasmRecodeUtils.ALG_NAME;
 import static com.imsweb.algorithms.lymphoma.LymphoidNeoplasmRecodeUtils.ALG_VERSION_2021;
 
 public class LymphoidNeoplasmRecodeAlgorithm2021 extends AbstractAlgorithm {
 
     public LymphoidNeoplasmRecodeAlgorithm2021() {
-        super(Algorithms.ALG_SEER_LYMPH_NEO_RECODE_2021, ALG_NAME + " " + ALG_VERSION_2021, ALG_VERSION_2021, ALG_INFO + " " + ALG_VERSION_2021);
+        super(Algorithms.ALG_SEER_LYMPH_NEO_RECODE_2021, ALG_NAME, ALG_VERSION_2021);
 
         _url = "https://seer.cancer.gov/lymphomarecode/lymphoma-2021.html";
 

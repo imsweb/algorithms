@@ -39,7 +39,6 @@ public class NapiiaUtilsTest {
     public void assertInfo() {
         Assert.assertNotNull(NapiiaUtils.ALG_VERSION);
         Assert.assertNotNull(NapiiaUtils.ALG_NAME);
-        Assert.assertNotNull(NapiiaUtils.ALG_INFO);
     }
 
     @Test

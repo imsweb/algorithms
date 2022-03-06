@@ -26,6 +26,9 @@ import com.imsweb.algorithms.seersiterecode.SeerSiteRecodeUtils;
  */
 public final class CauseSpecificUtils {
 
+    public static final String ALG_NAME = "SEER Cause-specific Death Classification";
+    public static final String ALG_VERSION = "for 2010+ submissions";
+
     //values for cause specific and cause others
     public static final String ALIVE_OR_DEAD_OF_OTHER_CAUSES = "0";
     public static final String DEAD = "1";

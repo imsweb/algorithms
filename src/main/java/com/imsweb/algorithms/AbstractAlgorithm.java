@@ -13,7 +13,6 @@ public abstract class AbstractAlgorithm implements Algorithm {
     protected String _id;
     protected String _name;
     protected String _version;
-    protected String _info;
     protected String _url;
 
     protected List<AlgorithmParam<?>> _params;
@@ -24,23 +23,16 @@ public abstract class AbstractAlgorithm implements Algorithm {
     protected Map<String, List<String>> _unknownValues;
 
     public AbstractAlgorithm(String id, String name, String version) {
-        this(id, name, version, name);
-    }
-
-    public AbstractAlgorithm(String id, String name, String version, String info) {
         if (id == null)
             throw new RuntimeException("ID is required");
         if (name == null)
             throw new RuntimeException("Name is required");
         if (version == null)
             throw new RuntimeException("Version is required (use N/A if your algorithm doesn't support a version)");
-        if (info == null)
-            throw new RuntimeException("Info is required (use name if your algorithm doesn't support any information)");
 
         _id = id;
         _name = name;
         _version = version;
-        _info = info;
 
         _params = new ArrayList<>();
 
@@ -63,11 +55,6 @@ public abstract class AbstractAlgorithm implements Algorithm {
     @Override
     public String getVersion() {
         return _version;
-    }
-
-    @Override
-    public String getInfo() {
-        return _info;
     }
 
     @Override

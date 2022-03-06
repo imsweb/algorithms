@@ -28,7 +28,7 @@ import static com.imsweb.algorithms.Algorithms.PARAM_CENSUS_POVERTY_INC_RECENT_Y
 public class CensusTractPovertyIndicatorAlgorithm extends AbstractAlgorithm {
 
     public CensusTractPovertyIndicatorAlgorithm() {
-        super(Algorithms.ALG_CENSUS_POVERTY, CensusTractPovertyIndicatorUtils.ALG_NAME, CensusTractPovertyIndicatorUtils.ALG_VERSION, CensusTractPovertyIndicatorUtils.ALG_INFO);
+        super(Algorithms.ALG_CENSUS_POVERTY, CensusTractPovertyIndicatorUtils.ALG_NAME, CensusTractPovertyIndicatorUtils.ALG_VERSION);
         
         _url = "https://www.naaccr.org/analysis-and-data-improvement-tools/#POVERTY";
         

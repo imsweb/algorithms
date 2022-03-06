@@ -20,8 +20,7 @@ import com.imsweb.algorithms.internal.Utils;
 public class IarcUtils {
 
     public static final String ALG_NAME = "IARC Multiple Primary Indicator";
-    public static final String VERSION = "ICD-O Third Edition";
-    public static final String ALG_INFO = "International rules for multiple primary cancers released in 2004";
+    public static final String VERSION = "ICD-O Third Edition released in 2004";
 
     public static final Integer DUPLICATE = 0;
     public static final Integer PRIMARY = 1;

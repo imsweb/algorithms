@@ -19,12 +19,11 @@ import static com.imsweb.algorithms.Algorithms.FIELD_HIST_O3;
 import static com.imsweb.algorithms.Algorithms.FIELD_PRIMARY_SITE;
 import static com.imsweb.algorithms.Algorithms.FIELD_SEER_SITE_RECODE;
 import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
-import static com.imsweb.algorithms.seersiterecode.SeerSiteRecodeUtils.VERSION_2010;
 
 public class SeerSiteRecodeAlgorithm extends AbstractAlgorithm {
 
     public SeerSiteRecodeAlgorithm() {
-        super(Algorithms.ALG_SEER_SITE_RECODE, SeerSiteRecodeUtils.ALG_NAME + " " + VERSION_2010, SeerSiteRecodeUtils.VERSION_2010, SeerSiteRecodeUtils.VERSION_2010_INFO);
+        super(Algorithms.ALG_SEER_SITE_RECODE, SeerSiteRecodeUtils.ALG_NAME, SeerSiteRecodeUtils.VERSION_2010);
 
         _url = "http://seer.cancer.gov/siterecode";
 

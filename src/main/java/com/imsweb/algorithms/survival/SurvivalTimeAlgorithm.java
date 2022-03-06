@@ -40,7 +40,7 @@ import static com.imsweb.algorithms.Algorithms.PARAM_SURV_CUTOFF_YEAR;
 public class SurvivalTimeAlgorithm extends AbstractAlgorithm {
 
     public SurvivalTimeAlgorithm() {
-        super(Algorithms.ALG_SURVIVAL_TIME, SurvivalTimeUtils.ALG_NAME, SurvivalTimeUtils.VERSION, SurvivalTimeUtils.ALG_INFO);
+        super(Algorithms.ALG_SURVIVAL_TIME, SurvivalTimeUtils.ALG_NAME, SurvivalTimeUtils.VERSION);
 
         _url = "http://seer.cancer.gov/survivaltime/";
 
