@@ -26,9 +26,7 @@ import com.imsweb.algorithms.lymphoma.LymphoidNeoplasmRecodeAlgorithm2021;
 import com.imsweb.algorithms.napiia.NapiiaAlgorithm;
 import com.imsweb.algorithms.nhia.NhiaAlgorithm;
 import com.imsweb.algorithms.prcdauiho.PrcdaUihoAlgorithm;
-import com.imsweb.algorithms.ruralurban.RucaAlgorithm;
-import com.imsweb.algorithms.ruralurban.UrbanContinuumAlgorithm;
-import com.imsweb.algorithms.ruralurban.UricAlgorithm;
+import com.imsweb.algorithms.ruralurban.RuralUrbanAlgorithm;
 import com.imsweb.algorithms.seersiterecode.SeerSiteRecodeAlgorithm;
 import com.imsweb.algorithms.survival.SurvivalTimeAlgorithm;
 import com.imsweb.algorithms.tractestcongressdist.TractEstCongressDistAlgorithm;
@@ -53,9 +51,7 @@ public class Algorithms {
     public static final String ALG_NAPIIA = "napiia";
     public static final String ALG_DEATH_CLASSIFICATION = "death-classification";
     public static final String ALG_CENSUS_POVERTY = "census-poverty";
-    public static final String ALG_URIC = "uric";
-    public static final String ALG_RUCA = "ruca";
-    public static final String ALG_URBAN_CONTINUUM = "urban-continuum";
+    public static final String ALG_RURAL_URBAN = "rural-urban";
     public static final String ALG_SURVIVAL_TIME = "survival-time";
     public static final String ALG_SEER_SITE_RECODE = "seer-site-recode";
     public static final String ALG_AYA_SITE_RECODE_2008 = "aya-site-recode"; // keep old name since it might be referenced in dictionaries
@@ -338,9 +334,7 @@ public class Algorithms {
             addAlgorithm(new DeathClassificationAlgorithm());
             addAlgorithm(new CensusTractPovertyIndicatorAlgorithm());
             addAlgorithm(new SurvivalTimeAlgorithm());
-            addAlgorithm(new UricAlgorithm());
-            addAlgorithm(new RucaAlgorithm());
-            addAlgorithm(new UrbanContinuumAlgorithm());
+            addAlgorithm(new RuralUrbanAlgorithm());
             addAlgorithm(new SeerSiteRecodeAlgorithm());
             addAlgorithm(new SeerBehaviorRecodeAlgorithm());
             addAlgorithm(new BainCnsRecodeAlgorithm2020());

@@ -156,8 +156,8 @@ public class AlgorithmsTest {
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
         Assert.assertEquals("0120", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_SURV_MONTH_ACTIVE_FUP));
 
-        // URIC
-        alg = Algorithms.getAlgorithm(Algorithms.ALG_URIC);
+        // Rural Urban
+        alg = Algorithms.getAlgorithm(Algorithms.ALG_RURAL_URBAN);
         Assert.assertTrue(alg.getParameters().isEmpty());
         Assert.assertFalse(alg.getUnknownValues().isEmpty());
         input = new AlgorithmInput();
@@ -171,34 +171,8 @@ public class AlgorithmsTest {
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
         Assert.assertEquals("1", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_URIC_2000));
         Assert.assertEquals("1", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_URIC_2010));
-
-        // RUCA
-        alg = Algorithms.getAlgorithm(Algorithms.ALG_RUCA);
-        Assert.assertTrue(alg.getParameters().isEmpty());
-        Assert.assertFalse(alg.getUnknownValues().isEmpty());
-        input = new AlgorithmInput();
-        patMap = new HashMap<>();
-        input.setPatient(patMap);
-        tumMap = new HashMap<>();
-        tumMap.put(Algorithms.FIELD_STATE_DX, "AL");
-        tumMap.put(FIELD_COUNTY_AT_DX_ANALYSIS, "001");
-        tumMap.put(Algorithms.FIELD_CENSUS_2000, "020200");
-        tumMap.put(Algorithms.FIELD_CENSUS_2010, "020200");
-        patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
         Assert.assertEquals("1", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_RUCA_2000));
         Assert.assertEquals("1", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_RUCA_2010));
-
-        // Urban Continuum
-        alg = Algorithms.getAlgorithm(Algorithms.ALG_URBAN_CONTINUUM);
-        Assert.assertTrue(alg.getParameters().isEmpty());
-        Assert.assertFalse(alg.getUnknownValues().isEmpty());
-        input = new AlgorithmInput();
-        patMap = new HashMap<>();
-        input.setPatient(patMap);
-        tumMap = new HashMap<>();
-        tumMap.put(Algorithms.FIELD_STATE_DX, "AL");
-        tumMap.put(FIELD_COUNTY_AT_DX_ANALYSIS, "001");
-        patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
         Assert.assertEquals("02", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_RURAL_CONT_1993));
         Assert.assertEquals("02", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_RURAL_CONT_2003));
         Assert.assertEquals("02", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_RURAL_CONT_2013));
