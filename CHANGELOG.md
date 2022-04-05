@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 3.9**
+
+- Added site-specific surgery tables for 2022 DX year.
+
 **Changes in version 3.8**
 
 - Combined the three Rural Urban algorithms into a single algorithm.
