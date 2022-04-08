@@ -2,7 +2,7 @@
 
 **Changes in version 3.9**
 
-- Added site-specific surgery tables for 2022 DX year.
+- Added site-specific surgery tables for 2022 DX year (note that all the histology exceptions were removed in this release).
 
 **Changes in version 3.8**
 
