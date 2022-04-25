@@ -1,6 +1,6 @@
 ## Algorithms Version History
 
-**Changes in version 3.9**
+**Changes in version 3.10**
 
 - Updated XStream library from version 1.4.18 to version 1.4.19.
 - Updated CSV library from version 5.5.2 to version 5.6.
