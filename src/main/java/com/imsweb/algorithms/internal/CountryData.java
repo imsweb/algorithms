@@ -3,6 +3,7 @@
  */
 package com.imsweb.algorithms.internal;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -22,6 +23,129 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  */
 public class CountryData {
 
+    private static final Map<String, String> _STATES = new HashMap<>();
+
+    static {
+        _STATES.put("AK", "02");
+        _STATES.put("AL", "01");
+        _STATES.put("AR", "05");
+        _STATES.put("AS", "60");
+        _STATES.put("AZ", "04");
+        _STATES.put("CA", "06");
+        _STATES.put("CO", "08");
+        _STATES.put("CT", "09");
+        _STATES.put("DC", "11");
+        _STATES.put("DE", "10");
+        _STATES.put("FL", "12");
+        _STATES.put("FM", "64");
+        _STATES.put("GA", "13");
+        _STATES.put("GU", "66");
+        _STATES.put("HI", "15");
+        _STATES.put("IA", "19");
+        _STATES.put("ID", "16");
+        _STATES.put("IL", "17");
+        _STATES.put("IN", "18");
+        _STATES.put("KS", "20");
+        _STATES.put("KY", "21");
+        _STATES.put("LA", "22");
+        _STATES.put("MA", "25");
+        _STATES.put("MD", "24");
+        _STATES.put("ME", "23");
+        _STATES.put("MH", "68");
+        _STATES.put("MI", "26");
+        _STATES.put("MN", "27");
+        _STATES.put("MO", "29");
+        _STATES.put("MP", "69");
+        _STATES.put("MS", "28");
+        _STATES.put("MT", "30");
+        _STATES.put("NC", "37");
+        _STATES.put("ND", "38");
+        _STATES.put("NE", "31");
+        _STATES.put("NH", "33");
+        _STATES.put("NJ", "34");
+        _STATES.put("NM", "35");
+        _STATES.put("NV", "32");
+        _STATES.put("NY", "36");
+        _STATES.put("OH", "39");
+        _STATES.put("OK", "40");
+        _STATES.put("OR", "41");
+        _STATES.put("PA", "42");
+        _STATES.put("PR", "43");
+        _STATES.put("PW", "70");
+        _STATES.put("RI", "44");
+        _STATES.put("SC", "45");
+        _STATES.put("SD", "46");
+        _STATES.put("TN", "47");
+        _STATES.put("TX", "48");
+        _STATES.put("UM", "74");
+        _STATES.put("UT", "49");
+        _STATES.put("VA", "51");
+        _STATES.put("VI", "78");
+        _STATES.put("VT", "50");
+        _STATES.put("WA", "53");
+        _STATES.put("WI", "55");
+        _STATES.put("WV", "54");
+        _STATES.put("WY", "56");
+    }
+
+    public static Map<String, String> getStates() {
+        return Collections.unmodifiableMap(_STATES);
+    }
+
+    // following start/end columns are shared between the two tract data files
+    public static final int STATE_FIPS_START = 1; // 2 char
+    public static final int STATE_FIPS_END = 2;
+    public static final int COUNTY_FIPS_START = 3; // 3 char
+    public static final int COUNTY_FIPS_END = 5;
+    public static final int TRACT_START = 6; // 6 char
+    public static final int TRACT_END = 11;
+
+    // following start/end columns are only applicable to the year-based tract data file
+    public static final int YEAR_START = 12; // 4 char
+    public static final int YEAR_END = 15;
+
+    public static final int YOST_US_BASED_QUINTILE_START = 16; // 1 char
+    public static final int YOST_US_BASED_QUINTILE_END = 16;
+    public static final int YOST_STATE_BASED_QUINTILE_START = 17; // 1 char
+    public static final int YOST_STATE_BASED_QUINTILE_END = 17;
+    public static final int PERCENT_BEL_POV_ALL_RACES_START = 18; // 5 char
+    public static final int PERCENT_BEL_POV_ALL_RACES_END = 22;
+    public static final int PERCENT_BEL_POV_WHITE_START = 23; // 5 char
+    public static final int PERCENT_BEL_POV_WHITE_END = 27;
+    public static final int PERCENT_BEL_POV_BLACK_START = 28; // 5 char
+    public static final int PERCENT_BEL_POV_BLACK_END = 32;
+    public static final int PERCENT_BEL_POV_AM_INDIAN_START = 33; // 5 char
+    public static final int PERCENT_BEL_POV_AM_INDIAN_END = 37;
+    public static final int PERCENT_BEL_POV_ASIAN_START = 38; // 5 char
+    public static final int PERCENT_BEL_POV_ASIAN_END = 42;
+    public static final int PERCENT_BEL_POV_OTHER_MULT_START = 43; // 5 char
+    public static final int PERCENT_BEL_POV_OTHER_MULT_END = 47;
+    public static final int PERCENT_BEL_POV_WHILE_NOT_HISP_START = 48; // 5 char
+    public static final int PERCENT_BEL_POV_WHILE_NOT_HISP_END = 52;
+    public static final int PERCENT_BEL_POV_HISP_START = 53; // 5 char
+    public static final int PERCENT_BEL_POV_HISP_END = 57;
+
+    // following start/end columns are only applicable to the non-year-based tract data file
+    public static final int RUCA_2010_A_START = 12; // 1 char
+    public static final int RUCA_2010_A_END = 12;
+    public static final int RUCA_2010_C_START = 13; // 1 char
+    public static final int RUCA_2010_C_END = 13;
+    public static final int URIC_2010_A_START = 14; // 1 char
+    public static final int URIC_2010_A_END = 14;
+    public static final int URIC_2010_B_START = 15; // 1 char
+    public static final int URIC_2010_B_END = 15;
+    public static final int URIC_2010_C_START = 16; // 1 char
+    public static final int URIC_2010_C_END = 16;
+    public static final int ZONE_ID_START = 17; // 10 char
+    public static final int ZONE_ID_END = 26;
+    public static final int NAACCR_POV_INDICATOR_START = 27; // 1 char
+    public static final int NAACCR_POV_INDICATOR_END = 27;
+    public static final int CDC_SUBCOUNTY_5K_START = 28; // 11 char
+    public static final int CDC_SUBCOUNTY_5K_END = 38;
+    public static final int CDC_SUBCOUNTY_20K_START = 39; // 11 char
+    public static final int CDC_SUBCOUNTY_20K_END = 49;
+
+
     // singleton instance
     private static final CountryData _INSTANCE = new CountryData();
 
@@ -34,17 +158,17 @@ public class CountryData {
     private final Map<String, StateData> _stateData = new HashMap<>();
 
     // the different data type that can be registered
-    private boolean _rucaInitialized = false;
-    private boolean _uricInitialized = false;
-    private boolean _continuumInitialized = false;
-    private boolean _povertyInitialized = false;
+    private boolean _rucaInitialized = false; // in file
+    private boolean _uricInitialized = false; // in file
+    private boolean _continuumInitialized = false; // NOT IN FILE???
+    private boolean _povertyInitialized = false; // in file
     private boolean _countyAtDxAnalysisInitialized = false;
     private boolean _prcdaInitialized = false;
     private boolean _uihoInitialized = false;
-    private boolean _yostAcsPovertyInitialized = false;
-    private boolean _tractEstCongressDistInitialized = false;
-    private boolean _ephtSubCountyInitialized = false;
-    private boolean _cancerReportingZoneInitialized = false;
+    private boolean _yostAcsPovertyInitialized = false; // in file
+    private boolean _tractEstCongressDistInitialized = false; // ???
+    private boolean _ephtSubCountyInitialized = false; // in file
+    private boolean _cancerReportingZoneInitialized = false; // in file
 
     // internal lock to control concurrency
     private final ReentrantReadWriteLock _lock = new ReentrantReadWriteLock();
