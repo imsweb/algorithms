@@ -239,7 +239,15 @@ public class CountryData {
                             CountyData countyData = stateData.getData().computeIfAbsent(county, k -> new CountyData());
                             CensusData censusData = countyData.getData().computeIfAbsent(tract, k -> new CensusData());
 
-                            // TODO FD
+                            // NAACCR Poverty indicator
+
+                            // URAC
+
+                            // URIC
+
+                            // NPCR EPHT SubCounty
+
+                            // Cancer Reporting Zone
 
                         }
 
@@ -288,11 +296,11 @@ public class CountryData {
                             CensusData censusData = countyData.getData().computeIfAbsent(tract, k -> new CensusData());
                             YearData yearData = censusData.getData().computeIfAbsent(year, k -> new YearData());
 
-                            // TODO FD (do we really need the "other" variable?
-
+                            // YOST
                             yearData.setYostQuintileState(StringUtils.trim(line.substring(YOST_STATE_BASED_QUINTILE_START - 1, YOST_STATE_BASED_QUINTILE_END)));
                             yearData.setYostQuintileUS(StringUtils.trim(line.substring(YOST_US_BASED_QUINTILE_START - 1, YOST_US_BASED_QUINTILE_END)));
 
+                            // ACS Poverty
                             yearData.setAcsPctPovAllRaces(cleanPoverty(lineNum, StringUtils.trim(line.substring(PERCENT_BEL_POV_ALL_RACES_START - 1, PERCENT_BEL_POV_ALL_RACES_END))));
                             yearData.setAcsPctPovWhite(cleanPoverty(lineNum, StringUtils.trim(line.substring(PERCENT_BEL_POV_WHITE_START - 1, PERCENT_BEL_POV_WHITE_END))));
                             yearData.setAcsPctPovBlack(cleanPoverty(lineNum, StringUtils.trim(line.substring(PERCENT_BEL_POV_BLACK_START - 1, PERCENT_BEL_POV_BLACK_END))));
