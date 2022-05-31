@@ -26,9 +26,14 @@ import com.imsweb.layout.record.fixed.FixedColumnsLayout;
 public class TimeDependentTractDataLab {
 
     public static void main(String[] args) throws IOException {
+        CountryData.getInstance().initializeTractData("MD");
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    public static void main2(String[] args) throws IOException {
 
         FixedColumnsLayout layout;
-        try (InputStream fis = Files.newInputStream(Paths.get("C:\\dev\\time-dependent-tract-data-layout-2022.xml"))) {
+        try (InputStream fis = Thread.currentThread().getContextClassLoader().getResourceAsStream("tract/time-dependent-tract-data-layout-2022.xml")) {
             layout = new FixedColumnsLayout(LayoutUtils.readFixedColumnsLayout(fis));
         }
 

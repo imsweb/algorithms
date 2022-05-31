@@ -3,10 +3,23 @@
  */
 package com.imsweb.algorithms.internal;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.LineNumberReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.zip.GZIPInputStream;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 
 /**
  * Several algorithms need to use data related to either states, counties or census trace codes.
@@ -26,66 +39,67 @@ public class CountryData {
     private static final Map<String, String> _STATES = new HashMap<>();
 
     static {
-        _STATES.put("AK", "02");
-        _STATES.put("AL", "01");
-        _STATES.put("AR", "05");
-        _STATES.put("AS", "60");
-        _STATES.put("AZ", "04");
-        _STATES.put("CA", "06");
-        _STATES.put("CO", "08");
-        _STATES.put("CT", "09");
-        _STATES.put("DC", "11");
-        _STATES.put("DE", "10");
-        _STATES.put("FL", "12");
-        _STATES.put("FM", "64");
-        _STATES.put("GA", "13");
-        _STATES.put("GU", "66");
-        _STATES.put("HI", "15");
-        _STATES.put("IA", "19");
-        _STATES.put("ID", "16");
-        _STATES.put("IL", "17");
-        _STATES.put("IN", "18");
-        _STATES.put("KS", "20");
-        _STATES.put("KY", "21");
-        _STATES.put("LA", "22");
-        _STATES.put("MA", "25");
-        _STATES.put("MD", "24");
-        _STATES.put("ME", "23");
-        _STATES.put("MH", "68");
-        _STATES.put("MI", "26");
-        _STATES.put("MN", "27");
-        _STATES.put("MO", "29");
-        _STATES.put("MP", "69");
-        _STATES.put("MS", "28");
-        _STATES.put("MT", "30");
-        _STATES.put("NC", "37");
-        _STATES.put("ND", "38");
-        _STATES.put("NE", "31");
-        _STATES.put("NH", "33");
-        _STATES.put("NJ", "34");
-        _STATES.put("NM", "35");
-        _STATES.put("NV", "32");
-        _STATES.put("NY", "36");
-        _STATES.put("OH", "39");
-        _STATES.put("OK", "40");
-        _STATES.put("OR", "41");
-        _STATES.put("PA", "42");
-        _STATES.put("PR", "43");
-        _STATES.put("PW", "70");
-        _STATES.put("RI", "44");
-        _STATES.put("SC", "45");
-        _STATES.put("SD", "46");
-        _STATES.put("TN", "47");
-        _STATES.put("TX", "48");
-        _STATES.put("UM", "74");
-        _STATES.put("UT", "49");
-        _STATES.put("VA", "51");
-        _STATES.put("VI", "78");
-        _STATES.put("VT", "50");
-        _STATES.put("WA", "53");
-        _STATES.put("WI", "55");
-        _STATES.put("WV", "54");
-        _STATES.put("WY", "56");
+        _STATES.put("01", "AL");
+        _STATES.put("02", "AK");
+        _STATES.put("04", "AZ");
+        _STATES.put("05", "AR");
+        _STATES.put("06", "CA");
+        _STATES.put("08", "CO");
+        _STATES.put("09", "CT");
+        _STATES.put("10", "DE");
+        _STATES.put("11", "DC");
+        _STATES.put("12", "FL");
+        _STATES.put("13", "GA");
+        _STATES.put("15", "HI");
+        _STATES.put("16", "ID");
+        _STATES.put("17", "IL");
+        _STATES.put("18", "IN");
+        _STATES.put("19", "IA");
+        _STATES.put("20", "KS");
+        _STATES.put("21", "KY");
+        _STATES.put("22", "LA");
+        _STATES.put("23", "ME");
+        _STATES.put("24", "MD");
+        _STATES.put("25", "MA");
+        _STATES.put("26", "MI");
+        _STATES.put("27", "MN");
+        _STATES.put("28", "MS");
+        _STATES.put("29", "MO");
+        _STATES.put("30", "MT");
+        _STATES.put("31", "NE");
+        _STATES.put("32", "NV");
+        _STATES.put("33", "NH");
+        _STATES.put("34", "NJ");
+        _STATES.put("35", "NM");
+        _STATES.put("36", "NY");
+        _STATES.put("37", "NC");
+        _STATES.put("38", "ND");
+        _STATES.put("39", "OH");
+        _STATES.put("40", "OK");
+        _STATES.put("41", "OR");
+        _STATES.put("42", "PA");
+        _STATES.put("43", "PR");
+        _STATES.put("44", "RI");
+        _STATES.put("45", "SC");
+        _STATES.put("46", "SD");
+        _STATES.put("47", "TN");
+        _STATES.put("48", "TX");
+        _STATES.put("49", "UT");
+        _STATES.put("50", "VT");
+        _STATES.put("51", "VA");
+        _STATES.put("53", "WA");
+        _STATES.put("54", "WV");
+        _STATES.put("55", "WI");
+        _STATES.put("56", "WY");
+        _STATES.put("60", "AS");
+        _STATES.put("64", "FM");
+        _STATES.put("66", "GU");
+        _STATES.put("68", "MH");
+        _STATES.put("69", "MP");
+        _STATES.put("70", "PW");
+        _STATES.put("74", "UM");
+        _STATES.put("78", "VI");
+        _STATES.put("99", "YY");
     }
 
     public static Map<String, String> getStates() {
@@ -145,7 +159,6 @@ public class CountryData {
     public static final int CDC_SUBCOUNTY_20K_START = 39; // 11 char
     public static final int CDC_SUBCOUNTY_20K_END = 49;
 
-
     // singleton instance
     private static final CountryData _INSTANCE = new CountryData();
 
@@ -157,16 +170,19 @@ public class CountryData {
     // shared internal data structure; sates mapped by state abbreviation
     private final Map<String, StateData> _stateData = new HashMap<>();
 
+    private Set<String> _stateTractDataInitialized = new HashSet<>();
+
+    private Set<String> _stateTractDataYearBasedInitialized = new HashSet<>();
+
     // the different data type that can be registered
     private boolean _rucaInitialized = false; // in file
     private boolean _uricInitialized = false; // in file
-    private boolean _continuumInitialized = false; // NOT IN FILE???
+    private boolean _continuumInitialized = false;
     private boolean _povertyInitialized = false; // in file
     private boolean _countyAtDxAnalysisInitialized = false;
     private boolean _prcdaInitialized = false;
     private boolean _uihoInitialized = false;
-    private boolean _yostAcsPovertyInitialized = false; // in file
-    private boolean _tractEstCongressDistInitialized = false; // ???
+    private boolean _tractEstCongressDistInitialized = false;
     private boolean _ephtSubCountyInitialized = false; // in file
     private boolean _cancerReportingZoneInitialized = false; // in file
 
@@ -180,6 +196,8 @@ public class CountryData {
         _lock.writeLock().lock();
         try {
             _stateData.clear();
+            _stateTractDataInitialized.clear();
+            _stateTractDataYearBasedInitialized.clear();
             _rucaInitialized = false;
             _uricInitialized = false;
             _continuumInitialized = false;
@@ -187,12 +205,135 @@ public class CountryData {
             _countyAtDxAnalysisInitialized = false;
             _prcdaInitialized = false;
             _uihoInitialized = false;
-            _yostAcsPovertyInitialized = false;
             _cancerReportingZoneInitialized = false;
         }
         finally {
             _lock.writeLock().unlock();
         }
+    }
+
+    public boolean isTractDataInitialized(String requestedState) {
+        _lock.readLock().lock();
+        try {
+            return _stateTractDataInitialized.contains(requestedState);
+        }
+        finally {
+            _lock.readLock().unlock();
+        }
+    }
+
+    public void initializeTractData(String requestedState) {
+        _lock.writeLock().lock();
+        try {
+            if (!_stateTractDataInitialized.contains(requestedState)) {
+                try (InputStream is = new GZIPInputStream(Thread.currentThread().getContextClassLoader().getResourceAsStream("tract/tract.level.ses.2008_17.minimized.txt.gz"));
+                     BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.US_ASCII))) {
+                    String line = reader.readLine();
+                    while (line != null) {
+                        String state = _STATES.get(line.substring(STATE_FIPS_START - 1, STATE_FIPS_END));
+                        String county = line.substring(COUNTY_FIPS_START - 1, COUNTY_FIPS_END);
+                        String tract = line.substring(TRACT_START - 1, TRACT_END);
+
+                        if (Objects.equals(state, requestedState)) {
+                            StateData stateData = _stateData.computeIfAbsent(state, k -> new StateData());
+                            CountyData countyData = stateData.getData().computeIfAbsent(county, k -> new CountyData());
+                            CensusData censusData = countyData.getData().computeIfAbsent(tract, k -> new CensusData());
+
+                            // TODO FD
+
+                        }
+
+                        line = reader.readLine();
+                    }
+                }
+                catch (IOException e) {
+                    throw new RuntimeException("Unable to initialize tract data", e);
+                }
+            }
+            _stateTractDataInitialized.add(requestedState);
+        }
+        finally {
+            _lock.writeLock().unlock();
+        }
+    }
+
+    public boolean isYearBasedTractDataInitialized(String requestedState) {
+        _lock.readLock().lock();
+        try {
+            return _stateTractDataYearBasedInitialized.contains(requestedState);
+        }
+        finally {
+            _lock.readLock().unlock();
+        }
+    }
+
+    public void initializeYearBasedTractData(String requestedState) {
+        _lock.writeLock().lock();
+        try {
+            if (!_stateTractDataYearBasedInitialized.contains(requestedState)) {
+                try (InputStream is = new GZIPInputStream(Thread.currentThread().getContextClassLoader().getResourceAsStream("tract/tract.level.ses.2008_17.minimized.year.based.txt.gz"));
+                     LineNumberReader reader = new LineNumberReader(new InputStreamReader(is, StandardCharsets.US_ASCII))) {
+                    String line = reader.readLine();
+                    while (line != null) {
+                        int lineNum = reader.getLineNumber();
+
+                        String state = _STATES.get(line.substring(STATE_FIPS_START - 1, STATE_FIPS_END));
+                        String county = line.substring(COUNTY_FIPS_START - 1, COUNTY_FIPS_END);
+                        String tract = line.substring(TRACT_START - 1, TRACT_END);
+                        String year = line.substring(YEAR_START - 1, YEAR_END);
+
+                        if (Objects.equals(state, requestedState)) {
+                            StateData stateData = _stateData.computeIfAbsent(state, k -> new StateData());
+                            CountyData countyData = stateData.getData().computeIfAbsent(county, k -> new CountyData());
+                            CensusData censusData = countyData.getData().computeIfAbsent(tract, k -> new CensusData());
+                            YearData yearData = censusData.getData().computeIfAbsent(year, k -> new YearData());
+
+                            // TODO FD (do we really need the "other" variable?
+
+                            yearData.setYostQuintileState(StringUtils.trim(line.substring(YOST_STATE_BASED_QUINTILE_START - 1, YOST_STATE_BASED_QUINTILE_END)));
+                            yearData.setYostQuintileUS(StringUtils.trim(line.substring(YOST_US_BASED_QUINTILE_START - 1, YOST_US_BASED_QUINTILE_END)));
+
+                            yearData.setAcsPctPovAllRaces(cleanPoverty(lineNum, StringUtils.trim(line.substring(PERCENT_BEL_POV_ALL_RACES_START - 1, PERCENT_BEL_POV_ALL_RACES_END))));
+                            yearData.setAcsPctPovWhite(cleanPoverty(lineNum, StringUtils.trim(line.substring(PERCENT_BEL_POV_WHITE_START - 1, PERCENT_BEL_POV_WHITE_END))));
+                            yearData.setAcsPctPovBlack(cleanPoverty(lineNum, StringUtils.trim(line.substring(PERCENT_BEL_POV_BLACK_START - 1, PERCENT_BEL_POV_BLACK_END))));
+                            yearData.setAcsPctPovAIAN(cleanPoverty(lineNum, StringUtils.trim(line.substring(PERCENT_BEL_POV_AM_INDIAN_START - 1, PERCENT_BEL_POV_AM_INDIAN_END))));
+                            yearData.setAcsPctPovAsianNHOPI(cleanPoverty(lineNum, StringUtils.trim(line.substring(PERCENT_BEL_POV_ASIAN_START - 1, PERCENT_BEL_POV_ASIAN_END))));
+                            yearData.setAcsPctPovOtherMulti(cleanPoverty(lineNum, StringUtils.trim(line.substring(PERCENT_BEL_POV_OTHER_MULT_START - 1, PERCENT_BEL_POV_OTHER_MULT_END))));
+                            yearData.setAcsPctPovWhiteNonHisp(cleanPoverty(lineNum, StringUtils.trim(line.substring(PERCENT_BEL_POV_WHILE_NOT_HISP_START - 1, PERCENT_BEL_POV_WHILE_NOT_HISP_END))));
+                            yearData.setAcsPctPovHispanic(cleanPoverty(lineNum, StringUtils.trim(line.substring(PERCENT_BEL_POV_HISP_START - 1, PERCENT_BEL_POV_HISP_END))));
+
+                        }
+
+                        line = reader.readLine();
+                    }
+                }
+                catch (IOException e) {
+                    throw new RuntimeException("Unable to initialize year based tract data", e);
+                }
+            }
+            _stateTractDataYearBasedInitialized.add(requestedState);
+        }
+        finally {
+            _lock.writeLock().unlock();
+        }
+    }
+
+    private String cleanPoverty(int lineNum, String value) {
+        if (value.isEmpty())
+            return value;
+
+        if (value.length() != 5 || !NumberUtils.isDigits(value))
+            throw new RuntimeException("Invalid ACS poverty value at line " + lineNum + ": " + value);
+
+        String left = value.substring(0, 3);
+        String right = value.substring(3);
+
+        if (left.startsWith("00"))
+            left = left.substring(2);
+        else if (left.startsWith("0"))
+            left = left.substring(1);
+
+        return left + "." + right;
     }
 
     /**
@@ -611,82 +752,12 @@ public class CountryData {
     public StateData getYostAcsPovertyData(String state) {
         _lock.readLock().lock();
         try {
-            if (!_yostAcsPovertyInitialized)
+            if (!isYearBasedTractDataInitialized(state))
                 throw new RuntimeException("Yost/ACS Poverty data cannot be access before it has been initialized!");
             return _stateData.get(state);
         }
         finally {
             _lock.readLock().unlock();
-        }
-    }
-
-    /**
-     * Returns true if the Yost/ACS Poverty data has been initialized, false otherwise.
-     */
-    public boolean isYostAcsPovertyDataInitialized() {
-        _lock.readLock().lock();
-        try {
-            return _yostAcsPovertyInitialized;
-        }
-        finally {
-            _lock.readLock().unlock();
-        }
-    }
-
-    /**
-     * Initializes the given Yost/ACS Poverty data (this call will make all other access to the data structure block).
-     */
-    public void initializeYostAcsPovertyData(Map<String, Map<String, Map<String, CensusData>>> data) {
-        _lock.writeLock().lock();
-        try {
-            if (!_yostAcsPovertyInitialized) {
-                for (Map.Entry<String, Map<String, Map<String, CensusData>>> stateEntry : data.entrySet()) {
-                    StateData stateData = _stateData.computeIfAbsent(stateEntry.getKey(), k -> new StateData());
-                    for (Map.Entry<String, Map<String, CensusData>> countyEntry : stateEntry.getValue().entrySet()) {
-                        CountyData countyData = stateData.getData().computeIfAbsent(countyEntry.getKey(), k -> new CountyData());
-                        for (Map.Entry<String, CensusData> censusEntry : countyEntry.getValue().entrySet()) {
-                            CensusData censusData = countyData.getData().computeIfAbsent(censusEntry.getKey(), k -> new CensusData());
-
-                            censusData.setAcsPctPov0610AIAN(censusEntry.getValue().getAcsPctPov0610AIAN());
-                            censusData.setAcsPctPov0610AllRaces(censusEntry.getValue().getAcsPctPov0610AllRaces());
-                            censusData.setAcsPctPov0610AsianNHOPI(censusEntry.getValue().getAcsPctPov0610AsianNHOPI());
-                            censusData.setAcsPctPov0610Black(censusEntry.getValue().getAcsPctPov0610Black());
-                            censusData.setAcsPctPov0610Hispanic(censusEntry.getValue().getAcsPctPov0610Hispanic());
-                            censusData.setAcsPctPov0610OtherMulti(censusEntry.getValue().getAcsPctPov0610OtherMulti());
-                            censusData.setAcsPctPov0610White(censusEntry.getValue().getAcsPctPov0610White());
-                            censusData.setAcsPctPov0610WhiteNonHisp(censusEntry.getValue().getAcsPctPov0610WhiteNonHisp());
-                            censusData.setYostQuintile0610State(censusEntry.getValue().getYostQuintile0610State());
-                            censusData.setYostQuintile0610US(censusEntry.getValue().getYostQuintile0610US());
-
-                            censusData.setAcsPctPov1014AIAN(censusEntry.getValue().getAcsPctPov1014AIAN());
-                            censusData.setAcsPctPov1014AllRaces(censusEntry.getValue().getAcsPctPov1014AllRaces());
-                            censusData.setAcsPctPov1014AsianNHOPI(censusEntry.getValue().getAcsPctPov1014AsianNHOPI());
-                            censusData.setAcsPctPov1014Black(censusEntry.getValue().getAcsPctPov1014Black());
-                            censusData.setAcsPctPov1014Hispanic(censusEntry.getValue().getAcsPctPov1014Hispanic());
-                            censusData.setAcsPctPov1014OtherMulti(censusEntry.getValue().getAcsPctPov1014OtherMulti());
-                            censusData.setAcsPctPov1014White(censusEntry.getValue().getAcsPctPov1014White());
-                            censusData.setAcsPctPov1014WhiteNonHisp(censusEntry.getValue().getAcsPctPov1014WhiteNonHisp());
-                            censusData.setYostQuintile1014State(censusEntry.getValue().getYostQuintile1014State());
-                            censusData.setYostQuintile1014US(censusEntry.getValue().getYostQuintile1014US());
-
-                            censusData.setAcsPctPov1418AIAN(censusEntry.getValue().getAcsPctPov1418AIAN());
-                            censusData.setAcsPctPov1418AllRaces(censusEntry.getValue().getAcsPctPov1418AllRaces());
-                            censusData.setAcsPctPov1418AsianNHOPI(censusEntry.getValue().getAcsPctPov1418AsianNHOPI());
-                            censusData.setAcsPctPov1418Black(censusEntry.getValue().getAcsPctPov1418Black());
-                            censusData.setAcsPctPov1418Hispanic(censusEntry.getValue().getAcsPctPov1418Hispanic());
-                            censusData.setAcsPctPov1418OtherMulti(censusEntry.getValue().getAcsPctPov1418OtherMulti());
-                            censusData.setAcsPctPov1418White(censusEntry.getValue().getAcsPctPov1418White());
-                            censusData.setAcsPctPov1418WhiteNonHisp(censusEntry.getValue().getAcsPctPov1418WhiteNonHisp());
-                            censusData.setYostQuintile1418State(censusEntry.getValue().getYostQuintile1418State());
-                            censusData.setYostQuintile1418US(censusEntry.getValue().getYostQuintile1418US());
-                        }
-                    }
-                }
-            }
-            _yostAcsPovertyInitialized = true;
-        }
-        finally {
-            _lock.writeLock().unlock();
         }
     }
 

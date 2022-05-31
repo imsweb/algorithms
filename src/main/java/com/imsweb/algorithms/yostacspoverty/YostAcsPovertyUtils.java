@@ -5,6 +5,12 @@ import java.time.LocalDate;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
+import com.imsweb.algorithms.internal.CensusData;
+import com.imsweb.algorithms.internal.CountryData;
+import com.imsweb.algorithms.internal.CountyData;
+import com.imsweb.algorithms.internal.StateData;
+import com.imsweb.algorithms.internal.YearData;
+
 /**
  * This class can be used to calculate ACS Linkage variables.
  * Created on Oct 13, 2017 by howew
@@ -14,8 +20,6 @@ public final class YostAcsPovertyUtils {
 
     public static final String ALG_NAME = "NAACCR Yost Quintile & Area-Based Social Measures Linkage Program";
     public static final String ALG_VERSION = "version 2.0 released in August 2020";
-
-    private static YostAcsPovertyDataProvider _PROVIDER;
 
     /**
      * Calculates the ACS data for the provided ACS data input dto
@@ -27,37 +31,44 @@ public final class YostAcsPovertyUtils {
      */
     public static YostAcsPovertyOutputDto computeYostAcsPovertyData(YostAcsPovertyInputDto input) {
         YostAcsPovertyOutputDto result = new YostAcsPovertyOutputDto();
-        if (input.isFullyInitialized()) {
-            String dxYear = StringUtils.rightPad(input.getDateOfDiagnosis(), 4).substring(0, 4).trim();
-            if (!StringUtils.isBlank(dxYear) && NumberUtils.isDigits(dxYear)) {
-                int yearDX = Integer.parseInt(dxYear);
-                if (yearDX >= 2005 && yearDX <= LocalDate.now().getYear()) {
-                    if (_PROVIDER == null)
-                        initializeInternalDataProvider();
-                    result = _PROVIDER.getYostAcsPovertyData(input.getAddressAtDxState(), input.getCountyAtDxAnalysis(), input.getCensusTract2010());
+
+        String state = input.getAddressAtDxState();
+        String county = input.getCountyAtDxAnalysis();
+        String census = input.getCensusTract2010();
+        String year = input.getDateOfDiagnosis() == null ? null : StringUtils.rightPad(input.getDateOfDiagnosis(), 4).substring(0, 4).trim();
+
+        if (state != null && county != null && census != null && NumberUtils.isDigits(year)) {
+            int dxYear = Integer.parseInt(year);
+            if (dxYear >= 2005 && dxYear <= LocalDate.now().getYear()) {
+
+                if (!CountryData.getInstance().isYearBasedTractDataInitialized(state))
+                    CountryData.getInstance().initializeYearBasedTractData(state);
+
+                StateData stateData = CountryData.getInstance().getYostAcsPovertyData(state);
+                if (stateData != null) {
+                    CountyData countyData = stateData.getCountyData(county);
+                    if (countyData != null) {
+                        CensusData censusData = countyData.getCensusData(census);
+                        if (censusData != null) {
+                            YearData yearData = censusData.getYearData(year);
+                            if (yearData != null) {
+                                result.setYostQuintileUS(yearData.getYostQuintileUS());
+                                result.setYostQuintileState(yearData.getYostQuintileState());
+                                result.setAcsPctPovAllRaces(yearData.getAcsPctPovAllRaces());
+                                result.setAcsPctPovWhite(yearData.getAcsPctPovWhite());
+                                result.setAcsPctPovBlack(yearData.getAcsPctPovBlack());
+                                result.setAcsPctPovAsianNHOPI(yearData.getAcsPctPovAsianNHOPI());
+                                result.setAcsPctPovAIAN(yearData.getAcsPctPovAIAN());
+                                result.setAcsPctPovOtherMulti(yearData.getAcsPctPovOtherMulti());
+                                result.setAcsPctPovWhiteNonHisp(yearData.getAcsPctPovWhiteNonHisp());
+                                result.setAcsPctPovHispanic(yearData.getAcsPctPovHispanic());
+                            }
+                        }
+                    }
                 }
             }
         }
+
         return result;
-    }
-
-    /**
-     * Use this method to register your own data provider instead of using the internal one that is entirely in memory.
-     * <br/><br/>
-     * This has to be done before the first call to the compute method, or the internal one will be registered by default.
-     * <br/><br/>
-     * Once a provider has been set, this method cannot be called (it will throw an exception).
-     * @param provider the <code>ACSLinkageDataProvider</code> to set
-     */
-    public static synchronized void setDataProvider(YostAcsPovertyDataProvider provider) {
-        if (_PROVIDER != null)
-            throw new RuntimeException("The data provider has already been set!");
-        _PROVIDER = provider;
-    }
-
-    private static synchronized void initializeInternalDataProvider() {
-        if (_PROVIDER != null)
-            return;
-        _PROVIDER = new YostAcsPovertyCsvData();
     }
 }
