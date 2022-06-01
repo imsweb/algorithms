@@ -3,7 +3,7 @@
  */
 package com.imsweb.algorithms.tractestcongressdist;
 
-public class TractEstCongressDistUtils {
+public final class TractEstCongressDistUtils {
 
     public static final String ALG_NAME = "NAACCR Tract-Estimated Congressional Districts";
     public static final String ALG_VERSION = "version 1.0 released in August 2021";
@@ -15,6 +15,10 @@ public class TractEstCongressDistUtils {
 
     // data provider
     private static TractEstCongressDistDataProvider _PROVIDER;
+
+    private TractEstCongressDistUtils() {
+        // no instances of this class allowed!
+    }
 
     /**
      * Calculates the Tract Estimated Congressional Districts code for the provided input DTO
@@ -70,9 +74,10 @@ public class TractEstCongressDistUtils {
      * Once a provider has been set, this method cannot be called (it will throw an exception).
      * @param provider the <code>TractEstCongressDistDataProvider</code> to set
      */
+    @SuppressWarnings("unused")
     public static synchronized void setDataProvider(TractEstCongressDistDataProvider provider) {
         if (_PROVIDER != null)
-            throw new RuntimeException("The data provider has already been set!");
+            throw new IllegalStateException("The data provider has already been set!");
         _PROVIDER = provider;
     }
 

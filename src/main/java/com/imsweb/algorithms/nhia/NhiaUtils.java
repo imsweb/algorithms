@@ -100,6 +100,10 @@ public final class NhiaUtils {
     // internal lock to control concurrency to the data
     private static final ReentrantReadWriteLock _LOCK = new ReentrantReadWriteLock();
 
+    private NhiaUtils() {
+        // no instances of this class allowed!
+    }
+
     /**
      * Calculates the NHIA value for the provided patient DTO and option.
      * <br/><br/>
@@ -203,11 +207,11 @@ public final class NhiaUtils {
 
         // option is required
         if (option == null)
-            throw new RuntimeException("Option value required!");
+            throw new IllegalStateException("Option value required!");
 
         // invalid options
         if (!option.equals(NHIA_OPTION_ALL_CASES) && !option.equals(NHIA_OPTION_SEVEN_AND_NINE) && !option.equals(NHIA_OPTION_SEVEN_ONLY))
-            throw new RuntimeException("Invalid option! Valid options are '0','1' and '2'");
+            throw new IllegalStateException("Invalid option! Valid options are '0','1' and '2'");
 
         // get spanish/hispanic origin and race
         String spanishOrigin = input.getSpanishHispanicOrigin();
@@ -397,13 +401,13 @@ public final class NhiaUtils {
     private static Set<String> readData(String file) {
         try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("nhia/" + file)) {
             if (is == null)
-                throw new RuntimeException("Unable to read internal " + file);
+                throw new IllegalStateException("Unable to read internal " + file);
             try (CSVReader reader = new CSVReader(new InputStreamReader(is, StandardCharsets.US_ASCII))) {
                 return reader.readAll().stream().map(row -> row[0].toUpperCase()).collect(Collectors.toSet());
             }
         }
         catch (CsvException | IOException e) {
-            throw new RuntimeException("Unable to read internal " + file, e);
+            throw new IllegalStateException("Unable to read internal " + file, e);
         }
     }
 

@@ -20,6 +20,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * But it is the responsibility of the algorithms to check that the data has been properly
  * initialized before it's being accessed.
  */
+@SuppressWarnings("BooleanMethodIsAlwaysInverted")
 public class CountryData {
 
     // singleton instance
@@ -78,7 +79,7 @@ public class CountryData {
         _lock.readLock().lock();
         try {
             if (!_rucaInitialized)
-                throw new RuntimeException("RUCA data cannot be access before it has been initialized!");
+                throw new IllegalStateException("RUCA data cannot be access before it has been initialized!");
             return _stateData.get(state);
         }
         finally {
@@ -132,7 +133,7 @@ public class CountryData {
         _lock.readLock().lock();
         try {
             if (!_uricInitialized)
-                throw new RuntimeException("URIC data cannot be access before it has been initialized!");
+                throw new IllegalStateException("URIC data cannot be access before it has been initialized!");
             return _stateData.get(state);
         }
         finally {
@@ -188,7 +189,7 @@ public class CountryData {
         _lock.readLock().lock();
         try {
             if (!_continuumInitialized)
-                throw new RuntimeException("Continuum data cannot be access before it has been initialized!");
+                throw new IllegalStateException("Continuum data cannot be access before it has been initialized!");
             return _stateData.get(state);
         }
         finally {
@@ -240,7 +241,7 @@ public class CountryData {
         _lock.readLock().lock();
         try {
             if (!_povertyInitialized)
-                throw new RuntimeException("Poverty indicator data cannot be access before it has been initialized!");
+                throw new IllegalStateException("Poverty indicator data cannot be access before it has been initialized!");
             return _stateData.get(state);
         }
         finally {
@@ -293,7 +294,7 @@ public class CountryData {
         _lock.readLock().lock();
         try {
             if (!_countyAtDxAnalysisInitialized)
-                throw new RuntimeException("County at diagnosis analysis data cannot be access before it has been initialized!");
+                throw new IllegalStateException("County at diagnosis analysis data cannot be access before it has been initialized!");
             return _stateData.get(state);
         }
         finally {
@@ -335,7 +336,7 @@ public class CountryData {
         _lock.readLock().lock();
         try {
             if (!_prcdaInitialized)
-                throw new RuntimeException("PRCDA data cannot be access before it has been initialized!");
+                throw new IllegalStateException("PRCDA data cannot be access before it has been initialized!");
             return _stateData.get(state);
         }
         finally {
@@ -385,7 +386,7 @@ public class CountryData {
         _lock.readLock().lock();
         try {
             if (!_uihoInitialized)
-                throw new RuntimeException("UIHO data cannot be access before it has been initialized!");
+                throw new IllegalStateException("UIHO data cannot be access before it has been initialized!");
             return _stateData.get(state);
         }
         finally {
@@ -435,7 +436,7 @@ public class CountryData {
         _lock.readLock().lock();
         try {
             if (!_tractEstCongressDistInitialized)
-                throw new RuntimeException("Tract-Estimated Congressional District data cannot be access before it has been initialized!");
+                throw new IllegalStateException("Tract-Estimated Congressional District data cannot be access before it has been initialized!");
             return _stateData.get(state);
         }
         finally {
@@ -488,7 +489,7 @@ public class CountryData {
         _lock.readLock().lock();
         try {
             if (!_yostAcsPovertyInitialized)
-                throw new RuntimeException("Yost/ACS Poverty data cannot be access before it has been initialized!");
+                throw new IllegalStateException("Yost/ACS Poverty data cannot be access before it has been initialized!");
             return _stateData.get(state);
         }
         finally {
@@ -573,7 +574,7 @@ public class CountryData {
         _lock.readLock().lock();
         try {
             if (!_ephtSubCountyInitialized)
-                throw new RuntimeException("EPHT SubCounty data cannot be access before it has been initialized!");
+                throw new IllegalStateException("EPHT SubCounty data cannot be access before it has been initialized!");
             return _stateData.get(state);
         }
         finally {
@@ -627,7 +628,7 @@ public class CountryData {
         _lock.readLock().lock();
         try {
             if (!_cancerReportingZoneInitialized)
-                throw new RuntimeException("CancerReportingZone data cannot be access before it has been initialized!");
+                throw new IllegalStateException("CancerReportingZone data cannot be access before it has been initialized!");
             return _stateData.get(state);
         }
         finally {

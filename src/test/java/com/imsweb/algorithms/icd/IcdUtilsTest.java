@@ -139,7 +139,6 @@ public class IcdUtilsTest {
     }
 
     @Test
-    @SuppressWarnings("ConstantConditions")
     public void testGetIcdO3FromIcd10() {
         IcdO3Entry icd = IcdUtils.getIcdO3FromIcd10("C000");
         Assert.assertEquals("C000", icd.getSite());
@@ -435,7 +434,7 @@ public class IcdUtilsTest {
             System.out.println("====================================");
         }
         catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
     }
     */

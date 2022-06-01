@@ -10,6 +10,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
 
@@ -47,16 +48,20 @@ public class CancerReportingZoneCsvData implements CancerReportingZoneDataProvid
     private Map<String, Map<String, Map<String, CensusData>>> loadCancerReportingZoneData() {
         Map<String, Map<String, Map<String, CensusData>>> result = new HashMap<>();
 
-        try (Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("cancerreportingzone/cancer-reporting-zones.csv"), StandardCharsets.US_ASCII)) {
-            for (String[] row : new CSVReaderBuilder(reader).withSkipLines(1).build().readAll()) {
-                String state = row[0], county = row[1], tract = row[2], tractEst = row[3];
+        try (Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("cancerreportingzone/cancer-reporting-zones.csv"), StandardCharsets.US_ASCII);
+             CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build()) {
+            for (String[] row : csvReader.readAll()) {
+                String state = row[0];
+                String county = row[1];
+                String tract = row[2];
+                String tractEst = row[3];
 
                 CensusData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new HashMap<>()).computeIfAbsent(tract, k -> new CensusData());
                 dto.setCancerReportingZone(tractEst);
             }
         }
         catch (CsvException | IOException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
 
         return result;

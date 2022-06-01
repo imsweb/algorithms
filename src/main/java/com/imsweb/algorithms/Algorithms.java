@@ -44,7 +44,7 @@ import static com.imsweb.algorithms.AlgorithmField.DATA_LEVEL_TUMOR;
  * - add a static method at the end of the class "createXxx" that returns an Algorithm, see how all the other ones are done.
  * - register the new algorithm (see initialize() method).
  */
-public class Algorithms {
+public final class Algorithms {
 
     // algorithm IDs
     public static final String ALG_NHIA = "nhia";
@@ -205,6 +205,13 @@ public class Algorithms {
     private static final ReentrantReadWriteLock _LOCK = new ReentrantReadWriteLock();
 
     /**
+     * Constructor.
+     */
+    private Algorithms() {
+        // no instances of this class allowed!
+    }
+
+    /**
      * Initializes the default fields and algorithms.
      */
     public static void initialize() {
@@ -357,18 +364,18 @@ public class Algorithms {
 
     private static void addField(AlgorithmField field) {
         if (field.getId() == null)
-            throw new RuntimeException("Field ID is required!");
+            throw new IllegalStateException("Field ID is required!");
         if (Algorithms._CACHED_FIELDS.containsKey(field.getId()))
-            throw new RuntimeException("Field ID '" + field.getId() + "' has already been registered!");
+            throw new IllegalStateException("Field ID '" + field.getId() + "' has already been registered!");
 
         Algorithms._CACHED_FIELDS.put(field.getId(), field);
     }
 
     private static void addAlgorithm(Algorithm algorithm) {
         if (algorithm.getId() == null)
-            throw new RuntimeException("Algorithm ID is required!");
+            throw new IllegalStateException("Algorithm ID is required!");
         if (Algorithms._CACHED_ALGORITHMS.containsKey(algorithm.getId()))
-            throw new RuntimeException("Algorithm ID '" + algorithm.getId() + "' has already been registered!");
+            throw new IllegalStateException("Algorithm ID '" + algorithm.getId() + "' has already been registered!");
 
         Algorithms._CACHED_ALGORITHMS.put(algorithm.getId(), algorithm);
     }
@@ -385,7 +392,7 @@ public class Algorithms {
      */
     public static void registerAlgorithm(Algorithm algorithm) {
         if (algorithm.getId() == null)
-            throw new RuntimeException("Algorithm ID is required!");
+            throw new IllegalStateException("Algorithm ID is required!");
 
         _LOCK.writeLock().lock();
         try {
@@ -401,7 +408,7 @@ public class Algorithms {
      */
     public static void unregisterAlgorithm(Algorithm algorithm) {
         if (algorithm.getId() == null)
-            throw new RuntimeException("Algorithm ID is required!");
+            throw new IllegalStateException("Algorithm ID is required!");
 
         _LOCK.writeLock().lock();
         try {
@@ -432,7 +439,7 @@ public class Algorithms {
         _LOCK.readLock().lock();
         try {
             if (_CACHED_ALGORITHMS.isEmpty())
-                throw new RuntimeException("Algorithms have not been initialized!");
+                throw new IllegalStateException("Algorithms have not been initialized!");
             return _CACHED_ALGORITHMS.get(algorithmId);
         }
         finally {

@@ -17,6 +17,10 @@ public final class YostAcsPovertyUtils {
 
     private static YostAcsPovertyDataProvider _PROVIDER;
 
+    private YostAcsPovertyUtils() {
+        // no instances of this class allowed!
+    }
+
     /**
      * Calculates the ACS data for the provided ACS data input dto
      * <br/><br/>
@@ -49,9 +53,10 @@ public final class YostAcsPovertyUtils {
      * Once a provider has been set, this method cannot be called (it will throw an exception).
      * @param provider the <code>ACSLinkageDataProvider</code> to set
      */
+    @SuppressWarnings("unused")
     public static synchronized void setDataProvider(YostAcsPovertyDataProvider provider) {
         if (_PROVIDER != null)
-            throw new RuntimeException("The data provider has already been set!");
+            throw new IllegalStateException("The data provider has already been set!");
         _PROVIDER = provider;
     }
 

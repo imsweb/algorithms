@@ -12,6 +12,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
 
@@ -70,16 +71,21 @@ public class EphtSubCountyCsvData implements EphtSubCountyDataProvider {
     @SuppressWarnings("ConstantConditions")
     private Map<String, Map<String, Map<String, CensusData>>> loadEphtSubCountyData() {
         Map<String, Map<String, Map<String, CensusData>>> result = new HashMap<>();
-        try (Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("ephtsubcounty/epht-sub-counties.csv"), StandardCharsets.US_ASCII)) {
-            for (String[] row : new CSVReaderBuilder(reader).withSkipLines(1).build().readAll()) {
-                String state = row[0], county = row[1], censusTract = row[2], epht5k = row[3], epht20k = row[4];
+        try (Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("ephtsubcounty/epht-sub-counties.csv"), StandardCharsets.US_ASCII);
+             CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build()) {
+            for (String[] row : csvReader.readAll()) {
+                String state = row[0];
+                String county = row[1];
+                String censusTract = row[2];
+                String epht5k = row[3];
+                String epht20k = row[4];
                 CensusData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new HashMap<>()).computeIfAbsent(censusTract, k -> new CensusData());
                 dto.setEpht2010GeoId20k(StringUtils.leftPad(epht20k, 11, '0'));
                 dto.setEpht2010GeoId5k(StringUtils.leftPad(epht5k, 11, '0'));
             }
         }
         catch (CsvException | IOException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
         return result;
     }

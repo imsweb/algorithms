@@ -38,6 +38,10 @@ public final class CauseSpecificUtils {
     //lookup for tables
     private static final List<CauseSpecificDataDto> _DATA_SITE_SPECIFIC = new ArrayList<>();
 
+    private CauseSpecificUtils() {
+        // no instances of this class allowed!
+    }
+
     /**
      * Calculates cause specific and cause other death classification values for the provided input dto.
      * <br/><br/>
@@ -88,6 +92,7 @@ public final class CauseSpecificUtils {
      * <li>SEQUENCE NOT APPLICABLE = "9"</li>
      * </ul>
      */
+    @SuppressWarnings({"DuplicateExpressions", "java:S1871"}) // branches with the same outcome
     public static CauseSpecificResultDto computeCauseSpecific(CauseSpecificInputDto input, int cutOffYear) {
         CauseSpecificResultDto result = new CauseSpecificResultDto();
 
@@ -118,8 +123,7 @@ public final class CauseSpecificUtils {
         String cod3dig = cod.substring(0, 3);
         String recode = SeerSiteRecodeUtils.calculateSiteRecode(SeerSiteRecodeUtils.VERSION_DEFAULT, input.getPrimarySite(), input.getHistologyIcdO3());
 
-        // first do all of the non-site-specific checks, some of the condition could be added to the text file which represents the tables. But I decided to use the same file and 
-        // same structure of code as SAS.       
+        // first do all the non-site-specific checks; some condition could be added to the text file which represents the tables. But I decided to use the same file and same structure of code as SAS
         int causeSpecific = 0;
         if (seq == 0) {
             if ("8".equals(icd)) {
@@ -194,14 +198,19 @@ public final class CauseSpecificUtils {
         return result;
     }
 
-    protected static synchronized List<CauseSpecificDataDto> getData() {
+    static synchronized List<CauseSpecificDataDto> getData() {
         if (_DATA_SITE_SPECIFIC.isEmpty()) {
             try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("causespecific/data.txt")) {
                 if (is == null)
-                    throw new RuntimeException("Unable to read causespecific/data.txt");
+                    throw new IllegalStateException("Unable to read causespecific/data.txt");
+
                 try (LineNumberReader reader = new LineNumberReader(new InputStreamReader(is, StandardCharsets.US_ASCII))) {
-                    reader.readLine(); //skip first line
                     String line = reader.readLine();
+
+                    //skip first line
+                    if (reader.getLineNumber() == 1)
+                        line = reader.readLine();
+
                     while (line != null) {
                         _DATA_SITE_SPECIFIC.add(new CauseSpecificDataDto(StringUtils.split(line, ';')));
                         line = reader.readLine();
@@ -209,7 +218,7 @@ public final class CauseSpecificUtils {
                 }
             }
             catch (IOException e) {
-                throw new RuntimeException(e);
+                throw new IllegalStateException(e);
             }
         }
         return _DATA_SITE_SPECIFIC;

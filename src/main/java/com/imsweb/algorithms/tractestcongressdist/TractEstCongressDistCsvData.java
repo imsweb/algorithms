@@ -4,12 +4,14 @@
 package com.imsweb.algorithms.tractestcongressdist;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
 
@@ -43,20 +45,27 @@ public class TractEstCongressDistCsvData implements TractEstCongressDistDataProv
         return censusData.getTractEstCongressDist();
     }
 
-    @SuppressWarnings("ConstantConditions")
     private Map<String, Map<String, Map<String, CensusData>>> loadTractEstCongressDistData() {
         Map<String, Map<String, Map<String, CensusData>>> result = new HashMap<>();
 
-        try (Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("tractestcongressdist/tract-estimated-congressional-districts.csv"), StandardCharsets.US_ASCII)) {
-            for (String[] row : new CSVReaderBuilder(reader).withSkipLines(1).build().readAll()) {
-                String state = row[0], county = row[1], tract = row[2], tractEst = row[3];
+        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("tractestcongressdist/tract-estimated-congressional-districts.csv")) {
+            if (is == null)
+                throw new IllegalStateException("Missing data!");
+            try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
+                 CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build()) {
+                for (String[] row : csvReader.readAll()) {
+                    String state = row[0];
+                    String county = row[1];
+                    String tract = row[2];
+                    String tractEst = row[3];
 
-                CensusData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new HashMap<>()).computeIfAbsent(tract, k -> new CensusData());
-                dto.setTractEstCongressDist(tractEst);
+                    CensusData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new HashMap<>()).computeIfAbsent(tract, k -> new CensusData());
+                    dto.setTractEstCongressDist(tractEst);
+                }
             }
         }
         catch (CsvException | IOException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
 
         return result;

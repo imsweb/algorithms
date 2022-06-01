@@ -11,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
+@SuppressWarnings("DanglingJavadoc")
 public class SurvivalTimeUtilsTest {
 
     @Test
@@ -731,7 +732,7 @@ public class SurvivalTimeUtilsTest {
      System.out.println(count);
      }
      catch (IOException e) {
-     throw new RuntimeException(e);
+     throw new IllegalStateException(e);
      }
      }
      ******************************************************************************************************/

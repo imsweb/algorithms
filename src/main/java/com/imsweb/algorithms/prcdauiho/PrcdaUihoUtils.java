@@ -13,7 +13,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 /**
  * This class can be used to calculate PRCDA, UIHO, and UIHO facility.
  * <br/><br/>
- * https://seer.cancer.gov/seerstat/variables/countyattribs/static.html#chsda
+ * <a href="https://seer.cancer.gov/seerstat/variables/countyattribs/static.html#chsda"</a>
  * <br/><br/>
  * Created on Aug 12, 2019 by howew
  * @author howew
@@ -58,6 +58,10 @@ public final class PrcdaUihoUtils {
     }
 
     private static PrcdaUihoDataProvider _PROVIDER;
+
+    private PrcdaUihoUtils() {
+        // no instances of this class allowed!
+    }
 
     /**
      * Calculates PRCDA, UIHO, and UIHO facility for the provided record
@@ -147,9 +151,10 @@ public final class PrcdaUihoUtils {
      * Once a provider has been set, this method cannot be called (it will throw an exception).
      * @param provider the <code>PrcdaUihoDataProvider</code> to set
      */
+    @SuppressWarnings("unused")
     public static synchronized void setDataProvider(PrcdaUihoDataProvider provider) {
         if (_PROVIDER != null)
-            throw new RuntimeException("The data provider has already been set!");
+            throw new IllegalStateException("The data provider has already been set!");
         _PROVIDER = provider;
     }
 

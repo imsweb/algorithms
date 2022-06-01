@@ -3,7 +3,7 @@
  */
 package com.imsweb.algorithms.cancerreportingzone;
 
-public class CancerReportingZoneUtils {
+public final class CancerReportingZoneUtils {
 
     public static final String ALG_NAME = "NAACCR Cancer Reporting Zones";
     public static final String ALG_VERSION = "version 1.0 released in August 2021";
@@ -15,6 +15,10 @@ public class CancerReportingZoneUtils {
 
     // data provider
     private static CancerReportingZoneDataProvider _PROVIDER;
+
+    private CancerReportingZoneUtils() {
+        // no instances of this class allowed!
+    }
 
     /**
      * Calculates the Cancer Reporting Zone for the provided input DTO
@@ -67,9 +71,10 @@ public class CancerReportingZoneUtils {
      * Once a provider has been set, this method cannot be called (it will throw an exception).
      * @param provider the <code>CancerReportingZoneDataProvider</code> to set
      */
+    @SuppressWarnings("unused")
     public static synchronized void setDataProvider(CancerReportingZoneDataProvider provider) {
         if (_PROVIDER != null)
-            throw new RuntimeException("The data provider has already been set!");
+            throw new IllegalStateException("The data provider has already been set!");
         _PROVIDER = provider;
     }
 

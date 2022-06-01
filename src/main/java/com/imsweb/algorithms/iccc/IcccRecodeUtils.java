@@ -139,14 +139,20 @@ public final class IcccRecodeUtils {
 
         ensureVersion(version);
 
-        Integer s = Integer.valueOf(site.substring(1)), h = Integer.valueOf(histology), b = -1;
+        Integer s = Integer.valueOf(site.substring(1));
+        Integer h = Integer.valueOf(histology);
+        Integer b = -1;
 
         if (!StringUtils.isBlank(behavior))
             b = Integer.valueOf(behavior);
 
         for (IcccExecutableSiteGroupDto dto : _INTERNAL_DATA.get(version)) {
             if (dto.matches(s, h, b)) {
-                result = recodeExtended ? (StringUtils.isEmpty(dto.getRecodeExtended()) ? ICCC_UNKNOWN_RECODE : dto.getRecodeExtended()) : dto.getRecode();
+                if (recodeExtended) {
+                    result = StringUtils.isEmpty(dto.getRecodeExtended()) ? ICCC_UNKNOWN_RECODE : dto.getRecodeExtended();
+                }
+                else
+                    result = dto.getRecode();
                 break;
             }
         }
@@ -172,10 +178,10 @@ public final class IcccRecodeUtils {
         else if (VERSION_THIRD_EDITION_IARC_2017.equals(version))
             url = Thread.currentThread().getContextClassLoader().getResource("iccc/iccc-data-third-edition-iarc-2017.csv");
         else
-            throw new RuntimeException("Unsupported version: " + version);
+            throw new IllegalStateException("Unsupported version: " + version);
 
         if (url == null)
-            throw new RuntimeException("Unable to find internal data file for version " + version);
+            throw new IllegalStateException("Unable to find internal data file for version " + version);
 
         List<IcccSiteGroupDto> groups = new ArrayList<>();
         _DATA.put(version, groups);
@@ -185,8 +191,8 @@ public final class IcccRecodeUtils {
 
         Pattern codePattern = Pattern.compile("\\d{3}");
 
-        try {
-            List<String[]> allData = new CSVReader(new InputStreamReader(url.openStream(), StandardCharsets.US_ASCII)).readAll();
+        try (CSVReader csvReader = new CSVReader(new InputStreamReader(url.openStream(), StandardCharsets.US_ASCII))) {
+            List<String[]> allData = csvReader.readAll();
             for (int i = 1; i < allData.size(); i++) {
                 String[] data = allData.get(i);
 
@@ -221,7 +227,7 @@ public final class IcccRecodeUtils {
                     group.setChildrenRecodes(Arrays.asList(children.split(",")));
                     for (String s : group.getChildrenRecodes())
                         if (!codePattern.matcher(s).matches())
-                            throw new RuntimeException("Invalid recode reference for " + group.getName() + ": " + s);
+                            throw new IllegalStateException("Invalid recode reference for " + group.getName() + ": " + s);
                 }
 
                 if (!groups.contains(group))
@@ -229,9 +235,9 @@ public final class IcccRecodeUtils {
 
                 if (!StringUtils.isBlank(recode)) {
                     if (!codePattern.matcher(recode).matches())
-                        throw new RuntimeException("Invalid recode: " + recode + " for id " + id);
+                        throw new IllegalStateException("Invalid recode: " + recode + " for id " + id);
                     if (!VERSION_THIRD_EDITION.equals(version) && !codePattern.matcher(recodeExtended).matches())
-                        throw new RuntimeException("Invalid recode extended: " + recodeExtended + " for id " + id);
+                        throw new IllegalStateException("Invalid recode extended: " + recodeExtended + " for id " + id);
 
                     IcccExecutableSiteGroupDto executable = new IcccExecutableSiteGroupDto();
                     executable.setId(id);
@@ -248,7 +254,7 @@ public final class IcccRecodeUtils {
             }
         }
         catch (CsvException | IOException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
     }
 }

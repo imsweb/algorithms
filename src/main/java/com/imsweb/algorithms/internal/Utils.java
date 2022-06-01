@@ -17,7 +17,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 import com.imsweb.algorithms.AlgorithmInput;
 import com.imsweb.algorithms.Algorithms;
 
-public class Utils {
+public final class Utils {
 
     private static final Pattern _SITE_PATTERN = Pattern.compile("[A-Z](\\d){0,3}");
     private static final Pattern _HIST_PATTERN = Pattern.compile("\\d{4}");
@@ -25,6 +25,9 @@ public class Utils {
     private static final Pattern _BEH_PATTERN = Pattern.compile("\\d");
     private static final Pattern _BEH_RANGE_PATTERN = Pattern.compile("\\d-\\d");
 
+    private Utils() {
+        // no instances of this class allowed!
+    }
 
     /**
      * Expands the provided string of sites into a list of sites, individual elements or ranges should be comma separated.
@@ -121,12 +124,12 @@ public class Utils {
         for (String s : StringUtils.split(toExpand, ',')) {
             if (!s.contains("-")) {
                 if (!_HIST_PATTERN.matcher(s).matches())
-                    throw new RuntimeException("Invalid histology code: " + s);
+                    throw new IllegalStateException("Invalid histology code: " + s);
                 result.add(Integer.valueOf(s));
             }
             else {
                 if (!_HIST_RANGE_PATTERN.matcher(s).matches())
-                    throw new RuntimeException("Invalid histology range: " + s);
+                    throw new IllegalStateException("Invalid histology range: " + s);
                 String[] parts = StringUtils.split(s, '-');
                 result.add(Range.between(Integer.valueOf(parts[0]), Integer.valueOf(parts[1])));
             }
@@ -146,12 +149,12 @@ public class Utils {
         for (String s : StringUtils.split(toExpand, ',')) {
             if (!s.contains("-")) {
                 if (!_BEH_PATTERN.matcher(s).matches())
-                    throw new RuntimeException("Invalid behavior code: " + s);
+                    throw new IllegalStateException("Invalid behavior code: " + s);
                 result.add(Integer.valueOf(s));
             }
             else {
                 if (!_BEH_RANGE_PATTERN.matcher(s).matches())
-                    throw new RuntimeException("Invalid behavior range: " + s);
+                    throw new IllegalStateException("Invalid behavior range: " + s);
                 String[] parts = StringUtils.split(s, '-');
                 result.add(Range.between(Integer.valueOf(parts[0]), Integer.valueOf(parts[1])));
             }
@@ -159,7 +162,7 @@ public class Utils {
         return result;
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public static boolean isContained(List<?> list, Integer value) {
         if (list == null)
             return false;

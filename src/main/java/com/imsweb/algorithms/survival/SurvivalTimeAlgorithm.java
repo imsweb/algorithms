@@ -74,7 +74,7 @@ public class SurvivalTimeAlgorithm extends AbstractAlgorithm {
     public AlgorithmOutput execute(AlgorithmInput input) {
         Integer cutoffYear = (Integer)input.getParameter(PARAM_SURV_CUTOFF_YEAR);
         if (cutoffYear == null)
-            throw new RuntimeException("This algorithm requires a cutoff year!");
+            throw new IllegalStateException("This algorithm requires a cutoff year!");
 
         Map<String, Object> inputPatient = Utils.extractPatient(input);
 

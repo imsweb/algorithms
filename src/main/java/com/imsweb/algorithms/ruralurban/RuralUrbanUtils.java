@@ -34,6 +34,10 @@ public final class RuralUrbanUtils {
     // data provider
     private static RuralUrbanDataProvider _PROVIDER;
 
+    private RuralUrbanUtils() {
+        // no instances of this class allowed!
+    }
+
     /**
      * Calculates the urban rural indicator code (uric2000, uric2010) for the provided input DTO
      * <br/><br/>
@@ -247,9 +251,10 @@ public final class RuralUrbanUtils {
      * Once a provider has been set, this method cannot be called (it will throw an exception).
      * @param provider the <code>RuralUrbanDataProvider</code> to set
      */
+    @SuppressWarnings("unused")
     public static synchronized void setDataProvider(RuralUrbanDataProvider provider) {
         if (_PROVIDER != null)
-            throw new RuntimeException("The data provider has already been set!");
+            throw new IllegalStateException("The data provider has already been set!");
         _PROVIDER = provider;
     }
 

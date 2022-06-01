@@ -1,6 +1,7 @@
 package com.imsweb.algorithms.yostacspoverty;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
@@ -8,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
+import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
 
@@ -81,57 +83,87 @@ public class YostAcsPovertyCsvData implements YostAcsPovertyDataProvider {
         return odto;
     }
 
-    @SuppressWarnings("ConstantConditions")
     private Map<String, Map<String, Map<String, CensusData>>> loadYostAcsPovertyData() {
         Map<String, Map<String, Map<String, CensusData>>> result = new HashMap<>();
 
-        try (Reader reader = new InputStreamReader(new GZIPInputStream(Thread.currentThread().getContextClassLoader().getResourceAsStream("yostacspoverty/yost-acs-poverty-0610-1014-1418.csv.gz")), StandardCharsets.US_ASCII)) {
-            for (String[] row : new CSVReaderBuilder(reader).withSkipLines(1).build().readAll()) {
-                String state = row[0], county = row[1], tract = row[2], yostQuintile0610US = row[3], yostQuintile0610State = row[4], pov0610AllRaces = row[5],
-                        pov0610White = row[6], pov0610Black = row[7], pov0610AIAN = row[8], pov0610AsianNHOPI = row[9], pov0610OtherMulti = row[10],
-                        pov0610WhiteNonHisp = row[11], pov0610Hispanic = row[12], yostQuintile1014US = row[13], yostQuintile1014State = row[14],
-                        pov1014AllRaces = row[15], pov1014White = row[16], pov1014Black = row[17], pov1014AIAN = row[18], pov1014AsianNHOPI = row[19],
-                        pov1014OtherMulti = row[20], pov1014WhiteNonHisp = row[21], pov1014Hispanic = row[22], yostQuintile1418US = row[23],
-                        yostQuintile1418State = row[24], pov1418AllRaces = row[25], pov1418White = row[26], pov1418Black = row[27], pov1418AIAN = row[28],
-                        pov1418AsianNHOPI = row[29], pov1418OtherMulti = row[30], pov1418WhiteNonHisp = row[31], pov1418Hispanic = row[32];
+        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("yostacspoverty/yost-acs-poverty-0610-1014-1418.csv.gz")) {
+            if (is == null)
+                throw new IllegalStateException("Missing data!");
+            try (Reader reader = new InputStreamReader(new GZIPInputStream(is), StandardCharsets.US_ASCII);
+                 CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build()) {
+                for (String[] row : csvReader.readAll()) {
+                    String state = row[0];
+                    String county = row[1];
+                    String tract = row[2];
+                    String yostQuintile0610US = row[3];
+                    String yostQuintile0610State = row[4];
+                    String pov0610AllRaces = row[5];
+                    String pov0610White = row[6];
+                    String pov0610Black = row[7];
+                    String pov0610AIAN = row[8];
+                    String pov0610AsianNHOPI = row[9];
+                    String pov0610OtherMulti = row[10];
+                    String pov0610WhiteNonHisp = row[11];
+                    String pov0610Hispanic = row[12];
+                    String yostQuintile1014US = row[13];
+                    String yostQuintile1014State = row[14];
+                    String pov1014AllRaces = row[15];
+                    String pov1014White = row[16];
+                    String pov1014Black = row[17];
+                    String pov1014AIAN = row[18];
+                    String pov1014AsianNHOPI = row[19];
+                    String pov1014OtherMulti = row[20];
+                    String pov1014WhiteNonHisp = row[21];
+                    String pov1014Hispanic = row[22];
+                    String yostQuintile1418US = row[23];
+                    String yostQuintile1418State = row[24];
+                    String pov1418AllRaces = row[25];
+                    String pov1418White = row[26];
+                    String pov1418Black = row[27];
+                    String pov1418AIAN = row[28];
+                    String pov1418AsianNHOPI = row[29];
+                    String pov1418OtherMulti = row[30];
+                    String pov1418WhiteNonHisp = row[31];
+                    String pov1418Hispanic = row[32];
 
-                CensusData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new HashMap<>()).computeIfAbsent(tract, k -> new CensusData());
-                dto.setYostQuintile0610US(yostQuintile0610US);
-                dto.setYostQuintile0610State(yostQuintile0610State);
-                dto.setAcsPctPov0610AllRaces(pov0610AllRaces);
-                dto.setAcsPctPov0610White(pov0610White);
-                dto.setAcsPctPov0610Black(pov0610Black);
-                dto.setAcsPctPov0610AIAN(pov0610AIAN);
-                dto.setAcsPctPov0610AsianNHOPI(pov0610AsianNHOPI);
-                dto.setAcsPctPov0610OtherMulti(pov0610OtherMulti);
-                dto.setAcsPctPov0610WhiteNonHisp(pov0610WhiteNonHisp);
-                dto.setAcsPctPov0610Hispanic(pov0610Hispanic);
+                    CensusData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new HashMap<>()).computeIfAbsent(tract, k -> new CensusData());
+                    dto.setYostQuintile0610US(yostQuintile0610US);
+                    dto.setYostQuintile0610State(yostQuintile0610State);
+                    dto.setAcsPctPov0610AllRaces(pov0610AllRaces);
+                    dto.setAcsPctPov0610White(pov0610White);
+                    dto.setAcsPctPov0610Black(pov0610Black);
+                    dto.setAcsPctPov0610AIAN(pov0610AIAN);
+                    dto.setAcsPctPov0610AsianNHOPI(pov0610AsianNHOPI);
+                    dto.setAcsPctPov0610OtherMulti(pov0610OtherMulti);
+                    dto.setAcsPctPov0610WhiteNonHisp(pov0610WhiteNonHisp);
+                    dto.setAcsPctPov0610Hispanic(pov0610Hispanic);
 
-                dto.setYostQuintile1014US(yostQuintile1014US);
-                dto.setYostQuintile1014State(yostQuintile1014State);
-                dto.setAcsPctPov1014AllRaces(pov1014AllRaces);
-                dto.setAcsPctPov1014White(pov1014White);
-                dto.setAcsPctPov1014Black(pov1014Black);
-                dto.setAcsPctPov1014AIAN(pov1014AIAN);
-                dto.setAcsPctPov1014AsianNHOPI(pov1014AsianNHOPI);
-                dto.setAcsPctPov1014OtherMulti(pov1014OtherMulti);
-                dto.setAcsPctPov1014WhiteNonHisp(pov1014WhiteNonHisp);
-                dto.setAcsPctPov1014Hispanic(pov1014Hispanic);
+                    dto.setYostQuintile1014US(yostQuintile1014US);
+                    dto.setYostQuintile1014State(yostQuintile1014State);
+                    dto.setAcsPctPov1014AllRaces(pov1014AllRaces);
+                    dto.setAcsPctPov1014White(pov1014White);
+                    dto.setAcsPctPov1014Black(pov1014Black);
+                    dto.setAcsPctPov1014AIAN(pov1014AIAN);
+                    dto.setAcsPctPov1014AsianNHOPI(pov1014AsianNHOPI);
+                    dto.setAcsPctPov1014OtherMulti(pov1014OtherMulti);
+                    dto.setAcsPctPov1014WhiteNonHisp(pov1014WhiteNonHisp);
+                    dto.setAcsPctPov1014Hispanic(pov1014Hispanic);
 
-                dto.setYostQuintile1418US(yostQuintile1418US);
-                dto.setYostQuintile1418State(yostQuintile1418State);
-                dto.setAcsPctPov1418AllRaces(pov1418AllRaces);
-                dto.setAcsPctPov1418White(pov1418White);
-                dto.setAcsPctPov1418Black(pov1418Black);
-                dto.setAcsPctPov1418AIAN(pov1418AIAN);
-                dto.setAcsPctPov1418AsianNHOPI(pov1418AsianNHOPI);
-                dto.setAcsPctPov1418OtherMulti(pov1418OtherMulti);
-                dto.setAcsPctPov1418WhiteNonHisp(pov1418WhiteNonHisp);
-                dto.setAcsPctPov1418Hispanic(pov1418Hispanic);
+                    dto.setYostQuintile1418US(yostQuintile1418US);
+                    dto.setYostQuintile1418State(yostQuintile1418State);
+                    dto.setAcsPctPov1418AllRaces(pov1418AllRaces);
+                    dto.setAcsPctPov1418White(pov1418White);
+                    dto.setAcsPctPov1418Black(pov1418Black);
+                    dto.setAcsPctPov1418AIAN(pov1418AIAN);
+                    dto.setAcsPctPov1418AsianNHOPI(pov1418AsianNHOPI);
+                    dto.setAcsPctPov1418OtherMulti(pov1418OtherMulti);
+                    dto.setAcsPctPov1418WhiteNonHisp(pov1418WhiteNonHisp);
+                    dto.setAcsPctPov1418Hispanic(pov1418Hispanic);
+                }
             }
         }
         catch (CsvException | IOException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
         return result;
     }

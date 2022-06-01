@@ -17,6 +17,10 @@ public final class EphtSubCountyUtils {
 
     private static EphtSubCountyDataProvider _PROVIDER;
 
+    private EphtSubCountyUtils() {
+        // no instances of this class allowed!
+    }
+
     /**
      * Calculates the EPHT 2010 GEO ID 5K and EPHT 2010 GEO ID 20K for the provided input DTO
      * <br/><br/>
@@ -77,9 +81,10 @@ public final class EphtSubCountyUtils {
      * Once a provider has been set, this method cannot be called (it will throw an exception).
      * @param provider the <code>EphtSubCountyDataProvider</code> to set
      */
+    @SuppressWarnings("unused")
     public static synchronized void setDataProvider(EphtSubCountyDataProvider provider) {
         if (_PROVIDER != null)
-            throw new RuntimeException("The data provider has already been set!");
+            throw new IllegalStateException("The data provider has already been set!");
         _PROVIDER = provider;
     }
 
