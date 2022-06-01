@@ -25,7 +25,7 @@ public class SeerSiteRecodeAlgorithm extends AbstractAlgorithm {
     public SeerSiteRecodeAlgorithm() {
         super(Algorithms.ALG_SEER_SITE_RECODE, SeerSiteRecodeUtils.ALG_NAME, SeerSiteRecodeUtils.VERSION_2010);
 
-        _url = "http://seer.cancer.gov/siterecode";
+        _url = "https://seer.cancer.gov/siterecode";
 
         _inputFields.add(Algorithms.getField(FIELD_PRIMARY_SITE));
         _inputFields.add(Algorithms.getField(FIELD_HIST_O3));
