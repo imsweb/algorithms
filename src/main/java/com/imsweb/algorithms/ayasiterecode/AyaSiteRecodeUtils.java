@@ -18,7 +18,7 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
 
-public class AyaSiteRecodeUtils {
+public final class AyaSiteRecodeUtils {
 
     public static final String ALG_NAME = "SEER Adolescents and Young Adults (AYA) Site Recode";
 

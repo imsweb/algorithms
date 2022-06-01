@@ -22,7 +22,7 @@ import com.imsweb.algorithms.internal.CountryData;
 import com.imsweb.algorithms.internal.CountyData;
 import com.imsweb.algorithms.internal.StateData;
 
-public class CountyAtDxAnalysisUtils {
+public final class CountyAtDxAnalysisUtils {
 
     public static final String ALG_NAME = "NAACCR County at Diagnosis Analysis";
     public static final String ALG_VERSION = "version 2.0 released in September 2019";

@@ -19,7 +19,7 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
 
-public class LymphoidNeoplasmRecodeUtils {
+public final class LymphoidNeoplasmRecodeUtils {
 
     public static final String ALG_NAME = "SEER Lymphoid Neoplasm Recode";
 
