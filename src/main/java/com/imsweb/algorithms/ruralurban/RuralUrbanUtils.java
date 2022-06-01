@@ -3,9 +3,6 @@
  */
 package com.imsweb.algorithms.ruralurban;
 
-import static com.imsweb.algorithms.ruralurban.RuralUrbanDataProvider.TRACT_CATEGORY_1;
-import static com.imsweb.algorithms.ruralurban.RuralUrbanDataProvider.TRACT_CATEGORY_2;
-
 /**
  * This class can be used to calculate the rural urban census code, the rural urban commuting area code, and the rural urban continuum code.
  * Created on Aug 12, 2014 by HoweW
@@ -31,8 +28,15 @@ public final class RuralUrbanUtils {
     public static final String CONTINUUM_UNK_98 = "98";
     public static final String CONTINUUM_UNK_99 = "99";
 
+    public static final String BEALE_CATEGORY_1 = "1993";
+    public static final String BEALE_CATEGORY_2 = "2003";
+    public static final String BEALE_CATEGORY_3 = "2013";
+
+    public static final String TRACT_CATEGORY_1 = "2000";
+    public static final String TRACT_CATEGORY_2 = "2010";
+
     // data provider
-    private static RuralUrbanDataProvider _PROVIDER;
+    private static final RuralUrbanDataProvider _PROVIDER = new RuralUrbanDataProvider();
 
     private RuralUrbanUtils() {
         // no instances of this class allowed!
@@ -79,12 +83,11 @@ public final class RuralUrbanUtils {
         else if ("000".equals(input.getCountyAtDxAnalysis()))
             result.setUrbanRuralIndicatorCode2000("B");
         else {
-            if (_PROVIDER == null)
-                initializeInternalDataProvider();
             result.setUrbanRuralIndicatorCode2000(_PROVIDER.getUrbanRuralIndicatorCode(TRACT_CATEGORY_1, input.getAddressAtDxState(), input.getCountyAtDxAnalysis(), input.getCensusTract2000()));
             result.setUrbanRuralIndicatorCode2000Percentage(
                     _PROVIDER.getRuralUrbanCensusPercentage(TRACT_CATEGORY_1, input.getAddressAtDxState(), input.getCountyAtDxAnalysis(), input.getCensusTract2000()));
         }
+
         if (result.getUrbanRuralIndicatorCode2000() == null)
             result.setUrbanRuralIndicatorCode2000(URBAN_RURAL_INDICATOR_CODE_UNKNOWN);
 
@@ -96,12 +99,11 @@ public final class RuralUrbanUtils {
         else if ("000".equals(input.getCountyAtDxAnalysis()))
             result.setUrbanRuralIndicatorCode2010("B");
         else {
-            if (_PROVIDER == null)
-                initializeInternalDataProvider();
             result.setUrbanRuralIndicatorCode2010(_PROVIDER.getUrbanRuralIndicatorCode(TRACT_CATEGORY_2, input.getAddressAtDxState(), input.getCountyAtDxAnalysis(), input.getCensusTract2010()));
             result.setUrbanRuralIndicatorCode2010Percentage(
                     _PROVIDER.getRuralUrbanCensusPercentage(TRACT_CATEGORY_2, input.getAddressAtDxState(), input.getCountyAtDxAnalysis(), input.getCensusTract2010()));
         }
+
         if (result.getUrbanRuralIndicatorCode2010() == null)
             result.setUrbanRuralIndicatorCode2010(URBAN_RURAL_INDICATOR_CODE_UNKNOWN);
 
@@ -147,11 +149,9 @@ public final class RuralUrbanUtils {
             result.setRuralUrbanCommutingArea2000("D");
         else if ("000".equals(input.getCountyAtDxAnalysis()))
             result.setRuralUrbanCommutingArea2000("B");
-        else {
-            if (_PROVIDER == null)
-                initializeInternalDataProvider();
+        else
             result.setRuralUrbanCommutingArea2000(_PROVIDER.getRuralUrbanCommutingArea(TRACT_CATEGORY_1, input.getAddressAtDxState(), input.getCountyAtDxAnalysis(), input.getCensusTract2000()));
-        }
+
         if (result.getRuralUrbanCommutingArea2000() == null)
             result.setRuralUrbanCommutingArea2000(RURAL_URBAN_COMMUTING_AREA_UNKNOWN);
 
@@ -162,11 +162,9 @@ public final class RuralUrbanUtils {
             result.setRuralUrbanCommutingArea2010("D");
         else if ("000".equals(input.getCountyAtDxAnalysis()))
             result.setRuralUrbanCommutingArea2010("B");
-        else {
-            if (_PROVIDER == null)
-                initializeInternalDataProvider();
+        else
             result.setRuralUrbanCommutingArea2010(_PROVIDER.getRuralUrbanCommutingArea(TRACT_CATEGORY_2, input.getAddressAtDxState(), input.getCountyAtDxAnalysis(), input.getCensusTract2010()));
-        }
+
         if (result.getRuralUrbanCommutingArea2010() == null)
             result.setRuralUrbanCommutingArea2010(RURAL_URBAN_COMMUTING_AREA_UNKNOWN);
 
@@ -225,12 +223,9 @@ public final class RuralUrbanUtils {
             result.setRuralUrbanContinuum2013("97");
         }
         else {
-            if (_PROVIDER == null)
-                initializeInternalDataProvider();
-
-            result.setRuralUrbanContinuum1993(_PROVIDER.getRuralUrbanContinuum(RuralUrbanDataProvider.BEALE_CATEGORY_1, input.getAddressAtDxState(), input.getCountyAtDxAnalysis()));
-            result.setRuralUrbanContinuum2003(_PROVIDER.getRuralUrbanContinuum(RuralUrbanDataProvider.BEALE_CATEGORY_2, input.getAddressAtDxState(), input.getCountyAtDxAnalysis()));
-            result.setRuralUrbanContinuum2013(_PROVIDER.getRuralUrbanContinuum(RuralUrbanDataProvider.BEALE_CATEGORY_3, input.getAddressAtDxState(), input.getCountyAtDxAnalysis()));
+            result.setRuralUrbanContinuum1993(_PROVIDER.getRuralUrbanContinuum(BEALE_CATEGORY_1, input.getAddressAtDxState(), input.getCountyAtDxAnalysis()));
+            result.setRuralUrbanContinuum2003(_PROVIDER.getRuralUrbanContinuum(BEALE_CATEGORY_2, input.getAddressAtDxState(), input.getCountyAtDxAnalysis()));
+            result.setRuralUrbanContinuum2013(_PROVIDER.getRuralUrbanContinuum(BEALE_CATEGORY_3, input.getAddressAtDxState(), input.getCountyAtDxAnalysis()));
         }
 
         if (result.getRuralUrbanContinuum1993() == null)
@@ -241,26 +236,5 @@ public final class RuralUrbanUtils {
             result.setRuralUrbanContinuum2013(RURAL_URBAN_CONTINUUM_UNKNOWN);
 
         return result;
-    }
-
-    /**
-     * Use this method to register your own data provider instead of using the internal one that is entirely in memory.
-     * <br/><br/>
-     * This has to be done before the first call to the compute method, or the internal one will be registered by default.
-     * <br/><br/>
-     * Once a provider has been set, this method cannot be called (it will throw an exception).
-     * @param provider the <code>RuralUrbanDataProvider</code> to set
-     */
-    @SuppressWarnings("unused")
-    public static synchronized void setDataProvider(RuralUrbanDataProvider provider) {
-        if (_PROVIDER != null)
-            throw new IllegalStateException("The data provider has already been set!");
-        _PROVIDER = provider;
-    }
-
-    private static synchronized void initializeInternalDataProvider() {
-        if (_PROVIDER != null)
-            return;
-        _PROVIDER = new RuralUrbanCsvData();
     }
 }

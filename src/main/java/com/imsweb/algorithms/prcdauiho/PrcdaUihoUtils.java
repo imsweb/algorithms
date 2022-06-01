@@ -50,6 +50,7 @@ public final class PrcdaUihoUtils {
 
     // States with a mix of PRCDA and non-PRCDA counties
     public static final List<String> MIXED_PRCDA;
+
     static {
         List<String> temp = new ArrayList<>(_STATES);
         temp.removeAll(ENTIRE_STATE_PRCDA);
@@ -57,7 +58,7 @@ public final class PrcdaUihoUtils {
         MIXED_PRCDA = Collections.unmodifiableList(new ArrayList<>(temp));
     }
 
-    private static PrcdaUihoDataProvider _PROVIDER;
+    private static final PrcdaUihoDataProvider _PROVIDER = new PrcdaUihoDataProvider();
 
     private PrcdaUihoUtils() {
         // no instances of this class allowed!
@@ -100,21 +101,17 @@ public final class PrcdaUihoUtils {
             result.setUIHO(UIHO_UNKNOWN);
         }
         else {
-            if (_PROVIDER == null)
-                initializeInternalDataProvider();
+
             // PRCDA
-            if (ENTIRE_STATE_PRCDA.contains(input.getAddressAtDxState())) {
+            if (ENTIRE_STATE_PRCDA.contains(input.getAddressAtDxState()))
                 result.setPRCDA(PRCDA_YES);
-            }
-            else if (ENTIRE_STATE_NON_PRCDA.contains(input.getAddressAtDxState())) {
+            else if (ENTIRE_STATE_NON_PRCDA.contains(input.getAddressAtDxState()))
                 result.setPRCDA(PRCDA_NO);
-            }
-            else if (!isCountyAtDxValid(input.getAddressAtDxCounty()) || (MIXED_PRCDA.contains(input.getAddressAtDxState()) && "999".equals(input.getAddressAtDxCounty()))) {
+            else if (!isCountyAtDxValid(input.getAddressAtDxCounty()) || (MIXED_PRCDA.contains(input.getAddressAtDxState()) && "999".equals(input.getAddressAtDxCounty())))
                 result.setPRCDA(PRCDA_UNKNOWN);
-            }
-            else {
+            else
                 result.setPRCDA(_PROVIDER.getPRCDA(input.getAddressAtDxState(), input.getAddressAtDxCounty()));
-            }
+
             // UIHO, UIHO FACILITY
             if (!isCountyAtDxValid(input.getAddressAtDxCounty()))
                 result.setUIHO(UIHO_UNKNOWN);
@@ -141,26 +138,5 @@ public final class PrcdaUihoUtils {
                 || _PROVINCES.contains(state)
                 || _ARMED_FORCES.contains(state)
                 || _UNKNOWN_STATES.contains(state);
-    }
-
-    /**
-     * Use this method to register your own data provider instead of using the internal one that is entirely in memory.
-     * <br/><br/>
-     * This has to be done before the first call to the compute method, or the internal one will be registered by default.
-     * <br/><br/>
-     * Once a provider has been set, this method cannot be called (it will throw an exception).
-     * @param provider the <code>PrcdaUihoDataProvider</code> to set
-     */
-    @SuppressWarnings("unused")
-    public static synchronized void setDataProvider(PrcdaUihoDataProvider provider) {
-        if (_PROVIDER != null)
-            throw new IllegalStateException("The data provider has already been set!");
-        _PROVIDER = provider;
-    }
-
-    private static synchronized void initializeInternalDataProvider() {
-        if (_PROVIDER != null)
-            return;
-        _PROVIDER = new PrcdaUihoCsvData();
     }
 }

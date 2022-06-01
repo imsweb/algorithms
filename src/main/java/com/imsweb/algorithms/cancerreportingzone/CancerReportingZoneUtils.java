@@ -14,7 +14,7 @@ public final class CancerReportingZoneUtils {
     public static final String CANCER_REPORTING_ZONE_UNK_D = "D";
 
     // data provider
-    private static CancerReportingZoneDataProvider _PROVIDER;
+    private static final CancerReportingZoneDataProvider _PROVIDER = new CancerReportingZoneDataProvider();
 
     private CancerReportingZoneUtils() {
         // no instances of this class allowed!
@@ -52,35 +52,12 @@ public final class CancerReportingZoneUtils {
             result.setCancerReportingZone(CANCER_REPORTING_ZONE_UNK_D);
         else if ("000".equals(input.getCountyAtDxAnalysis()))
             result.setCancerReportingZone("B");
-        else {
-            if (_PROVIDER == null)
-                initializeInternalDataProvider();
+        else
             result.setCancerReportingZone(_PROVIDER.getCancerReportingZone(input.getAddressAtDxState(), input.getCountyAtDxAnalysis(), input.getCensusTract2010()));
-        }
+
         if (result.getCancerReportingZone() == null)
             result.setCancerReportingZone(CANCER_REPORTING_ZONE_UNK_C);
 
         return result;
-    }
-
-    /**
-     * Use this method to register your own data provider instead of using the internal one that is entirely in memory.
-     * <br/><br/>
-     * This has to be done before the first call to the compute method, or the internal one will be registered by default.
-     * <br/><br/>
-     * Once a provider has been set, this method cannot be called (it will throw an exception).
-     * @param provider the <code>CancerReportingZoneDataProvider</code> to set
-     */
-    @SuppressWarnings("unused")
-    public static synchronized void setDataProvider(CancerReportingZoneDataProvider provider) {
-        if (_PROVIDER != null)
-            throw new IllegalStateException("The data provider has already been set!");
-        _PROVIDER = provider;
-    }
-
-    private static synchronized void initializeInternalDataProvider() {
-        if (_PROVIDER != null)
-            return;
-        _PROVIDER = new CancerReportingZoneCsvData();
     }
 }

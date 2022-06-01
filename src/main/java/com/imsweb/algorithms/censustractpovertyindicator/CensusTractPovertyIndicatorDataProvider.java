@@ -3,37 +3,90 @@
  */
 package com.imsweb.algorithms.censustractpovertyindicator;
 
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+import com.opencsv.exceptions.CsvException;
+
+import com.imsweb.algorithms.internal.CensusData;
+import com.imsweb.algorithms.internal.CountryData;
+import com.imsweb.algorithms.internal.CountyData;
+import com.imsweb.algorithms.internal.StateData;
+
+import static com.imsweb.algorithms.censustractpovertyindicator.CensusTractPovertyIndicatorUtils.POVERTY_INDICATOR_UNKNOWN;
+
 /**
- * The purpose of the <code>CensusTractPovertyIndicatorDataProvider</code> is to get the poverty indicator for provided year category, state of dx, county of dx, and census tract
- * either from the database or csv lookup based on the implementation
- * <p/>
+ * The purpose of this class is to get the poverty indicator for provided year category, state of dx, county of dx, and census tract
+ * from the csv file lookup.  This implementation is memory consumer. If there is a database, it is better to use another implementation.
  * Created on Oct 18, 2013 by bekeles
  * @author bekeles
  */
-public interface CensusTractPovertyIndicatorDataProvider {
+public class CensusTractPovertyIndicatorDataProvider {
 
-    String YEAR_CATEGORY_1 = "1";
-    String YEAR_CATEGORY_2 = "2";
-    String YEAR_CATEGORY_3 = "3";
-    String YEAR_CATEGORY_4 = "4";
-    String YEAR_CATEGORY_5 = "5";
-    String YEAR_CATEGORY_6 = "6";
-    String YEAR_CATEGORY_7 = "7";
-    String YEAR_CATEGORY_8 = "8";
-    String YEAR_CATEGORY_9 = "9";
-    String YEAR_CATEGORY_10 = "10";
-    String YEAR_CATEGORY_11 = "11";
+    public String getPovertyIndicator(String yearCategory, String state, String county, String census) {
 
-    /**
-     * Returns census tract poverty indicator for provided year category, state of dx, county of dx, and census tract.
-     * <p/>
-     * Created Oct 18, 2013 by bekeles
-     * @param yearCategory year category
-     * @param state state at DX
-     * @param county county at DX
-     * @param censusTract census tract (2000 or 2010)
-     * @return the corresponding census tract poverty indicator
-     */
-    String getPovertyIndicator(String yearCategory, String state, String county, String censusTract);
+        // make sure we have enough information to lookup the value
+        if (yearCategory == null || state == null || county == null || census == null)
+            return POVERTY_INDICATOR_UNKNOWN;
 
+        // lazily initialize the data
+        if (!CountryData.getInstance().isPovertyDataInitialized()) {
+            Map<String, Map<String, Map<String, CensusData>>> data = new HashMap<>();
+            // note that the year range in the filename is not always the same as the year range represented by the category...
+            readCsvData("poverty-indicator-1995-2004.csv", CensusTractPovertyIndicatorUtils.YEAR_CATEGORY_1, data);
+            readCsvData("poverty-indicator-2005-2007.csv", CensusTractPovertyIndicatorUtils.YEAR_CATEGORY_2, data);
+            readCsvData("poverty-indicator-2006-2010.csv", CensusTractPovertyIndicatorUtils.YEAR_CATEGORY_3, data);
+            readCsvData("poverty-indicator-2007-2011.csv", CensusTractPovertyIndicatorUtils.YEAR_CATEGORY_4, data);
+            readCsvData("poverty-indicator-2008-2012.csv", CensusTractPovertyIndicatorUtils.YEAR_CATEGORY_5, data);
+            readCsvData("poverty-indicator-2009-2013.csv", CensusTractPovertyIndicatorUtils.YEAR_CATEGORY_6, data);
+            readCsvData("poverty-indicator-2010-2014.csv", CensusTractPovertyIndicatorUtils.YEAR_CATEGORY_7, data);
+            readCsvData("poverty-indicator-2011-2015.csv", CensusTractPovertyIndicatorUtils.YEAR_CATEGORY_8, data);
+            readCsvData("poverty-indicator-2012-2016.csv", CensusTractPovertyIndicatorUtils.YEAR_CATEGORY_9, data);
+            readCsvData("poverty-indicator-2013-2017.csv", CensusTractPovertyIndicatorUtils.YEAR_CATEGORY_10, data);
+            readCsvData("poverty-indicator-2014-2018.csv", CensusTractPovertyIndicatorUtils.YEAR_CATEGORY_11, data);
+            CountryData.getInstance().initializePovertyData(data);
+        }
+
+        StateData stateData = CountryData.getInstance().getPovertyData(state);
+        if (stateData == null)
+            return POVERTY_INDICATOR_UNKNOWN;
+        CountyData countyData = stateData.getCountyData(county);
+        if (countyData == null)
+            return POVERTY_INDICATOR_UNKNOWN;
+        CensusData censusData = countyData.getCensusData(census);
+        if (censusData == null)
+            return POVERTY_INDICATOR_UNKNOWN;
+        Map<String, String> povertyData = censusData.getPovertyIndicators();
+        if (povertyData == null)
+            return POVERTY_INDICATOR_UNKNOWN;
+
+        return povertyData.getOrDefault(yearCategory, POVERTY_INDICATOR_UNKNOWN);
+    }
+
+    // helper to handle a single CSV data file
+    @SuppressWarnings("ConstantConditions")
+    private static void readCsvData(String datafile, String yearRangeCategory, Map<String, Map<String, Map<String, CensusData>>> data) {
+        try (Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("censustractpovertyindicator/" + datafile), StandardCharsets.US_ASCII);
+             CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build()) {
+            for (String[] row : csvReader.readAll()) {
+                String state = row[0];
+                String county = row[1];
+                String tract = row[2];
+                String indicator = row[3];
+                CensusData dto = data.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new HashMap<>()).computeIfAbsent(tract, k -> new CensusData());
+                if (dto.getPovertyIndicators() == null)
+                    dto.setPovertyIndicators(new HashMap<>());
+                dto.getPovertyIndicators().putIfAbsent(yearRangeCategory, indicator);
+            }
+        }
+        catch (CsvException | IOException e) {
+            throw new IllegalStateException(e);
+        }
+    }
 }
