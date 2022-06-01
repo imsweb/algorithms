@@ -1,6 +1,7 @@
 plugins {
     id 'java-library'
     id 'checkstyle'
+    id 'jacoco'
     id 'com.github.spotbugs' version '5.0.7'
     id 'maven-publish'
     id 'signing'
@@ -87,6 +88,15 @@ checkstyle {
     configFile = project(':').file('config/checkstyle/checkstyle.xml')
     configProperties = ['suppressionFile': project(':').file('config/checkstyle/checkstlye-exclude.xml')]
 }
+
+// jacoco plugin settings
+jacocoTestReport {
+    reports {
+        xml.required = true
+    }
+}
+test.finalizedBy jacocoTestReport
+
 
 // spotbugs plugin settings
 spotbugs {
