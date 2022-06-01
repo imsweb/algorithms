@@ -21,8 +21,6 @@ public final class YostAcsPovertyUtils {
     public static final String ALG_NAME = "NAACCR Yost Quintile & Area-Based Social Measures Linkage Program";
     public static final String ALG_VERSION = "version 2.0 released in August 2020";
 
-    private static final YostAcsPovertyDataProvider _PROVIDER = new YostAcsPovertyDataProvider();
-
     private YostAcsPovertyUtils() {
         // no instances of this class allowed!
     }
