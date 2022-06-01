@@ -15,7 +15,6 @@ import com.imsweb.algorithms.AlgorithmOutput;
 import com.imsweb.algorithms.Algorithms;
 import com.imsweb.algorithms.internal.Utils;
 
-import static com.imsweb.algorithms.Algorithms.FIELD_AYA_SITE_RECODE_2008;
 import static com.imsweb.algorithms.Algorithms.FIELD_AYA_SITE_RECODE_2020;
 import static com.imsweb.algorithms.Algorithms.FIELD_BEHAV_O3;
 import static com.imsweb.algorithms.Algorithms.FIELD_HIST_O3;
@@ -37,7 +36,7 @@ public class AyaSiteRecodeAlgorithm2020 extends AbstractAlgorithm {
 
         _outputFields.add(Algorithms.getField(FIELD_AYA_SITE_RECODE_2020));
 
-        _unknownValues.put(FIELD_AYA_SITE_RECODE_2008, Collections.singletonList(AyaSiteRecodeUtils.AYA_SITE_RECODE_UNKNOWN_2020));
+        _unknownValues.put(FIELD_AYA_SITE_RECODE_2020, Collections.singletonList(AyaSiteRecodeUtils.AYA_SITE_RECODE_UNKNOWN_2020));
     }
 
     @Override
