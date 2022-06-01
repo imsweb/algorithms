@@ -18,7 +18,7 @@ import org.apache.commons.lang3.math.NumberUtils;
  * This class is used to calculate the survival time in months for a give patient (a list of records).
  * It also calculates the vital status of the patient at the study cutoff date.
  * <br/><br/>
- * See <a href="http://seer.cancer.gov/survivaltime/">http://seer.cancer.gov/survivaltime/</a>.
+ * See <a href="https://seer.cancer.gov/survivaltime/">https://seer.cancer.gov/survivaltime/</a>.
  */
 public class SurvivalTimeUtils {
 
@@ -43,7 +43,7 @@ public class SurvivalTimeUtils {
      * Calculates the survival time for the provided list of records representing a patient.
      * It also calculates the vital status of the patient at the study cutoff date.
      * <br/><br/>
-     * See <a href="http://seer.cancer.gov/survivaltime/">http://seer.cancer.gov/survivaltime/</a>
+     * See <a href="https://seer.cancer.gov/survivaltime/">https://seer.cancer.gov/survivaltime/</a>
      * @param input input object representing a patient
      * @param endPointYear end point year (also called end study year, or current reporting year)
      * @return SurvivalTimeOutputPatientDto

@@ -15,10 +15,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import com.opencsv.CSVParserBuilder;
+import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
 
-public class LymphoidNeoplasmRecodeUtils {
+public final class LymphoidNeoplasmRecodeUtils {
 
     public static final String ALG_NAME = "SEER Lymphoid Neoplasm Recode";
 
@@ -27,6 +28,10 @@ public class LymphoidNeoplasmRecodeUtils {
     public static final String UNKNOWN = "99";
 
     private static List<LymphoidNeoplasmRecodeData> _DATA_2021;
+
+    private LymphoidNeoplasmRecodeUtils() {
+        // no instances of this class allowed!
+    }
 
     /**
      * Returns the coded Lymphoid Neoplasm from the provided input fields.
@@ -37,7 +42,7 @@ public class LymphoidNeoplasmRecodeUtils {
      */
     public static String calculateSiteRecode(String version, String site, String histology) {
         if (!ALG_VERSION_2021.equals(version))
-            throw new RuntimeException("Invalid version: " + version);
+            throw new IllegalStateException("Invalid version: " + version);
 
         if (StringUtils.isBlank(site) || StringUtils.isBlank(histology))
             return UNKNOWN;
@@ -73,10 +78,11 @@ public class LymphoidNeoplasmRecodeUtils {
         List<LymphoidNeoplasmRecodeData> result = new ArrayList<>();
         try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("lymphoma/" + filename)) {
             if (is == null)
-                throw new RuntimeException("Unable to find " + filename);
+                throw new IllegalStateException("Unable to find " + filename);
 
-            try (Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8)) {
-                for (String[] row : new CSVReaderBuilder(reader).withCSVParser(new CSVParserBuilder().withSeparator(',').build()).withSkipLines(1).build().readAll()) {
+            try (Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
+                 CSVReader csvReader = new CSVReaderBuilder(reader).withCSVParser(new CSVParserBuilder().withSeparator(',').build()).withSkipLines(1).build()) {
+                for (String[] row : csvReader.readAll()) {
                     String site = StringUtils.trimToNull(row[1]);
                     String hist = StringUtils.trimToNull(row[2]);
                     String recode = StringUtils.trimToNull(row[3]);
@@ -86,7 +92,7 @@ public class LymphoidNeoplasmRecodeUtils {
             }
         }
         catch (CsvException | IOException e) {
-            throw new RuntimeException("Unable to read " + filename, e);
+            throw new IllegalStateException("Unable to read " + filename, e);
         }
         return result;
     }

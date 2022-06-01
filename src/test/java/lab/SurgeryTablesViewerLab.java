@@ -55,7 +55,7 @@ import com.imsweb.seerutilsgui.table.SeerTable;
 @SuppressWarnings("ConstantConditions")
 public class SurgeryTablesViewerLab extends JFrame {
 
-    private SeerList<SurgeryTableDto> _tablesList;
+    private final SeerList<SurgeryTableDto> _tablesList;
     private JSplitPane _pane;
 
     public SurgeryTablesViewerLab() {
@@ -160,7 +160,7 @@ public class SurgeryTablesViewerLab extends JFrame {
                     row.add(buf.toString());
                 }
                 catch (IOException e) {
-                    throw new RuntimeException(e);
+                    throw new IllegalStateException(e);
                 }
             }
             else
@@ -257,7 +257,7 @@ public class SurgeryTablesViewerLab extends JFrame {
             }
             else {
                 if (!(table instanceof SeerTable))
-                    throw new RuntimeException("Was expecting a SeerTable");
+                    throw new IllegalStateException("Was expecting a SeerTable");
 
                 this.setBackground(((row % 2) == 0 || !((SeerTable)table).getAlternateRowColors()) ? SeerTable.COLOR_TABLE_ROW_ODD : SeerTable.COLOR_TABLE_ROW_EVEN);
                 this.setForeground(SeerTable.COLOR_TABLE_ROW_LBL);

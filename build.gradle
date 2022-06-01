@@ -1,7 +1,7 @@
 plugins {
     id 'java-library'
     id 'checkstyle'
-    id 'com.github.spotbugs' version '5.0.3'
+    id 'com.github.spotbugs' version '5.0.7'
     id 'maven-publish'
     id 'signing'
     id 'io.github.gradle-nexus.publish-plugin' version '1.1.0'
@@ -91,6 +91,22 @@ checkstyle {
 spotbugs {
     ignoreFailures = true
     excludeFilter = project(':').file("config/spotbugs/spotbugs-exclude.xml")
+}
+
+spotbugsMain {
+    reports {
+        xml {
+            enabled = true
+        }
+    }
+}
+
+spotbugsTest {
+    reports {
+        xml {
+            enabled = true
+        }
+    }
 }
 
 // needed to deploy to Maven Central

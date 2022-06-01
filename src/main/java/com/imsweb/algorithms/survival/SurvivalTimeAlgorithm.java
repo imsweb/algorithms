@@ -42,7 +42,7 @@ public class SurvivalTimeAlgorithm extends AbstractAlgorithm {
     public SurvivalTimeAlgorithm() {
         super(Algorithms.ALG_SURVIVAL_TIME, SurvivalTimeUtils.ALG_NAME, SurvivalTimeUtils.VERSION);
 
-        _url = "http://seer.cancer.gov/survivaltime/";
+        _url = "https://seer.cancer.gov/survivaltime/";
 
         _params.add(AlgorithmParam.of(PARAM_SURV_CUTOFF_YEAR, "Cutoff Year", Integer.class));
 
@@ -74,7 +74,7 @@ public class SurvivalTimeAlgorithm extends AbstractAlgorithm {
     public AlgorithmOutput execute(AlgorithmInput input) {
         Integer cutoffYear = (Integer)input.getParameter(PARAM_SURV_CUTOFF_YEAR);
         if (cutoffYear == null)
-            throw new RuntimeException("This algorithm requires a cutoff year!");
+            throw new IllegalStateException("This algorithm requires a cutoff year!");
 
         Map<String, Object> inputPatient = Utils.extractPatient(input);
 

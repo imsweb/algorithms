@@ -77,7 +77,7 @@ public class CensusTractPovertyIndicatorFormatsLab {
                     String[] parts = text.split("=");
                     String input = parts[0].trim().replaceAll("'", "");
                     if (parts.length != 2 || input.length() != 11 || parts[1].trim().length() != 1)
-                        throw new RuntimeException("Not reading the correct line. Something went wrong!");
+                        throw new IllegalStateException("Not reading the correct line. Something went wrong!");
                     if (year1)
                         pov9504Data.add(new String[] {input.substring(0, 2), input.substring(2, 5), input.substring(5, 11), parts[1].trim()});
                     else if (year2)
@@ -106,7 +106,7 @@ public class CensusTractPovertyIndicatorFormatsLab {
             writer0911.close();
         }
         catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
         // display the counters to check against SAS
         System.out.println(pov9504Data.size());

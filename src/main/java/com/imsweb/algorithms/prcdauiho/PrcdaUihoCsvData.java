@@ -4,6 +4,7 @@
 package com.imsweb.algorithms.prcdauiho;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
@@ -12,6 +13,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
 
@@ -84,34 +86,46 @@ public class PrcdaUihoCsvData implements PrcdaUihoDataProvider {
         return countyData.getUIHO();
     }
 
-    @SuppressWarnings("ConstantConditions")
     private Map<String, Map<String, CountyData>> loadPrcdaData() {
         Map<String, Map<String, CountyData>> result = new HashMap<>();
-        try (Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("prcdauiho/prcda20.csv"), StandardCharsets.US_ASCII)) {
-            for (String[] row : new CSVReaderBuilder(reader).build().readAll()) {
-                String state = row[0], county = row[1], prcda = row[2];
-                CountyData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new CountyData());
-                dto.setPRCDA(StringUtils.leftPad(prcda, 1, '0'));
+        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("prcdauiho/prcda20.csv")) {
+            if (is == null)
+                throw new IllegalStateException("Unable to find PRCDA data!");
+            try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
+                 CSVReader csvReader = new CSVReaderBuilder(reader).build()) {
+                for (String[] row : csvReader.readAll()) {
+                    String state = row[0];
+                    String county = row[1];
+                    String prcda = row[2];
+                    CountyData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new CountyData());
+                    dto.setPRCDA(StringUtils.leftPad(prcda, 1, '0'));
+                }
             }
         }
         catch (CsvException | IOException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
         return result;
     }
 
-    @SuppressWarnings("ConstantConditions")
     private Map<String, Map<String, CountyData>> loadUihoData() {
         Map<String, Map<String, CountyData>> result = new HashMap<>();
-        try (Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("prcdauiho/uiho20.csv"), StandardCharsets.US_ASCII)) {
-            for (String[] row : new CSVReaderBuilder(reader).build().readAll()) {
-                String state = row[0], county = row[1], uiho = row[2];
-                CountyData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new CountyData());
-                dto.setUIHO(StringUtils.leftPad(uiho, 1, '0'));
+        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("prcdauiho/uiho20.csv")) {
+            if (is == null)
+                throw new IllegalStateException("Unable to find UIHO data!");
+            try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
+                 CSVReader csvReader = new CSVReaderBuilder(reader).build()) {
+                for (String[] row : csvReader.readAll()) {
+                    String state = row[0];
+                    String county = row[1];
+                    String uiho = row[2];
+                    CountyData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new CountyData());
+                    dto.setUIHO(StringUtils.leftPad(uiho, 1, '0'));
+                }
             }
         }
         catch (CsvException | IOException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
         return result;
     }

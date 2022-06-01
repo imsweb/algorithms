@@ -22,6 +22,10 @@ public final class CensusTractPovertyIndicatorUtils {
 
     private static CensusTractPovertyIndicatorDataProvider _PROVIDER;
 
+    private CensusTractPovertyIndicatorUtils() {
+        // no instances of this class allowed!
+    }
+
     /**
      * Calculates the census tract poverty indicator for the provided census tract poverty indicator input dto
      * <br/><br/>
@@ -84,7 +88,8 @@ public final class CensusTractPovertyIndicatorUtils {
         if (!NumberUtils.isDigits(dxYear) || input.getAddressAtDxState() == null || input.getCountyAtDxAnalysis() == null)
             return result;
 
-        String censusTract, yearCategory;
+        String censusTract;
+        String yearCategory;
         int year = Integer.parseInt(dxYear);
         if (year >= 1995 && year <= 2004) {
             yearCategory = CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_1;
@@ -154,9 +159,10 @@ public final class CensusTractPovertyIndicatorUtils {
      * Once a provider has been set, this method cannot be called (it will throw an exception).
      * @param provider the <code>CensusTractPovertyIndicatorDataProvider</code> to set
      */
+    @SuppressWarnings("unused")
     public static synchronized void setDataProvider(CensusTractPovertyIndicatorDataProvider provider) {
         if (_PROVIDER != null)
-            throw new RuntimeException("The data provider has already been set!");
+            throw new IllegalStateException("The data provider has already been set!");
         _PROVIDER = provider;
     }
 

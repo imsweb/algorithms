@@ -107,6 +107,10 @@ public final class NapiiaUtils {
     // internal lock to control concurrency to the data
     private static final ReentrantReadWriteLock _LOCK = new ReentrantReadWriteLock();
 
+    private NapiiaUtils() {
+        // no instances of this class allowed!
+    }
+
     /**
      * Calculates the NAPIIA value for the provided Patient DTO.
      * <br/><br/>
@@ -171,7 +175,8 @@ public final class NapiiaUtils {
         if (input == null)
             return napiiaResults;
 
-        String napiia = null, reason = null;
+        String napiia = null;
+        String reason = null;
         boolean runBirthPlaceCountries = false;
         boolean runNames = false;
 
@@ -181,8 +186,18 @@ public final class NapiiaUtils {
 
         // gather a few stats
         List<String> races = Arrays.asList(input.getRace1(), input.getRace2(), input.getRace3(), input.getRace4(), input.getRace5());
-        int r01 = 0, r0203 = 0, r0432 = 0, r07 = 0, r88 = 0, r96 = 0, r97 = 0, r98 = 0, r99 = 0;
-        String r0203val = null, r0432val = null, r07val = null;
+        int r01 = 0;
+        int r0203 = 0;
+        int r0432 = 0;
+        int r07 = 0;
+        int r88 = 0;
+        int r96 = 0;
+        int r97 = 0;
+        int r98 = 0;
+        int r99 = 0;
+        String r0203val = null;
+        String r0432val = null;
+        String r07val = null;
         for (String r : races) {
             if (r == null || r.equals("88") || r.trim().isEmpty())
                 r88++;
@@ -474,14 +489,14 @@ public final class NapiiaUtils {
     }
 
     //Returns the name truncated to 12 characters.    
-    protected static String truncateName(String name) {
+    static String truncateName(String name) {
         if (name == null || name.length() <= 12)
             return name;
         else
             return name.substring(0, 12);
     }
 
-    protected static Short codeName(String name, Map<String, Short> lkup) {
+    static Short codeName(String name, Map<String, Short> lkup) {
         if (name == null)
             return null;
 
@@ -514,14 +529,14 @@ public final class NapiiaUtils {
     private static void readNameData(String file, Map<String, Short> map) {
         try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("napiia/" + file)) {
             if (is == null)
-                throw new RuntimeException("Unable to read internal " + file);
+                throw new IllegalStateException("Unable to read internal " + file);
             try (CSVReader reader = new CSVReader(new InputStreamReader(is, StandardCharsets.US_ASCII))) {
                 for (String[] row : reader.readAll())
                     map.put(row[0].toUpperCase(), Short.valueOf(row[1]));
             }
         }
         catch (CsvException | IOException e) {
-            throw new RuntimeException("Unable to read internal " + file, e);
+            throw new IllegalStateException("Unable to read internal " + file, e);
         }
     }
 }

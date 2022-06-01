@@ -14,10 +14,11 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
 import com.opencsv.CSVParserBuilder;
+import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
 
-public class BrainCnsRecodeUtils {
+public final class BrainCnsRecodeUtils {
 
     public static final String ALG_NAME = "SEER Brain/CNS Recode";
 
@@ -27,13 +28,17 @@ public class BrainCnsRecodeUtils {
 
     private static List<BrainCnsRecodeData> _DATA_2020;
 
+    private BrainCnsRecodeUtils() {
+        // no instances of this class allowed!
+    }
+
     public static String computeBrainCsnRecode(String version, String site, String histology, String behavior) {
 
         String unknownValue;
         if (ALG_VERSION_2020.equals(version))
             unknownValue = UNKNOWN_2020;
         else
-            throw new RuntimeException("Invalid version: " + version);
+            throw new IllegalStateException("Invalid version: " + version);
 
         if (StringUtils.isBlank(site) || StringUtils.isBlank(histology) || StringUtils.isBlank(behavior))
             return unknownValue;
@@ -64,10 +69,11 @@ public class BrainCnsRecodeUtils {
         List<BrainCnsRecodeData> result = new ArrayList<>();
         try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("braincnsrecode/" + filename)) {
             if (is == null)
-                throw new RuntimeException("Unable to find " + filename);
+                throw new IllegalStateException("Unable to find " + filename);
 
-            try (Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8)) {
-                for (String[] row : new CSVReaderBuilder(reader).withCSVParser(new CSVParserBuilder().build()).withSkipLines(1).build().readAll()) {
+            try (Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
+                 CSVReader csvReader = new CSVReaderBuilder(reader).withCSVParser(new CSVParserBuilder().build()).withSkipLines(1).build()) {
+                for (String[] row : csvReader.readAll()) {
                     String site = StringUtils.trim(row[1]).replace(" ", "");
                     String beh = StringUtils.trim(row[2]).replace(" ", "");
                     String histInc = StringUtils.trim(row[3]).replace(" ", "");
@@ -79,7 +85,7 @@ public class BrainCnsRecodeUtils {
             }
         }
         catch (CsvException | IOException e) {
-            throw new RuntimeException("Unable to read " + filename, e);
+            throw new IllegalStateException("Unable to read " + filename, e);
         }
         return result;
     }

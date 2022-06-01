@@ -96,7 +96,8 @@ public final class SeerSiteRecodeUtils {
 
         ensureVersion(version);
 
-        Integer s = Integer.valueOf(site.substring(1)), h = Integer.valueOf(histology);
+        Integer s = Integer.valueOf(site.substring(1));
+        Integer h = Integer.valueOf(histology);
 
         for (SeerExecutableSiteGroupDto dto : _INTERNAL_DATA.get(version)) {
             if (dto.matches(s, h)) {
@@ -159,10 +160,10 @@ public final class SeerSiteRecodeUtils {
         else if (VERSION_2003_WITHOUT_KSM.equals(version))
             url = Thread.currentThread().getContextClassLoader().getResource("seersiterecode/site-recode-data-2003-without-kms.csv");
         else
-            throw new RuntimeException("Unsupported version: " + version);
+            throw new IllegalStateException("Unsupported version: " + version);
 
         if (url == null)
-            throw new RuntimeException("Unable to find internal data file for version " + version);
+            throw new IllegalStateException("Unable to find internal data file for version " + version);
 
         List<SeerSiteGroupDto> groups = new ArrayList<>();
         _DATA.put(version, groups);
@@ -217,7 +218,7 @@ public final class SeerSiteRecodeUtils {
             }
         }
         catch (CsvException | IOException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
     }
 }

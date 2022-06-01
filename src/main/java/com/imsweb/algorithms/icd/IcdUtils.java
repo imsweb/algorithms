@@ -23,7 +23,7 @@ import com.opencsv.exceptions.CsvException;
 
 import com.imsweb.algorithms.icd.IcdO2Entry.ConversionResultType;
 
-public class IcdUtils {
+public final class IcdUtils {
 
     public static final String SEX_MALE = "1";
     public static final String SEX_FEMALE = "2";
@@ -381,6 +381,10 @@ public class IcdUtils {
         _ICD_O3_SITE_LOOKUP.put("C809", "Unknown primary site");
     }
 
+    private IcdUtils() {
+        // no instances of this class allowed!
+    }
+
     /**
      * Initializes the ICD data (this method is called lazily if needed).
      */
@@ -503,7 +507,12 @@ public class IcdUtils {
             result.setSourceCode(code);
             result.setSite(_ICD_O3_SITE_LOOKUP.containsKey(code) ? code : "C809");
             result.setHistology("8000");
-            result.setBehavior(icd10Code != null && icd10Code.startsWith("C") ? "3" : icd10Code != null && icd10Code.startsWith("D") ? "2" : null);
+            if (icd10Code != null && icd10Code.startsWith("C"))
+                result.setBehavior("3");
+            else if (icd10Code != null && icd10Code.startsWith("D"))
+                result.setBehavior("2");
+            else
+                result.setBehavior(null);
             result.setGrade("9");
             result.setLaterality(null);
             result.setReportable(null);
@@ -595,10 +604,8 @@ public class IcdUtils {
         }
 
         // Behavior invalid
-        if (icdO3Behavior == null)
-            result.setConversionResult(ConversionResultType.CONVERSION_FAILED_INVALID_BEHAVIOR);
-        else if ((!icdO3Behavior.equals("0")) && (!icdO3Behavior.equals("1")) && (!icdO3Behavior.equals("2")) &&
-                (!icdO3Behavior.equals("3")) && (!icdO3Behavior.equals("6")) && (!icdO3Behavior.equals("9")))
+        if (icdO3Behavior == null || ((!icdO3Behavior.equals("0")) && (!icdO3Behavior.equals("1")) && (!icdO3Behavior.equals("2")) &&
+                (!icdO3Behavior.equals("3")) && (!icdO3Behavior.equals("6")) && (!icdO3Behavior.equals("9"))))
             result.setConversionResult(ConversionResultType.CONVERSION_FAILED_INVALID_BEHAVIOR);
 
     }
@@ -631,9 +638,7 @@ public class IcdUtils {
 
             //Set hand review flag if needed
             String handFlag = lookupEntry.substring(_ICDO3_TO_ICDO2_LOOKUP_FLAG_HAND_POS, _ICDO3_TO_ICDO2_LOOKUP_FLAG_HAND_POS + 1);
-            if (handFlag.equals("A") || handFlag.equals(icdO3Behavior))
-                result.setConversionResult(ConversionResultType.CONVERSION_SUCCESSFUL_NEEDS_HAND_REVIEW);
-            else if (icdO3HistologyValue == 8402 && icdO3Behavior.equals("3"))
+            if (handFlag.equals("A") || handFlag.equals(icdO3Behavior) || (icdO3HistologyValue == 8402 && icdO3Behavior.equals("3")))
                 result.setConversionResult(ConversionResultType.CONVERSION_SUCCESSFUL_NEEDS_HAND_REVIEW);
 
             //Is there a special behavior based conversion?
@@ -731,46 +736,53 @@ public class IcdUtils {
     private static void loadIcdO3toIcdO2DataFile(String file, List<String> result) {
         result.clear();
 
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("icd/" + file), StandardCharsets.US_ASCII))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                // process the line.
-                line = line.trim();
-                if (line.length() > 0)
-                    result.add(line);
+        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("icd/" + file)) {
+            if (is == null)
+                throw new IllegalStateException("Unable to find ICD data file!");
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.US_ASCII))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    // process the line.
+                    line = line.trim();
+                    if (line.length() > 0)
+                        result.add(line);
+                }
             }
         }
         catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
     }
 
     private static void loadDataFile(String file, Map<String, IcdO3Entry> result) {
-        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("icd/" + file);
-             CSVReader reader = new CSVReaderBuilder(new InputStreamReader(is, StandardCharsets.US_ASCII)).withSkipLines(1).build()) {
-            for (String[] row : reader.readAll()) {
-                if (row.length != 8)
-                    throw new RuntimeException("Was expecting 8 values, got " + row.length + " - " + Arrays.toString(row));
+        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("icd/" + file)) {
+            if (is == null)
+                throw new IllegalStateException("Unable to find ICD data file!");
+             try (CSVReader reader = new CSVReaderBuilder(new InputStreamReader(is, StandardCharsets.US_ASCII)).withSkipLines(1).build()){
+                for (String[] row : reader.readAll()) {
+                    if (row.length != 8)
+                        throw new IllegalStateException("Was expecting 8 values, got " + row.length + " - " + Arrays.toString(row));
 
-                IcdO3Entry entry = new IcdO3Entry();
-                entry.setSourceCode(row[0]);
-                entry.setSite(row[1]);
-                entry.setHistology(row[2].isEmpty() ? null : row[2]);
-                entry.setBehavior(row[3].isEmpty() ? null : row[3]);
-                entry.setGrade(row[4].isEmpty() ? null : row[4]);
-                entry.setLaterality(row[5].isEmpty() ? null : row[5]);
-                entry.setReportable(row[6].isEmpty() ? null : row[6]);
-                entry.setSex(row[7].isEmpty() ? null : row[7]);
+                    IcdO3Entry entry = new IcdO3Entry();
+                    entry.setSourceCode(row[0]);
+                    entry.setSite(row[1]);
+                    entry.setHistology(row[2].isEmpty() ? null : row[2]);
+                    entry.setBehavior(row[3].isEmpty() ? null : row[3]);
+                    entry.setGrade(row[4].isEmpty() ? null : row[4]);
+                    entry.setLaterality(row[5].isEmpty() ? null : row[5]);
+                    entry.setReportable(row[6].isEmpty() ? null : row[6]);
+                    entry.setSex(row[7].isEmpty() ? null : row[7]);
 
-                // the key will contain the sex if it's not blank in the data files (blank means the value applies for any sex value)
-                if (entry.getSex() != null)
-                    result.put(entry.getSourceCode() + entry.getSex(), entry);
-                else
-                    result.put(entry.getSourceCode(), entry);
+                    // the key will contain the sex if it's not blank in the data files (blank means the value applies for any sex value)
+                    if (entry.getSex() != null)
+                        result.put(entry.getSourceCode() + entry.getSex(), entry);
+                    else
+                        result.put(entry.getSourceCode(), entry);
+                }
             }
         }
         catch (CsvException | IOException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
     }
 }

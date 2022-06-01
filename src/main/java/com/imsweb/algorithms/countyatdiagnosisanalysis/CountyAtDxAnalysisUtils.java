@@ -14,6 +14,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
 
@@ -21,7 +22,7 @@ import com.imsweb.algorithms.internal.CountryData;
 import com.imsweb.algorithms.internal.CountyData;
 import com.imsweb.algorithms.internal.StateData;
 
-public class CountyAtDxAnalysisUtils {
+public final class CountyAtDxAnalysisUtils {
 
     public static final String ALG_NAME = "NAACCR County at Diagnosis Analysis";
     public static final String ALG_VERSION = "version 2.0 released in September 2019";
@@ -45,6 +46,10 @@ public class CountyAtDxAnalysisUtils {
     public static final String OTHER_REP_AND_GEO_BLANK = "10.1";
 
     private static final List<String> _CANADIAN_STATE_ABBREVIATIONS = Arrays.asList("AB", "BC", "MB", "NB", "NL", "NS", "NT", "NU", "ON", "PE", "QC", "SK", "YT");
+
+    private CountyAtDxAnalysisUtils() {
+        // no instances of this class allowed!
+    }
 
     public static CountyAtDxAnalysisOutputDto computeCountyAtDiagnosis(CountyAtDxAnalysisInputDto input) {
         CountyAtDxAnalysisOutputDto output = new CountyAtDxAnalysisOutputDto();
@@ -153,12 +158,13 @@ public class CountyAtDxAnalysisUtils {
     @SuppressWarnings("ConstantConditions")
     private static Map<String, Map<String, CountyData>> loadCountyAtDxAnalysisData() {
         Map<String, java.util.Map<String, CountyData>> result = new HashMap<>();
-        try (Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("countyatdxanalysis/state-county-map.csv"), StandardCharsets.US_ASCII)) {
-            for (String[] row : new CSVReaderBuilder(reader).withSkipLines(1).build().readAll())
+        try (Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("countyatdxanalysis/state-county-map.csv"), StandardCharsets.US_ASCII);
+             CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build()) {
+            for (String[] row : csvReader.readAll())
                 result.computeIfAbsent(row[0], k -> new HashMap<>()).computeIfAbsent(row[1], k -> new CountyData());
         }
         catch (CsvException | IOException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
 
         return result;

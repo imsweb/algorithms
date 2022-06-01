@@ -24,11 +24,11 @@ public abstract class AbstractAlgorithm implements Algorithm {
 
     public AbstractAlgorithm(String id, String name, String version) {
         if (id == null)
-            throw new RuntimeException("ID is required");
+            throw new IllegalStateException("ID is required");
         if (name == null)
-            throw new RuntimeException("Name is required");
+            throw new IllegalStateException("Name is required");
         if (version == null)
-            throw new RuntimeException("Version is required (use N/A if your algorithm doesn't support a version)");
+            throw new IllegalStateException("Version is required (use N/A if your algorithm doesn't support a version)");
 
         _id = id;
         _name = name;

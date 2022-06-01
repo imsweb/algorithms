@@ -14,10 +14,11 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
 import com.opencsv.CSVParserBuilder;
+import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
 
-public class AyaSiteRecodeUtils {
+public final class AyaSiteRecodeUtils {
 
     public static final String ALG_NAME = "SEER Adolescents and Young Adults (AYA) Site Recode";
 
@@ -27,7 +28,12 @@ public class AyaSiteRecodeUtils {
     public static final String AYA_SITE_RECODE_UNKNOWN_2008 = "99";
     public static final String AYA_SITE_RECODE_UNKNOWN_2020 = "999";
 
-    private static List<AyaSiteRecodeData> _DATA_2008, _DATA_2020;
+    private static List<AyaSiteRecodeData> _DATA_2008;
+    private static List<AyaSiteRecodeData> _DATA_2020;
+
+    private AyaSiteRecodeUtils() {
+        // no instances of this class allowed!
+    }
 
     /**
      * Returns the coded AYA Site Recode from the provided input fields.
@@ -45,7 +51,7 @@ public class AyaSiteRecodeUtils {
         else if (ALG_VERSION_2020.equals(version))
             unknownValue = AYA_SITE_RECODE_UNKNOWN_2020;
         else
-            throw new RuntimeException("Invalid version: " + version);
+            throw new IllegalStateException("Invalid version: " + version);
 
         if (StringUtils.isBlank(site) || StringUtils.isBlank(histology) || StringUtils.isBlank(behavior))
             return unknownValue;
@@ -84,12 +90,13 @@ public class AyaSiteRecodeUtils {
         List<AyaSiteRecodeData> result = new ArrayList<>();
         try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("ayasiterecode/" + filename)) {
             if (is == null)
-                throw new RuntimeException("Unable to find " + filename);
+                throw new IllegalStateException("Unable to find " + filename);
 
             boolean txt = filename.endsWith(".txt");
 
-            try (Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8)) {
-                for (String[] row : new CSVReaderBuilder(reader).withCSVParser(new CSVParserBuilder().withSeparator(txt ? ';' : ',').build()).withSkipLines(txt ? 2 : 1).build().readAll()) {
+            try (Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
+                 CSVReader csvReader = new CSVReaderBuilder(reader).withCSVParser(new CSVParserBuilder().withSeparator(txt ? ';' : ',').build()).withSkipLines(txt ? 2 : 1).build()) {
+                for (String[] row : csvReader.readAll()) {
                     String beh = StringUtils.trimToNull(row[txt ? 1 : 3]);
                     String site = StringUtils.trimToNull(row[2]);
                     String hist = StringUtils.trimToNull(row[txt ? 3 : 1]);
@@ -100,7 +107,7 @@ public class AyaSiteRecodeUtils {
             }
         }
         catch (CsvException | IOException e) {
-            throw new RuntimeException("Unable to read " + filename, e);
+            throw new IllegalStateException("Unable to read " + filename, e);
         }
         return result;
     }
