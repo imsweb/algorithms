@@ -20,7 +20,7 @@ import org.apache.commons.lang3.math.NumberUtils;
  * <br/><br/>
  * See <a href="https://seer.cancer.gov/survivaltime/">https://seer.cancer.gov/survivaltime/</a>.
  */
-public class SurvivalTimeUtils {
+public final class SurvivalTimeUtils {
 
     public static final String ALG_NAME = "SEER Survival Time in Months";
     public static final String VERSION = "version 2.2 released in September 2014";
@@ -32,12 +32,16 @@ public class SurvivalTimeUtils {
     public static final String SURVIVAL_FLAG_DCO_AUTOPSY_ONLY = "8";
     public static final String SURVIVAL_FLAG_UNKNOWN = "9";
 
-    private static final double _DAYS_IN_MONTH = 365.24 / (double)12;
+    private static final double _DAYS_IN_MONTH = 365.24 / 12;
 
     public static final String UNKNOWN_SURVIVAL = "9999";
     public static final String BLANK_YEAR = null;
     public static final String BLANK_MONTH = null;
     public static final String BLANK_DAY = null;
+
+    private SurvivalTimeUtils() {
+        // no instances of this class allowed!
+    }
 
     /**
      * Calculates the survival time for the provided list of records representing a patient.
@@ -108,13 +112,7 @@ public class SurvivalTimeUtils {
             int dolcDay = NumberUtils.isDigits(dolcDayStr) ? Integer.parseInt(dolcDayStr) : 99;
             int vs = NumberUtils.isDigits(vsStr) ? Integer.parseInt(vsStr) : 9;
             //if dolc year is invalid or if dolc date is future date, set it as missing, and if Dolc year is missing set the month and date as missing.
-            boolean isDolcValid = true;
-            try {
-                LocalDate.of(dolcYear, dolcMonth, dolcDay);
-            }
-            catch (DateTimeException e) {
-                isDolcValid = false;
-            }
+            boolean isDolcValid = isDateValid(dolcYear, dolcMonth, dolcDay);
             LocalDate now = LocalDate.now();
             if (dolcYear < 1900 || dolcYear > now.getYear() || (dolcYear == now.getYear() && ((dolcMonth <= 12 && dolcMonth > now.getMonthValue()) || (dolcMonth == now.getMonthValue() && isDolcValid
                     && dolcDay > now.getDayOfMonth()))))
@@ -154,15 +152,16 @@ public class SurvivalTimeUtils {
 
                 // check validity of the date
                 boolean valid = tempRec._year != 9999 && tempRec._year >= 1900 && tempRec._year <= endPointYear;
-                if (valid) {
-                    try {
-                        LocalDate.of(tempRec._year, tempRec._month == 99 ? 1 : tempRec._month, tempRec._day == 99 ? 1 : tempRec._day);
+                if (valid && !isDateValid(tempRec._year, tempRec._month == 99 ? 1 : tempRec._month, tempRec._day == 99 ? 1 : tempRec._day)) {
+                    if (tempRec._month >= 1 && tempRec._month <= 12) {
+                        tempRec._daySafe = 99;
+                        tempRec._day = 99;
                     }
-                    catch (DateTimeException e) {
-                        if (tempRec._month >= 1 && tempRec._month <= 12)
-                            tempRec._daySafe = tempRec._day = 99;
-                        else
-                            tempRec._month = tempRec._monthSafe = tempRec._daySafe = tempRec._day = 99;
+                    else {
+                        tempRec._month = 99;
+                        tempRec._monthSafe = 99;
+                        tempRec._daySafe = 99;
+                        tempRec._day = 99;
                     }
                 }
 
@@ -259,15 +258,12 @@ public class SurvivalTimeUtils {
         return patientResultsDto;
     }
 
-    @SuppressWarnings("SameParameterValue")
+    @SuppressWarnings({"SameParameterValue", "java:S107", "java:S3776"}) // too many arguments, method too complex
     private static void calculateSurvivalTime(List<InternalRecDto> records, List<SurvivalTimeOutputRecordDto> patientResultsList, int dolcYear, int dolcMonth, int dolcDay, int birthYear, int birthMonth, int birthDay, int vs, int endYear, int endMonth, int endDay, boolean presumeAlive) {
 
         //check validity of DOLC
         //if the month is invalid, set both day and month to 99, if the day is invalid set it as missing.
-        try {
-            LocalDate.of(dolcYear == 9999 ? 1900 : dolcYear, dolcMonth == 99 ? 1 : dolcMonth, dolcDay == 99 ? 1 : dolcDay);
-        }
-        catch (DateTimeException e) {
+        if (!isDateValid(dolcYear == 9999 ? 1900 : dolcYear, dolcMonth == 99 ? 1 : dolcMonth, dolcDay == 99 ? 1 : dolcDay)) {
             if (dolcMonth >= 1 && dolcMonth <= 12)
                 dolcDay = 99;
             else
@@ -287,10 +283,7 @@ public class SurvivalTimeUtils {
             birthMonth = birthDay = 99;
         if (birthMonth == 99)
             birthDay = 99;
-        try {
-            LocalDate.of(birthYear, birthMonth == 99 ? 1 : birthMonth, birthDay == 99 ? 1 : birthDay);
-        }
-        catch (DateTimeException e) {
+        if (!isDateValid(birthYear, birthMonth == 99 ? 1 : birthMonth, birthDay == 99 ? 1 : birthDay)) {
             if (birthMonth >= 1 && birthMonth <= 12)
                 birthDay = 99;
             else
@@ -344,7 +337,8 @@ public class SurvivalTimeUtils {
             InternalRecDto rec = records.get(i);
             if (rec._monthSafe == 99) {
                 // get earliest day and month possible for this date
-                int earliestMonthPossible = 0, earliestDayPossible = 0;
+                int earliestMonthPossible = 0;
+                int earliestDayPossible = 0;
                 //use birthday for the first record
                 if (i == 0 && birthYear == rec._yearSafe && birthMonth != 99) {
                     earliestMonthPossible = birthMonth;
@@ -365,7 +359,8 @@ public class SurvivalTimeUtils {
                     earliestDayPossible = 1;
                 }
                 // get latest day and month possible for this date
-                int latestMonthPossible = 0, latestDayPossible = 0;
+                int latestMonthPossible = 0;
+                int latestDayPossible = 0;
                 for (int j = i + 1; j < records.size(); j++) {
                     InternalRecDto nextRec = records.get(j);
                     if (nextRec._monthSafe != 99) {
@@ -481,7 +476,8 @@ public class SurvivalTimeUtils {
         // STEP 4 - go through the records IN REVERSE ORDER and fix the issue where a person could have a DX with some missing codes
         // coded as "could be 0 days" followed by a tumor that could not be zero days (with or without some missing) - therefore the
         // earlier tumor can't be 0 days.
-        boolean survivalGreaterThanZero = false, survivalGreaterThanZeroPA = false;
+        boolean survivalGreaterThanZero = false;
+        boolean survivalGreaterThanZeroPA = false;
         for (int i = records.size() - 1; i >= 0; i--) {
             SurvivalTimeOutputRecordDto rec = records.get(i)._recordResult;
             String flag = rec.getSurvivalMonthsFlag();
@@ -503,8 +499,15 @@ public class SurvivalTimeUtils {
 
         SurvivalTimeInputRecordDto _originalRecord;
         SurvivalTimeOutputRecordDto _recordResult;
-        int _year, _month, _day, _yearSafe, _monthSafe, _daySafe, _seqNum;
-        int _diffInDays, _diffInDaysPA;
+        int _year;
+        int _month;
+        int _day;
+        int _yearSafe;
+        int _monthSafe;
+        int _daySafe;
+        int _seqNum;
+        int _diffInDays;
+        int _diffInDaysPA;
 
         public InternalRecDto() {
             _recordResult = new SurvivalTimeOutputRecordDto();
@@ -700,5 +703,16 @@ public class SurvivalTimeUtils {
                 return seq <= sortedResult.get(i)._seqNum;
 
         return false;
+    }
+
+    @SuppressWarnings("java:S2201") // ignored return value
+    private static boolean isDateValid(int year, int month, int day) {
+        try {
+            LocalDate.of(year, month, day);
+        }
+        catch (DateTimeException e) {
+            return false;
+        }
+        return true;
     }
 }

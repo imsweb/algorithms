@@ -14,7 +14,7 @@ public final class TractEstCongressDistUtils {
     public static final String TRACT_EST_CONGRESS_DIST_UNK_D = "D";
 
     // data provider
-    private static TractEstCongressDistDataProvider _PROVIDER;
+    private static final TractEstCongressDistDataProvider _PROVIDER = new TractEstCongressDistDataProvider();
 
     private TractEstCongressDistUtils() {
         // no instances of this class allowed!
@@ -48,42 +48,19 @@ public final class TractEstCongressDistUtils {
     public static TractEstCongressDistOutputDto computeTractEstCongressDist(TractEstCongressDistInputDto input) {
         TractEstCongressDistOutputDto result = new TractEstCongressDistOutputDto();
         input.applyRecodes();
-        
+
         if (!input.isStateValidOrMissingOrUnknown() || !input.isCountyValidOrMissingOrUnknown() || !input.isCensusTract2010ValidOrMissingOrUnknown())
             result.setTractEstCongressDist(TRACT_EST_CONGRESS_DIST_UNK_A);
         else if (input.isStateMissingOrUnknown() || input.isCountyMissingOrUnknown() || input.isCensusTract2010MissingOrUnknown())
             result.setTractEstCongressDist(TRACT_EST_CONGRESS_DIST_UNK_D);
         else if ("000".equals(input.getCountyAtDxAnalysis()))
             result.setTractEstCongressDist("B");
-        else {
-            if (_PROVIDER == null)
-                initializeInternalDataProvider();
+        else
             result.setTractEstCongressDist(_PROVIDER.getTractEstCongressDist(input.getAddressAtDxState(), input.getCountyAtDxAnalysis(), input.getCensusTract2010()));
-        }
+
         if (result.getTractEstCongressDist() == null)
             result.setTractEstCongressDist(TRACT_EST_CONGRESS_DIST_UNK_C);
 
         return result;
-    }
-
-    /**
-     * Use this method to register your own data provider instead of using the internal one that is entirely in memory.
-     * <br/><br/>
-     * This has to be done before the first call to the compute method, or the internal one will be registered by default.
-     * <br/><br/>
-     * Once a provider has been set, this method cannot be called (it will throw an exception).
-     * @param provider the <code>TractEstCongressDistDataProvider</code> to set
-     */
-    @SuppressWarnings("unused")
-    public static synchronized void setDataProvider(TractEstCongressDistDataProvider provider) {
-        if (_PROVIDER != null)
-            throw new IllegalStateException("The data provider has already been set!");
-        _PROVIDER = provider;
-    }
-
-    private static synchronized void initializeInternalDataProvider() {
-        if (_PROVIDER != null)
-            return;
-        _PROVIDER = new TractEstCongressDistCsvData();
     }
 }

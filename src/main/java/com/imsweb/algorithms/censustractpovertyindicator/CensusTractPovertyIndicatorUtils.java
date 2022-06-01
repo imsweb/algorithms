@@ -20,7 +20,19 @@ public final class CensusTractPovertyIndicatorUtils {
     //Unknown value for census tract poverty indicator
     public static final String POVERTY_INDICATOR_UNKNOWN = "9";
 
-    private static CensusTractPovertyIndicatorDataProvider _PROVIDER;
+    public static final String YEAR_CATEGORY_1 = "1";
+    public static final String YEAR_CATEGORY_2 = "2";
+    public static final String YEAR_CATEGORY_3 = "3";
+    public static final String YEAR_CATEGORY_4 = "4";
+    public static final String YEAR_CATEGORY_5 = "5";
+    public static final String YEAR_CATEGORY_6 = "6";
+    public static final String YEAR_CATEGORY_7 = "7";
+    public static final String YEAR_CATEGORY_8 = "8";
+    public static final String YEAR_CATEGORY_9 = "9";
+    public static final String YEAR_CATEGORY_10 = "10";
+    public static final String YEAR_CATEGORY_11 = "11";
+
+    private static final CensusTractPovertyIndicatorDataProvider _PROVIDER = new CensusTractPovertyIndicatorDataProvider();
 
     private CensusTractPovertyIndicatorUtils() {
         // no instances of this class allowed!
@@ -92,83 +104,59 @@ public final class CensusTractPovertyIndicatorUtils {
         String yearCategory;
         int year = Integer.parseInt(dxYear);
         if (year >= 1995 && year <= 2004) {
-            yearCategory = CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_1;
+            yearCategory = YEAR_CATEGORY_1;
             censusTract = input.getCensusTract2000();
         }
         else if (year >= 2005 && year <= 2007) {
-            yearCategory = CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_2;
+            yearCategory = YEAR_CATEGORY_2;
             censusTract = input.getCensusTract2000();
         }
         else if (year == 2008) {
-            yearCategory = CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_3;
+            yearCategory = YEAR_CATEGORY_3;
             censusTract = input.getCensusTract2010();
         }
         else if (year == 2009) {
-            yearCategory = CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_4;
+            yearCategory = YEAR_CATEGORY_4;
             censusTract = input.getCensusTract2010();
         }
         else if (year == 2010) {
-            yearCategory = CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_5;
+            yearCategory = YEAR_CATEGORY_5;
             censusTract = input.getCensusTract2010();
         }
         else if (year == 2011) {
-            yearCategory = CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_6;
+            yearCategory = YEAR_CATEGORY_6;
             censusTract = input.getCensusTract2010();
         }
         else if (year == 2012) {
-            yearCategory = CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_7;
+            yearCategory = YEAR_CATEGORY_7;
             censusTract = input.getCensusTract2010();
         }
         else if (year == 2013) {
-            yearCategory = CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_8;
+            yearCategory = YEAR_CATEGORY_8;
             censusTract = input.getCensusTract2010();
         }
         else if (year == 2014) {
-            yearCategory = CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_9;
+            yearCategory = YEAR_CATEGORY_9;
             censusTract = input.getCensusTract2010();
         }
         else if (year == 2015) {
-            yearCategory = CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_10;
+            yearCategory = YEAR_CATEGORY_10;
             censusTract = input.getCensusTract2010();
         }
         else if (year >= 2016 && (year <= 2018 || (includeRecentYears && year <= LocalDate.now().getYear()))) {
-            yearCategory = CensusTractPovertyIndicatorDataProvider.YEAR_CATEGORY_11;
+            yearCategory = YEAR_CATEGORY_11;
             censusTract = input.getCensusTract2010();
         }
         else
             return result;
 
-        if (censusTract != null) {
-            if (_PROVIDER == null)
-                initializeInternalDataProvider();
+        if (censusTract != null)
             result.setCensusTractPovertyIndicator(_PROVIDER.getPovertyIndicator(yearCategory, input.getAddressAtDxState(), input.getCountyAtDxAnalysis(), censusTract));
-        }
 
         // getPovertyIndicator method never returns null, but lets make sure we don't return null value anyways
         if (result.getCensusTractPovertyIndicator() == null)
             result.setCensusTractPovertyIndicator(POVERTY_INDICATOR_UNKNOWN);
 
         return result;
-    }
-
-    /**
-     * Use this method to register your own data provider instead of using the internal one that is entirely in memory.
-     * <br/><br/>
-     * This has to be done before the first call to the compute method, or the internal one will be registered by default.
-     * <br/><br/>
-     * Once a provider has been set, this method cannot be called (it will throw an exception).
-     * @param provider the <code>CensusTractPovertyIndicatorDataProvider</code> to set
-     */
-    @SuppressWarnings("unused")
-    public static synchronized void setDataProvider(CensusTractPovertyIndicatorDataProvider provider) {
-        if (_PROVIDER != null)
-            throw new IllegalStateException("The data provider has already been set!");
-        _PROVIDER = provider;
-    }
-
-    private static synchronized void initializeInternalDataProvider() {
-        if (_PROVIDER != null)
-            return;
-        _PROVIDER = new CensusTractPovertyIndicatorCsvData();
     }
 }
