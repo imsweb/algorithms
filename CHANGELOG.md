@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 3.11 (not released yet)**
+
+- Removed non-thread safe providers for all algorithms.
+
 **Changes in version 3.10**
 
 - Updated XStream library from version 1.4.18 to version 1.4.19.
