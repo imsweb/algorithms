@@ -16,7 +16,6 @@ import static com.imsweb.algorithms.Algorithms.FIELD_ACS_POV_ALL_RACES;
 import static com.imsweb.algorithms.Algorithms.FIELD_ACS_POV_ASIAN_NHOPI;
 import static com.imsweb.algorithms.Algorithms.FIELD_ACS_POV_BLACK;
 import static com.imsweb.algorithms.Algorithms.FIELD_ACS_POV_HISP;
-import static com.imsweb.algorithms.Algorithms.FIELD_ACS_POV_OTHER_MULTI;
 import static com.imsweb.algorithms.Algorithms.FIELD_ACS_POV_WHITE;
 import static com.imsweb.algorithms.Algorithms.FIELD_ACS_POV_WHITE_NON_HISP;
 import static com.imsweb.algorithms.Algorithms.FIELD_ACS_YOST_QUINTILE_STATE;
@@ -43,7 +42,6 @@ public class YostAcsPovertyAlgorithm extends AbstractAlgorithm {
         _outputFields.add(Algorithms.getField(FIELD_ACS_POV_BLACK));
         _outputFields.add(Algorithms.getField(FIELD_ACS_POV_AIAN));
         _outputFields.add(Algorithms.getField(FIELD_ACS_POV_ASIAN_NHOPI));
-        _outputFields.add(Algorithms.getField(FIELD_ACS_POV_OTHER_MULTI));
         _outputFields.add(Algorithms.getField(FIELD_ACS_POV_WHITE_NON_HISP));
         _outputFields.add(Algorithms.getField(FIELD_ACS_POV_HISP));
     }
@@ -75,7 +73,6 @@ public class YostAcsPovertyAlgorithm extends AbstractAlgorithm {
             outputTumor.put(FIELD_ACS_POV_BLACK, resultDto.getAcsPctPovBlack());
             outputTumor.put(FIELD_ACS_POV_AIAN, resultDto.getAcsPctPovAIAN());
             outputTumor.put(FIELD_ACS_POV_ASIAN_NHOPI, resultDto.getAcsPctPovAsianNHOPI());
-            outputTumor.put(FIELD_ACS_POV_OTHER_MULTI, resultDto.getAcsPctPovOtherMulti());
             outputTumor.put(FIELD_ACS_POV_WHITE_NON_HISP, resultDto.getAcsPctPovWhiteNonHisp());
             outputTumor.put(FIELD_ACS_POV_HISP, resultDto.getAcsPctPovHispanic());
 

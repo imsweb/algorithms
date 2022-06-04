@@ -133,12 +133,10 @@ public class CountryData {
     public static final int PERCENT_BEL_POV_AM_INDIAN_END = 37;
     public static final int PERCENT_BEL_POV_ASIAN_START = 38; // 5 char
     public static final int PERCENT_BEL_POV_ASIAN_END = 42;
-    public static final int PERCENT_BEL_POV_OTHER_MULT_START = 43; // 5 char
-    public static final int PERCENT_BEL_POV_OTHER_MULT_END = 47;
-    public static final int PERCENT_BEL_POV_WHILE_NOT_HISP_START = 48; // 5 char
-    public static final int PERCENT_BEL_POV_WHILE_NOT_HISP_END = 52;
-    public static final int PERCENT_BEL_POV_HISP_START = 53; // 5 char
-    public static final int PERCENT_BEL_POV_HISP_END = 57;
+    public static final int PERCENT_BEL_POV_WHILE_NOT_HISP_START = 43; // 5 char
+    public static final int PERCENT_BEL_POV_WHILE_NOT_HISP_END = 47;
+    public static final int PERCENT_BEL_POV_HISP_START = 48; // 5 char
+    public static final int PERCENT_BEL_POV_HISP_END = 52;
 
     // following start/end columns are only applicable to the non-year-based tract data file
     public static final int RUCA_2010_A_START = 12; // 1 char
@@ -307,7 +305,6 @@ public class CountryData {
                             yearData.setAcsPctPovBlack(cleanPoverty(lineNum, StringUtils.trim(line.substring(PERCENT_BEL_POV_BLACK_START - 1, PERCENT_BEL_POV_BLACK_END))));
                             yearData.setAcsPctPovAIAN(cleanPoverty(lineNum, StringUtils.trim(line.substring(PERCENT_BEL_POV_AM_INDIAN_START - 1, PERCENT_BEL_POV_AM_INDIAN_END))));
                             yearData.setAcsPctPovAsianNHOPI(cleanPoverty(lineNum, StringUtils.trim(line.substring(PERCENT_BEL_POV_ASIAN_START - 1, PERCENT_BEL_POV_ASIAN_END))));
-                            yearData.setAcsPctPovOtherMulti(cleanPoverty(lineNum, StringUtils.trim(line.substring(PERCENT_BEL_POV_OTHER_MULT_START - 1, PERCENT_BEL_POV_OTHER_MULT_END))));
                             yearData.setAcsPctPovWhiteNonHisp(cleanPoverty(lineNum, StringUtils.trim(line.substring(PERCENT_BEL_POV_WHILE_NOT_HISP_START - 1, PERCENT_BEL_POV_WHILE_NOT_HISP_END))));
                             yearData.setAcsPctPovHispanic(cleanPoverty(lineNum, StringUtils.trim(line.substring(PERCENT_BEL_POV_HISP_START - 1, PERCENT_BEL_POV_HISP_END))));
 

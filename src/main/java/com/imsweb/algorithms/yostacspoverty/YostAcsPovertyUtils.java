@@ -63,7 +63,6 @@ public final class YostAcsPovertyUtils {
                                 result.setAcsPctPovBlack(yearData.getAcsPctPovBlack());
                                 result.setAcsPctPovAsianNHOPI(yearData.getAcsPctPovAsianNHOPI());
                                 result.setAcsPctPovAIAN(yearData.getAcsPctPovAIAN());
-                                result.setAcsPctPovOtherMulti(yearData.getAcsPctPovOtherMulti());
                                 result.setAcsPctPovWhiteNonHisp(yearData.getAcsPctPovWhiteNonHisp());
                                 result.setAcsPctPovHispanic(yearData.getAcsPctPovHispanic());
                             }

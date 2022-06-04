@@ -25,12 +25,8 @@ import com.imsweb.layout.record.fixed.FixedColumnsLayout;
 
 public class TimeDependentTractDataLab {
 
-    public static void main(String[] args) throws IOException {
-        CountryData.getInstance().initializeTractData("MD");
-    }
-
     @SuppressWarnings("ConstantConditions")
-    public static void main2(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException {
 
         FixedColumnsLayout layout;
         try (InputStream fis = Thread.currentThread().getContextClassLoader().getResourceAsStream("tract/time-dependent-tract-data-layout-2022.xml")) {
@@ -38,8 +34,8 @@ public class TimeDependentTractDataLab {
         }
 
         Path inputFile = Paths.get("C:\\dev\\tract.level.ses.2008_17.txt.gz");
-        Path outputFile = Paths.get("C:\\dev\\tract.level.ses.2008_17.minimized.txt.gz");
-        Path outputFileYear = Paths.get("C:\\dev\\tract.level.ses.2008_17.minimized.year.based.txt.gz");
+        Path outputFile = Paths.get(System.getProperty("user.dir") + "\\src\\main\\resources\\tract\\tract.level.ses.2008_17.minimized.txt.gz");
+        Path outputFileYear = Paths.get(System.getProperty("user.dir") + "\\src\\main\\resources\\tract\\tract.level.ses.2008_17.minimized.year.based.txt.gz");
         try (LineNumberReader reader = new LineNumberReader(new InputStreamReader(new GZIPInputStream(Files.newInputStream(inputFile)), StandardCharsets.US_ASCII));
              BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new GZIPOutputStream(Files.newOutputStream(outputFile)), StandardCharsets.US_ASCII));
              BufferedWriter writerYear = new BufferedWriter(new OutputStreamWriter(new GZIPOutputStream(Files.newOutputStream(outputFileYear)), StandardCharsets.US_ASCII))) {
@@ -59,7 +55,7 @@ public class TimeDependentTractDataLab {
 
                 if (state == null)
                     throw new RuntimeException("Line " + lineNum + ": missing state");
-                if (!CountryData.getStates().containsValue(state))
+                if (!CountryData.getStates().containsKey(state))
                     throw new RuntimeException("Line " + lineNum + ": invalid state: " + state);
                 if (county == null)
                     throw new RuntimeException("Line " + lineNum + ": missing county");
@@ -82,7 +78,6 @@ public class TimeDependentTractDataLab {
                 addValue(lineNum, line.get("percentBelowPovertyBlack"), bufYear, CountryData.PERCENT_BEL_POV_BLACK_START, CountryData.PERCENT_BEL_POV_BLACK_END);
                 addValue(lineNum, line.get("percentBelowPovertyAmIndian"), bufYear, CountryData.PERCENT_BEL_POV_AM_INDIAN_START, CountryData.PERCENT_BEL_POV_AM_INDIAN_END);
                 addValue(lineNum, line.get("percentBelowPovertyAsian"), bufYear, CountryData.PERCENT_BEL_POV_ASIAN_START, CountryData.PERCENT_BEL_POV_ASIAN_END);
-                addValue(lineNum, line.get("percentBelowPovertyOtherMult"), bufYear, CountryData.PERCENT_BEL_POV_OTHER_MULT_START, CountryData.PERCENT_BEL_POV_OTHER_MULT_END);
                 addValue(lineNum, line.get("percentBelowPovertyWhiteNotHisp"), bufYear, CountryData.PERCENT_BEL_POV_WHILE_NOT_HISP_START, CountryData.PERCENT_BEL_POV_WHILE_NOT_HISP_END);
                 addValue(lineNum, line.get("percentBelowPovertyHisp"), bufYear, CountryData.PERCENT_BEL_POV_HISP_START, CountryData.PERCENT_BEL_POV_HISP_END);
                 if (bufYear.length() != CountryData.PERCENT_BEL_POV_HISP_END)

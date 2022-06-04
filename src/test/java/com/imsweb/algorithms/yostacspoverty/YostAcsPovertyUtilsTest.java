@@ -24,7 +24,6 @@ public class YostAcsPovertyUtilsTest {
         Assert.assertEquals("12.40", odto.getAcsPctPovBlack());
         Assert.assertEquals("", odto.getAcsPctPovAIAN());
         Assert.assertEquals("0.00", odto.getAcsPctPovAsianNHOPI());
-        Assert.assertEquals("20.00", odto.getAcsPctPovOtherMulti());
         Assert.assertEquals("7.85", odto.getAcsPctPovWhiteNonHisp());
         Assert.assertEquals("0.00", odto.getAcsPctPovHispanic());
 
@@ -40,7 +39,6 @@ public class YostAcsPovertyUtilsTest {
         Assert.assertEquals("0.00", odto.getAcsPctPovBlack());
         Assert.assertEquals("20.65", odto.getAcsPctPovAIAN());
         Assert.assertEquals("7.81", odto.getAcsPctPovAsianNHOPI());
-        Assert.assertEquals("1.15", odto.getAcsPctPovOtherMulti());
         Assert.assertEquals("2.88", odto.getAcsPctPovWhiteNonHisp());
         Assert.assertEquals("0.00", odto.getAcsPctPovHispanic());
     }

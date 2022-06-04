@@ -15,7 +15,6 @@ public class YearData {
     private String _acsPctPovBlack;
     private String _acsPctPovAIAN;
     private String _acsPctPovAsianNHOPI;
-    private String _acsPctPovOtherMulti;
     private String _acsPctPovWhiteNonHisp;
     private String _acsPctPovHispanic;
 
@@ -73,14 +72,6 @@ public class YearData {
 
     public void setAcsPctPovAsianNHOPI(String acsPctPovAsianNHOPI) {
         _acsPctPovAsianNHOPI = acsPctPovAsianNHOPI;
-    }
-
-    public String getAcsPctPovOtherMulti() {
-        return _acsPctPovOtherMulti;
-    }
-
-    public void setAcsPctPovOtherMulti(String acsPctPovOtherMulti) {
-        _acsPctPovOtherMulti = acsPctPovOtherMulti;
     }
 
     public String getAcsPctPovWhiteNonHisp() {

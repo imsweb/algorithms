@@ -16,8 +16,6 @@ public class YostAcsPovertyOutputDto {
 
     private String _acsPctPovAsianNHOPI;
 
-    private String _acsPctPovOtherMulti;
-
     private String _acsPctPovWhiteNonHisp;
 
     private String _acsPctPovHispanic;
@@ -76,14 +74,6 @@ public class YostAcsPovertyOutputDto {
 
     public void setAcsPctPovAsianNHOPI(String acsPctPovAsianNHOPI) {
         _acsPctPovAsianNHOPI = acsPctPovAsianNHOPI;
-    }
-
-    public String getAcsPctPovOtherMulti() {
-        return _acsPctPovOtherMulti;
-    }
-
-    public void setAcsPctPovOtherMulti(String acsPctPovOtherMulti) {
-        _acsPctPovOtherMulti = acsPctPovOtherMulti;
     }
 
     public String getAcsPctPovWhiteNonHisp() {

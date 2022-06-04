@@ -159,7 +159,6 @@ public final class Algorithms {
     public static final String FIELD_ACS_POV_BLACK = "acsPctPovBlack";
     public static final String FIELD_ACS_POV_AIAN = "acsPctPovAIAN";
     public static final String FIELD_ACS_POV_ASIAN_NHOPI = "acsPctPovAsianNHOPI";
-    public static final String FIELD_ACS_POV_OTHER_MULTI = "acsPctPovOtherMulti";
     public static final String FIELD_ACS_POV_WHITE_NON_HISP = "acsPctPovWhiteNonHisp";
     public static final String FIELD_ACS_POV_HISP = "acsPctPov0610Hispanic";
     public static final String FIELD_EPHT_2010_GEOID_5K = "epht2010GeoId5k";
@@ -285,7 +284,6 @@ public final class Algorithms {
             addField(AlgorithmField.of(FIELD_ACS_POV_BLACK, null, 6, "ACS Pct Poverty (Black)", "ACS Pov Black", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_ACS_POV_AIAN, null, 6, "ACS Pct Poverty (AIAN)", "ACS Pov AIAN", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_ACS_POV_ASIAN_NHOPI, null, 6, "ACS Pct Poverty (2Asian/NHOPI)", "ACS Pov Asian/NHOPI", DATA_LEVEL_TUMOR));
-            addField(AlgorithmField.of(FIELD_ACS_POV_OTHER_MULTI, null, 6, "ACS Pct Poverty (Other/Multiracial)", "ACS Pov Other/Multiracial", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_ACS_POV_WHITE_NON_HISP, null, 6, "ACS Pct Poverty (White, Non-Hispanic)", "ACS Pov Non-Hispanic", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_ACS_POV_HISP, null, 6, "ACS Pct Poverty (Hispanic)", "ACS Pov Hispanic", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_EPHT_2010_GEOID_5K, null, 11, "EPHT 2010 GEO ID 5K", "EPHT 5K", DATA_LEVEL_TUMOR));
