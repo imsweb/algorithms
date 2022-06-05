@@ -22,34 +22,28 @@ import com.imsweb.algorithms.internal.StateData;
 import static com.imsweb.algorithms.censustractpovertyindicator.CensusTractPovertyIndicatorUtils.POVERTY_INDICATOR_UNKNOWN;
 
 /**
- * The purpose of this class is to get the poverty indicator for provided year category, state of dx, county of dx, and census tract
- * from the csv file lookup.  This implementation is memory consumer. If there is a database, it is better to use another implementation.
- * Created on Oct 18, 2013 by bekeles
- * @author bekeles
+ * Only "old years" (1995-2007) are provided by this data provider; the more recent years come from the "tract" data.
  */
 public class CensusTractPovertyIndicatorDataProvider {
 
-    public String getPovertyIndicator(String yearCategory, String state, String county, String census) {
+    private static final String _YEAR_CATEGORY_1995_2004 = "1";
+    private static final String _YEAR_CATEGORY_2005_2007 = "2";
+
+    public String getPovertyIndicator(int year, String state, String county, String census) {
 
         // make sure we have enough information to lookup the value
-        if (yearCategory == null || state == null || county == null || census == null)
+        if (state == null || county == null || census == null)
+            return POVERTY_INDICATOR_UNKNOWN;
+
+        // should not happen, this provider should not be called for "recent' years...
+        if (year < 1995 || year > 2007)
             return POVERTY_INDICATOR_UNKNOWN;
 
         // lazily initialize the data
         if (!CountryData.getInstance().isPovertyDataInitialized()) {
             Map<String, Map<String, Map<String, CensusData>>> data = new HashMap<>();
-            // note that the year range in the filename is not always the same as the year range represented by the category...
-            readCsvData("poverty-indicator-1995-2004.csv", CensusTractPovertyIndicatorUtils.YEAR_CATEGORY_1, data);
-            readCsvData("poverty-indicator-2005-2007.csv", CensusTractPovertyIndicatorUtils.YEAR_CATEGORY_2, data);
-            readCsvData("poverty-indicator-2006-2010.csv", CensusTractPovertyIndicatorUtils.YEAR_CATEGORY_3, data);
-            readCsvData("poverty-indicator-2007-2011.csv", CensusTractPovertyIndicatorUtils.YEAR_CATEGORY_4, data);
-            readCsvData("poverty-indicator-2008-2012.csv", CensusTractPovertyIndicatorUtils.YEAR_CATEGORY_5, data);
-            readCsvData("poverty-indicator-2009-2013.csv", CensusTractPovertyIndicatorUtils.YEAR_CATEGORY_6, data);
-            readCsvData("poverty-indicator-2010-2014.csv", CensusTractPovertyIndicatorUtils.YEAR_CATEGORY_7, data);
-            readCsvData("poverty-indicator-2011-2015.csv", CensusTractPovertyIndicatorUtils.YEAR_CATEGORY_8, data);
-            readCsvData("poverty-indicator-2012-2016.csv", CensusTractPovertyIndicatorUtils.YEAR_CATEGORY_9, data);
-            readCsvData("poverty-indicator-2013-2017.csv", CensusTractPovertyIndicatorUtils.YEAR_CATEGORY_10, data);
-            readCsvData("poverty-indicator-2014-2018.csv", CensusTractPovertyIndicatorUtils.YEAR_CATEGORY_11, data);
+            readCsvData("poverty-indicator-1995-2004.csv", _YEAR_CATEGORY_1995_2004, data);
+            readCsvData("poverty-indicator-2005-2007.csv", _YEAR_CATEGORY_2005_2007, data);
             CountryData.getInstance().initializePovertyData(data);
         }
 
@@ -66,7 +60,7 @@ public class CensusTractPovertyIndicatorDataProvider {
         if (povertyData == null)
             return POVERTY_INDICATOR_UNKNOWN;
 
-        return povertyData.getOrDefault(yearCategory, POVERTY_INDICATOR_UNKNOWN);
+        return povertyData.getOrDefault(year <= 2004 ? _YEAR_CATEGORY_1995_2004 : _YEAR_CATEGORY_2005_2007, POVERTY_INDICATOR_UNKNOWN);
     }
 
     // helper to handle a single CSV data file

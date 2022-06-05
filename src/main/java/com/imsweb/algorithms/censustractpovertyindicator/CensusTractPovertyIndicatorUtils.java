@@ -7,6 +7,9 @@ import java.time.LocalDate;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
+import com.imsweb.algorithms.yostacspoverty.YostAcsPovertyInputDto;
+import com.imsweb.algorithms.yostacspoverty.YostAcsPovertyUtils;
+
 /**
  * This class can be used to calculate census tract poverty indicator.
  * Created on Oct 17, 2013 by BekeleS
@@ -19,18 +22,6 @@ public final class CensusTractPovertyIndicatorUtils {
 
     //Unknown value for census tract poverty indicator
     public static final String POVERTY_INDICATOR_UNKNOWN = "9";
-
-    public static final String YEAR_CATEGORY_1 = "1";
-    public static final String YEAR_CATEGORY_2 = "2";
-    public static final String YEAR_CATEGORY_3 = "3";
-    public static final String YEAR_CATEGORY_4 = "4";
-    public static final String YEAR_CATEGORY_5 = "5";
-    public static final String YEAR_CATEGORY_6 = "6";
-    public static final String YEAR_CATEGORY_7 = "7";
-    public static final String YEAR_CATEGORY_8 = "8";
-    public static final String YEAR_CATEGORY_9 = "9";
-    public static final String YEAR_CATEGORY_10 = "10";
-    public static final String YEAR_CATEGORY_11 = "11";
 
     private static final CensusTractPovertyIndicatorDataProvider _PROVIDER = new CensusTractPovertyIndicatorDataProvider();
 
@@ -100,63 +91,44 @@ public final class CensusTractPovertyIndicatorUtils {
         if (!NumberUtils.isDigits(dxYear) || input.getAddressAtDxState() == null || input.getCountyAtDxAnalysis() == null)
             return result;
 
-        String censusTract;
-        String yearCategory;
         int year = Integer.parseInt(dxYear);
-        if (year >= 1995 && year <= 2004) {
-            yearCategory = YEAR_CATEGORY_1;
-            censusTract = input.getCensusTract2000();
+        if (year >= 1995 && year <= 2007)
+            result.setCensusTractPovertyIndicator(_PROVIDER.getPovertyIndicator(year, input.getAddressAtDxState(), input.getCountyAtDxAnalysis(), input.getCensusTract2000()));
+        else if (year >= 2008 && (year <= 2017 || (includeRecentYears && year <= LocalDate.now().getYear()))) {
+            YostAcsPovertyInputDto yostAcsPovertyInput = new YostAcsPovertyInputDto();
+            yostAcsPovertyInput.setAddressAtDxState(input.getAddressAtDxState());
+            yostAcsPovertyInput.setCountyAtDxAnalysis(input.getCountyAtDxAnalysis());
+            yostAcsPovertyInput.setCensusTract2010(input.getCensusTract2010());
+            yostAcsPovertyInput.setDateOfDiagnosis(String.valueOf(Math.min(year, 2017))); // we have to use 2017 (last year of data available) for all "recent years"...
+            result.setCensusTractPovertyIndicator(deriveValueFromPercentage(YostAcsPovertyUtils.computeYostAcsPovertyData(yostAcsPovertyInput).getAcsPctPovAllRaces()));
         }
-        else if (year >= 2005 && year <= 2007) {
-            yearCategory = YEAR_CATEGORY_2;
-            censusTract = input.getCensusTract2000();
-        }
-        else if (year == 2008) {
-            yearCategory = YEAR_CATEGORY_3;
-            censusTract = input.getCensusTract2010();
-        }
-        else if (year == 2009) {
-            yearCategory = YEAR_CATEGORY_4;
-            censusTract = input.getCensusTract2010();
-        }
-        else if (year == 2010) {
-            yearCategory = YEAR_CATEGORY_5;
-            censusTract = input.getCensusTract2010();
-        }
-        else if (year == 2011) {
-            yearCategory = YEAR_CATEGORY_6;
-            censusTract = input.getCensusTract2010();
-        }
-        else if (year == 2012) {
-            yearCategory = YEAR_CATEGORY_7;
-            censusTract = input.getCensusTract2010();
-        }
-        else if (year == 2013) {
-            yearCategory = YEAR_CATEGORY_8;
-            censusTract = input.getCensusTract2010();
-        }
-        else if (year == 2014) {
-            yearCategory = YEAR_CATEGORY_9;
-            censusTract = input.getCensusTract2010();
-        }
-        else if (year == 2015) {
-            yearCategory = YEAR_CATEGORY_10;
-            censusTract = input.getCensusTract2010();
-        }
-        else if (year >= 2016 && (year <= 2018 || (includeRecentYears && year <= LocalDate.now().getYear()))) {
-            yearCategory = YEAR_CATEGORY_11;
-            censusTract = input.getCensusTract2010();
-        }
-        else
-            return result;
 
-        if (censusTract != null)
-            result.setCensusTractPovertyIndicator(_PROVIDER.getPovertyIndicator(yearCategory, input.getAddressAtDxState(), input.getCountyAtDxAnalysis(), censusTract));
-
-        // getPovertyIndicator method never returns null, but lets make sure we don't return null value anyways
+        // safety net - never return a null value
         if (result.getCensusTractPovertyIndicator() == null)
             result.setCensusTractPovertyIndicator(POVERTY_INDICATOR_UNKNOWN);
 
         return result;
+    }
+
+    static String deriveValueFromPercentage(String percentStr) {
+        if (percentStr == null)
+            return POVERTY_INDICATOR_UNKNOWN;
+
+        try {
+            float percent = NumberUtils.createFloat(percentStr);
+
+            if (percent < 5.0)
+                return "1";
+            else if (percent < 10.0)
+                return "2";
+            else if (percent < 20.0)
+                return "3";
+            else
+                return "4";
+        }
+        catch (NumberFormatException e) {
+            return POVERTY_INDICATOR_UNKNOWN;
+        }
+
     }
 }

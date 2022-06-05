@@ -11,105 +11,119 @@ import org.junit.Test;
 
 public class CensusTractPovertyIndicatorUtilsTest {
 
-    private static final String _PROP_STATE_DX = "addressAtDxState";
-    private static final String _PROP_COUNTY_DX_ANALYSIS = "countyAtDxAnalysis";
-    private static final String _PROP_DIAGNOSIS_YEAR = "dateOfDiagnosisYear";
-    private static final String _PROP_CENSUS_TRACT_2000 = "censusTract2000";
-    private static final String _PROP_CENSUS_TRACT_2010 = "censusTract2010";
+    @Test
+    public void testDeriveValueFromPercentage() {
+        Assert.assertEquals("9", CensusTractPovertyIndicatorUtils.deriveValueFromPercentage(null));
+        Assert.assertEquals("9", CensusTractPovertyIndicatorUtils.deriveValueFromPercentage(""));
+        Assert.assertEquals("9", CensusTractPovertyIndicatorUtils.deriveValueFromPercentage("  "));
+        Assert.assertEquals("9", CensusTractPovertyIndicatorUtils.deriveValueFromPercentage("xxxx"));
+
+        Assert.assertEquals("1", CensusTractPovertyIndicatorUtils.deriveValueFromPercentage("0.00"));
+        Assert.assertEquals("1", CensusTractPovertyIndicatorUtils.deriveValueFromPercentage("3.20"));
+        Assert.assertEquals("1", CensusTractPovertyIndicatorUtils.deriveValueFromPercentage("4.99"));
+        Assert.assertEquals("2", CensusTractPovertyIndicatorUtils.deriveValueFromPercentage("5.00"));
+        Assert.assertEquals("2", CensusTractPovertyIndicatorUtils.deriveValueFromPercentage("5.01"));
+        Assert.assertEquals("2", CensusTractPovertyIndicatorUtils.deriveValueFromPercentage("7.5"));
+        Assert.assertEquals("2", CensusTractPovertyIndicatorUtils.deriveValueFromPercentage("9.99"));
+        Assert.assertEquals("3", CensusTractPovertyIndicatorUtils.deriveValueFromPercentage("15.00"));
+        Assert.assertEquals("4", CensusTractPovertyIndicatorUtils.deriveValueFromPercentage("25.00"));
+        Assert.assertEquals("4", CensusTractPovertyIndicatorUtils.deriveValueFromPercentage("99.99"));
+        Assert.assertEquals("4", CensusTractPovertyIndicatorUtils.deriveValueFromPercentage("100.00"));
+    }
 
     @Test
-    public void testComputePovertyindicator() {
+    public void testComputePovertyIndicator() {
 
         Map<String, String> record = new HashMap<>();
-        record.put(_PROP_STATE_DX, "WY");
-        record.put(_PROP_COUNTY_DX_ANALYSIS, "039");
-        record.put(_PROP_CENSUS_TRACT_2000, "997600");
+        record.put("addressAtDxState", "WY");
+        record.put("countyAtDxAnalysis", "039");
+        record.put("censusTract2000", "997600");
 
         //test not enough information
         Assert.assertEquals("9", computePovertyIndicator(record).getCensusTractPovertyIndicator());
         //test non-integer diagnosis year
-        record.put(_PROP_DIAGNOSIS_YEAR, "xxxx");
+        record.put("dateOfDiagnosisYear", "xxxx");
         Assert.assertEquals("9", computePovertyIndicator(record).getCensusTractPovertyIndicator());
         //test diagnosis year before 95 
-        record.put(_PROP_DIAGNOSIS_YEAR, "1994");
+        record.put("dateOfDiagnosisYear", "1994");
         Assert.assertEquals("9", computePovertyIndicator(record).getCensusTractPovertyIndicator());
         //test diagnosis year after 2011
-        record.put(_PROP_DIAGNOSIS_YEAR, "2012");
+        record.put("dateOfDiagnosisYear", "2012");
         Assert.assertEquals("9", computePovertyIndicator(record).getCensusTractPovertyIndicator());
         //test year category 1
-        record.put(_PROP_DIAGNOSIS_YEAR, "1999");
+        record.put("dateOfDiagnosisYear", "1999");
         Assert.assertEquals("2", computePovertyIndicator(record).getCensusTractPovertyIndicator());
         //test year category 2
-        record.put(_PROP_DIAGNOSIS_YEAR, "2005");
+        record.put("dateOfDiagnosisYear", "2005");
         Assert.assertEquals("1", computePovertyIndicator(record).getCensusTractPovertyIndicator());
         //test year category 3
-        record.put(_PROP_DIAGNOSIS_YEAR, "2008");
+        record.put("dateOfDiagnosisYear", "2008");
         Assert.assertEquals("9", computePovertyIndicator(record).getCensusTractPovertyIndicator());
         //test year category 3 with a combination of state, county and census 2010 not in the lookup
-        record.put(_PROP_CENSUS_TRACT_2010, "997600");
+        record.put("censusTract2010", "997600");
         Assert.assertEquals("9", computePovertyIndicator(record).getCensusTractPovertyIndicator());
         //test year category 3 with a combination of state, county and census 2010 in the lookup
-        record.put(_PROP_CENSUS_TRACT_2010, "967702");
+        record.put("censusTract2010", "967702");
         Assert.assertEquals("3", computePovertyIndicator(record).getCensusTractPovertyIndicator());
         //test year category 4 with a combination of state, county and census 2010 in the lookup
-        record.put(_PROP_STATE_DX, "AL");
-        record.put(_PROP_COUNTY_DX_ANALYSIS, "001");
-        record.put(_PROP_CENSUS_TRACT_2010, "020900");
-        record.put(_PROP_DIAGNOSIS_YEAR, "2009");
+        record.put("addressAtDxState", "AL");
+        record.put("countyAtDxAnalysis", "001");
+        record.put("censusTract2010", "020900");
+        record.put("dateOfDiagnosisYear", "2009");
         Assert.assertEquals("2", computePovertyIndicator(record).getCensusTractPovertyIndicator());
         //test year category 5 with a combination of state, county and census 2010 in the lookup
-        record.put(_PROP_CENSUS_TRACT_2010, "020900");
-        record.put(_PROP_DIAGNOSIS_YEAR, "2010");
+        record.put("censusTract2010", "020900");
+        record.put("dateOfDiagnosisYear", "2010");
         Assert.assertEquals("3", computePovertyIndicator(record).getCensusTractPovertyIndicator());
         //test year category 6 with a combination of state, county and census 2010 in the lookup
-        record.put(_PROP_CENSUS_TRACT_2010, "020900");
-        record.put(_PROP_DIAGNOSIS_YEAR, "2011");
+        record.put("censusTract2010", "020900");
+        record.put("dateOfDiagnosisYear", "2011");
         Assert.assertEquals("2", computePovertyIndicator(record).getCensusTractPovertyIndicator());
         //test year category 7 with a combination of state, county and census 2010 in the lookup
-        record.put(_PROP_CENSUS_TRACT_2010, "020900");
-        record.put(_PROP_DIAGNOSIS_YEAR, "2012");
+        record.put("censusTract2010", "020900");
+        record.put("dateOfDiagnosisYear", "2012");
         Assert.assertEquals("3", computePovertyIndicator(record).getCensusTractPovertyIndicator());
         //test year category 8 with a combination of state, county and census 2010 in the lookup
-        record.put(_PROP_CENSUS_TRACT_2010, "020700");
-        record.put(_PROP_DIAGNOSIS_YEAR, "2013");
+        record.put("censusTract2010", "020700");
+        record.put("dateOfDiagnosisYear", "2013");
         Assert.assertEquals("4", computePovertyIndicator(record).getCensusTractPovertyIndicator());
         //test year category 9 with a combination of state, county and census 2010 in the lookup
-        record.put(_PROP_CENSUS_TRACT_2010, "020700");
-        record.put(_PROP_DIAGNOSIS_YEAR, "2014");
+        record.put("censusTract2010", "020700");
+        record.put("dateOfDiagnosisYear", "2014");
         Assert.assertEquals("3", computePovertyIndicator(record).getCensusTractPovertyIndicator());
         //test year category 10 with a combination of state, county and census 2010 in the lookup
-        record.put(_PROP_CENSUS_TRACT_2010, "020600");
-        record.put(_PROP_DIAGNOSIS_YEAR, "2015");
+        record.put("censusTract2010", "020600");
+        record.put("dateOfDiagnosisYear", "2015");
         Assert.assertEquals("3", computePovertyIndicator(record).getCensusTractPovertyIndicator());
         //test year category 11 with a combination of state, county and census 2010 in the lookup
-        record.put(_PROP_CENSUS_TRACT_2010, "020600");
-        record.put(_PROP_DIAGNOSIS_YEAR, "2016");
+        record.put("censusTract2010", "020600");
+        record.put("dateOfDiagnosisYear", "2016");
         Assert.assertEquals("4", computePovertyIndicator(record).getCensusTractPovertyIndicator());
 
         //test 2019+ years
         record.clear();
-        record.put(_PROP_STATE_DX, "WY");
-        record.put(_PROP_COUNTY_DX_ANALYSIS, "039");
-        record.put(_PROP_CENSUS_TRACT_2010, "967702");
-        record.put(_PROP_DIAGNOSIS_YEAR, "2019");
+        record.put("addressAtDxState", "WY");
+        record.put("countyAtDxAnalysis", "039");
+        record.put("censusTract2010", "967702");
+        record.put("dateOfDiagnosisYear", "2019");
         Assert.assertEquals("9", computePovertyIndicator(record, false).getCensusTractPovertyIndicator());
         Assert.assertEquals("2", computePovertyIndicator(record, true).getCensusTractPovertyIndicator());
 
         //test unknown year
         record.clear();
-        record.put(_PROP_STATE_DX, "WY");
-        record.put(_PROP_COUNTY_DX_ANALYSIS, "039");
-        record.put(_PROP_CENSUS_TRACT_2010, "967702");
-        record.put(_PROP_DIAGNOSIS_YEAR, "999");
+        record.put("addressAtDxState", "WY");
+        record.put("countyAtDxAnalysis", "039");
+        record.put("censusTract2010", "967702");
+        record.put("dateOfDiagnosisYear", "999");
         Assert.assertEquals("9", computePovertyIndicator(record, false).getCensusTractPovertyIndicator());
         Assert.assertEquals("9", computePovertyIndicator(record, true).getCensusTractPovertyIndicator());
 
         // test a real case from DMS (this case failed when we generated unique keys from the concatenated state/county/census)
         record.clear();
-        record.put(_PROP_STATE_DX, "HI");
-        record.put(_PROP_COUNTY_DX_ANALYSIS, "003");
-        record.put(_PROP_CENSUS_TRACT_2000, "003405");
-        record.put(_PROP_DIAGNOSIS_YEAR, "2007");
+        record.put("addressAtDxState", "HI");
+        record.put("countyAtDxAnalysis", "003");
+        record.put("censusTract2000", "003405");
+        record.put("dateOfDiagnosisYear", "2007");
         Assert.assertEquals("3", computePovertyIndicator(record).getCensusTractPovertyIndicator());
     }
 
@@ -120,53 +134,12 @@ public class CensusTractPovertyIndicatorUtilsTest {
     private CensusTractPovertyIndicatorOutputDto computePovertyIndicator(Map<String, String> record, boolean includeRecentYears) {
 
         CensusTractPovertyIndicatorInputDto input = new CensusTractPovertyIndicatorInputDto();
-        input.setAddressAtDxState(record.get(_PROP_STATE_DX));
-        input.setCountyAtDxAnalysis(record.get(_PROP_COUNTY_DX_ANALYSIS));
-        input.setDateOfDiagnosisYear(record.get(_PROP_DIAGNOSIS_YEAR));
-        input.setCensusTract2000(record.get(_PROP_CENSUS_TRACT_2000));
-        input.setCensusTract2010(record.get(_PROP_CENSUS_TRACT_2010));
+        input.setAddressAtDxState(record.get("addressAtDxState"));
+        input.setCountyAtDxAnalysis(record.get("countyAtDxAnalysis"));
+        input.setDateOfDiagnosisYear(record.get("dateOfDiagnosisYear"));
+        input.setCensusTract2000(record.get("censusTract2000"));
+        input.setCensusTract2010(record.get("censusTract2010"));
 
         return CensusTractPovertyIndicatorUtils.computePovertyIndicator(input, includeRecentYears);
     }
-
-    //compare sas and seerutils output
-    /*********************************************************************************************************
-     public static void main(String[] args) throws Exception {
-     File sasResults = new File("H:\\povertyIndicator\\poverty-sas-results.txt");
-     File input = new File("E:\\Project Docs\\CensusTract\\poverty-test.txt");
-     LineNumberReader sasReader = new LineNumberReader(new InputStreamReader(SeerUtils.createInputStream(sasResults)));
-     LineNumberReader javaReader = new LineNumberReader(new InputStreamReader(SeerUtils.createInputStream(input)));
-     String sasLine = sasReader.readLine();
-     String javaLine = javaReader.readLine();
-     Layout layout = LayoutFactory.getLayout(LayoutFactory.LAYOUT_ID_NAACCR_13_ABSTRACT);
-     long totalCases = 0;
-     long diff = 0;
-     while (sasLine != null && javaLine != null) {
-     Map<String, String> sasRec = layout.createRecordFromLine(sasLine);
-     Map<String, String> javaRec = layout.createRecordFromLine(javaLine);
-     totalCases++;
-     String utilsPovertyIndicator = CensusTractPovertyIndicatorUtils.computePovertyIndicator(javaRec).getCensusTractPovertyIndicator();
-
-     totalCases++;
-     if (sasRec.get("censusPovertyIndictr") == null ? utilsPovertyIndicator != null : !sasRec.get("censusPovertyIndictr").equals(utilsPovertyIndicator)) {
-     diff++;
-     //Put the output inside the if statement if there are differences, I put it here first to see everything is going well
-     System.out.println("Patient Id        " + sasRec.get("patientIdNumber") + "...." + javaRec.get("patientIdNumber"));
-     System.out.println("DX year           " + sasRec.get(_PROP_DIAGNOSIS_YEAR) + "...." + javaRec.get(
-     _PROP_DIAGNOSIS_YEAR));
-     System.out.println("Dx State          " + sasRec.get(_PROP_STATE_DX) + "...." + javaRec.get(_PROP_STATE_DX));
-     System.out.println("Dx County         " + sasRec.get(_PROP_COUNTY_DX) + "...." + javaRec.get(_PROP_COUNTY_DX));
-     System.out.println("Census tract 2000 " + sasRec.get(_PROP_CENSUS_TRACT_2000) + "...." + javaRec.get(
-     _PROP_CENSUS_TRACT_2000));
-     System.out.println("Census tract 2010 " + sasRec.get(_PROP_CENSUS_TRACT_2010) + "...." + javaRec.get(
-     _PROP_CENSUS_TRACT_2010));
-     System.out.println(sasRec.get("censusPovertyIndictr") + "--------" + utilsPovertyIndicator);
-     System.out.println("..................................................");
-     }
-     sasLine = sasReader.readLine();
-     javaLine = javaReader.readLine();
-     }
-     System.out.println("Poverty Indicator:  " + totalCases + " cases tested! and " + diff + " cases failed!");
-     }
-     *******************************************************************************************************************************************************/
 }
