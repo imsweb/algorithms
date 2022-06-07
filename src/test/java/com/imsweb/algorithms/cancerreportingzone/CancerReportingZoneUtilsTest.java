@@ -50,13 +50,13 @@ public class CancerReportingZoneUtilsTest {
         record.put(_PROP_STATE_DX, "WA");
         record.put(_PROP_COUNTY_DX_ANALYSIS, "067");
         record.put(_PROP_CENSUS_TRACT_2010, "012720");
-        Assert.assertEquals("A9071za", computeCancerReportingZone(record).getCancerReportingZone());
+        Assert.assertEquals("53A9071za", computeCancerReportingZone(record).getCancerReportingZone());
 
         record.clear();
         record.put(_PROP_STATE_DX, "ID");
         record.put(_PROP_COUNTY_DX_ANALYSIS, "001");
         record.put(_PROP_CENSUS_TRACT_2010, "000100");
-        Assert.assertEquals("A9014zd", computeCancerReportingZone(record).getCancerReportingZone());
+        Assert.assertEquals("16A9014zd", computeCancerReportingZone(record).getCancerReportingZone());
     }
 
     private CancerReportingZoneOutputDto computeCancerReportingZone(Map<String, String> record) {

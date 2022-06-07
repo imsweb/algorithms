@@ -7,8 +7,6 @@ public class CancerReportingZoneOutputDto {
 
     private String _cancerReportingZone;
 
-    public CancerReportingZoneOutputDto() {}
-
     public String getCancerReportingZone() {
         return _cancerReportingZone;
     }

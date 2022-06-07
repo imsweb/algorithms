@@ -172,20 +172,21 @@ public class CountryData {
     // shared internal data structure; sates mapped by state abbreviation
     private final Map<String, StateData> _stateData = new HashMap<>();
 
+    // the states that had their census-related data initialized
     private final Set<String> _stateTractDataInitialized = new HashSet<>();
 
+    // the states that had their year-based census-related data initialized
     private final Set<String> _stateTractDataYearBasedInitialized = new HashSet<>();
 
     // the different data type that can be registered
     private boolean _rucaInitialized = false; // in file
     private boolean _uricInitialized = false; // in file
     private boolean _continuumInitialized = false;
-    private boolean _povertyInitialized = false; // in file
+    private boolean _povertyInitialized = false; // this is only used for "old" years; the recent years are handled by the census-related data...
     private boolean _countyAtDxAnalysisInitialized = false;
     private boolean _prcdaInitialized = false;
     private boolean _uihoInitialized = false;
     private boolean _tractEstCongressDistInitialized = false;
-    private boolean _cancerReportingZoneInitialized = false; // in file
 
     // internal lock to control concurrency
     private final ReentrantReadWriteLock _lock = new ReentrantReadWriteLock();
@@ -206,7 +207,6 @@ public class CountryData {
             _countyAtDxAnalysisInitialized = false;
             _prcdaInitialized = false;
             _uihoInitialized = false;
-            _cancerReportingZoneInitialized = false;
         }
         finally {
             _lock.writeLock().unlock();
@@ -251,7 +251,7 @@ public class CountryData {
                                 censusData.setEpht2010GeoId20k(StringUtils.leftPad(StringUtils.trimToNull(line.substring(CDC_SUBCOUNTY_20K_START - 1, CDC_SUBCOUNTY_20K_END)), 11, '0'));
 
                                 // Cancer Reporting Zone
-
+                                censusData.setCancerReportingZone(StringUtils.trimToNull(line.substring(ZONE_ID_START - 1, ZONE_ID_END)));
                             }
 
                             line = reader.readLine();
@@ -784,58 +784,4 @@ public class CountryData {
             _lock.writeLock().unlock();
         }
     }
-
-    /**
-     * Returns requested state data to be used by the CancerReportingZone algorithm.
-     */
-    public StateData getCancerReportingZoneData(String state) {
-        _lock.readLock().lock();
-        try {
-            if (!_cancerReportingZoneInitialized)
-                throw new IllegalStateException("CancerReportingZone data cannot be access before it has been initialized!");
-            return _stateData.get(state);
-        }
-        finally {
-            _lock.readLock().unlock();
-        }
-    }
-
-    /**
-     * Returns true if the CancerReportingZone data has been initialized, false otherwise.
-     */
-    public boolean isCancerReportingZoneDataInitialized() {
-        _lock.readLock().lock();
-        try {
-            return _cancerReportingZoneInitialized;
-        }
-        finally {
-            _lock.readLock().unlock();
-        }
-    }
-
-    /**
-     * Initializes the given CancerReportingZone data (this call will make all other access to the data structure block).
-     */
-    public void initializeCancerReportingZoneData(Map<String, Map<String, Map<String, CensusData>>> data) {
-        _lock.writeLock().lock();
-        try {
-            if (!_cancerReportingZoneInitialized) {
-                for (Map.Entry<String, Map<String, Map<String, CensusData>>> stateEntry : data.entrySet()) {
-                    StateData stateData = _stateData.computeIfAbsent(stateEntry.getKey(), k -> new StateData());
-                    for (Map.Entry<String, Map<String, CensusData>> countyEntry : stateEntry.getValue().entrySet()) {
-                        CountyData countyData = stateData.getData().computeIfAbsent(countyEntry.getKey(), k -> new CountyData());
-                        for (Map.Entry<String, CensusData> censusEntry : countyEntry.getValue().entrySet()) {
-                            CensusData censusData = countyData.getData().computeIfAbsent(censusEntry.getKey(), k -> new CensusData());
-                            censusData.setCancerReportingZone(censusEntry.getValue().getCancerReportingZone());
-                        }
-                    }
-                }
-            }
-            _cancerReportingZoneInitialized = true;
-        }
-        finally {
-            _lock.writeLock().unlock();
-        }
-    }
-
 }
