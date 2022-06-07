@@ -37,6 +37,9 @@ import org.apache.commons.lang3.math.NumberUtils;
 @SuppressWarnings("BooleanMethodIsAlwaysInverted")
 public class CountryData {
 
+    private static final String _SEER_CENSUS_DATA_FILE = "tract/tract.level.ses.2008_17.minimized.txt.gz";
+    private static final String _SEER_CENSUS_DATA_FILE_YEAR_BASED = "tract/tract.level.ses.2008_17.minimized.year.based.txt.gz";
+
     private static final Map<String, String> _STATES = new HashMap<>();
 
     static {
@@ -169,9 +172,9 @@ public class CountryData {
     // shared internal data structure; sates mapped by state abbreviation
     private final Map<String, StateData> _stateData = new HashMap<>();
 
-    private Set<String> _stateTractDataInitialized = new HashSet<>();
+    private final Set<String> _stateTractDataInitialized = new HashSet<>();
 
-    private Set<String> _stateTractDataYearBasedInitialized = new HashSet<>();
+    private final Set<String> _stateTractDataYearBasedInitialized = new HashSet<>();
 
     // the different data type that can be registered
     private boolean _rucaInitialized = false; // in file
@@ -182,7 +185,6 @@ public class CountryData {
     private boolean _prcdaInitialized = false;
     private boolean _uihoInitialized = false;
     private boolean _tractEstCongressDistInitialized = false;
-    private boolean _ephtSubCountyInitialized = false; // in file
     private boolean _cancerReportingZoneInitialized = false; // in file
 
     // internal lock to control concurrency
@@ -225,36 +227,39 @@ public class CountryData {
         _lock.writeLock().lock();
         try {
             if (!_stateTractDataInitialized.contains(requestedState)) {
-                try (InputStream is = new GZIPInputStream(Thread.currentThread().getContextClassLoader().getResourceAsStream("tract/tract.level.ses.2008_17.minimized.txt.gz"));
-                     BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.US_ASCII))) {
-                    String line = reader.readLine();
-                    while (line != null) {
-                        String state = _STATES.get(line.substring(STATE_FIPS_START - 1, STATE_FIPS_END));
-                        String county = line.substring(COUNTY_FIPS_START - 1, COUNTY_FIPS_END);
-                        String tract = line.substring(TRACT_START - 1, TRACT_END);
+                try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(_SEER_CENSUS_DATA_FILE)) {
+                    if (is == null)
+                        throw new IllegalStateException("Unable to get SEER census tract data file");
+                    try (BufferedReader reader = new BufferedReader(new InputStreamReader(new GZIPInputStream(is), StandardCharsets.US_ASCII))) {
+                        String line = reader.readLine();
+                        while (line != null) {
+                            String state = _STATES.get(line.substring(STATE_FIPS_START - 1, STATE_FIPS_END));
+                            String county = line.substring(COUNTY_FIPS_START - 1, COUNTY_FIPS_END);
+                            String tract = line.substring(TRACT_START - 1, TRACT_END);
 
-                        if (Objects.equals(state, requestedState)) {
-                            StateData stateData = _stateData.computeIfAbsent(state, k -> new StateData());
-                            CountyData countyData = stateData.getData().computeIfAbsent(county, k -> new CountyData());
-                            CensusData censusData = countyData.getData().computeIfAbsent(tract, k -> new CensusData());
+                            if (Objects.equals(state, requestedState)) {
+                                StateData stateData = _stateData.computeIfAbsent(state, k -> new StateData());
+                                CountyData countyData = stateData.getData().computeIfAbsent(county, k -> new CountyData());
+                                CensusData censusData = countyData.getData().computeIfAbsent(tract, k -> new CensusData());
 
-                            // URAC
+                                // URAC
 
-                            // URIC
+                                // URIC
 
-                            // NPCR EPHT SubCounty
-                            censusData.setEpht2010GeoId5k(StringUtils.leftPad(StringUtils.trimToNull(line.substring(CDC_SUBCOUNTY_5K_START - 1, CDC_SUBCOUNTY_5K_END)), 11, '0'));
-                            censusData.setEpht2010GeoId20k(StringUtils.leftPad(StringUtils.trimToNull(line.substring(CDC_SUBCOUNTY_20K_START - 1, CDC_SUBCOUNTY_20K_END)), 11, '0'));
+                                // NPCR EPHT SubCounty
+                                censusData.setEpht2010GeoId5k(StringUtils.leftPad(StringUtils.trimToNull(line.substring(CDC_SUBCOUNTY_5K_START - 1, CDC_SUBCOUNTY_5K_END)), 11, '0'));
+                                censusData.setEpht2010GeoId20k(StringUtils.leftPad(StringUtils.trimToNull(line.substring(CDC_SUBCOUNTY_20K_START - 1, CDC_SUBCOUNTY_20K_END)), 11, '0'));
 
-                            // Cancer Reporting Zone
+                                // Cancer Reporting Zone
 
+                            }
+
+                            line = reader.readLine();
                         }
-
-                        line = reader.readLine();
                     }
                 }
                 catch (IOException e) {
-                    throw new RuntimeException("Unable to initialize tract data", e);
+                    throw new IllegalStateException("Unable to initialize tract data", e);
                 }
             }
             _stateTractDataInitialized.add(requestedState);
@@ -290,43 +295,47 @@ public class CountryData {
         _lock.writeLock().lock();
         try {
             if (!_stateTractDataYearBasedInitialized.contains(requestedState)) {
-                try (InputStream is = new GZIPInputStream(Thread.currentThread().getContextClassLoader().getResourceAsStream("tract/tract.level.ses.2008_17.minimized.year.based.txt.gz"));
-                     LineNumberReader reader = new LineNumberReader(new InputStreamReader(is, StandardCharsets.US_ASCII))) {
-                    String line = reader.readLine();
-                    while (line != null) {
-                        int lineNum = reader.getLineNumber();
+                try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(_SEER_CENSUS_DATA_FILE_YEAR_BASED)) {
+                    if (is == null)
+                        throw new IllegalStateException("Unable to get year-based SEER census tract data file");
+                    try (LineNumberReader reader = new LineNumberReader(new InputStreamReader(new GZIPInputStream(is), StandardCharsets.US_ASCII))) {
+                        String line = reader.readLine();
+                        while (line != null) {
+                            int lineNum = reader.getLineNumber();
 
-                        String state = _STATES.get(line.substring(STATE_FIPS_START - 1, STATE_FIPS_END));
-                        String county = line.substring(COUNTY_FIPS_START - 1, COUNTY_FIPS_END);
-                        String tract = line.substring(TRACT_START - 1, TRACT_END);
-                        String year = line.substring(YEAR_START - 1, YEAR_END);
+                            String state = _STATES.get(line.substring(STATE_FIPS_START - 1, STATE_FIPS_END));
+                            String county = line.substring(COUNTY_FIPS_START - 1, COUNTY_FIPS_END);
+                            String tract = line.substring(TRACT_START - 1, TRACT_END);
+                            String year = line.substring(YEAR_START - 1, YEAR_END);
 
-                        if (Objects.equals(state, requestedState)) {
-                            StateData stateData = _stateData.computeIfAbsent(state, k -> new StateData());
-                            CountyData countyData = stateData.getData().computeIfAbsent(county, k -> new CountyData());
-                            CensusData censusData = countyData.getData().computeIfAbsent(tract, k -> new CensusData());
-                            YearData yearData = censusData.getData().computeIfAbsent(year, k -> new YearData());
+                            if (Objects.equals(state, requestedState)) {
+                                StateData stateData = _stateData.computeIfAbsent(state, k -> new StateData());
+                                CountyData countyData = stateData.getData().computeIfAbsent(county, k -> new CountyData());
+                                CensusData censusData = countyData.getData().computeIfAbsent(tract, k -> new CensusData());
+                                YearData yearData = censusData.getData().computeIfAbsent(year, k -> new YearData());
 
-                            // YOST
-                            yearData.setYostQuintileState(StringUtils.trim(line.substring(YOST_STATE_BASED_QUINTILE_START - 1, YOST_STATE_BASED_QUINTILE_END)));
-                            yearData.setYostQuintileUS(StringUtils.trim(line.substring(YOST_US_BASED_QUINTILE_START - 1, YOST_US_BASED_QUINTILE_END)));
+                                // YOST
+                                yearData.setYostQuintileState(StringUtils.trim(line.substring(YOST_STATE_BASED_QUINTILE_START - 1, YOST_STATE_BASED_QUINTILE_END)));
+                                yearData.setYostQuintileUS(StringUtils.trim(line.substring(YOST_US_BASED_QUINTILE_START - 1, YOST_US_BASED_QUINTILE_END)));
 
-                            // ACS Poverty
-                            yearData.setAcsPctPovAllRaces(cleanPoverty(lineNum, StringUtils.trim(line.substring(PERCENT_BEL_POV_ALL_RACES_START - 1, PERCENT_BEL_POV_ALL_RACES_END))));
-                            yearData.setAcsPctPovWhite(cleanPoverty(lineNum, StringUtils.trim(line.substring(PERCENT_BEL_POV_WHITE_START - 1, PERCENT_BEL_POV_WHITE_END))));
-                            yearData.setAcsPctPovBlack(cleanPoverty(lineNum, StringUtils.trim(line.substring(PERCENT_BEL_POV_BLACK_START - 1, PERCENT_BEL_POV_BLACK_END))));
-                            yearData.setAcsPctPovAIAN(cleanPoverty(lineNum, StringUtils.trim(line.substring(PERCENT_BEL_POV_AM_INDIAN_START - 1, PERCENT_BEL_POV_AM_INDIAN_END))));
-                            yearData.setAcsPctPovAsianNHOPI(cleanPoverty(lineNum, StringUtils.trim(line.substring(PERCENT_BEL_POV_ASIAN_START - 1, PERCENT_BEL_POV_ASIAN_END))));
-                            yearData.setAcsPctPovWhiteNonHisp(cleanPoverty(lineNum, StringUtils.trim(line.substring(PERCENT_BEL_POV_WHILE_NOT_HISP_START - 1, PERCENT_BEL_POV_WHILE_NOT_HISP_END))));
-                            yearData.setAcsPctPovHispanic(cleanPoverty(lineNum, StringUtils.trim(line.substring(PERCENT_BEL_POV_HISP_START - 1, PERCENT_BEL_POV_HISP_END))));
+                                // ACS Poverty
+                                yearData.setAcsPctPovAllRaces(cleanPoverty(lineNum, StringUtils.trim(line.substring(PERCENT_BEL_POV_ALL_RACES_START - 1, PERCENT_BEL_POV_ALL_RACES_END))));
+                                yearData.setAcsPctPovWhite(cleanPoverty(lineNum, StringUtils.trim(line.substring(PERCENT_BEL_POV_WHITE_START - 1, PERCENT_BEL_POV_WHITE_END))));
+                                yearData.setAcsPctPovBlack(cleanPoverty(lineNum, StringUtils.trim(line.substring(PERCENT_BEL_POV_BLACK_START - 1, PERCENT_BEL_POV_BLACK_END))));
+                                yearData.setAcsPctPovAIAN(cleanPoverty(lineNum, StringUtils.trim(line.substring(PERCENT_BEL_POV_AM_INDIAN_START - 1, PERCENT_BEL_POV_AM_INDIAN_END))));
+                                yearData.setAcsPctPovAsianNHOPI(cleanPoverty(lineNum, StringUtils.trim(line.substring(PERCENT_BEL_POV_ASIAN_START - 1, PERCENT_BEL_POV_ASIAN_END))));
+                                yearData.setAcsPctPovWhiteNonHisp(
+                                        cleanPoverty(lineNum, StringUtils.trim(line.substring(PERCENT_BEL_POV_WHILE_NOT_HISP_START - 1, PERCENT_BEL_POV_WHILE_NOT_HISP_END))));
+                                yearData.setAcsPctPovHispanic(cleanPoverty(lineNum, StringUtils.trim(line.substring(PERCENT_BEL_POV_HISP_START - 1, PERCENT_BEL_POV_HISP_END))));
 
+                            }
+
+                            line = reader.readLine();
                         }
-
-                        line = reader.readLine();
                     }
                 }
                 catch (IOException e) {
-                    throw new RuntimeException("Unable to initialize year based tract data", e);
+                    throw new IllegalStateException("Unable to initialize year based tract data", e);
                 }
             }
             _stateTractDataYearBasedInitialized.add(requestedState);
@@ -341,7 +350,7 @@ public class CountryData {
             return value;
 
         if (value.length() != 5 || !NumberUtils.isDigits(value))
-            throw new RuntimeException("Invalid ACS poverty value at line " + lineNum + ": " + value);
+            throw new IllegalStateException("Invalid ACS poverty value at line " + lineNum + ": " + value);
 
         String left = value.substring(0, 3);
         String right = value.substring(3);
