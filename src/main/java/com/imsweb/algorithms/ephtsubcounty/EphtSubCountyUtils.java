@@ -3,6 +3,11 @@
  */
 package com.imsweb.algorithms.ephtsubcounty;
 
+import com.imsweb.algorithms.internal.CensusData;
+import com.imsweb.algorithms.internal.CountryData;
+import com.imsweb.algorithms.internal.CountyData;
+import com.imsweb.algorithms.internal.StateData;
+
 /**
  * This class can be used to calculate EPHT 2010 GEO ID 5K and EPHT 2010 GEO ID 20K.
  */
@@ -11,11 +16,12 @@ public final class EphtSubCountyUtils {
     public static final String ALG_NAME = "NPCR EPHT SubCounty";
     public static final String ALG_VERSION = "version 1.0 released in August 2021";
 
+    public static final String UNKNOWN_EPHT = "99999999999";
+
     public static final String EPHT_2010_GEO_ID_UNK_A = "A";
+    public static final String EPHT_2010_GEO_ID_UNK_B = "B";
     public static final String EPHT_2010_GEO_ID_UNK_C = "C";
     public static final String EPHT_2010_GEO_ID_UNK_D = "D";
-
-    private static final EphtSubCountyDataProvider _PROVIDER = new EphtSubCountyDataProvider();
 
     private EphtSubCountyUtils() {
         // no instances of this class allowed!
@@ -45,6 +51,7 @@ public final class EphtSubCountyUtils {
      */
     public static EphtSubCountyOutputDto computeEphtSubCounty(EphtSubCountyInputDto input) {
         EphtSubCountyOutputDto result = new EphtSubCountyOutputDto();
+
         input.applyRecodes();
 
         if (!input.isStateValidOrMissingOrUnknown() || !input.isCountyValidOrMissingOrUnknown() || !input.isCensusTract2010ValidOrMissingOrUnknown()) {
@@ -56,13 +63,26 @@ public final class EphtSubCountyUtils {
             result.setEpht2010GeoId20k(EPHT_2010_GEO_ID_UNK_D);
         }
         else if ("000".equals(input.getCountyAtDxAnalysis())) {
-            result.setEpht2010GeoId5k("B");
-            result.setEpht2010GeoId20k("B");
+            result.setEpht2010GeoId5k(EPHT_2010_GEO_ID_UNK_B);
+            result.setEpht2010GeoId20k(EPHT_2010_GEO_ID_UNK_B);
         }
         else {
-            result.setEpht2010GeoId5k(_PROVIDER.getEPHT2010GeoId5k(input.getAddressAtDxState(), input.getCountyAtDxAnalysis(), input.getCensusTract2010()));
-            result.setEpht2010GeoId20k(_PROVIDER.getEPHT2010GeoId20k(input.getAddressAtDxState(), input.getCountyAtDxAnalysis(), input.getCensusTract2010()));
+            if (!CountryData.getInstance().isTractDataInitialized(input.getAddressAtDxState()))
+                CountryData.getInstance().initializeTractData(input.getAddressAtDxState());
+
+            StateData stateData = CountryData.getInstance().getTractData(input.getAddressAtDxState());
+            if (stateData != null) {
+                CountyData countyData = stateData.getCountyData(input.getCountyAtDxAnalysis());
+                if (countyData != null) {
+                    CensusData censusData = countyData.getCensusData(input.getCensusTract2010());
+                    if (censusData != null) {
+                        result.setEpht2010GeoId5k(censusData.getEpht2010GeoId5k());
+                        result.setEpht2010GeoId20k(censusData.getEpht2010GeoId20k());
+                    }
+                }
+            }
         }
+
         if (result.getEpht2010GeoId5k() == null)
             result.setEpht2010GeoId5k(EPHT_2010_GEO_ID_UNK_C);
         if (result.getEpht2010GeoId20k() == null)

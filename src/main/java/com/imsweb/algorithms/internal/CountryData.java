@@ -238,13 +238,13 @@ public class CountryData {
                             CountyData countyData = stateData.getData().computeIfAbsent(county, k -> new CountyData());
                             CensusData censusData = countyData.getData().computeIfAbsent(tract, k -> new CensusData());
 
-                            // NAACCR Poverty indicator
-
                             // URAC
 
                             // URIC
 
                             // NPCR EPHT SubCounty
+                            censusData.setEpht2010GeoId5k(StringUtils.leftPad(StringUtils.trimToNull(line.substring(CDC_SUBCOUNTY_5K_START - 1, CDC_SUBCOUNTY_5K_END)), 11, '0'));
+                            censusData.setEpht2010GeoId20k(StringUtils.leftPad(StringUtils.trimToNull(line.substring(CDC_SUBCOUNTY_20K_START - 1, CDC_SUBCOUNTY_20K_END)), 11, '0'));
 
                             // Cancer Reporting Zone
 
@@ -261,6 +261,18 @@ public class CountryData {
         }
         finally {
             _lock.writeLock().unlock();
+        }
+    }
+
+    public StateData getTractData(String state) {
+        _lock.readLock().lock();
+        try {
+            if (!isTractDataInitialized(state))
+                throw new IllegalStateException("Census tract data cannot be access before it has been initialized!");
+            return _stateData.get(state);
+        }
+        finally {
+            _lock.readLock().unlock();
         }
     }
 
@@ -340,6 +352,18 @@ public class CountryData {
             left = left.substring(1);
 
         return left + "." + right;
+    }
+
+    public StateData getYearBasedTractData(String state) {
+        _lock.readLock().lock();
+        try {
+            if (!isYearBasedTractDataInitialized(state))
+                throw new IllegalStateException("Year-based census tract data cannot be access before it has been initialized!");
+            return _stateData.get(state);
+        }
+        finally {
+            _lock.readLock().unlock();
+        }
     }
 
     /**
@@ -746,75 +770,6 @@ public class CountryData {
                 }
             }
             _tractEstCongressDistInitialized = true;
-        }
-        finally {
-            _lock.writeLock().unlock();
-        }
-    }
-
-    /**
-     * Returns requested state data to be used by the Yost/ACS Poverty algorithm.
-     */
-    public StateData getYostAcsPovertyData(String state) {
-        _lock.readLock().lock();
-        try {
-            if (!isYearBasedTractDataInitialized(state))
-                throw new IllegalStateException("Yost/ACS Poverty data cannot be access before it has been initialized!");
-            return _stateData.get(state);
-        }
-        finally {
-            _lock.readLock().unlock();
-        }
-    }
-
-    /**
-     * Returns requested state data to be used by the EPHT SubCounty algorithm.
-     */
-    public StateData getEphtSubCountyData(String state) {
-        _lock.readLock().lock();
-        try {
-            if (!_ephtSubCountyInitialized)
-                throw new IllegalStateException("EPHT SubCounty data cannot be access before it has been initialized!");
-            return _stateData.get(state);
-        }
-        finally {
-            _lock.readLock().unlock();
-        }
-    }
-
-    /**
-     * Returns true if the EPHT SubCounty data has been initialized, false otherwise.
-     */
-    public boolean isEphtSubCountyDataInitialized() {
-        _lock.readLock().lock();
-        try {
-            return _ephtSubCountyInitialized;
-        }
-        finally {
-            _lock.readLock().unlock();
-        }
-    }
-
-    /**
-     * Initializes the given EPHT SubCounty data (this call will make all other access to the data structure block).
-     */
-    public void initializeEphtSubCountyData(Map<String, Map<String, Map<String, CensusData>>> data) {
-        _lock.writeLock().lock();
-        try {
-            if (!_ephtSubCountyInitialized) {
-                for (Map.Entry<String, Map<String, Map<String, CensusData>>> stateEntry : data.entrySet()) {
-                    StateData stateData = _stateData.computeIfAbsent(stateEntry.getKey(), k -> new StateData());
-                    for (Map.Entry<String, Map<String, CensusData>> countyEntry : stateEntry.getValue().entrySet()) {
-                        CountyData countyData = stateData.getData().computeIfAbsent(countyEntry.getKey(), k -> new CountyData());
-                        for (Map.Entry<String, CensusData> censusEntry : countyEntry.getValue().entrySet()) {
-                            CensusData censusData = countyData.getData().computeIfAbsent(censusEntry.getKey(), k -> new CensusData());
-                            censusData.setEpht2010GeoId5k(censusEntry.getValue().getEpht2010GeoId5k());
-                            censusData.setEpht2010GeoId20k(censusEntry.getValue().getEpht2010GeoId20k());
-                        }
-                    }
-                }
-            }
-            _ephtSubCountyInitialized = true;
         }
         finally {
             _lock.writeLock().unlock();

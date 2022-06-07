@@ -48,7 +48,7 @@ public final class YostAcsPovertyUtils {
                 if (!CountryData.getInstance().isYearBasedTractDataInitialized(state))
                     CountryData.getInstance().initializeYearBasedTractData(state);
 
-                StateData stateData = CountryData.getInstance().getYostAcsPovertyData(state);
+                StateData stateData = CountryData.getInstance().getYearBasedTractData(state);
                 if (stateData != null) {
                     CountyData countyData = stateData.getCountyData(county);
                     if (countyData != null) {
