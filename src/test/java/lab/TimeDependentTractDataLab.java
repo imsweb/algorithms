@@ -28,12 +28,18 @@ public class TimeDependentTractDataLab {
     @SuppressWarnings("ConstantConditions")
     public static void main(String[] args) throws IOException {
 
+        // I created a layout to be able to easily read the big fixed-column census tract file; that layout needs to agree on the "dictionary" provided on the SEER website:
+        //    https://seer.cancer.gov/seerstat/variables/countyattribs/ctattrdict.html
+
+        // The input file was not added to the project (the files have a timestamp, and I didn't see the point of adding all that data to the project).
+        // This class creates the minimized output files in their final location in this project, they retain the timestamp of the full data file...
+
         FixedColumnsLayout layout;
         try (InputStream fis = Thread.currentThread().getContextClassLoader().getResourceAsStream("tract/time-dependent-tract-data-layout-2022.xml")) {
             layout = new FixedColumnsLayout(LayoutUtils.readFixedColumnsLayout(fis));
         }
 
-        Path inputFile = Paths.get("C:\\dev\\tract.level.ses.2008_17.txt.gz");
+        Path inputFile = Paths.get("<change me>\\tract.level.ses.2008_17.txt.gz");
         Path outputFile = Paths.get(System.getProperty("user.dir") + "\\src\\main\\resources\\tract\\tract.level.ses.2008_17.minimized.txt.gz");
         Path outputFileYear = Paths.get(System.getProperty("user.dir") + "\\src\\main\\resources\\tract\\tract.level.ses.2008_17.minimized.year.based.txt.gz");
         try (LineNumberReader reader = new LineNumberReader(new InputStreamReader(new GZIPInputStream(Files.newInputStream(inputFile)), StandardCharsets.US_ASCII));
@@ -90,11 +96,8 @@ public class TimeDependentTractDataLab {
                 addValue(lineNum, state, buf, CountryData.STATE_FIPS_START, CountryData.STATE_FIPS_END);
                 addValue(lineNum, county, buf, CountryData.COUNTY_FIPS_START, CountryData.COUNTY_FIPS_END);
                 addValue(lineNum, tract, buf, CountryData.TRACT_START, CountryData.TRACT_END);
-                addValue(lineNum, line.get("ruca2010A"), buf, CountryData.RUCA_2010_A_START, CountryData.RUCA_2010_A_END);
-                addValue(lineNum, line.get("race2010C"), buf, CountryData.RUCA_2010_C_START, CountryData.RUCA_2010_C_END);
-                addValue(lineNum, line.get("uric2010A"), buf, CountryData.URIC_2010_A_START, CountryData.URIC_2010_A_END);
-                addValue(lineNum, line.get("uric2010B"), buf, CountryData.URIC_2010_B_START, CountryData.URIC_2010_B_END);
-                addValue(lineNum, line.get("uric2010C"), buf, CountryData.URIC_2010_C_START, CountryData.URIC_2010_C_END);
+                addValue(lineNum, line.get("race2010C"), buf, CountryData.RUCA_2010_START, CountryData.RUCA_2010_END); // categorization C (2 categories)
+                addValue(lineNum, line.get("uric2010A"), buf, CountryData.URIC_2010_START, CountryData.URIC_2010_END); // categorization A (4 categories)
                 addValue(lineNum, line.get("zoneId"), buf, CountryData.ZONE_ID_START, CountryData.ZONE_ID_END);
                 addValue(lineNum, line.get("naaccrPovertyIndicator"), buf, CountryData.NAACCR_POV_INDICATOR_START, CountryData.NAACCR_POV_INDICATOR_END);
                 addValue(lineNum, line.get("cdcSubcounty5k"), buf, CountryData.CDC_SUBCOUNTY_5K_START, CountryData.CDC_SUBCOUNTY_5K_END);

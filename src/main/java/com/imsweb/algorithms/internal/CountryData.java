@@ -142,24 +142,18 @@ public class CountryData {
     public static final int PERCENT_BEL_POV_HISP_END = 52;
 
     // following start/end columns are only applicable to the non-year-based tract data file
-    public static final int RUCA_2010_A_START = 12; // 1 char
-    public static final int RUCA_2010_A_END = 12;
-    public static final int RUCA_2010_C_START = 13; // 1 char
-    public static final int RUCA_2010_C_END = 13;
-    public static final int URIC_2010_A_START = 14; // 1 char
-    public static final int URIC_2010_A_END = 14;
-    public static final int URIC_2010_B_START = 15; // 1 char
-    public static final int URIC_2010_B_END = 15;
-    public static final int URIC_2010_C_START = 16; // 1 char
-    public static final int URIC_2010_C_END = 16;
-    public static final int ZONE_ID_START = 17; // 10 char
-    public static final int ZONE_ID_END = 26;
-    public static final int NAACCR_POV_INDICATOR_START = 27; // 1 char
-    public static final int NAACCR_POV_INDICATOR_END = 27;
-    public static final int CDC_SUBCOUNTY_5K_START = 28; // 11 char
-    public static final int CDC_SUBCOUNTY_5K_END = 38;
-    public static final int CDC_SUBCOUNTY_20K_START = 39; // 11 char
-    public static final int CDC_SUBCOUNTY_20K_END = 49;
+    public static final int RUCA_2010_START = 12; // 1 char
+    public static final int RUCA_2010_END = 12;
+    public static final int URIC_2010_START = 13; // 1 char
+    public static final int URIC_2010_END = 13;
+    public static final int ZONE_ID_START = 14; // 10 char
+    public static final int ZONE_ID_END = 23;
+    public static final int NAACCR_POV_INDICATOR_START = 24; // 1 char
+    public static final int NAACCR_POV_INDICATOR_END = 24;
+    public static final int CDC_SUBCOUNTY_5K_START = 25; // 11 char
+    public static final int CDC_SUBCOUNTY_5K_END = 35;
+    public static final int CDC_SUBCOUNTY_20K_START = 36; // 11 char
+    public static final int CDC_SUBCOUNTY_20K_END = 46;
 
     // singleton instance
     private static final CountryData _INSTANCE = new CountryData();
@@ -178,10 +172,14 @@ public class CountryData {
     // the states that had their year-based census-related data initialized
     private final Set<String> _stateTractDataYearBasedInitialized = new HashSet<>();
 
-    // the different data type that can be registered
-    private boolean _rucaInitialized = false; // in file
-    private boolean _uricInitialized = false; // in file
-    private boolean _continuumInitialized = false;
+    // the states that had their RUCA 2000 data initialized
+    private final Set<String> _ruca2000StateInitialized = new HashSet<>();
+
+    // the states that had their URIC 2000 data initialized
+    private final Set<String> _uric2000StateInitialized = new HashSet<>();
+
+    // the states that had their Continuum 1993/2003/2013 data initialized
+    private final Set<String> _continuumStateInitialized = new HashSet<>();
     private boolean _povertyInitialized = false; // this is only used for "old" years; the recent years are handled by the census-related data...
     private boolean _countyAtDxAnalysisInitialized = false;
     private boolean _prcdaInitialized = false;
@@ -200,9 +198,9 @@ public class CountryData {
             _stateData.clear();
             _stateTractDataInitialized.clear();
             _stateTractDataYearBasedInitialized.clear();
-            _rucaInitialized = false;
-            _uricInitialized = false;
-            _continuumInitialized = false;
+            _ruca2000StateInitialized.clear();
+            _uric2000StateInitialized.clear();
+            _continuumStateInitialized.clear();
             _povertyInitialized = false;
             _countyAtDxAnalysisInitialized = false;
             _prcdaInitialized = false;
@@ -242,9 +240,11 @@ public class CountryData {
                                 CountyData countyData = stateData.getData().computeIfAbsent(county, k -> new CountyData());
                                 CensusData censusData = countyData.getData().computeIfAbsent(tract, k -> new CensusData());
 
-                                // URAC
+                                // RUCA2010 - RUCA2000 is still handled with specific (old) data files
+                                censusData.setCommutingArea2010(Objects.toString(StringUtils.trimToNull(line.substring(RUCA_2010_START - 1, RUCA_2010_END)), "9"));
 
-                                // URIC
+                                // URIC2010 - URIC2000 is still handled with specific (old) data files
+                                censusData.setIndicatorCode2010(Objects.toString(StringUtils.trimToNull(line.substring(URIC_2010_START - 1, URIC_2010_END)), "9"));
 
                                 // NPCR EPHT SubCounty
                                 censusData.setEpht2010GeoId5k(StringUtils.leftPad(StringUtils.trimToNull(line.substring(CDC_SUBCOUNTY_5K_START - 1, CDC_SUBCOUNTY_5K_END)), 11, '0'));
@@ -376,27 +376,12 @@ public class CountryData {
     }
 
     /**
-     * Returns requested state data to be used by the RUCA algorithm.
-     */
-    public StateData getRucaStateData(String state) {
-        _lock.readLock().lock();
-        try {
-            if (!_rucaInitialized)
-                throw new IllegalStateException("RUCA data cannot be access before it has been initialized!");
-            return _stateData.get(state);
-        }
-        finally {
-            _lock.readLock().unlock();
-        }
-    }
-
-    /**
      * Returns true if the RUCA data has been initialized, false otherwise.
      */
-    public boolean isRucaDataInitialized() {
+    public boolean isRuca2000DataInitialized(String requestedState) {
         _lock.readLock().lock();
         try {
-            return _rucaInitialized;
+            return _ruca2000StateInitialized.contains(requestedState);
         }
         finally {
             _lock.readLock().unlock();
@@ -406,23 +391,25 @@ public class CountryData {
     /**
      * Initializes the given RUCA data (this call will make all other access to the data structure block).
      */
-    public void initializeRucaData(Map<String, Map<String, Map<String, CensusData>>> data) {
+    public void initializeRuca2000Data(String requestedState, Map<String, Map<String, Map<String, CensusData>>> data) {
         _lock.writeLock().lock();
         try {
-            if (!_rucaInitialized) {
+            if (!_ruca2000StateInitialized.contains(requestedState)) {
                 for (Map.Entry<String, Map<String, Map<String, CensusData>>> stateEntry : data.entrySet()) {
+                    if (!Objects.equals(stateEntry.getKey(), requestedState))
+                        continue;
                     StateData stateData = _stateData.computeIfAbsent(stateEntry.getKey(), k -> new StateData());
                     for (Map.Entry<String, Map<String, CensusData>> countyEntry : stateEntry.getValue().entrySet()) {
                         CountyData countyData = stateData.getData().computeIfAbsent(countyEntry.getKey(), k -> new CountyData());
                         for (Map.Entry<String, CensusData> censusEntry : countyEntry.getValue().entrySet()) {
                             CensusData censusData = countyData.getData().computeIfAbsent(censusEntry.getKey(), k -> new CensusData());
                             censusData.setCommutingArea2000(censusEntry.getValue().getCommutingArea2000());
-                            censusData.setCommutingArea2010(censusEntry.getValue().getCommutingArea2010());
+                            // RUCA2010 is set via the SEER tract data...
                         }
                     }
                 }
             }
-            _rucaInitialized = true;
+            _ruca2000StateInitialized.add(requestedState);
         }
         finally {
             _lock.writeLock().unlock();
@@ -430,27 +417,12 @@ public class CountryData {
     }
 
     /**
-     * Returns requested state data to be used by the URIC algorithm.
-     */
-    public StateData getUricStateData(String state) {
-        _lock.readLock().lock();
-        try {
-            if (!_uricInitialized)
-                throw new IllegalStateException("URIC data cannot be access before it has been initialized!");
-            return _stateData.get(state);
-        }
-        finally {
-            _lock.readLock().unlock();
-        }
-    }
-
-    /**
      * Returns true if the URIC data has been initialized, false otherwise.
      */
-    public boolean isUricDataInitialized() {
+    public boolean isUric2000DataInitialized(String requestedState) {
         _lock.readLock().lock();
         try {
-            return _uricInitialized;
+            return _uric2000StateInitialized.contains(requestedState);
         }
         finally {
             _lock.readLock().unlock();
@@ -460,25 +432,25 @@ public class CountryData {
     /**
      * Initializes the given URIC data (this call will make all other access to the data structure block).
      */
-    public void initializeUricData(Map<String, Map<String, Map<String, CensusData>>> data) {
+    public void initializeUric2000Data(String requestedState, Map<String, Map<String, Map<String, CensusData>>> data) {
         _lock.writeLock().lock();
         try {
-            if (!_uricInitialized) {
+            if (!_uric2000StateInitialized.contains(requestedState)) {
                 for (Map.Entry<String, Map<String, Map<String, CensusData>>> stateEntry : data.entrySet()) {
+                    if (!Objects.equals(stateEntry.getKey(), requestedState))
+                        continue;
                     StateData stateData = _stateData.computeIfAbsent(stateEntry.getKey(), k -> new StateData());
                     for (Map.Entry<String, Map<String, CensusData>> countyEntry : stateEntry.getValue().entrySet()) {
                         CountyData countyData = stateData.getData().computeIfAbsent(countyEntry.getKey(), k -> new CountyData());
                         for (Map.Entry<String, CensusData> censusEntry : countyEntry.getValue().entrySet()) {
                             CensusData censusData = countyData.getData().computeIfAbsent(censusEntry.getKey(), k -> new CensusData());
                             censusData.setIndicatorCode2000(censusEntry.getValue().getIndicatorCode2000());
-                            censusData.setIndicatorCodePercentage2000(censusEntry.getValue().getIndicatorCodePercentage2000());
-                            censusData.setIndicatorCode2010(censusEntry.getValue().getIndicatorCode2010());
-                            censusData.setIndicatorCodePercentage2010(censusEntry.getValue().getIndicatorCodePercentage2010());
+                            // URIC2010 is set via the SEER tract data...
                         }
                     }
                 }
             }
-            _uricInitialized = true;
+            _uric2000StateInitialized.add(requestedState);
         }
         finally {
             _lock.writeLock().unlock();
@@ -491,7 +463,7 @@ public class CountryData {
     public StateData getContinuumStateData(String state) {
         _lock.readLock().lock();
         try {
-            if (!_continuumInitialized)
+            if (!_continuumStateInitialized.contains(state))
                 throw new IllegalStateException("Continuum data cannot be access before it has been initialized!");
             return _stateData.get(state);
         }
@@ -503,10 +475,10 @@ public class CountryData {
     /**
      * Returns true if the Continuum data has been initialized, false otherwise.
      */
-    public boolean isContinuumDataInitialized() {
+    public boolean isContinuumDataInitialized(String requestedState) {
         _lock.readLock().lock();
         try {
-            return _continuumInitialized;
+            return _continuumStateInitialized.contains(requestedState);
         }
         finally {
             _lock.readLock().unlock();
@@ -516,11 +488,13 @@ public class CountryData {
     /**
      * Initializes the given Continuum data (this call will make all other access to the data structure block).
      */
-    public void initializeContinuumData(Map<String, Map<String, CountyData>> data) {
+    public void initializeContinuumData(String requestedState, Map<String, Map<String, CountyData>> data) {
         _lock.writeLock().lock();
         try {
-            if (!_continuumInitialized) {
+            if (!_continuumStateInitialized.contains(requestedState)) {
                 for (Map.Entry<String, Map<String, CountyData>> stateEntry : data.entrySet()) {
+                    if (!Objects.equals(stateEntry.getKey(), requestedState))
+                        continue;
                     StateData stateData = _stateData.computeIfAbsent(stateEntry.getKey(), k -> new StateData());
                     for (Map.Entry<String, CountyData> countyEntry : stateEntry.getValue().entrySet()) {
                         CountyData countyData = stateData.getData().computeIfAbsent(countyEntry.getKey(), k -> new CountyData());
@@ -530,7 +504,7 @@ public class CountryData {
                     }
                 }
             }
-            _continuumInitialized = true;
+            _continuumStateInitialized.add(requestedState);
         }
         finally {
             _lock.writeLock().unlock();

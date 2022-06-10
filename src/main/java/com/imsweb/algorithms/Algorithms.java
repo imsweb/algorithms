@@ -14,7 +14,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import com.imsweb.algorithms.ayasiterecode.AyaSiteRecodeAlgorithm2008;
 import com.imsweb.algorithms.ayasiterecode.AyaSiteRecodeAlgorithm2020;
 import com.imsweb.algorithms.behavrecode.SeerBehaviorRecodeAlgorithm;
-import com.imsweb.algorithms.braincnsrecode.BainCnsRecodeAlgorithm2020;
+import com.imsweb.algorithms.braincnsrecode.BrainCnsRecodeAlgorithm2020;
 import com.imsweb.algorithms.cancerreportingzone.CancerReportingZoneAlgorithm;
 import com.imsweb.algorithms.causespecific.DeathClassificationAlgorithm;
 import com.imsweb.algorithms.censustractpovertyindicator.CensusTractPovertyIndicatorAlgorithm;
@@ -302,7 +302,7 @@ public final class Algorithms {
             addAlgorithm(new RuralUrbanAlgorithm());
             addAlgorithm(new SeerSiteRecodeAlgorithm());
             addAlgorithm(new SeerBehaviorRecodeAlgorithm());
-            addAlgorithm(new BainCnsRecodeAlgorithm2020());
+            addAlgorithm(new BrainCnsRecodeAlgorithm2020());
             addAlgorithm(new AyaSiteRecodeAlgorithm2008());
             addAlgorithm(new AyaSiteRecodeAlgorithm2020());
             addAlgorithm(new IcccAlgorithm());

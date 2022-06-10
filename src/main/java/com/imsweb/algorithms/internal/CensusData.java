@@ -8,15 +8,17 @@ import java.util.Map;
 
 public class CensusData {
 
-    // RUCA data
+    // RUCA 2000
     private String _commutingArea2000;
+
+    // RUCA 2010
     private String _commutingArea2010;
 
-    // URIC data
+    // URIC 2000
     private String _indicatorCode2000;
-    private Float _indicatorCodePercentage2000;
+
+    // URIC 2010
     private String _indicatorCode2010;
-    private Float _indicatorCodePercentage2010;
 
     // poverty indicator data
     private Map<String, String> _povertyIndicators;
@@ -24,15 +26,17 @@ public class CensusData {
     // Cancer Reporting Zone
     private String _cancerReportingZone;
 
-    // EPHT SubCounty
+    // EPHT SubCounty 5K
     private String _epht2010GeoId5k;
+
+    // EPHT SubCounty 20K
     private String _epht2010GeoId20k;
 
     // TractEstCongressDist
     private String _tractEstCongressDist;
 
     // year data keyed by DX year
-    private Map<String, YearData> _yearData = new HashMap<>();
+    private final Map<String, YearData> _yearData = new HashMap<>();
 
     public String getIndicatorCode2000() {
         return _indicatorCode2000;
@@ -50,14 +54,6 @@ public class CensusData {
         _commutingArea2000 = commutingArea2000;
     }
 
-    public Float getIndicatorCodePercentage2000() {
-        return _indicatorCodePercentage2000;
-    }
-
-    public void setIndicatorCodePercentage2000(Float indicatorCodePercentage2000) {
-        _indicatorCodePercentage2000 = indicatorCodePercentage2000;
-    }
-
     public String getIndicatorCode2010() {
         return _indicatorCode2010;
     }
@@ -72,14 +68,6 @@ public class CensusData {
 
     public void setCommutingArea2010(String commutingArea2010) {
         _commutingArea2010 = commutingArea2010;
-    }
-
-    public Float getIndicatorCodePercentage2010() {
-        return _indicatorCodePercentage2010;
-    }
-
-    public void setIndicatorCodePercentage2010(Float indicatorCodePercentage2010) {
-        _indicatorCodePercentage2010 = indicatorCodePercentage2010;
     }
 
     public Map<String, String> getPovertyIndicators() {

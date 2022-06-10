@@ -47,10 +47,13 @@ public class RuralUrbanDataProvider {
         if (tractCategory == null || state == null || county == null || censusTract == null)
             return URBAN_RURAL_INDICATOR_CODE_UNKNOWN;
 
-        if (!CountryData.getInstance().isUricDataInitialized())
-            CountryData.getInstance().initializeUricData(loadUrbanRuralIndicatorCodeData());
+        // 2010 comes from the SEER tract data, 2000 comes from specific files...
+        if (!CountryData.getInstance().isTractDataInitialized(state))
+            CountryData.getInstance().initializeTractData(state);
+        if (!CountryData.getInstance().isUric2000DataInitialized(state))
+            CountryData.getInstance().initializeUric2000Data(state, loadUrbanRuralIndicatorCodeData());
 
-        StateData stateData = CountryData.getInstance().getUricStateData(state);
+        StateData stateData = CountryData.getInstance().getTractData(state);
         if (stateData == null)
             return URBAN_RURAL_INDICATOR_CODE_UNKNOWN;
         CountyData countyData = stateData.getCountyData(county);
@@ -61,44 +64,18 @@ public class RuralUrbanDataProvider {
             return URBAN_RURAL_INDICATOR_CODE_UNKNOWN;
 
         String result = null;
-        if (tractCategory.equals(RuralUrbanUtils.TRACT_CATEGORY_1))
+        if (tractCategory.equals(RuralUrbanUtils.TRACT_CATEGORY_2000))
             result = censusData.getIndicatorCode2000();
-        else if (tractCategory.equals(RuralUrbanUtils.TRACT_CATEGORY_2)) {
+        else if (tractCategory.equals(RuralUrbanUtils.TRACT_CATEGORY_2010)) {
             result = censusData.getIndicatorCode2010();
 
+            // TODO FD I don't think we want this, waiting on confirmation...
             // if you didn't find a match in the 2010 lookup, check the 2000 lookup
-            if (result == null || result.equals(URBAN_RURAL_INDICATOR_CODE_UNKNOWN))
-                result = censusData.getIndicatorCode2000();
+            //if (result == null || result.equals(URBAN_RURAL_INDICATOR_CODE_UNKNOWN))
+            //    result = censusData.getIndicatorCode2000();
         }
 
         return result == null ? URBAN_RURAL_INDICATOR_CODE_UNKNOWN : result;
-    }
-
-    public Float getRuralUrbanCensusPercentage(String tractCategory, String state, String county, String censusTract) {
-        if (tractCategory == null || state == null || county == null || censusTract == null)
-            return null;
-
-        if (!CountryData.getInstance().isUricDataInitialized())
-            CountryData.getInstance().initializeUricData(loadUrbanRuralIndicatorCodeData());
-
-        StateData stateData = CountryData.getInstance().getUricStateData(state);
-        if (stateData == null)
-            return null;
-        CountyData countyData = stateData.getCountyData(county);
-        if (countyData == null)
-            return null;
-        CensusData censusData = countyData.getCensusData(censusTract);
-        if (censusData == null)
-            return null;
-
-        switch (tractCategory) {
-            case RuralUrbanUtils.TRACT_CATEGORY_1:
-                return censusData.getIndicatorCodePercentage2000();
-            case RuralUrbanUtils.TRACT_CATEGORY_2:
-                return censusData.getIndicatorCodePercentage2010();
-            default:
-                return null;
-        }
     }
 
     private Map<String, Map<String, Map<String, CensusData>>> loadUrbanRuralIndicatorCodeData() {
@@ -114,43 +91,13 @@ public class RuralUrbanDataProvider {
                     String state = row[0];
                     String county = row[1];
                     String tract = row[2];
-                    String percent = row[3];
+                    // percent is not used anymore
                     String indicator = row[4];
 
                     if (indicator.length() != 1)
                         throw new IllegalStateException("Found unexpected format for URIC value: " + indicator);
 
-                    CensusData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new HashMap<>()).computeIfAbsent(tract, k -> new CensusData());
-                    dto.setIndicatorCode2000(indicator);
-                    if (!".".equals(percent))
-                        dto.setIndicatorCodePercentage2000(Float.valueOf(percent));
-                }
-            }
-        }
-        catch (CsvException | IOException e) {
-            throw new IllegalStateException(e);
-        }
-
-        // load 2010 data
-        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("ruralurban/urban-rural-indicator-code-2010.csv")) {
-            if (is == null)
-                throw new IllegalStateException("Missing data file!");
-            try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
-                 CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build()) {
-                for (String[] row : csvReader.readAll()) {
-                    String state = row[0];
-                    String county = row[1];
-                    String tract = row[2];
-                    String percent = row[3];
-                    String indicator = row[4];
-
-                    if (indicator.length() != 1)
-                        throw new IllegalStateException("Found unexpected format for URIC value: " + indicator);
-
-                    CensusData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new HashMap<>()).computeIfAbsent(tract, k -> new CensusData());
-                    dto.setIndicatorCode2010(indicator);
-                    if (!".".equals(percent))
-                        dto.setIndicatorCodePercentage2010(Float.valueOf(percent));
+                    result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new HashMap<>()).computeIfAbsent(tract, k -> new CensusData()).setIndicatorCode2000(indicator);
                 }
             }
         }
@@ -165,10 +112,13 @@ public class RuralUrbanDataProvider {
         if (tractCategory == null || state == null || county == null || censusTract == null)
             return RURAL_URBAN_COMMUTING_AREA_UNKNOWN;
 
-        if (!CountryData.getInstance().isRucaDataInitialized())
-            CountryData.getInstance().initializeRucaData(loadRuralUrbanCommutingAreaData());
+        // 2010 comes from the SEER tract data, 2000 comes from specific files...
+        if (!CountryData.getInstance().isTractDataInitialized(state))
+            CountryData.getInstance().initializeTractData(state);
+        if (!CountryData.getInstance().isRuca2000DataInitialized(state))
+            CountryData.getInstance().initializeRuca2000Data(state, loadRuralUrbanCommutingAreaData());
 
-        StateData stateData = CountryData.getInstance().getRucaStateData(state);
+        StateData stateData = CountryData.getInstance().getTractData(state);
         if (stateData == null)
             return RURAL_URBAN_COMMUTING_AREA_UNKNOWN;
         CountyData countyData = stateData.getCountyData(county);
@@ -179,14 +129,15 @@ public class RuralUrbanDataProvider {
             return RURAL_URBAN_COMMUTING_AREA_UNKNOWN;
 
         String result = null;
-        if (tractCategory.equals(RuralUrbanUtils.TRACT_CATEGORY_1))
+        if (tractCategory.equals(RuralUrbanUtils.TRACT_CATEGORY_2000))
             result = censusData.getCommutingArea2000();
-        else if (tractCategory.equals(RuralUrbanUtils.TRACT_CATEGORY_2)) {
+        else if (tractCategory.equals(RuralUrbanUtils.TRACT_CATEGORY_2010)) {
             result = censusData.getCommutingArea2010();
 
+            // TODO FD I don't think we want this, waiting on confirmation...
             // if you didn't find a match in the 2010 lookup, check the 2000 lookup
-            if (result == null || result.equals(RURAL_URBAN_COMMUTING_AREA_UNKNOWN))
-                result = censusData.getCommutingArea2000();
+            //if (result == null || result.equals(RURAL_URBAN_COMMUTING_AREA_UNKNOWN))
+            //    result = censusData.getCommutingArea2000();
         }
 
         return result == null ? RURAL_URBAN_COMMUTING_AREA_UNKNOWN : result;
@@ -224,33 +175,6 @@ public class RuralUrbanDataProvider {
             throw new IllegalStateException(e);
         }
 
-        // load 2010 data
-        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("ruralurban/rural-urban-commuting-area-2010.csv")) {
-            if (is == null)
-                throw new IllegalStateException("Missing data file!");
-            try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
-                 CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build()) {
-                for (String[] row : csvReader.readAll()) {
-                    String state = row[0];
-                    String county = row[1];
-                    String tract = row[2];
-                    String primary = row[3];
-                    String secondary = row[4];
-
-                    CensusData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new HashMap<>()).computeIfAbsent(tract, k -> new CensusData());
-                    if (primary.equals("99"))
-                        dto.setCommutingArea2010("9");
-                    else if (urbanCommutingAreas.contains(secondary))
-                        dto.setCommutingArea2010("1");
-                    else
-                        dto.setCommutingArea2010("2");
-                }
-            }
-        }
-        catch (CsvException | IOException e) {
-            throw new IllegalStateException(e);
-        }
-
         return result;
     }
 
@@ -258,8 +182,8 @@ public class RuralUrbanDataProvider {
         if (bealeCategory == null || state == null || county == null)
             return RURAL_URBAN_CONTINUUM_UNKNOWN;
 
-        if (!CountryData.getInstance().isContinuumDataInitialized())
-            CountryData.getInstance().initializeContinuumData(loadRuralUrbanContinuumData());
+        if (!CountryData.getInstance().isContinuumDataInitialized(state))
+            CountryData.getInstance().initializeContinuumData(state, loadRuralUrbanContinuumData());
 
         StateData stateData = CountryData.getInstance().getContinuumStateData(state);
         if (stateData == null)
@@ -270,17 +194,17 @@ public class RuralUrbanDataProvider {
 
         String result;
         switch (bealeCategory) {
-            case RuralUrbanUtils.BEALE_CATEGORY_1:
+            case RuralUrbanUtils.BEALE_CATEGORY_1993:
                 result = countyData.getUrbanContinuum1993();
                 break;
-            case RuralUrbanUtils.BEALE_CATEGORY_2:
+            case RuralUrbanUtils.BEALE_CATEGORY_2003:
                 result = countyData.getUrbanContinuum2003();
 
                 // if you didn't find a match in the 2003 lookup, check the 1993 lookup
                 if (result == null || result.equals(RURAL_URBAN_CONTINUUM_UNKNOWN))
                     result = countyData.getUrbanContinuum1993();
                 break;
-            case RuralUrbanUtils.BEALE_CATEGORY_3:
+            case RuralUrbanUtils.BEALE_CATEGORY_2013:
                 result = countyData.getUrbanContinuum2013();
 
                 // if you didn't find a match in the 2013 lookup, check the 2003 lookup

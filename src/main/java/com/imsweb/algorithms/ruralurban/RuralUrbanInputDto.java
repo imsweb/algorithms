@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
+@SuppressWarnings("BooleanMethodIsAlwaysInverted")
 public class RuralUrbanInputDto {
 
     //Valid NAACCR values for state at dx
@@ -41,9 +42,6 @@ public class RuralUrbanInputDto {
     private String _addressAtDxState;
     private String _censusTract2000;
     private String _censusTract2010;
-
-    public RuralUrbanInputDto() {
-    }
 
     public void applyRecodes() {
         _addressAtDxState = _addressAtDxState == null ? "" : _addressAtDxState.toUpperCase().trim();
