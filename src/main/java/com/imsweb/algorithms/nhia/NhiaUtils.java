@@ -412,7 +412,7 @@ public final class NhiaUtils {
     }
 
     /**
-     * Returns the list of counties with low Hispanic ethnicity (< 5%).
+     * Returns the list of counties with low Hispanic ethnicity (&lt; 5%).
      * @return map where the keys are the state abbreviation and the values are the list of counties
      */
     public static Map<String, List<String>> getLowHispanicCountiesPerState() {

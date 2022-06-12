@@ -8,9 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -50,8 +48,6 @@ public class RuralUrbanDataProvider {
         // 2010 comes from the SEER tract data, 2000 comes from specific files...
         if (!CountryData.getInstance().isTractDataInitialized(state))
             CountryData.getInstance().initializeTractData(state);
-        if (!CountryData.getInstance().isUric2000DataInitialized(state))
-            CountryData.getInstance().initializeUric2000Data(state, loadUrbanRuralIndicatorCodeData());
 
         StateData stateData = CountryData.getInstance().getTractData(state);
         if (stateData == null)
@@ -78,36 +74,6 @@ public class RuralUrbanDataProvider {
         return result == null ? URBAN_RURAL_INDICATOR_CODE_UNKNOWN : result;
     }
 
-    private Map<String, Map<String, Map<String, CensusData>>> loadUrbanRuralIndicatorCodeData() {
-        Map<String, Map<String, Map<String, CensusData>>> result = new HashMap<>();
-
-        // load 2000 data
-        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("ruralurban/urban-rural-indicator-code-2000.csv")) {
-            if (is == null)
-                throw new IllegalStateException("Missing data file!");
-            try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
-                 CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build()) {
-                for (String[] row : csvReader.readAll()) {
-                    String state = row[0];
-                    String county = row[1];
-                    String tract = row[2];
-                    // percent is not used anymore
-                    String indicator = row[4];
-
-                    if (indicator.length() != 1)
-                        throw new IllegalStateException("Found unexpected format for URIC value: " + indicator);
-
-                    result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new HashMap<>()).computeIfAbsent(tract, k -> new CensusData()).setIndicatorCode2000(indicator);
-                }
-            }
-        }
-        catch (CsvException | IOException e) {
-            throw new IllegalStateException(e);
-        }
-
-        return result;
-    }
-
     public String getRuralUrbanCommutingArea(String tractCategory, String state, String county, String censusTract) {
         if (tractCategory == null || state == null || county == null || censusTract == null)
             return RURAL_URBAN_COMMUTING_AREA_UNKNOWN;
@@ -115,8 +81,6 @@ public class RuralUrbanDataProvider {
         // 2010 comes from the SEER tract data, 2000 comes from specific files...
         if (!CountryData.getInstance().isTractDataInitialized(state))
             CountryData.getInstance().initializeTractData(state);
-        if (!CountryData.getInstance().isRuca2000DataInitialized(state))
-            CountryData.getInstance().initializeRuca2000Data(state, loadRuralUrbanCommutingAreaData());
 
         StateData stateData = CountryData.getInstance().getTractData(state);
         if (stateData == null)
@@ -141,41 +105,6 @@ public class RuralUrbanDataProvider {
         }
 
         return result == null ? RURAL_URBAN_COMMUTING_AREA_UNKNOWN : result;
-    }
-
-    private Map<String, Map<String, Map<String, CensusData>>> loadRuralUrbanCommutingAreaData() {
-        Map<String, Map<String, Map<String, CensusData>>> result = new HashMap<>();
-
-        List<String> urbanCommutingAreas = Arrays.asList("1.0", "1.1", "2.0", "2.1", "3.0", "4.1", "5.1", "7.1", "8.1", "10.1");
-
-        // load 2000 data
-        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("ruralurban/rural-urban-commuting-area-2000.csv")) {
-            if (is == null)
-                throw new IllegalStateException("Missing data file!");
-            try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
-                 CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build()) {
-                for (String[] row : csvReader.readAll()) {
-                    String state = row[0];
-                    String county = row[1];
-                    String tract = row[2];
-                    String primary = row[3];
-                    String secondary = row[4];
-
-                    CensusData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new HashMap<>()).computeIfAbsent(tract, k -> new CensusData());
-                    if (primary.equals("99"))
-                        dto.setCommutingArea2000("9");
-                    else if (urbanCommutingAreas.contains(secondary))
-                        dto.setCommutingArea2000("1");
-                    else
-                        dto.setCommutingArea2000("2");
-                }
-            }
-        }
-        catch (CsvException | IOException e) {
-            throw new IllegalStateException(e);
-        }
-
-        return result;
     }
 
     public String getRuralUrbanContinuum(String bealeCategory, String state, String county) {

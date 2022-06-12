@@ -48,13 +48,10 @@ public class CountryData {
         _TRACT_FIELDS.put("countyFips", 3);
         _TRACT_FIELDS.put("censusTract", 6);
         _TRACT_FIELDS.put("yearData", 370);
-        //TRACT_FIELDS.put("ruca2000", 1);
+        _TRACT_FIELDS.put("ruca2000", 1);
         _TRACT_FIELDS.put("ruca2010", 1);
-        //TRACT_FIELDS.put("uric2000", 1);
+        _TRACT_FIELDS.put("uric2000", 1);
         _TRACT_FIELDS.put("uric2010", 1);
-        //TRACT_FIELDS.put("continuum1993", 1);
-        //TRACT_FIELDS.put("continuum2003", 1);
-        //TRACT_FIELDS.put("continuum2013", 1);
         _TRACT_FIELDS.put("cancerReportingZone", 10);
         _TRACT_FIELDS.put("naaccrPovertyIndicator", 1);
         _TRACT_FIELDS.put("npcrEphtSubcounty5k", 11);
@@ -103,12 +100,6 @@ public class CountryData {
     // the states that had their year-based census-related data initialized
     private final Set<String> _stateTractDataYearBasedInitialized = new HashSet<>();
 
-    // the states that had their RUCA 2000 data initialized
-    private final Set<String> _ruca2000StateInitialized = new HashSet<>();
-
-    // the states that had their URIC 2000 data initialized
-    private final Set<String> _uric2000StateInitialized = new HashSet<>();
-
     // the states that had their Continuum 1993/2003/2013 data initialized
     private final Set<String> _continuumStateInitialized = new HashSet<>();
     private boolean _povertyInitialized = false; // this is only used for "old" years; the recent years are handled by the census-related data...
@@ -129,8 +120,6 @@ public class CountryData {
             _stateData.clear();
             _stateTractDataInitialized.clear();
             _stateTractDataYearBasedInitialized.clear();
-            _ruca2000StateInitialized.clear();
-            _uric2000StateInitialized.clear();
             _continuumStateInitialized.clear();
             _povertyInitialized = false;
             _countyAtDxAnalysisInitialized = false;
@@ -179,10 +168,12 @@ public class CountryData {
                                 CountyData countyData = stateData.getData().computeIfAbsent(county, k -> new CountyData());
                                 CensusData censusData = countyData.getData().computeIfAbsent(tract, k -> new CensusData());
 
-                                // RUCA2010 - RUCA2000 is still handled with specific (old) data files
+                                // RUCA
+                                censusData.setCommutingArea2000(Objects.toString(StringUtils.trimToNull(values.get("ruca2000")), "9"));
                                 censusData.setCommutingArea2010(Objects.toString(StringUtils.trimToNull(values.get("ruca2010")), "9"));
 
-                                // URIC2010 - URIC2000 is still handled with specific (old) data files
+                                // URIC
+                                censusData.setIndicatorCode2000(Objects.toString(StringUtils.trimToNull(values.get("uric2000")), "9"));
                                 censusData.setIndicatorCode2010(Objects.toString(StringUtils.trimToNull(values.get("uric2010")), "9"));
 
                                 // NPCR EPHT SubCounty
@@ -327,88 +318,6 @@ public class CountryData {
         }
         finally {
             _lock.readLock().unlock();
-        }
-    }
-
-    /**
-     * Returns true if the RUCA data has been initialized, false otherwise.
-     */
-    public boolean isRuca2000DataInitialized(String requestedState) {
-        _lock.readLock().lock();
-        try {
-            return _ruca2000StateInitialized.contains(requestedState);
-        }
-        finally {
-            _lock.readLock().unlock();
-        }
-    }
-
-    /**
-     * Initializes the given RUCA data (this call will make all other access to the data structure block).
-     */
-    public void initializeRuca2000Data(String requestedState, Map<String, Map<String, Map<String, CensusData>>> data) {
-        _lock.writeLock().lock();
-        try {
-            if (!_ruca2000StateInitialized.contains(requestedState)) {
-                for (Map.Entry<String, Map<String, Map<String, CensusData>>> stateEntry : data.entrySet()) {
-                    if (!Objects.equals(stateEntry.getKey(), requestedState))
-                        continue;
-                    StateData stateData = _stateData.computeIfAbsent(stateEntry.getKey(), k -> new StateData());
-                    for (Map.Entry<String, Map<String, CensusData>> countyEntry : stateEntry.getValue().entrySet()) {
-                        CountyData countyData = stateData.getData().computeIfAbsent(countyEntry.getKey(), k -> new CountyData());
-                        for (Map.Entry<String, CensusData> censusEntry : countyEntry.getValue().entrySet()) {
-                            CensusData censusData = countyData.getData().computeIfAbsent(censusEntry.getKey(), k -> new CensusData());
-                            censusData.setCommutingArea2000(censusEntry.getValue().getCommutingArea2000());
-                            // RUCA2010 is set via the SEER tract data...
-                        }
-                    }
-                }
-            }
-            _ruca2000StateInitialized.add(requestedState);
-        }
-        finally {
-            _lock.writeLock().unlock();
-        }
-    }
-
-    /**
-     * Returns true if the URIC data has been initialized, false otherwise.
-     */
-    public boolean isUric2000DataInitialized(String requestedState) {
-        _lock.readLock().lock();
-        try {
-            return _uric2000StateInitialized.contains(requestedState);
-        }
-        finally {
-            _lock.readLock().unlock();
-        }
-    }
-
-    /**
-     * Initializes the given URIC data (this call will make all other access to the data structure block).
-     */
-    public void initializeUric2000Data(String requestedState, Map<String, Map<String, Map<String, CensusData>>> data) {
-        _lock.writeLock().lock();
-        try {
-            if (!_uric2000StateInitialized.contains(requestedState)) {
-                for (Map.Entry<String, Map<String, Map<String, CensusData>>> stateEntry : data.entrySet()) {
-                    if (!Objects.equals(stateEntry.getKey(), requestedState))
-                        continue;
-                    StateData stateData = _stateData.computeIfAbsent(stateEntry.getKey(), k -> new StateData());
-                    for (Map.Entry<String, Map<String, CensusData>> countyEntry : stateEntry.getValue().entrySet()) {
-                        CountyData countyData = stateData.getData().computeIfAbsent(countyEntry.getKey(), k -> new CountyData());
-                        for (Map.Entry<String, CensusData> censusEntry : countyEntry.getValue().entrySet()) {
-                            CensusData censusData = countyData.getData().computeIfAbsent(censusEntry.getKey(), k -> new CensusData());
-                            censusData.setIndicatorCode2000(censusEntry.getValue().getIndicatorCode2000());
-                            // URIC2010 is set via the SEER tract data...
-                        }
-                    }
-                }
-            }
-            _uric2000StateInitialized.add(requestedState);
-        }
-        finally {
-            _lock.writeLock().unlock();
         }
     }
 

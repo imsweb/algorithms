@@ -9,19 +9,28 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.io.OutputStreamWriter;
+import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 import org.apache.commons.lang3.StringUtils;
+
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+import com.opencsv.exceptions.CsvException;
 
 import com.imsweb.algorithms.internal.CountryData;
 import com.imsweb.layout.LayoutUtils;
@@ -105,13 +114,8 @@ public class TractDataLab {
             layout = new FixedColumnsLayout(LayoutUtils.readFixedColumnsLayout(fis));
         }
 
-        // the big SEER tract data file was not added to the project (too big)
+        // load the data from the big SEER tract data file (it was not added to the project, too big)
         Path inputFile = Paths.get("C:\\dev\\tract.level.ses.2008_17.txt.gz");
-
-        // TODO FD read the other files
-
-        Path outputFile = Paths.get(System.getProperty("user.dir") + "\\src\\main\\resources\\tract\\tract-data.txt.gz");
-
         Map<DataKey, Map<String, String>> tractValues = new TreeMap<>();
         Map<DataKey, Map<Integer, String>> tractYearBasedValues = new HashMap<>();
         try (LineNumberReader reader = new LineNumberReader(new InputStreamReader(new GZIPInputStream(Files.newInputStream(inputFile)), StandardCharsets.US_ASCII))) {
@@ -144,7 +148,7 @@ public class TractDataLab {
                 StringBuilder buf = new StringBuilder();
                 for (String field : CountryData.getTractYearBasedFields().keySet())
                     buf.append(cleanYearBasedTractValue(lineNum, line, field));
-                tractYearBasedValues.computeIfAbsent(key, k -> new TreeMap<>()).put(Integer.valueOf(year), buf.toString());
+                tractYearBasedValues.computeIfAbsent(key, k -> new HashMap<>()).put(Integer.valueOf(year), buf.toString());
 
                 //tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("ruca2000", cleanTractValue(lineNum, line, "", "ruca2000"));
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("ruca2010", cleanTractValue(lineNum, line, "ruca2010C", "ruca2010"));
@@ -162,12 +166,64 @@ public class TractDataLab {
             }
         }
 
-        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new GZIPOutputStream(Files.newOutputStream(outputFile)), StandardCharsets.US_ASCII))) {
-            for (Entry<DataKey, Map<String, String>> entry : tractValues.entrySet()) {
-                DataKey key = entry.getKey();
-                Map<String, String> values = entry.getValue();
+        // URCA 2000
+        Map<DataKey, String> ruca2000Values = new HashMap<>();
+        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("ruralurban/rural-urban-commuting-area-2000.csv")) {
+            if (is == null)
+                throw new IllegalStateException("Missing data file!");
+            try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
+                 CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build()) {
 
+                List<String> urbanCommutingAreas = Arrays.asList("1.0", "1.1", "2.0", "2.1", "3.0", "4.1", "5.1", "7.1", "8.1", "10.1");
+
+                for (String[] row : csvReader.readAll()) {
+                    String primary = row[3];
+                    String secondary = row[4];
+
+                    String val;
+                    if (primary.equals("99"))
+                        val = "9";
+                    else if (urbanCommutingAreas.contains(secondary))
+                        val = "1";
+                    else
+                        val = "2";
+
+                    ruca2000Values.put(new DataKey(row[0], row[1], row[2]), val);
+                }
+            }
+        }
+        catch (CsvException | IOException e) {
+            throw new IllegalStateException(e);
+        }
+
+        // URIC 2000
+        Map<DataKey, String> uric2000Values = new HashMap<>();
+        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("ruralurban/urban-rural-indicator-code-2000.csv")) {
+            if (is == null)
+                throw new IllegalStateException("Missing data file!");
+            try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
+                 CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build()) {
+                for (String[] row : csvReader.readAll()) {
+                    if (row[4].length() != 1)
+                        throw new IllegalStateException("Found unexpected format for URIC value: " + row[4]);
+                    uric2000Values.put(new DataKey(row[0], row[1], row[2]), row[4]);
+                }
+            }
+        }
+        catch (CsvException | IOException e) {
+            throw new IllegalStateException(e);
+        }
+
+        // since we merge information from multiple sources, it's important to process the super set of all the keys!
+        Set<DataKey> allKeys = new TreeSet<>(tractValues.keySet());
+        allKeys.addAll(ruca2000Values.keySet());
+        allKeys.addAll(uric2000Values.keySet());
+
+        Path outputFile = Paths.get(System.getProperty("user.dir") + "\\src\\main\\resources\\tract\\tract-data.txt.gz");
+        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new GZIPOutputStream(Files.newOutputStream(outputFile)), StandardCharsets.US_ASCII))) {
+            for (DataKey key : allKeys) {
                 StringBuilder buf = new StringBuilder();
+
                 for (String field : CountryData.getTractFields().keySet()) {
                     if ("stateAbbreviation".equals(field))
                         buf.append(key.getState());
@@ -175,6 +231,10 @@ public class TractDataLab {
                         buf.append(key.getCounty());
                     else if ("censusTract".equals(field))
                         buf.append(key.getTract());
+                    else if ("ruca2000".equals(field))
+                        buf.append(ruca2000Values.getOrDefault(key, " "));
+                    else if ("uric2000".equals(field))
+                        buf.append(uric2000Values.getOrDefault(key, " "));
                     else if ("yearData".equals(field)) {
                         Map<Integer, String> yearData = tractYearBasedValues.get(key);
                         if (yearData != null) {
@@ -184,8 +244,10 @@ public class TractDataLab {
                         else
                             buf.append(StringUtils.rightPad("", CountryData.getTractFields().get(field), " "));
                     }
-                    else
-                        buf.append(values.get(field));
+                    else {
+                        String val = tractValues.getOrDefault(key, new HashMap<>()).getOrDefault(field, "");
+                        buf.append(StringUtils.rightPad(val, CountryData.getTractFields().get(field), " "));
+                    }
                 }
 
                 String line = buf.toString();

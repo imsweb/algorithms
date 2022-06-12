@@ -57,8 +57,8 @@ public final class RuralUrbanUtils {
      * The returned urban rural census will have the following values depending on the census tract (2000, or 2010):
      * <ul>
      * <li>1 = All urban - the percentage of the population in an urban area is 100%</li>
-     * <li>2 = Mostly urban - the percentage of the population in an urban area is between >=50% and <100%</li>
-     * <li>3 = Mostly rural - the percentage of the population in an urban area is between >0% and <50%</li>
+     * <li>2 = Mostly urban - the percentage of the population in an urban area is between &gt;=50% and &lt;100%</li>
+     * <li>3 = Mostly rural - the percentage of the population in an urban area is between &gt;0% and &lt;50%</li>
      * <li>4 = All rural - the percentage of the population in an urban area is 0%</li>
      * <li>9 = The percentage of the population in an urban or rural area is unknown</li>
      * <li>A = State, county, or tract are invalid</li>
