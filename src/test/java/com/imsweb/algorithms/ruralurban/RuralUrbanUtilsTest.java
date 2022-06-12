@@ -101,7 +101,6 @@ public class RuralUrbanUtilsTest {
                         record.put(_PROP_CENSUS_TRACT_2000, tract);
                         Assert.assertEquals("4", computeUrbanRuralIndicatorCode(record).getUrbanRuralIndicatorCode2010());
                         Assert.assertEquals("2", computeRuralUrbanCommutingArea(record).getRuralUrbanCommutingArea2000());
-                        System.out.println(record);
                         Assert.assertEquals("1", computeRuralUrbanCommutingArea(record).getRuralUrbanCommutingArea2010());
                         record.put(_PROP_STATE_DX, "WY");
                         record.put(_PROP_COUNTY_DX_ANALYSIS, "041");

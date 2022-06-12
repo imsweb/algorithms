@@ -12,7 +12,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -37,123 +39,52 @@ import org.apache.commons.lang3.math.NumberUtils;
 @SuppressWarnings("BooleanMethodIsAlwaysInverted")
 public class CountryData {
 
-    private static final String _SEER_CENSUS_DATA_FILE = "tract/tract.level.ses.2008_17.minimized.txt.gz";
-    private static final String _SEER_CENSUS_DATA_FILE_YEAR_BASED = "tract/tract.level.ses.2008_17.minimized.year.based.txt.gz";
+    private static final String _SEER_CENSUS_DATA_FILE = "tract/tract-data.txt.gz";
 
-    private static final Map<String, String> _STATES = new HashMap<>();
+    private static final Map<String, Integer> _TRACT_FIELDS = new LinkedHashMap<>();
 
     static {
-        _STATES.put("01", "AL");
-        _STATES.put("02", "AK");
-        _STATES.put("04", "AZ");
-        _STATES.put("05", "AR");
-        _STATES.put("06", "CA");
-        _STATES.put("08", "CO");
-        _STATES.put("09", "CT");
-        _STATES.put("10", "DE");
-        _STATES.put("11", "DC");
-        _STATES.put("12", "FL");
-        _STATES.put("13", "GA");
-        _STATES.put("15", "HI");
-        _STATES.put("16", "ID");
-        _STATES.put("17", "IL");
-        _STATES.put("18", "IN");
-        _STATES.put("19", "IA");
-        _STATES.put("20", "KS");
-        _STATES.put("21", "KY");
-        _STATES.put("22", "LA");
-        _STATES.put("23", "ME");
-        _STATES.put("24", "MD");
-        _STATES.put("25", "MA");
-        _STATES.put("26", "MI");
-        _STATES.put("27", "MN");
-        _STATES.put("28", "MS");
-        _STATES.put("29", "MO");
-        _STATES.put("30", "MT");
-        _STATES.put("31", "NE");
-        _STATES.put("32", "NV");
-        _STATES.put("33", "NH");
-        _STATES.put("34", "NJ");
-        _STATES.put("35", "NM");
-        _STATES.put("36", "NY");
-        _STATES.put("37", "NC");
-        _STATES.put("38", "ND");
-        _STATES.put("39", "OH");
-        _STATES.put("40", "OK");
-        _STATES.put("41", "OR");
-        _STATES.put("42", "PA");
-        _STATES.put("43", "PR");
-        _STATES.put("44", "RI");
-        _STATES.put("45", "SC");
-        _STATES.put("46", "SD");
-        _STATES.put("47", "TN");
-        _STATES.put("48", "TX");
-        _STATES.put("49", "UT");
-        _STATES.put("50", "VT");
-        _STATES.put("51", "VA");
-        _STATES.put("53", "WA");
-        _STATES.put("54", "WV");
-        _STATES.put("55", "WI");
-        _STATES.put("56", "WY");
-        _STATES.put("60", "AS");
-        _STATES.put("64", "FM");
-        _STATES.put("66", "GU");
-        _STATES.put("68", "MH");
-        _STATES.put("69", "MP");
-        _STATES.put("70", "PW");
-        _STATES.put("74", "UM");
-        _STATES.put("78", "VI");
-        _STATES.put("99", "YY");
+        _TRACT_FIELDS.put("stateAbbreviation", 2);
+        _TRACT_FIELDS.put("countyFips", 3);
+        _TRACT_FIELDS.put("censusTract", 6);
+        _TRACT_FIELDS.put("yearData", 370);
+        //TRACT_FIELDS.put("ruca2000", 1);
+        _TRACT_FIELDS.put("ruca2010", 1);
+        //TRACT_FIELDS.put("uric2000", 1);
+        _TRACT_FIELDS.put("uric2010", 1);
+        //TRACT_FIELDS.put("continuum1993", 1);
+        //TRACT_FIELDS.put("continuum2003", 1);
+        //TRACT_FIELDS.put("continuum2013", 1);
+        _TRACT_FIELDS.put("cancerReportingZone", 10);
+        _TRACT_FIELDS.put("naaccrPovertyIndicator", 1);
+        _TRACT_FIELDS.put("npcrEphtSubcounty5k", 11);
+        _TRACT_FIELDS.put("npcrEphtSubcounty20k", 11);
     }
 
-    public static Map<String, String> getStates() {
-        return Collections.unmodifiableMap(_STATES);
+    public static Map<String, Integer> getTractFields() {
+        return Collections.unmodifiableMap(_TRACT_FIELDS);
     }
 
-    // following start/end columns are shared between the two tract data files
-    public static final int STATE_FIPS_START = 1; // 2 char
-    public static final int STATE_FIPS_END = 2;
-    public static final int COUNTY_FIPS_START = 3; // 3 char
-    public static final int COUNTY_FIPS_END = 5;
-    public static final int TRACT_START = 6; // 6 char
-    public static final int TRACT_END = 11;
+    private static final Map<String, Integer> _TRACT_YEAR_BASED_FIELDS = new LinkedHashMap<>();
 
-    // following start/end columns are only applicable to the year-based tract data file
-    public static final int YEAR_START = 12; // 4 char
-    public static final int YEAR_END = 15;
+    static {
+        _TRACT_YEAR_BASED_FIELDS.put("yostUsBasedQuintile", 1);
+        _TRACT_YEAR_BASED_FIELDS.put("yostStateBasedQuintile", 1);
+        _TRACT_YEAR_BASED_FIELDS.put("percentBelowPovertyAllRaces", 5);
+        _TRACT_YEAR_BASED_FIELDS.put("percentBelowPovertyWhite", 5);
+        _TRACT_YEAR_BASED_FIELDS.put("percentBelowPovertyBlack", 5);
+        _TRACT_YEAR_BASED_FIELDS.put("percentBelowPovertyAmIndian", 5);
+        _TRACT_YEAR_BASED_FIELDS.put("percentBelowPovertyAsian", 5);
+        _TRACT_YEAR_BASED_FIELDS.put("percentBelowPovertyWhiteNotHisp", 5);
+        _TRACT_YEAR_BASED_FIELDS.put("percentBelowPovertyHisp", 5);
+    }
 
-    public static final int YOST_US_BASED_QUINTILE_START = 16; // 1 char
-    public static final int YOST_US_BASED_QUINTILE_END = 16;
-    public static final int YOST_STATE_BASED_QUINTILE_START = 17; // 1 char
-    public static final int YOST_STATE_BASED_QUINTILE_END = 17;
-    public static final int PERCENT_BEL_POV_ALL_RACES_START = 18; // 5 char
-    public static final int PERCENT_BEL_POV_ALL_RACES_END = 22;
-    public static final int PERCENT_BEL_POV_WHITE_START = 23; // 5 char
-    public static final int PERCENT_BEL_POV_WHITE_END = 27;
-    public static final int PERCENT_BEL_POV_BLACK_START = 28; // 5 char
-    public static final int PERCENT_BEL_POV_BLACK_END = 32;
-    public static final int PERCENT_BEL_POV_AM_INDIAN_START = 33; // 5 char
-    public static final int PERCENT_BEL_POV_AM_INDIAN_END = 37;
-    public static final int PERCENT_BEL_POV_ASIAN_START = 38; // 5 char
-    public static final int PERCENT_BEL_POV_ASIAN_END = 42;
-    public static final int PERCENT_BEL_POV_WHILE_NOT_HISP_START = 43; // 5 char
-    public static final int PERCENT_BEL_POV_WHILE_NOT_HISP_END = 47;
-    public static final int PERCENT_BEL_POV_HISP_START = 48; // 5 char
-    public static final int PERCENT_BEL_POV_HISP_END = 52;
+    public static Map<String, Integer> getTractYearBasedFields() {
+        return Collections.unmodifiableMap(_TRACT_YEAR_BASED_FIELDS);
+    }
 
-    // following start/end columns are only applicable to the non-year-based tract data file
-    public static final int RUCA_2010_START = 12; // 1 char
-    public static final int RUCA_2010_END = 12;
-    public static final int URIC_2010_START = 13; // 1 char
-    public static final int URIC_2010_END = 13;
-    public static final int ZONE_ID_START = 14; // 10 char
-    public static final int ZONE_ID_END = 23;
-    public static final int NAACCR_POV_INDICATOR_START = 24; // 1 char
-    public static final int NAACCR_POV_INDICATOR_END = 24;
-    public static final int CDC_SUBCOUNTY_5K_START = 25; // 11 char
-    public static final int CDC_SUBCOUNTY_5K_END = 35;
-    public static final int CDC_SUBCOUNTY_20K_START = 36; // 11 char
-    public static final int CDC_SUBCOUNTY_20K_END = 46;
+    public static final int TRACT_YEAR_MIN_VAL = 2008;
+    public static final int TRACT_YEAR_MAX_VAL = 2017;
 
     // singleton instance
     private static final CountryData _INSTANCE = new CountryData();
@@ -231,9 +162,17 @@ public class CountryData {
                     try (BufferedReader reader = new BufferedReader(new InputStreamReader(new GZIPInputStream(is), StandardCharsets.US_ASCII))) {
                         String line = reader.readLine();
                         while (line != null) {
-                            String state = _STATES.get(line.substring(STATE_FIPS_START - 1, STATE_FIPS_END));
-                            String county = line.substring(COUNTY_FIPS_START - 1, COUNTY_FIPS_END);
-                            String tract = line.substring(TRACT_START - 1, TRACT_END);
+
+                            int index = 0;
+                            Map<String, String> values = new HashMap<>();
+                            for (Entry<String, Integer> entry : _TRACT_FIELDS.entrySet()) {
+                                values.put(entry.getKey(), line.substring(index, index + entry.getValue()));
+                                index += entry.getValue();
+                            }
+
+                            String state = values.get("stateAbbreviation");
+                            String county = values.get("countyFips");
+                            String tract = values.get("censusTract");
 
                             if (Objects.equals(state, requestedState)) {
                                 StateData stateData = _stateData.computeIfAbsent(state, k -> new StateData());
@@ -241,17 +180,17 @@ public class CountryData {
                                 CensusData censusData = countyData.getData().computeIfAbsent(tract, k -> new CensusData());
 
                                 // RUCA2010 - RUCA2000 is still handled with specific (old) data files
-                                censusData.setCommutingArea2010(Objects.toString(StringUtils.trimToNull(line.substring(RUCA_2010_START - 1, RUCA_2010_END)), "9"));
+                                censusData.setCommutingArea2010(Objects.toString(StringUtils.trimToNull(values.get("ruca2010")), "9"));
 
                                 // URIC2010 - URIC2000 is still handled with specific (old) data files
-                                censusData.setIndicatorCode2010(Objects.toString(StringUtils.trimToNull(line.substring(URIC_2010_START - 1, URIC_2010_END)), "9"));
+                                censusData.setIndicatorCode2010(Objects.toString(StringUtils.trimToNull(values.get("uric2010")), "9"));
 
                                 // NPCR EPHT SubCounty
-                                censusData.setEpht2010GeoId5k(StringUtils.leftPad(StringUtils.trimToNull(line.substring(CDC_SUBCOUNTY_5K_START - 1, CDC_SUBCOUNTY_5K_END)), 11, '0'));
-                                censusData.setEpht2010GeoId20k(StringUtils.leftPad(StringUtils.trimToNull(line.substring(CDC_SUBCOUNTY_20K_START - 1, CDC_SUBCOUNTY_20K_END)), 11, '0'));
+                                censusData.setEpht2010GeoId5k(StringUtils.leftPad(StringUtils.trimToNull(values.get("npcrEphtSubcounty5k")), 11, '0'));
+                                censusData.setEpht2010GeoId20k(StringUtils.leftPad(StringUtils.trimToNull(values.get("npcrEphtSubcounty20k")), 11, '0'));
 
                                 // Cancer Reporting Zone
-                                censusData.setCancerReportingZone(StringUtils.trimToNull(line.substring(ZONE_ID_START - 1, ZONE_ID_END)));
+                                censusData.setCancerReportingZone(StringUtils.trimToNull(values.get("cancerReportingZone")));
                             }
 
                             line = reader.readLine();
@@ -295,7 +234,7 @@ public class CountryData {
         _lock.writeLock().lock();
         try {
             if (!_stateTractDataYearBasedInitialized.contains(requestedState)) {
-                try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(_SEER_CENSUS_DATA_FILE_YEAR_BASED)) {
+                try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(_SEER_CENSUS_DATA_FILE)) {
                     if (is == null)
                         throw new IllegalStateException("Unable to get year-based SEER census tract data file");
                     try (LineNumberReader reader = new LineNumberReader(new InputStreamReader(new GZIPInputStream(is), StandardCharsets.US_ASCII))) {
@@ -303,30 +242,46 @@ public class CountryData {
                         while (line != null) {
                             int lineNum = reader.getLineNumber();
 
-                            String state = _STATES.get(line.substring(STATE_FIPS_START - 1, STATE_FIPS_END));
-                            String county = line.substring(COUNTY_FIPS_START - 1, COUNTY_FIPS_END);
-                            String tract = line.substring(TRACT_START - 1, TRACT_END);
-                            String year = line.substring(YEAR_START - 1, YEAR_END);
+                            int index = 0;
+                            Map<String, String> values = new HashMap<>();
+                            for (Entry<String, Integer> entry : _TRACT_FIELDS.entrySet()) {
+                                values.put(entry.getKey(), line.substring(index, index + entry.getValue()));
+                                index += entry.getValue();
+                            }
+
+                            String state = values.get("stateAbbreviation");
+                            String county = values.get("countyFips");
+                            String tract = values.get("censusTract");
+                            String rawYearData = values.get("yearData");
 
                             if (Objects.equals(state, requestedState)) {
                                 StateData stateData = _stateData.computeIfAbsent(state, k -> new StateData());
                                 CountyData countyData = stateData.getData().computeIfAbsent(county, k -> new CountyData());
                                 CensusData censusData = countyData.getData().computeIfAbsent(tract, k -> new CensusData());
-                                YearData yearData = censusData.getData().computeIfAbsent(year, k -> new YearData());
 
-                                // YOST
-                                yearData.setYostQuintileState(StringUtils.trim(line.substring(YOST_STATE_BASED_QUINTILE_START - 1, YOST_STATE_BASED_QUINTILE_END)));
-                                yearData.setYostQuintileUS(StringUtils.trim(line.substring(YOST_US_BASED_QUINTILE_START - 1, YOST_US_BASED_QUINTILE_END)));
+                                index = 0;
+                                for (int year = TRACT_YEAR_MIN_VAL; year <= TRACT_YEAR_MAX_VAL; year++) {
+                                    YearData yearData = censusData.getData().computeIfAbsent(String.valueOf(year), k -> new YearData());
 
-                                // ACS Poverty
-                                yearData.setAcsPctPovAllRaces(cleanPoverty(lineNum, StringUtils.trim(line.substring(PERCENT_BEL_POV_ALL_RACES_START - 1, PERCENT_BEL_POV_ALL_RACES_END))));
-                                yearData.setAcsPctPovWhite(cleanPoverty(lineNum, StringUtils.trim(line.substring(PERCENT_BEL_POV_WHITE_START - 1, PERCENT_BEL_POV_WHITE_END))));
-                                yearData.setAcsPctPovBlack(cleanPoverty(lineNum, StringUtils.trim(line.substring(PERCENT_BEL_POV_BLACK_START - 1, PERCENT_BEL_POV_BLACK_END))));
-                                yearData.setAcsPctPovAIAN(cleanPoverty(lineNum, StringUtils.trim(line.substring(PERCENT_BEL_POV_AM_INDIAN_START - 1, PERCENT_BEL_POV_AM_INDIAN_END))));
-                                yearData.setAcsPctPovAsianNHOPI(cleanPoverty(lineNum, StringUtils.trim(line.substring(PERCENT_BEL_POV_ASIAN_START - 1, PERCENT_BEL_POV_ASIAN_END))));
-                                yearData.setAcsPctPovWhiteNonHisp(
-                                        cleanPoverty(lineNum, StringUtils.trim(line.substring(PERCENT_BEL_POV_WHILE_NOT_HISP_START - 1, PERCENT_BEL_POV_WHILE_NOT_HISP_END))));
-                                yearData.setAcsPctPovHispanic(cleanPoverty(lineNum, StringUtils.trim(line.substring(PERCENT_BEL_POV_HISP_START - 1, PERCENT_BEL_POV_HISP_END))));
+                                    Map<String, String> yearValues = new HashMap<>();
+                                    for (Entry<String, Integer> entry : _TRACT_YEAR_BASED_FIELDS.entrySet()) {
+                                        yearValues.put(entry.getKey(), rawYearData.substring(index, index + entry.getValue()));
+                                        index += entry.getValue();
+                                    }
+
+                                    // YOST
+                                    yearData.setYostQuintileState(StringUtils.trim(yearValues.get("yostStateBasedQuintile")));
+                                    yearData.setYostQuintileUS(StringUtils.trim(yearValues.get("yostUsBasedQuintile")));
+
+                                    // ACS Poverty
+                                    yearData.setAcsPctPovAllRaces(cleanPoverty(lineNum, StringUtils.trim(yearValues.get("percentBelowPovertyAllRaces"))));
+                                    yearData.setAcsPctPovWhite(cleanPoverty(lineNum, StringUtils.trim(yearValues.get("percentBelowPovertyWhite"))));
+                                    yearData.setAcsPctPovBlack(cleanPoverty(lineNum, StringUtils.trim(yearValues.get("percentBelowPovertyBlack"))));
+                                    yearData.setAcsPctPovAIAN(cleanPoverty(lineNum, StringUtils.trim(yearValues.get("percentBelowPovertyAmIndian"))));
+                                    yearData.setAcsPctPovAsianNHOPI(cleanPoverty(lineNum, StringUtils.trim(yearValues.get("percentBelowPovertyAsian"))));
+                                    yearData.setAcsPctPovWhiteNonHisp(cleanPoverty(lineNum, StringUtils.trim(yearValues.get("percentBelowPovertyWhiteNotHisp"))));
+                                    yearData.setAcsPctPovHispanic(cleanPoverty(lineNum, StringUtils.trim(yearValues.get("percentBelowPovertyHisp"))));
+                                }
 
                             }
 
