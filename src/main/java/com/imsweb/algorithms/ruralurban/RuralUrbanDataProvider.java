@@ -62,14 +62,8 @@ public class RuralUrbanDataProvider {
         String result = null;
         if (tractCategory.equals(RuralUrbanUtils.TRACT_CATEGORY_2000))
             result = censusData.getIndicatorCode2000();
-        else if (tractCategory.equals(RuralUrbanUtils.TRACT_CATEGORY_2010)) {
+        else if (tractCategory.equals(RuralUrbanUtils.TRACT_CATEGORY_2010))
             result = censusData.getIndicatorCode2010();
-
-            // TODO FD I don't think we want this, waiting on confirmation...
-            // if you didn't find a match in the 2010 lookup, check the 2000 lookup
-            //if (result == null || result.equals(URBAN_RURAL_INDICATOR_CODE_UNKNOWN))
-            //    result = censusData.getIndicatorCode2000();
-        }
 
         return result == null ? URBAN_RURAL_INDICATOR_CODE_UNKNOWN : result;
     }
@@ -95,14 +89,8 @@ public class RuralUrbanDataProvider {
         String result = null;
         if (tractCategory.equals(RuralUrbanUtils.TRACT_CATEGORY_2000))
             result = censusData.getCommutingArea2000();
-        else if (tractCategory.equals(RuralUrbanUtils.TRACT_CATEGORY_2010)) {
+        else if (tractCategory.equals(RuralUrbanUtils.TRACT_CATEGORY_2010))
             result = censusData.getCommutingArea2010();
-
-            // TODO FD I don't think we want this, waiting on confirmation...
-            // if you didn't find a match in the 2010 lookup, check the 2000 lookup
-            //if (result == null || result.equals(RURAL_URBAN_COMMUTING_AREA_UNKNOWN))
-            //    result = censusData.getCommutingArea2000();
-        }
 
         return result == null ? RURAL_URBAN_COMMUTING_AREA_UNKNOWN : result;
     }
