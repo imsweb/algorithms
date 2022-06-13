@@ -167,7 +167,7 @@ public final class NapiiaUtils {
      * @param input the <code>NapiiaInputRecordDto</code> input DTO object
      * @return the computed NAPIIA Results Dto, which has a calculated napiia value, a boolean which indicates whether a human review is needed or not and a reason if human review is required
      */
-    @SuppressWarnings("ConstantConditions")
+    @SuppressWarnings({"ConstantConditions", "java:S3776"}) // method too complex
     public static NapiiaResultsDto computeNapiia(NapiiaInputRecordDto input) {
         NapiiaResultsDto napiiaResults = new NapiiaResultsDto();
 

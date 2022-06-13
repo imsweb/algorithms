@@ -26,6 +26,10 @@ public class IarcUtils {
     public static final Integer PRIMARY = 1;
     public static final Integer INSITU = 9;
 
+    private IarcUtils() {
+        // utility class
+    }
+
     public static List<IarcMpInputRecordDto> calculateIarcMp(List<IarcMpInputRecordDto> records) {
         //No records
         if (records == null || records.isEmpty())
@@ -200,7 +204,10 @@ public class IarcUtils {
     private static class InternalRecDto implements Comparable<InternalRecDto> {
 
         IarcMpInputRecordDto _originalRecord;
-        int _year, _month, _day, _seqNum;
+        int _year;
+        int _month;
+        int _day;
+        int _seqNum;
 
         public InternalRecDto(IarcMpInputRecordDto record) {
             _originalRecord = record;

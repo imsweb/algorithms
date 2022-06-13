@@ -17,9 +17,6 @@ public class CauseSpecificInputDto {
 
     private String _dateOfLastContactYear;
 
-    public CauseSpecificInputDto() {
-    }
-
     public String getPrimarySite() {
         return _primarySite;
     }

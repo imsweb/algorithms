@@ -5,9 +5,9 @@ package com.imsweb.algorithms.prcdauiho;
 
 public class PrcdaUihoOutputDto {
 
-    private String _prcda, _uiho;
+    private String _prcda;
 
-    public PrcdaUihoOutputDto() { }
+    private String _uiho;
 
     public String getPRCDA() {
         return _prcda;

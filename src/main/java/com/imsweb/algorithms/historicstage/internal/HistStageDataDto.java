@@ -13,8 +13,8 @@ import org.apache.commons.lang3.StringUtils;
 
 public abstract class HistStageDataDto {
 
-    private static Pattern _RANGE_PATTERN = Pattern.compile("^(\\d+)-(\\d+)$");
-    private static Pattern _NUMBER_PATTERN = Pattern.compile("^(\\d+)$");
+    private static final Pattern _RANGE_PATTERN = Pattern.compile("^(\\d+)-(\\d+)$");
+    private static final Pattern _NUMBER_PATTERN = Pattern.compile("^(\\d+)$");
 
     protected List<Object> parse(String str) {
         List<Object> result = new ArrayList<>();
@@ -42,7 +42,7 @@ public abstract class HistStageDataDto {
         Integer intValue = _NUMBER_PATTERN.matcher(value).matches() ? Integer.valueOf(value) : null;
         for (Object obj : list) {
             if (obj instanceof Range) {
-                Range range = (Range)obj;
+                Range<?> range = (Range<?>)obj;
                 if (intValue != null && intValue.compareTo((Integer)range.getMinimum()) >= 0 && intValue.compareTo((Integer)range.getMaximum()) <= 0)
                     return true;
             }

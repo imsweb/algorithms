@@ -98,6 +98,10 @@ public final class NeoAdjuvantTherapyTxEffectUtils {
         _ALL_ALLOWED_VALUES.addAll(_G.keySet());
     }
 
+    private NeoAdjuvantTherapyTxEffectUtils() {
+        // utility class
+    }
+
     /**
      * Returns the lookup for neoadjuvTherapyTreatmentEffect (#1634) corresponding to the provided schemaId (#3800).
      */

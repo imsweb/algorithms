@@ -22,7 +22,7 @@ public abstract class AbstractAlgorithm implements Algorithm {
 
     protected Map<String, List<String>> _unknownValues;
 
-    public AbstractAlgorithm(String id, String name, String version) {
+    protected AbstractAlgorithm(String id, String name, String version) {
         if (id == null)
             throw new IllegalStateException("ID is required");
         if (name == null)
@@ -81,7 +81,4 @@ public abstract class AbstractAlgorithm implements Algorithm {
     public Map<String, List<String>> getUnknownValues() {
         return _unknownValues;
     }
-
-    @Override
-    public abstract AlgorithmOutput execute(AlgorithmInput input);
 }

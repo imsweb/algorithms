@@ -9,9 +9,6 @@ public class CauseSpecificResultDto {
 
     private String _causeOtherDeathClassification;
 
-    public CauseSpecificResultDto() {
-    }
-
     public String getCauseSpecificDeathClassification() {
         return _causeSpecificDeathClassification;
     }

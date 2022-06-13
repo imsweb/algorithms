@@ -26,7 +26,8 @@ public class BehaviorRecodeUtils {
     public static final String ONLY_MALIGNANT_2010_AND_AFTER = "6";
     public static final String UNKNOWN = "9";
 
-    public BehaviorRecodeUtils() {
+    private BehaviorRecodeUtils() {
+        // utility class
     }
 
     public static String computeBehaviorRecode(String site, String hist, String behavior, String dxYear) {

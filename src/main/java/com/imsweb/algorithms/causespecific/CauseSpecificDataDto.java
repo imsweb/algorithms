@@ -15,15 +15,15 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class CauseSpecificDataDto {
 
-    private String _icdVersion;
+    private final String _icdVersion;
 
-    private String _seq;
+    private final String _seq;
 
-    private String _recode;
+    private final String _recode;
 
-    private List<Object> _deathCode3Dig;
+    private final List<Object> _deathCode3Dig;
 
-    private List<Object> _deathCode4Dig;
+    private final List<Object> _deathCode4Dig;
 
     public CauseSpecificDataDto(String[] row) {
         _icdVersion = row[0];

@@ -5,9 +5,9 @@ package com.imsweb.algorithms.ephtsubcounty;
 
 public class EphtSubCountyOutputDto {
 
-    private String _epht2010GeoId5k, _epht2010GeoId20k;
-    
-    public EphtSubCountyOutputDto() { }
+    private String _epht2010GeoId5k;
+
+    private String _epht2010GeoId20k;
 
     public String getEpht2010GeoId5k() {
         return _epht2010GeoId5k;

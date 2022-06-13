@@ -1,4 +1,4 @@
-package com.imsweb.algorithms.historicstage;
+package lab;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,6 +11,8 @@ import java.util.zip.GZIPInputStream;
 
 import com.opencsv.CSVWriter;
 
+import com.imsweb.algorithms.historicstage.HistoricStageInputDto;
+import com.imsweb.algorithms.historicstage.HistoricStageUtils;
 import com.imsweb.layout.LayoutFactory;
 import com.imsweb.layout.record.fixed.naaccr.NaaccrLayout;
 
@@ -18,7 +20,7 @@ import com.imsweb.layout.record.fixed.naaccr.NaaccrLayout;
  * Read in a NAACCR 14 gz file and output a csv with registry, pat id, seq num, yeardx, stage
  * Created by keelg on 6/29/2015.
  */
-public class HistoricStageNaaccrTests {
+public class HistoricStageNaaccrLab {
 
     public static void main(String[] args) throws IOException {
 
@@ -43,7 +45,8 @@ public class HistoricStageNaaccrTests {
                     line[3] = record.get(layout.getFieldByNaaccrItemNumber(390).getName()); //Yeardx
 
                     HistoricStageInputDto inputDto = new HistoricStageInputDto();
-                    // TODO translate record into input DTO (method taking a record was deprecated)
+
+                    // translate record into input DTO (method taking a record was deprecated)
 
                     line[4] = HistoricStageUtils.computeHistoricStage(inputDto).getResult();
                     writer.writeNext(line);

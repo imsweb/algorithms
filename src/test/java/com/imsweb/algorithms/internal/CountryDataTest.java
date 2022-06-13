@@ -21,6 +21,7 @@ import com.imsweb.algorithms.ruralurban.RuralUrbanUtils;
 public class CountryDataTest {
 
     @Test
+    @SuppressWarnings({"java:S2925", "ResultOfMethodCallIgnored"}) // calling Thread.sleep
     public void testConcurrency() throws InterruptedException {
 
         // individual algorithms test their own data; this test is making sure the combined access

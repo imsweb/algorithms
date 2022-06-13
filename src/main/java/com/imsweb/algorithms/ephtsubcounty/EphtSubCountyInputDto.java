@@ -29,9 +29,6 @@ public class EphtSubCountyInputDto {
 
     private String _censusTract2010;
 
-    public EphtSubCountyInputDto() {
-    }
-
     public void applyRecodes() {
         _addressAtDxState = _addressAtDxState == null ? "" : _addressAtDxState.toUpperCase().trim();
         _countyAtDxAnalysis = _countyAtDxAnalysis == null ? "" : _countyAtDxAnalysis.trim();

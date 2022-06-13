@@ -22,9 +22,6 @@ public class PrcdaUihoInputDto {
     private String _addressAtDxCounty;
     private String _addressAtDxState;
 
-    public PrcdaUihoInputDto() {
-    }
-
     public void applyRecodes() {
         _addressAtDxState = _addressAtDxState == null ? "" : _addressAtDxState.toUpperCase().trim();
         _addressAtDxCounty = _addressAtDxCounty == null ? "" : _addressAtDxCounty.trim();
