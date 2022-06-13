@@ -115,6 +115,7 @@ public class TractDataLab {
         }
 
         // load the data from the big SEER tract data file (it was not added to the project, too big)
+        //    https://seer.cancer.gov/seerstat/variables/countyattribs/census-tract-attribs.html
         Path inputFile = Paths.get("C:\\dev\\tract.level.ses.2008_17.txt.gz");
         Map<DataKey, Map<String, String>> tractValues = new TreeMap<>();
         Map<DataKey, Map<Integer, String>> tractYearBasedValues = new HashMap<>();
@@ -148,22 +149,38 @@ public class TractDataLab {
                 StringBuilder buf = new StringBuilder();
                 for (String field : CountryData.getTractYearBasedFields().keySet())
                     buf.append(cleanYearBasedTractValue(lineNum, line, field));
-                tractYearBasedValues.computeIfAbsent(key, k -> new HashMap<>()).put(Integer.valueOf(year), buf.toString());
+                tractYearBasedValues.computeIfAbsent(key, k -> new TreeMap<>()).put(Integer.valueOf(year), buf.toString());
 
-                //tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("ruca2000", cleanTractValue(lineNum, line, "", "ruca2000"));
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("ruca2010", cleanTractValue(lineNum, line, "ruca2010C", "ruca2010"));
-                //tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("uric2000", cleanTractValue(lineNum, line, "", "uric2000"));
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("uric2010", cleanTractValue(lineNum, line, "uric2010A", "uric2010"));
-                //tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("continuum1993", cleanTractValue(lineNum, line, "", "continuum1993"));
-                //tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("continuum2003", cleanTractValue(lineNum, line, "", "continuum2003"));
-                //tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("continuum2013", cleanTractValue(lineNum, line, "", "continuum2013"));
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("cancerReportingZone", cleanTractValue(lineNum, line, "zoneId", "cancerReportingZone"));
-                tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("naaccrPovertyIndicator", cleanTractValue(lineNum, line, "naaccrPovertyIndicator", "naaccrPovertyIndicator"));
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("npcrEphtSubcounty5k", cleanTractValue(lineNum, line, "cdcSubcounty5k", "npcrEphtSubcounty5k"));
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("npcrEphtSubcounty20k", cleanTractValue(lineNum, line, "cdcSubcounty20k", "npcrEphtSubcounty20k"));
 
                 line = layout.readNextRecord(reader);
             }
+        }
+
+        // NAACCR Poverty Indicator 1995-2004
+        Map<DataKey, String> naaccrPovertyIndicator9504 = new HashMap<>();
+        try (Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("povertyindicator/poverty-indicator-1995-2004.csv"), StandardCharsets.US_ASCII);
+             CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build()) {
+            for (String[] row : csvReader.readAll())
+                naaccrPovertyIndicator9504.put(new DataKey(row[0], row[1], row[2]), row[3]);
+        }
+        catch (CsvException | IOException e) {
+            throw new IllegalStateException(e);
+        }
+
+        // NAACCR Poverty Indicator 2005-2007
+        Map<DataKey, String> naaccrPovertyIndicator0507 = new HashMap<>();
+        try (Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("povertyindicator/poverty-indicator-2005-2007.csv"), StandardCharsets.US_ASCII);
+             CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build()) {
+            for (String[] row : csvReader.readAll())
+                naaccrPovertyIndicator0507.put(new DataKey(row[0], row[1], row[2]), row[3]);
+        }
+        catch (CsvException | IOException e) {
+            throw new IllegalStateException(e);
         }
 
         // URCA 2000
@@ -218,6 +235,8 @@ public class TractDataLab {
         Set<DataKey> allKeys = new TreeSet<>(tractValues.keySet());
         allKeys.addAll(ruca2000Values.keySet());
         allKeys.addAll(uric2000Values.keySet());
+        allKeys.addAll(naaccrPovertyIndicator9504.keySet());
+        allKeys.addAll(naaccrPovertyIndicator0507.keySet());
 
         Path outputFile = Paths.get(System.getProperty("user.dir") + "\\src\\main\\resources\\tract\\tract-data.txt.gz");
         try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new GZIPOutputStream(Files.newOutputStream(outputFile)), StandardCharsets.US_ASCII))) {
@@ -231,6 +250,10 @@ public class TractDataLab {
                         buf.append(key.getCounty());
                     else if ("censusTract".equals(field))
                         buf.append(key.getTract());
+                    else if ("naaccrPovertyIndicator9504".equals(field))
+                        buf.append(naaccrPovertyIndicator9504.getOrDefault(key, " "));
+                    else if ("naaccrPovertyIndicator0507".equals(field))
+                        buf.append(naaccrPovertyIndicator0507.getOrDefault(key, " "));
                     else if ("ruca2000".equals(field))
                         buf.append(ruca2000Values.getOrDefault(key, " "));
                     else if ("uric2000".equals(field))
@@ -256,7 +279,7 @@ public class TractDataLab {
                 if (line.contains("null"))
                     throw new IllegalStateException("Line contains null: " + line);
 
-                writer.write(buf.toString());
+                writer.write(line);
                 writer.newLine();
             }
         }

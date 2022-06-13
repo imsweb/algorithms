@@ -7,6 +7,10 @@ import java.time.LocalDate;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
+import com.imsweb.algorithms.internal.CensusData;
+import com.imsweb.algorithms.internal.CountryData;
+import com.imsweb.algorithms.internal.CountyData;
+import com.imsweb.algorithms.internal.StateData;
 import com.imsweb.algorithms.yostacspoverty.YostAcsPovertyInputDto;
 import com.imsweb.algorithms.yostacspoverty.YostAcsPovertyUtils;
 
@@ -22,8 +26,6 @@ public final class CensusTractPovertyIndicatorUtils {
 
     //Unknown value for census tract poverty indicator
     public static final String POVERTY_INDICATOR_UNKNOWN = "9";
-
-    private static final CensusTractPovertyIndicatorDataProvider _PROVIDER = new CensusTractPovertyIndicatorDataProvider();
 
     private CensusTractPovertyIndicatorUtils() {
         // no instances of this class allowed!
@@ -92,8 +94,21 @@ public final class CensusTractPovertyIndicatorUtils {
             return result;
 
         int year = Integer.parseInt(dxYear);
-        if (year >= 1995 && year <= 2007)
-            result.setCensusTractPovertyIndicator(_PROVIDER.getPovertyIndicator(year, input.getAddressAtDxState(), input.getCountyAtDxAnalysis(), input.getCensusTract2000()));
+        if (year >= 1995 && year <= 2007) {
+
+            if (!CountryData.getInstance().isTractDataInitialized(input.getAddressAtDxState()))
+                CountryData.getInstance().initializeTractData(input.getAddressAtDxState());
+
+            StateData stateData = CountryData.getInstance().getTractData(input.getAddressAtDxState());
+            if (stateData != null) {
+                CountyData countyData = stateData.getCountyData(input.getCountyAtDxAnalysis());
+                if (countyData != null) {
+                    CensusData censusData = countyData.getCensusData(input.getCensusTract2000());
+                    if (censusData != null)
+                        result.setCensusTractPovertyIndicator(year <= 2004 ? censusData.getNaaccrPovertyIndicator9504() : censusData.getNaaccrPovertyIndicator0507());
+                }
+            }
+        }
         else if (year >= 2008 && (year <= 2017 || (includeRecentYears && year <= LocalDate.now().getYear()))) {
             YostAcsPovertyInputDto yostAcsPovertyInput = new YostAcsPovertyInputDto();
             yostAcsPovertyInput.setAddressAtDxState(input.getAddressAtDxState());

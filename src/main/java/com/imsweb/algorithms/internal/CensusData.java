@@ -20,8 +20,11 @@ public class CensusData {
     // URIC 2010
     private String _indicatorCode2010;
 
-    // poverty indicator data
-    private Map<String, String> _povertyIndicators;
+    // poverty indicator data (1995-2004)
+    private String _naaccrPovertyIndicator9504;
+
+    // poverty indicator data (2005-2007)
+    private String _naaccrPovertyIndicator0507;
 
     // Cancer Reporting Zone
     private String _cancerReportingZone;
@@ -70,12 +73,20 @@ public class CensusData {
         _commutingArea2010 = commutingArea2010;
     }
 
-    public Map<String, String> getPovertyIndicators() {
-        return _povertyIndicators;
+    public String getNaaccrPovertyIndicator9504() {
+        return _naaccrPovertyIndicator9504;
     }
 
-    public void setPovertyIndicators(Map<String, String> povertyIndicators) {
-        _povertyIndicators = povertyIndicators;
+    public void setNaaccrPovertyIndicator9504(String naaccrPovertyIndicator9504) {
+        _naaccrPovertyIndicator9504 = naaccrPovertyIndicator9504;
+    }
+
+    public String getNaaccrPovertyIndicator0507() {
+        return _naaccrPovertyIndicator0507;
+    }
+
+    public void setNaaccrPovertyIndicator0507(String naaccrPovertyIndicator0507) {
+        _naaccrPovertyIndicator0507 = naaccrPovertyIndicator0507;
     }
 
     public String getEpht2010GeoId20k() {

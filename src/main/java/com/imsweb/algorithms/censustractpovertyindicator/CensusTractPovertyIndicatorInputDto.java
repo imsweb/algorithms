@@ -15,9 +15,6 @@ public class CensusTractPovertyIndicatorInputDto {
 
     private String _censusTract2010;
 
-    public CensusTractPovertyIndicatorInputDto() {
-    }
-
     public String getAddressAtDxState() {
         return _addressAtDxState;
     }

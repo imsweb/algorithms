@@ -7,9 +7,6 @@ public class CensusTractPovertyIndicatorOutputDto {
 
     private String _censusTractPovertyIndicator;
 
-    public CensusTractPovertyIndicatorOutputDto() {
-    }
-
     public String getCensusTractPovertyIndicator() {
         return _censusTractPovertyIndicator;
     }

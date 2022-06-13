@@ -53,7 +53,8 @@ public class CountryData {
         _TRACT_FIELDS.put("uric2000", 1);
         _TRACT_FIELDS.put("uric2010", 1);
         _TRACT_FIELDS.put("cancerReportingZone", 10);
-        _TRACT_FIELDS.put("naaccrPovertyIndicator", 1);
+        _TRACT_FIELDS.put("naaccrPovertyIndicator9504", 1);
+        _TRACT_FIELDS.put("naaccrPovertyIndicator0507", 1);
         _TRACT_FIELDS.put("npcrEphtSubcounty5k", 11);
         _TRACT_FIELDS.put("npcrEphtSubcounty20k", 11);
     }
@@ -102,7 +103,6 @@ public class CountryData {
 
     // the states that had their Continuum 1993/2003/2013 data initialized
     private final Set<String> _continuumStateInitialized = new HashSet<>();
-    private boolean _povertyInitialized = false; // this is only used for "old" years; the recent years are handled by the census-related data...
     private boolean _countyAtDxAnalysisInitialized = false;
     private boolean _prcdaInitialized = false;
     private boolean _uihoInitialized = false;
@@ -121,7 +121,6 @@ public class CountryData {
             _stateTractDataInitialized.clear();
             _stateTractDataYearBasedInitialized.clear();
             _continuumStateInitialized.clear();
-            _povertyInitialized = false;
             _countyAtDxAnalysisInitialized = false;
             _prcdaInitialized = false;
             _uihoInitialized = false;
@@ -167,6 +166,10 @@ public class CountryData {
                                 StateData stateData = _stateData.computeIfAbsent(state, k -> new StateData());
                                 CountyData countyData = stateData.getData().computeIfAbsent(county, k -> new CountyData());
                                 CensusData censusData = countyData.getData().computeIfAbsent(tract, k -> new CensusData());
+
+                                // NAACCR Poverty Indicator (only "old" years, the "recent" years are computed from the ACS poverty percentages for "all races")
+                                censusData.setNaaccrPovertyIndicator9504(StringUtils.trimToNull(values.get("naaccrPovertyIndicator9504")));
+                                censusData.setNaaccrPovertyIndicator0507(StringUtils.trimToNull(values.get("naaccrPovertyIndicator0507")));
 
                                 // RUCA
                                 censusData.setCommutingArea2000(Objects.toString(StringUtils.trimToNull(values.get("ruca2000")), "9"));
@@ -369,59 +372,6 @@ public class CountryData {
                 }
             }
             _continuumStateInitialized.add(requestedState);
-        }
-        finally {
-            _lock.writeLock().unlock();
-        }
-    }
-
-    /**
-     * Returns requested state data to be used by the poverty indicator algorithm.
-     */
-    public StateData getPovertyData(String state) {
-        _lock.readLock().lock();
-        try {
-            if (!_povertyInitialized)
-                throw new IllegalStateException("Poverty indicator data cannot be access before it has been initialized!");
-            return _stateData.get(state);
-        }
-        finally {
-            _lock.readLock().unlock();
-        }
-    }
-
-    /**
-     * Returns true if the poverty indicator data has been initialized, false otherwise.
-     */
-    public boolean isPovertyDataInitialized() {
-        _lock.readLock().lock();
-        try {
-            return _povertyInitialized;
-        }
-        finally {
-            _lock.readLock().unlock();
-        }
-    }
-
-    /**
-     * Initializes the given poverty indicator data (this call will make all other access to the data structure block).
-     */
-    public void initializePovertyData(Map<String, Map<String, Map<String, CensusData>>> data) {
-        _lock.writeLock().lock();
-        try {
-            if (!_povertyInitialized) {
-                for (Map.Entry<String, Map<String, Map<String, CensusData>>> stateEntry : data.entrySet()) {
-                    StateData stateData = _stateData.computeIfAbsent(stateEntry.getKey(), k -> new StateData());
-                    for (Map.Entry<String, Map<String, CensusData>> countyEntry : stateEntry.getValue().entrySet()) {
-                        CountyData countyData = stateData.getData().computeIfAbsent(countyEntry.getKey(), k -> new CountyData());
-                        for (Map.Entry<String, CensusData> censusEntry : countyEntry.getValue().entrySet()) {
-                            CensusData censusData = countyData.getData().computeIfAbsent(censusEntry.getKey(), k -> new CensusData());
-                            censusData.setPovertyIndicators(censusEntry.getValue().getPovertyIndicators());
-                        }
-                    }
-                }
-            }
-            _povertyInitialized = true;
         }
         finally {
             _lock.writeLock().unlock();
