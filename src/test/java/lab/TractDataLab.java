@@ -134,7 +134,7 @@ public class TractDataLab {
 
         // load the data from the big SEER tract data file (it was not added to the project, too big)
         //    https://seer.cancer.gov/seerstat/variables/countyattribs/census-tract-attribs.html
-        Path inputFile = Paths.get("C:\\dev\\tract.level.ses.2008_17.txt.gz");
+        Path inputFile = Paths.get("<change-me>\\tract.level.ses.2008_17.txt.gz");
         Map<DataKey, Map<String, String>> tractValues = new TreeMap<>();
         Map<DataKey, Map<Integer, String>> tractYearBasedValues = new HashMap<>();
         try (LineNumberReader reader = new LineNumberReader(new InputStreamReader(new GZIPInputStream(Files.newInputStream(inputFile)), StandardCharsets.US_ASCII))) {
