@@ -126,7 +126,8 @@ sonarqube {
         property 'sonar.projectKey', 'Library---Algorithms'
         property 'sonar.organization', 'imsweb'
         property 'sonar.host.url', project.ext.get('sonar.host.url')
-        property 'sonar.exclusions', "**/lab/*"
+        property 'sonar.exclusions', '**/lab/*'
+        property 'sonar.coverage.exclusions', '**/lab/*'
     }
 }
 
