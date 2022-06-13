@@ -17,7 +17,7 @@ import com.imsweb.algorithms.internal.Utils;
  * <br/><br/>
  * See <a href="http://www.iacr.com.fr/images/doc/MPrules_july2004.pdf">http://www.iacr.com.fr/images/doc/MPrules_july2004.pdf/</a>.
  */
-public class IarcUtils {
+public final class IarcUtils {
 
     public static final String ALG_NAME = "IARC Multiple Primary Indicator";
     public static final String VERSION = "ICD-O Third Edition released in 2004";

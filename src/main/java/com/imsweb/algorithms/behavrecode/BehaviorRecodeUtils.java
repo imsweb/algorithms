@@ -10,7 +10,7 @@ import org.apache.commons.lang3.math.NumberUtils;
  * Created on March 01, 2016
  * @author Sewbesew Bekele
  */
-public class BehaviorRecodeUtils {
+public final class BehaviorRecodeUtils {
 
     //Algorithm info
     public static final String ALG_NAME = "SEER Behavior Recode for Analysis";
