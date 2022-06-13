@@ -107,6 +107,24 @@ public class TractDataLab {
     @SuppressWarnings("ConstantConditions")
     public static void main(String[] args) throws IOException {
 
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //   Make sure to read this if you are not familiar with this class or if you haven't used it in a while...
+        //   This class reads multiple census-related data files and merges them into a single "census-data.gz.txt" file.
+        //   All the data files exists in the project in the test resource folder, except the SEER one (that one was too big).
+        //   This class reads all the data from all sources and puts it into data structures keyed by state/county/tract;
+        //   it then has a final loop that uses all the data structures and writes the final file.
+        //   If you add a new source, don't forget to add its keys to the set of "all keys" since not all the files have
+        //   the same keys (it's important to iterate over the super-set of all keys).
+        //
+        //   The final file is a fixed-column file, but nothing defines the start/end columns. Instead, the fields are
+        //   defines in the CountryData class, in the order they appear, with their specific length. And so to add a new
+        //   source and/or field, start by adding the field to the list of fields in CountryData.
+        //
+        //   A handful of fields are "year based"; instead of having a second file that repeats the state/county/tract, those
+        //   were added to the regular data file as a single "yearData" field which itself is a fixed-column value.
+        //   The CountryData class defines a second list of "year-based" fields, as well as a min/max value for the years.
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
         // I created a layout to be able to easily read the big fixed-column census tract file; that layout needs to agree on the "dictionary" provided on the SEER website:
         //    https://seer.cancer.gov/seerstat/variables/countyattribs/ctattrdict.html
         FixedColumnsLayout layout;
