@@ -231,12 +231,28 @@ public class TractDataLab {
             throw new IllegalStateException(e);
         }
 
+        // Tract-estimate Congressional Districts
+        Map<DataKey, String> tractEstCongresDistricts = new HashMap<>();
+        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("tractestcongressdist/tract-estimated-congressional-districts.csv")) {
+            if (is == null)
+                throw new IllegalStateException("Missing data!");
+            try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
+                 CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build()) {
+                for (String[] row : csvReader.readAll())
+                    tractEstCongresDistricts.put(new DataKey(row[0], row[1], row[2]), row[3]);
+            }
+        }
+        catch (CsvException | IOException e) {
+            throw new IllegalStateException(e);
+        }
+
         // since we merge information from multiple sources, it's important to process the super set of all the keys!
         Set<DataKey> allKeys = new TreeSet<>(tractValues.keySet());
         allKeys.addAll(ruca2000Values.keySet());
         allKeys.addAll(uric2000Values.keySet());
         allKeys.addAll(naaccrPovertyIndicator9504.keySet());
         allKeys.addAll(naaccrPovertyIndicator0507.keySet());
+        allKeys.addAll(tractEstCongresDistricts.keySet());
 
         Path outputFile = Paths.get(System.getProperty("user.dir") + "\\src\\main\\resources\\tract\\tract-data.txt.gz");
         try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new GZIPOutputStream(Files.newOutputStream(outputFile)), StandardCharsets.US_ASCII))) {
@@ -258,6 +274,8 @@ public class TractDataLab {
                         buf.append(ruca2000Values.getOrDefault(key, " "));
                     else if ("uric2000".equals(field))
                         buf.append(uric2000Values.getOrDefault(key, " "));
+                    else if ("tractEstCongressDist".equals(field))
+                        buf.append(tractEstCongresDistricts.getOrDefault(key, "  "));
                     else if ("yearData".equals(field)) {
                         Map<Integer, String> yearData = tractYearBasedValues.get(key);
                         if (yearData != null) {

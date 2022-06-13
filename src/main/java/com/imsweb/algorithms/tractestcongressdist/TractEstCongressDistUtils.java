@@ -3,6 +3,11 @@
  */
 package com.imsweb.algorithms.tractestcongressdist;
 
+import com.imsweb.algorithms.internal.CensusData;
+import com.imsweb.algorithms.internal.CountryData;
+import com.imsweb.algorithms.internal.CountyData;
+import com.imsweb.algorithms.internal.StateData;
+
 public final class TractEstCongressDistUtils {
 
     public static final String ALG_NAME = "NAACCR Tract-Estimated Congressional Districts";
@@ -12,9 +17,6 @@ public final class TractEstCongressDistUtils {
     public static final String TRACT_EST_CONGRESS_DIST_UNK_A = "A";
     public static final String TRACT_EST_CONGRESS_DIST_UNK_C = "C";
     public static final String TRACT_EST_CONGRESS_DIST_UNK_D = "D";
-
-    // data provider
-    private static final TractEstCongressDistDataProvider _PROVIDER = new TractEstCongressDistDataProvider();
 
     private TractEstCongressDistUtils() {
         // no instances of this class allowed!
@@ -55,8 +57,21 @@ public final class TractEstCongressDistUtils {
             result.setTractEstCongressDist(TRACT_EST_CONGRESS_DIST_UNK_D);
         else if ("000".equals(input.getCountyAtDxAnalysis()))
             result.setTractEstCongressDist("B");
-        else
-            result.setTractEstCongressDist(_PROVIDER.getTractEstCongressDist(input.getAddressAtDxState(), input.getCountyAtDxAnalysis(), input.getCensusTract2010()));
+        else {
+
+            if (!CountryData.getInstance().isTractDataInitialized(input.getAddressAtDxState()))
+                CountryData.getInstance().initializeTractData(input.getAddressAtDxState());
+
+            StateData stateData = CountryData.getInstance().getTractData(input.getAddressAtDxState());
+            if (stateData != null) {
+                CountyData countyData = stateData.getCountyData(input.getCountyAtDxAnalysis());
+                if (countyData != null) {
+                    CensusData censusData = countyData.getCensusData(input.getCensusTract2010());
+                    if (censusData != null)
+                        result.setTractEstCongressDist(censusData.getTractEstCongressDist());
+                }
+            }
+        }
 
         if (result.getTractEstCongressDist() == null)
             result.setTractEstCongressDist(TRACT_EST_CONGRESS_DIST_UNK_C);

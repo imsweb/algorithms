@@ -27,9 +27,6 @@ public class TractEstCongressDistInputDto {
     private String _addressAtDxState;
     private String _censusTract2010;
 
-    public TractEstCongressDistInputDto() {
-    }
-
     public void applyRecodes() {
         _addressAtDxState = _addressAtDxState == null ? "" : _addressAtDxState.toUpperCase().trim();
         _countyAtDxAnalysis = _countyAtDxAnalysis == null ? "" : _countyAtDxAnalysis.trim();

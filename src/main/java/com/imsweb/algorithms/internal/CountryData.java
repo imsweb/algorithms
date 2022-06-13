@@ -57,6 +57,7 @@ public class CountryData {
         _TRACT_FIELDS.put("naaccrPovertyIndicator0507", 1);
         _TRACT_FIELDS.put("npcrEphtSubcounty5k", 11);
         _TRACT_FIELDS.put("npcrEphtSubcounty20k", 11);
+        _TRACT_FIELDS.put("tractEstCongressDist", 2);
     }
 
     public static Map<String, Integer> getTractFields() {
@@ -185,6 +186,9 @@ public class CountryData {
 
                                 // Cancer Reporting Zone
                                 censusData.setCancerReportingZone(StringUtils.trimToNull(values.get("cancerReportingZone")));
+
+                                // Tract-estimate Congressional Districts
+                                censusData.setTractEstCongressDist(StringUtils.trimToNull(values.get("tractEstCongressDist")));
                             }
 
                             line = reader.readLine();

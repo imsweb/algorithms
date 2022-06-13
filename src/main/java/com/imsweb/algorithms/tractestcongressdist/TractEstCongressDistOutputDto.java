@@ -6,8 +6,6 @@ package com.imsweb.algorithms.tractestcongressdist;
 public class TractEstCongressDistOutputDto {
 
     private String _tractEstCongressDist;
-    
-    public TractEstCongressDistOutputDto() {}
 
     public String getTractEstCongressDist() {
         return _tractEstCongressDist;
