@@ -2,6 +2,7 @@
 
 **Changes in version 4.0 (not released yet)**
 
+- Added extended codes to ICCC algorithm. 
 - Switched the data source for following algorithms to use SEER data: NAACCR Poverty Indicator, RUCA/URIC, NPCR EPHT SubCounty 5/20K, Cancer Reporting Zone, Tract-estimate Congressional Districts, Yost/ACS Poverty.
 - Changed Yost/ACS Poverty algorithm: it now can compute a value for every DX year instead of just three points in time, but it only returns a result for a single year of data.
 - Changed how census-related data is included in and loaded by the library to optimized its files-size and memory footprint.

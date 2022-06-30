@@ -18,6 +18,8 @@ import com.imsweb.algorithms.internal.Utils;
 import static com.imsweb.algorithms.Algorithms.FIELD_BEHAV_O3;
 import static com.imsweb.algorithms.Algorithms.FIELD_HIST_O3;
 import static com.imsweb.algorithms.Algorithms.FIELD_ICCC;
+import static com.imsweb.algorithms.Algorithms.FIELD_ICCC_EXT;
+import static com.imsweb.algorithms.Algorithms.FIELD_ICCC_EXT_MAJOR_CATEGORY;
 import static com.imsweb.algorithms.Algorithms.FIELD_ICCC_MAJOR_CATEGORY;
 import static com.imsweb.algorithms.Algorithms.FIELD_PRIMARY_SITE;
 import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
@@ -35,9 +37,13 @@ public class IcccAlgorithm extends AbstractAlgorithm {
 
         _outputFields.add(Algorithms.getField(FIELD_ICCC));
         _outputFields.add(Algorithms.getField(FIELD_ICCC_MAJOR_CATEGORY));
+        _outputFields.add(Algorithms.getField(FIELD_ICCC_EXT));
+        _outputFields.add(Algorithms.getField(FIELD_ICCC_EXT_MAJOR_CATEGORY));
 
         _unknownValues.put(FIELD_ICCC, Collections.singletonList(IcccRecodeUtils.ICCC_UNKNOWN_RECODE));
         _unknownValues.put(FIELD_ICCC_MAJOR_CATEGORY, Collections.singletonList(IcccRecodeUtils.ICCC_UNKNOWN_MAJOR_CATEGORY));
+        _unknownValues.put(FIELD_ICCC_EXT, Collections.singletonList(IcccRecodeUtils.ICCC_UNKNOWN_RECODE));
+        _unknownValues.put(FIELD_ICCC_EXT_MAJOR_CATEGORY, Collections.singletonList(IcccRecodeUtils.ICCC_UNKNOWN_MAJOR_CATEGORY));
     }
 
     @Override
@@ -53,10 +59,14 @@ public class IcccAlgorithm extends AbstractAlgorithm {
 
             String icccCode = IcccRecodeUtils.calculateSiteRecode(getVersion(), site, hist, beh, false);
             String icccMajorCategory = IcccRecodeUtils.calculateIcccMajorCategory(icccCode);
+            String icccExtCode = IcccRecodeUtils.calculateSiteRecode(getVersion(), site, hist, beh, true);
+            String icccExtMajorCategory = IcccRecodeUtils.calculateIcccMajorCategory(icccExtCode);
 
             Map<String, Object> outputTumor = new HashMap<>();
             outputTumor.put(FIELD_ICCC, icccCode);
             outputTumor.put(FIELD_ICCC_MAJOR_CATEGORY, icccMajorCategory);
+            outputTumor.put(FIELD_ICCC_EXT, icccExtCode);
+            outputTumor.put(FIELD_ICCC_EXT_MAJOR_CATEGORY, icccExtMajorCategory);
             outputTumors.add(outputTumor);
         }
 

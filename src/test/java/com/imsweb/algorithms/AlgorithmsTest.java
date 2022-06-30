@@ -246,6 +246,9 @@ public class AlgorithmsTest {
         tumMap.put(Algorithms.FIELD_BEHAV_O3, "3");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
         Assert.assertEquals("122", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_ICCC));
+        Assert.assertEquals("15", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_ICCC_MAJOR_CATEGORY));
+        Assert.assertEquals("115", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_ICCC_EXT));
+        Assert.assertEquals("13", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_ICCC_EXT_MAJOR_CATEGORY));
 
         // IARC
         alg = Algorithms.getAlgorithm(Algorithms.ALG_IARC);
