@@ -1,6 +1,7 @@
 package com.imsweb.algorithms.seersiterecode;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.commons.lang3.Range;
 
@@ -9,6 +10,7 @@ import org.apache.commons.lang3.Range;
  * User: depryf
  * Date: 8/22/12
  */
+@SuppressWarnings("unused")
 public class SeerExecutableSiteGroupDto {
 
     /**
@@ -108,10 +110,8 @@ public class SeerExecutableSiteGroupDto {
             return true;
         if (o == null || getClass() != o.getClass())
             return false;
-
         SeerExecutableSiteGroupDto that = (SeerExecutableSiteGroupDto)o;
-
-        return !(_id != null ? !_id.equals(that._id) : that._id != null);
+        return Objects.equals(_id, that._id);
 
     }
 
@@ -121,7 +121,8 @@ public class SeerExecutableSiteGroupDto {
     }
 
     public boolean matches(Integer site, Integer histology) {
-        boolean siteOk, histOk = false;
+        boolean siteOk;
+        boolean histOk = false;
 
         // check site
         if (_siteInclusions != null)
@@ -144,7 +145,7 @@ public class SeerExecutableSiteGroupDto {
         return siteOk && histOk;
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "rawtypes"})
     private boolean isContained(List<Object> list, Integer value) {
         if (list == null)
             return false;

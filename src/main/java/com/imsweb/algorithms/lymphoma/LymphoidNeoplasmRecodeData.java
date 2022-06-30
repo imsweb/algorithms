@@ -22,7 +22,7 @@ public class LymphoidNeoplasmRecodeData {
         _recode = recode;
     }
 
-    @SuppressWarnings({"unchecked", "rawtypes", "RedundantIfStatement"})
+    @SuppressWarnings({"unchecked", "rawtypes", "RedundantIfStatement", "java:S1126"})
     public boolean matches(String site, String hist) {
 
         boolean siteMatches = false;

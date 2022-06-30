@@ -60,7 +60,7 @@ public class NapiiaAlgorithm extends AbstractAlgorithm {
         inputDto.setNapiiaInputPatientDtoList(new ArrayList<>());
 
         Map<String, Object> patientMap = Utils.extractPatient(input);
-        for (Map<String, Object> ignored : Utils.extractTumors(patientMap, true)) {
+        for (int i = 0; i < Utils.extractTumors(patientMap, true).size(); i++) {
             NapiiaInputRecordDto dto = new NapiiaInputRecordDto();
             dto.setSpanishHispanicOrigin((String)patientMap.get(FIELD_SPAN_HISP_OR));
             dto.setBirthplaceCountry((String)patientMap.get(FIELD_COUNTRY_BIRTH));

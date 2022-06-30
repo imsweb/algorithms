@@ -9,6 +9,7 @@ import com.imsweb.algorithms.internal.Utils;
  * User: depryf
  * Date: 8/22/12
  */
+@SuppressWarnings("unused")
 public class IcccExecutableSiteGroupDto {
 
     /**
@@ -144,7 +145,9 @@ public class IcccExecutableSiteGroupDto {
     }
 
     public boolean matches(Integer site, Integer histology, Integer behavior) {
-        boolean siteOk, histOk = false, behavOk = false;
+        boolean siteOk;
+        boolean histOk = false;
+        boolean behavOk = false;
 
         // check site
         if (_siteInclusions != null)

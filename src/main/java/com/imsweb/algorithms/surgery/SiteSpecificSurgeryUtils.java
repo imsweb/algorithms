@@ -34,8 +34,6 @@ import com.imsweb.algorithms.surgery.xml.SurgeryTablesXmlDto;
 
 /**
  * Utility class to return site-specific surgery information that can be used to build application-specific lookups.
- * <br/><br/>
- * Data for the tables was taken from the SEER website: https://seer.cancer.gov/tools/codingmanuals/historical.html
  */
 public final class SiteSpecificSurgeryUtils {
 
@@ -94,13 +92,14 @@ public final class SiteSpecificSurgeryUtils {
     }
 
     // cached data
-    private Map<Integer, SurgeryTablesDto> _data = new HashMap<>();
+    private final Map<Integer, SurgeryTablesDto> _data = new HashMap<>();
 
     // cached regex
-    private Pattern _sitePattern = Pattern.compile("C\\d\\d\\d?"), _histPattern = Pattern.compile("\\d\\d\\d\\d");
+    private final Pattern _sitePattern = Pattern.compile("C\\d\\d\\d?");
+    private final Pattern _histPattern = Pattern.compile("\\d\\d\\d\\d");
 
     // internal lock to control concurrency (this is needed because we lazily initialize the data)
-    private ReentrantReadWriteLock _lock = new ReentrantReadWriteLock();
+    private final ReentrantReadWriteLock _lock = new ReentrantReadWriteLock();
 
     /**
      * No public constructor, use the instance.
@@ -151,6 +150,7 @@ public final class SiteSpecificSurgeryUtils {
      * @param title requested table title
      * @return site-specific surgery table, maybe null
      */
+    @SuppressWarnings("unused")
     public SurgeryTableDto getTable(int dxYear, String title) {
         SurgeryTablesDto tables = getTables(dxYear);
         if (tables == null)

@@ -26,7 +26,7 @@ public class BrainCnsRecodeData {
         _recode = recode;
     }
 
-    @SuppressWarnings({"unchecked", "rawtypes", "RedundantIfStatement"})
+    @SuppressWarnings({"unchecked", "rawtypes", "RedundantIfStatement", "java:S1126"})
     public boolean matches(String site, String hist, String beh) {
 
         boolean behMatches = false;
