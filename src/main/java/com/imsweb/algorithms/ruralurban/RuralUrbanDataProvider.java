@@ -116,21 +116,9 @@ public class RuralUrbanDataProvider {
                 break;
             case RuralUrbanUtils.BEALE_CATEGORY_2003:
                 result = countyData.getUrbanContinuum2003();
-
-                // if you didn't find a match in the 2003 lookup, check the 1993 lookup
-                if (result == null || result.equals(RURAL_URBAN_CONTINUUM_UNKNOWN))
-                    result = countyData.getUrbanContinuum1993();
                 break;
             case RuralUrbanUtils.BEALE_CATEGORY_2013:
                 result = countyData.getUrbanContinuum2013();
-
-                // if you didn't find a match in the 2013 lookup, check the 2003 lookup
-                if (result == null || result.equals(RURAL_URBAN_CONTINUUM_UNKNOWN))
-                    result = countyData.getUrbanContinuum2003();
-
-                // if you didn't find a match in the 2003 lookup, check the 1993 lookup
-                if (result == null || result.equals(RURAL_URBAN_CONTINUUM_UNKNOWN))
-                    result = countyData.getUrbanContinuum1993();
                 break;
             default:
                 throw new IllegalStateException("Invalid beale category: " + bealeCategory);

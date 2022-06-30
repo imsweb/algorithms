@@ -174,31 +174,6 @@ public class RuralUrbanUtilsTest {
         Assert.assertEquals(result2013, computeRuralUrbanContinuum(record).getRuralUrbanContinuum2013());
 
         //////////////////////////////////////////////////////////////////////////////////////////////
-        // TESTS FOR LOOKING IN THE PRIOR YEAR TABLE WHEN THE VALUE YOU ARE LOOKING FOR ISN'T FOUND
-        //////////////////////////////////////////////////////////////////////////////////////////////
-        // test for Clifton Forge, VA
-        record.put(_PROP_STATE_DX, "VA");
-        record.put(_PROP_COUNTY_DX_ANALYSIS, "560");
-        result2003 = computeRuralUrbanContinuum(record).getRuralUrbanContinuum2003();
-        result2013 = computeRuralUrbanContinuum(record).getRuralUrbanContinuum2013();
-        Assert.assertEquals(result2013, result2003);
-
-        // test for Miscellaneous AK counties
-        record.put(_PROP_STATE_DX, "AK");
-        record.put(_PROP_COUNTY_DX_ANALYSIS, "201");
-        result2003 = computeRuralUrbanContinuum(record).getRuralUrbanContinuum2003();
-        result2013 = computeRuralUrbanContinuum(record).getRuralUrbanContinuum2013();
-        Assert.assertEquals(result2013, result2003);
-        record.put(_PROP_COUNTY_DX_ANALYSIS, "232");
-        result2003 = computeRuralUrbanContinuum(record).getRuralUrbanContinuum2003();
-        result2013 = computeRuralUrbanContinuum(record).getRuralUrbanContinuum2013();
-        Assert.assertEquals(result2013, result2003);
-        record.put(_PROP_COUNTY_DX_ANALYSIS, "280");
-        result2003 = computeRuralUrbanContinuum(record).getRuralUrbanContinuum2003();
-        result2013 = computeRuralUrbanContinuum(record).getRuralUrbanContinuum2013();
-        Assert.assertEquals(result2013, result2003);
-
-        //////////////////////////////////////////////////////////////////////////////////////////////
         // TEST KALAWAO, HAWAII - 2003
         //////////////////////////////////////////////////////////////////////////////////////////////
         record.put(_PROP_STATE_DX, "HI");
