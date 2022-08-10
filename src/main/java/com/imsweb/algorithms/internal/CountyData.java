@@ -13,7 +13,9 @@ public class CountyData {
 
     // prcda, uiho data
     private String _prcda;
+    private String _prcda2017;
     private String _uiho;
+    private String _uihoCity;
 
     // urban continuum data
     private String _urbanContinuum1993;
@@ -23,20 +25,36 @@ public class CountyData {
     // census data keyed by census tract code
     private Map<String, CensusData> _censusData = new HashMap<>();
 
-    public String getPRCDA() {
+    public String getPrcda() {
         return _prcda;
     }
 
-    public void setPRCDA(String prcda) {
+    public String getPrcda2017() {
+        return _prcda2017;
+    }
+
+    public void setPrcda(String prcda) {
         _prcda = prcda;
     }
 
-    public String getUIHO() {
+    public void setPrcda2017(String prcda2017) {
+        _prcda2017 = prcda2017;
+    }
+
+    public String getUiho() {
         return _uiho;
     }
 
-    public void setUIHO(String uiho) {
+    public String getUihoCity() {
+        return _uihoCity;
+    }
+
+    public void setUiho(String uiho) {
         _uiho = uiho;
+    }
+
+    public void setUihoCity(String uihoCity) {
+        _uihoCity = uihoCity;
     }
 
     public String getUrbanContinuum1993() {

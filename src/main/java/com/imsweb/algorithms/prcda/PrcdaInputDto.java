@@ -1,12 +1,12 @@
 /*
  * Copyright (C) 2013 Information Management Services, Inc.
  */
-package com.imsweb.algorithms.prcdauiho;
+package com.imsweb.algorithms.prcda;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class PrcdaUihoInputDto {
+public class PrcdaInputDto {
 
     // SEER City recodes
     private static final Map<String, String> _SEER_CITY_RECODES = new HashMap<>();
