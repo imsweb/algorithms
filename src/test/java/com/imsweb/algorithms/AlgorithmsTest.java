@@ -18,6 +18,7 @@ import com.imsweb.algorithms.nhia.NhiaUtils;
 import com.imsweb.naaccrxml.NaaccrFormat;
 import com.imsweb.naaccrxml.NaaccrXmlDictionaryUtils;
 import com.imsweb.naaccrxml.entity.dictionary.NaaccrDictionary;
+import com.imsweb.naaccrxml.entity.dictionary.NaaccrDictionaryItem;
 
 import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS;
 import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS_FLAG;
@@ -53,7 +54,7 @@ public class AlgorithmsTest {
 
     @Test
     public void testFields() {
-        NaaccrDictionary dictionary = NaaccrXmlDictionaryUtils.getMergedDictionaries(NaaccrFormat.NAACCR_VERSION_210);
+        NaaccrDictionary dictionary = NaaccrXmlDictionaryUtils.getMergedDictionaries(NaaccrFormat.NAACCR_VERSION_220);
         for (AlgorithmField field : Algorithms.getAllFields()) {
             Assert.assertNotNull(field.getId());
             Assert.assertTrue(field.getId() + " is too long!", field.getId().length() <= 32);
