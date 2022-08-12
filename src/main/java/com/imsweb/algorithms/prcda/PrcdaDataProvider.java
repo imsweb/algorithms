@@ -39,7 +39,9 @@ import static com.imsweb.algorithms.prcda.PrcdaUtils.isStateAtDxValid;
 public class PrcdaDataProvider {
 
     private enum PrcdaYear { YR2017, YR2020;
-        public static PrcdaYear getDefault() { return YR2020; }
+        public static PrcdaYear getDefault() {
+            return YR2020;
+        }
     }
 
     public String getPrcda(String state, String county) {
