@@ -237,9 +237,9 @@ public final class Algorithms {
             addField(AlgorithmField.of(FIELD_CENSUS_2000, 130, 6, "Census Tract 2000", "Cens 2000", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_CENSUS_2010, 135, 6, "Census Tract 2010", "Cens 2010", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_CENSUS_POVERTY_INDICTR, 145, 1, "Census Tr Poverty Indictr", "Cens Pov", DATA_LEVEL_TUMOR));
-            addField(AlgorithmField.of(FIELD_IHS_PRCDA, 194, 1, "IHS Purchased/Referred Care Delivery Area (PRCDA)", "IHS PRCDA", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_IHS_PRCDA, 194, 1, "IHS Purchased/Referred Care Delivery Area", "IHS PRCDA", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_UIHO, 284, 1, "Urban Indian Health Organization (UIHO)", "UIHO", DATA_LEVEL_TUMOR));
-            addField(AlgorithmField.of(FIELD_UIHO_CITY, 285, 2, "Urban Indian Health Organization City", "UIHO City", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_UIHO_CITY, 285, 2, "UIHO City", "UIHO City", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_URIC_2000, 345, 1, "URIC 2000", "URIC 2000", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_URIC_2010, 346, 1, "URIC 2010", "URIC 2010", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_RUCA_2000, 339, 1, "RUCA 2000", "RUCA 2000", DATA_LEVEL_TUMOR));
@@ -286,7 +286,7 @@ public final class Algorithms {
             addField(AlgorithmField.of(FIELD_IARC_MP_HIST_GROUP, null, 2, "IARC Multiple Primary Histology Group", "IARC MP Hist Grp", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_IARC_MP_HISTOLOGY, null, 4, "IARC Multiple Primary Histology", "IARC MP Hist", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_COUNTY_AT_DX_ANALYSIS_FLAG, null, 4, "County at DX Analysis Flag", "DX Anlys Cty Fg", DATA_LEVEL_TUMOR));
-            addField(AlgorithmField.of(FIELD_IHS_PRCDA_2017, null, 1, "IHS Purchased/Referred Care Delivery Area (PRCDA) 2017", "IHS PRCDA 2017", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_IHS_PRCDA_2017, null, 1, "IHS PRCDA 2017", "IHS PRCDA 2017", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_ACS_YOST_QUINTILE_US, null, 1, "Yost Quintile (Across States)", "Yost US", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_ACS_YOST_QUINTILE_STATE, null, 1, "Yost Quintile (State Specific)", "Yost State", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_ACS_POV_ALL_RACES, null, 6, "ACS Pct Poverty (All Races)", "ACS Pov All", DATA_LEVEL_TUMOR));
