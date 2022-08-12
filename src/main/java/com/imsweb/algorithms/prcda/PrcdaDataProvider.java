@@ -93,7 +93,7 @@ public class PrcdaDataProvider {
 
     private Map<String, Map<String, CountyData>> loadPrcdaData() {
         Map<String, Map<String, CountyData>> result = new HashMap<>();
-        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("prcdauiho/prcda.csv")) {
+        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("prcda/prcda.csv")) {
             if (is == null) {
                 throw new IllegalStateException("Unable to find PRCDA data!");
             }
