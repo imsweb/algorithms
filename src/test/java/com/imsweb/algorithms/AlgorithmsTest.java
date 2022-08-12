@@ -19,11 +19,6 @@ import com.imsweb.naaccrxml.NaaccrFormat;
 import com.imsweb.naaccrxml.NaaccrXmlDictionaryUtils;
 import com.imsweb.naaccrxml.entity.dictionary.NaaccrDictionary;
 
-import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS;
-import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS_FLAG;
-import static com.imsweb.algorithms.Algorithms.FIELD_IHS_PRCDA;
-import static com.imsweb.algorithms.Algorithms.FIELD_UIHO;
-
 public class AlgorithmsTest {
 
     @BeforeClass
@@ -51,7 +46,7 @@ public class AlgorithmsTest {
 
     @Test
     public void testFields() {
-        NaaccrDictionary dictionary = NaaccrXmlDictionaryUtils.getMergedDictionaries(NaaccrFormat.NAACCR_VERSION_210);
+        NaaccrDictionary dictionary = NaaccrXmlDictionaryUtils.getMergedDictionaries(NaaccrFormat.NAACCR_VERSION_220);
         for (AlgorithmField field : Algorithms.getAllFields()) {
             Assert.assertNotNull(field.getId());
             Assert.assertTrue(field.getId() + " is too long!", field.getId().length() <= 32);
@@ -131,7 +126,7 @@ public class AlgorithmsTest {
         input.setPatient(patMap);
         tumMap = new HashMap<>();
         tumMap.put(Algorithms.FIELD_STATE_DX, "HI");
-        tumMap.put(FIELD_COUNTY_AT_DX_ANALYSIS, "003");
+        tumMap.put(Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS, "003");
         tumMap.put(Algorithms.FIELD_CENSUS_2000, "003405");
         tumMap.put(Algorithms.FIELD_DX_DATE, "20070101");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
@@ -165,7 +160,7 @@ public class AlgorithmsTest {
         input.setPatient(patMap);
         tumMap = new HashMap<>();
         tumMap.put(Algorithms.FIELD_STATE_DX, "AL");
-        tumMap.put(FIELD_COUNTY_AT_DX_ANALYSIS, "001");
+        tumMap.put(Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS, "001");
         tumMap.put(Algorithms.FIELD_CENSUS_2000, "020200");
         tumMap.put(Algorithms.FIELD_CENSUS_2010, "020200");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
@@ -287,11 +282,26 @@ public class AlgorithmsTest {
         tumMap.put(Algorithms.FIELD_CENSUS_CERTAINTY_2020, "1");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
         Map<String, Object> tumor = Utils.extractTumors(alg.execute(input).getPatient()).get(0);
-        Assert.assertEquals("005", tumor.get(FIELD_COUNTY_AT_DX_ANALYSIS));
-        Assert.assertEquals(CountyAtDxAnalysisUtils.REP_REP_GEO_EQUAL, tumor.get(FIELD_COUNTY_AT_DX_ANALYSIS_FLAG));
+        Assert.assertEquals("005", tumor.get(Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS));
+        Assert.assertEquals(CountyAtDxAnalysisUtils.REP_REP_GEO_EQUAL, tumor.get(Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS_FLAG));
 
-        // PRCDA/UIHO
-        alg = Algorithms.getAlgorithm(Algorithms.ALG_PRCDA_UIHO);
+        // PRCDA
+        alg = Algorithms.getAlgorithm(Algorithms.ALG_PRCDA);
+        Assert.assertTrue(alg.getParameters().isEmpty());
+        Assert.assertFalse(alg.getUnknownValues().isEmpty());
+        input = new AlgorithmInput();
+        patMap = new HashMap<>();
+        input.setPatient(patMap);
+        tumMap = new HashMap<>();
+        tumMap.put(Algorithms.FIELD_STATE_DX, "MN");
+        tumMap.put(Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS, "035");
+        patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
+        tumor = Utils.extractTumors(alg.execute(input).getPatient()).get(0);
+        Assert.assertEquals("0", tumor.get(Algorithms.FIELD_IHS_PRCDA_2017));
+        Assert.assertEquals("1", tumor.get(Algorithms.FIELD_IHS_PRCDA));
+
+        // UIHO
+        alg = Algorithms.getAlgorithm(Algorithms.ALG_UIHO);
         Assert.assertTrue(alg.getParameters().isEmpty());
         Assert.assertFalse(alg.getUnknownValues().isEmpty());
         input = new AlgorithmInput();
@@ -302,8 +312,8 @@ public class AlgorithmsTest {
         tumMap.put(Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS, "013");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
         tumor = Utils.extractTumors(alg.execute(input).getPatient()).get(0);
-        Assert.assertEquals("0", tumor.get(FIELD_IHS_PRCDA));
-        Assert.assertEquals("1", tumor.get(FIELD_UIHO));
+        Assert.assertEquals("1", tumor.get(Algorithms.FIELD_UIHO));
+        Assert.assertEquals("07", tumor.get(Algorithms.FIELD_UIHO_CITY));
 
         // Brain/CNS
         alg = Algorithms.getAlgorithm(Algorithms.ALG_SEER_BRAIN_CNS_RECODE);

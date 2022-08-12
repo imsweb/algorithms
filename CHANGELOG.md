@@ -8,6 +8,7 @@
 - Changed RUCA/URIC/Continuum urban/rural algorithms so they don't use a previous year results if the current year can't be computed. 
 - Changed how census-related data is included in and loaded by the library to optimized its files-size and memory footprint.
 - Removed non-thread-safe providers for all algorithms.
+- Split the PRCDA-UIHO algorithm into 2 separate algorithms: PRCDA and UIHO. Updated both algorithms to produce '2020' values. Added a '2017' calculation to the PRCDA algorithm. Added UIHO City to the UIHO algorithm.
 
 **Changes in version 3.10**
 

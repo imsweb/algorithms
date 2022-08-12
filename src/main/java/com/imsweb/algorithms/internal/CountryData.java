@@ -463,7 +463,8 @@ public class CountryData {
                     StateData stateData = _stateData.computeIfAbsent(stateEntry.getKey(), k -> new StateData());
                     for (Map.Entry<String, CountyData> countyEntry : stateEntry.getValue().entrySet()) {
                         CountyData countyData = stateData.getData().computeIfAbsent(countyEntry.getKey(), k -> new CountyData());
-                        countyData.setPRCDA(countyEntry.getValue().getPRCDA());
+                        countyData.setPrcda(countyEntry.getValue().getPrcda());
+                        countyData.setPrcda2017(countyEntry.getValue().getPrcda2017());
                     }
                 }
             }
@@ -513,7 +514,8 @@ public class CountryData {
                     StateData stateData = _stateData.computeIfAbsent(stateEntry.getKey(), k -> new StateData());
                     for (Map.Entry<String, CountyData> countyEntry : stateEntry.getValue().entrySet()) {
                         CountyData countyData = stateData.getData().computeIfAbsent(countyEntry.getKey(), k -> new CountyData());
-                        countyData.setUIHO(countyEntry.getValue().getUIHO());
+                        countyData.setUiho(countyEntry.getValue().getUiho());
+                        countyData.setUihoCity(countyEntry.getValue().getUihoCity());
                     }
                 }
             }
