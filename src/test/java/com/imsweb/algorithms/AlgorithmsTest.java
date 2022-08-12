@@ -18,7 +18,6 @@ import com.imsweb.algorithms.nhia.NhiaUtils;
 import com.imsweb.naaccrxml.NaaccrFormat;
 import com.imsweb.naaccrxml.NaaccrXmlDictionaryUtils;
 import com.imsweb.naaccrxml.entity.dictionary.NaaccrDictionary;
-import com.imsweb.naaccrxml.entity.dictionary.NaaccrDictionaryItem;
 
 import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS;
 import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS_FLAG;
