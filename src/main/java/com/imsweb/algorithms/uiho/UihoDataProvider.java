@@ -39,36 +39,44 @@ public class UihoDataProvider {
 
     public String getUIHO(String state, String county) {
 
-        if (!isStateAtDxValid(state) || !isCountyAtDxValid(county))
+        if (!isStateAtDxValid(state) || !isCountyAtDxValid(county)) {
             return UIHO_UNKNOWN;
-
-        if (!CountryData.getInstance().isUihoDataInitialized())
+        }
+        if (!CountryData.getInstance().isUihoDataInitialized()) {
             CountryData.getInstance().initializeUihoData(loadUihoData());
+        }
 
         StateData stateData = CountryData.getInstance().getUihoData(state);
-        if (stateData == null)
+        if (stateData == null) {
             return UIHO_NO;
+        }
+
         CountyData countyData = stateData.getCountyData(county);
-        if (countyData == null)
+        if (countyData == null) {
             return UIHO_NO;
+        }
 
         return countyData.getUiho();
     }
 
     public String getUIHOCity(String state, String county) {
 
-        if (!isStateAtDxValid(state) || !isCountyAtDxValid(county))
+        if (!isStateAtDxValid(state) || !isCountyAtDxValid(county)) {
             return UIHO_CITY_UNKNOWN;
-
-        if (!CountryData.getInstance().isUihoDataInitialized())
+        }
+        if (!CountryData.getInstance().isUihoDataInitialized()) {
             CountryData.getInstance().initializeUihoData(loadUihoData());
+        }
 
         StateData stateData = CountryData.getInstance().getUihoData(state);
-        if (stateData == null)
+        if (stateData == null) {
             return UIHO_CITY_NONE;
+        }
+
         CountyData countyData = stateData.getCountyData(county);
-        if (countyData == null)
+        if (countyData == null) {
             return UIHO_CITY_NONE;
+        }
 
         return countyData.getUihoCity();
     }
@@ -76,8 +84,9 @@ public class UihoDataProvider {
     private Map<String, Map<String, CountyData>> loadUihoData() {
         Map<String, Map<String, CountyData>> result = new HashMap<>();
         try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("uiho/uiho.csv")) {
-            if (is == null)
+            if (is == null) {
                 throw new IllegalStateException("Unable to find UIHO data!");
+            }
             try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
                  CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build()) {
                 for (String[] row : csvReader.readAll()) {

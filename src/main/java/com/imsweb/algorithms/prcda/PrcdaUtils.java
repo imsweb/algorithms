@@ -33,7 +33,8 @@ public final class PrcdaUtils {
 
     private static final List<String> _ARMED_FORCES = Arrays.asList("AA", "AE", "AP");
 
-    private static final List<String> _UNKNOWN_STATES = Arrays.asList("CD", "US", "XX", "YY", "ZZ");
+    // Just sort of acknowledging the existence of these codes to show I didn't forget about them.
+    //private static final List<String> _UNKNOWN_STATES = Arrays.asList("CD", "US", "XX", "YY", "ZZ");
 
     public static final String PRCDA_NO = "0";
     public static final String PRCDA_YES = "1";
@@ -43,17 +44,13 @@ public final class PrcdaUtils {
     public static final List<String> ENTIRE_STATE_PRCDA = Collections.unmodifiableList(Arrays.asList("AK", "CT", "NV", "OK", "SC"));
 
     // States where every county is non-PRCDA
-    public static final List<String> ENTIRE_STATE_NON_PRCDA = Collections.unmodifiableList(Arrays.asList("AR", "DE", "DC", "GA",
-            "HI", "IL", "KY", "MD", "MO", "NH", "NJ", "OH", "TN", "VT", "WV"));
-
-    // States with a mix of PRCDA and non-PRCDA counties
-    public static final List<String> MIXED_PRCDA;
-
+    public static final List<String> ENTIRE_STATE_NON_PRCDA;
     static {
-        List<String> temp = new ArrayList<>(_STATES);
-        temp.removeAll(ENTIRE_STATE_PRCDA);
-        temp.removeAll(ENTIRE_STATE_NON_PRCDA);
-        MIXED_PRCDA = Collections.unmodifiableList(new ArrayList<>(temp));
+        List<String> nonPrcda = new ArrayList<>(Arrays.asList("AR", "DE", "DC", "GA", "HI", "IL", "KY", "MD", "MO", "NH", "NJ", "OH", "TN", "VT", "WV"));
+        nonPrcda.addAll(_TERRITORIES);
+        nonPrcda.addAll(_PROVINCES);
+        nonPrcda.addAll(_ARMED_FORCES);
+        ENTIRE_STATE_NON_PRCDA = Collections.unmodifiableList(nonPrcda);
     }
 
     private static final PrcdaDataProvider _PROVIDER = new PrcdaDataProvider();
@@ -91,35 +88,39 @@ public final class PrcdaUtils {
         else if (ENTIRE_STATE_PRCDA.contains(input.getAddressAtDxState())) {
             result.setPrcda(PRCDA_YES);
             result.setPrcda2017(PRCDA_YES);
-        } else if (ENTIRE_STATE_NON_PRCDA.contains(input.getAddressAtDxState())) {
+        }
+        else if (ENTIRE_STATE_NON_PRCDA.contains(input.getAddressAtDxState())) {
             result.setPrcda(PRCDA_NO);
             result.setPrcda2017(PRCDA_NO);
-        } else if (!isCountyAtDxValid(input.getAddressAtDxCounty()) || (MIXED_PRCDA.contains(input.getAddressAtDxState()) && "999".equals(input.getAddressAtDxCounty()))) {
+        }
+        else if (!isCountyAtDxValid(input.getAddressAtDxCounty())) {
             result.setPrcda(PRCDA_UNKNOWN);
             result.setPrcda2017(PRCDA_UNKNOWN);
-        } else {
+        }
+        else {
             result.setPrcda(_PROVIDER.getPrcda(input.getAddressAtDxState(), input.getAddressAtDxCounty()));
             result.setPrcda2017(_PROVIDER.getPrcda2017(input.getAddressAtDxState(), input.getAddressAtDxCounty()));
         }
 
-        // get methods should never return null, but lets make sure we don't return null value anyways
-        if (result.getPrcda() == null)
+        // get methods should never return null, but let's make sure we don't return null value anyway
+        if (result.getPrcda() == null) {
             result.setPrcda(PRCDA_NO);
-        if (result.getPrcda2017() == null)
+        }
+        if (result.getPrcda2017() == null) {
             result.setPrcda2017(PRCDA_NO);
+        }
 
         return result;
     }
 
     static boolean isCountyAtDxValid(String county) {
-        return (NumberUtils.isDigits(county)) && county.length() == 3;
+        return county != null && county.length() == 3 && !("999".equals(county)) && NumberUtils.isDigits(county);
     }
 
     static boolean isStateAtDxValid(String state) {
         return _STATES.contains(state)
                 || _TERRITORIES.contains(state)
                 || _PROVINCES.contains(state)
-                || _ARMED_FORCES.contains(state)
-                || _UNKNOWN_STATES.contains(state);
+                || _ARMED_FORCES.contains(state);
     }
 }

@@ -31,7 +31,8 @@ public final class UihoUtils {
 
     private static final List<String> _ARMED_FORCES = Arrays.asList("AA", "AE", "AP");
 
-    private static final List<String> _UNKNOWN_STATES = Arrays.asList("CD", "US", "XX", "YY", "ZZ");
+    // Just sort of acknowledging the existence of these codes to show I didn't forget about them.
+    //private static final List<String> _UNKNOWN_STATES = Arrays.asList("CD", "US", "XX", "YY", "ZZ");
 
     public static final String UIHO_NO = "0";
     public static final String UIHO_UNKNOWN = "9";
@@ -71,38 +72,34 @@ public final class UihoUtils {
         UihoOutputDto result = new UihoOutputDto();
         input.applyRecodes();
 
-        if (!isStateAtDxValid(input.getAddressAtDxState())) {
+        if (!isStateAtDxValid(input.getAddressAtDxState()) || !isCountyAtDxValid(input.getAddressAtDxCounty())) {
             result.setUIHO(UIHO_UNKNOWN);
             result.setUihoCity(UIHO_CITY_UNKNOWN);
         }
         else {
-            if (!isCountyAtDxValid(input.getAddressAtDxCounty())) {
-                result.setUIHO(UIHO_UNKNOWN);
-                result.setUihoCity(UIHO_CITY_UNKNOWN);
-            }
-            else {
-                result.setUIHO(_PROVIDER.getUIHO(input.getAddressAtDxState(), input.getAddressAtDxCounty()));
-                result.setUihoCity(_PROVIDER.getUIHOCity(input.getAddressAtDxState(), input.getAddressAtDxCounty()));
-            }
+            result.setUIHO(_PROVIDER.getUIHO(input.getAddressAtDxState(), input.getAddressAtDxCounty()));
+            result.setUihoCity(_PROVIDER.getUIHOCity(input.getAddressAtDxState(), input.getAddressAtDxCounty()));
         }
 
-        // get methods should never return null, but lets make sure we don't return null value anyways
+        // get methods should never return null, but let's make sure we don't return null value anyway
         if (result.getUiho() == null) {
             result.setUIHO(UIHO_NO);
+        }
+        if (result.getUihoCity() == null) {
             result.setUihoCity(UIHO_CITY_NONE);
         }
+
         return result;
     }
 
     static boolean isCountyAtDxValid(String county) {
-        return (NumberUtils.isDigits(county)) && county.length() == 3;
+        return county != null && county.length() == 3 && !("999".equals(county)) && NumberUtils.isDigits(county);
     }
 
     static boolean isStateAtDxValid(String state) {
         return _STATES.contains(state)
                 || _TERRITORIES.contains(state)
                 || _PROVINCES.contains(state)
-                || _ARMED_FORCES.contains(state)
-                || _UNKNOWN_STATES.contains(state);
+                || _ARMED_FORCES.contains(state);
     }
 }
