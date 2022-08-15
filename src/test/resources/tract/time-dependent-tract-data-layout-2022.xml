@@ -28,7 +28,7 @@
 	<field name="percentBelowPovertyWhiteNotHisp" start="122" end="126" long-label="Percent of persons below poverty White alone, not Hispanic or Latino"/>
 	<field name="percentBelowPovertyHisp" start="127" end="131" long-label="Percent of persons below poverty Hispanic or Latino"/>
 	<field name="ruca2010A" start="132" end="132" long-label="2010 RUCA-based categorization A"/>
-	<field name="race2010C" start="133" end="133" long-label="2010 RUCA-based categorization C"/>
+	<field name="ruca2010C" start="133" end="133" long-label="2010 RUCA-based categorization C"/>
 	<field name="uric2010A" start="134" end="134" long-label="2010 Census-based Urban Rural Indicator Codes (URIC) categorization A"/>
 	<field name="uric2010B" start="135" end="135" long-label="2010 Census-based Urban Rural Indicator Codes (URIC) categorization B"/>
 	<field name="uric2010C" start="136" end="136" long-label="2010 Census-based Urban Rural Indicator Codes (URIC) categorization C"/>
