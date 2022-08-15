@@ -35,8 +35,14 @@ public class CensusData {
     // EPHT SubCounty 20K
     private String _epht2010GeoId20k;
 
+    // EPHT SubCounty 50K
+    private String _epht2010GeoId50k;
+
     // TractEstCongressDist
     private String _tractEstCongressDist;
+
+    // Social Vulnerability Index
+    private String _sviOverallStateBased;
 
     // year data keyed by DX year
     private final Map<String, YearData> _yearData = new HashMap<>();
@@ -105,6 +111,14 @@ public class CensusData {
         _epht2010GeoId5k = epht2010GeoId5k;
     }
 
+    public String getEpht2010GeoId50k() {
+        return _epht2010GeoId50k;
+    }
+
+    public void setEpht2010GeoId50k(String epht2010GeoId50k) {
+        _epht2010GeoId50k = epht2010GeoId50k;
+    }
+
     public String getTractEstCongressDist() {
         return _tractEstCongressDist;
     }
@@ -119,6 +133,14 @@ public class CensusData {
 
     public void setCancerReportingZone(String cancerReportingZone) {
         _cancerReportingZone = cancerReportingZone;
+    }
+
+    public String getSviOverallStateBased() {
+        return _sviOverallStateBased;
+    }
+
+    public void setSviOverallStateBased(String sviOverallStateBased) {
+        _sviOverallStateBased = sviOverallStateBased;
     }
 
     /**

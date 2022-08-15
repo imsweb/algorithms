@@ -9,6 +9,8 @@ public class EphtSubCountyOutputDto {
 
     private String _epht2010GeoId20k;
 
+    private String _epht2010GeoId50k;
+
     public String getEpht2010GeoId5k() {
         return _epht2010GeoId5k;
     }
@@ -23,5 +25,13 @@ public class EphtSubCountyOutputDto {
 
     public void setEpht2010GeoId20k(String epht2010GeoId20k) {
         _epht2010GeoId20k = epht2010GeoId20k;
+    }
+
+    public String getEpht2010GeoId50k() {
+        return _epht2010GeoId50k;
+    }
+
+    public void setEpht2010GeoId50k(String epht2010GeoId50k) {
+        _epht2010GeoId50k = epht2010GeoId50k;
     }
 }

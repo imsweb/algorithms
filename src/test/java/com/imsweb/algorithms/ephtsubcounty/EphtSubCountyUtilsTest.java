@@ -56,18 +56,21 @@ public class EphtSubCountyUtilsTest {
         record.put(_PROP_CENSUS_TRACT_2010, "967702");
         Assert.assertEquals("00005603955", computeEphtSubCounty(record).getEpht2010GeoId5k());
         Assert.assertEquals("00005603926", computeEphtSubCounty(record).getEpht2010GeoId20k());
+        Assert.assertEquals("00005600744", computeEphtSubCounty(record).getEpht2010GeoId50k());
         record.clear();
         record.put(_PROP_STATE_DX, "HI");
         record.put(_PROP_COUNTY_DX_ANALYSIS, "003");
         record.put(_PROP_CENSUS_TRACT_2010, "003405");
         Assert.assertEquals("00001500392", computeEphtSubCounty(record).getEpht2010GeoId5k());
         Assert.assertEquals("00015003106", computeEphtSubCounty(record).getEpht2010GeoId20k());
+        Assert.assertEquals("00015003302", computeEphtSubCounty(record).getEpht2010GeoId50k());
         record.clear();
         record.put(_PROP_STATE_DX, "AL");
         record.put(_PROP_COUNTY_DX_ANALYSIS, "003");
         record.put(_PROP_CENSUS_TRACT_2010, "990000");
         Assert.assertEquals("C", computeEphtSubCounty(record).getEpht2010GeoId5k()); // used to be 99999999999 in old data, became C when we switched to big SEER census data file
         Assert.assertEquals("C", computeEphtSubCounty(record).getEpht2010GeoId20k());
+        Assert.assertEquals("C", computeEphtSubCounty(record).getEpht2010GeoId50k());
     }
 
     private EphtSubCountyOutputDto computeEphtSubCounty(Map<String, String> record) {

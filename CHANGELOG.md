@@ -9,6 +9,8 @@
 - Changed how census-related data is included in and loaded by the library to optimized its files-size and memory footprint.
 - Removed non-thread-safe providers for all algorithms.
 - Split the PRCDA-UIHO algorithm into 2 separate algorithms: PRCDA and UIHO. Updated both algorithms to produce '2020' values. Added a '2017' calculation to the PRCDA algorithm. Added UIHO City to the UIHO algorithm.
+- Added 50K output variable to the NPCR EPHT SubCounty algorithm.
+- Added new Social Vulnerability Index algorithm.
 
 **Changes in version 3.10**
 

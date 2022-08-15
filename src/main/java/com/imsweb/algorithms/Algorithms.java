@@ -29,6 +29,7 @@ import com.imsweb.algorithms.prcda.PrcdaAlgorithm;
 import com.imsweb.algorithms.ruralurban.RuralUrbanAlgorithm;
 import com.imsweb.algorithms.seersiterecode.SeerSiteRecodeAlgorithm;
 import com.imsweb.algorithms.survival.SurvivalTimeAlgorithm;
+import com.imsweb.algorithms.svi.SocialVulnerabilityAlgorithm;
 import com.imsweb.algorithms.tractestcongressdist.TractEstCongressDistAlgorithm;
 import com.imsweb.algorithms.uiho.UihoAlgorithm;
 import com.imsweb.algorithms.yostacspoverty.YostAcsPovertyAlgorithm;
@@ -69,6 +70,7 @@ public final class Algorithms {
     public static final String ALG_CANCER_REPORTING_ZONE = "cancer-reporting-zone";
     public static final String ALG_SEER_BRAIN_CNS_RECODE = "seer-brain-cns-recode";
     public static final String ALG_SEER_LYMPH_NEO_RECODE_2021 = "seer-lymphoid-neoplasm-recode-2021";
+    public static final String ALG_SVI = "svi";
 
     // special properties
     public static final String FIELD_TUMORS = "tumors";
@@ -169,10 +171,12 @@ public final class Algorithms {
     public static final String FIELD_ACS_POV_HISP = "acsPctPov0610Hispanic";
     public static final String FIELD_EPHT_2010_GEOID_5K = "epht2010GeoId5k";
     public static final String FIELD_EPHT_2010_GEOID_20K = "epht2010GeoId20k";
+    public static final String FIELD_EPHT_2010_GEOID_50K = "epht2010GeoId50k";
     public static final String FIELD_TRACT_EST_CONGRESS_DIST = "tractEstCongressDist";
     public static final String FIELD_CANCER_REPORTING_ZONE = "cancerReportingZone";
     public static final String FIELD_SEER_BRAIN_CSN_RECODE_2020 = "seerBrainCnsRecode2020";
     public static final String FIELD_SEER_LYMPH_NEO_RECODE_2021 = "seerLymphNeoplasmRecode2021";
+    public static final String FIELD_LVI_OVERALL_STATE_BASED = "sviOverallStateBased";
 
     // options
     public static final String PARAM_NHIA_OPTION = "nhiaOption";
@@ -298,10 +302,12 @@ public final class Algorithms {
             addField(AlgorithmField.of(FIELD_ACS_POV_HISP, null, 6, "ACS Pct Poverty (Hispanic)", "ACS Pov Hispanic", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_EPHT_2010_GEOID_5K, null, 11, "EPHT 2010 GEO ID 5K", "EPHT 5K", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_EPHT_2010_GEOID_20K, null, 11, "EPHT 2010 GEO ID 20K", "EPHT 20K", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_EPHT_2010_GEOID_50K, null, 11, "EPHT 2010 GEO ID 50K", "EPHT 50K", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_TRACT_EST_CONGRESS_DIST, null, 2, "Tract-Estimated Congressional District", "Tract-Est Congress Dist", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_CANCER_REPORTING_ZONE, null, 8, "Cancer Reporting Zone", "Cancer Reporting Zone", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_SEER_BRAIN_CSN_RECODE_2020, null, 2, "SEER Brain/CNS Recode 2020", "Brain/CNS", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_SEER_LYMPH_NEO_RECODE_2021, null, 2, "SEER Lymphoid Neoplasm Recode 2021", "Lymph 21", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_LVI_OVERALL_STATE_BASED, null, 5, "Social Vulnerability Index Overall State Based", "LVI Overall State", DATA_LEVEL_TUMOR));
 
             // algorithms
             addAlgorithm(new NhiaAlgorithm());
@@ -325,6 +331,7 @@ public final class Algorithms {
             addAlgorithm(new TractEstCongressDistAlgorithm());
             addAlgorithm(new CancerReportingZoneAlgorithm());
             addAlgorithm(new LymphoidNeoplasmRecodeAlgorithm2021());
+            addAlgorithm(new SocialVulnerabilityAlgorithm());
         }
         finally {
             _LOCK.writeLock().unlock();

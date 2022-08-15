@@ -23,6 +23,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.function.UnaryOperator;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
@@ -99,6 +100,7 @@ public class TractDataLab {
         _STATES.put("68", "MH");
         _STATES.put("69", "MP");
         _STATES.put("70", "PW");
+        _STATES.put("72", "PR");
         _STATES.put("74", "UM");
         _STATES.put("78", "VI");
         _STATES.put("99", "YY");
@@ -128,56 +130,17 @@ public class TractDataLab {
         // I created a layout to be able to easily read the big fixed-column census tract file; that layout needs to agree on the "dictionary" provided on the SEER website:
         //    https://seer.cancer.gov/seerstat/variables/countyattribs/ctattrdict.html
         FixedColumnsLayout layout;
-        try (InputStream fis = Thread.currentThread().getContextClassLoader().getResourceAsStream("tract/seer-tract-data-layout-2022.xml")) {
+        try (InputStream fis = Thread.currentThread().getContextClassLoader().getResourceAsStream("tract/time-dependent-tract-data-layout-2022.xml")) {
             layout = new FixedColumnsLayout(LayoutUtils.readFixedColumnsLayout(fis));
         }
 
         // load the data from the big SEER tract data file (it was not added to the project, too big)
         //    https://seer.cancer.gov/seerstat/variables/countyattribs/census-tract-attribs.html
-        Path inputFile = Paths.get("<change-me>\\tract.level.ses.2008_17.txt.gz");
+        // 8/15/22 - new version of the SEER data was provided, but it's not posted online yet; a Puerto-Rico version of the data file was also provided (it won't be posted)
         Map<DataKey, Map<String, String>> tractValues = new TreeMap<>();
         Map<DataKey, Map<Integer, String>> tractYearBasedValues = new HashMap<>();
-        try (LineNumberReader reader = new LineNumberReader(new InputStreamReader(new GZIPInputStream(Files.newInputStream(inputFile)), StandardCharsets.US_ASCII))) {
-
-            Map<String, String> line = layout.readNextRecord(reader);
-            while (line != null) {
-
-                int lineNum = reader.getLineNumber();
-
-                String state = line.get("stateFipsCode");
-                String county = line.get("countyFipsCode");
-                String tract = line.get("tract");
-                String year = line.get("year");
-
-                if (state == null)
-                    throw new RuntimeException("Line " + lineNum + ": missing state");
-                if (!_STATES.containsKey(state))
-                    throw new RuntimeException("Line " + lineNum + ": invalid state: " + state);
-                if (county == null)
-                    throw new RuntimeException("Line " + lineNum + ": missing county");
-                if (tract == null)
-                    throw new RuntimeException("Line " + lineNum + ": missing tract");
-                if (year == null)
-                    throw new RuntimeException("Line " + lineNum + ": missing year");
-                if (Integer.valueOf(year).compareTo(CountryData.TRACT_YEAR_MIN_VAL) < 0 || Integer.valueOf(year).compareTo(CountryData.TRACT_YEAR_MAX_VAL) > 0)
-                    throw new RuntimeException("Line " + lineNum + ": invalid/unexpected year: " + year);
-
-                DataKey key = new DataKey(_STATES.get(state), county, tract);
-
-                StringBuilder buf = new StringBuilder();
-                for (String field : CountryData.getTractYearBasedFields().keySet())
-                    buf.append(cleanYearBasedTractValue(lineNum, line, field));
-                tractYearBasedValues.computeIfAbsent(key, k -> new TreeMap<>()).put(Integer.valueOf(year), buf.toString());
-
-                tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("ruca2010", cleanTractValue(lineNum, line, "ruca2010C", "ruca2010"));
-                tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("uric2010", cleanTractValue(lineNum, line, "uric2010A", "uric2010"));
-                tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("cancerReportingZone", cleanTractValue(lineNum, line, "zoneId", "cancerReportingZone"));
-                tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("npcrEphtSubcounty5k", cleanTractValue(lineNum, line, "cdcSubcounty5k", "npcrEphtSubcounty5k"));
-                tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("npcrEphtSubcounty20k", cleanTractValue(lineNum, line, "cdcSubcounty20k", "npcrEphtSubcounty20k"));
-
-                line = layout.readNextRecord(reader);
-            }
-        }
+        processMainSeerDataFile(Paths.get("C:\\dev\\tract-level-data\\tract.level.ses.2008_17.txt.gz"), layout, tractValues, tractYearBasedValues);
+        processMainSeerDataFile(Paths.get("C:\\dev\\tract-level-data\\tract.level.ses.2008_17.puerto.rico.txt.gz"), layout, tractValues, tractYearBasedValues);
 
         // NAACCR Poverty Indicator 1995-2004
         Map<DataKey, String> naaccrPovertyIndicator9504 = new HashMap<>();
@@ -277,6 +240,8 @@ public class TractDataLab {
             for (DataKey key : allKeys) {
                 StringBuilder buf = new StringBuilder();
 
+                // the fields are returned and processed in a very specific order; the order of the if/else statements doesn't matter
+                // also, most fields come from the big shared SEER data file, those don't have their own if/else statements
                 for (String field : CountryData.getTractFields().keySet()) {
                     if ("stateAbbreviation".equals(field))
                         buf.append(key.getState());
@@ -292,8 +257,6 @@ public class TractDataLab {
                         buf.append(ruca2000Values.getOrDefault(key, " "));
                     else if ("uric2000".equals(field))
                         buf.append(uric2000Values.getOrDefault(key, " "));
-                    else if ("tractEstCongressDist".equals(field))
-                        buf.append(tractEstCongresDistricts.getOrDefault(key, "  "));
                     else if ("yearData".equals(field)) {
                         Map<Integer, String> yearData = tractYearBasedValues.get(key);
                         if (yearData != null) {
@@ -322,7 +285,13 @@ public class TractDataLab {
     }
 
     private static String cleanTractValue(int lineNum, Map<String, String> line, String sourceField, String targetField) {
+        return cleanTractValue(lineNum, line, sourceField, targetField, null);
+    }
+
+    private static String cleanTractValue(int lineNum, Map<String, String> line, String sourceField, String targetField, UnaryOperator<String> operator) {
         String value = line.get(sourceField);
+        if (operator != null)
+            value = operator.apply(value);
         if (value == null)
             value = "";
         int length = CountryData.getTractFields().get(targetField);
@@ -339,6 +308,53 @@ public class TractDataLab {
         if (value.length() > length)
             throw new RuntimeException("Line " + lineNum + ": value too long: " + value);
         return StringUtils.rightPad(value, length, " ");
+    }
+
+    private static void processMainSeerDataFile(Path inputFile, FixedColumnsLayout layout, Map<DataKey, Map<String, String>> tractValues, Map<DataKey, Map<Integer, String>> tractYearBasedValues) throws IOException {
+        try (LineNumberReader reader = new LineNumberReader(new InputStreamReader(new GZIPInputStream(Files.newInputStream(inputFile)), StandardCharsets.US_ASCII))) {
+
+            Map<String, String> line = layout.readNextRecord(reader);
+            while (line != null) {
+
+                int lineNum = reader.getLineNumber();
+
+                String state = line.get("stateFipsCode");
+                String county = line.get("countyFipsCode");
+                String tract = line.get("tract");
+                String year = line.get("year");
+
+                if (state == null)
+                    throw new RuntimeException("Line " + lineNum + ": missing state");
+                if (!_STATES.containsKey(state))
+                    throw new RuntimeException("Line " + lineNum + ": invalid state: " + state);
+                if (county == null)
+                    throw new RuntimeException("Line " + lineNum + ": missing county");
+                if (tract == null)
+                    throw new RuntimeException("Line " + lineNum + ": missing tract");
+                if (year == null)
+                    throw new RuntimeException("Line " + lineNum + ": missing year");
+                if (Integer.valueOf(year).compareTo(CountryData.TRACT_YEAR_MIN_VAL) < 0 || Integer.valueOf(year).compareTo(CountryData.TRACT_YEAR_MAX_VAL) > 0)
+                    throw new RuntimeException("Line " + lineNum + ": invalid/unexpected year: " + year);
+
+                DataKey key = new DataKey(_STATES.get(state), county, tract);
+
+                StringBuilder buf = new StringBuilder();
+                for (String field : CountryData.getTractYearBasedFields().keySet())
+                    buf.append(cleanYearBasedTractValue(lineNum, line, field));
+                tractYearBasedValues.computeIfAbsent(key, k -> new TreeMap<>()).put(Integer.valueOf(year), buf.toString());
+
+                tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("ruca2010", cleanTractValue(lineNum, line, "ruca2010C", "ruca2010"));
+                tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("uric2010", cleanTractValue(lineNum, line, "uric2010A", "uric2010"));
+                tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("cancerReportingZone", cleanTractValue(lineNum, line, "zoneId", "cancerReportingZone"));
+                tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("npcrEphtSubcounty5k", cleanTractValue(lineNum, line, "cdcSubcounty5k", "npcrEphtSubcounty5k"));
+                tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("npcrEphtSubcounty20k", cleanTractValue(lineNum, line, "cdcSubcounty20k", "npcrEphtSubcounty20k"));
+                tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("npcrEphtSubcounty50k", cleanTractValue(lineNum, line, "cdcSubcounty50k", "npcrEphtSubcounty50k"));
+                tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("tractEstCongressDist", cleanTractValue(lineNum, line, "congressionalDistrict", "tractEstCongressDist", s -> StringUtils.substring(s, 2)));
+                tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("sviOverallStateBased", cleanTractValue(lineNum, line, "sviOverallState", "sviOverallStateBased"));
+
+                line = layout.readNextRecord(reader);
+            }
+        }
     }
 
     private static class DataKey implements Comparable<DataKey> {

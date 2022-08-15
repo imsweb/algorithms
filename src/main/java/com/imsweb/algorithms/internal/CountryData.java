@@ -39,8 +39,11 @@ import org.apache.commons.lang3.math.NumberUtils;
 @SuppressWarnings("BooleanMethodIsAlwaysInverted")
 public class CountryData {
 
+    // TODO FD PRCDA and UIHO are census data, they should be added to the internal shared census data files to not repeat the keys...
+
     private static final String _SEER_CENSUS_DATA_FILE = "tract/tract-data.txt.gz";
 
+    //
     private static final Map<String, Integer> _TRACT_FIELDS = new LinkedHashMap<>();
 
     static {
@@ -57,7 +60,9 @@ public class CountryData {
         _TRACT_FIELDS.put("naaccrPovertyIndicator0507", 1);
         _TRACT_FIELDS.put("npcrEphtSubcounty5k", 11);
         _TRACT_FIELDS.put("npcrEphtSubcounty20k", 11);
+        _TRACT_FIELDS.put("npcrEphtSubcounty50k", 11);
         _TRACT_FIELDS.put("tractEstCongressDist", 2);
+        _TRACT_FIELDS.put("sviOverallStateBased", 5);
     }
 
     public static Map<String, Integer> getTractFields() {
@@ -107,7 +112,6 @@ public class CountryData {
     private boolean _countyAtDxAnalysisInitialized = false;
     private boolean _prcdaInitialized = false;
     private boolean _uihoInitialized = false;
-    private boolean _tractEstCongressDistInitialized = false;
 
     // internal lock to control concurrency
     private final ReentrantReadWriteLock _lock = new ReentrantReadWriteLock();
@@ -183,12 +187,16 @@ public class CountryData {
                                 // NPCR EPHT SubCounty
                                 censusData.setEpht2010GeoId5k(StringUtils.leftPad(StringUtils.trimToNull(values.get("npcrEphtSubcounty5k")), 11, '0'));
                                 censusData.setEpht2010GeoId20k(StringUtils.leftPad(StringUtils.trimToNull(values.get("npcrEphtSubcounty20k")), 11, '0'));
+                                censusData.setEpht2010GeoId50k(StringUtils.leftPad(StringUtils.trimToNull(values.get("npcrEphtSubcounty50k")), 11, '0'));
 
                                 // Cancer Reporting Zone
                                 censusData.setCancerReportingZone(StringUtils.trimToNull(values.get("cancerReportingZone")));
 
                                 // Tract-estimate Congressional Districts
                                 censusData.setTractEstCongressDist(StringUtils.trimToNull(values.get("tractEstCongressDist")));
+
+                                // Social Vulnerability Index (SVI)
+                                censusData.setSviOverallStateBased(StringUtils.trimToNull(values.get("sviOverallStateBased")));
                             }
 
                             line = reader.readLine();
@@ -520,59 +528,6 @@ public class CountryData {
                 }
             }
             _uihoInitialized = true;
-        }
-        finally {
-            _lock.writeLock().unlock();
-        }
-    }
-
-    /**
-     * Returns requested state data to be used by the Tract-Estimated Congressional District algorithm.
-     */
-    public StateData getTractEstCongressDistStateData(String state) {
-        _lock.readLock().lock();
-        try {
-            if (!_tractEstCongressDistInitialized)
-                throw new IllegalStateException("Tract-Estimated Congressional District data cannot be access before it has been initialized!");
-            return _stateData.get(state);
-        }
-        finally {
-            _lock.readLock().unlock();
-        }
-    }
-
-    /**
-     * Returns true if the Tract-Estimated Congressional District data has been initialized, false otherwise.
-     */
-    public boolean isTractEstCongressDistDataInitialized() {
-        _lock.readLock().lock();
-        try {
-            return _tractEstCongressDistInitialized;
-        }
-        finally {
-            _lock.readLock().unlock();
-        }
-    }
-
-    /**
-     * Initializes the given Tract-Estimated Congressional District data (this call will make all other access to the data structure block).
-     */
-    public void initializeTractEstCongressDistData(Map<String, Map<String, Map<String, CensusData>>> data) {
-        _lock.writeLock().lock();
-        try {
-            if (!_tractEstCongressDistInitialized) {
-                for (Map.Entry<String, Map<String, Map<String, CensusData>>> stateEntry : data.entrySet()) {
-                    StateData stateData = _stateData.computeIfAbsent(stateEntry.getKey(), k -> new StateData());
-                    for (Map.Entry<String, Map<String, CensusData>> countyEntry : stateEntry.getValue().entrySet()) {
-                        CountyData countyData = stateData.getData().computeIfAbsent(countyEntry.getKey(), k -> new CountyData());
-                        for (Map.Entry<String, CensusData> censusEntry : countyEntry.getValue().entrySet()) {
-                            CensusData censusData = countyData.getData().computeIfAbsent(censusEntry.getKey(), k -> new CensusData());
-                            censusData.setTractEstCongressDist(censusEntry.getValue().getTractEstCongressDist());
-                        }
-                    }
-                }
-            }
-            _tractEstCongressDistInitialized = true;
         }
         finally {
             _lock.writeLock().unlock();
