@@ -39,8 +39,6 @@ import org.apache.commons.lang3.math.NumberUtils;
 @SuppressWarnings("BooleanMethodIsAlwaysInverted")
 public class CountryData {
 
-    // TODO FD PRCDA and UIHO are census data, they should be added to the internal shared census data files to not repeat the keys...
-
     private static final String _SEER_CENSUS_DATA_FILE = "tract/tract-data.txt.gz";
 
     //

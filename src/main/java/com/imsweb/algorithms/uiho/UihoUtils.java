@@ -82,12 +82,10 @@ public final class UihoUtils {
         }
 
         // get methods should never return null, but let's make sure we don't return null value anyway
-        if (result.getUiho() == null) {
+        if (result.getUiho() == null)
             result.setUIHO(UIHO_NO);
-        }
-        if (result.getUihoCity() == null) {
+        if (result.getUihoCity() == null)
             result.setUihoCity(UIHO_CITY_NONE);
-        }
 
         return result;
     }

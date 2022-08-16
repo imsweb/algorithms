@@ -40,6 +40,7 @@ public class PrcdaDataProvider {
 
     private enum PrcdaYear {
         YR2017, YR2020;
+
         public static PrcdaYear getDefault() {
             return YR2020;
         }
@@ -56,47 +57,37 @@ public class PrcdaDataProvider {
     private String getPrcdaData(PrcdaYear prcdaYear, String state, String county) {
         prcdaYear = prcdaYear == null ? PrcdaYear.getDefault() : prcdaYear;
 
-        if (!isStateAtDxValid(state)) {
+        if (!isStateAtDxValid(state))
             return PRCDA_UNKNOWN;
-        }
-        else if (ENTIRE_STATE_PRCDA.contains(state)) {
+        else if (ENTIRE_STATE_PRCDA.contains(state))
             return PRCDA_YES;
-        }
-        else if (ENTIRE_STATE_NON_PRCDA.contains(state)) {
+        else if (ENTIRE_STATE_NON_PRCDA.contains(state))
             return PRCDA_NO;
-        }
-        else if (!isCountyAtDxValid(county)) {
+        else if (!isCountyAtDxValid(county))
             return PRCDA_UNKNOWN;
-        }
 
-        if (!CountryData.getInstance().isPrcdaDataInitialized()) {
+        if (!CountryData.getInstance().isPrcdaDataInitialized())
             CountryData.getInstance().initializePrcdaData(loadPrcdaData());
-        }
 
         StateData stateData = CountryData.getInstance().getPrcdaData(state);
-        if (stateData == null) {
+        if (stateData == null)
             return PRCDA_NO;
-        }
 
         CountyData countyData = stateData.getCountyData(county);
-        if (countyData == null) {
+        if (countyData == null)
             return PRCDA_NO;
-        }
 
-        if (PrcdaYear.YR2017.equals(prcdaYear)) {
+        if (PrcdaYear.YR2017.equals(prcdaYear))
             return countyData.getPrcda2017();
-        }
-        else {
+        else
             return countyData.getPrcda();
-        }
     }
 
     private Map<String, Map<String, CountyData>> loadPrcdaData() {
         Map<String, Map<String, CountyData>> result = new HashMap<>();
         try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("prcda/prcda.csv")) {
-            if (is == null) {
+            if (is == null)
                 throw new IllegalStateException("Unable to find PRCDA data!");
-            }
             try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
                  CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build()) {
                 for (String[] row : csvReader.readAll()) {

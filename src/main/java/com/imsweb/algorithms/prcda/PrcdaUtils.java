@@ -45,6 +45,7 @@ public final class PrcdaUtils {
 
     // States where every county is non-PRCDA
     public static final List<String> ENTIRE_STATE_NON_PRCDA;
+
     static {
         List<String> nonPrcda = new ArrayList<>(Arrays.asList("AR", "DE", "DC", "GA", "HI", "IL", "KY", "MD", "MO", "NH", "NJ", "OH", "TN", "VT", "WV"));
         nonPrcda.addAll(_TERRITORIES);
@@ -93,22 +94,22 @@ public final class PrcdaUtils {
             result.setPrcda(PRCDA_NO);
             result.setPrcda2017(PRCDA_NO);
         }
-        else if (!isCountyAtDxValid(input.getAddressAtDxCounty())) {
-            result.setPrcda(PRCDA_UNKNOWN);
-            result.setPrcda2017(PRCDA_UNKNOWN);
-        }
         else {
-            result.setPrcda(_PROVIDER.getPrcda(input.getAddressAtDxState(), input.getAddressAtDxCounty()));
-            result.setPrcda2017(_PROVIDER.getPrcda2017(input.getAddressAtDxState(), input.getAddressAtDxCounty()));
+            if (!isCountyAtDxValid(input.getAddressAtDxCounty())) {
+                result.setPrcda(PRCDA_UNKNOWN);
+                result.setPrcda2017(PRCDA_UNKNOWN);
+            }
+            else {
+                result.setPrcda(_PROVIDER.getPrcda(input.getAddressAtDxState(), input.getAddressAtDxCounty()));
+                result.setPrcda2017(_PROVIDER.getPrcda2017(input.getAddressAtDxState(), input.getAddressAtDxCounty()));
+            }
         }
 
         // get methods should never return null, but let's make sure we don't return null value anyway
-        if (result.getPrcda() == null) {
+        if (result.getPrcda() == null)
             result.setPrcda(PRCDA_NO);
-        }
-        if (result.getPrcda2017() == null) {
+        if (result.getPrcda2017() == null)
             result.setPrcda2017(PRCDA_NO);
-        }
 
         return result;
     }
