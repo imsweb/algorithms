@@ -176,7 +176,7 @@ public final class Algorithms {
     public static final String FIELD_CANCER_REPORTING_ZONE = "cancerReportingZone";
     public static final String FIELD_SEER_BRAIN_CSN_RECODE_2020 = "seerBrainCnsRecode2020";
     public static final String FIELD_SEER_LYMPH_NEO_RECODE_2021 = "seerLymphNeoplasmRecode2021";
-    public static final String FIELD_LVI_OVERALL_STATE_BASED = "sviOverallStateBased";
+    public static final String FIELD_CDC_SVI_2018 = "cdcSVI2018";
 
     // options
     public static final String PARAM_NHIA_OPTION = "nhiaOption";
@@ -307,7 +307,7 @@ public final class Algorithms {
             addField(AlgorithmField.of(FIELD_CANCER_REPORTING_ZONE, null, 8, "Cancer Reporting Zone", "Cancer Reporting Zone", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_SEER_BRAIN_CSN_RECODE_2020, null, 2, "SEER Brain/CNS Recode 2020", "Brain/CNS", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_SEER_LYMPH_NEO_RECODE_2021, null, 2, "SEER Lymphoid Neoplasm Recode 2021", "Lymph 21", DATA_LEVEL_TUMOR));
-            addField(AlgorithmField.of(FIELD_LVI_OVERALL_STATE_BASED, null, 5, "Social Vulnerability Index Overall State Based", "LVI Overall State", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_CDC_SVI_2018, null, 5, "CDC SVI 2018", "SVI 18", DATA_LEVEL_TUMOR));
 
             // algorithms
             addAlgorithm(new NhiaAlgorithm());
