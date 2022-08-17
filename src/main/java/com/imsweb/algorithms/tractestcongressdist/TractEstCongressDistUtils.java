@@ -3,6 +3,8 @@
  */
 package com.imsweb.algorithms.tractestcongressdist;
 
+import com.imsweb.algorithms.StateCountyTractInputDto;
+import com.imsweb.algorithms.StateCountyTractInputDto.CensusTract;
 import com.imsweb.algorithms.internal.CensusData;
 import com.imsweb.algorithms.internal.CountryData;
 import com.imsweb.algorithms.internal.CountyData;
@@ -15,6 +17,7 @@ public final class TractEstCongressDistUtils {
 
     //Unknown values for each code
     public static final String TRACT_EST_CONGRESS_DIST_UNK_A = "A";
+    public static final String TRACT_EST_CONGRESS_DIST_UNK_B = "B";
     public static final String TRACT_EST_CONGRESS_DIST_UNK_C = "C";
     public static final String TRACT_EST_CONGRESS_DIST_UNK_D = "D";
 
@@ -44,19 +47,23 @@ public final class TractEstCongressDistUtils {
      * <li>D = State, county, or tract are blank or unknown/li>
      * </ul>
      * <br/><br/>
-     * @param input a <code>TractEstCongressDistInputDto</code> input object
+     * @param input a <code>StateCountyTractInputDto</code> input object
      * @return the computed Tract Estimated Congressional Districts value
      */
-    public static TractEstCongressDistOutputDto computeTractEstCongressDist(TractEstCongressDistInputDto input) {
+    public static TractEstCongressDistOutputDto computeTractEstCongressDist(StateCountyTractInputDto input) {
         TractEstCongressDistOutputDto result = new TractEstCongressDistOutputDto();
+
         input.applyRecodes();
 
-        if (!input.isStateValidOrMissingOrUnknown() || !input.isCountyValidOrMissingOrUnknown() || !input.isCensusTract2010ValidOrMissingOrUnknown())
+        if (input.hasInvalidStateCountyOrCensusTract(CensusTract._2010)) {
             result.setTractEstCongressDist(TRACT_EST_CONGRESS_DIST_UNK_A);
-        else if (input.isStateMissingOrUnknown() || input.isCountyMissingOrUnknown() || input.isCensusTract2010MissingOrUnknown())
+        }
+        else if (input.hasUnknownStateCountyOrCensusTract(CensusTract._2010)) {
             result.setTractEstCongressDist(TRACT_EST_CONGRESS_DIST_UNK_D);
-        else if ("000".equals(input.getCountyAtDxAnalysis()))
-            result.setTractEstCongressDist("B");
+        }
+        else if (input.countyIsNotReported()) {
+            result.setTractEstCongressDist(TRACT_EST_CONGRESS_DIST_UNK_B);
+        }
         else {
 
             if (!CountryData.getInstance().isTractDataInitialized(input.getAddressAtDxState()))

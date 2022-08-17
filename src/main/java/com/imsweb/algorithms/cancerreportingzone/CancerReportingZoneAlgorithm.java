@@ -13,6 +13,7 @@ import com.imsweb.algorithms.AbstractAlgorithm;
 import com.imsweb.algorithms.AlgorithmInput;
 import com.imsweb.algorithms.AlgorithmOutput;
 import com.imsweb.algorithms.Algorithms;
+import com.imsweb.algorithms.StateCountyTractInputDto;
 import com.imsweb.algorithms.internal.Utils;
 
 import static com.imsweb.algorithms.Algorithms.FIELD_CANCER_REPORTING_ZONE;
@@ -44,7 +45,7 @@ public class CancerReportingZoneAlgorithm extends AbstractAlgorithm {
         outputPatient.put(FIELD_TUMORS, outputTumors);
 
         for (Map<String, Object> inputTumor : Utils.extractTumors(Utils.extractPatient(input))) {
-            CancerReportingZoneInputDto inputDto = new CancerReportingZoneInputDto();
+            StateCountyTractInputDto inputDto = new StateCountyTractInputDto();
             inputDto.setAddressAtDxState((String)inputTumor.get(FIELD_STATE_DX));
             inputDto.setCountyAtDxAnalysis((String)inputTumor.get(FIELD_COUNTY_AT_DX_ANALYSIS));
             inputDto.setCensusTract2010((String)inputTumor.get(FIELD_CENSUS_2010));

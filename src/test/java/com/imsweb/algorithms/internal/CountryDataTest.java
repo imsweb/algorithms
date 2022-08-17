@@ -13,9 +13,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.imsweb.algorithms.StateCountyTractInputDto;
 import com.imsweb.algorithms.censustractpovertyindicator.CensusTractPovertyIndicatorInputDto;
 import com.imsweb.algorithms.censustractpovertyindicator.CensusTractPovertyIndicatorUtils;
-import com.imsweb.algorithms.ruralurban.RuralUrbanInputDto;
 import com.imsweb.algorithms.ruralurban.RuralUrbanUtils;
 
 public class CountryDataTest {
@@ -28,7 +28,7 @@ public class CountryDataTest {
         // is working as expected from a concurrency point of view
 
         // we will use this simple URAC calculation...
-        final RuralUrbanInputDto rucaInput = new RuralUrbanInputDto();
+        final StateCountyTractInputDto rucaInput = new StateCountyTractInputDto();
         rucaInput.setAddressAtDxState("AL");
         rucaInput.setCountyAtDxAnalysis("001");
         rucaInput.setCensusTract2010(null);
@@ -36,7 +36,7 @@ public class CountryDataTest {
         Assert.assertEquals(rucaExpectedValue, RuralUrbanUtils.computeRuralUrbanCommutingArea(rucaInput).getRuralUrbanCommutingArea2010());
 
         // we will use this simple URIC calculation...
-        final RuralUrbanInputDto uricInput = new RuralUrbanInputDto();
+        final StateCountyTractInputDto uricInput = new StateCountyTractInputDto();
         uricInput.setAddressAtDxState("AL");
         uricInput.setCountyAtDxAnalysis("001");
         uricInput.setCensusTract2010("020200");
@@ -44,7 +44,7 @@ public class CountryDataTest {
         Assert.assertEquals(uricExpectedValue, RuralUrbanUtils.computeUrbanRuralIndicatorCode(uricInput).getUrbanRuralIndicatorCode2010());
 
         // we will use this simple Continuum calculation...
-        final RuralUrbanInputDto continuumInput = new RuralUrbanInputDto();
+        final StateCountyTractInputDto continuumInput = new StateCountyTractInputDto();
         continuumInput.setAddressAtDxState("AL");
         continuumInput.setCountyAtDxAnalysis("001");
         final String continuumExpectedValue = "02";

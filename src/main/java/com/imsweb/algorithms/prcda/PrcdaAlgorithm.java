@@ -13,6 +13,7 @@ import com.imsweb.algorithms.AbstractAlgorithm;
 import com.imsweb.algorithms.AlgorithmInput;
 import com.imsweb.algorithms.AlgorithmOutput;
 import com.imsweb.algorithms.Algorithms;
+import com.imsweb.algorithms.StateCountyInputDto;
 import com.imsweb.algorithms.internal.Utils;
 
 import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS;
@@ -44,9 +45,9 @@ public class PrcdaAlgorithm extends AbstractAlgorithm {
         outputPatient.put(FIELD_TUMORS, outputTumors);
 
         for (Map<String, Object> inputTumor : Utils.extractTumors(Utils.extractPatient(input))) {
-            PrcdaInputDto inputDto = new PrcdaInputDto();
+            StateCountyInputDto inputDto = new StateCountyInputDto();
             inputDto.setAddressAtDxState((String)inputTumor.get(FIELD_STATE_DX));
-            inputDto.setAddressAtDxCounty((String)inputTumor.get(FIELD_COUNTY_AT_DX_ANALYSIS));
+            inputDto.setCountyAtDxAnalysis((String)inputTumor.get(FIELD_COUNTY_AT_DX_ANALYSIS));
 
             PrcdaOutputDto outputDto = PrcdaUtils.computePrcda(inputDto);
 

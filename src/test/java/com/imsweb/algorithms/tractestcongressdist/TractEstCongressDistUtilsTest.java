@@ -9,6 +9,8 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.imsweb.algorithms.StateCountyTractInputDto;
+
 public class TractEstCongressDistUtilsTest {
 
     // this properties have been deprecated in the main class but so many tests use them that it was easier to copy them here
@@ -34,7 +36,7 @@ public class TractEstCongressDistUtilsTest {
         Assert.assertEquals("C", computeTractEstCongressDist(record).getTractEstCongressDist());
         
         // test unknown A (invalid value)
-        record.put(_PROP_STATE_DX, "AA");
+        record.put(_PROP_STATE_DX, "QQ");
         Assert.assertEquals("A", computeTractEstCongressDist(record).getTractEstCongressDist());
         record.put(_PROP_STATE_DX, "WY");
         
@@ -45,6 +47,15 @@ public class TractEstCongressDistUtilsTest {
         // test unknown D (missing value)
         record.put(_PROP_COUNTY_DX_ANALYSIS, null);
         Assert.assertEquals("D", computeTractEstCongressDist(record).getTractEstCongressDist());
+
+        //test PR
+        record.clear();
+        record.put(_PROP_STATE_DX, "PR");
+        record.put(_PROP_COUNTY_DX_ANALYSIS, "001");
+        record.put(_PROP_CENSUS_TRACT_2010, "956300");
+        Assert.assertEquals("98", computeTractEstCongressDist(record).getTractEstCongressDist());
+        record.put(_PROP_CENSUS_TRACT_2010, "555555");
+        Assert.assertEquals("C", computeTractEstCongressDist(record).getTractEstCongressDist());
 
         //test 2019+ years
         record.clear();
@@ -63,7 +74,7 @@ public class TractEstCongressDistUtilsTest {
 
     private TractEstCongressDistOutputDto computeTractEstCongressDist(Map<String, String> record) {
 
-        TractEstCongressDistInputDto input = new TractEstCongressDistInputDto();
+        StateCountyTractInputDto input = new StateCountyTractInputDto();
         input.setAddressAtDxState(record.get(_PROP_STATE_DX));
         input.setCountyAtDxAnalysis(record.get(_PROP_COUNTY_DX_ANALYSIS));
         input.setCensusTract2010(record.get(_PROP_CENSUS_TRACT_2010));

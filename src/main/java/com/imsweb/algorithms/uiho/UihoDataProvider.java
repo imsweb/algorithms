@@ -21,15 +21,15 @@ import com.imsweb.algorithms.internal.CountryData;
 import com.imsweb.algorithms.internal.CountyData;
 import com.imsweb.algorithms.internal.StateData;
 
+import static com.imsweb.algorithms.StateCountyInputDto.isInvalidStateOrCounty;
+import static com.imsweb.algorithms.StateCountyInputDto.isUnknownStateOrCounty;
 import static com.imsweb.algorithms.uiho.UihoUtils.UIHO_CITY_NONE;
 import static com.imsweb.algorithms.uiho.UihoUtils.UIHO_CITY_UNKNOWN;
 import static com.imsweb.algorithms.uiho.UihoUtils.UIHO_NO;
 import static com.imsweb.algorithms.uiho.UihoUtils.UIHO_UNKNOWN;
-import static com.imsweb.algorithms.uiho.UihoUtils.isCountyAtDxValid;
-import static com.imsweb.algorithms.uiho.UihoUtils.isStateAtDxValid;
 
 /**
- * The purpose of this class is to get the PRCDA, UIHO, and UIHO facility for the provided
+ * The purpose of this class is to get the UIHO and UIHO facility for the provided
  * state of dx and county of dx from the csv file lookup.  This implementation is memory
  * consumer. If there is a database, it is better to use another implementation.
  * Created on Aug 12, 2019 by howew
@@ -39,8 +39,9 @@ public class UihoDataProvider {
 
     public String getUIHO(String state, String county) {
 
-        if (!isStateAtDxValid(state) || !isCountyAtDxValid(county))
+        if (isInvalidStateOrCounty(state, county) || isUnknownStateOrCounty(state, county) || "000".equals(county))
             return UIHO_UNKNOWN;
+
         if (!CountryData.getInstance().isUihoDataInitialized())
             CountryData.getInstance().initializeUihoData(loadUihoData());
 
@@ -57,8 +58,9 @@ public class UihoDataProvider {
 
     public String getUIHOCity(String state, String county) {
 
-        if (!isStateAtDxValid(state) || !isCountyAtDxValid(county))
+        if (isInvalidStateOrCounty(state, county) || isUnknownStateOrCounty(state, county) || "000".equals(county))
             return UIHO_CITY_UNKNOWN;
+
         if (!CountryData.getInstance().isUihoDataInitialized())
             CountryData.getInstance().initializeUihoData(loadUihoData());
 

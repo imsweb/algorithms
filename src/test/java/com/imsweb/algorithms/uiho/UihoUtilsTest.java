@@ -10,6 +10,7 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.imsweb.algorithms.StateCountyInputDto;
 import com.imsweb.algorithms.prcda.PrcdaUtils;
 
 import static com.imsweb.algorithms.uiho.UihoUtils.UIHO_CITY_NONE;
@@ -31,7 +32,7 @@ public class UihoUtilsTest {
         List<String> validStates = Arrays.asList("AL", "AK", "AZ", "CO", "GA", "MN", "NV", "SE", "VA", "ON", "ZZ");
         List<String> invalStates = Arrays.asList("", "99", null);
         List<String> validCounty = Arrays.asList("001", "003", "005", "007", "017", "097");
-        List<String> invalCounty = Arrays.asList("", "ABC", "01", "999", null);
+        List<String> invalCounty = Arrays.asList("", "000", "ABC", "01", "999", null);
 
         List<String> states = new ArrayList<>();
         states.addAll(validStates);
@@ -41,17 +42,17 @@ public class UihoUtilsTest {
         counties.addAll(validCounty);
         counties.addAll(invalCounty);
 
-        UihoInputDto input = new UihoInputDto();
+        StateCountyInputDto input = new StateCountyInputDto();
 
         for (String state : states) {
             for (String county : counties) {
                 input.setAddressAtDxState(state);
-                input.setAddressAtDxCounty(county);
+                input.setCountyAtDxAnalysis(county);
                 input.applyRecodes();
                 UihoOutputDto output = UihoUtils.computeUiho(input);
                 String stCnty = state + county;
 
-                if (invalStates.contains(input.getAddressAtDxState()) || invalCounty.contains(input.getAddressAtDxCounty()) || "ZZ".equals(input.getAddressAtDxState())) {
+                if (invalStates.contains(input.getAddressAtDxState()) || invalCounty.contains(input.getCountyAtDxAnalysis()) || "ZZ".equals(input.getAddressAtDxState())) {
                     Assert.assertEquals(UIHO_UNKNOWN, output.getUiho());
                     Assert.assertEquals(UIHO_CITY_UNKNOWN, output.getUihoCity());
                 }

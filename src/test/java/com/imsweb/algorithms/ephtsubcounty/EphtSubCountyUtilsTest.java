@@ -9,6 +9,8 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.imsweb.algorithms.StateCountyTractInputDto;
+
 public class EphtSubCountyUtilsTest {
 
     private static final String _PROP_STATE_DX = "addressAtDxState";
@@ -20,7 +22,7 @@ public class EphtSubCountyUtilsTest {
         Map<String, String> record = new HashMap<>();
 
         // test invalid state
-        record.put(_PROP_STATE_DX, "AA");
+        record.put(_PROP_STATE_DX, "QQ");
         record.put(_PROP_COUNTY_DX_ANALYSIS, "039");
         Assert.assertEquals("A", computeEphtSubCounty(record).getEpht2010GeoId5k());
         // test invalid county
@@ -71,10 +73,17 @@ public class EphtSubCountyUtilsTest {
         Assert.assertEquals("C", computeEphtSubCounty(record).getEpht2010GeoId5k()); // used to be 99999999999 in old data, became C when we switched to big SEER census data file
         Assert.assertEquals("C", computeEphtSubCounty(record).getEpht2010GeoId20k());
         Assert.assertEquals("C", computeEphtSubCounty(record).getEpht2010GeoId50k());
+        record.clear();
+        record.put(_PROP_STATE_DX, "PR");
+        record.put(_PROP_COUNTY_DX_ANALYSIS, "001");
+        record.put(_PROP_CENSUS_TRACT_2010, "956300");
+        Assert.assertEquals("C", computeEphtSubCounty(record).getEpht2010GeoId5k());
+        Assert.assertEquals("C", computeEphtSubCounty(record).getEpht2010GeoId20k());
+        Assert.assertEquals("C", computeEphtSubCounty(record).getEpht2010GeoId50k());
     }
 
     private EphtSubCountyOutputDto computeEphtSubCounty(Map<String, String> record) {
-        EphtSubCountyInputDto input = new EphtSubCountyInputDto();
+        StateCountyTractInputDto input = new StateCountyTractInputDto();
         input.setAddressAtDxState(record.get(_PROP_STATE_DX));
         input.setCountyAtDxAnalysis(record.get(_PROP_COUNTY_DX_ANALYSIS));
         input.setCensusTract2010(record.get(_PROP_CENSUS_TRACT_2010));

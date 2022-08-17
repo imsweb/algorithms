@@ -10,6 +10,8 @@ import java.util.List;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
+import com.imsweb.algorithms.StateCountyInputDto;
+
 /**
  * This class can be used to calculate PRCDA.
  * <br/><br/>
@@ -75,18 +77,14 @@ public final class PrcdaUtils {
      * 1 = PRCDA county
      * 9 = Unknown
      * <br/><br/>
-     * @param input a <code>PrcdaInputDto</code> input object
+     * @param input a <code>StateCountyInputDto</code> input object
      * @return <code>PrcdaOutputDto</code> output object
      */
-    public static PrcdaOutputDto computePrcda(PrcdaInputDto input) {
+    public static PrcdaOutputDto computePrcda(StateCountyInputDto input) {
         PrcdaOutputDto result = new PrcdaOutputDto();
         input.applyRecodes();
 
-        if (!isStateAtDxValid(input.getAddressAtDxState())) {
-            result.setPrcda(PRCDA_UNKNOWN);
-            result.setPrcda2017(PRCDA_UNKNOWN);
-        }
-        else if (ENTIRE_STATE_PRCDA.contains(input.getAddressAtDxState())) {
+        if (ENTIRE_STATE_PRCDA.contains(input.getAddressAtDxState())) {
             result.setPrcda(PRCDA_YES);
             result.setPrcda2017(PRCDA_YES);
         }
@@ -95,13 +93,13 @@ public final class PrcdaUtils {
             result.setPrcda2017(PRCDA_NO);
         }
         else {
-            if (!isCountyAtDxValid(input.getAddressAtDxCounty())) {
+            if (input.hasInvalidStateOrCounty() || input.hasUnknownStateOrCounty() || input.countyIsNotReported()) {
                 result.setPrcda(PRCDA_UNKNOWN);
                 result.setPrcda2017(PRCDA_UNKNOWN);
             }
             else {
-                result.setPrcda(_PROVIDER.getPrcda(input.getAddressAtDxState(), input.getAddressAtDxCounty()));
-                result.setPrcda2017(_PROVIDER.getPrcda2017(input.getAddressAtDxState(), input.getAddressAtDxCounty()));
+                result.setPrcda(_PROVIDER.getPrcda(input.getAddressAtDxState(), input.getCountyAtDxAnalysis()));
+                result.setPrcda2017(_PROVIDER.getPrcda2017(input.getAddressAtDxState(), input.getCountyAtDxAnalysis()));
             }
         }
 
@@ -115,7 +113,7 @@ public final class PrcdaUtils {
     }
 
     static boolean isCountyAtDxValid(String county) {
-        return county != null && county.length() == 3 && !("999".equals(county)) && NumberUtils.isDigits(county);
+        return county != null && county.length() == 3 && !("000".equals(county)) && !("999".equals(county)) && NumberUtils.isDigits(county);
     }
 
     static boolean isStateAtDxValid(String state) {

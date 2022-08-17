@@ -11,6 +11,8 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.imsweb.algorithms.StateCountyTractInputDto;
+
 public class RuralUrbanUtilsTest {
 
     // these properties have been deprecated in the main class but so many tests use them that it was easier to copy them here
@@ -184,7 +186,7 @@ public class RuralUrbanUtilsTest {
 
     // using a map of properties has been deprecated, but so many calls are used in this unit test that it was easier to reproduce the deprecated method here...
     private RuralUrbanOutputDto computeUrbanRuralIndicatorCode(Map<String, String> record) {
-        RuralUrbanInputDto input = new RuralUrbanInputDto();
+        StateCountyTractInputDto input = new StateCountyTractInputDto();
         input.setAddressAtDxState(record.get(_PROP_STATE_DX));
         input.setCountyAtDxAnalysis(record.get(_PROP_COUNTY_DX_ANALYSIS));
         input.setCensusTract2000(record.get(_PROP_CENSUS_TRACT_2000));
@@ -194,7 +196,7 @@ public class RuralUrbanUtilsTest {
 
     // using a map of properties has been deprecated, but so many calls are used in this unit test that it was easier to reproduce the deprecated method here...
     private RuralUrbanOutputDto computeRuralUrbanCommutingArea(Map<String, String> record) {
-        RuralUrbanInputDto input = new RuralUrbanInputDto();
+        StateCountyTractInputDto input = new StateCountyTractInputDto();
         input.setAddressAtDxState(record.get(_PROP_STATE_DX));
         input.setCountyAtDxAnalysis(record.get(_PROP_COUNTY_DX_ANALYSIS));
         input.setCensusTract2000(record.get(_PROP_CENSUS_TRACT_2000));
@@ -204,7 +206,7 @@ public class RuralUrbanUtilsTest {
 
     // using a map of properties has been deprecated, but so many calls are used in this unit test that it was easier to reproduce the deprecated method here...
     private RuralUrbanOutputDto computeRuralUrbanContinuum(Map<String, String> record) {
-        RuralUrbanInputDto input = new RuralUrbanInputDto();
+        StateCountyTractInputDto input = new StateCountyTractInputDto();
         input.setAddressAtDxState(record.get(_PROP_STATE_DX));
         input.setCountyAtDxAnalysis(record.get(_PROP_COUNTY_DX_ANALYSIS));
         return RuralUrbanUtils.computeRuralUrbanContinuum(input);

@@ -9,6 +9,8 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.imsweb.algorithms.StateCountyTractInputDto;
+
 public class CancerReportingZoneUtilsTest {
 
     private static final String _PROP_STATE_DX = "addressAtDxState";
@@ -33,7 +35,7 @@ public class CancerReportingZoneUtilsTest {
         Assert.assertEquals("C", computeCancerReportingZone(record).getCancerReportingZone());
 
         // test unknown A (invalid value)
-        record.put(_PROP_STATE_DX, "AA");
+        record.put(_PROP_STATE_DX, "QQ");
         Assert.assertEquals("A", computeCancerReportingZone(record).getCancerReportingZone());
         record.put(_PROP_STATE_DX, "WY");
 
@@ -44,6 +46,15 @@ public class CancerReportingZoneUtilsTest {
         // test unknown D (missing value)
         record.put(_PROP_COUNTY_DX_ANALYSIS, null);
         Assert.assertEquals("D", computeCancerReportingZone(record).getCancerReportingZone());
+
+        //test PR
+        record.clear();
+        record.put(_PROP_STATE_DX, "PR");
+        record.put(_PROP_COUNTY_DX_ANALYSIS, "001");
+        record.put(_PROP_CENSUS_TRACT_2010, "956300");
+        Assert.assertEquals("C", computeCancerReportingZone(record).getCancerReportingZone());
+        record.put(_PROP_CENSUS_TRACT_2010, "555555");
+        Assert.assertEquals("C", computeCancerReportingZone(record).getCancerReportingZone());
 
         // test a case that will return a code
         record.clear();
@@ -60,7 +71,7 @@ public class CancerReportingZoneUtilsTest {
     }
 
     private CancerReportingZoneOutputDto computeCancerReportingZone(Map<String, String> record) {
-        CancerReportingZoneInputDto input = new CancerReportingZoneInputDto();
+        StateCountyTractInputDto input = new StateCountyTractInputDto();
         input.setAddressAtDxState(record.get(_PROP_STATE_DX));
         input.setCountyAtDxAnalysis(record.get(_PROP_COUNTY_DX_ANALYSIS));
         input.setCensusTract2010(record.get(_PROP_CENSUS_TRACT_2010));
