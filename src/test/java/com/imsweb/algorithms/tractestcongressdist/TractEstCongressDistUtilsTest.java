@@ -3,18 +3,14 @@
  */
 package com.imsweb.algorithms.tractestcongressdist;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-public class TractEstCongressDistUtilsTest {
+import com.imsweb.algorithms.StateCountyTractInputDto;
 
-    // this properties have been deprecated in the main class but so many tests use them that it was easier to copy them here
-    private static final String _PROP_STATE_DX = "addressAtDxState";
-    private static final String _PROP_COUNTY_DX_ANALYSIS = "countyAtDxAnalysis";
-    private static final String _PROP_CENSUS_TRACT_2010 = "censusTract2010";
+public class TractEstCongressDistUtilsTest {
 
     @Test
     public void assertInfo() {
@@ -25,49 +21,75 @@ public class TractEstCongressDistUtilsTest {
     @Test
     public void testComputeTractEstCongressDist() {
 
-        Map<String, String> record = new HashMap<>();
-        record.put(_PROP_STATE_DX, "WY");
-        record.put(_PROP_COUNTY_DX_ANALYSIS, "039");
-        record.put(_PROP_CENSUS_TRACT_2010, "997600");
+        StateCountyTractInputDto input = new StateCountyTractInputDto();
 
-        //test unknown C (not found)
-        Assert.assertEquals("C", computeTractEstCongressDist(record).getTractEstCongressDist());
-        
-        // test unknown A (invalid value)
-        record.put(_PROP_STATE_DX, "AA");
-        Assert.assertEquals("A", computeTractEstCongressDist(record).getTractEstCongressDist());
-        record.put(_PROP_STATE_DX, "WY");
-        
-        // test unknown B (county not reported)
-        record.put(_PROP_COUNTY_DX_ANALYSIS, "000");
-        Assert.assertEquals("B", computeTractEstCongressDist(record).getTractEstCongressDist());
-        
+        // test a SEER city recode
+        input.setAddressAtDxState("LO");
+        input.setCountyAtDxAnalysis("071");
+        input.setCensusTract2010("007903");
+        Assert.assertEquals("08", TractEstCongressDistUtils.computeTractEstCongressDist(input).getTractEstCongressDist());
+
+        // test Puerto Rico
+        input.setAddressAtDxState("PR");
+        input.setCountyAtDxAnalysis("001");
+        input.setCensusTract2010("956300");
+        Assert.assertEquals("98", TractEstCongressDistUtils.computeTractEstCongressDist(input).getTractEstCongressDist());
+
+        // test unknown A (state, county, or tract are invalid)
+        for (String state : Arrays.asList("WA", "INVALID")) {
+            for (String county : Arrays.asList("067", "INVALID")) {
+                for (String tract : Arrays.asList("012720", "INVALID")) {
+                    input.setAddressAtDxState(state);
+                    input.setCountyAtDxAnalysis(county);
+                    input.setCensusTract2010(tract);
+                    String key = String.format("%s|%s|%s", state, county, tract);
+
+                    if ("WA".equals(state) && "067".equals(county) && "012720".equals(tract))
+                        Assert.assertEquals(key, "03", TractEstCongressDistUtils.computeTractEstCongressDist(input).getTractEstCongressDist());
+                    else
+                        Assert.assertEquals(key, "A", TractEstCongressDistUtils.computeTractEstCongressDist(input).getTractEstCongressDist());
+                }
+            }
+        }
+
+        // test unknown B (county was not reported)
+        input.setAddressAtDxState("WA");
+        input.setCountyAtDxAnalysis("000");
+        input.setCensusTract2010("012720");
+        Assert.assertEquals("B", TractEstCongressDistUtils.computeTractEstCongressDist(input).getTractEstCongressDist());
+
+        //test unknown C (the state+county+tract combination was not found in lookup table or there was a blank entry in the table)
+        for (String state : Arrays.asList("WA", "SK")) {
+            for (String county : Arrays.asList("067", "555")) {
+                for (String tract : Arrays.asList("012720", "555555")) {
+                    input.setAddressAtDxState(state);
+                    input.setCountyAtDxAnalysis(county);
+                    input.setCensusTract2010(tract);
+                    String key = String.format("%s|%s|%s", state, county, tract);
+
+                    if ("WA".equals(state) && "067".equals(county) && "012720".equals(tract))
+                        Assert.assertEquals(key, "03", TractEstCongressDistUtils.computeTractEstCongressDist(input).getTractEstCongressDist());
+                    else
+                        Assert.assertEquals(key, "C", TractEstCongressDistUtils.computeTractEstCongressDist(input).getTractEstCongressDist());
+                }
+            }
+        }
+
         // test unknown D (missing value)
-        record.put(_PROP_COUNTY_DX_ANALYSIS, null);
-        Assert.assertEquals("D", computeTractEstCongressDist(record).getTractEstCongressDist());
+        for (String state : Arrays.asList("WA", "ZZ", null)) {
+            for (String county : Arrays.asList("067", "999", null)) {
+                for (String tract : Arrays.asList("012720", "999999", null)) {
+                    input.setAddressAtDxState(state);
+                    input.setCountyAtDxAnalysis(county);
+                    input.setCensusTract2010(tract);
+                    String key = String.format("%s|%s|%s", state, county, tract);
 
-        //test 2019+ years
-        record.clear();
-        record.put(_PROP_STATE_DX, "WY");
-        record.put(_PROP_COUNTY_DX_ANALYSIS, "039");
-        record.put(_PROP_CENSUS_TRACT_2010, "967702");
-        Assert.assertEquals("00", computeTractEstCongressDist(record).getTractEstCongressDist());
-
-        // test a real case from DMS (this case failed when we generated unique keys from the concatenated state/county/census)
-        record.clear();
-        record.put(_PROP_STATE_DX, "HI");
-        record.put(_PROP_COUNTY_DX_ANALYSIS, "003");
-        record.put(_PROP_CENSUS_TRACT_2010, "003405");
-        Assert.assertEquals("01", computeTractEstCongressDist(record).getTractEstCongressDist());
-    }
-
-    private TractEstCongressDistOutputDto computeTractEstCongressDist(Map<String, String> record) {
-
-        TractEstCongressDistInputDto input = new TractEstCongressDistInputDto();
-        input.setAddressAtDxState(record.get(_PROP_STATE_DX));
-        input.setCountyAtDxAnalysis(record.get(_PROP_COUNTY_DX_ANALYSIS));
-        input.setCensusTract2010(record.get(_PROP_CENSUS_TRACT_2010));
-
-        return TractEstCongressDistUtils.computeTractEstCongressDist(input);
+                    if ("WA".equals(state) && "067".equals(county) && "012720".equals(tract))
+                        Assert.assertEquals(key, "03", TractEstCongressDistUtils.computeTractEstCongressDist(input).getTractEstCongressDist());
+                    else
+                        Assert.assertEquals(key, "D", TractEstCongressDistUtils.computeTractEstCongressDist(input).getTractEstCongressDist());
+                }
+            }
+        }
     }
 }

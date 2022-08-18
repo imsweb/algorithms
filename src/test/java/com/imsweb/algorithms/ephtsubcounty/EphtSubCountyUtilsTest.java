@@ -3,82 +3,116 @@
  */
 package com.imsweb.algorithms.ephtsubcounty;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
 
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.imsweb.algorithms.StateCountyTractInputDto;
+
 public class EphtSubCountyUtilsTest {
 
-    private static final String _PROP_STATE_DX = "addressAtDxState";
-    private static final String _PROP_COUNTY_DX_ANALYSIS = "countyAtDxAnalysis";
-    private static final String _PROP_CENSUS_TRACT_2010 = "censusTract2010";
+    @Test
+    public void assertInfo() {
+        Assert.assertNotNull(EphtSubCountyUtils.ALG_VERSION);
+        Assert.assertNotNull(EphtSubCountyUtils.ALG_NAME);
+    }
 
     @Test
     public void testComputeEphtSubCounty() {
-        Map<String, String> record = new HashMap<>();
+        StateCountyTractInputDto input = new StateCountyTractInputDto();
 
-        // test invalid state
-        record.put(_PROP_STATE_DX, "AA");
-        record.put(_PROP_COUNTY_DX_ANALYSIS, "039");
-        Assert.assertEquals("A", computeEphtSubCounty(record).getEpht2010GeoId5k());
-        // test invalid county
-        record.put(_PROP_STATE_DX, "WY");
-        record.put(_PROP_COUNTY_DX_ANALYSIS, "abc");
-        Assert.assertEquals("A", computeEphtSubCounty(record).getEpht2010GeoId5k());
-        // test county not reported
-        record.put(_PROP_COUNTY_DX_ANALYSIS, "000");
-        record.put(_PROP_CENSUS_TRACT_2010, "997600");
-        Assert.assertEquals("B", computeEphtSubCounty(record).getEpht2010GeoId5k());
-        //test missing census tract
-        record.put(_PROP_COUNTY_DX_ANALYSIS, "039");
-        record.put(_PROP_CENSUS_TRACT_2010, null);
-        Assert.assertEquals("D", computeEphtSubCounty(record).getEpht2010GeoId5k());
-        // test unknown census tract
-        record.put(_PROP_CENSUS_TRACT_2010, "999999");
-        Assert.assertEquals("D", computeEphtSubCounty(record).getEpht2010GeoId5k());
-        //test combination of state, county and census 2010 not in the lookup
-        record.put(_PROP_CENSUS_TRACT_2010, "997600");
-        Assert.assertEquals("C", computeEphtSubCounty(record).getEpht2010GeoId5k());
-        //test combination of state, county and census 2010 in the lookup
-        record.put(_PROP_CENSUS_TRACT_2010, "967702");
-        Assert.assertEquals("00005603955", computeEphtSubCounty(record).getEpht2010GeoId5k());
-        
-        //test combinations of state, county and census 2010 in the lookup
-        record.put(_PROP_STATE_DX, "AL");
-        record.put(_PROP_COUNTY_DX_ANALYSIS, "001");
-        record.put(_PROP_CENSUS_TRACT_2010, "020900");
-        Assert.assertEquals("01001020900", computeEphtSubCounty(record).getEpht2010GeoId5k());
-        record.clear();
-        record.put(_PROP_STATE_DX, "WY");
-        record.put(_PROP_COUNTY_DX_ANALYSIS, "039");
-        record.put(_PROP_CENSUS_TRACT_2010, "967702");
-        Assert.assertEquals("00005603955", computeEphtSubCounty(record).getEpht2010GeoId5k());
-        Assert.assertEquals("00005603926", computeEphtSubCounty(record).getEpht2010GeoId20k());
-        Assert.assertEquals("00005600744", computeEphtSubCounty(record).getEpht2010GeoId50k());
-        record.clear();
-        record.put(_PROP_STATE_DX, "HI");
-        record.put(_PROP_COUNTY_DX_ANALYSIS, "003");
-        record.put(_PROP_CENSUS_TRACT_2010, "003405");
-        Assert.assertEquals("00001500392", computeEphtSubCounty(record).getEpht2010GeoId5k());
-        Assert.assertEquals("00015003106", computeEphtSubCounty(record).getEpht2010GeoId20k());
-        Assert.assertEquals("00015003302", computeEphtSubCounty(record).getEpht2010GeoId50k());
-        record.clear();
-        record.put(_PROP_STATE_DX, "AL");
-        record.put(_PROP_COUNTY_DX_ANALYSIS, "003");
-        record.put(_PROP_CENSUS_TRACT_2010, "990000");
-        Assert.assertEquals("C", computeEphtSubCounty(record).getEpht2010GeoId5k()); // used to be 99999999999 in old data, became C when we switched to big SEER census data file
-        Assert.assertEquals("C", computeEphtSubCounty(record).getEpht2010GeoId20k());
-        Assert.assertEquals("C", computeEphtSubCounty(record).getEpht2010GeoId50k());
-    }
+        // test a SEER city recode
+        input.setAddressAtDxState("LO");
+        input.setCountyAtDxAnalysis("071");
+        input.setCensusTract2010("007903");
+        Assert.assertEquals("00060713015", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2010GeoId5k());
+        Assert.assertEquals("00060713188", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2010GeoId20k());
+        Assert.assertEquals("00060717452", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2010GeoId50k());
 
-    private EphtSubCountyOutputDto computeEphtSubCounty(Map<String, String> record) {
-        EphtSubCountyInputDto input = new EphtSubCountyInputDto();
-        input.setAddressAtDxState(record.get(_PROP_STATE_DX));
-        input.setCountyAtDxAnalysis(record.get(_PROP_COUNTY_DX_ANALYSIS));
-        input.setCensusTract2010(record.get(_PROP_CENSUS_TRACT_2010));
+        // test Puerto Rico
+        input.setAddressAtDxState("PR");
+        input.setCountyAtDxAnalysis("001");
+        input.setCensusTract2010("956300");
+        Assert.assertEquals("C", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2010GeoId5k());
+        Assert.assertEquals("C", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2010GeoId20k());
+        Assert.assertEquals("C", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2010GeoId50k());
 
-        return EphtSubCountyUtils.computeEphtSubCounty(input);
+        // test unknown A (state, county, or tract are invalid)
+        for (String state : Arrays.asList("WA", "INVALID")) {
+            for (String county : Arrays.asList("067", "INVALID")) {
+                for (String tract : Arrays.asList("012720", "INVALID")) {
+                    input.setAddressAtDxState(state);
+                    input.setCountyAtDxAnalysis(county);
+                    input.setCensusTract2010(tract);
+                    String key = String.format("%s|%s|%s", state, county, tract);
+
+                    if ("WA".equals(state) && "067".equals(county) && "012720".equals(tract)) {
+                        Assert.assertEquals(key, "00005306787", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2010GeoId5k());
+                        Assert.assertEquals(key, "00053067466", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2010GeoId20k());
+                        Assert.assertEquals(key, "00530671089", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2010GeoId50k());
+                    }
+                    else {
+                        Assert.assertEquals(key, "A", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2010GeoId5k());
+                        Assert.assertEquals(key, "A", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2010GeoId20k());
+                        Assert.assertEquals(key, "A", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2010GeoId50k());
+                    }
+                }
+            }
+        }
+
+        // test unknown B (county was not reported)
+        input.setAddressAtDxState("WA");
+        input.setCountyAtDxAnalysis("000");
+        input.setCensusTract2010("012720");
+        Assert.assertEquals("B", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2010GeoId5k());
+        Assert.assertEquals("B", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2010GeoId20k());
+        Assert.assertEquals("B", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2010GeoId50k());
+
+        //test unknown C (the state+county+tract combination was not found in lookup table or there was a blank entry in the table)
+        for (String state : Arrays.asList("WA", "SK")) {
+            for (String county : Arrays.asList("067", "555")) {
+                for (String tract : Arrays.asList("012720", "555555")) {
+                    input.setAddressAtDxState(state);
+                    input.setCountyAtDxAnalysis(county);
+                    input.setCensusTract2010(tract);
+                    String key = String.format("%s|%s|%s", state, county, tract);
+
+                    if ("WA".equals(state) && "067".equals(county) && "012720".equals(tract)) {
+                        Assert.assertEquals(key, "00005306787", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2010GeoId5k());
+                        Assert.assertEquals(key, "00053067466", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2010GeoId20k());
+                        Assert.assertEquals(key, "00530671089", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2010GeoId50k());
+                    }
+                    else {
+                        Assert.assertEquals(key, "C", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2010GeoId5k());
+                        Assert.assertEquals(key, "C", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2010GeoId20k());
+                        Assert.assertEquals(key, "C", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2010GeoId50k());
+                    }
+                }
+            }
+        }
+
+        // test unknown D (missing value)
+        for (String state : Arrays.asList("WA", "ZZ", null)) {
+            for (String county : Arrays.asList("067", "999", null)) {
+                for (String tract : Arrays.asList("012720", "999999", null)) {
+                    input.setAddressAtDxState(state);
+                    input.setCountyAtDxAnalysis(county);
+                    input.setCensusTract2010(tract);
+                    String key = String.format("%s|%s|%s", state, county, tract);
+
+                    if ("WA".equals(state) && "067".equals(county) && "012720".equals(tract)) {
+                        Assert.assertEquals(key, "00005306787", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2010GeoId5k());
+                        Assert.assertEquals(key, "00053067466", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2010GeoId20k());
+                        Assert.assertEquals(key, "00530671089", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2010GeoId50k());
+                    }
+                    else {
+                        Assert.assertEquals(key, "D", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2010GeoId5k());
+                        Assert.assertEquals(key, "D", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2010GeoId20k());
+                        Assert.assertEquals(key, "D", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2010GeoId50k());
+                    }
+                }
+            }
+        }
     }
 }

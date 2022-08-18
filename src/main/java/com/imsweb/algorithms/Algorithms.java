@@ -307,7 +307,7 @@ public final class Algorithms {
             addField(AlgorithmField.of(FIELD_CANCER_REPORTING_ZONE, null, 8, "Cancer Reporting Zone", "Cancer Reporting Zone", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_SEER_BRAIN_CSN_RECODE_2020, null, 2, "SEER Brain/CNS Recode 2020", "Brain/CNS", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_SEER_LYMPH_NEO_RECODE_2021, null, 2, "SEER Lymphoid Neoplasm Recode 2021", "Lymph 21", DATA_LEVEL_TUMOR));
-            addField(AlgorithmField.of(FIELD_CDC_SVI_2018, null, 5, "CDC SVI 2018", "SVI 18", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_CDC_SVI_2018, null, 5, "CDC/ATSDR Social Vulnerability Index 2018", "CDC/ATSDR SVI 2018", DATA_LEVEL_TUMOR));
 
             // algorithms
             addAlgorithm(new NhiaAlgorithm());

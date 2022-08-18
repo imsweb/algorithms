@@ -3,18 +3,12 @@
  */
 package com.imsweb.algorithms.prcda;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import static com.imsweb.algorithms.prcda.PrcdaUtils.ENTIRE_STATE_NON_PRCDA;
-import static com.imsweb.algorithms.prcda.PrcdaUtils.ENTIRE_STATE_PRCDA;
-import static com.imsweb.algorithms.prcda.PrcdaUtils.PRCDA_NO;
-import static com.imsweb.algorithms.prcda.PrcdaUtils.PRCDA_UNKNOWN;
-import static com.imsweb.algorithms.prcda.PrcdaUtils.PRCDA_YES;
+import com.imsweb.algorithms.StateCountyInputDto;
 
 public class PrcdaUtilsTest {
 
@@ -27,58 +21,53 @@ public class PrcdaUtilsTest {
     @Test
     public void testComputePrcda() {
 
-        List<String> validStates = Arrays.asList("AL", "AK", "AZ", "CO", "GA", "MN", "NV", "SE", "VA", "ON", "ZZ");
-        List<String> invalStates = Arrays.asList("", "99", null);
-        List<String> validCounty = Arrays.asList("001", "003", "005", "007", "013", "017", "035", "097");
-        List<String> invalCounty = Arrays.asList("", "ABC", "01", "999", null);
+        StateCountyInputDto input = new StateCountyInputDto();
 
-        List<String> prcdaYes = Arrays.asList("AL003", "AL097", "AZ001", "AZ003", "AZ005", "AZ007", "AZ013",
-                "AZ017", "CO007", "MN001", "MN005", "MN007", "MN017", "MN035", "MN097", "NV001", "NV003",
-                "NV005", "NV007", "NV017", "VA003", "VA097", "WA007", "WA017", "WA035");
+        // test a SEER city recode
+        input.setAddressAtDxState("LO");
+        input.setCountyAtDxAnalysis("071");
+        Assert.assertEquals("1", PrcdaUtils.computePrcda(input).getPrcda());
+        Assert.assertEquals("1", PrcdaUtils.computePrcda(input).getPrcda2017());
 
-        List<String> prcdaYes2017 = Arrays.asList("AL003", "AL097", "AZ001", "AZ003", "AZ005", "AZ007",
-                "AZ013", "AZ017", "CO007", "MN001", "MN005", "MN007", "MN017", "NV001", "NV003", "NV005",
-                "NV007", "NV017", "SE007", "SE017", "VA097", "WA007", "WA017", "WA035");
+        // test Puerto Rico
+        input.setAddressAtDxState("PR");
+        input.setCountyAtDxAnalysis("001");
+        Assert.assertEquals("0", PrcdaUtils.computePrcda(input).getPrcda());
+        Assert.assertEquals("0", PrcdaUtils.computePrcda(input).getPrcda2017());
 
-        List<String> states = new ArrayList<>();
-        states.addAll(validStates);
-        states.addAll(invalStates);
-        states.addAll(ENTIRE_STATE_PRCDA);
+        // test for when the entire state is PRCDA
+        // if the entire state is PRCDA then we should always return 1 regardless of what the county is
+        input.setAddressAtDxState("AK");
+        for (String county : Arrays.asList("001", "999", "INVALID", null)) {
+            input.setCountyAtDxAnalysis(county);
+            String key = String.format("%s|%s", input.getAddressAtDxState(), county);
+            Assert.assertEquals(key, "1", PrcdaUtils.computePrcda(input).getPrcda());
+            Assert.assertEquals(key, "1", PrcdaUtils.computePrcda(input).getPrcda2017());
+        }
 
-        List<String> counties = new ArrayList<>();
-        counties.addAll(validCounty);
-        counties.addAll(invalCounty);
+        // test for when the entire state is NOT PRCDA
+        // if the entire state is NOT PRCDA then we should always return 0 regardless of what the county is
+        input.setAddressAtDxState("DE");
+        for (String county : Arrays.asList("001", "999", "INVALID", null)) {
+            input.setCountyAtDxAnalysis(county);
+            String key = String.format("%s|%s", input.getAddressAtDxState(), county);
+            Assert.assertEquals(key, "0", PrcdaUtils.computePrcda(input).getPrcda());
+            Assert.assertEquals(key, "0", PrcdaUtils.computePrcda(input).getPrcda2017());
+        }
 
-        PrcdaInputDto input = new PrcdaInputDto();
-
-        for (String state : states) {
-            for (String county : counties) {
+        // test missing or invalid state or county - or county not reported
+        for (String state : Arrays.asList("MN", "ZZ", "INVALID", null)) {
+            for (String county : Arrays.asList("035", "000", "999", "INVALID", null)) {
                 input.setAddressAtDxState(state);
-                input.setAddressAtDxCounty(county);
-                input.applyRecodes();
-                String stCnty = input.getAddressAtDxState() + input.getAddressAtDxCounty();
-
-                PrcdaOutputDto output = PrcdaUtils.computePrcda(input);
-
-                if (invalStates.contains(input.getAddressAtDxState()) || "ZZ".equals(input.getAddressAtDxState())) {
-                    Assert.assertEquals(PRCDA_UNKNOWN, output.getPrcda());
-                    Assert.assertEquals(PRCDA_UNKNOWN, output.getPrcda2017());
-                }
-                else if (ENTIRE_STATE_PRCDA.contains(input.getAddressAtDxState())) {
-                    Assert.assertEquals(PRCDA_YES, output.getPrcda());
-                    Assert.assertEquals(PRCDA_YES, output.getPrcda2017());
-                }
-                else if (ENTIRE_STATE_NON_PRCDA.contains(input.getAddressAtDxState())) {
-                    Assert.assertEquals(PRCDA_NO, output.getPrcda());
-                    Assert.assertEquals(PRCDA_NO, output.getPrcda2017());
-                }
-                else if (invalCounty.contains(input.getAddressAtDxCounty())) {
-                    Assert.assertEquals(PRCDA_UNKNOWN, output.getPrcda());
-                    Assert.assertEquals(PRCDA_UNKNOWN, output.getPrcda2017());
+                input.setCountyAtDxAnalysis(county);
+                String key = String.format("%s|%s", state, county);
+                if ("MN".equals(state) && "035".equals(county)) {
+                    Assert.assertEquals(key, "1", PrcdaUtils.computePrcda(input).getPrcda());
+                    Assert.assertEquals(key, "0", PrcdaUtils.computePrcda(input).getPrcda2017());
                 }
                 else {
-                    Assert.assertEquals(prcdaYes.contains(stCnty) ? PRCDA_YES : PRCDA_NO, output.getPrcda());
-                    Assert.assertEquals(prcdaYes2017.contains(stCnty) ? PRCDA_YES : PRCDA_NO, output.getPrcda2017());
+                    Assert.assertEquals(key, "9", PrcdaUtils.computePrcda(input).getPrcda());
+                    Assert.assertEquals(key, "9", PrcdaUtils.computePrcda(input).getPrcda2017());
                 }
             }
         }

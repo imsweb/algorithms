@@ -21,13 +21,13 @@ import com.imsweb.algorithms.internal.CountryData;
 import com.imsweb.algorithms.internal.CountyData;
 import com.imsweb.algorithms.internal.StateData;
 
+import static com.imsweb.algorithms.StateCountyInputDto.isInvalidStateOrCounty;
+import static com.imsweb.algorithms.StateCountyInputDto.isUnknownStateOrCounty;
 import static com.imsweb.algorithms.prcda.PrcdaUtils.ENTIRE_STATE_NON_PRCDA;
 import static com.imsweb.algorithms.prcda.PrcdaUtils.ENTIRE_STATE_PRCDA;
 import static com.imsweb.algorithms.prcda.PrcdaUtils.PRCDA_NO;
 import static com.imsweb.algorithms.prcda.PrcdaUtils.PRCDA_UNKNOWN;
 import static com.imsweb.algorithms.prcda.PrcdaUtils.PRCDA_YES;
-import static com.imsweb.algorithms.prcda.PrcdaUtils.isCountyAtDxValid;
-import static com.imsweb.algorithms.prcda.PrcdaUtils.isStateAtDxValid;
 
 /**
  * The purpose of this class is to get the PRCDA for the provided
@@ -57,13 +57,11 @@ public class PrcdaDataProvider {
     private String getPrcdaData(PrcdaYear prcdaYear, String state, String county) {
         prcdaYear = prcdaYear == null ? PrcdaYear.getDefault() : prcdaYear;
 
-        if (!isStateAtDxValid(state))
-            return PRCDA_UNKNOWN;
-        else if (ENTIRE_STATE_PRCDA.contains(state))
+        if (ENTIRE_STATE_PRCDA.contains(state))
             return PRCDA_YES;
         else if (ENTIRE_STATE_NON_PRCDA.contains(state))
             return PRCDA_NO;
-        else if (!isCountyAtDxValid(county))
+        else if (isInvalidStateOrCounty(state, county) || isUnknownStateOrCounty(state, county) || "000".equals(county))
             return PRCDA_UNKNOWN;
 
         if (!CountryData.getInstance().isPrcdaDataInitialized())

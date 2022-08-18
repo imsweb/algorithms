@@ -11,6 +11,7 @@
 - Split the PRCDA-UIHO algorithm into 2 separate algorithms: PRCDA and UIHO. Updated both algorithms to produce '2020' values. Added a '2017' calculation to the PRCDA algorithm. Added UIHO City to the UIHO algorithm.
 - Added 50K output variable to the NPCR EPHT SubCounty algorithm.
 - Added new Social Vulnerability Index algorithm.
+- Updated several algorithms that used their own input DTOs containing state and county or state, county, and Census tract to use a new unified StateCountyInputDto or StateCountyTractInputDto.
 
 **Changes in version 3.10**
 

@@ -3,6 +3,8 @@
  */
 package com.imsweb.algorithms.ephtsubcounty;
 
+import com.imsweb.algorithms.StateCountyTractInputDto;
+import com.imsweb.algorithms.StateCountyTractInputDto.CensusTract;
 import com.imsweb.algorithms.internal.CensusData;
 import com.imsweb.algorithms.internal.CountryData;
 import com.imsweb.algorithms.internal.CountyData;
@@ -44,30 +46,31 @@ public final class EphtSubCountyUtils {
      * <li>D = State, county, or tract are blank or unknown/li>
      * </ul>
      * <br/><br/>
-     * @param input a <code>EphtSubCountyInputDto</code> input object
+     * @param input a <code>StateCountyTractInputDto</code> input object
      * @return a <code>EphtSubCountyOutputDto</code> object
      */
-    public static EphtSubCountyOutputDto computeEphtSubCounty(EphtSubCountyInputDto input) {
+    public static EphtSubCountyOutputDto computeEphtSubCounty(StateCountyTractInputDto input) {
         EphtSubCountyOutputDto result = new EphtSubCountyOutputDto();
 
         input.applyRecodes();
 
-        if (!input.isStateValidOrMissingOrUnknown() || !input.isCountyValidOrMissingOrUnknown() || !input.isCensusTract2010ValidOrMissingOrUnknown()) {
+        if (input.hasInvalidStateCountyOrCensusTract(CensusTract._2010)) {
             result.setEpht2010GeoId5k(EPHT_2010_GEO_ID_UNK_A);
             result.setEpht2010GeoId20k(EPHT_2010_GEO_ID_UNK_A);
             result.setEpht2010GeoId50k(EPHT_2010_GEO_ID_UNK_A);
         }
-        else if (input.isStateMissingOrUnknown() || input.isCountyMissingOrUnknown() || input.isCensusTract2010MissingOrUnknown()) {
+        else if (input.hasUnknownStateCountyOrCensusTract(CensusTract._2010)) {
             result.setEpht2010GeoId5k(EPHT_2010_GEO_ID_UNK_D);
             result.setEpht2010GeoId20k(EPHT_2010_GEO_ID_UNK_D);
             result.setEpht2010GeoId50k(EPHT_2010_GEO_ID_UNK_D);
         }
-        else if ("000".equals(input.getCountyAtDxAnalysis())) {
+        else if (input.countyIsNotReported()) {
             result.setEpht2010GeoId5k(EPHT_2010_GEO_ID_UNK_B);
             result.setEpht2010GeoId20k(EPHT_2010_GEO_ID_UNK_B);
             result.setEpht2010GeoId50k(EPHT_2010_GEO_ID_UNK_B);
         }
         else {
+
             if (!CountryData.getInstance().isTractDataInitialized(input.getAddressAtDxState()))
                 CountryData.getInstance().initializeTractData(input.getAddressAtDxState());
 

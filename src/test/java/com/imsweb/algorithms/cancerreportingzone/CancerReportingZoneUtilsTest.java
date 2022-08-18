@@ -3,17 +3,14 @@
  */
 package com.imsweb.algorithms.cancerreportingzone;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-public class CancerReportingZoneUtilsTest {
+import com.imsweb.algorithms.StateCountyTractInputDto;
 
-    private static final String _PROP_STATE_DX = "addressAtDxState";
-    private static final String _PROP_COUNTY_DX_ANALYSIS = "countyAtDxAnalysis";
-    private static final String _PROP_CENSUS_TRACT_2010 = "censusTract2010";
+public class CancerReportingZoneUtilsTest {
 
     @Test
     public void assertInfo() {
@@ -24,47 +21,75 @@ public class CancerReportingZoneUtilsTest {
     @Test
     public void testComputeTractEstCongressDist() {
 
-        Map<String, String> record = new HashMap<>();
-        record.put(_PROP_STATE_DX, "WA");
-        record.put(_PROP_COUNTY_DX_ANALYSIS, "067");
-        record.put(_PROP_CENSUS_TRACT_2010, "012721");
+        StateCountyTractInputDto input = new StateCountyTractInputDto();
 
-        //test unknown C (not found)
-        Assert.assertEquals("C", computeCancerReportingZone(record).getCancerReportingZone());
+        // test a SEER city recode
+        input.setAddressAtDxState("LO");
+        input.setCountyAtDxAnalysis("071");
+        input.setCensusTract2010("007903");
+        Assert.assertEquals("06A0274", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone());
 
-        // test unknown A (invalid value)
-        record.put(_PROP_STATE_DX, "AA");
-        Assert.assertEquals("A", computeCancerReportingZone(record).getCancerReportingZone());
-        record.put(_PROP_STATE_DX, "WY");
+        // test Puerto Rico
+        input.setAddressAtDxState("PR");
+        input.setCountyAtDxAnalysis("001");
+        input.setCensusTract2010("956300");
+        Assert.assertEquals("C", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone());
 
-        // test unknown B (county not reported)
-        record.put(_PROP_COUNTY_DX_ANALYSIS, "000");
-        Assert.assertEquals("B", computeCancerReportingZone(record).getCancerReportingZone());
+        // test unknown A (state, county, or tract are invalid)
+        for (String state : Arrays.asList("WA", "INVALID")) {
+            for (String county : Arrays.asList("067", "INVALID")) {
+                for (String tract : Arrays.asList("012720", "INVALID")) {
+                    input.setAddressAtDxState(state);
+                    input.setCountyAtDxAnalysis(county);
+                    input.setCensusTract2010(tract);
+                    String key = String.format("%s|%s|%s", state, county, tract);
+
+                    if ("WA".equals(state) && "067".equals(county) && "012720".equals(tract))
+                        Assert.assertEquals(key, "53A9071za", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone());
+                    else
+                        Assert.assertEquals(key, "A", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone());
+                }
+            }
+        }
+
+        // test unknown B (county was not reported)
+        input.setAddressAtDxState("WA");
+        input.setCountyAtDxAnalysis("000");
+        input.setCensusTract2010("012720");
+        Assert.assertEquals("B", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone());
+
+        //test unknown C (the state+county+tract combination was not found in lookup table or there was a blank entry in the table)
+        for (String state : Arrays.asList("WA", "SK")) {
+            for (String county : Arrays.asList("067", "555")) {
+                for (String tract : Arrays.asList("012720", "555555")) {
+                    input.setAddressAtDxState(state);
+                    input.setCountyAtDxAnalysis(county);
+                    input.setCensusTract2010(tract);
+                    String key = String.format("%s|%s|%s", state, county, tract);
+
+                    if ("WA".equals(state) && "067".equals(county) && "012720".equals(tract))
+                        Assert.assertEquals(key, "53A9071za", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone());
+                    else
+                        Assert.assertEquals(key, "C", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone());
+                }
+            }
+        }
 
         // test unknown D (missing value)
-        record.put(_PROP_COUNTY_DX_ANALYSIS, null);
-        Assert.assertEquals("D", computeCancerReportingZone(record).getCancerReportingZone());
+        for (String state : Arrays.asList("WA", "ZZ", null)) {
+            for (String county : Arrays.asList("067", "999", null)) {
+                for (String tract : Arrays.asList("012720", "999999", null)) {
+                    input.setAddressAtDxState(state);
+                    input.setCountyAtDxAnalysis(county);
+                    input.setCensusTract2010(tract);
+                    String key = String.format("%s|%s|%s", state, county, tract);
 
-        // test a case that will return a code
-        record.clear();
-        record.put(_PROP_STATE_DX, "WA");
-        record.put(_PROP_COUNTY_DX_ANALYSIS, "067");
-        record.put(_PROP_CENSUS_TRACT_2010, "012720");
-        Assert.assertEquals("53A9071za", computeCancerReportingZone(record).getCancerReportingZone());
-
-        record.clear();
-        record.put(_PROP_STATE_DX, "ID");
-        record.put(_PROP_COUNTY_DX_ANALYSIS, "001");
-        record.put(_PROP_CENSUS_TRACT_2010, "000100");
-        Assert.assertEquals("16A9014zd", computeCancerReportingZone(record).getCancerReportingZone());
-    }
-
-    private CancerReportingZoneOutputDto computeCancerReportingZone(Map<String, String> record) {
-        CancerReportingZoneInputDto input = new CancerReportingZoneInputDto();
-        input.setAddressAtDxState(record.get(_PROP_STATE_DX));
-        input.setCountyAtDxAnalysis(record.get(_PROP_COUNTY_DX_ANALYSIS));
-        input.setCensusTract2010(record.get(_PROP_CENSUS_TRACT_2010));
-
-        return CancerReportingZoneUtils.computeCancerReportingZone(input);
+                    if ("WA".equals(state) && "067".equals(county) && "012720".equals(tract))
+                        Assert.assertEquals(key, "53A9071za", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone());
+                    else
+                        Assert.assertEquals(key, "D", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone());
+                }
+            }
+        }
     }
 }

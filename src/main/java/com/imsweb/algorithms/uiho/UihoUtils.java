@@ -3,10 +3,7 @@
  */
 package com.imsweb.algorithms.uiho;
 
-import java.util.Arrays;
-import java.util.List;
-
-import org.apache.commons.lang3.math.NumberUtils;
+import com.imsweb.algorithms.StateCountyInputDto;
 
 /**
  * This class can be used to calculate UIHO, and UIHO city.
@@ -20,19 +17,6 @@ public final class UihoUtils {
 
     public static final String ALG_NAME = "NPCR UIHO Linkage Program";
     public static final String ALG_VERSION = "version 2.2 released in June 2022";
-
-    private static final List<String> _STATES = Arrays.asList("AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "GA", "HI", "ID", "IL",
-            "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH",
-            "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY");
-
-    private static final List<String> _TERRITORIES = Arrays.asList("AS", "GU", "MP", "PW", "PR", "UM", "VI", "FM", "MH", "TT");
-
-    private static final List<String> _PROVINCES = Arrays.asList("AB", "BC", "MB", "NB", "NL", "NS", "NT", "NU", "ON", "PE", "QC", "SK", "YT");
-
-    private static final List<String> _ARMED_FORCES = Arrays.asList("AA", "AE", "AP");
-
-    // Just sort of acknowledging the existence of these codes to show I didn't forget about them.
-    //private static final List<String> _UNKNOWN_STATES = Arrays.asList("CD", "US", "XX", "YY", "ZZ");
 
     public static final String UIHO_NO = "0";
     public static final String UIHO_UNKNOWN = "9";
@@ -65,20 +49,20 @@ public final class UihoUtils {
      * 01-98 = UIHO City number
      * 99 = Unknown
      * <br/><br/>
-     * @param input a <code>UihoInputDto</code> input object
+     * @param input a <code>StateCountyInputDto</code> input object
      * @return <code>UihoOutputDto</code> output object
      */
-    public static UihoOutputDto computeUiho(UihoInputDto input) {
+    public static UihoOutputDto computeUiho(StateCountyInputDto input) {
         UihoOutputDto result = new UihoOutputDto();
         input.applyRecodes();
 
-        if (!isStateAtDxValid(input.getAddressAtDxState()) || !isCountyAtDxValid(input.getAddressAtDxCounty())) {
+        if (input.hasInvalidStateOrCounty() || input.hasUnknownStateOrCounty() || input.countyIsNotReported()) {
             result.setUIHO(UIHO_UNKNOWN);
             result.setUihoCity(UIHO_CITY_UNKNOWN);
         }
         else {
-            result.setUIHO(_PROVIDER.getUIHO(input.getAddressAtDxState(), input.getAddressAtDxCounty()));
-            result.setUihoCity(_PROVIDER.getUIHOCity(input.getAddressAtDxState(), input.getAddressAtDxCounty()));
+            result.setUIHO(_PROVIDER.getUIHO(input.getAddressAtDxState(), input.getCountyAtDxAnalysis()));
+            result.setUihoCity(_PROVIDER.getUIHOCity(input.getAddressAtDxState(), input.getCountyAtDxAnalysis()));
         }
 
         // get methods should never return null, but let's make sure we don't return null value anyway
@@ -88,16 +72,5 @@ public final class UihoUtils {
             result.setUihoCity(UIHO_CITY_NONE);
 
         return result;
-    }
-
-    static boolean isCountyAtDxValid(String county) {
-        return county != null && county.length() == 3 && !("999".equals(county)) && NumberUtils.isDigits(county);
-    }
-
-    static boolean isStateAtDxValid(String state) {
-        return _STATES.contains(state)
-                || _TERRITORIES.contains(state)
-                || _PROVINCES.contains(state)
-                || _ARMED_FORCES.contains(state);
     }
 }

@@ -3,6 +3,8 @@
  */
 package com.imsweb.algorithms.cancerreportingzone;
 
+import com.imsweb.algorithms.StateCountyTractInputDto;
+import com.imsweb.algorithms.StateCountyTractInputDto.CensusTract;
 import com.imsweb.algorithms.internal.CensusData;
 import com.imsweb.algorithms.internal.CountryData;
 import com.imsweb.algorithms.internal.CountyData;
@@ -42,20 +44,24 @@ public final class CancerReportingZoneUtils {
      * <li>D = State, county, or tract are blank or unknown/li>
      * </ul>
      * <br/><br/>
-     * @param input a <code>CancerReportingZoneInputDto</code> input object
+     * @param input a <code>StateCountyTractInputDto</code> input object
      * @return the computed Cancer Reporting Zone value
      */
-    public static CancerReportingZoneOutputDto computeCancerReportingZone(CancerReportingZoneInputDto input) {
+    public static CancerReportingZoneOutputDto computeCancerReportingZone(StateCountyTractInputDto input) {
         CancerReportingZoneOutputDto result = new CancerReportingZoneOutputDto();
+
         input.applyRecodes();
 
-        if (!input.isStateValidOrMissingOrUnknown() || !input.isCountyValidOrMissingOrUnknown() || !input.isCensusTract2010ValidOrMissingOrUnknown())
+        if (input.hasInvalidStateCountyOrCensusTract(CensusTract._2010)) {
             result.setCancerReportingZone(CANCER_REPORTING_ZONE_UNK_A);
-        else if (input.isStateMissingOrUnknown() || input.isCountyMissingOrUnknown() || input.isCensusTract2010MissingOrUnknown())
+        }
+        else if (input.hasUnknownStateCountyOrCensusTract(CensusTract._2010)) {
             result.setCancerReportingZone(CANCER_REPORTING_ZONE_UNK_D);
-        else if ("000".equals(input.getCountyAtDxAnalysis()))
+        }
+        else if (input.countyIsNotReported())
             result.setCancerReportingZone(CANCER_REPORTING_ZONE_UNK_B);
         else {
+
             if (!CountryData.getInstance().isTractDataInitialized(input.getAddressAtDxState()))
                 CountryData.getInstance().initializeTractData(input.getAddressAtDxState());
 
