@@ -4,15 +4,11 @@
 package com.imsweb.algorithms.tractestcongressdist;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 import com.imsweb.algorithms.StateCountyTractInputDto;
-import com.imsweb.algorithms.svi.SocialVulnerabilityIndexUtils;
 
 public class TractEstCongressDistUtilsTest {
 
