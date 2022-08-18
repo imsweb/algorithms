@@ -27,13 +27,13 @@ public class TractEstCongressDistUtilsTest {
 
         StateCountyTractInputDto input = new StateCountyTractInputDto();
 
-        // test a valid value from WA
-        input.setAddressAtDxState("WA");
-        input.setCountyAtDxAnalysis("067");
-        input.setCensusTract2010("012720");
-        Assert.assertEquals("03", TractEstCongressDistUtils.computeTractEstCongressDist(input).getTractEstCongressDist());
+        // test a SEER city recode
+        input.setAddressAtDxState("LO");
+        input.setCountyAtDxAnalysis("071");
+        input.setCensusTract2010("007903");
+        Assert.assertEquals("08", TractEstCongressDistUtils.computeTractEstCongressDist(input).getTractEstCongressDist());
 
-        // test a valid value from PR
+        // test Puerto Rico
         input.setAddressAtDxState("PR");
         input.setCountyAtDxAnalysis("001");
         input.setCensusTract2010("956300");

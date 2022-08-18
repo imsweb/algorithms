@@ -23,7 +23,20 @@ public class PrcdaUtilsTest {
 
         StateCountyInputDto input = new StateCountyInputDto();
 
-        // test entire state is PRCDA - if the entire state is PRCDA then we should always return 1 regardless of what the county is
+        // test a SEER city recode
+        input.setAddressAtDxState("LO");
+        input.setCountyAtDxAnalysis("071");
+        Assert.assertEquals("1", PrcdaUtils.computePrcda(input).getPrcda());
+        Assert.assertEquals("1", PrcdaUtils.computePrcda(input).getPrcda2017());
+
+        // test Puerto Rico
+        input.setAddressAtDxState("PR");
+        input.setCountyAtDxAnalysis("001");
+        Assert.assertEquals("0", PrcdaUtils.computePrcda(input).getPrcda());
+        Assert.assertEquals("0", PrcdaUtils.computePrcda(input).getPrcda2017());
+
+        // test for when the entire state is PRCDA
+        // if the entire state is PRCDA then we should always return 1 regardless of what the county is
         input.setAddressAtDxState("AK");
         for (String county : Arrays.asList("001", "999", "INVALID", null)) {
             input.setCountyAtDxAnalysis(county);
@@ -32,7 +45,8 @@ public class PrcdaUtilsTest {
             Assert.assertEquals(key, "1", PrcdaUtils.computePrcda(input).getPrcda2017());
         }
 
-        // test entire state is NOT PRCDA - if the entire state is NOT PRCDA then we should always return 0 regardless of what the county is
+        // test for when the entire state is NOT PRCDA
+        // if the entire state is NOT PRCDA then we should always return 0 regardless of what the county is
         input.setAddressAtDxState("DE");
         for (String county : Arrays.asList("001", "999", "INVALID", null)) {
             input.setCountyAtDxAnalysis(county);
