@@ -25,19 +25,6 @@ public final class PrcdaUtils {
     public static final String ALG_NAME = "NPCR PRCDA Linkage Program";
     public static final String ALG_VERSION = "version 2.2 released in June 2022";
 
-    private static final List<String> _STATES = Arrays.asList("AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "GA", "HI", "ID", "IL",
-            "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH",
-            "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY");
-
-    private static final List<String> _TERRITORIES = Arrays.asList("AS", "GU", "MP", "PW", "PR", "UM", "VI", "FM", "MH", "TT");
-
-    private static final List<String> _PROVINCES = Arrays.asList("AB", "BC", "MB", "NB", "NL", "NS", "NT", "NU", "ON", "PE", "QC", "SK", "YT");
-
-    private static final List<String> _ARMED_FORCES = Arrays.asList("AA", "AE", "AP");
-
-    // Just sort of acknowledging the existence of these codes to show I didn't forget about them.
-    //private static final List<String> _UNKNOWN_STATES = Arrays.asList("CD", "US", "XX", "YY", "ZZ");
-
     public static final String PRCDA_NO = "0";
     public static final String PRCDA_YES = "1";
     public static final String PRCDA_UNKNOWN = "9";
@@ -47,12 +34,15 @@ public final class PrcdaUtils {
 
     // States where every county is non-PRCDA
     public static final List<String> ENTIRE_STATE_NON_PRCDA;
-
     static {
         List<String> nonPrcda = new ArrayList<>(Arrays.asList("AR", "DE", "DC", "GA", "HI", "IL", "KY", "MD", "MO", "NH", "NJ", "OH", "TN", "VT", "WV"));
-        nonPrcda.addAll(_TERRITORIES);
-        nonPrcda.addAll(_PROVINCES);
-        nonPrcda.addAll(_ARMED_FORCES);
+        List<String> territory = Arrays.asList("AS", "GU", "MP", "PW", "PR", "UM", "VI", "FM", "MH", "TT");
+        List<String> province = Arrays.asList("AB", "BC", "MB", "NB", "NL", "NS", "NT", "NU", "ON", "PE", "QC", "SK", "YT");
+        List<String> military = Arrays.asList("AA", "AE", "AP");
+        //List<String> UNKNOWN_VALUES_DO_NOT_INCLUDE_IN_NON_PRCDA = Arrays.asList("CD", "US", "XX", "YY", "ZZ");
+        nonPrcda.addAll(territory);
+        nonPrcda.addAll(province);
+        nonPrcda.addAll(military);
         ENTIRE_STATE_NON_PRCDA = Collections.unmodifiableList(nonPrcda);
     }
 
@@ -110,16 +100,5 @@ public final class PrcdaUtils {
             result.setPrcda2017(PRCDA_NO);
 
         return result;
-    }
-
-    static boolean isCountyAtDxValid(String county) {
-        return county != null && county.length() == 3 && !("000".equals(county)) && !("999".equals(county)) && NumberUtils.isDigits(county);
-    }
-
-    static boolean isStateAtDxValid(String state) {
-        return _STATES.contains(state)
-                || _TERRITORIES.contains(state)
-                || _PROVINCES.contains(state)
-                || _ARMED_FORCES.contains(state);
     }
 }
