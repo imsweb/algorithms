@@ -168,7 +168,7 @@ public final class Algorithms {
     public static final String FIELD_ACS_POV_AIAN = "acsPctPovAIAN";
     public static final String FIELD_ACS_POV_ASIAN_NHOPI = "acsPctPovAsianNHOPI";
     public static final String FIELD_ACS_POV_WHITE_NON_HISP = "acsPctPovWhiteNonHisp";
-    public static final String FIELD_ACS_POV_HISP = "acsPctPov0610Hispanic";
+    public static final String FIELD_ACS_POV_HISP = "acsPctPovHispanic";
     public static final String FIELD_EPHT_2010_GEOID_5K = "epht2010GeoId5k";
     public static final String FIELD_EPHT_2010_GEOID_20K = "epht2010GeoId20k";
     public static final String FIELD_EPHT_2010_GEOID_50K = "epht2010GeoId50k";
