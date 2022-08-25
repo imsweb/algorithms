@@ -38,6 +38,7 @@ public class CancerReportingZoneAlgorithm extends AbstractAlgorithm {
         _outputFields.add(Algorithms.getField(FIELD_CANCER_REPORTING_ZONE_TRACT_CERT));
 
         _unknownValues.put(FIELD_CANCER_REPORTING_ZONE, Arrays.asList(CANCER_REPORTING_ZONE_UNK_A, CANCER_REPORTING_ZONE_UNK_D));
+        _unknownValues.put(FIELD_CANCER_REPORTING_ZONE_TRACT_CERT, Arrays.asList(CANCER_REPORTING_ZONE_UNK_A, CANCER_REPORTING_ZONE_UNK_D));
     }
 
     @Override

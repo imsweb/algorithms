@@ -52,12 +52,18 @@ public final class CancerReportingZoneUtils {
 
         input.applyRecodes();
 
-        if (input.hasInvalidStateCountyOrCensusTract(CensusTract._2010))
+        if (input.hasInvalidStateCountyOrCensusTract(CensusTract._2010)) {
             result.setCancerReportingZone(CANCER_REPORTING_ZONE_UNK_A);
-        else if (input.hasUnknownStateCountyOrCensusTract(CensusTract._2010))
+            result.setCancerReportingZoneTractCert(CANCER_REPORTING_ZONE_UNK_A);
+        }
+        else if (input.hasUnknownStateCountyOrCensusTract(CensusTract._2010)) {
             result.setCancerReportingZone(CANCER_REPORTING_ZONE_UNK_D);
-        else if (input.countyIsNotReported())
+            result.setCancerReportingZoneTractCert(CANCER_REPORTING_ZONE_UNK_D);
+        }
+        else if (input.countyIsNotReported()) {
             result.setCancerReportingZone(CANCER_REPORTING_ZONE_UNK_B);
+            result.setCancerReportingZoneTractCert(CANCER_REPORTING_ZONE_UNK_B);
+        }
         else {
 
             if (!CountryData.getInstance().isTractDataInitialized(input.getAddressAtDxState()))
@@ -78,6 +84,8 @@ public final class CancerReportingZoneUtils {
 
         if (result.getCancerReportingZone() == null)
             result.setCancerReportingZone(CANCER_REPORTING_ZONE_UNK_C);
+        if (result.getCancerReportingZoneTractCert() == null)
+            result.setCancerReportingZoneTractCert(CANCER_REPORTING_ZONE_UNK_C);
 
         return result;
     }
