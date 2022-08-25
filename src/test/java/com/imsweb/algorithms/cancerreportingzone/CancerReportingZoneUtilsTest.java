@@ -28,12 +28,14 @@ public class CancerReportingZoneUtilsTest {
         input.setCountyAtDxAnalysis("071");
         input.setCensusTract2010("007903");
         Assert.assertEquals("06A0274", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone());
+        Assert.assertEquals("1", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZoneTractCert());
 
         // test Puerto Rico
         input.setAddressAtDxState("PR");
         input.setCountyAtDxAnalysis("001");
         input.setCensusTract2010("956300");
         Assert.assertEquals("C", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone());
+        Assert.assertNull(CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZoneTractCert()); // not available for PR?
 
         // test unknown A (state, county, or tract are invalid)
         for (String state : Arrays.asList("WA", "INVALID")) {

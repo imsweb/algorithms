@@ -17,6 +17,7 @@ import com.imsweb.algorithms.StateCountyTractInputDto;
 import com.imsweb.algorithms.internal.Utils;
 
 import static com.imsweb.algorithms.Algorithms.FIELD_CANCER_REPORTING_ZONE;
+import static com.imsweb.algorithms.Algorithms.FIELD_CANCER_REPORTING_ZONE_TRACT_CERT;
 import static com.imsweb.algorithms.Algorithms.FIELD_CENSUS_2010;
 import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS;
 import static com.imsweb.algorithms.Algorithms.FIELD_STATE_DX;
@@ -34,6 +35,7 @@ public class CancerReportingZoneAlgorithm extends AbstractAlgorithm {
         _inputFields.add(Algorithms.getField(FIELD_CENSUS_2010));
 
         _outputFields.add(Algorithms.getField(FIELD_CANCER_REPORTING_ZONE));
+        _outputFields.add(Algorithms.getField(FIELD_CANCER_REPORTING_ZONE_TRACT_CERT));
 
         _unknownValues.put(FIELD_CANCER_REPORTING_ZONE, Arrays.asList(CANCER_REPORTING_ZONE_UNK_A, CANCER_REPORTING_ZONE_UNK_D));
     }
@@ -54,6 +56,7 @@ public class CancerReportingZoneAlgorithm extends AbstractAlgorithm {
 
             Map<String, Object> outputTumor = new HashMap<>();
             outputTumor.put(FIELD_CANCER_REPORTING_ZONE, outputDto.getCancerReportingZone());
+            outputTumor.put(FIELD_CANCER_REPORTING_ZONE_TRACT_CERT, outputDto.getCancerReportingZoneTractCert());
 
             outputTumors.add(outputTumor);
         }
