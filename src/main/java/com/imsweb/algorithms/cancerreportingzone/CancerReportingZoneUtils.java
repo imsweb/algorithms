@@ -54,12 +54,16 @@ public final class CancerReportingZoneUtils {
 
         if (input.hasInvalidStateCountyOrCensusTract(CensusTract._2010)) {
             result.setCancerReportingZone(CANCER_REPORTING_ZONE_UNK_A);
+            result.setCancerReportingZoneTractCert(CANCER_REPORTING_ZONE_UNK_A);
         }
         else if (input.hasUnknownStateCountyOrCensusTract(CensusTract._2010)) {
             result.setCancerReportingZone(CANCER_REPORTING_ZONE_UNK_D);
+            result.setCancerReportingZoneTractCert(CANCER_REPORTING_ZONE_UNK_D);
         }
-        else if (input.countyIsNotReported())
+        else if (input.countyIsNotReported()) {
             result.setCancerReportingZone(CANCER_REPORTING_ZONE_UNK_B);
+            result.setCancerReportingZoneTractCert(CANCER_REPORTING_ZONE_UNK_B);
+        }
         else {
 
             if (!CountryData.getInstance().isTractDataInitialized(input.getAddressAtDxState()))
@@ -70,14 +74,18 @@ public final class CancerReportingZoneUtils {
                 CountyData countyData = stateData.getCountyData(input.getCountyAtDxAnalysis());
                 if (countyData != null) {
                     CensusData censusData = countyData.getCensusData(input.getCensusTract2010());
-                    if (censusData != null)
+                    if (censusData != null) {
                         result.setCancerReportingZone(censusData.getCancerReportingZone());
+                        result.setCancerReportingZoneTractCert(censusData.getCancerReportingZoneTractCert());
+                    }
                 }
             }
         }
 
         if (result.getCancerReportingZone() == null)
             result.setCancerReportingZone(CANCER_REPORTING_ZONE_UNK_C);
+        if (result.getCancerReportingZoneTractCert() == null)
+            result.setCancerReportingZoneTractCert(CANCER_REPORTING_ZONE_UNK_C);
 
         return result;
     }

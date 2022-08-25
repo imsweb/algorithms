@@ -54,6 +54,7 @@ public class CountryData {
         _TRACT_FIELDS.put("uric2000", 1);
         _TRACT_FIELDS.put("uric2010", 1);
         _TRACT_FIELDS.put("cancerReportingZone", 10);
+        _TRACT_FIELDS.put("cancerReportingZoneTractCert", 1);
         _TRACT_FIELDS.put("naaccrPovertyIndicator9504", 1);
         _TRACT_FIELDS.put("naaccrPovertyIndicator0507", 1);
         _TRACT_FIELDS.put("npcrEphtSubcounty5k", 11);
@@ -189,6 +190,7 @@ public class CountryData {
 
                                 // Cancer Reporting Zone
                                 censusData.setCancerReportingZone(StringUtils.trimToNull(values.get("cancerReportingZone")));
+                                censusData.setCancerReportingZoneTractCert(StringUtils.trimToNull(values.get("cancerReportingZoneTractCert")));
 
                                 // Tract-estimate Congressional Districts
                                 censusData.setTractEstCongressDist(StringUtils.trimToNull(values.get("tractEstCongressDist")));

@@ -28,12 +28,14 @@ public class CancerReportingZoneUtilsTest {
         input.setCountyAtDxAnalysis("071");
         input.setCensusTract2010("007903");
         Assert.assertEquals("06A0274", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone());
+        Assert.assertEquals("1", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZoneTractCert());
 
         // test Puerto Rico
         input.setAddressAtDxState("PR");
         input.setCountyAtDxAnalysis("001");
         input.setCensusTract2010("956300");
         Assert.assertEquals("C", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone());
+        Assert.assertEquals("C", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZoneTractCert());
 
         // test unknown A (state, county, or tract are invalid)
         for (String state : Arrays.asList("WA", "INVALID")) {
@@ -57,6 +59,7 @@ public class CancerReportingZoneUtilsTest {
         input.setCountyAtDxAnalysis("000");
         input.setCensusTract2010("012720");
         Assert.assertEquals("B", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone());
+        Assert.assertEquals("B", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZoneTractCert());
 
         //test unknown C (the state+county+tract combination was not found in lookup table or there was a blank entry in the table)
         for (String state : Arrays.asList("WA", "SK")) {

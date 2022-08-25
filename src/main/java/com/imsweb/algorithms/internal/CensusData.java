@@ -29,6 +29,9 @@ public class CensusData {
     // Cancer Reporting Zone
     private String _cancerReportingZone;
 
+    // Cancer Reporting Zone Tract Certainty
+    private String _cancerReportingZoneTractCert;
+
     // EPHT SubCounty 5K
     private String _epht2010GeoId5k;
 
@@ -133,6 +136,14 @@ public class CensusData {
 
     public void setCancerReportingZone(String cancerReportingZone) {
         _cancerReportingZone = cancerReportingZone;
+    }
+
+    public String getCancerReportingZoneTractCert() {
+        return _cancerReportingZoneTractCert;
+    }
+
+    public void setCancerReportingZoneTractCert(String cancerReportingZoneTractCert) {
+        _cancerReportingZoneTractCert = cancerReportingZoneTractCert;
     }
 
     public String getSviOverallStateBased() {
