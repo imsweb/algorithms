@@ -1,6 +1,6 @@
 ## Algorithms Version History
 
-**Changes in version 4.0 (not released yet)**
+**Changes in version 4.0**
 
 - Added extended codes to ICCC algorithm. 
 - Switched the data source for following algorithms to use SEER data: NAACCR Poverty Indicator, RUCA/URIC, NPCR EPHT SubCounty 5/20K, Cancer Reporting Zone, Tract-estimate Congressional Districts, Yost/ACS Poverty.
