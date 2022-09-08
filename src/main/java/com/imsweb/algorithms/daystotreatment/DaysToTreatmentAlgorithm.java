@@ -55,13 +55,7 @@ public class DaysToTreatmentAlgorithm extends AbstractAlgorithm {
     }
 
     public static String computeDaysToTreatment(String dxDate, String txDate) {
-        if (dxDate == null || dxDate.length() != 8 || !NumberUtils.isDigits(dxDate) || "00000000".equals(dxDate) || "99999999".equals(dxDate))
-            return "999";
-
-        if (txDate == null || "00000000".equals(txDate) || "99999999".equals(txDate))
-            return "998";
-
-        if (txDate.length() != 8 || !NumberUtils.isDigits(txDate))
+        if (dxDate == null || dxDate.length() != 8 || !NumberUtils.isDigits(dxDate) || txDate == null || txDate.length() != 8 || !NumberUtils.isDigits(txDate))
             return "999";
 
         try {
@@ -80,8 +74,8 @@ public class DaysToTreatmentAlgorithm extends AbstractAlgorithm {
             if (result < 0)
                 result = 0;
 
-            if (result > 997)
-                result = 997;
+            if (result > 998)
+                result = 998;
 
             return StringUtils.leftPad(String.valueOf(result), 3, '0');
         }

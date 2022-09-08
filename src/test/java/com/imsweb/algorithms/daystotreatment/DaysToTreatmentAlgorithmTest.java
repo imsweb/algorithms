@@ -25,11 +25,11 @@ public class DaysToTreatmentAlgorithmTest {
         Assert.assertEquals("999", DaysToTreatmentAlgorithm.computeDaysToTreatment("000000000", "20200102"));
         Assert.assertEquals("999", DaysToTreatmentAlgorithm.computeDaysToTreatment("20200230", "20210101"));
 
-        Assert.assertEquals("998", DaysToTreatmentAlgorithm.computeDaysToTreatment("20200101", null));
+        Assert.assertEquals("999", DaysToTreatmentAlgorithm.computeDaysToTreatment("20200101", null));
         Assert.assertEquals("999", DaysToTreatmentAlgorithm.computeDaysToTreatment("20200101", "202001"));
         Assert.assertEquals("999", DaysToTreatmentAlgorithm.computeDaysToTreatment("20200101", "ABC"));
-        Assert.assertEquals("998", DaysToTreatmentAlgorithm.computeDaysToTreatment("20200101", "99999999"));
-        Assert.assertEquals("998", DaysToTreatmentAlgorithm.computeDaysToTreatment("20200101", "00000000"));
+        Assert.assertEquals("999", DaysToTreatmentAlgorithm.computeDaysToTreatment("20200101", "99999999"));
+        Assert.assertEquals("999", DaysToTreatmentAlgorithm.computeDaysToTreatment("20200101", "00000000"));
         Assert.assertEquals("999", DaysToTreatmentAlgorithm.computeDaysToTreatment("20200101", "20200230"));
     }
 }
