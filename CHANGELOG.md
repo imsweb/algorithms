@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 4.1**
+
+- Added new SEER algorithm to compute days between diagnosis and treatment. 
+
 **Changes in version 4.0**
 
 - Added extended codes to ICCC algorithm. 
