@@ -29,7 +29,7 @@ import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
 public class DaysToTreatmentAlgorithm extends AbstractAlgorithm {
 
     public DaysToTreatmentAlgorithm() {
-        super(Algorithms.ALG_DAYS_TO_TREATMENT, "Days from Diagnosis to Treatment", "Version 1.0 released in September 2022");
+        super(Algorithms.ALG_DAYS_TO_TREATMENT, "SEER Days from Diagnosis to Treatment", "Version 1.0 released in September 2022");
 
         _inputFields.add(Algorithms.getField(FIELD_DX_DATE));
         _inputFields.add(Algorithms.getField(FIELD_DATE_INITIAL_RX_SEER));
