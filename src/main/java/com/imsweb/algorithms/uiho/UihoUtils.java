@@ -8,7 +8,7 @@ import com.imsweb.algorithms.StateCountyInputDto;
 /**
  * This class can be used to calculate UIHO, and UIHO city.
  * <br/><br/>
- * <a href="https://seer.cancer.gov/seerstat/variables/countyattribs/static.html#chsda"</a>
+ * <a href="https://seer.cancer.gov/seerstat/variables/countyattribs/static.html#chsda">View documentation</a>
  * <br/><br/>
  * Created on Aug 12, 2019 by howew
  * @author howew

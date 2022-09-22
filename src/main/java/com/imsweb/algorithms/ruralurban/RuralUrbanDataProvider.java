@@ -31,10 +31,10 @@ import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.URBAN_RURAL_INDIC
  * from the csv file lookup.  This implementation is memory consumer. If there is a database, it is better to use another implementation.
  * <br/><br/>
  * The data used by this provider comes from the official census website. See the following SEER website for more information:
- * <a href="https://seer.cancer.gov/seerstat/variables/countyattribs/"</a>
+ * <a href="https://seer.cancer.gov/seerstat/variables/countyattribs/">View documentation</a>
  * In particular, the rural/urban percentage comes from these sections:
- * 2010: <a href="https://seer.cancer.gov/seerstat/variables/countyattribs/#10"</a>
- * 2000: <a href="https://seer.cancer.gov/seerstat/variables/countyattribs/#ca2000"</a>
+ * 2010: <a href="https://seer.cancer.gov/seerstat/variables/countyattribs/#10">View documentation</a>
+ * 2000: <a href="https://seer.cancer.gov/seerstat/variables/countyattribs/#ca2000">View documentation</a>
  * <br/><br/>
  * Created on Aug 12, 2014 by HoweW
  * @author howew
