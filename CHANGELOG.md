@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 4.2**
+
+- Tweak Cancer Reporting Zone algorithm to it doesn't return state FIPS code prefixes.
+
 **Changes in version 4.1**
 
 - Added new SEER algorithm to compute days between diagnosis and treatment. 

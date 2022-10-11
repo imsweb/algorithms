@@ -139,8 +139,8 @@ public class TractDataLab {
         // 8/15/22 - new version of the SEER data was provided, but it's not posted online yet; a Puerto-Rico version of the data file was also provided (it won't be posted)
         Map<DataKey, Map<String, String>> tractValues = new TreeMap<>();
         Map<DataKey, Map<Integer, String>> tractYearBasedValues = new HashMap<>();
-        processMainSeerDataFile(Paths.get("C:\\dev\\tract-level-data\\tract.level.ses.2008_17.txt.gz"), layout, tractValues, tractYearBasedValues);
-        processMainSeerDataFile(Paths.get("C:\\dev\\tract-level-data\\tract.level.ses.2008_17.puerto.rico.txt.gz"), layout, tractValues, tractYearBasedValues);
+        processMainSeerDataFile(Paths.get("H:\\documents\\previous-pc-backup-2022\\dev\\tract-level-data\\tract.level.ses.2008_17.txt.gz"), layout, tractValues, tractYearBasedValues);
+        processMainSeerDataFile(Paths.get("H:\\documents\\previous-pc-backup-2022\\dev\\tract-level-data\\tract.level.ses.2008_17.puerto.rico.txt.gz"), layout, tractValues, tractYearBasedValues);
 
         // NAACCR Poverty Indicator 1995-2004
         Map<DataKey, String> naaccrPovertyIndicator9504 = new HashMap<>();
@@ -345,7 +345,7 @@ public class TractDataLab {
 
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("ruca2010", cleanTractValue(lineNum, line, "ruca2010C", "ruca2010"));
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("uric2010", cleanTractValue(lineNum, line, "uric2010A", "uric2010"));
-                tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("cancerReportingZone", cleanTractValue(lineNum, line, "zoneId", "cancerReportingZone"));
+                tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("cancerReportingZone", cleanTractValue(lineNum, line, "zoneId", "cancerReportingZone", s -> StringUtils.substring(s, 2)));
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("cancerReportingZoneTractCert", cleanTractValue(lineNum, line, "zoneTractCertainty", "cancerReportingZoneTractCert"));
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("npcrEphtSubcounty5k", cleanTractValue(lineNum, line, "cdcSubcounty5k", "npcrEphtSubcounty5k"));
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("npcrEphtSubcounty20k", cleanTractValue(lineNum, line, "cdcSubcounty20k", "npcrEphtSubcounty20k"));
