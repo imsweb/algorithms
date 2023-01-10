@@ -3,16 +3,17 @@
  */
 package com.imsweb.algorithms.neoadjuvant;
 
+import java.util.Collections;
+
 import org.junit.Assert;
 import org.junit.Test;
 
-@SuppressWarnings("ConstantConditions")
 public class NeoAdjuvantTherapyTxEffectUtilsTest {
 
     @Test
     public void testGetLookup() {
-        Assert.assertNull(NeoAdjuvantTherapyTxEffectUtils.getLookup(null));
-        Assert.assertNull(NeoAdjuvantTherapyTxEffectUtils.getLookup(""));
+        Assert.assertEquals(Collections.emptyMap(), NeoAdjuvantTherapyTxEffectUtils.getLookup(null));
+        Assert.assertEquals(Collections.emptyMap(), NeoAdjuvantTherapyTxEffectUtils.getLookup(""));
 
         // test B schema
         Assert.assertEquals("No definite response to presurgical therapy in the invasive carcinoma\n"
@@ -21,7 +22,7 @@ public class NeoAdjuvantTherapyTxEffectUtilsTest {
                 NeoAdjuvantTherapyTxEffectUtils.getLookup("00480").get("4"));
 
         // test G schema
-        Assert.assertEquals(1, NeoAdjuvantTherapyTxEffectUtils.getLookup("00812").size());
+        Assert.assertEquals(2, NeoAdjuvantTherapyTxEffectUtils.getLookup("00812").size());
 
     }
 
