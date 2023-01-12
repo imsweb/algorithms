@@ -1,5 +1,10 @@
 ## Algorithms Version History
 
+**Changes in version 4.3**
+
+- Added site-specific surgery tables for 2023 DX year (they apply to a new 2023+ NAACCR data item).
+- Updated neoadjuvTherapyTreatmentEffect lookups (added code 9/DCO to some lookups).
+
 **Changes in version 4.2**
 
 - Tweak Cancer Reporting Zone algorithm to it doesn't return state FIPS code prefixes.
@@ -73,7 +78,7 @@
 **Changes in version 3.1**
 
 - Added new version of the ICCC algorithm and switched the default algorithm to that version.
-- Added new utility class to return schema-specific lookup for neoadjuvTherapyTreatmentEffect (#1634) field.
+- Added new utility class to return schema-specific lookup for neoadjuvTherapyTreatmentEffect field.
 
 **Changes in version 3.0**
 
