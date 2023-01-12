@@ -113,9 +113,10 @@ public final class NeoAdjuvantTherapyTxEffectUtils {
     /**
      * Returns the lookup for neoadjuvTherapyTreatmentEffect (#1634) corresponding to the provided schemaId (#3800).
      */
+    @SuppressWarnings("java:S1168")
     public static Map<String, String> getLookup(String schemaId) {
         if (StringUtils.isBlank(schemaId))
-            return Collections.emptyMap();
+            return null;
 
         Map<String, String> result;
         if (_A_SCHEMA.contains(schemaId))

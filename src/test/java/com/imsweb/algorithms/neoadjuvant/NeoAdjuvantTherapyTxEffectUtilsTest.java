@@ -3,8 +3,6 @@
  */
 package com.imsweb.algorithms.neoadjuvant;
 
-import java.util.Collections;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -12,8 +10,8 @@ public class NeoAdjuvantTherapyTxEffectUtilsTest {
 
     @Test
     public void testGetLookup() {
-        Assert.assertEquals(Collections.emptyMap(), NeoAdjuvantTherapyTxEffectUtils.getLookup(null));
-        Assert.assertEquals(Collections.emptyMap(), NeoAdjuvantTherapyTxEffectUtils.getLookup(""));
+        Assert.assertNull(NeoAdjuvantTherapyTxEffectUtils.getLookup(null));
+        Assert.assertNull(NeoAdjuvantTherapyTxEffectUtils.getLookup(""));
 
         // test B schema
         Assert.assertEquals("No definite response to presurgical therapy in the invasive carcinoma\n"
