@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 
-<surgery-tables version="2022" version-name="2022 SEER Coding Manual">
+<surgery-tables version="2023" version-name="2023 SEER Coding Manual">
     <surgery-table title="Oral Cavity">
         <site-inclusion>C000-C009,C019,C020-C029,C030-C039,C040-C049,C050-C059,C060-C069</site-inclusion>
         <pre-note><![CDATA[Oral Cavity<br/>Lip C000-C009, Base of Tongue C019, Other Parts of Tongue C020-C029, Gum C030-C039, Floor of Mouth C040-C049, Palate C050-C059, Other Parts of Mouth C060-C069
