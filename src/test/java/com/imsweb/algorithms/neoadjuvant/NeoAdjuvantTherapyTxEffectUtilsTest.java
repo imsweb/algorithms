@@ -6,7 +6,6 @@ package com.imsweb.algorithms.neoadjuvant;
 import org.junit.Assert;
 import org.junit.Test;
 
-@SuppressWarnings("ConstantConditions")
 public class NeoAdjuvantTherapyTxEffectUtilsTest {
 
     @Test
@@ -21,7 +20,7 @@ public class NeoAdjuvantTherapyTxEffectUtilsTest {
                 NeoAdjuvantTherapyTxEffectUtils.getLookup("00480").get("4"));
 
         // test G schema
-        Assert.assertEquals(1, NeoAdjuvantTherapyTxEffectUtils.getLookup("00812").size());
+        Assert.assertEquals(2, NeoAdjuvantTherapyTxEffectUtils.getLookup("00812").size());
 
     }
 
