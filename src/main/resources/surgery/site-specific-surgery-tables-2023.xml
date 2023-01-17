@@ -32,7 +32,7 @@
         </row>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>No specimen sent to pathology from surgical events A100-140</b>]]></description>
+            <description><![CDATA[<b>No specimen sent to pathology from surgical events A100-A140</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -50,7 +50,7 @@
         <row break="true"/>
         <row level="1">
             <code/>
-            <description><![CDATA[<b>Any combination of A200 or A260-270 WITH</b>]]></description>
+            <description><![CDATA[<b>Any combination of A200 or A260-A270 WITH</b>]]></description>
         </row>
         <row level="2">
             <code>A210</code>
@@ -74,7 +74,7 @@
         </row>
         <row level="0">
             <code/>
-            <description><![CDATA[[<b><i>SEER Note:</i></b> Codes A200-270 include shave and wedge resection]]]></description>
+            <description><![CDATA[[<b><i>SEER Note:</i></b> Codes A200-A270 include shave and wedge resection]]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -117,7 +117,7 @@
         <row break="true"/>
         <row level="1">
             <code/>
-            <description><![CDATA[<b>Codes A400-430 include:</b>]]></description>
+            <description><![CDATA[<b>Codes A400-A430 include:</b>]]></description>
         </row>
         <row level="2">
             <code/>
@@ -130,7 +130,7 @@
         <row break="true"/>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>Specimen sent to pathology from surgical events A200-430</b>]]></description>
+            <description><![CDATA[<b>Specimen sent to pathology from surgical events A200-A430</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -174,7 +174,7 @@
         </row>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>No specimen sent to pathology from surgical events A100-140</b>]]></description>
+            <description><![CDATA[<b>No specimen sent to pathology from surgical events A100-A140</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -192,7 +192,7 @@
         <row break="true"/>
         <row level="1">
             <code/>
-            <description><![CDATA[<b>Any combination of A200 or A260-270 WITH</b>]]></description>
+            <description><![CDATA[<b>Any combination of A200 or A260-A270 WITH</b>]]></description>
         </row>
         <row level="2">
             <code>A210</code>
@@ -217,7 +217,7 @@
         <row break="true"/>
         <row level="0">
             <code/>
-            <description><![CDATA[[<b><i>SEER Note:</i></b> Codes A300-800 include major salivary gland, NOS]]]></description>
+            <description><![CDATA[[<b><i>SEER Note:</i></b> Codes A300-A800 include major salivary gland, NOS]]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -250,7 +250,7 @@
         </row>
         <row level="0">
             <code/>
-            <description><![CDATA[[<b><i>SEER Note:</i></b> Codes A300-360 are with or without superficial lobe]]]></description>
+            <description><![CDATA[[<b><i>SEER Note:</i></b> Codes A300-A360 are with or without superficial lobe]]]></description>
         </row>
         <row level="2">
             <code>A370</code>
@@ -263,7 +263,7 @@
         <row break="true"/>
         <row level="0">
             <code/>
-            <description><![CDATA[[<b><i>SEER Note:</i></b> Codes A400-800 may include submandibulectomy and submaxillectomy]]]></description>
+            <description><![CDATA[[<b><i>SEER Note:</i></b> Codes A400-A800 may include submandibulectomy and submaxillectomy]]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -303,7 +303,7 @@
         <row break="true"/>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>Specimen sent to pathology from surgical events A200-800</b>]]></description>
+            <description><![CDATA[<b>Specimen sent to pathology from surgical events A200-A800</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -351,7 +351,7 @@
         </row>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>No specimen sent to pathology from surgical events A100-150</b>]]></description>
+            <description><![CDATA[<b>No specimen sent to pathology from surgical events A100-A150</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -369,7 +369,7 @@
         <row break="true"/>
         <row level="1">
             <code/>
-            <description><![CDATA[<b>Any combination of A200 or A260-270 WITH</b>]]></description>
+            <description><![CDATA[<b>Any combination of A200 or A260-A270 WITH</b>]]></description>
         </row>
         <row level="2">
             <code>A210</code>
@@ -453,7 +453,7 @@
         <row break="true"/>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>Specimen sent to pathology from surgical events A200-520</b>]]></description>
+            <description><![CDATA[<b>Specimen sent to pathology from surgical events A200-A520</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -497,7 +497,7 @@
         </row>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>No specimen sent to pathology from surgical events A100-140</b>]]></description>
+            <description><![CDATA[<b>No specimen sent to pathology from surgical events A100-A140</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -515,7 +515,7 @@
         <row break="true"/>
         <row level="1">
             <code/>
-            <description><![CDATA[<b>Any combination of A200 or A260-270 WITH</b>]]></description>
+            <description><![CDATA[<b>Any combination of A200 or A260-A270 WITH</b>]]></description>
         </row>
         <row level="2">
             <code>A210</code>
@@ -574,7 +574,7 @@
         </row>
         <row level="1">
             <code>A550</code>
-            <description><![CDATA[Combination of A510 WITH any of A520-540]]></description>
+            <description><![CDATA[Combination of A510 WITH any of A520-A540]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -584,7 +584,7 @@
         <row break="true"/>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>Specimen sent to pathology from surgical events A200-800</b>]]></description>
+            <description><![CDATA[<b>Specimen sent to pathology from surgical events A200-A800</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -628,7 +628,7 @@
         </row>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>No specimen sent to pathology from surgical events A100-140</b>]]></description>
+            <description><![CDATA[<b>No specimen sent to pathology from surgical events A100-A140</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -646,7 +646,7 @@
         <row break="true"/>
         <row level="1">
             <code/>
-            <description><![CDATA[<b>Any combination of A200 or A260-270 WITH</b>]]></description>
+            <description><![CDATA[<b>Any combination of A200 or A260-A270 WITH</b>]]></description>
         </row>
         <row level="2">
             <code>A210</code>
@@ -734,7 +734,7 @@
         </row>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>Codes A500-520 are used for gastrectomy resection when only portions of esophagus are included in procedure</b>]]></description>
+            <description><![CDATA[<b>Codes A500-A520 are used for gastrectomy resection when only portions of esophagus are included in procedure</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -755,7 +755,7 @@
         </row>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>Codes A600-630 are used for gastrectomy resections with organs other than esophagus. Portions of esophagus may or may not be included in the resection.</b>]]></description>
+            <description><![CDATA[<b>Codes A600-A630 are used for gastrectomy resections with organs other than esophagus. Portions of esophagus may or may not be included in the resection.</b>]]></description>
         </row>
         <row level="0">
             <code/>
@@ -769,7 +769,7 @@
         <row break="true"/>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>Specimen sent to pathology from surgical events A200-800</b>]]></description>
+            <description><![CDATA[<b>Specimen sent to pathology from surgical events A200-A800</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -794,7 +794,7 @@
         <pre-note><![CDATA[Colon<br/>C180-C189
 Code removal/surgical ablation of single or multiple liver metastases under the data item <i>Surgical Procedure of Other Site</i> (NAACCR Item # 1294)
 [<b><i>SEER Note:</i></b> Do not code a colostomy, with no colon tissue removed, as surgery. If colostomy is the only procedure performed, assign surgery code A000.]
-[<b><i>SEER Note:</i></b> Code circumferential resection margin (CRM) (NAACCR # 3823) when assigning surgery codes A300-800. CRM is not applicable for other surgery codes for this site.]
+[<b><i>SEER Note:</i></b> Code circumferential resection margin (CRM) (NAACCR # 3823) when assigning surgery codes A300-A800. CRM is not applicable for other surgery codes for this site.]
 ]]></pre-note>
         <row level="0">
             <code>A000</code>
@@ -836,7 +836,7 @@ Code removal/surgical ablation of single or multiple liver metastases under the 
         </row>
         <row level="1">
             <code/>
-            <description><![CDATA[Any combination of A200 or A260-290 WITH]]></description>
+            <description><![CDATA[Any combination of A200 or A260-A290 WITH]]></description>
         </row>
         <row level="2">
             <code>A220</code>
@@ -923,7 +923,7 @@ Code removal/surgical ablation of single or multiple liver metastases under the 
         <row break="true"/>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>Specimen sent to pathology from surgical events A200-800</b>]]></description>
+            <description><![CDATA[<b>Specimen sent to pathology from surgical events A200-A800</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -940,7 +940,7 @@ Code removal/surgical ablation of single or multiple liver metastases under the 
         <site-inclusion>C199</site-inclusion>
         <pre-note><![CDATA[Rectosigmoid<br/>C199
 Code removal/surgical ablation of single or multiple liver metastases under the data item <i>Surgical Procedure of Other Site</i> (NAACCR Item # 1294).
-[<b><i>SEER Note:</i></b> Code circumferential resection margin (CRM) (NAACCR # 3823) when assigning surgery codes A270, A300-800. CRM is not applicable for other surgery codes for this site.]
+[<b><i>SEER Note:</i></b> Code circumferential resection margin (CRM) (NAACCR # 3823) when assigning surgery codes A270, A300-A800. CRM is not applicable for other surgery codes for this site.]
 ]]></pre-note>
         <row level="0">
             <code>A000</code>
@@ -974,7 +974,7 @@ Code removal/surgical ablation of single or multiple liver metastases under the 
         </row>
         <row level="1">
             <code/>
-            <description><![CDATA[Combination of A200 or A260-270 WITH]]></description>
+            <description><![CDATA[Combination of A200 or A260-A270 WITH]]></description>
         </row>
         <row level="2">
             <code>A220</code>
@@ -1091,7 +1091,7 @@ Code removal/surgical ablation of single or multiple liver metastases under the 
         <row break="true"/>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>Specimen sent to pathology from surgical events A200-800</b>]]></description>
+            <description><![CDATA[<b>Specimen sent to pathology from surgical events A200-A800</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -1108,7 +1108,7 @@ Code removal/surgical ablation of single or multiple liver metastases under the 
         <site-inclusion>C209</site-inclusion>
         <pre-note><![CDATA[Rectum<br/>C209
 Code removal/surgical ablation of single or multiple liver metastases under the data item <i>Surgical Procedure of Other Site</i> (NAACCR Item # 1294).
-[<b><i>SEER Note:</i></b> Code circumferential resection margin (CRM) (NAACCR # 3823) when assigning surgery codes A270, A300-800. CRM is not applicable for other surgery codes for this site.]
+[<b><i>SEER Note:</i></b> Code circumferential resection margin (CRM) (NAACCR # 3823) when assigning surgery codes A270, A300-A800. CRM is not applicable for other surgery codes for this site.]
 ]]></pre-note>
         <row level="0">
             <code>A000</code>
@@ -1142,7 +1142,7 @@ Code removal/surgical ablation of single or multiple liver metastases under the 
         </row>
         <row level="1">
             <code/>
-            <description><![CDATA[Any combination of A200 or A260-270 WITH]]></description>
+            <description><![CDATA[Any combination of A200 or A260-A270 WITH]]></description>
         </row>
         <row level="2">
             <code>A220</code>
@@ -1226,7 +1226,7 @@ Code removal/surgical ablation of single or multiple liver metastases under the 
         <row break="true"/>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>Specimen sent to pathology from surgical events A200-800</b>]]></description>
+            <description><![CDATA[<b>Specimen sent to pathology from surgical events A200-A800</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -1280,7 +1280,7 @@ Code removal/surgical ablation of single or multiple liver metastases under the 
         </row>
         <row level="1">
             <code/>
-            <description><![CDATA[Any combination of A200 or A260-270 WITH]]></description>
+            <description><![CDATA[Any combination of A200 or A260-A270 WITH]]></description>
         </row>
         <row level="2">
             <code>A220</code>
@@ -1314,7 +1314,7 @@ Code removal/surgical ablation of single or multiple liver metastases under the 
         <row break="true"/>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>Specimen sent to pathology from surgical events A200-630</b>]]></description>
+            <description><![CDATA[<b>Specimen sent to pathology from surgical events A200-A630</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -1374,7 +1374,7 @@ Code removal/surgical ablation of single or multiple liver metastases under the 
         </row>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>No specimen sent to pathology from surgical events A100-170</b>]]></description>
+            <description><![CDATA[<b>No specimen sent to pathology from surgical events A100-A170</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -1403,7 +1403,7 @@ Code removal/surgical ablation of single or multiple liver metastases under the 
         </row>
         <row level="2">
             <code/>
-            <description><![CDATA[[<b><i>SEER Note:</i></b> Codes A230-250 mean one, two or three wedges or segments of the liver were removed]]]></description>
+            <description><![CDATA[[<b><i>SEER Note:</i></b> Codes A230-A250 mean one, two or three wedges or segments of the liver were removed]]]></description>
         </row>
         <row level="2">
             <code>A260</code>
@@ -1472,7 +1472,7 @@ Code removal/surgical ablation of single or multiple liver metastases under the 
         <row break="true"/>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>Specimen sent to pathology from surgical events A200-750</b>]]></description>
+            <description><![CDATA[<b>Specimen sent to pathology from surgical events A200-A750</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -1587,7 +1587,7 @@ Code removal/surgical ablation of single or multiple liver metastases under the 
         </row>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>No specimen sent to pathology from surgical events A100-150</b>]]></description>
+            <description><![CDATA[<b>No specimen sent to pathology from surgical events A100-A150</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -1605,7 +1605,7 @@ Code removal/surgical ablation of single or multiple liver metastases under the 
         <row break="true"/>
         <row level="1">
             <code/>
-            <description><![CDATA[Any combination of A200 or A260-270 WITH]]></description>
+            <description><![CDATA[Any combination of A200 or A260-A270 WITH]]></description>
         </row>
         <row level="2">
             <code>A210</code>
@@ -1688,7 +1688,7 @@ Code removal/surgical ablation of single or multiple liver metastases under the 
         <row break="true"/>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>Specimen sent to pathology from surgical events A200-800</b>]]></description>
+            <description><![CDATA[<b>Specimen sent to pathology from surgical events A200-A800</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -1733,7 +1733,7 @@ Code removal/surgical ablation of single or multiple liver metastases under the 
         </row>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>No specimen sent to pathology from surgical events A120-130 and A150</b>]]></description>
+            <description><![CDATA[<b>No specimen sent to pathology from surgical events A120-A130 and A150</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -1767,7 +1767,7 @@ Code removal/surgical ablation of single or multiple liver metastases under the 
         </row>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>Specimen sent to pathology from surgical events A200-250</b>]]></description>
+            <description><![CDATA[<b>Specimen sent to pathology from surgical events A200-A250</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -1939,7 +1939,7 @@ Connective, Subcutaneous, And Other Soft Tissues C490-C499
         <row break="true"/>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>Specimen sent to pathology from surgical events A250-540</b>]]></description>
+            <description><![CDATA[<b>Specimen sent to pathology from surgical events A250-A540</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -2042,7 +2042,7 @@ Connective, Subcutaneous, And Other Soft Tissues C490-C499
         </row>
         <row break="true"/>
         <row level="0">
-            <code>600</code>
+            <code>B600</code>
             <description><![CDATA[Major amputation]]></description>
         </row>
         <row break="true"/>
@@ -2102,12 +2102,12 @@ Connective, Subcutaneous, And Other Soft Tissues C490-C499
         </row>
         <row level="1">
             <code/>
-            <description><![CDATA[<b>Procedures coded A200-240 remove the gross primary tumor and some of the breast tissue (breast-conserving or -preserving surgery). There may be microscopic residual tumor.</b>]]></description>
+            <description><![CDATA[<b>Procedures coded A200-A240 remove the gross primary tumor and some of the breast tissue (breast-conserving or -preserving surgery). There may be microscopic residual tumor.</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
             <code/>
-            <description><![CDATA[[<b><i>SEER Note:</i></b> When a patient has a procedure coded to A200-240 (e.g., lumpectomy) with reconstruction, code only the procedure (e.g., lumpectomy, code A220) as the surgery.]]]></description>
+            <description><![CDATA[[<b><i>SEER Note:</i></b> When a patient has a procedure coded to A200-A240 (e.g., lumpectomy) with reconstruction, code only the procedure (e.g., lumpectomy, code A220) as the surgery.]]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -2131,7 +2131,7 @@ Connective, Subcutaneous, And Other Soft Tissues C490-C499
         <row break="true"/>
         <row level="0">
             <code/>
-            <description><![CDATA[[<b><i>SEER Note:</i></b> Code Goldilocks mastectomy in <i>Surgery of Primary Site</i> (NAACCR # 1290). Breast surgery code A300 seems to be the best available choice for "Goldilocks" mastectomy. It is essentially a skin-sparing mastectomy with breast reconstruction. The choice between code A300 and codes in the A400-490 range depends on the extent of the breast removal. Review the operative report carefully and assign the code that best reflects the extent of the breast removal.]]]></description>
+            <description><![CDATA[[<b><i>SEER Note:</i></b> Code Goldilocks mastectomy in <i>Surgery of Primary Site</i> (NAACCR # 1290). Breast surgery code A300 seems to be the best available choice for "Goldilocks" mastectomy. It is essentially a skin-sparing mastectomy with breast reconstruction. The choice between code A300 and codes in the A400-A490 range depends on the extent of the breast removal. Review the operative report carefully and assign the code that best reflects the extent of the breast removal.]]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -2216,12 +2216,12 @@ Connective, Subcutaneous, And Other Soft Tissues C490-C499
         <row break="true"/>
         <row level="0">
             <code/>
-            <description><![CDATA[Reconstruction that is planned as part of first course treatment is coded A430-490 or A750, regardless of whether it is done at the time of mastectomy or later.]]></description>
+            <description><![CDATA[Reconstruction that is planned as part of first course treatment is coded A430-A490 or A750, regardless of whether it is done at the time of mastectomy or later.]]></description>
         </row>
         <row break="true"/>
         <row level="0">
             <code/>
-            <description><![CDATA[[<b><i>SEER Note:</i></b> Reconstruction may be done at the same time as the mastectomy or may be done later. Code A430-490, or A750 if the operative report or medical record states reconstruction will be done later, or if a tissue expander is inserted during the mastectomy procedure. Tissue expander insertion precedes reconstruction.]]]></description>
+            <description><![CDATA[[<b><i>SEER Note:</i></b> Reconstruction may be done at the same time as the mastectomy or may be done later. Code A430-A490, or A750 if the operative report or medical record states reconstruction will be done later, or if a tissue expander is inserted during the mastectomy procedure. Tissue expander insertion precedes reconstruction.]]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -2388,7 +2388,7 @@ Connective, Subcutaneous, And Other Soft Tissues C490-C499
         <row break="true"/>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>Specimen sent to pathology for surgical events coded A200-800</b>]]></description>
+            <description><![CDATA[<b>Specimen sent to pathology for surgical events coded A200-A800</b>]]></description>
         </row>
         <row level="0">
             <code>A900</code>
@@ -2444,7 +2444,7 @@ Connective, Subcutaneous, And Other Soft Tissues C490-C499
         </row>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>No specimen sent to pathology from surgical events A100-170</b>]]></description>
+            <description><![CDATA[<b>No specimen sent to pathology from surgical events A100-A170</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -2600,7 +2600,7 @@ Connective, Subcutaneous, And Other Soft Tissues C490-C499
         <row break="true"/>
         <row level="0">
             <code/>
-            <description><![CDATA[<i>Specimen sent to pathology from surgical events A200-740</i>]]></description>
+            <description><![CDATA[<i>Specimen sent to pathology from surgical events A200-A740</i>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -2662,7 +2662,7 @@ Connective, Subcutaneous, And Other Soft Tissues C490-C499
         </row>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>No specimen sent to pathology from surgical events A100-160</b>]]></description>
+            <description><![CDATA[<b>No specimen sent to pathology from surgical events A100-A160</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -2684,7 +2684,7 @@ Connective, Subcutaneous, And Other Soft Tissues C490-C499
         <row break="true"/>
         <row level="1">
             <code/>
-            <description><![CDATA[<b>Any combination of A200 or A240-260 WITH</b>]]></description>
+            <description><![CDATA[<b>Any combination of A200 or A240-A260 WITH</b>]]></description>
         </row>
         <row level="2">
             <code>A210</code>
@@ -2826,7 +2826,7 @@ Connective, Subcutaneous, And Other Soft Tissues C490-C499
         <row break="true"/>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>Specimen sent to pathology from surgical events A200-790</b>]]></description>
+            <description><![CDATA[<b>Specimen sent to pathology from surgical events A200-A790</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -3038,7 +3038,7 @@ Connective, Subcutaneous, And Other Soft Tissues C490-C499
         <row break="true"/>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>Specimen sent to pathology from surgical events A250-800</b>]]></description>
+            <description><![CDATA[<b>Specimen sent to pathology from surgical events A250-A800</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -3097,7 +3097,7 @@ Do not code an orchiectomy in this field. For prostate primaries, orchiectomies 
         </row>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>No specimen sent to pathology from surgical events A100-170</b>]]></description>
+            <description><![CDATA[<b>No specimen sent to pathology from surgical events A100-A170</b>]]></description>
         </row>
         <row level="0">
             <code/>
@@ -3123,7 +3123,7 @@ Do not code an orchiectomy in this field. For prostate primaries, orchiectomies 
         <row break="true"/>
         <row level="1">
             <code/>
-            <description><![CDATA[<b>Any combination of A200-230 WITH</b>]]></description>
+            <description><![CDATA[<b>Any combination of A200-A230 WITH</b>]]></description>
         </row>
         <row level="2">
             <code>A240</code>
@@ -3175,7 +3175,7 @@ Do not code an orchiectomy in this field. For prostate primaries, orchiectomies 
         <row break="true"/>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>Specimen sent to pathology from surgical events A200-800</b>]]></description>
+            <description><![CDATA[<b>Specimen sent to pathology from surgical events A200-A800</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -3236,7 +3236,7 @@ Do not code an orchiectomy in this field. For prostate primaries, orchiectomies 
         <row break="true"/>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>Specimen sent to pathology from surgical events A200-800</b>]]></description>
+            <description><![CDATA[<b>Specimen sent to pathology from surgical events A200-A800</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -3284,7 +3284,7 @@ Do not code an orchiectomy in this field. For prostate primaries, orchiectomies 
         </row>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>No specimen sent to pathology from this surgical event A100-150</b>]]></description>
+            <description><![CDATA[<b>No specimen sent to pathology from this surgical event A100-A150</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -3302,7 +3302,7 @@ Do not code an orchiectomy in this field. For prostate primaries, orchiectomies 
         <row break="true"/>
         <row level="1">
             <code/>
-            <description><![CDATA[<b>Any combination of A200 or A260-270 WITH</b>]]></description>
+            <description><![CDATA[<b>Any combination of A200 or A260-A270 WITH</b>]]></description>
         </row>
         <row level="2">
             <code>A210</code>
@@ -3388,7 +3388,7 @@ Do not code an orchiectomy in this field. For prostate primaries, orchiectomies 
         <row break="true"/>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>Specimen sent to pathology from surgical events A200-800</b>]]></description>
+            <description><![CDATA[<b>Specimen sent to pathology from surgical events A200-A800</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -3444,11 +3444,11 @@ Do not code an orchiectomy in this field. For prostate primaries, orchiectomies 
         </row>
         <row level="1">
             <code/>
-            <description><![CDATA[Also code the introduction of immunotherapy in the immunotherapy items. If immunotherapy is followed by surgery of the type coded A200-800, code that surgery instead and code the immunotherapy only as immunotherapy.]]></description>
+            <description><![CDATA[Also code the introduction of immunotherapy in the immunotherapy items. If immunotherapy is followed by surgery of the type coded A200-A800, code that surgery instead and code the immunotherapy only as immunotherapy.]]></description>
         </row>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>No specimen sent to pathology from surgical events A100-160</b>]]></description>
+            <description><![CDATA[<b>No specimen sent to pathology from surgical events A100-A160</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -3470,7 +3470,7 @@ Do not code an orchiectomy in this field. For prostate primaries, orchiectomies 
         <row break="true"/>
         <row level="1">
             <code/>
-            <description><![CDATA[<b>Combination of A200 or A260-270 WITH</b>]]></description>
+            <description><![CDATA[<b>Combination of A200 or A260-A270 WITH</b>]]></description>
         </row>
         <row level="2">
             <code>A210</code>
@@ -3531,7 +3531,7 @@ Do not code an orchiectomy in this field. For prostate primaries, orchiectomies 
         </row>
         <row level="1">
             <code/>
-            <description><![CDATA[When the procedure is described as a pelvic exenteration for males, but the prostate is not removed, the surgery should be coded as a cystectomy (code A600-640).]]></description>
+            <description><![CDATA[When the procedure is described as a pelvic exenteration for males, but the prostate is not removed, the surgery should be coded as a cystectomy (code A600-A640).]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -3552,7 +3552,7 @@ Do not code an orchiectomy in this field. For prostate primaries, orchiectomies 
         </row>
         <row level="2">
             <code/>
-            <description><![CDATA[If cystectomy is done along with prostatectomy/hysterectomy, all pelvic organs removed during the procedure are included in codes A700-740.]]></description>
+            <description><![CDATA[If cystectomy is done along with prostatectomy/hysterectomy, all pelvic organs removed during the procedure are included in codes A700-A740.]]></description>
         </row>
         <row level="2">
             <code/>
@@ -3560,7 +3560,7 @@ Do not code an orchiectomy in this field. For prostate primaries, orchiectomies 
         </row>
         <row level="1">
             <code/>
-            <description><![CDATA[For females, includes removal of bladder, uterus, ovaries, entire vaginal wall, and entire urethra. For males, includes removal of the prostate. When a procedure is described as a pelvic exenteration for males, but the prostate is not removed, the surgery should be coded as a cystectomy (code A600-640).]]></description>
+            <description><![CDATA[For females, includes removal of bladder, uterus, ovaries, entire vaginal wall, and entire urethra. For males, includes removal of the prostate. When a procedure is described as a pelvic exenteration for males, but the prostate is not removed, the surgery should be coded as a cystectomy (code A600-A640).]]></description>
         </row>
         <row break="true"/>
         <row level="1">
@@ -3601,7 +3601,7 @@ Do not code an orchiectomy in this field. For prostate primaries, orchiectomies 
         <row break="true"/>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>Specimen sent to pathology from surgical events A200-800</b>]]></description>
+            <description><![CDATA[<b>Specimen sent to pathology from surgical events A200-A800</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -3668,7 +3668,7 @@ Do not code laminectomies for spinal cord primaries
         <row break="true"/>
         <row level="0">
             <code>A400</code>
-            <description><![CDATA[Partial resection of lobe of brain, when the surgery cannot be coded as A200-300]]></description>
+            <description><![CDATA[Partial resection of lobe of brain, when the surgery cannot be coded as A200-A300]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -3678,12 +3678,12 @@ Do not code laminectomies for spinal cord primaries
         <row break="true"/>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>Codes A300-550 are not applicable for spinal cord or spinal nerve primary sites.</b>]]></description>
+            <description><![CDATA[<b>Codes A300-A550 are not applicable for spinal cord or spinal nerve primary sites.</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>Specimen sent to pathology from surgical events A200-550</b>]]></description>
+            <description><![CDATA[<b>Specimen sent to pathology from surgical events A200-A550</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -3770,7 +3770,7 @@ Do not code laminectomies for spinal cord primaries
         <row break="true"/>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>Specimen sent to pathology from surgical events A250-800</b>]]></description>
+            <description><![CDATA[<b>Specimen sent to pathology from surgical events A250-A800</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -3877,7 +3877,7 @@ Do not code laminectomies for spinal cord primaries
         <row break="true"/>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>Specimen sent to pathology for surgical events A250-620</b>]]></description>
+            <description><![CDATA[<b>Specimen sent to pathology for surgical events A250-A620</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -3945,7 +3945,7 @@ Do not code laminectomies for spinal cord primaries
         <row break="true"/>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>Specimen sent to pathology for surgical events A210-800</b>]]></description>
+            <description><![CDATA[<b>Specimen sent to pathology for surgical events A210-A800</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -4011,7 +4011,7 @@ Do not code laminectomies for spinal cord primaries
         </row>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>No specimen sent to pathology from surgical events A100-140</b>]]></description>
+            <description><![CDATA[<b>No specimen sent to pathology from surgical events A100-A140</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -4029,7 +4029,7 @@ Do not code laminectomies for spinal cord primaries
         <row break="true"/>
         <row level="1">
             <code/>
-            <description><![CDATA[<b>Any combination of A200 or A260-270 WITH</b>]]></description>
+            <description><![CDATA[<b>Any combination of A200 or A260-A270 WITH</b>]]></description>
         </row>
         <row level="2">
             <code>A210</code>
@@ -4086,7 +4086,7 @@ Do not code laminectomies for spinal cord primaries
         <row break="true"/>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>Specimen sent to pathology from surgical events A200-600</b>]]></description>
+            <description><![CDATA[<b>Specimen sent to pathology from surgical events A200-A600</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
