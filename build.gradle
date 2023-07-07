@@ -68,7 +68,7 @@ jar {
 
 // checkstyle plugin settings
 checkstyle {
-    ignoreFailures = true
+    ignoreFailures = false
     configFile = project(':').file('config/checkstyle/checkstyle.xml')
     configProperties = ['suppressionFile': project(':').file('config/checkstyle/checkstlye-exclude.xml')]
 }

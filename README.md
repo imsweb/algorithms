@@ -1,5 +1,7 @@
 # SEER Algorithms
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=imsweb_algorithms&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=imsweb_algorithms)
+[![integration](https://github.com/imsweb/algorithms/workflows/integration/badge.svg)](https://github.com/imsweb/algorithms/actions)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.imsweb/algorithms/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.imsweb/algorithms)
 
 This library contains the Java implementations of algorithms used in cancer-related data processing.
