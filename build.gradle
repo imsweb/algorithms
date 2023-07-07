@@ -84,7 +84,7 @@ test.finalizedBy jacocoTestReport
 
 // spotbugs plugin settings
 spotbugs {
-    ignoreFailures = true
+    ignoreFailures = false
     excludeFilter = project(':').file("config/spotbugs/spotbugs-exclude.xml")
 }
 
