@@ -300,7 +300,7 @@ public final class Algorithms {
             addField(AlgorithmField.of(FIELD_EPHT_2010_GEOID_20K, null, 11, "EPHT 2010 GEO ID 20K", "EPHT 20K", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_EPHT_2010_GEOID_50K, null, 11, "EPHT 2010 GEO ID 50K", "EPHT 50K", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_TRACT_EST_CONGRESS_DIST, null, 2, "Tract-Estimated Congressional District", "Tract-Est Congress Dist", DATA_LEVEL_TUMOR));
-            addField(AlgorithmField.of(FIELD_CANCER_REPORTING_ZONE, null, 8, "Cancer Reporting Zone", "Cancer Rpt Zone", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_CANCER_REPORTING_ZONE, null, 10, "Cancer Reporting Zone", "Cancer Rpt Zone", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_CANCER_REPORTING_ZONE_TRACT_CERT, null, 1, "Cancer Reporting Zone Tract Certainty", "Cancer Rpt Zone Tract Cert", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_SEER_BRAIN_CSN_RECODE_2020, null, 2, "SEER Brain/CNS Recode 2020", "Brain/CNS", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_SEER_LYMPH_NEO_RECODE_2021, null, 2, "SEER Lymphoid Neoplasm Recode 2021", "Lymph 21", DATA_LEVEL_TUMOR));
