@@ -54,12 +54,12 @@ public final class EphtSubCountyUtils {
 
         input.applyRecodes();
 
-        if (input.hasInvalidStateCountyOrCensusTract(CensusTract._2010)) {
+        if (input.hasInvalidStateCountyOrCensusTract(CensusTract.CENSUS_2010)) {
             result.setEpht2010GeoId5k(EPHT_2010_GEO_ID_UNK_A);
             result.setEpht2010GeoId20k(EPHT_2010_GEO_ID_UNK_A);
             result.setEpht2010GeoId50k(EPHT_2010_GEO_ID_UNK_A);
         }
-        else if (input.hasUnknownStateCountyOrCensusTract(CensusTract._2010)) {
+        else if (input.hasUnknownStateCountyOrCensusTract(CensusTract.CENSUS_2010)) {
             result.setEpht2010GeoId5k(EPHT_2010_GEO_ID_UNK_D);
             result.setEpht2010GeoId20k(EPHT_2010_GEO_ID_UNK_D);
             result.setEpht2010GeoId50k(EPHT_2010_GEO_ID_UNK_D);

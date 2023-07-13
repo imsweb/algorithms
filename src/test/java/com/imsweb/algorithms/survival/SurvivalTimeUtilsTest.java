@@ -21,6 +21,7 @@ public class SurvivalTimeUtilsTest {
     }
 
     @Test
+    @SuppressWarnings("java:S5961") // too much complexity
     public void testLogic() {
 
         List<SurvivalTimeInputRecordDto> records = new ArrayList<>();

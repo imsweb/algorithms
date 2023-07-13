@@ -42,6 +42,7 @@ public class NapiiaUtilsTest {
     }
 
     @Test
+    @SuppressWarnings("java:S5961") // too much complexity
     public void testComputeNapiia() {
 
         //test different flavor of methods for special cases

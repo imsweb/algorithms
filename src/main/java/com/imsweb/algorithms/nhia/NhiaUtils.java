@@ -153,12 +153,12 @@ public final class NhiaUtils {
             //Lets first assume all counties are less than 5% hispanic.
             boolean lowHispanicCounty = true;
             //Then lets go through all records and see if there are counties with hispanic percentage greater than 5%, if we get one consider the countyDx of the patient as high hispanic
-            for (NhiaInputRecordDto record : patient.getNhiaInputPatientDtoList())
-                if (!isLowHispanicEthnicityCounty(record.getCountyAtDxAnalysis(), record.getStateAtDx())) {
+            for (NhiaInputRecordDto rec : patient.getNhiaInputPatientDtoList())
+                if (!isLowHispanicEthnicityCounty(rec.getCountyAtDxAnalysis(), rec.getStateAtDx())) {
                     lowHispanicCounty = false;
                     //Lets use that county which is more than 5%
-                    input.setStateAtDx(record.getStateAtDx());
-                    input.setCountyAtDxAnalysis(record.getCountyAtDxAnalysis());
+                    input.setStateAtDx(rec.getStateAtDx());
+                    input.setCountyAtDxAnalysis(rec.getCountyAtDxAnalysis());
                     break;
                 }
             //if lowHispanicCounty is still true, that means all counties of Dx are low hispanic, So we should consider the patient is in low hispanic county.
