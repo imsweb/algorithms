@@ -55,10 +55,10 @@ public final class TractEstCongressDistUtils {
 
         input.applyRecodes();
 
-        if (input.hasInvalidStateCountyOrCensusTract(CensusTract._2010)) {
+        if (input.hasInvalidStateCountyOrCensusTract(CensusTract.CENSUS_2010)) {
             result.setTractEstCongressDist(TRACT_EST_CONGRESS_DIST_UNK_A);
         }
-        else if (input.hasUnknownStateCountyOrCensusTract(CensusTract._2010)) {
+        else if (input.hasUnknownStateCountyOrCensusTract(CensusTract.CENSUS_2010)) {
             result.setTractEstCongressDist(TRACT_EST_CONGRESS_DIST_UNK_D);
         }
         else if (input.countyIsNotReported()) {

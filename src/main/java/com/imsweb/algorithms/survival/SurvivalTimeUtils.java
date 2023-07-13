@@ -69,11 +69,11 @@ public final class SurvivalTimeUtils {
             String dolcDayStr = allRecords.get(0).getDateOfLastContactDay();
             String vsStr = allRecords.get(0).getVitalStatus();
             patientResultsDto.setVitalStatusRecode(vsStr);
-            for (SurvivalTimeInputRecordDto record : allRecords) {
-                boolean sameYear = dolcYearStr == null ? record.getDateOfLastContactYear() == null : dolcYearStr.equals(record.getDateOfLastContactYear());
-                boolean sameMonth = dolcMonthStr == null ? record.getDateOfLastContactMonth() == null : dolcMonthStr.equals(record.getDateOfLastContactMonth());
-                boolean sameDay = dolcDayStr == null ? record.getDateOfLastContactDay() == null : dolcDayStr.equals(record.getDateOfLastContactDay());
-                boolean sameVs = vsStr == null ? record.getVitalStatus() == null : vsStr.equals(record.getVitalStatus());
+            for (SurvivalTimeInputRecordDto rec : allRecords) {
+                boolean sameYear = dolcYearStr == null ? rec.getDateOfLastContactYear() == null : dolcYearStr.equals(rec.getDateOfLastContactYear());
+                boolean sameMonth = dolcMonthStr == null ? rec.getDateOfLastContactMonth() == null : dolcMonthStr.equals(rec.getDateOfLastContactMonth());
+                boolean sameDay = dolcDayStr == null ? rec.getDateOfLastContactDay() == null : dolcDayStr.equals(rec.getDateOfLastContactDay());
+                boolean sameVs = vsStr == null ? rec.getVitalStatus() == null : vsStr.equals(rec.getVitalStatus());
                 if (!sameYear || !sameMonth || !sameDay || !sameVs) {
                     //We need to sort the records to calculated the sorted index
                     List<InternalRecDto> tempInternalRecords = new ArrayList<>();
@@ -513,13 +513,13 @@ public final class SurvivalTimeUtils {
             _recordResult = new SurvivalTimeOutputRecordDto();
         }
 
-        public InternalRecDto(SurvivalTimeInputRecordDto record, SurvivalTimeOutputRecordDto recordResult) {
-            _originalRecord = record;
+        public InternalRecDto(SurvivalTimeInputRecordDto rec, SurvivalTimeOutputRecordDto recordResult) {
+            _originalRecord = rec;
             _recordResult = recordResult;
 
-            String yearStr = record.getDateOfDiagnosisYear();
-            String monthStr = record.getDateOfDiagnosisMonth();
-            String dayStr = record.getDateOfDiagnosisDay();
+            String yearStr = rec.getDateOfDiagnosisYear();
+            String monthStr = rec.getDateOfDiagnosisMonth();
+            String dayStr = rec.getDateOfDiagnosisDay();
             _year = _yearSafe = NumberUtils.isDigits(yearStr) ? Integer.parseInt(yearStr) : 9999;
             _month = _monthSafe = NumberUtils.isDigits(monthStr) ? Integer.parseInt(monthStr) : 99;
             _day = _daySafe = NumberUtils.isDigits(dayStr) ? Integer.parseInt(dayStr) : 99;
@@ -529,7 +529,7 @@ public final class SurvivalTimeUtils {
             // sequence number
             //    the sequence numbers might be used to determine the order; there are two families of sequences: federal (00-59, 98, 99) and non-federal (60-97);
             //    sine the non-federal need to always be after the federal, let's add 100 to all the non-federal (making them 160-197)
-            String seqNumStr = record.getSequenceNumberCentral();
+            String seqNumStr = rec.getSequenceNumberCentral();
             _seqNum = NumberUtils.isDigits(seqNumStr) ? Integer.parseInt(seqNumStr) : -1;
             if (_seqNum >= 60 && _seqNum <= 97)
                 _seqNum = _seqNum + 100;
@@ -705,7 +705,7 @@ public final class SurvivalTimeUtils {
         return false;
     }
 
-    @SuppressWarnings("java:S2201") // ignored return value
+    @SuppressWarnings({"java:S2201", "ResultOfMethodCallIgnored"}) // ignored return value
     private static boolean isDateValid(int year, int month, int day) {
         try {
             LocalDate.of(year, month, day);

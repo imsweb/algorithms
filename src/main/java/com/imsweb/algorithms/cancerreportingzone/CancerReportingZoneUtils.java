@@ -52,11 +52,11 @@ public final class CancerReportingZoneUtils {
 
         input.applyRecodes();
 
-        if (input.hasInvalidStateCountyOrCensusTract(CensusTract._2010)) {
+        if (input.hasInvalidStateCountyOrCensusTract(CensusTract.CENSUS_2010)) {
             result.setCancerReportingZone(CANCER_REPORTING_ZONE_UNK_A);
             result.setCancerReportingZoneTractCert(CANCER_REPORTING_ZONE_UNK_A);
         }
-        else if (input.hasUnknownStateCountyOrCensusTract(CensusTract._2010)) {
+        else if (input.hasUnknownStateCountyOrCensusTract(CensusTract.CENSUS_2010)) {
             result.setCancerReportingZone(CANCER_REPORTING_ZONE_UNK_D);
             result.setCancerReportingZoneTractCert(CANCER_REPORTING_ZONE_UNK_D);
         }

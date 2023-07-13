@@ -11,7 +11,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 public class StateCountyTractInputDto extends StateCountyInputDto {
 
     public enum CensusTract {
-        _2000, _2010;
+        CENSUS_2000, CENSUS_2010
     }
 
     //NAACCR values for missing or unknown census tract
@@ -28,10 +28,10 @@ public class StateCountyTractInputDto extends StateCountyInputDto {
     }
 
     private String getCensusTractVariable(CensusTract censusTract) {
-        if (CensusTract._2000.equals(censusTract)) {
+        if (CensusTract.CENSUS_2000.equals(censusTract)) {
             return _censusTract2000;
         }
-        else if (CensusTract._2010.equals(censusTract)) {
+        else if (CensusTract.CENSUS_2010.equals(censusTract)) {
             return _censusTract2010;
         }
         else {

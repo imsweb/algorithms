@@ -79,9 +79,9 @@ public final class RuralUrbanUtils {
         input.applyRecodes();
 
         // 2000
-        if (input.hasInvalidStateCountyOrCensusTract(CensusTract._2000))
+        if (input.hasInvalidStateCountyOrCensusTract(CensusTract.CENSUS_2000))
             result.setUrbanRuralIndicatorCode2000("A");
-        else if (input.hasUnknownStateCountyOrCensusTract(CensusTract._2000))
+        else if (input.hasUnknownStateCountyOrCensusTract(CensusTract.CENSUS_2000))
             result.setUrbanRuralIndicatorCode2000("D");
         else if (input.countyIsNotReported())
             result.setUrbanRuralIndicatorCode2000("B");
@@ -92,9 +92,9 @@ public final class RuralUrbanUtils {
             result.setUrbanRuralIndicatorCode2000(URBAN_RURAL_INDICATOR_CODE_UNKNOWN);
 
         // 2010
-        if (input.hasInvalidStateCountyOrCensusTract(CensusTract._2010))
+        if (input.hasInvalidStateCountyOrCensusTract(CensusTract.CENSUS_2010))
             result.setUrbanRuralIndicatorCode2010("A");
-        else if (input.hasUnknownStateCountyOrCensusTract(CensusTract._2010))
+        else if (input.hasUnknownStateCountyOrCensusTract(CensusTract.CENSUS_2010))
             result.setUrbanRuralIndicatorCode2010("D");
         else if (input.countyIsNotReported())
             result.setUrbanRuralIndicatorCode2010("B");
@@ -140,9 +140,9 @@ public final class RuralUrbanUtils {
         input.applyRecodes();
 
         // 2000
-        if (input.hasInvalidStateCountyOrCensusTract(CensusTract._2000))
+        if (input.hasInvalidStateCountyOrCensusTract(CensusTract.CENSUS_2000))
             result.setRuralUrbanCommutingArea2000("A");
-        else if (input.hasUnknownStateCountyOrCensusTract(CensusTract._2000))
+        else if (input.hasUnknownStateCountyOrCensusTract(CensusTract.CENSUS_2000))
             result.setRuralUrbanCommutingArea2000("D");
         else if (input.countyIsNotReported())
             result.setRuralUrbanCommutingArea2000("B");
@@ -153,9 +153,9 @@ public final class RuralUrbanUtils {
             result.setRuralUrbanCommutingArea2000(RURAL_URBAN_COMMUTING_AREA_UNKNOWN);
 
         // 2010
-        if (input.hasInvalidStateCountyOrCensusTract(CensusTract._2010))
+        if (input.hasInvalidStateCountyOrCensusTract(CensusTract.CENSUS_2010))
             result.setRuralUrbanCommutingArea2010("A");
-        else if (input.hasUnknownStateCountyOrCensusTract(CensusTract._2010))
+        else if (input.hasUnknownStateCountyOrCensusTract(CensusTract.CENSUS_2010))
             result.setRuralUrbanCommutingArea2010("D");
         else if (input.countyIsNotReported())
             result.setRuralUrbanCommutingArea2010("B");
