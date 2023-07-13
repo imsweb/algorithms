@@ -20,10 +20,7 @@ import com.imsweb.algorithms.internal.Utils;
 import static com.imsweb.algorithms.Algorithms.FIELD_BEHAV_O3;
 import static com.imsweb.algorithms.Algorithms.FIELD_DX_DATE;
 import static com.imsweb.algorithms.Algorithms.FIELD_HIST_O3;
-import static com.imsweb.algorithms.Algorithms.FIELD_IARC_MP_HISTOLOGY;
-import static com.imsweb.algorithms.Algorithms.FIELD_IARC_MP_HIST_GROUP;
 import static com.imsweb.algorithms.Algorithms.FIELD_IARC_MP_INDICATOR;
-import static com.imsweb.algorithms.Algorithms.FIELD_IARC_MP_SITE_GROUP;
 import static com.imsweb.algorithms.Algorithms.FIELD_PRIMARY_SITE;
 import static com.imsweb.algorithms.Algorithms.FIELD_SEQ_NUM_CTRL;
 import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
@@ -42,9 +39,6 @@ public class IarcAlgorithm extends AbstractAlgorithm {
         _inputFields.add(Algorithms.getField(FIELD_SEQ_NUM_CTRL));
 
         _outputFields.add(Algorithms.getField(FIELD_IARC_MP_INDICATOR));
-        _outputFields.add(Algorithms.getField(FIELD_IARC_MP_SITE_GROUP));
-        _outputFields.add(Algorithms.getField(FIELD_IARC_MP_HIST_GROUP));
-        _outputFields.add(Algorithms.getField(FIELD_IARC_MP_HISTOLOGY));
     }
 
     @Override
@@ -72,12 +66,7 @@ public class IarcAlgorithm extends AbstractAlgorithm {
         outputPatient.put(FIELD_TUMORS, outputTumors);
         for (IarcMpInputRecordDto dto : inputRecordDtoList) {
             Map<String, Object> outputTumor = new HashMap<>();
-
             outputTumor.put(FIELD_IARC_MP_INDICATOR, Objects.toString(dto.getInternationalPrimaryIndicator(), null));
-            outputTumor.put(FIELD_IARC_MP_SITE_GROUP, dto.getSiteGroup());
-            outputTumor.put(FIELD_IARC_MP_HIST_GROUP, Objects.toString(dto.getHistGroup(), null));
-            outputTumor.put(FIELD_IARC_MP_HISTOLOGY, dto.getHistology()); // this is weird, but the algorithm can actually update the histology as a side effect!
-
             outputTumors.add(outputTumor);
         }
 
