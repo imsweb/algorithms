@@ -5,8 +5,10 @@ package com.imsweb.algorithms;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -26,37 +28,31 @@ public class AlgorithmsTest {
         Algorithms.initialize();
     }
 
-    //    @Test
-    //    public void printAllAlgorithms() {
-    //        List<String> list = new ArrayList<>();
-    //        for (Algorithm alg : Algorithms.getAlgorithms()) {
-    //            StringBuilder buf = new StringBuilder("\n");
-    //
-    //            buf.append(alg.getName());
-    //            buf.append("\n  version = ").append(alg.getVersion());
-    //            buf.append("\n  info = ").append(alg.getName()).append(" ").append(alg.getVersion());
-    //
-    //            list.add(buf.toString());
-    //        }
-    //
-    //        Collections.sort(list);
-    //
-    //        list.forEach(System.out::println);
-    //    }
-
     @Test
     public void testFields() {
-        NaaccrDictionary dictionary = NaaccrXmlDictionaryUtils.getMergedDictionaries(NaaccrFormat.NAACCR_VERSION_220);
+        NaaccrDictionary dictionary = NaaccrXmlDictionaryUtils.getMergedDictionaries(NaaccrFormat.NAACCR_VERSION_230);
+
+        Set<String> ids = new HashSet<>();
+        Set<Integer> nums = new HashSet<>();
         for (AlgorithmField field : Algorithms.getAllFields()) {
             Assert.assertNotNull(field.getId());
             Assert.assertTrue(field.getId() + " is too long!", field.getId().length() <= 32);
-            Assert.assertNotNull(field.getId(), field.getName());
+            Assert.assertNotNull(field.getId() + " requires a number!", field.getNumber());
+            Assert.assertNotNull(field.getId() + " requires a name!", field.getName());
             Assert.assertTrue(field.getId() + " has its name too long!", field.getName().length() <= 50);
             Assert.assertNotNull(field.getId() + " requires a short name!", field.getShortName());
             Assert.assertNotNull(field.getId() + " requires a length!", field.getLength());
             Assert.assertNotNull(field.getId() + " requires a data level!", field.getDataLevel());
 
-            if (field.getNumber() != null) {
+            if (ids.contains(field.getId()))
+                Assert.fail(field.getId() + " is not unique!");
+            ids.add(field.getId());
+
+            if (nums.contains(field.getNumber()))
+                Assert.fail(field.getNumber() + " is not unique!");
+            nums.add(field.getNumber());
+
+            if (field.isNaaccrStandard()) {
                 Assert.assertEquals(field.getId(), dictionary.getItemByNaaccrNum(field.getNumber()).getNaaccrId(), field.getId());
                 Assert.assertEquals(field.getId(), dictionary.getItemByNaaccrNum(field.getNumber()).getNaaccrName(), field.getName());
             }

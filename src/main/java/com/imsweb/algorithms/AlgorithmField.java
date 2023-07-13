@@ -14,6 +14,10 @@ public class AlgorithmField {
     public static final String DATA_LEVEL_TUMOR = "Tumor";
 
     public static AlgorithmField of(String id, Integer number, Integer length, String name, String shortName, String dataLevel) {
+        return of(id, number, length, name, shortName, dataLevel, true);
+    }
+
+    public static AlgorithmField of(String id, Integer number, Integer length, String name, String shortName, String dataLevel, boolean isNaaccrStandard) {
         AlgorithmField field = new AlgorithmField();
         field.setId(id);
         field.setNumber(number);
@@ -21,6 +25,7 @@ public class AlgorithmField {
         field.setName(name);
         field.setShortName(shortName);
         field.setDataLevel(dataLevel);
+        field.setNaaccrStandard(isNaaccrStandard);
         return field;
     }
 
@@ -41,6 +46,9 @@ public class AlgorithmField {
 
     // data level (corresponds to the NAACCR XML parent tags, usually Patient or Tumor)
     private String _dataLevel;
+
+    // whether the field is a NAACCR standard field
+    private boolean isNaaccrStandard;
 
     public String getId() {
         return _id;
@@ -88,6 +96,14 @@ public class AlgorithmField {
 
     public void setDataLevel(String dataLevel) {
         _dataLevel = dataLevel;
+    }
+
+    public boolean isNaaccrStandard() {
+        return isNaaccrStandard;
+    }
+
+    public void setNaaccrStandard(boolean naaccrStandard) {
+        isNaaccrStandard = naaccrStandard;
     }
 
     @Override

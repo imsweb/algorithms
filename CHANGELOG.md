@@ -2,7 +2,10 @@
 
 **Changes in version 4.4**
 
-- Changed length of cancerReportingZone field from 8 to 10 and added state FIPS code in front of returned values.  
+- Changed length of cancerReportingZone field from 8 to 10 and added state FIPS code in front of returned values.
+- Removed ICCC major category and ICCC Extended major category output fields from ICCC algorithm.
+- Removed group site/histology and histology output fields from IARC algorithm.
+- Added NAACCR numbers for all non-NAACCR-standard fields along with a new isNaaccrStandard boolean variable on the AlgorithmField class.
 
 **Changes in version 4.3**
 
