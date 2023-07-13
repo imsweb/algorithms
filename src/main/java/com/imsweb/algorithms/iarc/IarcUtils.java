@@ -47,12 +47,12 @@ public final class IarcUtils {
         //Calculate the site group and hist group
         //let's also use a different list so we don't change the order of the original records
         List<InternalRecDto> internalRecords = new ArrayList<>();
-        for (IarcMpInputRecordDto record : records) {
-            //Set iarc as primary by default
-            record.setInternationalPrimaryIndicator(PRIMARY);
-            record.setSiteGroup(calculateSiteGroup(record.getSite()));
-            record.setHistGroup(calculateHistGroup(record.getHistology()));
-            internalRecords.add(new InternalRecDto(record));
+        for (IarcMpInputRecordDto rec : records) {
+            //Set IARC as primary by default
+            rec.setInternationalPrimaryIndicator(PRIMARY);
+            rec.setSiteGroup(calculateSiteGroup(rec.getSite()));
+            rec.setHistGroup(calculateHistGroup(rec.getHistology()));
+            internalRecords.add(new InternalRecDto(rec));
         }
 
         Collections.sort(internalRecords);
@@ -161,8 +161,8 @@ public final class IarcUtils {
         return histologyGroup;
     }
 
-    private static boolean isInsitu(IarcMpInputRecordDto record) {
-        return !"3".equals(record.getBehavior()) && !(record.getSite() != null && record.getSite().toUpperCase().startsWith("C67"));
+    private static boolean isInsitu(IarcMpInputRecordDto rec) {
+        return !"3".equals(rec.getBehavior()) && !(rec.getSite() != null && rec.getSite().toUpperCase().startsWith("C67"));
     }
 
     private static boolean isKaposiSarcoma(IarcMpInputRecordDto rec1, IarcMpInputRecordDto rec2) {
@@ -209,18 +209,18 @@ public final class IarcUtils {
         int _day;
         int _seqNum;
 
-        public InternalRecDto(IarcMpInputRecordDto record) {
-            _originalRecord = record;
+        public InternalRecDto(IarcMpInputRecordDto rec) {
+            _originalRecord = rec;
 
-            String yearStr = record.getDateOfDiagnosisYear();
-            String monthStr = record.getDateOfDiagnosisMonth();
-            String dayStr = record.getDateOfDiagnosisDay();
+            String yearStr = rec.getDateOfDiagnosisYear();
+            String monthStr = rec.getDateOfDiagnosisMonth();
+            String dayStr = rec.getDateOfDiagnosisDay();
             _year = NumberUtils.isDigits(yearStr) ? Integer.parseInt(yearStr) : 9999;
             _month = NumberUtils.isDigits(monthStr) ? Integer.parseInt(monthStr) : 99;
             _day = NumberUtils.isDigits(dayStr) ? Integer.parseInt(dayStr) : 99;
             if (_month == 99)
                 _day = 99;
-            _seqNum = record.getSequenceNumber() == null ? -1 : record.getSequenceNumber();
+            _seqNum = rec.getSequenceNumber() == null ? -1 : rec.getSequenceNumber();
             //    the sequence numbers might be used to determine the order; there are two families of sequences: federal (00-59, 98, 99) and non-federal (60-97);
             //    sine the non-federal need to always be after the federal, let's add 100 to all the non-federal (making them 160-197)
             if (_seqNum >= 60 && _seqNum <= 97)

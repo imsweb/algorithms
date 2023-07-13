@@ -155,9 +155,6 @@ public final class Algorithms {
     public static final String FIELD_ICCC_EXT = "icccExtended";
     public static final String FIELD_ICCC_EXT_MAJOR_CATEGORY = "icccExtendedMajorCategory";
     public static final String FIELD_IARC_MP_INDICATOR = "iarcMpIndicator";
-    public static final String FIELD_IARC_MP_SITE_GROUP = "iarcMpSiteGroup";
-    public static final String FIELD_IARC_MP_HIST_GROUP = "iarcMpHistGroup";
-    public static final String FIELD_IARC_MP_HISTOLOGY = "iarcMpHistologicTypeIcdO3";
     public static final String FIELD_COUNTY_AT_DX_ANALYSIS_FLAG = "countyAtDxAnalysisFlag";
     public static final String FIELD_IHS_PRCDA = "ihsPurchRefCareDeliveryArea";
     public static final String FIELD_IHS_PRCDA_2017 = "ihsPurchRefCareDeliveryArea2017";
@@ -292,9 +289,6 @@ public final class Algorithms {
             addField(AlgorithmField.of(FIELD_ICCC_EXT, null, 3, "Int Class of Childhood Cancer (ICCC) Extended Code", "ICCC Ext", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_ICCC_EXT_MAJOR_CATEGORY, null, 2, "ICCC Extended Major Category", "ICCC Ext Cat", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_IARC_MP_INDICATOR, null, 1, "IARC Multiple Primary Indicator", "IARC MP", DATA_LEVEL_TUMOR));
-            addField(AlgorithmField.of(FIELD_IARC_MP_SITE_GROUP, null, 3, "IARC Multiple Primary Site Group", "IARC MP Site Gr", DATA_LEVEL_TUMOR));
-            addField(AlgorithmField.of(FIELD_IARC_MP_HIST_GROUP, null, 2, "IARC Multiple Primary Histology Group", "IARC MP Hist Grp", DATA_LEVEL_TUMOR));
-            addField(AlgorithmField.of(FIELD_IARC_MP_HISTOLOGY, null, 4, "IARC Multiple Primary Histology", "IARC MP Hist", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_COUNTY_AT_DX_ANALYSIS_FLAG, null, 4, "County at DX Analysis Flag", "DX Anlys Cty Fg", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_IHS_PRCDA_2017, null, 1, "IHS PRCDA 2017", "IHS PRCDA 2017", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_ACS_YOST_QUINTILE_US, null, 1, "Yost Quintile (Across States)", "Yost US", DATA_LEVEL_TUMOR));
