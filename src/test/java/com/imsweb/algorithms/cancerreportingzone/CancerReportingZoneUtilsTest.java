@@ -27,7 +27,7 @@ public class CancerReportingZoneUtilsTest {
         input.setAddressAtDxState("LO");
         input.setCountyAtDxAnalysis("071");
         input.setCensusTract2010("007903");
-        Assert.assertEquals("A0274", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone());
+        Assert.assertEquals("06A0274", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone());
         Assert.assertEquals("1", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZoneTractCert());
 
         // test Puerto Rico
@@ -47,7 +47,7 @@ public class CancerReportingZoneUtilsTest {
                     String key = String.format("%s|%s|%s", state, county, tract);
 
                     if ("WA".equals(state) && "067".equals(county) && "012720".equals(tract))
-                        Assert.assertEquals(key, "A9071za", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone());
+                        Assert.assertEquals(key, "53A9071za", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone());
                     else
                         Assert.assertEquals(key, "A", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone());
                 }
@@ -71,7 +71,7 @@ public class CancerReportingZoneUtilsTest {
                     String key = String.format("%s|%s|%s", state, county, tract);
 
                     if ("WA".equals(state) && "067".equals(county) && "012720".equals(tract))
-                        Assert.assertEquals(key, "A9071za", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone());
+                        Assert.assertEquals(key, "53A9071za", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone());
                     else
                         Assert.assertEquals(key, "C", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone());
                 }
@@ -88,7 +88,7 @@ public class CancerReportingZoneUtilsTest {
                     String key = String.format("%s|%s|%s", state, county, tract);
 
                     if ("WA".equals(state) && "067".equals(county) && "012720".equals(tract))
-                        Assert.assertEquals(key, "A9071za", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone());
+                        Assert.assertEquals(key, "53A9071za", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone());
                     else
                         Assert.assertEquals(key, "D", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone());
                 }

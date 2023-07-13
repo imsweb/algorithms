@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 4.4**
+
+- Changed length of cancerReportingZone field from 8 to 10 and added state FIPS code in front of returned values.  
+
 **Changes in version 4.3**
 
 - Added site-specific surgery tables for 2023 DX year (they apply to a new 2023+ NAACCR data item).
