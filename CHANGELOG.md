@@ -2,6 +2,7 @@
 
 **Changes in version 4.4**
 
+- Added new Derived Summary Grade 2018 algorithm.
 - Changed length of cancerReportingZone field from 8 to 10 and added state FIPS code in front of returned values.
 - Removed ICCC major category and ICCC Extended major category output fields from ICCC algorithm.
 - Removed group site/histology and histology output fields from IARC algorithm.
