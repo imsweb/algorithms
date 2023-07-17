@@ -335,6 +335,18 @@ public class AlgorithmsTest {
         tumMap.put(Algorithms.FIELD_HIST_O3, "9651");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
         Assert.assertEquals("01", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_SEER_LYMPH_NEO_RECODE_2021));
+
+        // Derived Summary Grade 2018
+        alg = Algorithms.getAlgorithm(Algorithms.ALG_SEER_DERIVED_SUMMARY_STAGE_2018);
+        Assert.assertTrue(alg.getParameters().isEmpty());
+        Assert.assertFalse(alg.getUnknownValues().isEmpty());
+        input = new AlgorithmInput();
+        patMap = new HashMap<>();
+        input.setPatient(patMap);
+        tumMap = new HashMap<>();
+        tumMap.put(Algorithms.FIELD_GRADE_CLINICAL, "1");
+        patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
+        Assert.assertEquals("1", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_DERIVED_SUMMARY_GRADE));
     }
 
     @Test

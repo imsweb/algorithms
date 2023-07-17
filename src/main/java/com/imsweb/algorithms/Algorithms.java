@@ -20,6 +20,7 @@ import com.imsweb.algorithms.causespecific.DeathClassificationAlgorithm;
 import com.imsweb.algorithms.censustractpovertyindicator.CensusTractPovertyIndicatorAlgorithm;
 import com.imsweb.algorithms.countyatdiagnosisanalysis.CountyAtDxAnalysisAlgorithm;
 import com.imsweb.algorithms.daystotreatment.DaysToTreatmentAlgorithm;
+import com.imsweb.algorithms.derivedgrade.DerivedSummaryGradeAlgorithm2018;
 import com.imsweb.algorithms.ephtsubcounty.EphtSubCountyAlgorithm;
 import com.imsweb.algorithms.iarc.IarcAlgorithm;
 import com.imsweb.algorithms.iccc.IcccAlgorithm;
@@ -71,6 +72,7 @@ public final class Algorithms {
     public static final String ALG_CANCER_REPORTING_ZONE = "cancer-reporting-zone";
     public static final String ALG_SEER_BRAIN_CNS_RECODE = "seer-brain-cns-recode";
     public static final String ALG_SEER_LYMPH_NEO_RECODE_2021 = "seer-lymphoid-neoplasm-recode-2021";
+    public static final String ALG_SEER_DERIVED_SUMMARY_STAGE_2018 = "seer-derived-summary-stage-2018";
     public static final String ALG_SVI = "svi";
     public static final String ALG_DAYS_TO_TREATMENT = "days-to-treatment";
 
@@ -142,6 +144,9 @@ public final class Algorithms {
     public static final String FIELD_CENSUS_CERTAINTY_2020 = "censusTractCertainty2020";
     public static final String FIELD_COUNTY_AT_DX_ANALYSIS = "countyAtDxAnalysis";
     public static final String FIELD_DATE_INITIAL_RX_SEER = "dateInitialRxSeer";
+    public static final String FIELD_SCHEMA_ID = "schemaId";
+    public static final String FIELD_GRADE_CLINICAL = "gradeClinical";
+    public static final String FIELD_GRADE_PATHOLOGICAL = "gradePathological";
 
     // non-standard fields
     public static final String FIELD_NAPIIA_NEEDS_REVIEW = "napiiaNeedsHumanReview";
@@ -175,6 +180,7 @@ public final class Algorithms {
     public static final String FIELD_CANCER_REPORTING_ZONE_TRACT_CERT = "cancerReportingZoneTractCert";
     public static final String FIELD_SEER_BRAIN_CSN_RECODE_2020 = "seerBrainCnsRecode2020";
     public static final String FIELD_SEER_LYMPH_NEO_RECODE_2021 = "seerLymphNeoplasmRecode2021";
+    public static final String FIELD_DERIVED_SUMMARY_GRADE = "derivedSummaryGrade";
     public static final String FIELD_CDC_SVI_2018 = "cdcSVI2018";
     public static final String FIELD_DAYS_TO_TREATMENT = "daysToTreatment";
 
@@ -273,7 +279,10 @@ public final class Algorithms {
             addField(AlgorithmField.of(FIELD_CENSUS_CERTAINTY_2010, 367, 1, "Census Tr Certainty 2010", "Cens Cert 2010", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_CENSUS_CERTAINTY_2020, 369, 1, "Census Tract Certainty 2020", "Cens Cert 2020", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_COUNTY_AT_DX_ANALYSIS, 89, 3, "County at DX Analysis", "DX Anlys Cty", DATA_LEVEL_TUMOR));
-            addField(AlgorithmField.of(FIELD_DATE_INITIAL_RX_SEER, 1260, 8, "Date Initial RX SEER", "Dt  Init RX", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_DATE_INITIAL_RX_SEER, 1260, 8, "Date Initial RX SEER", "Dt Init RX", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_SCHEMA_ID, 3800, 5, "Schema ID", "Schema Id", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_GRADE_CLINICAL, 3843, 1, "Grade Clinical", "Grade Clin", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_GRADE_PATHOLOGICAL, 3844, 1, "Grade Pathological", "Grade Path", DATA_LEVEL_TUMOR));
 
             // non-standard fields
             addField(AlgorithmField.of(FIELD_NAPIIA_NEEDS_REVIEW, 9430, 1, "NAPIIA Needs Review", "NAPIIA Rev", DATA_LEVEL_PATIENT, false));
@@ -304,6 +313,7 @@ public final class Algorithms {
             addField(AlgorithmField.of(FIELD_CANCER_REPORTING_ZONE_TRACT_CERT, 9416, 1, "Cancer Reporting Zone Tract Certainty", "Cancer Rpt Zone Tract Cert", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_SEER_BRAIN_CSN_RECODE_2020, 9455, 2, "SEER Brain/CNS Recode 2020", "Brain/CNS", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_SEER_LYMPH_NEO_RECODE_2021, 9450, 2, "SEER Lymphoid Neoplasm Recode 2021", "Lymph 21", DATA_LEVEL_TUMOR, false));
+            addField(AlgorithmField.of(FIELD_DERIVED_SUMMARY_GRADE, 1975, 1, "Derived Summary Grade", "Der Sum Grade", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_CDC_SVI_2018, 9600, 5, "CDC/ATSDR Social Vulnerability Index 2018", "CDC/ATSDR SVI 2018", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_DAYS_TO_TREATMENT, 9750, 3, "Days from Diagnosis to Treatment", "Days to TX", DATA_LEVEL_TUMOR, false));
 
@@ -331,6 +341,7 @@ public final class Algorithms {
             addAlgorithm(new LymphoidNeoplasmRecodeAlgorithm2021());
             addAlgorithm(new SocialVulnerabilityAlgorithm());
             addAlgorithm(new DaysToTreatmentAlgorithm());
+            addAlgorithm(new DerivedSummaryGradeAlgorithm2018());
         }
         finally {
             _LOCK.writeLock().unlock();
