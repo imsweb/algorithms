@@ -32,6 +32,12 @@ public final class SeerSiteRecodeUtils {
     // algorithm name
     public static final String ALG_NAME = "SEER Site Recode ICD-O-3";
 
+    // version for the 2023 data (https://seer.cancer.gov/siterecode/icdo3_2023/)
+    public static final String VERSION_2023 = "2023 Revision";
+
+    // version for the 2023 expanded data (https://seer.cancer.gov/siterecode/icdo3_2023_expanded/)
+    public static final String VERSION_2023_EXPANDED = "2023 Revision Expanded";
+
     // version for the 2010+ data (https://seer.cancer.gov/siterecode/icdo3_dwhoheme/index.html)
     public static final String VERSION_2010 = "WHO 2008 Definition";
 
@@ -45,6 +51,8 @@ public final class SeerSiteRecodeUtils {
     private static final Set<String> _VERSIONS = new HashSet<>();
 
     static {
+        _VERSIONS.add(VERSION_2023);
+        _VERSIONS.add(VERSION_2023_EXPANDED);
         _VERSIONS.add(VERSION_2010);
         _VERSIONS.add(VERSION_2003);
         _VERSIONS.add(VERSION_2003_WITHOUT_KSM);
@@ -89,18 +97,42 @@ public final class SeerSiteRecodeUtils {
      * @return the calculated site recode for the provided parameters, unknown if it can't be calculated
      */
     public static String calculateSiteRecode(String version, String site, String histology) {
-        String result = UNKNOWN_RECODE;
+        return calculateSiteRecode(version, site, histology, null, null);
+    }
 
-        if (StringUtils.isBlank(site) || !_SITE_PATTERN.matcher(site).matches() || StringUtils.isBlank(histology) || !NumberUtils.isDigits(histology))
+    /**
+     * Returns the calculated site recode for the provided parameters, unknown if it can't be calculated.
+     * @param version data version
+     * @param site site
+     * @param histology histology
+     * @param behavior behavior
+     * @param dxYear DX Year
+     * @return the calculated site recode for the provided parameters, unknown if it can't be calculated
+     */
+    public static String calculateSiteRecode(String version, String site, String histology, String behavior, String dxYear) {
+        String result = null;
+
+        // unknown value only applies to older versions...
+        if (VERSION_2010.equals(version) || VERSION_2003.equals(version) || VERSION_2003_WITHOUT_KSM.equals(version))
+            result = UNKNOWN_RECODE;
+
+        // site/hist are required
+        if (StringUtils.isBlank(site) || !_SITE_PATTERN.matcher(site).matches() || !NumberUtils.isDigits(histology))
             return result;
+
+        // beh/dxYear are required for newer algorithms
+        if ((VERSION_2023.equals(version) || VERSION_2023_EXPANDED.equals(version)) && (!NumberUtils.isDigits(behavior) || !NumberUtils.isDigits(dxYear)))
+            return null;
 
         ensureVersion(version);
 
         Integer s = Integer.valueOf(site.substring(1));
         Integer h = Integer.valueOf(histology);
+        Integer b = NumberUtils.isDigits(behavior) ? Integer.valueOf(behavior) : null;
+        Integer y = NumberUtils.isDigits(dxYear) ? Integer.valueOf(dxYear) : null;
 
         for (SeerExecutableSiteGroupDto dto : _INTERNAL_DATA.get(version)) {
-            if (dto.matches(s, h)) {
+            if (dto.matches(s, h, b, y)) {
                 result = dto.getRecode();
                 break;
             }
@@ -127,7 +159,7 @@ public final class SeerSiteRecodeUtils {
     public static String getRecodeName(String recode, String version) {
         String result = UNKNOWN_LABEL;
 
-        if (StringUtils.isBlank(recode) || !NumberUtils.isDigits(recode))
+        if (!NumberUtils.isDigits(recode))
             return result;
 
         ensureVersion(version);
@@ -153,7 +185,11 @@ public final class SeerSiteRecodeUtils {
             return;
 
         URL url;
-        if (VERSION_2010.equals(version))
+        if (VERSION_2023.equals(version))
+            url = Thread.currentThread().getContextClassLoader().getResource("seersiterecode/site-recode-data-2023.csv");
+        else if (VERSION_2023_EXPANDED.equals(version))
+            url = Thread.currentThread().getContextClassLoader().getResource("seersiterecode/site-recode-data-2023-expanded.csv");
+        else if (VERSION_2010.equals(version))
             url = Thread.currentThread().getContextClassLoader().getResource("seersiterecode/site-recode-data-2010.csv");
         else if (VERSION_2003.equals(version))
             url = Thread.currentThread().getContextClassLoader().getResource("seersiterecode/site-recode-data-2003.csv");
@@ -171,6 +207,8 @@ public final class SeerSiteRecodeUtils {
         List<SeerExecutableSiteGroupDto> executables = new ArrayList<>();
         _INTERNAL_DATA.put(version, executables);
 
+        boolean newFormat = VERSION_2023.equals(version) || VERSION_2023_EXPANDED.equals(version);
+
         try {
             Set<String> names = new HashSet<>();
             List<String[]> allData = new CSVReader(new InputStreamReader(url.openStream(), StandardCharsets.US_ASCII)).readAll();
@@ -184,10 +222,24 @@ public final class SeerSiteRecodeUtils {
                 String siteOut = data[4].isEmpty() ? null : data[4];
                 String histIn = data[5].isEmpty() ? null : data[5];
                 String histOut = data[6].isEmpty() ? null : data[6];
-                String recode = data[7].isEmpty() ? null : data[7];
-                String children = data[8].isEmpty() ? null : data[8];
 
-                if (!names.contains(name)) {
+                String behIn = null;
+                String yearMin = null;
+                String yearMax = null;
+                String recode;
+                String children = null;
+                if (newFormat) {
+                    behIn = data[7].isEmpty() ? null : data[7];
+                    yearMin = data[8].isEmpty() ? null : data[8];
+                    yearMax = data[9].isEmpty() ? null : data[9];
+                    recode = data[10].isEmpty() ? null : data[10];
+                }
+                else {
+                    recode = data[7].isEmpty() ? null : data[7];
+                    children = data[8].isEmpty() ? null : data[8];
+                }
+
+                if (!names.contains(name) || newFormat) {
                     SeerSiteGroupDto group = new SeerSiteGroupDto();
                     group.setId(id);
                     group.setName(name);
@@ -196,6 +248,9 @@ public final class SeerSiteRecodeUtils {
                     group.setSiteExclusions(siteOut);
                     group.setHistologyInclusions(histIn);
                     group.setHistologyExclusions(histOut);
+                    group.setBehaviorInclusions(behIn);
+                    group.setMinDxYear(yearMin);
+                    group.setMaxDxYear(yearMax);
                     group.setRecode(recode);
                     if (children != null)
                         group.setChildrenRecodes(Arrays.asList(children.split(",")));
@@ -211,6 +266,11 @@ public final class SeerSiteRecodeUtils {
                     executable.setSiteExclusions(Utils.expandSitesAsIntegers(siteOut));
                     executable.setHistologyInclusions(Utils.expandHistologiesAsIntegers(histIn));
                     executable.setHistologyExclusions(Utils.expandHistologiesAsIntegers(histOut));
+                    executable.setBehaviorInclusions(Utils.expandBehaviorsAsIntegers(behIn));
+                    if (NumberUtils.isDigits(yearMin))
+                        executable.setMinDxYear(Integer.valueOf(yearMin));
+                    if (NumberUtils.isDigits(yearMax))
+                        executable.setMaxDxYear(Integer.valueOf(yearMax));
                     executable.setRecode(recode);
                     executables.add(executable);
                 }

@@ -27,21 +27,29 @@ public class SeerSiteRecodeUtilsTest {
         Set<String> names = new HashSet<>(), codes = new HashSet<>();
         for (SeerSiteGroupDto dto : SeerSiteRecodeUtils.getRawData(SeerSiteRecodeUtils.VERSION_2010)) {
             if (names.contains(dto.getName()))
-                Assert.fail("Got dupliate name: " + dto.getName());
+                Assert.fail("Got duplicate name: " + dto.getName());
             names.add(dto.getName());
 
             if (dto.getRecode() != null) {
                 if (codes.contains(dto.getRecode()))
-                    Assert.fail("Got dupliate recode: " + dto.getRecode());
+                    Assert.fail("Got duplicate recode: " + dto.getRecode());
                 codes.add(dto.getRecode());
             }
         }
     }
 
     @Test
-    public void testData() {
+    public void testCalculateSiteRecode2023() {
+        Assert.fail("Finish these tests");
+    }
 
-        // 2010
+    @Test
+    public void testCalculateSiteRecode2023Expanded() {
+        Assert.fail("Finish these tests");
+    }
+
+    @Test
+    public void testCalculateSiteRecode2010() {
         Assert.assertEquals("99999", SeerSiteRecodeUtils.calculateSiteRecode(SeerSiteRecodeUtils.VERSION_2010, "", "8000"));
         Assert.assertEquals("99999", SeerSiteRecodeUtils.calculateSiteRecode(SeerSiteRecodeUtils.VERSION_2010, "C182", ""));
         Assert.assertEquals("99999", SeerSiteRecodeUtils.calculateSiteRecode(SeerSiteRecodeUtils.VERSION_2010, null, null));
@@ -54,8 +62,10 @@ public class SeerSiteRecodeUtilsTest {
         Assert.assertEquals("20010", SeerSiteRecodeUtils.calculateSiteRecode(SeerSiteRecodeUtils.VERSION_2010, "C008", "8000"));
         Assert.assertEquals("35011", SeerSiteRecodeUtils.calculateSiteRecode(SeerSiteRecodeUtils.VERSION_2010, "C424", "9811"));
         Assert.assertEquals("35012", SeerSiteRecodeUtils.calculateSiteRecode(SeerSiteRecodeUtils.VERSION_2010, "C424", "9823"));
+    }
 
-        // 2003
+    @Test
+    public void testCalculateSiteRecode2003() {
         Assert.assertEquals("99999", SeerSiteRecodeUtils.calculateSiteRecode(SeerSiteRecodeUtils.VERSION_2003, "", "8000"));
         Assert.assertEquals("99999", SeerSiteRecodeUtils.calculateSiteRecode(SeerSiteRecodeUtils.VERSION_2003, "C182", ""));
         Assert.assertEquals("99999", SeerSiteRecodeUtils.calculateSiteRecode(SeerSiteRecodeUtils.VERSION_2003, null, null));
@@ -68,8 +78,10 @@ public class SeerSiteRecodeUtilsTest {
         Assert.assertEquals("20010", SeerSiteRecodeUtils.calculateSiteRecode(SeerSiteRecodeUtils.VERSION_2003, "C008", "8000"));
         Assert.assertEquals("99999", SeerSiteRecodeUtils.calculateSiteRecode(SeerSiteRecodeUtils.VERSION_2003, "C424", "9811"));
         Assert.assertEquals("35012", SeerSiteRecodeUtils.calculateSiteRecode(SeerSiteRecodeUtils.VERSION_2003, "C424", "9823"));
+    }
 
-        // 2003 without Kaposi Sarcoma and Mesothelioma
+    @Test
+    public void testCalculateSiteRecode2003WithoutKsm() {
         Assert.assertEquals("99999", SeerSiteRecodeUtils.calculateSiteRecode(SeerSiteRecodeUtils.VERSION_2003_WITHOUT_KSM, "", "8000"));
         Assert.assertEquals("99999", SeerSiteRecodeUtils.calculateSiteRecode(SeerSiteRecodeUtils.VERSION_2003_WITHOUT_KSM, "C182", ""));
         Assert.assertEquals("99999", SeerSiteRecodeUtils.calculateSiteRecode(SeerSiteRecodeUtils.VERSION_2003_WITHOUT_KSM, null, null));
@@ -95,6 +107,16 @@ public class SeerSiteRecodeUtilsTest {
         Assert.assertEquals(unknown, SeerSiteRecodeUtils.getRecodeName("20200"));
         Assert.assertEquals("Peritoneum, Omentum and Mesentery", SeerSiteRecodeUtils.getRecodeName("21120"));
         Assert.assertEquals("Cervix Uteri", SeerSiteRecodeUtils.getRecodeName("27010"));
+
+        // 2023
+        Assert.assertEquals(unknown, SeerSiteRecodeUtils.getRecodeName(null, SeerSiteRecodeUtils.VERSION_2023));
+        Assert.assertEquals(unknown, SeerSiteRecodeUtils.getRecodeName("", SeerSiteRecodeUtils.VERSION_2023));
+        Assert.assertEquals("Lip", SeerSiteRecodeUtils.getRecodeName("001", SeerSiteRecodeUtils.VERSION_2023));
+
+        // 2023 expanded
+        Assert.assertEquals(unknown, SeerSiteRecodeUtils.getRecodeName(null, SeerSiteRecodeUtils.VERSION_2023_EXPANDED));
+        Assert.assertEquals(unknown, SeerSiteRecodeUtils.getRecodeName("", SeerSiteRecodeUtils.VERSION_2023_EXPANDED));
+        Assert.assertEquals("Lip", SeerSiteRecodeUtils.getRecodeName("001", SeerSiteRecodeUtils.VERSION_2023_EXPANDED));
 
         //2010
         Assert.assertEquals(unknown, SeerSiteRecodeUtils.getRecodeName(null, SeerSiteRecodeUtils.VERSION_2010));

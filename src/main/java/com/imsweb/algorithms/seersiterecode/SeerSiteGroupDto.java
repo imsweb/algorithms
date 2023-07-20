@@ -1,39 +1,38 @@
 package com.imsweb.algorithms.seersiterecode;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created with IntelliJ IDEA.
  * User: depryf
  * Date: 8/22/12
  */
+@SuppressWarnings("unused")
 public class SeerSiteGroupDto {
 
-    /** Unique identifier (identifiers might change from one version to another) */
     private String _id;
 
-    /** Name of the group */
     private String _name;
 
-    /** Indentation level */
     private Integer _level;
 
-    /** Site inclusions */
     private String _siteInclusions;
 
-    /** Site exclusions */
     private String _siteExclusions;
 
-    /** Histology inclusions */
     private String _histologyInclusions;
 
-    /** Histology exclusions */
     private String _histologyExclusions;
 
-    /** Recode */
+    private String _behaviorInclusions;
+
+    private String _minDxYear;
+
+    private String _maxDxYear;
+
     private String _recode;
 
-    /** Children codes */
     private List<String> _childrenRecodes;
 
     public String getId() {
@@ -100,6 +99,30 @@ public class SeerSiteGroupDto {
         _histologyExclusions = histologyExclusions;
     }
 
+    public String getBehaviorInclusions() {
+        return _behaviorInclusions;
+    }
+
+    public void setBehaviorInclusions(String behaviorInclusions) {
+        _behaviorInclusions = behaviorInclusions;
+    }
+
+    public String getMinDxYear() {
+        return _minDxYear;
+    }
+
+    public void setMinDxYear(String minDxYear) {
+        _minDxYear = minDxYear;
+    }
+
+    public String getMaxDxYear() {
+        return _maxDxYear;
+    }
+
+    public void setMaxDxYear(String maxDxYear) {
+        _maxDxYear = maxDxYear;
+    }
+
     public void setRecode(String recode) {
         _recode = recode;
     }
@@ -115,9 +138,7 @@ public class SeerSiteGroupDto {
         if (o == null || getClass() != o.getClass())
             return false;
 
-        SeerSiteGroupDto that = (SeerSiteGroupDto)o;
-
-        return !(_id != null ? !_id.equals(that._id) : that._id != null);
+        return Objects.equals(_id, ((SeerSiteGroupDto)o)._id);
 
     }
 

@@ -13,39 +13,24 @@ import org.apache.commons.lang3.Range;
 @SuppressWarnings("unused")
 public class SeerExecutableSiteGroupDto {
 
-    /**
-     * Unique identifier
-     */
     private String _id;
 
-    /**
-     * Name of the group
-     */
     private String _name;
 
-    /**
-     * Site inclusions (single integer values or ranges)
-     */
     private List<Object> _siteInclusions;
 
-    /**
-     * Site exclusions (single integer values or ranges)
-     */
     private List<Object> _siteExclusions;
 
-    /**
-     * Histology inclusions (single integer values or ranges)
-     */
     private List<Object> _histologyInclusions;
 
-    /**
-     * Histology exclusions (single integer values or ranges)
-     */
     private List<Object> _histologyExclusions;
 
-    /**
-     * Recode
-     */
+    private List<Object> _behaviorInclusions;
+
+    private Integer _minDxYear;
+
+    private Integer _maxDxYear;
+
     private String _recode;
 
     public String getId() {
@@ -96,6 +81,18 @@ public class SeerExecutableSiteGroupDto {
         _histologyExclusions = histologyExclusions;
     }
 
+    public void setBehaviorInclusions(List<Object> behaviorInclusions) {
+        _behaviorInclusions = behaviorInclusions;
+    }
+
+    public void setMinDxYear(Integer minDxYear) {
+        _minDxYear = minDxYear;
+    }
+
+    public void setMaxDxYear(Integer maxDxYear) {
+        _maxDxYear = maxDxYear;
+    }
+
     public void setName(String name) {
         _name = name;
     }
@@ -110,8 +107,7 @@ public class SeerExecutableSiteGroupDto {
             return true;
         if (o == null || getClass() != o.getClass())
             return false;
-        SeerExecutableSiteGroupDto that = (SeerExecutableSiteGroupDto)o;
-        return Objects.equals(_id, that._id);
+        return Objects.equals(_id, ((SeerExecutableSiteGroupDto)o)._id);
 
     }
 
@@ -120,9 +116,11 @@ public class SeerExecutableSiteGroupDto {
         return _id != null ? _id.hashCode() : 0;
     }
 
-    public boolean matches(Integer site, Integer histology) {
+    public boolean matches(Integer site, Integer histology, Integer behavior, Integer dxYear) {
         boolean siteOk;
         boolean histOk = false;
+        boolean behOk = false;
+        boolean dxYearOk = false;
 
         // check site
         if (_siteInclusions != null)
@@ -132,7 +130,7 @@ public class SeerExecutableSiteGroupDto {
         else
             siteOk = true;
 
-        // check histology (only if site matched)
+        // check histology if needed
         if (siteOk) {
             if (_histologyInclusions != null)
                 histOk = isContained(_histologyInclusions, histology);
@@ -142,7 +140,25 @@ public class SeerExecutableSiteGroupDto {
                 histOk = true;
         }
 
-        return siteOk && histOk;
+        // check behavior if needed
+        if (siteOk && histOk) {
+            if (_behaviorInclusions != null)
+                behOk = isContained(_behaviorInclusions, behavior);
+            else
+                behOk = true;
+        }
+
+        // check min/max years if needed
+        if (siteOk && histOk && behOk) {
+            if (_minDxYear != null)
+                dxYearOk = dxYear != null && dxYear.compareTo(_minDxYear) >= 0;
+            else if (_maxDxYear != null)
+                dxYearOk = dxYear != null && dxYear.compareTo(_maxDxYear) < 0;
+            else
+                dxYearOk = true;
+        }
+
+        return siteOk && histOk && behOk && dxYearOk;
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
