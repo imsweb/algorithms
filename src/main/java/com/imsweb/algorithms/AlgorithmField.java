@@ -6,7 +6,7 @@ package com.imsweb.algorithms;
 import java.util.Objects;
 
 /**
- * Abstraction of an "field" that is used either as input or output (or both) for an given algorithm.
+ * Abstraction of a "field" that is used either as input or output (or both) for a given algorithm.
  */
 public class AlgorithmField {
 
@@ -48,7 +48,7 @@ public class AlgorithmField {
     private String _dataLevel;
 
     // whether the field is a NAACCR standard field
-    private boolean isNaaccrStandard;
+    private boolean _isNaaccrStandard;
 
     public String getId() {
         return _id;
@@ -99,11 +99,11 @@ public class AlgorithmField {
     }
 
     public boolean isNaaccrStandard() {
-        return isNaaccrStandard;
+        return _isNaaccrStandard;
     }
 
     public void setNaaccrStandard(boolean naaccrStandard) {
-        isNaaccrStandard = naaccrStandard;
+        _isNaaccrStandard = naaccrStandard;
     }
 
     @Override

@@ -181,6 +181,22 @@ public class AlgorithmsTest {
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
         Assert.assertEquals("22030", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_SEER_SITE_RECODE));
 
+        // SEER Site Recode 2023
+        alg = Algorithms.getAlgorithm(Algorithms.ALG_SEER_SITE_RECODE_2023);
+        Assert.assertTrue(alg.getParameters().isEmpty());
+        Assert.assertTrue(alg.getUnknownValues().isEmpty());
+        input = new AlgorithmInput();
+        patMap = new HashMap<>();
+        input.setPatient(patMap);
+        tumMap = new HashMap<>();
+        tumMap.put(Algorithms.FIELD_PRIMARY_SITE, "C340");
+        tumMap.put(Algorithms.FIELD_HIST_O3, "8000");
+        tumMap.put(Algorithms.FIELD_BEHAV_O3, "3");
+        tumMap.put(Algorithms.FIELD_DX_DATE, "2023");
+        patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
+        Assert.assertEquals("030", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_SEER_SITE_RECODE_2023));
+        Assert.assertEquals("030", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_SEER_SITE_RECODE_2023_EXPANDED));
+
         // SEER Behavior Recode
         alg = Algorithms.getAlgorithm(Algorithms.ALG_SEER_BEHAVIOR_RECODE);
         Assert.assertTrue(alg.getParameters().isEmpty());
