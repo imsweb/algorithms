@@ -153,7 +153,7 @@ public class SeerExecutableSiteGroupDto {
             if (_minDxYear != null)
                 dxYearOk = dxYear != null && dxYear.compareTo(_minDxYear) >= 0;
             else if (_maxDxYear != null)
-                dxYearOk = dxYear != null && dxYear.compareTo(_maxDxYear) < 0;
+                dxYearOk = dxYear != null && dxYear.compareTo(_maxDxYear) <= 0;
             else
                 dxYearOk = true;
         }

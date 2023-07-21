@@ -17,13 +17,19 @@ import org.apache.commons.lang3.StringUtils;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 
+/**
+ * Lab class was used to parse data from these locations:
+ * <a href="https://seer.cancer.gov/siterecode/icdo3_2023/">...</a>
+ * <a href="https://seer.cancer.gov/siterecode/icdo3_2023_expanded/">...</a>
+ * Downloaded Excel file, saved as CSV, replaced non-ASCII dashes by ASCII ones and ran this class...
+ */
 public class SeerSiteRecodeParserLab {
 
     public static void main(String[] args) throws IOException, CsvException {
         File input = new File("<original-csv-path>");
 
-        List<String> newLines = new ArrayList<>();
-        newLines.add("ID,Group Name,Indentation,Sites IN,Sites OUT,Hist IN,Hist OUT,Beh IN,DX Year Min,DX Year Max,Recode");
+        List<List<String>> newLines = new ArrayList<>();
+        newLines.add(Arrays.asList("ID", "Name", "Indentation", "Sites IN", "Hist IN", "Hist OUT", "Beh IN", "DX Year Min", "DX Year Max", "Recode"));
 
         int count = 0;
         try (CSVReader reader = new CSVReader(new InputStreamReader(Files.newInputStream(input.toPath()), StandardCharsets.US_ASCII))) {
@@ -43,53 +49,70 @@ public class SeerSiteRecodeParserLab {
                 String beh = line[3].trim();
                 String recode = line[4].trim();
 
-                StringBuilder buf = new StringBuilder();
+                List<String> newLine = new ArrayList<>();
 
-                buf.append("\"").append(++count).append("\"");
-                buf.append(",");
-
-                buf.append("\"").append(name).append("\"");
-                buf.append(",");
-
-                buf.append("\"").append(StringUtils.isEmpty(site) ? "0" : "1").append("\"");
-                buf.append(",");
-
-                buf.append("\"").append(site.replace(" " , "")).append("\"");
-                buf.append(",\"\",");
-
-                if (hist.toLowerCase().startsWith("excluding "))
-                    buf.append("\"\"").append(",").append("\"").append(hist.toLowerCase().replace("excluding", "").replace(" " , ""));
-                else if ("all".equalsIgnoreCase(hist))
-                    buf.append("\"\"").append(",").append("\"");
-                else
-                    buf.append("\"").append(hist.replace(" " , "")).append("\"").append(",").append("\"");
-                buf.append("\"").append(",");
-
-                buf.append("\"").append(beh.replace("-", ",")).append("\"");
-                buf.append(",");
-
-                buf.append("\"{MIN}\"");
-                buf.append(",");
-
-                buf.append("\"{MAX}\"");
-                buf.append(",");
-
-                buf.append("\"").append(recode).append("\"");
-
-                String newLine = buf.toString();
-                String newExtraLine = null;
-                if (hist.contains("9727 (<2010)")) {
-                    newLine = buf.toString().replace("9727(<2010)", "9727").replace("{MAX}", "2009");
-                    newExtraLine = buf.toString().replace(String.valueOf(count), String.valueOf(++count)).replace("9727(<2010),", "").replace("{MIN}", "2010");
+                newLine.add(String.valueOf(++count));
+                newLine.add(name);
+                newLine.add(StringUtils.isEmpty(site) ? "0" : "1");
+                newLine.add(site.replace(" ", ""));
+                if (hist.toLowerCase().startsWith("excluding ")) {
+                    newLine.add(null);
+                    newLine.add(hist.toLowerCase().replace("excluding", "").replace(" ", ""));
                 }
-                else if (hist.contains("9727 (2010+)")) {
-                    newLine = buf.toString().replace("9727(2010+)", "9727").replace("{MIN}", "2010");
-                    newExtraLine = buf.toString().replace(String.valueOf(count), String.valueOf(++count)).replace("9727(2010+),", "").replace("{MAX}", "2009");
+                else if ("all".equalsIgnoreCase(hist)) {
+                    newLine.add(null);
+                    newLine.add(null);
+                }
+                else {
+                    newLine.add(hist.replace(" ", ""));
+                    newLine.add(null);
+                }
+                newLine.add(beh.replace("-", ","));
+                newLine.add(null);
+                newLine.add(null);
+                newLine.add(recode);
+
+                int siteIdx = 3;
+                int histInIdx = 4;
+                int histOutIdx = 5;
+                int behInIdx = 6;
+                int minYearIdx = 7;
+                int maxYearIdx = 8;
+
+                // do we need to copy previous line (for "merged" cells)?
+                if (StringUtils.isNotBlank(newLine.get(siteIdx))) {
+                    if (StringUtils.isBlank(newLine.get(histInIdx)) && StringUtils.isBlank(newLine.get(histOutIdx))) {
+                        List<String> previousLine = newLines.get(newLines.size() - 1);
+                        if (StringUtils.isNotBlank(previousLine.get(histInIdx)))
+                            newLine.set(histInIdx, previousLine.get(histInIdx));
+                        else
+                            newLine.set(histOutIdx, previousLine.get(histOutIdx));
+                    }
+                    if (StringUtils.isBlank(newLine.get(histInIdx)) && StringUtils.isBlank(newLine.get(histOutIdx)))
+                        throw new IllegalStateException(String.join(",", newLine));
+
+                    if (StringUtils.isBlank(newLine.get(behInIdx)))
+                        newLine.set(behInIdx, newLines.get(newLines.size() - 1).get(6));
+                    if (StringUtils.isBlank(newLine.get(behInIdx)))
+                        throw new IllegalStateException(String.join(",", newLine));
                 }
 
-                newLine = newLine.replace("{MAX}", "").replace("{MIN}", "").replace("\"\",", ",");
-                if (newExtraLine != null)
-                    newExtraLine = newExtraLine.replace("{MAX}", "").replace("{MIN}", "").replace("\"\",", ",");
+                // fix the only place that uses the DX year
+                List<String> newExtraLine = null;
+                if (StringUtils.isNotBlank(newLine.get(histInIdx)) && newLine.get(histInIdx).contains("9727(<2010)")) {
+                    newExtraLine = new ArrayList<>(newLine);
+                    newLine.set(histInIdx, newLine.get(histInIdx).replace("9727(<2010)", "9727"));
+                    newLine.set(maxYearIdx, "2009");
+                    newExtraLine.set(histInIdx, newExtraLine.get(histInIdx).replace("9727(<2010)", ""));
+                    newExtraLine.set(minYearIdx, "2010");
+                }
+                else if (StringUtils.isNotBlank(newLine.get(histInIdx)) && newLine.get(histInIdx).contains("9727(2010+)")) {
+                    newExtraLine = new ArrayList<>(newLine);
+                    newLine.set(histInIdx, newLine.get(histInIdx).replace("9727(2010+)", "9727"));
+                    newLine.set(minYearIdx, "2010");
+                    newExtraLine.set(histInIdx, newExtraLine.get(histInIdx).replace("9727(2010+)", ""));
+                    newExtraLine.set(maxYearIdx, "2009");
+                }
 
                 newLines.add(newLine);
                 if (newExtraLine != null)
@@ -99,7 +122,15 @@ public class SeerSiteRecodeParserLab {
             }
         }
 
-        newLines.forEach(System.out::println);
+        List<String> lines = new ArrayList<>();
+        for (List<String> list : newLines) {
+            List<String> cleanValues = new ArrayList<>();
+            for (String value : list)
+                cleanValues.add(StringUtils.isBlank(value) ? "" : ("\"" + value + "\""));
+            lines.add(String.join(",", cleanValues));
+        }
+
+        lines.forEach(System.out::println);
     }
 
 }

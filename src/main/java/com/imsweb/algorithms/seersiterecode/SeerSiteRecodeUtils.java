@@ -219,22 +219,27 @@ public final class SeerSiteRecodeUtils {
                 String name = data[1].isEmpty() ? null : data[1];
                 String level = data[2].isEmpty() ? "0" : data[2];
                 String siteIn = data[3].isEmpty() ? null : data[3];
-                String siteOut = data[4].isEmpty() ? null : data[4];
-                String histIn = data[5].isEmpty() ? null : data[5];
-                String histOut = data[6].isEmpty() ? null : data[6];
 
+                String siteOut = null;
+                String histIn;
+                String histOut;
                 String behIn = null;
                 String yearMin = null;
                 String yearMax = null;
                 String recode;
                 String children = null;
                 if (newFormat) {
-                    behIn = data[7].isEmpty() ? null : data[7];
-                    yearMin = data[8].isEmpty() ? null : data[8];
-                    yearMax = data[9].isEmpty() ? null : data[9];
-                    recode = data[10].isEmpty() ? null : data[10];
+                    histIn = data[4].isEmpty() ? null : data[4];
+                    histOut = data[5].isEmpty() ? null : data[5];
+                    behIn = data[6].isEmpty() ? null : data[6];
+                    yearMin = data[7].isEmpty() ? null : data[7];
+                    yearMax = data[8].isEmpty() ? null : data[8];
+                    recode = data[9].isEmpty() ? null : data[9];
                 }
                 else {
+                    siteOut = data[4].isEmpty() ? null : data[4];
+                    histIn = data[5].isEmpty() ? null : data[5];
+                    histOut = data[6].isEmpty() ? null : data[6];
                     recode = data[7].isEmpty() ? null : data[7];
                     children = data[8].isEmpty() ? null : data[8];
                 }
