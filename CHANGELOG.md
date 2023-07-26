@@ -2,6 +2,7 @@
 
 **Changes in version 4.4**
 
+- Changed County at DX Analysis algorithm to use 2020 census fields for DX years 2020 and later.
 - Added new Derived Summary Grade 2018 algorithm.
 - Changed length of cancerReportingZone field from 8 to 10 and added state FIPS code in front of returned values.
 - Removed ICCC major category and ICCC Extended major category output fields from ICCC algorithm.

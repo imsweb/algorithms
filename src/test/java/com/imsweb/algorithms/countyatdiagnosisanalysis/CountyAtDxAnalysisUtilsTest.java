@@ -19,7 +19,7 @@ public class CountyAtDxAnalysisUtilsTest {
         input.setCountyAtDxGeocode1990("001");
         input.setCountyAtDxGeocode2000("003");
         input.setCountyAtDxGeocode2010("005");
-        input.setCountyAtDxGeocode2020("007");
+        input.setCountyAtDxGeocode2020("009");
         input.setCensusTrCert19708090("1");
         input.setCensusTrCertainty2000("1");
         input.setCensusTrCertainty2010("1");
@@ -91,13 +91,20 @@ public class CountyAtDxAnalysisUtilsTest {
         Assert.assertEquals("005", output.getCountyAtDxAnalysis());
         Assert.assertEquals(CountyAtDxAnalysisUtils.GEO_CERT_KNOWN_REP_UNK, output.getCountyAtDxAnalysisFlag());
 
+        input.setDateOfDiagnosis("20230101");
+        output = CountyAtDxAnalysisUtils.computeCountyAtDiagnosis(input);
+        Assert.assertEquals("009", output.getCountyAtDxAnalysis());
+        Assert.assertEquals(CountyAtDxAnalysisUtils.GEO_CERT_KNOWN_REP_UNK, output.getCountyAtDxAnalysisFlag());
+
         // Verify that if both reported and geocoder values are blank/9, return 999/10.1
-        input.setCountyAtDxGeocode2010(null);
+        input.setCountyAtDxGeocode2020(null);
         output = CountyAtDxAnalysisUtils.computeCountyAtDiagnosis(input);
         Assert.assertEquals(CountyAtDxAnalysisUtils.INVALID_COUNTY_CODE, output.getCountyAtDxAnalysis());
         Assert.assertEquals(CountyAtDxAnalysisUtils.OTHER_REP_AND_GEO_BLANK, output.getCountyAtDxAnalysisFlag());
 
         input.setCountyAtDx("005");
+        input.setDateOfDiagnosis("20150101");
+        input.setCountyAtDxGeocode2010(null);
 
         // Verify that if geocoder county is blank/9, reported value is used
         output = CountyAtDxAnalysisUtils.computeCountyAtDiagnosis(input);
