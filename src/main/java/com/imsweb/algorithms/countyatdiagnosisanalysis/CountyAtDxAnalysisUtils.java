@@ -25,7 +25,7 @@ import com.imsweb.algorithms.internal.StateData;
 public final class CountyAtDxAnalysisUtils {
 
     public static final String ALG_NAME = "NAACCR County at Diagnosis Analysis";
-    public static final String ALG_VERSION = "version 2.0 released in September 2019";
+    public static final String ALG_VERSION = "version 3.0 released in August 2023";
 
     // special codes
     public static final String INVALID_COUNTY_CODE = "999";
@@ -88,9 +88,13 @@ public final class CountyAtDxAnalysisUtils {
                 geocoderCountyAtDx = input.getCountyAtDxGeocode2000();
                 geocoderCertainty = input.getCensusTrCertainty2000();
             }
-            else {
+            else if (diagnosisYear < 2020) {
                 geocoderCountyAtDx = input.getCountyAtDxGeocode2010();
                 geocoderCertainty = input.getCensusTrCertainty2010();
+            }
+            else {
+                geocoderCountyAtDx = input.getCountyAtDxGeocode2020();
+                geocoderCertainty = input.getCensusTrCertainty2020();
             }
 
             if (StringUtils.isBlank(geocoderCountyAtDx) && StringUtils.isBlank(input.getCountyAtDx())) {
