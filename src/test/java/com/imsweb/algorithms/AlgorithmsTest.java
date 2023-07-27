@@ -184,7 +184,7 @@ public class AlgorithmsTest {
         // SEER Site Recode 2023
         alg = Algorithms.getAlgorithm(Algorithms.ALG_SEER_SITE_RECODE_2023);
         Assert.assertTrue(alg.getParameters().isEmpty());
-        Assert.assertTrue(alg.getUnknownValues().isEmpty());
+        Assert.assertFalse(alg.getUnknownValues().isEmpty());
         input = new AlgorithmInput();
         patMap = new HashMap<>();
         input.setPatient(patMap);
