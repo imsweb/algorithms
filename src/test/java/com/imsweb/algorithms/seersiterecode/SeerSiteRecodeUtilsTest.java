@@ -46,11 +46,11 @@ public class SeerSiteRecodeUtilsTest {
 
     @Test
     public void testCalculateSiteRecode2023() {
-        Assert.assertNull(SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2023, "", "8000", "3", "2023"));
-        Assert.assertNull(SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2023, "C182", "", "3", "2023"));
-        Assert.assertNull(SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2023, null, null, "3", "2023"));
-        Assert.assertNull(SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2023, "C182", "8000", null, "2023"));
-        Assert.assertNull(SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2023, "C182", "8000", "3", null));
+        Assert.assertEquals("99", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2023, "", "8000", "3", "2023"));
+        Assert.assertEquals("99", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2023, "C182", "", "3", "2023"));
+        Assert.assertEquals("99", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2023, null, null, "3", "2023"));
+        Assert.assertEquals("99", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2023, "C182", "8000", null, "2023"));
+        Assert.assertEquals("99", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2023, "C182", "8000", "3", null));
         Assert.assertEquals("020", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2023, "C182", "8000", "3", "2023"));
         Assert.assertEquals("024", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2023, "C239", "8000", "3", "2023"));
         Assert.assertEquals("070", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2023, "C239", "9673", "3", "2023"));
@@ -79,11 +79,11 @@ public class SeerSiteRecodeUtilsTest {
 
     @Test
     public void testCalculateSiteRecode2023Expanded() {
-        Assert.assertNull(SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2023_EXPANDED, "", "8000", "3", "2023"));
-        Assert.assertNull(SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2023_EXPANDED, "C182", "", "3", "2023"));
-        Assert.assertNull(SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2023_EXPANDED, null, null, "3", "2023"));
-        Assert.assertNull(SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2023_EXPANDED, "C182", "8000", null, "2023"));
-        Assert.assertNull(SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2023_EXPANDED, "C182", "8000", "3", null));
+        Assert.assertEquals("99", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2023_EXPANDED, "", "8000", "3", "2023"));
+        Assert.assertEquals("99", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2023_EXPANDED, "C182", "", "3", "2023"));
+        Assert.assertEquals("99", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2023_EXPANDED, null, null, "3", "2023"));
+        Assert.assertEquals("99", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2023_EXPANDED, "C182", "8000", null, "2023"));
+        Assert.assertEquals("99", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2023_EXPANDED, "C182", "8000", "3", null));
         Assert.assertEquals("020", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2023_EXPANDED, "C182", "8000", "3", "2023"));
         Assert.assertEquals("024", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2023_EXPANDED, "C239", "8000", "3", "2023"));
         Assert.assertEquals("071", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2023_EXPANDED, "C239", "9673", "3", "2023"));

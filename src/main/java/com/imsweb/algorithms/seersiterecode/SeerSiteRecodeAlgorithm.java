@@ -32,7 +32,7 @@ public class SeerSiteRecodeAlgorithm extends AbstractAlgorithm {
 
         _outputFields.add(Algorithms.getField(FIELD_SEER_SITE_RECODE));
 
-        _unknownValues.put(FIELD_SEER_SITE_RECODE, Collections.singletonList(SeerSiteRecodeUtils.UNKNOWN_RECODE));
+        _unknownValues.put(FIELD_SEER_SITE_RECODE, Collections.singletonList(SeerSiteRecodeUtils.UNKNOWN_RECODE_2010));
     }
 
     @Override

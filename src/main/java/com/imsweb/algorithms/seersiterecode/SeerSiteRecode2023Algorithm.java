@@ -4,6 +4,7 @@
 package com.imsweb.algorithms.seersiterecode;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ import static com.imsweb.algorithms.Algorithms.FIELD_BEHAV_O3;
 import static com.imsweb.algorithms.Algorithms.FIELD_DX_DATE;
 import static com.imsweb.algorithms.Algorithms.FIELD_HIST_O3;
 import static com.imsweb.algorithms.Algorithms.FIELD_PRIMARY_SITE;
+import static com.imsweb.algorithms.Algorithms.FIELD_SEER_SITE_RECODE;
 import static com.imsweb.algorithms.Algorithms.FIELD_SEER_SITE_RECODE_2023;
 import static com.imsweb.algorithms.Algorithms.FIELD_SEER_SITE_RECODE_2023_EXPANDED;
 import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
@@ -36,6 +38,8 @@ public class SeerSiteRecode2023Algorithm extends AbstractAlgorithm {
 
         _outputFields.add(Algorithms.getField(FIELD_SEER_SITE_RECODE_2023));
         _outputFields.add(Algorithms.getField(FIELD_SEER_SITE_RECODE_2023_EXPANDED));
+
+        _unknownValues.put(FIELD_SEER_SITE_RECODE, Collections.singletonList(SeerSiteRecodeUtils.UNKNOWN_RECODE_2023));
     }
 
     @Override

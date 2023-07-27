@@ -62,7 +62,8 @@ public final class SeerSiteRecodeUtils {
     public static final String VERSION_DEFAULT = VERSION_2010;
 
     // unknown value
-    public static final String UNKNOWN_RECODE = "99999";
+    public static final String UNKNOWN_RECODE_2010 = "99999";
+    public static final String UNKNOWN_RECODE_2023 = "99";
 
     // unknown label
     public static final String UNKNOWN_LABEL = "Unknown";
@@ -110,11 +111,13 @@ public final class SeerSiteRecodeUtils {
      * @return the calculated site recode for the provided parameters, unknown if it can't be calculated
      */
     public static String calculateSiteRecode(String version, String site, String histology, String behavior, String dxYear) {
-        String result = null;
-
-        // unknown value only applies to older versions...
+        String result;
         if (VERSION_2010.equals(version) || VERSION_2003.equals(version) || VERSION_2003_WITHOUT_KSM.equals(version))
-            result = UNKNOWN_RECODE;
+            result = UNKNOWN_RECODE_2010;
+        else if (VERSION_2023.equals(version) || VERSION_2023_EXPANDED.equals(version))
+            result = UNKNOWN_RECODE_2023;
+        else
+            throw new IllegalStateException("Unsupported version: " + version);
 
         // site/hist are required
         if (StringUtils.isBlank(site) || !_SITE_PATTERN.matcher(site).matches() || !NumberUtils.isDigits(histology))
@@ -122,9 +125,9 @@ public final class SeerSiteRecodeUtils {
 
         // beh/dxYear are required for newer algorithms
         if ((VERSION_2023.equals(version) || VERSION_2023_EXPANDED.equals(version)) && (!NumberUtils.isDigits(behavior) || !NumberUtils.isDigits(dxYear)))
-            return null;
+            return result;
 
-        ensureVersion(version);
+        loadDataIfNeeded(version);
 
         Integer s = Integer.valueOf(site.substring(1));
         Integer h = Integer.valueOf(histology);
@@ -162,7 +165,7 @@ public final class SeerSiteRecodeUtils {
         if (!NumberUtils.isDigits(recode))
             return result;
 
-        ensureVersion(version);
+        loadDataIfNeeded(version);
 
         for (SeerExecutableSiteGroupDto dto : _INTERNAL_DATA.get(version)) {
             if (recode.equals(dto.getRecode())) {
@@ -175,12 +178,12 @@ public final class SeerSiteRecodeUtils {
     }
 
     public static List<SeerSiteGroupDto> getRawData(String version) {
-        ensureVersion(version);
+        loadDataIfNeeded(version);
 
         return _DATA.get(version);
     }
 
-    private static synchronized void ensureVersion(String version) {
+    private static synchronized void loadDataIfNeeded(String version) {
         if (_DATA.containsKey(version))
             return;
 
