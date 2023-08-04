@@ -184,7 +184,7 @@ public final class Algorithms {
     public static final String FIELD_CANCER_REPORTING_ZONE_TRACT_REQ = "cancerReportingZoneTractReq";
     public static final String FIELD_SEER_BRAIN_CSN_RECODE_2020 = "seerBrainCnsRecode2020";
     public static final String FIELD_SEER_LYMPH_NEO_RECODE_2021 = "seerLymphNeoplasmRecode2021";
-    public static final String FIELD_DERIVED_SUMMARY_GRADE = "derivedSummaryGrade";
+    public static final String FIELD_DERIVED_SUMMARY_GRADE_2018 = "derivedSummaryGrade2018";
     public static final String FIELD_CDC_SVI_2018 = "cdcSVI2018";
     public static final String FIELD_DAYS_TO_TREATMENT = "daysToTreatment";
 
@@ -319,7 +319,7 @@ public final class Algorithms {
             addField(AlgorithmField.of(FIELD_CANCER_REPORTING_ZONE_TRACT_REQ, 9416, 1, "Census Tract Required for Cancer Reporting Zone", "Cancer Rpt Zone Tract Cert", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_SEER_BRAIN_CSN_RECODE_2020, 9455, 2, "SEER Brain/CNS Recode 2020", "Brain/CNS", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_SEER_LYMPH_NEO_RECODE_2021, 9450, 2, "SEER Lymphoid Neoplasm Recode 2021", "Lymph 21", DATA_LEVEL_TUMOR, false));
-            addField(AlgorithmField.of(FIELD_DERIVED_SUMMARY_GRADE, 1975, 1, "Derived Summary Grade", "Der Sum Grade", DATA_LEVEL_TUMOR, false));
+            addField(AlgorithmField.of(FIELD_DERIVED_SUMMARY_GRADE_2018, 1975, 1, "Derived Summary Grade 2018", "Der Sum Grade 18", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_CDC_SVI_2018, 9600, 5, "CDC/ATSDR Social Vulnerability Index 2018", "CDC/ATSDR SVI 2018", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_DAYS_TO_TREATMENT, 9750, 3, "Days from Diagnosis to Treatment", "Days to TX", DATA_LEVEL_TUMOR, false));
 

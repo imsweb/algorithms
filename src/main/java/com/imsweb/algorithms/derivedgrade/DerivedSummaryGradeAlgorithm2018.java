@@ -16,7 +16,7 @@ import com.imsweb.algorithms.Algorithms;
 import com.imsweb.algorithms.internal.Utils;
 
 import static com.imsweb.algorithms.Algorithms.FIELD_BEHAV_O3;
-import static com.imsweb.algorithms.Algorithms.FIELD_DERIVED_SUMMARY_GRADE;
+import static com.imsweb.algorithms.Algorithms.FIELD_DERIVED_SUMMARY_GRADE_2018;
 import static com.imsweb.algorithms.Algorithms.FIELD_GRADE_CLINICAL;
 import static com.imsweb.algorithms.Algorithms.FIELD_GRADE_PATHOLOGICAL;
 import static com.imsweb.algorithms.Algorithms.FIELD_SCHEMA_ID;
@@ -36,9 +36,9 @@ public class DerivedSummaryGradeAlgorithm2018 extends AbstractAlgorithm {
         _inputFields.add(Algorithms.getField(FIELD_GRADE_CLINICAL));
         _inputFields.add(Algorithms.getField(FIELD_GRADE_PATHOLOGICAL));
 
-        _outputFields.add(Algorithms.getField(FIELD_DERIVED_SUMMARY_GRADE));
+        _outputFields.add(Algorithms.getField(FIELD_DERIVED_SUMMARY_GRADE_2018));
 
-        _unknownValues.put(FIELD_DERIVED_SUMMARY_GRADE, Collections.singletonList(DerivedSummaryGradeUtils.UNKNOWN));
+        _unknownValues.put(FIELD_DERIVED_SUMMARY_GRADE_2018, Collections.singletonList(DerivedSummaryGradeUtils.UNKNOWN));
     }
 
     @Override
@@ -52,7 +52,7 @@ public class DerivedSummaryGradeAlgorithm2018 extends AbstractAlgorithm {
             String beh = (String)inputTumor.get(FIELD_BEHAV_O3);
             String gradeClin = (String)inputTumor.get(FIELD_GRADE_CLINICAL);
             String gradePath = (String)inputTumor.get(FIELD_GRADE_PATHOLOGICAL);
-            outputTumors.add(Collections.singletonMap(FIELD_DERIVED_SUMMARY_GRADE, DerivedSummaryGradeUtils.deriveSummaryGrade(schemaId, beh, gradeClin, gradePath)));
+            outputTumors.add(Collections.singletonMap(FIELD_DERIVED_SUMMARY_GRADE_2018, DerivedSummaryGradeUtils.deriveSummaryGrade(schemaId, beh, gradeClin, gradePath)));
         }
 
         return AlgorithmOutput.of(outputPatient);

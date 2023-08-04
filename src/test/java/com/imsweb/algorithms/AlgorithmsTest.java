@@ -362,7 +362,7 @@ public class AlgorithmsTest {
         tumMap = new HashMap<>();
         tumMap.put(Algorithms.FIELD_GRADE_CLINICAL, "1");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
-        Assert.assertEquals("1", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_DERIVED_SUMMARY_GRADE));
+        Assert.assertEquals("1", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_DERIVED_SUMMARY_GRADE_2018));
     }
 
     @Test
