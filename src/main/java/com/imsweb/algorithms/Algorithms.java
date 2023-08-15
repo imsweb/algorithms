@@ -292,8 +292,8 @@ public final class Algorithms {
             addField(AlgorithmField.of(FIELD_NAPIIA_NEEDS_REVIEW, 9430, 1, "NAPIIA Needs Review", "NAPIIA Rev", DATA_LEVEL_PATIENT, false));
             addField(AlgorithmField.of(FIELD_NAPIIA_REVIEW_REASON, 9431, 256, "NAPIIA Review Reason", "NAPIIA Rev Res", DATA_LEVEL_PATIENT, false));
             addField(AlgorithmField.of(FIELD_SEER_SITE_RECODE, 9410, 5, "SEER Site Recode ICD-O-3", "Site Recode", DATA_LEVEL_TUMOR, false));
-            addField(AlgorithmField.of(FIELD_SEER_SITE_RECODE_2023, 9412, 3, "SEER Site Recode ICD-O-3 2023 Revision", "Site Recode 23", DATA_LEVEL_TUMOR, false));
-            addField(AlgorithmField.of(FIELD_SEER_SITE_RECODE_2023_EXPANDED, 9413, 3, "SEER Site Recode ICD-O-3 2023 Revision Expanded", "Site Recode 23 Exp", DATA_LEVEL_TUMOR, false));
+            addField(AlgorithmField.of(FIELD_SEER_SITE_RECODE_2023, 9412, 2, "SEER Site Recode ICD-O-3 2023 Revision", "Site Recode 23", DATA_LEVEL_TUMOR, false));
+            addField(AlgorithmField.of(FIELD_SEER_SITE_RECODE_2023_EXPANDED, 9413, 2, "SEER Site Recode ICD-O-3 2023 Revision Expanded", "Site Recode 23 Exp", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_SEER_BEHAV_RECODE, 9411, 1, "SEER Site Behavior Recode ICD-O-3", "SEER Behav", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_AYA_SITE_RECODE_2008, 9444, 2, "AYA Site Recode 2008", "AYA 08", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_AYA_SITE_RECODE_2020, 9445, 3, "AYA Site Recode 2020", "AYA 20", DATA_LEVEL_TUMOR, false));
