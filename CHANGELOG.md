@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 4.5**
+
+- Fixed SEER Site Recode 2023 and SEER Site Recode 2023 Expanded to output 2-digit codes instead of 3.
+
 **Changes in version 4.4**
 
 - Changed County at DX Analysis algorithm to use 2020 census fields for DX years 2020 and later.
