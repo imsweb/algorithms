@@ -34,9 +34,9 @@ public class EphtSubCountyUtilsTest {
         input.setAddressAtDxState("PR");
         input.setCountyAtDxAnalysis("001");
         input.setCensusTract2010("956300");
-        Assert.assertEquals("C", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2010GeoId5k());
-        Assert.assertEquals("C", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2010GeoId20k());
-        Assert.assertEquals("C", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2010GeoId50k());
+        Assert.assertEquals("00072001217", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2010GeoId5k());
+        Assert.assertEquals("00000072001", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2010GeoId20k());
+        Assert.assertEquals("00007201121", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2010GeoId50k());
 
         // test unknown A (state, county, or tract are invalid)
         for (String state : Arrays.asList("WA", "INVALID")) {

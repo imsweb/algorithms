@@ -3,6 +3,7 @@
 **Changes in version 4.5**
 
 - Fixed SEER Site Recode 2023 and SEER Site Recode 2023 Expanded to output 2-digit codes instead of 3.
+- Updated data for the NPCR EPHT SubCounty algorithm.
 
 **Changes in version 4.4**
 

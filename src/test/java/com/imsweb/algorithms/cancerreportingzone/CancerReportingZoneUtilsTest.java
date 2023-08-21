@@ -27,7 +27,7 @@ public class CancerReportingZoneUtilsTest {
         input.setAddressAtDxState("LO");
         input.setCountyAtDxAnalysis("071");
         input.setCensusTract2010("007903");
-        Assert.assertEquals("06A0274", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone());
+        Assert.assertEquals("06A0274ca", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone());
         Assert.assertEquals("1", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZoneTractCert());
 
         // test Puerto Rico
