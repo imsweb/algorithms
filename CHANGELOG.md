@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 4.6**
+
+- Changed histology ranges in SEER Site Recode WHO 2008 algorithm (issue #147).
+
 **Changes in version 4.5**
 
 - Fixed SEER Site Recode 2023 and SEER Site Recode 2023 Expanded to output 2-digit codes instead of 3.
