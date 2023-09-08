@@ -39,7 +39,7 @@ public final class SeerSiteRecodeUtils {
     public static final String VERSION_2023_EXPANDED = "2023 Revision Expanded";
 
     // version for the 2010+ data (https://seer.cancer.gov/siterecode/icdo3_dwhoheme/index.html)
-    public static final String VERSION_2010 = "WHO 2008 Definition";
+    public static final String VERSION_2008 = "WHO 2008 Definition";
 
     // version for the 2003 data (https://seer.cancer.gov/siterecode/icdo3_d01272003/)
     public static final String VERSION_2003 = "2003 Definition";
@@ -53,16 +53,16 @@ public final class SeerSiteRecodeUtils {
     static {
         _VERSIONS.add(VERSION_2023);
         _VERSIONS.add(VERSION_2023_EXPANDED);
-        _VERSIONS.add(VERSION_2010);
+        _VERSIONS.add(VERSION_2008);
         _VERSIONS.add(VERSION_2003);
         _VERSIONS.add(VERSION_2003_WITHOUT_KSM);
     }
 
     // default version
-    public static final String VERSION_DEFAULT = VERSION_2010;
+    public static final String VERSION_DEFAULT = VERSION_2008;
 
     // unknown value
-    public static final String UNKNOWN_RECODE_2010 = "99999";
+    public static final String UNKNOWN_RECODE_2008 = "99999";
     public static final String UNKNOWN_RECODE_2023 = "99";
 
     // unknown label
@@ -112,8 +112,8 @@ public final class SeerSiteRecodeUtils {
      */
     public static String calculateSiteRecode(String version, String site, String histology, String behavior, String dxYear) {
         String result;
-        if (VERSION_2010.equals(version) || VERSION_2003.equals(version) || VERSION_2003_WITHOUT_KSM.equals(version))
-            result = UNKNOWN_RECODE_2010;
+        if (VERSION_2008.equals(version) || VERSION_2003.equals(version) || VERSION_2003_WITHOUT_KSM.equals(version))
+            result = UNKNOWN_RECODE_2008;
         else if (VERSION_2023.equals(version) || VERSION_2023_EXPANDED.equals(version))
             result = UNKNOWN_RECODE_2023;
         else
@@ -192,8 +192,8 @@ public final class SeerSiteRecodeUtils {
             url = Thread.currentThread().getContextClassLoader().getResource("seersiterecode/site-recode-data-2023.csv");
         else if (VERSION_2023_EXPANDED.equals(version))
             url = Thread.currentThread().getContextClassLoader().getResource("seersiterecode/site-recode-data-2023-expanded.csv");
-        else if (VERSION_2010.equals(version))
-            url = Thread.currentThread().getContextClassLoader().getResource("seersiterecode/site-recode-data-2010.csv");
+        else if (VERSION_2008.equals(version))
+            url = Thread.currentThread().getContextClassLoader().getResource("seersiterecode/site-recode-data-2008.csv");
         else if (VERSION_2003.equals(version))
             url = Thread.currentThread().getContextClassLoader().getResource("seersiterecode/site-recode-data-2003.csv");
         else if (VERSION_2003_WITHOUT_KSM.equals(version))

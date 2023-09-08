@@ -23,7 +23,7 @@ import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
 public class SeerSiteRecodeAlgorithm extends AbstractAlgorithm {
 
     public SeerSiteRecodeAlgorithm() {
-        super(Algorithms.ALG_SEER_SITE_RECODE, SeerSiteRecodeUtils.ALG_NAME, SeerSiteRecodeUtils.VERSION_2010);
+        super(Algorithms.ALG_SEER_SITE_RECODE, SeerSiteRecodeUtils.ALG_NAME, SeerSiteRecodeUtils.VERSION_2008);
 
         _url = "https://seer.cancer.gov/siterecode";
 
@@ -32,7 +32,7 @@ public class SeerSiteRecodeAlgorithm extends AbstractAlgorithm {
 
         _outputFields.add(Algorithms.getField(FIELD_SEER_SITE_RECODE));
 
-        _unknownValues.put(FIELD_SEER_SITE_RECODE, Collections.singletonList(SeerSiteRecodeUtils.UNKNOWN_RECODE_2010));
+        _unknownValues.put(FIELD_SEER_SITE_RECODE, Collections.singletonList(SeerSiteRecodeUtils.UNKNOWN_RECODE_2008));
     }
 
     @Override

@@ -36,7 +36,7 @@ public final class IcccRecodeUtils {
     public static final String VERSION_THIRD_EDITION = "Third edition (ICCC-3) based on ICD-O-3";
 
     // version based on the WHO 2008 classification (https://seer.cancer.gov/iccc/iccc-who2008.html)
-    public static final String VERSION_WHO_2008 = "ICD-O-3/WHO 200";
+    public static final String VERSION_WHO_2008 = "ICD-O-3/WHO 2008";
 
     // version for the 2010+ data/IARC 2017 (https://seer.cancer.gov/iccc/iccc-iarc-2017.html)
     public static final String VERSION_THIRD_EDITION_IARC_2017 = "Third edition based on ICD-O-3/IARC 2017";

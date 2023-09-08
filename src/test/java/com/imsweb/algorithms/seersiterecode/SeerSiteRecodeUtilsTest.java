@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import static com.imsweb.algorithms.seersiterecode.SeerSiteRecodeUtils.VERSION_2003;
 import static com.imsweb.algorithms.seersiterecode.SeerSiteRecodeUtils.VERSION_2003_WITHOUT_KSM;
-import static com.imsweb.algorithms.seersiterecode.SeerSiteRecodeUtils.VERSION_2010;
+import static com.imsweb.algorithms.seersiterecode.SeerSiteRecodeUtils.VERSION_2008;
 import static com.imsweb.algorithms.seersiterecode.SeerSiteRecodeUtils.VERSION_2023;
 import static com.imsweb.algorithms.seersiterecode.SeerSiteRecodeUtils.VERSION_2023_EXPANDED;
 
@@ -25,13 +25,13 @@ public class SeerSiteRecodeUtilsTest {
 
     @Test
     public void testRawData() {
-        Assert.assertFalse(SeerSiteRecodeUtils.getRawData(VERSION_2010).isEmpty());
+        Assert.assertFalse(SeerSiteRecodeUtils.getRawData(VERSION_2008).isEmpty());
         Assert.assertFalse(SeerSiteRecodeUtils.getRawData(VERSION_2003).isEmpty());
         Assert.assertFalse(SeerSiteRecodeUtils.getRawData(VERSION_2003_WITHOUT_KSM).isEmpty());
 
         // make sure groups are unique
         Set<String> names = new HashSet<>(), codes = new HashSet<>();
-        for (SeerSiteGroupDto dto : SeerSiteRecodeUtils.getRawData(VERSION_2010)) {
+        for (SeerSiteGroupDto dto : SeerSiteRecodeUtils.getRawData(VERSION_2008)) {
             if (names.contains(dto.getName()))
                 Assert.fail("Got duplicate name: " + dto.getName());
             names.add(dto.getName());
@@ -119,18 +119,18 @@ public class SeerSiteRecodeUtilsTest {
 
     @Test
     public void testCalculateSiteRecode2010() {
-        Assert.assertEquals("99999", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2010, "", "8000"));
-        Assert.assertEquals("99999", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2010, "C182", ""));
-        Assert.assertEquals("99999", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2010, null, null));
-        Assert.assertEquals("21043", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2010, "C182", "8000"));
-        Assert.assertEquals("21080", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2010, "C239", "8000"));
-        Assert.assertEquals("33042", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2010, "C239", "9673"));
-        Assert.assertEquals("33041", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2010, "C098", "9673"));
-        Assert.assertEquals("36020", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2010, "C239", "9140"));
-        Assert.assertEquals("36010", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2010, "C239", "9055"));
-        Assert.assertEquals("20010", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2010, "C008", "8000"));
-        Assert.assertEquals("35011", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2010, "C424", "9811"));
-        Assert.assertEquals("35012", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2010, "C424", "9823"));
+        Assert.assertEquals("99999", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2008, "", "8000"));
+        Assert.assertEquals("99999", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2008, "C182", ""));
+        Assert.assertEquals("99999", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2008, null, null));
+        Assert.assertEquals("21043", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2008, "C182", "8000"));
+        Assert.assertEquals("21080", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2008, "C239", "8000"));
+        Assert.assertEquals("33042", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2008, "C239", "9673"));
+        Assert.assertEquals("33041", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2008, "C098", "9673"));
+        Assert.assertEquals("36020", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2008, "C239", "9140"));
+        Assert.assertEquals("36010", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2008, "C239", "9055"));
+        Assert.assertEquals("20010", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2008, "C008", "8000"));
+        Assert.assertEquals("35011", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2008, "C424", "9811"));
+        Assert.assertEquals("35012", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2008, "C424", "9823"));
     }
 
     @Test
@@ -188,13 +188,13 @@ public class SeerSiteRecodeUtilsTest {
         Assert.assertEquals("Lip", SeerSiteRecodeUtils.getRecodeName("01", VERSION_2023_EXPANDED));
 
         //2010
-        Assert.assertEquals(unknown, SeerSiteRecodeUtils.getRecodeName(null, VERSION_2010));
-        Assert.assertEquals(unknown, SeerSiteRecodeUtils.getRecodeName("", VERSION_2010));
-        Assert.assertEquals(unknown, SeerSiteRecodeUtils.getRecodeName("20100A", VERSION_2010));
-        Assert.assertEquals(unknown, SeerSiteRecodeUtils.getRecodeName("20200", VERSION_2010));
-        Assert.assertEquals("Hodgkin - Extranodal", SeerSiteRecodeUtils.getRecodeName("33012", VERSION_2010));
-        Assert.assertEquals("Miscellaneous", SeerSiteRecodeUtils.getRecodeName("37000", VERSION_2010));
-        Assert.assertEquals("Acute Monocytic Leukemia", SeerSiteRecodeUtils.getRecodeName("35031", VERSION_2010));
+        Assert.assertEquals(unknown, SeerSiteRecodeUtils.getRecodeName(null, VERSION_2008));
+        Assert.assertEquals(unknown, SeerSiteRecodeUtils.getRecodeName("", VERSION_2008));
+        Assert.assertEquals(unknown, SeerSiteRecodeUtils.getRecodeName("20100A", VERSION_2008));
+        Assert.assertEquals(unknown, SeerSiteRecodeUtils.getRecodeName("20200", VERSION_2008));
+        Assert.assertEquals("Hodgkin - Extranodal", SeerSiteRecodeUtils.getRecodeName("33012", VERSION_2008));
+        Assert.assertEquals("Miscellaneous", SeerSiteRecodeUtils.getRecodeName("37000", VERSION_2008));
+        Assert.assertEquals("Acute Monocytic Leukemia", SeerSiteRecodeUtils.getRecodeName("35031", VERSION_2008));
 
         //2003
         Assert.assertEquals(unknown, SeerSiteRecodeUtils.getRecodeName(null, VERSION_2003));
