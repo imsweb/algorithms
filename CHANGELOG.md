@@ -2,7 +2,7 @@
 
 **Changes in version 4.6**
 
-- Changed histology ranges in SEER Site Recode WHO 2008 algorithm (issue #147).
+- Changed histology ranges in multiple SEER recode algorithms (issue #147).
 
 **Changes in version 4.5**
 
