@@ -76,7 +76,7 @@ public class BrainCnsRecodeUtilsTest {
         Assert.assertEquals("27", BrainCnsRecodeUtils.computeBrainCsnRecode(ALG_VERSION_2020, "C700", "9590", "3"));
         Assert.assertEquals("27", BrainCnsRecodeUtils.computeBrainCsnRecode(ALG_VERSION_2020, "C700", "9990", "3"));
         Assert.assertEquals("27", BrainCnsRecodeUtils.computeBrainCsnRecode(ALG_VERSION_2020, "C700", "9992", "3"));
-        Assert.assertEquals("15", BrainCnsRecodeUtils.computeBrainCsnRecode(ALG_VERSION_2020, "C700", "9993", "3"));
+        Assert.assertEquals("27", BrainCnsRecodeUtils.computeBrainCsnRecode(ALG_VERSION_2020, "C700", "9993", "3"));
         Assert.assertEquals("24", BrainCnsRecodeUtils.computeBrainCsnRecode(ALG_VERSION_2020, "C700", "9505", "0"));
 
         Assert.assertEquals("16", BrainCnsRecodeUtils.computeBrainCsnRecode(ALG_VERSION_2020, "C700", "9530", "0"));
