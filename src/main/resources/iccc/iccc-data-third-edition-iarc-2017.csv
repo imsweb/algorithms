@@ -11,7 +11,7 @@ ID,Group Name,Indentation,Sites IN,Sites OUT,Hist IN,Hist OUT,Group code,Group c
 10,"Lymphoid leukemia, NOS",2,C000-C809,,9820,,011,,004,3
 11,Acute myeloid leukemias,1,C000-C809,,"9840,9861,9865-9867,9869-9874,9877-9879,9891,9895-9897,9898,9910,9911,9912,9920,9930,9931",,012,,005,3
 12,Chronic myeloproliferative diseases,1,C000-C809,,"9863,9875,9876,9950,9960-9964",,013,,006,3
-13,Myelodysplastic syndrome and other myeloproliferative diseases,1,C000-C809,,"9945,9946,9975,9980,9982-9987,9989,9991,9993",,014,,007,3
+13,Myelodysplastic syndrome and other myeloproliferative diseases,1,C000-C809,,"9945,9946,9975,9980,9982-9987,9989,9991-9993",,014,,007,3
 14,Unspecified and other specified leukemias,1,C000-C809,,"9800,9801,9805-9809,9860,9965-9968",,015,,008,3
 15,Lymphomas And Reticuloendothelial Neoplasms,0,,,,,,"021,022,023,024,025",,
 16,Hodgkin lymphomas,1,C000-C809,,"9650-9655,9659,9661-9665,9667",,021,,009,3
