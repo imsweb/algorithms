@@ -13,3 +13,6 @@ The downloadable Excel spreadsheet required a lot of manual manipulations to be 
 4. I added leading C in front of all sites
 5. Some lines contained hist exclusions instead of inclusion; I changed "Histology" to "Histology Inclusions" and added a new "Histology Exclusions" column
 6. Some lines contained "anything not cover above"; I left those values blank, meaning any values. That means the order ini which the data rows are tried matters!
+
+
+09/12/23 - I manually updated the histology ranges of the brain-cnsrecode-2020revision.csv file (changes were not posted online yet).

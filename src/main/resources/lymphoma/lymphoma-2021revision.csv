@@ -11,7 +11,7 @@ Lymphoid Neoplasm,,,01-44
     1(b) Nodular lymphocyte predominant Hodgkin lymphoma,000-809,9659,06
   2 Non-Hodgkin lymphoma,,,07-42
 "    2(a) Non-Hodgkin lymphoma, B-cell",,,07-26
-"      2(a)1 Precursor Non-Hodgkin lymphoma, B-cell",000-809,"9728,9811-9818,9835-9836",07
+"      2(a)1 Precursor Non-Hodgkin lymphoma, B-cell",000-809,"9728,9811-9819,9835-9836",07
 "      2(a)2 Mature Non-Hodgkin lymphoma, B-cell",,,08-25
         2(a)2.1 Chronic/Sm/Prolymphocytic/Mantle B-cell NHL,,,08-10
           2(a)2.1.1 Chronic/Small lymphocytic leuk/lymph,000-809,"9670,9823",08
@@ -50,7 +50,7 @@ Lymphoid Neoplasm,,,01-44
 "          2(b)2.2.1 Peripheral T-cell lymphoma, NOS",000-809,9702,30
           2(b)2.2.2 Angioimmunoblastic T-cell lymphoma,000-809,9705,31
           2(b)2.2.3 Subcutan panniculitis-like T-cell lymph,000-809,9708,32
-"          2(b)2.2.4 Anaplastic lar cell lymph, T-/Null-cell",000-809,9714,33
+"          2(b)2.2.4 Anaplastic lar cell lymph, T-/Null-cell",000-809,"9714,9715",33
           2(b)2.2.5 Hepatosplenic T-cell lymphoma,000-809,9716,34
           2(b)2.2.6 Enteropathy-type T-cell lymphoma,000-809,9717,35
 "          2(b)2.2.7 Cutaneous T-cell lymphoma, NOS",000-809,"9709,9726",36
