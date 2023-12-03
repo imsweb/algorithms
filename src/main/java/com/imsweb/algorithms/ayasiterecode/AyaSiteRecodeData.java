@@ -66,7 +66,7 @@ public class AyaSiteRecodeData {
         for (String val : StringUtils.split(value.replace(".", ""), ',')) {
             String[] parts = StringUtils.split(val, '-');
             if (parts.length == 2)
-                result.add(Range.between(parts[0], parts[1]));
+                result.add(Range.of(parts[0], parts[1]));
             else
                 result.add(val);
         }

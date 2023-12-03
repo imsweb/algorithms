@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 4.7**
+
+- Updated CSV library from version 5.7.1 to version 5.9.
+
 **Changes in version 4.6**
 
 - Changed histology ranges in multiple SEER recode algorithms (issue #147).

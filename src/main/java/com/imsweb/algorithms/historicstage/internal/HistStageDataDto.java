@@ -22,7 +22,7 @@ public abstract class HistStageDataDto {
         for (String token : StringUtils.split(str, ',')) {
             Matcher matcher = _RANGE_PATTERN.matcher(token);
             if (matcher.matches())
-                result.add(Range.between(Integer.valueOf(matcher.group(1)), Integer.valueOf(matcher.group(2))));
+                result.add(Range.of(Integer.valueOf(matcher.group(1)), Integer.valueOf(matcher.group(2))));
             else {
                 matcher = _NUMBER_PATTERN.matcher(token);
                 if (matcher.matches())

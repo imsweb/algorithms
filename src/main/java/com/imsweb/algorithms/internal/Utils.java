@@ -106,14 +106,14 @@ public final class Utils {
                 result.add(Integer.valueOf(s.substring(1)));
             else {
                 String[] parts = StringUtils.split(s, '-');
-                result.add(Range.between(Integer.valueOf(parts[0].substring(1)), Integer.valueOf(parts[1].substring(1))));
+                result.add(Range.of(Integer.valueOf(parts[0].substring(1)), Integer.valueOf(parts[1].substring(1))));
             }
         }
         return result;
     }
 
     /**
-     * Expands the provided histologies as either individual integer codes, or as ranges.
+     * Expands the provided histology codes as either individual integer codes, or as ranges.
      * @param toExpand sites to expand
      * @return expanded sites
      */
@@ -131,7 +131,7 @@ public final class Utils {
                 if (!_HIST_RANGE_PATTERN.matcher(s).matches())
                     throw new IllegalStateException("Invalid histology range: " + s);
                 String[] parts = StringUtils.split(s, '-');
-                result.add(Range.between(Integer.valueOf(parts[0]), Integer.valueOf(parts[1])));
+                result.add(Range.of(Integer.valueOf(parts[0]), Integer.valueOf(parts[1])));
             }
         }
         return result;
@@ -156,7 +156,7 @@ public final class Utils {
                 if (!_BEH_RANGE_PATTERN.matcher(s).matches())
                     throw new IllegalStateException("Invalid behavior range: " + s);
                 String[] parts = StringUtils.split(s, '-');
-                result.add(Range.between(Integer.valueOf(parts[0]), Integer.valueOf(parts[1])));
+                result.add(Range.of(Integer.valueOf(parts[0]), Integer.valueOf(parts[1])));
             }
         }
         return result;

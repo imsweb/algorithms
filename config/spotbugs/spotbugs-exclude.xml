@@ -15,4 +15,8 @@
     <Match>
         <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
     </Match>
+    <Match>
+        <!-- Be wary of letting constructors throw exceptions, not easy to fix, and I don't think that can create a problem -->
+        <Bug pattern="CT_CONSTRUCTOR_THROW"/>
+    </Match>
 </FindBugsFilter>

@@ -57,7 +57,7 @@ public class LymphoidNeoplasmRecodeData {
             if (parts.length == 2) {
                 String low = isSite && !parts[0].startsWith("C") ? ("C" + parts[0]) : parts[0];
                 String high = isSite && !parts[1].startsWith("C") ? ("C" + parts[1]) : parts[1];
-                result.add(Range.between(low, high));
+                result.add(Range.of(low, high));
             }
             else
                 result.add(isSite && !val.startsWith("C") ? ("C" + val) : val);
