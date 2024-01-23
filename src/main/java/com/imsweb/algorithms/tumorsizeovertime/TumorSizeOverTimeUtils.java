@@ -3,10 +3,25 @@
  */
 package com.imsweb.algorithms.tumorsizeovertime;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
+import org.apache.commons.lang3.Range;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
-public class TumorSizeOverTimeUtils {
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvException;
+
+public final class TumorSizeOverTimeUtils {
 
     public static final String ALG_NAME = "Tumor Size Over Time";
     public static final String ALG_VERSION = "version 1.0 released in January 2024";
@@ -14,12 +29,17 @@ public class TumorSizeOverTimeUtils {
     public static final String TUMOR_SIZE_NOT_AVAILABLE = "XX1";
     public static final int INVALID_INPUT_VALUE = -1;
 
+    // internal lock to control concurrency to the data
+    private static final ReentrantReadWriteLock _LOCK = new ReentrantReadWriteLock();
+
+    private static Map<String, List<Object>> _SITE_SIZE_MAP;
+
     private TumorSizeOverTimeUtils() {
         // no instances of this class allowed!
     }
 
     public static String computeTumorSizeOverTime(TumorSizeOverTimeInputDto input) {
-        if (input == null || StringUtils.isBlank(input.getTumorSize()))
+        if (input == null)
             return null;
         int hist = NumberUtils.toInt(input.getHist(), INVALID_INPUT_VALUE);
         int site = input.getSite() == null || input.getSite().length() < 4 ? INVALID_INPUT_VALUE : NumberUtils.toInt(input.getSite().substring(1), INVALID_INPUT_VALUE);
@@ -28,8 +48,10 @@ public class TumorSizeOverTimeUtils {
         if (tumorSizeNotAvailable(hist, site))
             return TUMOR_SIZE_NOT_AVAILABLE;
 
-        //Applying Tumor Size Definitions.Updated sheet
         String size = input.getTumorSize();
+        if (size == null)
+            return null;
+        //Applying Tumor Size Definitions.Updated sheet
         int sizeInt = NumberUtils.toInt(input.getTumorSize(), INVALID_INPUT_VALUE);
         int dxYear = input.getDxYear();
         String result = size;
@@ -96,13 +118,16 @@ public class TumorSizeOverTimeUtils {
             else {
                 if ("996".equals(size))
                     result = "055";
-                else if (sizeInt == 997 || sizeInt == 998)
+                else if ("997".equals(size))
                     result = "999";
             }
         }
 
         //998 special code
         if ("998".equals(result) && !valid998(hist, site, input.getBehavior()))
+            result = "999";
+
+        if (!"998".equals(result) && !"999".equals(result) && !isValidTumorSize(input.getSite(), NumberUtils.toInt(result, INVALID_INPUT_VALUE)))
             result = "999";
         return result;
     }
@@ -115,6 +140,78 @@ public class TumorSizeOverTimeUtils {
     public static boolean valid998(int hist, int site, String behavior) {
         return (((site >= 180 && site <= 189) || site == 199 || site == 209) && (hist == 8220 || hist == 8221) && "3".equals(behavior)) ||
                 (((site >= 150 && site <= 169) || (site >= 340 && site <= 349) || (site >= 500 && site <= 509)) && !((hist >= 8720 && hist <= 8790) || hist == 9140 || (hist >= 9590 && hist <= 9993)));
+
+    }
+
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static boolean isValidTumorSize(String site, Integer size) {
+        if (size == null || StringUtils.isBlank(site))
+            return false;
+
+        _LOCK.readLock().lock();
+        try {
+            if (_SITE_SIZE_MAP == null) {
+                _LOCK.readLock().unlock();
+                _LOCK.writeLock().lock();
+                try {
+                    _SITE_SIZE_MAP = readData("edits.csv");
+                }
+                finally {
+                    _LOCK.writeLock().unlock();
+                    _LOCK.readLock().lock();
+                }
+            }
+            List<Object> validSizes = _SITE_SIZE_MAP.getOrDefault(site, Collections.emptyList());
+            for (Object validSize : validSizes) {
+                if (validSize instanceof Integer && size.equals(validSize))
+                    return true;
+                if (validSize instanceof Range && ((Range)validSize).contains(size))
+                    return true;
+            }
+            return false;
+        }
+        finally {
+            _LOCK.readLock().unlock();
+        }
+    }
+
+    private static Map<String, List<Object>> readData(String file) {
+        Map<String, List<Object>> map = new HashMap<>();
+        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("tumorsizeovertime/" + file)) {
+            if (is == null)
+                throw new IllegalStateException("Unable to read internal " + file);
+            try (CSVReader reader = new CSVReader(new InputStreamReader(is, StandardCharsets.US_ASCII))) {
+                for (String[] row : reader.readAll()) {
+                    String site = row[0].substring(0, 4);
+                    List<Object> sizes = getSizeList(row[1]);
+                    map.put(site, sizes);
+
+                }
+            }
+        }
+        catch (CsvException | IOException e) {
+            throw new IllegalStateException("Unable to read internal " + file, e);
+        }
+
+        return map;
+    }
+
+    private static List<Object> getSizeList(String size) {
+        List<Object> sizes = new ArrayList<>();
+        if ("Not enough cases".equals(size) || "Tumor size always 999".equals(size))
+            return sizes;
+
+        for (String token : StringUtils.split(size, ',')) {
+            token = token.trim();
+            if (token.contains("-")) {
+                int start = NumberUtils.toInt(StringUtils.split(token, '-')[0], INVALID_INPUT_VALUE);
+                int end = NumberUtils.toInt(StringUtils.split(token, '-')[1], INVALID_INPUT_VALUE);
+                sizes.add(Range.of(start, end));
+            }
+            else
+                sizes.add(NumberUtils.toInt(token, INVALID_INPUT_VALUE));
+        }
+        return sizes;
 
     }
 }
