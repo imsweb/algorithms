@@ -8,26 +8,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.math.NumberUtils;
-
 import com.imsweb.algorithms.AbstractAlgorithm;
 import com.imsweb.algorithms.AlgorithmInput;
 import com.imsweb.algorithms.AlgorithmOutput;
 import com.imsweb.algorithms.Algorithms;
-import com.imsweb.algorithms.StateCountyTractInputDto;
 import com.imsweb.algorithms.internal.Utils;
-import com.imsweb.algorithms.tractestcongressdist.TractEstCongressDistOutputDto;
-import com.imsweb.algorithms.tractestcongressdist.TractEstCongressDistUtils;
 
 import static com.imsweb.algorithms.Algorithms.FIELD_BEHAV_O3;
-import static com.imsweb.algorithms.Algorithms.FIELD_CENSUS_2010;
-import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS;
 import static com.imsweb.algorithms.Algorithms.FIELD_DX_DATE;
 import static com.imsweb.algorithms.Algorithms.FIELD_EOD_TUMOR_SIZE;
 import static com.imsweb.algorithms.Algorithms.FIELD_HIST_O3;
 import static com.imsweb.algorithms.Algorithms.FIELD_PRIMARY_SITE;
-import static com.imsweb.algorithms.Algorithms.FIELD_STATE_DX;
-import static com.imsweb.algorithms.Algorithms.FIELD_TRACT_EST_CONGRESS_DIST;
 import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
 import static com.imsweb.algorithms.Algorithms.FIELD_TUMOR_SIZE;
 import static com.imsweb.algorithms.Algorithms.FIELD_TUMOR_SIZE_OVER_TIME;
