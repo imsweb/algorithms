@@ -296,7 +296,7 @@ public final class Algorithms {
             addField(AlgorithmField.of(FIELD_GRADE_CLINICAL, 3843, 1, "Grade Clinical", "Grade Clin", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_GRADE_PATHOLOGICAL, 3844, 1, "Grade Pathological", "Grade Path", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_TUMOR_SIZE, 2800, 3, "CS Tumor Size", "CS Size", DATA_LEVEL_TUMOR));
-            addField(AlgorithmField.of(FIELD_EOD_TUMOR_SIZE, 780, 3, "EOD Tumor Size", "EOD Size", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_EOD_TUMOR_SIZE, 780, 3, "EOD--Tumor Size", "EOD Size", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_TUMOR_SIZE_SUMMARY, 756, 3, "Tumor Size Summary", "Tumor Size Summary", DATA_LEVEL_TUMOR));
 
             // non-standard fields
