@@ -151,6 +151,10 @@ public final class Algorithms {
     public static final String FIELD_SCHEMA_ID = "schemaId";
     public static final String FIELD_GRADE_CLINICAL = "gradeClinical";
     public static final String FIELD_GRADE_PATHOLOGICAL = "gradePathological";
+    public static final String FIELD_TUMOR_SIZE = "csTumorSize";
+    public static final String FIELD_EOD_TUMOR_SIZE = "eodTumorSize";
+
+    public static final String FIELD_TUMOR_SIZE_SUMMARY = "tumorSizeSummary";
 
     // non-standard fields
     public static final String FIELD_NAPIIA_NEEDS_REVIEW = "napiiaNeedsHumanReview";
@@ -189,11 +193,6 @@ public final class Algorithms {
     public static final String FIELD_DERIVED_SUMMARY_GRADE_2018 = "derivedSummaryGrade2018";
     public static final String FIELD_CDC_SVI_2018 = "cdcSVI2018";
     public static final String FIELD_DAYS_TO_TREATMENT = "daysToTreatment";
-
-    public static final String FIELD_TUMOR_SIZE = "csTumorSize";
-    public static final String FIELD_EOD_TUMOR_SIZE = "eodTumorSize";
-
-    public static final String FIELD_TUMOR_SIZE_SUMMARY = "tumorSizeSummary";
     public static final String FIELD_TUMOR_SIZE_OVER_TIME = "tumorSizeOverTime";
 
     // options

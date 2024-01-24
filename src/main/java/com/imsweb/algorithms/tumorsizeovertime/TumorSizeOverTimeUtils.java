@@ -23,7 +23,7 @@ import com.opencsv.exceptions.CsvException;
 
 public final class TumorSizeOverTimeUtils {
 
-    public static final String ALG_NAME = "Tumor Size Over Time";
+    public static final String ALG_NAME = "SEER Tumor Size Over Time";
     public static final String ALG_VERSION = "version 1.0 released in January 2024";
 
     public static final String TUMOR_SIZE_NOT_AVAILABLE = "XX1";
