@@ -9,7 +9,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Objects;
 
-import org.apache.commons.lang3.math.NumberUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -70,6 +69,44 @@ public class TumorSizeOverTimeUtilsTest {
         Assert.assertEquals("015", TumorSizeOverTimeUtils.computeTumorSizeOverTime(inputDto));
         inputDto.setCsTumorSize("993");
         Assert.assertEquals("025", TumorSizeOverTimeUtils.computeTumorSizeOverTime(inputDto));
+        inputDto.setCsTumorSize("994");
+        Assert.assertEquals("035", TumorSizeOverTimeUtils.computeTumorSizeOverTime(inputDto));
+        inputDto.setCsTumorSize("995");
+        Assert.assertEquals("045", TumorSizeOverTimeUtils.computeTumorSizeOverTime(inputDto));
+        inputDto.setCsTumorSize("996");
+        Assert.assertEquals("055", TumorSizeOverTimeUtils.computeTumorSizeOverTime(inputDto));
+        inputDto.setSite("C340");
+        Assert.assertEquals("999", TumorSizeOverTimeUtils.computeTumorSizeOverTime(inputDto));
+        inputDto.setSite("C409");
+        Assert.assertEquals("065", TumorSizeOverTimeUtils.computeTumorSizeOverTime(inputDto));
+        inputDto.setSite("C000");
+        inputDto.setCsTumorSize("997");
+        Assert.assertEquals("999", TumorSizeOverTimeUtils.computeTumorSizeOverTime(inputDto));
+        inputDto.setSite("C649");
+        Assert.assertEquals("075", TumorSizeOverTimeUtils.computeTumorSizeOverTime(inputDto));
+        inputDto.setSite("C150");
+        Assert.assertEquals("999", TumorSizeOverTimeUtils.computeTumorSizeOverTime(inputDto));
+        inputDto.setHist("8935");
+        Assert.assertEquals("105", TumorSizeOverTimeUtils.computeTumorSizeOverTime(inputDto));
+        inputDto.setSite("C400");
+        Assert.assertEquals("085", TumorSizeOverTimeUtils.computeTumorSizeOverTime(inputDto));
+        inputDto.setSite("C340");
+        Assert.assertEquals("998", TumorSizeOverTimeUtils.computeTumorSizeOverTime(inputDto));
+        //2016+
+        inputDto.setDxYear("2016");
+        inputDto.setSite("C000");
+        inputDto.setHist("8000");
+        inputDto.setBehavior("3");
+        inputDto.setTumorSizeSummary("991");
+        Assert.assertEquals("999", TumorSizeOverTimeUtils.computeTumorSizeOverTime(inputDto));
+        inputDto.setTumorSizeSummary("060");
+        Assert.assertEquals("060", TumorSizeOverTimeUtils.computeTumorSizeOverTime(inputDto));
+        inputDto.setTumorSizeSummary("080");
+        Assert.assertEquals("999", TumorSizeOverTimeUtils.computeTumorSizeOverTime(inputDto));
+        inputDto.setTumorSizeSummary("998");
+        Assert.assertEquals("999", TumorSizeOverTimeUtils.computeTumorSizeOverTime(inputDto));
+        inputDto.setSite("C169");
+        Assert.assertEquals("998", TumorSizeOverTimeUtils.computeTumorSizeOverTime(inputDto));
     }
 
     @Test
