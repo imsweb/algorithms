@@ -48,12 +48,19 @@ public final class TumorSizeOverTimeUtils {
         if (tumorSizeNotAvailable(hist, site))
             return TUMOR_SIZE_NOT_AVAILABLE;
 
-        String size = input.getTumorSize();
-        if (size == null)
+        int dxYear = NumberUtils.toInt(input.getDxYear(), INVALID_INPUT_VALUE);
+        String size = null;
+        if (dxYear >= 1988 && dxYear <= 2003)
+            size = input.getEodTumorSize();
+        else if (dxYear >= 2004 && dxYear <= 2015)
+            size = input.getCsTumorSize();
+        else if (dxYear > 2015)
+            size = input.getTumorSizeSummary();
+
+        if (StringUtils.isBlank(size))
             return null;
         //Applying Tumor Size Definitions.Updated sheet
-        int sizeInt = NumberUtils.toInt(input.getTumorSize(), INVALID_INPUT_VALUE);
-        int dxYear = input.getDxYear();
+        int sizeInt = NumberUtils.toInt(size, INVALID_INPUT_VALUE);
         String result = size;
         //All years all sites 401-989 -> 999
         if (sizeInt >= 401 && sizeInt <= 989)
@@ -168,7 +175,8 @@ public final class TumorSizeOverTimeUtils {
                 if (validSize instanceof Range && ((Range)validSize).contains(size))
                     return true;
             }
-            return false;
+            //if site is not defined in the override list, return true
+            return validSizes.isEmpty();
         }
         finally {
             _LOCK.readLock().unlock();
@@ -198,18 +206,21 @@ public final class TumorSizeOverTimeUtils {
 
     private static List<Object> getSizeList(String size) {
         List<Object> sizes = new ArrayList<>();
-        if ("Not enough cases".equals(size) || "Tumor size always 999".equals(size))
-            return sizes;
-
-        for (String token : StringUtils.split(size, ',')) {
-            token = token.trim();
-            if (token.contains("-")) {
-                int start = NumberUtils.toInt(StringUtils.split(token, '-')[0], INVALID_INPUT_VALUE);
-                int end = NumberUtils.toInt(StringUtils.split(token, '-')[1], INVALID_INPUT_VALUE);
-                sizes.add(Range.of(start, end));
+        if ("Not enough cases".equals(size))
+            sizes.add(Range.of(0, 999));
+        else if ("Tumor size always 999".equals(size))
+            sizes.add(999);
+        else {
+            for (String token : StringUtils.split(size, ',')) {
+                token = token.trim();
+                if (token.contains("-")) {
+                    int start = NumberUtils.toInt(StringUtils.split(token, '-')[0], INVALID_INPUT_VALUE);
+                    int end = NumberUtils.toInt(StringUtils.split(token, '-')[1], INVALID_INPUT_VALUE);
+                    sizes.add(Range.of(start, end));
+                }
+                else
+                    sizes.add(NumberUtils.toInt(token, INVALID_INPUT_VALUE));
             }
-            else
-                sizes.add(NumberUtils.toInt(token, INVALID_INPUT_VALUE));
         }
         return sizes;
 

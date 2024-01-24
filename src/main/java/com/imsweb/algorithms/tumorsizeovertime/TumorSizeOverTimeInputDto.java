@@ -4,17 +4,19 @@
 package com.imsweb.algorithms.tumorsizeovertime;
 
 public class TumorSizeOverTimeInputDto {
-    private int _dxYear;
+    private String _dxYear;
     private String _site;
     private String _hist;
     private String _behavior;
-    private String _tumorSize;
+    private String _eodTumorSize;
+    private String _csTumorSize;
+    private String _tumorSizeSummary;
 
-    public int getDxYear() {
+    public String getDxYear() {
         return _dxYear;
     }
 
-    public void setDxYear(int dxYear) {
+    public void setDxYear(String dxYear) {
         _dxYear = dxYear;
     }
 
@@ -42,11 +44,27 @@ public class TumorSizeOverTimeInputDto {
         _behavior = behavior;
     }
 
-    public String getTumorSize() {
-        return _tumorSize;
+    public String getEodTumorSize() {
+        return _eodTumorSize;
     }
 
-    public void setTumorSize(String tumorSize) {
-        _tumorSize = tumorSize;
+    public void setEodTumorSize(String eodTumorSize) {
+        _eodTumorSize = eodTumorSize;
+    }
+
+    public String getCsTumorSize() {
+        return _csTumorSize;
+    }
+
+    public void setCsTumorSize(String csTumorSize) {
+        _csTumorSize = csTumorSize;
+    }
+
+    public String getTumorSizeSummary() {
+        return _tumorSizeSummary;
+    }
+
+    public void setTumorSizeSummary(String tumorSizeSummary) {
+        _tumorSizeSummary = tumorSizeSummary;
     }
 }

@@ -57,14 +57,10 @@ public class TumorSizeOverTimeAlgorithm extends AbstractAlgorithm {
 
         for (Map<String, Object> inputTumor : Utils.extractTumors(Utils.extractPatient(input))) {
             TumorSizeOverTimeInputDto inputDto = new TumorSizeOverTimeInputDto();
-            int dxYear = NumberUtils.toInt(Utils.extractYear((String)inputTumor.get(FIELD_DX_DATE)), -1);
-            inputDto.setDxYear(dxYear);
-            if (dxYear >= 1988 && dxYear <= 2003)
-                inputDto.setTumorSize((String)inputTumor.get(FIELD_EOD_TUMOR_SIZE));
-            else if (dxYear >= 2004 && dxYear <= 2015)
-                inputDto.setTumorSize((String)inputTumor.get(FIELD_TUMOR_SIZE));
-            else if (dxYear > 2015)
-                inputDto.setTumorSize((String)inputTumor.get(FIELD_TUMOR_SIZE_SUMMARY));
+            inputDto.setDxYear(Utils.extractYear((String)inputTumor.get(FIELD_DX_DATE)));
+            inputDto.setEodTumorSize((String)inputTumor.get(FIELD_EOD_TUMOR_SIZE));
+            inputDto.setCsTumorSize((String)inputTumor.get(FIELD_TUMOR_SIZE));
+            inputDto.setTumorSizeSummary((String)inputTumor.get(FIELD_TUMOR_SIZE_SUMMARY));
             inputDto.setSite((String)inputTumor.get(FIELD_PRIMARY_SITE));
             inputDto.setHist((String)inputTumor.get(FIELD_HIST_O3));
             inputDto.setBehavior((String)inputTumor.get(FIELD_BEHAV_O3));
