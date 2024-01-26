@@ -170,8 +170,8 @@ tasks.named("dependencyUpdates").configure {
 signing {
     required { !project.version.endsWith('-SNAPSHOT') }
 
-    String signingKey = project.findProperty('signing.armored.key') ?: ''
-    String signingPassword = project.findProperty('signing.armored.password') ?: ''
+    String signingKey = project.findProperty('signingKey') ?: ''
+    String signingPassword = project.findProperty('signingPassword') ?: ''
 
     useInMemoryPgpKeys(signingKey, signingPassword)
 
