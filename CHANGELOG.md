@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 4.8**
+
+- Added new SEER algorithm to compute Tumor Size Over Time.
+
 **Changes in version 4.7**
 
 - Updated CSV library from version 5.7.1 to version 5.9.

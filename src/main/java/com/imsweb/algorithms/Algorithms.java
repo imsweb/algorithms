@@ -34,6 +34,7 @@ import com.imsweb.algorithms.seersiterecode.SeerSiteRecodeAlgorithm;
 import com.imsweb.algorithms.survival.SurvivalTimeAlgorithm;
 import com.imsweb.algorithms.svi.SocialVulnerabilityAlgorithm;
 import com.imsweb.algorithms.tractestcongressdist.TractEstCongressDistAlgorithm;
+import com.imsweb.algorithms.tumorsizeovertime.TumorSizeOverTimeAlgorithm;
 import com.imsweb.algorithms.uiho.UihoAlgorithm;
 import com.imsweb.algorithms.yostacspoverty.YostAcsPovertyAlgorithm;
 
@@ -77,6 +78,7 @@ public final class Algorithms {
     public static final String ALG_SEER_DERIVED_SUMMARY_STAGE_2018 = "seer-derived-summary-stage-2018";
     public static final String ALG_SVI = "svi";
     public static final String ALG_DAYS_TO_TREATMENT = "days-to-treatment";
+    public static final String ALG_TUMOR_SIZE_OVER_TIME = "tumor-size-over-time";
 
     // special properties
     public static final String FIELD_TUMORS = "tumors";
@@ -149,6 +151,10 @@ public final class Algorithms {
     public static final String FIELD_SCHEMA_ID = "schemaId";
     public static final String FIELD_GRADE_CLINICAL = "gradeClinical";
     public static final String FIELD_GRADE_PATHOLOGICAL = "gradePathological";
+    public static final String FIELD_TUMOR_SIZE = "csTumorSize";
+    public static final String FIELD_EOD_TUMOR_SIZE = "eodTumorSize";
+
+    public static final String FIELD_TUMOR_SIZE_SUMMARY = "tumorSizeSummary";
 
     // non-standard fields
     public static final String FIELD_NAPIIA_NEEDS_REVIEW = "napiiaNeedsHumanReview";
@@ -187,6 +193,7 @@ public final class Algorithms {
     public static final String FIELD_DERIVED_SUMMARY_GRADE_2018 = "derivedSummaryGrade2018";
     public static final String FIELD_CDC_SVI_2018 = "cdcSVI2018";
     public static final String FIELD_DAYS_TO_TREATMENT = "daysToTreatment";
+    public static final String FIELD_TUMOR_SIZE_OVER_TIME = "tumorSizeOverTime";
 
     // options
     public static final String PARAM_NHIA_OPTION = "nhiaOption";
@@ -287,6 +294,9 @@ public final class Algorithms {
             addField(AlgorithmField.of(FIELD_SCHEMA_ID, 3800, 5, "Schema ID", "Schema Id", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_GRADE_CLINICAL, 3843, 1, "Grade Clinical", "Grade Clin", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_GRADE_PATHOLOGICAL, 3844, 1, "Grade Pathological", "Grade Path", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_TUMOR_SIZE, 2800, 3, "CS Tumor Size", "CS Size", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_EOD_TUMOR_SIZE, 780, 3, "EOD--Tumor Size", "EOD Size", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_TUMOR_SIZE_SUMMARY, 756, 3, "Tumor Size Summary", "Tumor Size Summary", DATA_LEVEL_TUMOR));
 
             // non-standard fields
             addField(AlgorithmField.of(FIELD_NAPIIA_NEEDS_REVIEW, 9430, 1, "NAPIIA Needs Review", "NAPIIA Rev", DATA_LEVEL_PATIENT, false));
@@ -322,6 +332,7 @@ public final class Algorithms {
             addField(AlgorithmField.of(FIELD_DERIVED_SUMMARY_GRADE_2018, 1975, 1, "Derived Summary Grade 2018", "Der Sum Grade 18", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_CDC_SVI_2018, 9600, 5, "CDC/ATSDR Social Vulnerability Index 2018", "CDC/ATSDR SVI 2018", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_DAYS_TO_TREATMENT, 9750, 3, "Days from Diagnosis to Treatment", "Days to TX", DATA_LEVEL_TUMOR, false));
+            addField(AlgorithmField.of(FIELD_TUMOR_SIZE_OVER_TIME, 9751, 3, "Tumor Size Over Time", "Tumor Size Over Time", DATA_LEVEL_TUMOR, false));
 
             // algorithms
             addAlgorithm(new NhiaAlgorithm());
@@ -349,6 +360,7 @@ public final class Algorithms {
             addAlgorithm(new SocialVulnerabilityAlgorithm());
             addAlgorithm(new DaysToTreatmentAlgorithm());
             addAlgorithm(new DerivedSummaryGradeAlgorithm2018());
+            addAlgorithm(new TumorSizeOverTimeAlgorithm());
         }
         finally {
             _LOCK.writeLock().unlock();
