@@ -1,18 +1,22 @@
 ## Algorithms Version History
 
+**Changes in version 4.8 (not released yet)**
+
+- Updated Derived Grade 2018 algorithm to handle value 8 for special schema IDs (issue #179).
+
 **Changes in version 4.7**
 
-- Added new SEER algorithm to compute Tumor Size Over Time.
+- Added new SEER algorithm to compute Tumor Size Over Time (issue #177).
 - Updated CSV library from version 5.7.1 to version 5.9.
 
 **Changes in version 4.6**
 
-- Changed histology ranges in multiple SEER recode algorithms (issue #147).
+- Changed histology ranges in multiple SEER recode algorithms (issue #176).
 
 **Changes in version 4.5**
 
-- Fixed SEER Site Recode 2023 and SEER Site Recode 2023 Expanded to output 2-digit codes instead of 3.
-- Updated data for the NPCR EPHT SubCounty algorithm.
+- Fixed SEER Site Recode 2023 and SEER Site Recode 2023 Expanded to output 2-digit codes instead of 3 (issue #175).
+- Updated data for the NPCR EPHT SubCounty algorithm (issue #161).
 
 **Changes in version 4.4**
 
