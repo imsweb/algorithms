@@ -55,5 +55,11 @@ public class DerivedSummaryGradeUtilsTest {
         Assert.assertEquals("H", DerivedSummaryGradeUtils.deriveSummaryGrade("00480", "3", "X", "H"));
         Assert.assertNull(DerivedSummaryGradeUtils.deriveSummaryGrade("00480", null, "X", "X"));
 
+        Assert.assertEquals("8", DerivedSummaryGradeUtils.deriveSummaryGrade("00790", null, "8", null));
+        Assert.assertEquals("8", DerivedSummaryGradeUtils.deriveSummaryGrade("00790", null, null, "8"));
+        Assert.assertEquals("8", DerivedSummaryGradeUtils.deriveSummaryGrade("00790", null, "8", "X"));
+        Assert.assertEquals("8", DerivedSummaryGradeUtils.deriveSummaryGrade("00790", null, "X", "8"));
+        Assert.assertNull(DerivedSummaryGradeUtils.deriveSummaryGrade("00790", null, "X", null));
+        Assert.assertNull("8", DerivedSummaryGradeUtils.deriveSummaryGrade("00790", null, null, "X"));
     }
 }
