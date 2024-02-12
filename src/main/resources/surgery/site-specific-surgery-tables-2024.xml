@@ -956,7 +956,7 @@ Code removal/surgical ablation of single or multiple liver metastases under the 
             <description><![CDATA[[Code B600 includes removal of the entire colon, including the entire rectum]]]></description>
         </row>
         <row level="1">
-            <code>A610</code>
+            <code>B610</code>
             <description><![CDATA[Plus resection of contiguous organ; example: small bowel, bladder]]></description>
         </row>
         <row level="1">
@@ -987,12 +987,12 @@ Code removal/surgical ablation of single or multiple liver metastases under the 
         </row>
         <row break="true"/>
         <row level="0">
-            <code>A900</code>
+            <code>B900</code>
             <description><![CDATA[Surgery, NOS]]></description>
         </row>
         <row break="true"/>
         <row level="0">
-            <code>A990</code>
+            <code>B990</code>
             <description><![CDATA[Unknown if surgery performed; death certificate ONLY]]></description>
         </row>
     </surgery-table>
@@ -1582,7 +1582,7 @@ Code removal/surgical ablation of single or multiple liver metastases under the 
             <description><![CDATA[Local or partial pancreatectomy and duodenectomy <b>WITHOUT</b> distal/partial gastrectomy, pylorus preserving Whipple]]></description>
         </row>
         <row level="1">
-            <code>A370</code>
+            <code>B370</code>
             <description><![CDATA[Local or partial pancreatectomy and duodenectomy <b>WITH</b> partial gastrectomy, Classic Whipple]]></description>
         </row>
         <row level="0">
@@ -1615,7 +1615,7 @@ Code removal/surgical ablation of single or multiple liver metastases under the 
         </row>
         <row break="true"/>
         <row level="0">
-            <code>A990</code>
+            <code>B990</code>
             <description><![CDATA[Unknown if surgery performed; death certificate ONLY]]></description>
         </row>
     </surgery-table>
@@ -1916,12 +1916,12 @@ Code removal/surgical ablation of single or multiple liver metastases under the 
         </row>
         <row break="true"/>
         <row level="0">
-            <code>A900</code>
+            <code>B900</code>
             <description><![CDATA[Surgery, NOS]]></description>
         </row>
         <row break="true"/>
         <row level="0">
-            <code>A990</code>
+            <code>B990</code>
             <description><![CDATA[Unknown if surgery performed; death certificate ONLY]]></description>
         </row>
     </surgery-table>
@@ -2170,7 +2170,7 @@ Connective, Subcutaneous, And Other Soft Tissues C490-C499
         </row>
         <row break="true"/>
         <row level="0">
-            <code>A=B800</code>
+            <code>B800</code>
             <description><![CDATA[Mastectomy, NOS (including extended radical mastectomy)]]></description>
         </row>
         <row break="true"/>
@@ -3585,7 +3585,7 @@ Do not code laminectomies for spinal cord primaries
         <pre-note><![CDATA[Thyroid Gland<br/>C739
 ]]></pre-note>
         <row level="0">
-            <code>A000</code>
+            <code>B000</code>
             <description><![CDATA[None; no surgery of primary site; autopsy ONLY]]></description>
         </row>
         <row break="true"/>
@@ -3616,7 +3616,7 @@ Do not code laminectomies for spinal cord primaries
             <description><![CDATA[Lobectomy and/or isthmectomy]]></description>
         </row>
         <row level="1">
-            <code>A251</code>
+            <code>B251</code>
             <description><![CDATA[Lobectomy ONLY (right or left)]]></description>
         </row>
         <row level="1">
