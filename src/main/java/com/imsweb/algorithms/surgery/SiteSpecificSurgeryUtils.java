@@ -119,7 +119,7 @@ public final class SiteSpecificSurgeryUtils {
             return null;
 
         // optimization: some years share the same data, so let's adjust the DX year so its XML data actually exists
-        int year = IntStream.of(1998, 2004, 2007, 2010, 2012, 2013, 2014, 2015, 2016, 2018, 2021, 2022, 2023).filter(y -> y <= dxYear).max().orElse(2023);
+        int year = IntStream.of(1998, 2004, 2007, 2010, 2012, 2013, 2014, 2015, 2016, 2018, 2021, 2022, 2023, 2024).filter(y -> y <= dxYear).max().orElse(2024);
 
         _lock.readLock().lock();
         if (!_data.containsKey(year)) {
