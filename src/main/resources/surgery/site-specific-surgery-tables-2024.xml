@@ -791,9 +791,9 @@
     </surgery-table>
     <surgery-table title="Colon">
         <site-inclusion>C180-C189</site-inclusion>
-        <pre-note><![CDATA[Colon<br/>C180-C189
-Code removal/surgical ablation of single or multiple liver metastases under the data item <i>Surgical Procedure of Other Site</i> (NAACCR Item # 1294)<br/>
-[<b><i>SEER Note:</i></b> Do not code a colostomy, with no colon tissue removed, as surgery. If colostomy is the only procedure performed, assign surgery code B000.]<br/>
+        <pre-note><![CDATA[Colon<br/>C180-C189<br/><br/>
+Code removal/surgical ablation of single or multiple liver metastases under the data item <i>Surgical Procedure of Other Site</i> (NAACCR Item # 1294)<br/><br/>
+[<b><i>SEER Note:</i></b> Do not code a colostomy, with no colon tissue removed, as surgery. If colostomy is the only procedure performed, assign surgery code B000.]<br/><br/>
 [<b><i>SEER Note:</i></b> Code circumferential resection margin (CRM) (NAACCR # 3823) when assigning surgery codes B300-B800. CRM is not applicable for other surgery codes for this site.]
 ]]></pre-note>
         <row level="0">
@@ -807,7 +807,7 @@ Code removal/surgical ablation of single or multiple liver metastases under the 
         </row>
         <row level="1">
             <code/>
-            <description><![CDATA[B100 includes electrocautery; fulguration (includes use of hot forceps for tumor destruction)]]></description>
+            <description><![CDATA[<b><i>Note:</i></b> B100 includes electrocautery; fulguration (includes use of hot forceps for tumor destruction)]]></description>
         </row>
         <row level="0">
             <code/>
@@ -877,7 +877,7 @@ Code removal/surgical ablation of single or multiple liver metastases under the 
             <code>B300</code>
             <description><![CDATA[Partial colectomy, removal of one or more segments with colon resection but less than half of colon is removed]]></description>
         </row>
-        <row level="0">
+        <row level="1">
             <code/>
             <description><![CDATA[<b><i>Note:</i></b> Code B300 includes removal of one or more colon segments, but less than half of the colon.<ul><li>Segments include cecum, ascending, hepatic flexure, transverse colon, splenic flexure, sigmoid colon and/or the descending colon</li><li>Transverse colectomy includes transverse colon</li><li>Splenic flexure colectomy includes transverse colon and the splenic flexure</li><li>Sigmoidectomy includes removal of sigmoid colon and descending colon</li></ul>]]></description>
         </row>
@@ -900,7 +900,7 @@ Code removal/surgical ablation of single or multiple liver metastases under the 
         </row>
         <row level="1">
             <code/>
-            <description><![CDATA[[<b><i>SEER Note:</i></b>  Removal of a short portion of the distal ileum is not “removal of a contiguous organ.”]]]></description>
+            <description><![CDATA[[<b><i>SEER Note:</i></b>  Removal of a short portion of the distal ileum is <b>not</b> “removal of a contiguous organ.”]]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -930,12 +930,13 @@ Code removal/surgical ablation of single or multiple liver metastases under the 
         <row break="true"/>
         <row level="0">
             <code>B500</code>
-            <description><![CDATA[Total colectomy (removal of colon from cecum to the rectosigmoid junction; may include a portion of the rectum)]]></description>
+            <description><![CDATA[Total colectomy (removal of colon from cecum to the rectosigmoid junction; may include a <b>portion</b> of the rectum)]]></description>
         </row>
-        <row level="0">
+        <row level="1">
             <code/>
-            <description><![CDATA[[<b><i>Note:</i></b> Code B500 includes removal of all segments of colon, NOT including the entire rectum]]]></description>
+            <description><![CDATA[<b><i>Note:</i></b> Code B500 includes removal of all segments of colon, NOT including the entire rectum]]></description>
         </row>
+        <row break="true"/>
         <row level="1">
             <code>B510</code>
             <description><![CDATA[Plus resection of contiguous organ; example: small bowel, bladder]]></description>
@@ -949,9 +950,9 @@ Code removal/surgical ablation of single or multiple liver metastases under the 
             <code>B600</code>
             <description><![CDATA[Total proctocolectomy (removal of colon from cecum to the rectosigmoid junction, including the <b>entire</b> rectum)]]></description>
         </row>
-        <row level="0">
+        <row level="1">
             <code/>
-            <description><![CDATA[[<b><i>Note:</i></b> Code B600 includes removal of the entire colon, including the <b>entire</b> rectum]]]></description>
+            <description><![CDATA[<b><i>Note:</i></b> Code B600 includes removal of the entire colon, including the entire rectum]]></description>
         </row>
         <row level="0">
             <code/>
@@ -1600,7 +1601,7 @@ Code removal/surgical ablation of single or multiple liver metastases under the 
         </row>
         <row level="1">
             <code/>
-            <description><![CDATA[[<b>B600 includes extended pancreatoduodenectomy</b>]]]></description>
+            <description><![CDATA[<b><i>Note:</i></b> B600 includes extended pancreatoduodenectomy]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -1612,7 +1613,6 @@ Code removal/surgical ablation of single or multiple liver metastases under the 
             <code>B900</code>
             <description><![CDATA[Surgery, NOS]]></description>
         </row>
-        <row break="true"/>
         <row level="0">
             <code/>
             <description><![CDATA[[<b><i>SEER Note:</i></b> Assign code B900 for NanoKnife, or irreversible electroporation (IRE)]]]></description>
@@ -1848,9 +1848,13 @@ Code removal/surgical ablation of single or multiple liver metastases under the 
             <code>B330</code>
             <description><![CDATA[Lobectomy WITH mediastinal lymph node dissection]]></description>
         </row>
+        <row level="1">
+            <code/>
+            <description><![CDATA[<b>The lymph node dissection should also be coded under <i>Scope of Regional Lymph Node Surgery</i> (NAACCR Item # 1292) or <i>Scope of Regional Lymph Node Surgery</i> at This Facility (NAACCR Item #672)</b>]]></description>
+        </row>
         <row level="0">
             <code/>
-            <description><![CDATA[<b><i>Note:</i></b> A sleeve lobectomy/bilobectomy includes resection of the entire lobe(s) in addition to part of the bronchus. A sleeve lobectomy is distinct from a typical lobectomy or bilobectomy, in which the bronchus is not resected. <b>The lymph node dissection should also be coded under <i>Scope of Regional Lymph Node Surgery</i> (NAACCR Item # 1292) or <i>Scope of Regional Lymph Node Surgery</i> at This Facility (NAACCR Item #672)</b>]]></description>
+            <description><![CDATA[<b><i>Note:</i></b> A sleeve lobectomy/bilobectomy includes resection of the entire lobe(s) in addition to part of the bronchus. A sleeve lobectomy is distinct from a typical lobectomy or bilobectomy, in which the bronchus is not resected.]]></description>
         </row>
         <row level="0">
             <code/>
@@ -2146,6 +2150,7 @@ If contralateral breast reveals a second primary, each breast is abstracted sepa
             <code/>
             <description><![CDATA[<b><i>Note:</i></b> Use code B200 when there is a previous positive biopsy (either core or FNA).]]></description>
         </row>
+        <row break="true"/>
         <row level="1">
             <code>B210</code>
             <description><![CDATA[Excisional breast biopsy - Diagnostic excision, no pre-operative biopsy proven diagnosis of cancer]]></description>
@@ -2233,7 +2238,7 @@ If contralateral breast reveals a second primary, each breast is abstracted sepa
         <row break="true"/>
         <row level="0">
             <code/>
-            <description><![CDATA[[<b><i>SEER Note:</i></b> Code the most invasive, extensive, or definitive surgery in Surgery of Primary Site 2023 (NAACCR #1291). Assign code B510 or B520 if a patient has an excisional biopsy followed by an areolar-sparing mastectomy during the first course of therapy. Code the cumulative result of the surgeries, which is an areolar-sparing mastectomy in this case.]]]></description>
+            <description><![CDATA[[<b><i>SEER Note:</i></b> Code the most invasive, extensive, or definitive surgery in Surgery of Primary Site 2023 (NAACCR #1291).<br/><br/>Assign code B510 or B520 if a patient has an excisional biopsy followed by an areolar-sparing mastectomy during the first course of therapy. Code the cumulative result of the surgeries, which is an areolar-sparing mastectomy in this case.]]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -2250,7 +2255,7 @@ If contralateral breast reveals a second primary, each breast is abstracted sepa
         </row>
         <row level="0">
             <code/>
-            <description><![CDATA[<b><i>Note:</i></b> A total (simple) mastectomy removes all breast tissue, the nipple, areolar complex, and breast skin. It is performed with and without sentinel node biopsy or ALND. Use code B600, B610, B620 if patient had a modified radical mastectomy.]]></description>
+            <description><![CDATA[<b><i>Note:</i></b> A total (simple) mastectomy removes all breast tissue, the nipple, areolar complex, and breast skin. It is performed with and without sentinel node biopsy or ALND.<br/>Use code B600, B610, B620 if patient had a modified radical mastectomy.]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -2267,11 +2272,11 @@ If contralateral breast reveals a second primary, each breast is abstracted sepa
         </row>
         <row level="1">
             <code>B760</code>
-            <description><![CDATA[<b><i>Note:</i></b> Bilateral mastectomy for a single tumor involving both breasts, as for bilateral inflammatory carcinoma]]></description>
+            <description><![CDATA[Bilateral mastectomy for a single tumor involving both breasts, as for bilateral inflammatory carcinoma]]></description>
         </row>
         <row level="0">
             <code/>
-            <description><![CDATA[A radical mastectomy removes all breast tissue, the nipple areolar complex, breast skin, and pectoralis muscle. It is performed with level l-III ALND.]]></description>
+            <description><![CDATA[<b><i>Note:</i></b> A radical mastectomy removes all breast tissue, the nipple areolar complex, breast skin, and pectoralis muscle. It is performed with level l-III ALND.]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -3609,7 +3614,7 @@ Do not code laminectomies for spinal cord primaries
         </row>
         <row level="0">
             <code/>
-            <description><![CDATA[No specimen sent to pathology from surgical event B130]]></description>
+            <description><![CDATA[<b>No specimen sent to pathology from surgical event B130</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">

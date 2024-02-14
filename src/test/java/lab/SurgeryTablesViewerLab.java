@@ -61,7 +61,7 @@ public class SurgeryTablesViewerLab extends JFrame {
     public SurgeryTablesViewerLab() {
         JPanel contentPnl = SeerGuiUtils.createContentPanel(this, 5);
 
-        SurgeryTablesDto data = SiteSpecificSurgeryUtils.getInstance().getTables(2023);
+        SurgeryTablesDto data = SiteSpecificSurgeryUtils.getInstance().getTables(2024);
 
         // WEST - list of tables
         JPanel westPnl = SeerGuiUtils.createPanel();
