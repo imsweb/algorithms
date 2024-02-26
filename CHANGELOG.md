@@ -1,6 +1,6 @@
 ## Algorithms Version History
 
-**Changes in version 4.8 (not released yet)**
+**Changes in version 4.8**
 
 - Updated Derived Grade 2018 algorithm to handle value 8 for special schema IDs (issue #179).
 - Added site-specific surgery tables for 2024 DX year (Issue #180).
