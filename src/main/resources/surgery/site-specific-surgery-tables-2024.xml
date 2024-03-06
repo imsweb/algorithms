@@ -849,7 +849,7 @@ Code removal/surgical ablation of single or multiple liver metastases under the 
         <row break="true"/>
         <row level="1">
             <code/>
-            <description><![CDATA[<b>Any combination of B200 or B260-B290 WITH<b/>]]></description>
+            <description><![CDATA[<b>Any combination of B200 or B260-B290 WITH</b>]]></description>
         </row>
         <row level="2">
             <code>B220</code>
@@ -866,7 +866,7 @@ Code removal/surgical ablation of single or multiple liver metastases under the 
         <row break="true"/>
         <row level="1">
             <code>B291</code>
-            <description><![CDATA[Electrocautery]]></description>
+            <description><![CDATA[Wide Local Excision with Tumor]]></description>
         </row>
         <row level="2">
             <code/>
@@ -1799,7 +1799,7 @@ Code removal/surgical ablation of single or multiple liver metastases under the 
         </row>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>No specimen sent to pathology from surgical events A120-A130 and A150</b>]]></description>
+            <description><![CDATA[<b>No specimen sent to pathology from surgical events B120-B130 and B150</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
@@ -3669,7 +3669,7 @@ Do not code laminectomies for spinal cord primaries
         <row break="true"/>
         <row level="0">
             <code/>
-            <description><![CDATA[<b>Specimen sent to pathology from surgical events B250-B800</b>]]></description>
+            <description><![CDATA[<b>Specimen sent to pathology from surgical events B200-B800</b>]]></description>
         </row>
         <row break="true"/>
         <row level="0">
