@@ -2,7 +2,7 @@
 
 **Changes in version 4.9**
 
-- Fixed a few mistakes in new 2024 site-specific surgary lookups.
+- Fixed a few mistakes in new 2024 site-specific surgery lookups.
 
 **Changes in version 4.8**
 
