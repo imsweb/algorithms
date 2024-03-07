@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 4.9**
+
+- Fixed a few mistakes in new 2024 site-specific surgary lookups.
+
 **Changes in version 4.8**
 
 - Updated Derived Grade 2018 algorithm to handle value 8 for special schema IDs (issue #179).
