@@ -257,7 +257,7 @@ public class AlgorithmsTest {
 
         // IARC
         alg = Algorithms.getAlgorithm(Algorithms.ALG_IARC);
-        Assert.assertTrue(alg.getParameters().isEmpty());
+        Assert.assertFalse(alg.getParameters().isEmpty());
         Assert.assertTrue(alg.getUnknownValues().isEmpty());
         input = new AlgorithmInput();
         patMap = new HashMap<>();
