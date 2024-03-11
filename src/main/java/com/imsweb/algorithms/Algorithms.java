@@ -200,6 +200,7 @@ public final class Algorithms {
     public static final String PARAM_SEER_COD_CLASS_CUTOFF_YEAR = "seerCodClassCutoffYear";
     public static final String PARAM_CENSUS_POVERTY_INC_RECENT_YEARS = "censusPovertyIncludeRecentYears";
     public static final String PARAM_SURV_CUTOFF_YEAR = "survivalCutoffYear";
+    public static final String PARAM_IARC_REVIEW_MODE = "iarcReviewMode";
 
     // cached fields
     private static final Map<String, AlgorithmField> _CACHED_FIELDS = new HashMap<>();

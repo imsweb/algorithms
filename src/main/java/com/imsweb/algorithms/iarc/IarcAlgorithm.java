@@ -14,6 +14,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 import com.imsweb.algorithms.AbstractAlgorithm;
 import com.imsweb.algorithms.AlgorithmInput;
 import com.imsweb.algorithms.AlgorithmOutput;
+import com.imsweb.algorithms.AlgorithmParam;
 import com.imsweb.algorithms.Algorithms;
 import com.imsweb.algorithms.internal.Utils;
 
@@ -24,6 +25,7 @@ import static com.imsweb.algorithms.Algorithms.FIELD_IARC_MP_INDICATOR;
 import static com.imsweb.algorithms.Algorithms.FIELD_PRIMARY_SITE;
 import static com.imsweb.algorithms.Algorithms.FIELD_SEQ_NUM_CTRL;
 import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
+import static com.imsweb.algorithms.Algorithms.PARAM_IARC_REVIEW_MODE;
 
 public class IarcAlgorithm extends AbstractAlgorithm {
 
@@ -31,6 +33,8 @@ public class IarcAlgorithm extends AbstractAlgorithm {
         super(Algorithms.ALG_IARC, IarcUtils.ALG_NAME, IarcUtils.VERSION);
 
         _url = "http://www.iacr.com.fr/images/doc/MPrules_july2004.pdf";
+
+        _params.add(AlgorithmParam.of(PARAM_IARC_REVIEW_MODE, "Review Mode", Boolean.class));
 
         _inputFields.add(Algorithms.getField(FIELD_PRIMARY_SITE));
         _inputFields.add(Algorithms.getField(FIELD_HIST_O3));
@@ -43,6 +47,10 @@ public class IarcAlgorithm extends AbstractAlgorithm {
 
     @Override
     public AlgorithmOutput execute(AlgorithmInput input) {
+        Boolean reviewMode = (Boolean)input.getParameter(PARAM_IARC_REVIEW_MODE);
+        if (reviewMode == null)
+            reviewMode = Boolean.FALSE;
+
         List<IarcMpInputRecordDto> inputRecordDtoList = new ArrayList<>();
         for (Map<String, Object> inputTumor : Utils.extractTumors(Utils.extractPatient(input))) {
             IarcMpInputRecordDto inputRecordDto = new IarcMpInputRecordDto();
@@ -59,7 +67,7 @@ public class IarcAlgorithm extends AbstractAlgorithm {
             inputRecordDtoList.add(inputRecordDto);
         }
 
-        IarcUtils.calculateIarcMp(inputRecordDtoList);
+        IarcUtils.calculateIarcMp(inputRecordDtoList, reviewMode);
 
         Map<String, Object> outputPatient = new HashMap<>();
         List<Map<String, Object>> outputTumors = new ArrayList<>();

@@ -24,13 +24,29 @@ public final class IarcUtils {
 
     public static final Integer DUPLICATE = 0;
     public static final Integer PRIMARY = 1;
+    public static final Integer PRIMARY_WITH_DUPLICATE = 2; // only used in special "review" mode
     public static final Integer INSITU = 9;
 
     private IarcUtils() {
         // utility class
     }
 
+    /**
+     * Computes the IARC multiple primary flag on all the provided records belonging to the same patient.
+     * @param records records to process
+     * @return the computed IARC MP flag
+     */
     public static List<IarcMpInputRecordDto> calculateIarcMp(List<IarcMpInputRecordDto> records) {
+        return calculateIarcMp(records, false);
+    }
+
+    /**
+     * Computes the IARC multiple primary flag on all the provided records belonging to the same patient.
+     * @param records records to process
+     * @param flagPrimaryWithDuplicate if set to false (the default), primary tumors will be set to 1=primary whether they have a duplicate or not. Otherwise, they will be set to 1=primary if they have no duplicate and 2=primary-with-duplicate if they have a duplicate.
+     * @return the computed IARC MP flag
+     */
+    public static List<IarcMpInputRecordDto> calculateIarcMp(List<IarcMpInputRecordDto> records, boolean flagPrimaryWithDuplicate) {
         //No records
         if (records == null || records.isEmpty())
             return null;
@@ -79,6 +95,8 @@ public final class IarcUtils {
                     //Kaposi sarcoma or Hemato, no need to check the site
                     if (isKaposiSarcoma(r1, r2) || isHemato(r1, r2) || (isSameSiteGroup(r1, r2) && (isSameHistGroup(r1, r2) || isNosVsSpecific(r1, r2)))) {
                         r2.setInternationalPrimaryIndicator(DUPLICATE);
+                        if (flagPrimaryWithDuplicate)
+                            r1.setInternationalPrimaryIndicator(PRIMARY_WITH_DUPLICATE);
                         if (needToUpdateHistology(r1, r2)) {
                             r1.setHistology(r2.getHistology());
                             r1.setHistGroup(calculateHistGroup(r1.getHistology()));
@@ -187,18 +205,18 @@ public final class IarcUtils {
         //14 is NOS for 8-13
         //5 is NOS for 1-4
         return (rec1.getHistGroup() == 17 && ((rec2.getHistGroup() >= 1 && rec2.getHistGroup() <= 7) || rec2.getHistGroup() == 15 || rec2.getHistGroup() == 16)) ||
-                (rec2.getHistGroup() == 17 && ((rec1.getHistGroup() >= 1 && rec1.getHistGroup() <= 7) || rec1.getHistGroup() == 15 || rec1.getHistGroup() == 16)) ||
-                (rec1.getHistGroup() == 14 && rec2.getHistGroup() >= 8 && rec2.getHistGroup() <= 13) ||
-                (rec2.getHistGroup() == 14 && rec1.getHistGroup() >= 8 && rec1.getHistGroup() <= 13) ||
-                (rec1.getHistGroup() == 5 && rec2.getHistGroup() >= 1 && rec2.getHistGroup() <= 4) ||
-                (rec2.getHistGroup() == 5 && rec1.getHistGroup() >= 1 && rec1.getHistGroup() <= 4);
+               (rec2.getHistGroup() == 17 && ((rec1.getHistGroup() >= 1 && rec1.getHistGroup() <= 7) || rec1.getHistGroup() == 15 || rec1.getHistGroup() == 16)) ||
+               (rec1.getHistGroup() == 14 && rec2.getHistGroup() >= 8 && rec2.getHistGroup() <= 13) ||
+               (rec2.getHistGroup() == 14 && rec1.getHistGroup() >= 8 && rec1.getHistGroup() <= 13) ||
+               (rec1.getHistGroup() == 5 && rec2.getHistGroup() >= 1 && rec2.getHistGroup() <= 4) ||
+               (rec2.getHistGroup() == 5 && rec1.getHistGroup() >= 1 && rec1.getHistGroup() <= 4);
     }
 
     private static boolean needToUpdateHistology(IarcMpInputRecordDto primaryRec, IarcMpInputRecordDto dupRecord) {
         return (primaryRec.getHistGroup() == 17 && ((dupRecord.getHistGroup() >= 1 && dupRecord.getHistGroup() <= 7) || dupRecord.getHistGroup() == 15 || dupRecord.getHistGroup() == 16)) ||
-                (primaryRec.getHistGroup() == 14 && dupRecord.getHistGroup() >= 8 && dupRecord.getHistGroup() <= 13) ||
-                (primaryRec.getHistGroup() == 5 && dupRecord.getHistGroup() >= 1 && dupRecord.getHistGroup() <= 4) ||
-                (primaryRec.getHistGroup().equals(dupRecord.getHistGroup()) && NumberUtils.toInt(primaryRec.getHistology()) < NumberUtils.toInt(dupRecord.getHistology()));
+               (primaryRec.getHistGroup() == 14 && dupRecord.getHistGroup() >= 8 && dupRecord.getHistGroup() <= 13) ||
+               (primaryRec.getHistGroup() == 5 && dupRecord.getHistGroup() >= 1 && dupRecord.getHistGroup() <= 4) ||
+               (primaryRec.getHistGroup().equals(dupRecord.getHistGroup()) && NumberUtils.toInt(primaryRec.getHistology()) < NumberUtils.toInt(dupRecord.getHistology()));
     }
 
     private static class InternalRecDto implements Comparable<InternalRecDto> {

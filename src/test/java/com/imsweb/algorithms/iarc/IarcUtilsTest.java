@@ -53,6 +53,7 @@ public class IarcUtilsTest {
         patient.clear();
         patient.add(new IarcMpInputRecordDto("2017", "01", "05", 1, "C679", "8000", "2"));
         Assert.assertEquals(IarcUtils.PRIMARY, IarcUtils.calculateIarcMp(patient).get(0).getInternationalPrimaryIndicator());
+        Assert.assertEquals(IarcUtils.PRIMARY, IarcUtils.calculateIarcMp(patient, true).get(0).getInternationalPrimaryIndicator());
 
         //Kaposi Sarcoma, site doesn't matter, 2nd record is takes because of sequence number
         patient.clear();
@@ -61,6 +62,9 @@ public class IarcUtilsTest {
         List<IarcMpInputRecordDto> results = IarcUtils.calculateIarcMp(patient);
         Assert.assertEquals(IarcUtils.DUPLICATE, results.get(0).getInternationalPrimaryIndicator());
         Assert.assertEquals(IarcUtils.PRIMARY, results.get(1).getInternationalPrimaryIndicator());
+        results = IarcUtils.calculateIarcMp(patient, true);
+        Assert.assertEquals(IarcUtils.DUPLICATE, results.get(0).getInternationalPrimaryIndicator());
+        Assert.assertEquals(IarcUtils.PRIMARY_WITH_DUPLICATE, results.get(1).getInternationalPrimaryIndicator());
 
         //Hemato, same group, the second one is diagnosed first
         patient.clear();
@@ -71,6 +75,9 @@ public class IarcUtilsTest {
         Assert.assertEquals(IarcUtils.PRIMARY, results.get(1).getInternationalPrimaryIndicator());
         Assert.assertEquals("9597", results.get(0).getHistology());
         Assert.assertEquals("9940", results.get(1).getHistology());
+        results = IarcUtils.calculateIarcMp(patient, true);
+        Assert.assertEquals(IarcUtils.DUPLICATE, results.get(0).getInternationalPrimaryIndicator());
+        Assert.assertEquals(IarcUtils.PRIMARY_WITH_DUPLICATE, results.get(1).getInternationalPrimaryIndicator());
 
         //Hemato, different group but one is NOS, the second one is picked as primary because  federal (00-59, 98, 99) considered first than non-federal (60-97)
         patient.clear();
@@ -82,6 +89,9 @@ public class IarcUtilsTest {
         Assert.assertEquals("9656", results.get(0).getHistology());
         //NOS histology is replaced by more specific
         Assert.assertEquals("9656", results.get(1).getHistology());
+        results = IarcUtils.calculateIarcMp(patient, true);
+        Assert.assertEquals(IarcUtils.DUPLICATE, results.get(0).getInternationalPrimaryIndicator());
+        Assert.assertEquals(IarcUtils.PRIMARY_WITH_DUPLICATE, results.get(1).getInternationalPrimaryIndicator());
 
         //Hemato, different group
         patient.clear();
@@ -90,6 +100,9 @@ public class IarcUtilsTest {
         //Group 9
         patient.add(new IarcMpInputRecordDto("2001", "02", "26", 99, "C339", "9597", "3"));
         results = IarcUtils.calculateIarcMp(patient);
+        Assert.assertEquals(IarcUtils.PRIMARY, results.get(0).getInternationalPrimaryIndicator());
+        Assert.assertEquals(IarcUtils.PRIMARY, results.get(1).getInternationalPrimaryIndicator());
+        results = IarcUtils.calculateIarcMp(patient, true);
         Assert.assertEquals(IarcUtils.PRIMARY, results.get(0).getInternationalPrimaryIndicator());
         Assert.assertEquals(IarcUtils.PRIMARY, results.get(1).getInternationalPrimaryIndicator());
 
@@ -101,6 +114,9 @@ public class IarcUtilsTest {
         results = IarcUtils.calculateIarcMp(patient);
         Assert.assertEquals(IarcUtils.PRIMARY, results.get(0).getInternationalPrimaryIndicator());
         Assert.assertEquals(IarcUtils.DUPLICATE, results.get(1).getInternationalPrimaryIndicator());
+        results = IarcUtils.calculateIarcMp(patient, true);
+        Assert.assertEquals(IarcUtils.PRIMARY_WITH_DUPLICATE, results.get(0).getInternationalPrimaryIndicator());
+        Assert.assertEquals(IarcUtils.DUPLICATE, results.get(1).getInternationalPrimaryIndicator());
 
         //same site, different hist group
         patient.clear();
@@ -109,6 +125,9 @@ public class IarcUtilsTest {
         //Group 2, site C069
         patient.add(new IarcMpInputRecordDto("2001", "11", "26", 0, "C065", "8100", "3"));
         results = IarcUtils.calculateIarcMp(patient);
+        Assert.assertEquals(IarcUtils.PRIMARY, results.get(0).getInternationalPrimaryIndicator());
+        Assert.assertEquals(IarcUtils.PRIMARY, results.get(1).getInternationalPrimaryIndicator());
+        results = IarcUtils.calculateIarcMp(patient, true);
         Assert.assertEquals(IarcUtils.PRIMARY, results.get(0).getInternationalPrimaryIndicator());
         Assert.assertEquals(IarcUtils.PRIMARY, results.get(1).getInternationalPrimaryIndicator());
 
@@ -121,12 +140,18 @@ public class IarcUtilsTest {
         results = IarcUtils.calculateIarcMp(patient);
         Assert.assertEquals(IarcUtils.DUPLICATE, results.get(0).getInternationalPrimaryIndicator());
         Assert.assertEquals(IarcUtils.PRIMARY, results.get(1).getInternationalPrimaryIndicator());
+        results = IarcUtils.calculateIarcMp(patient, true);
+        Assert.assertEquals(IarcUtils.DUPLICATE, results.get(0).getInternationalPrimaryIndicator());
+        Assert.assertEquals(IarcUtils.PRIMARY_WITH_DUPLICATE, results.get(1).getInternationalPrimaryIndicator());
 
         //Site group and hist group unknown
         patient.clear();
         patient.add(new IarcMpInputRecordDto("", "88", "27", 0, "XYZ", "9597", "3"));
         patient.add(new IarcMpInputRecordDto("", "66", "dd", 1, "C339", "HIST", "3"));
         results = IarcUtils.calculateIarcMp(patient);
+        Assert.assertEquals(IarcUtils.PRIMARY, results.get(0).getInternationalPrimaryIndicator());
+        Assert.assertEquals(IarcUtils.PRIMARY, results.get(1).getInternationalPrimaryIndicator());
+        results = IarcUtils.calculateIarcMp(patient, true);
         Assert.assertEquals(IarcUtils.PRIMARY, results.get(0).getInternationalPrimaryIndicator());
         Assert.assertEquals(IarcUtils.PRIMARY, results.get(1).getInternationalPrimaryIndicator());
 
@@ -136,6 +161,9 @@ public class IarcUtilsTest {
         patient.add(new IarcMpInputRecordDto("2001", "99", "30", 0, "C679", "9140", "3"));
         results = IarcUtils.calculateIarcMp(patient);
         Assert.assertEquals(IarcUtils.PRIMARY, results.get(0).getInternationalPrimaryIndicator());
+        Assert.assertEquals(IarcUtils.DUPLICATE, results.get(1).getInternationalPrimaryIndicator());
+        results = IarcUtils.calculateIarcMp(patient, true);
+        Assert.assertEquals(IarcUtils.PRIMARY_WITH_DUPLICATE, results.get(0).getInternationalPrimaryIndicator());
         Assert.assertEquals(IarcUtils.DUPLICATE, results.get(1).getInternationalPrimaryIndicator());
     }
 }

@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 4.10 (not released yet)**
+
+- Added a "Review Mode" parameter (defaults to false) to the IARC MP algorithm.
+
 **Changes in version 4.9**
 
 - Fixed a few mistakes in new 2024 site-specific surgery lookups.
