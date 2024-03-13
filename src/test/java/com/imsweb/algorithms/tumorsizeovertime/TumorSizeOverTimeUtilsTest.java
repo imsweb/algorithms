@@ -5,6 +5,7 @@ package com.imsweb.algorithms.tumorsizeovertime;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.LineNumberReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Objects;
@@ -56,6 +57,8 @@ public class TumorSizeOverTimeUtilsTest {
         Assert.assertEquals("990", TumorSizeOverTimeUtils.computeTumorSizeOverTime(inputDto));
         inputDto.setSite("C500");
         inputDto.setEodTumorSize("997");
+        Assert.assertEquals("999", TumorSizeOverTimeUtils.computeTumorSizeOverTime(inputDto));
+        inputDto.setEodTumorSize("002");
         Assert.assertEquals("999", TumorSizeOverTimeUtils.computeTumorSizeOverTime(inputDto));
 
         //2004-2015
@@ -174,11 +177,13 @@ public class TumorSizeOverTimeUtilsTest {
     }
 
     @Test
+    @SuppressWarnings("DataFlowIssue")
     public void testCsvFile() throws IOException, CsvException {
-        try (CSVReader reader = new CSVReaderBuilder(
-                new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("tumorsizeovertime/tumorsize.test.data.csv"), StandardCharsets.US_ASCII)).withSkipLines(1)
-                .build()) {
-            for (String[] row : reader.readAll()) {
+        try (LineNumberReader lineNumberReader = new LineNumberReader(new InputStreamReader(
+                Thread.currentThread().getContextClassLoader().getResourceAsStream("tumorsizeovertime/tumorsize.test.data.csv"), StandardCharsets.US_ASCII));
+                CSVReader reader = new CSVReaderBuilder(lineNumberReader).withSkipLines(1).build()) {
+            String[] row = reader.readNext();
+            while (row != null) {
                 TumorSizeOverTimeInputDto input = new TumorSizeOverTimeInputDto();
                 input.setDxYear(row[0]);
                 input.setSite(row[1]);
@@ -194,7 +199,9 @@ public class TumorSizeOverTimeUtilsTest {
                 String result = TumorSizeOverTimeUtils.computeTumorSizeOverTime(input);
 
                 if (!Objects.equals(expectedResult, result))
-                    Assert.fail("Unexpected result in CSV data file for row " + Arrays.asList(row) + " vs " + result);
+                    Assert.fail("Line " + lineNumberReader.getLineNumber() + " - Unexpected result in CSV data file for row " + Arrays.asList(row) + " vs " + result);
+                
+                row = reader.readNext();
             }
         }
     }

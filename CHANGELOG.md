@@ -2,6 +2,7 @@
 
 **Changes in version 4.10 (not released yet)**
 
+- Tweaked the Tumor Size Over Time algorithm.
 - Added a "Review Mode" parameter (defaults to false) to the IARC MP algorithm.
 
 **Changes in version 4.9**
