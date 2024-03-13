@@ -24,7 +24,6 @@ public final class IarcUtils {
 
     public static final Integer DUPLICATE = 0;
     public static final Integer PRIMARY = 1;
-    public static final Integer PRIMARY_WITH_DUPLICATE = 2; // only used in special "review" mode
     public static final Integer INSITU = 9;
 
     private IarcUtils() {
@@ -96,7 +95,7 @@ public final class IarcUtils {
                     if (isKaposiSarcoma(r1, r2) || isHemato(r1, r2) || (isSameSiteGroup(r1, r2) && (isSameHistGroup(r1, r2) || isNosVsSpecific(r1, r2)))) {
                         r2.setInternationalPrimaryIndicator(DUPLICATE);
                         if (flagPrimaryWithDuplicate)
-                            r1.setInternationalPrimaryIndicator(PRIMARY_WITH_DUPLICATE);
+                            r1.setInternationalPrimaryIndicator(DUPLICATE);
                         if (needToUpdateHistology(r1, r2)) {
                             r1.setHistology(r2.getHistology());
                             r1.setHistGroup(calculateHistGroup(r1.getHistology()));
