@@ -62,6 +62,7 @@ public class CountryData {
         _TRACT_FIELDS.put("npcrEphtSubcounty50k", 11);
         _TRACT_FIELDS.put("tractEstCongressDist", 2);
         _TRACT_FIELDS.put("sviOverallStateBased", 5);
+        _TRACT_FIELDS.put("persistentPoverty", 1);
     }
 
     public static Map<String, Integer> getTractFields() {
@@ -197,6 +198,9 @@ public class CountryData {
 
                                 // Social Vulnerability Index (SVI)
                                 censusData.setSviOverallStateBased(StringUtils.trimToNull(values.get("sviOverallStateBased")));
+                                
+                                // persistence poverty
+                                censusData.setPersistentPoverty(StringUtils.trimToNull(values.get("persistentPoverty")));
                             }
 
                             line = reader.readLine();
