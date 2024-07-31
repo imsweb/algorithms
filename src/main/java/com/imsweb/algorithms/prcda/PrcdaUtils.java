@@ -70,6 +70,7 @@ public final class PrcdaUtils {
      */
     public static PrcdaOutputDto computePrcda(StateCountyInputDto input) {
         PrcdaOutputDto result = new PrcdaOutputDto();
+        
         input.applyRecodes();
 
         if (ENTIRE_STATE_PRCDA.contains(input.getAddressAtDxState())) {

@@ -46,6 +46,8 @@ public class CensusData {
 
     // Social Vulnerability Index
     private String _sviOverallStateBased;
+    
+    private String _persistentPoverty;
 
     // year data keyed by DX year
     private final Map<String, YearData> _yearData = new HashMap<>();
@@ -152,6 +154,14 @@ public class CensusData {
 
     public void setSviOverallStateBased(String sviOverallStateBased) {
         _sviOverallStateBased = sviOverallStateBased;
+    }
+
+    public String getPersistentPoverty() {
+        return _persistentPoverty;
+    }
+
+    public void setPersistentPoverty(String persistentPoverty) {
+        _persistentPoverty = persistentPoverty;
     }
 
     /**

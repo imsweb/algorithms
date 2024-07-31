@@ -23,6 +23,9 @@ import java.util.zip.GZIPInputStream;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
+import com.imsweb.algorithms.StateCountyTractInputDto;
+import com.imsweb.algorithms.StateCountyTractInputDto.CensusTract;
+
 /**
  * Several algorithms need to use data related to either states, counties or census trace codes.
  * To optimize the memory usage, this class was introduced so those algorithms can use a shared
@@ -62,6 +65,7 @@ public class CountryData {
         _TRACT_FIELDS.put("npcrEphtSubcounty50k", 11);
         _TRACT_FIELDS.put("tractEstCongressDist", 2);
         _TRACT_FIELDS.put("sviOverallStateBased", 5);
+        _TRACT_FIELDS.put("persistentPoverty", 1);
     }
 
     public static Map<String, Integer> getTractFields() {
@@ -88,6 +92,26 @@ public class CountryData {
 
     public static final int TRACT_YEAR_MIN_VAL = 2008;
     public static final int TRACT_YEAR_MAX_VAL = 2017;
+
+    public static CensusData getCensusData(StateCountyTractInputDto input, CensusTract censusTract) {
+        if (!CountryData.getInstance().isTractDataInitialized(input.getAddressAtDxState()))
+            CountryData.getInstance().initializeTractData(input.getAddressAtDxState());
+
+        StateData stateData = CountryData.getInstance().getTractData(input.getAddressAtDxState());
+        if (stateData != null) {
+            CountyData countyData = stateData.getCountyData(input.getCountyAtDxAnalysis());
+            if (countyData != null) {
+                if (censusTract == CensusTract.CENSUS_2000)
+                    return countyData.getCensusData(input.getCensusTract2000());
+                else if (censusTract == CensusTract.CENSUS_2010)
+                    return countyData.getCensusData(input.getCensusTract2010());
+                else
+                    throw new IllegalArgumentException("Unsupported census tract: " + censusTract);
+            }
+        }
+
+        return null;
+    }
 
     // singleton instance
     private static final CountryData _INSTANCE = new CountryData();
@@ -197,6 +221,9 @@ public class CountryData {
 
                                 // Social Vulnerability Index (SVI)
                                 censusData.setSviOverallStateBased(StringUtils.trimToNull(values.get("sviOverallStateBased")));
+
+                                // persistence poverty
+                                censusData.setPersistentPoverty(StringUtils.trimToNull(values.get("persistentPoverty")));
                             }
 
                             line = reader.readLine();

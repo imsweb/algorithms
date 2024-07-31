@@ -54,6 +54,7 @@ public final class UihoUtils {
      */
     public static UihoOutputDto computeUiho(StateCountyInputDto input) {
         UihoOutputDto result = new UihoOutputDto();
+        
         input.applyRecodes();
 
         if (input.hasInvalidStateOrCounty() || input.hasUnknownStateOrCounty() || input.countyIsNotReported()) {

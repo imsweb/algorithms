@@ -25,7 +25,6 @@ import static com.imsweb.algorithms.Algorithms.FIELD_RURAL_CONT_1993;
 import static com.imsweb.algorithms.Algorithms.FIELD_RURAL_CONT_2003;
 import static com.imsweb.algorithms.Algorithms.FIELD_RURAL_CONT_2013;
 import static com.imsweb.algorithms.Algorithms.FIELD_STATE_DX;
-import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
 import static com.imsweb.algorithms.Algorithms.FIELD_URIC_2000;
 import static com.imsweb.algorithms.Algorithms.FIELD_URIC_2010;
 import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.CONTINUUM_UNK_96;
@@ -72,16 +71,10 @@ public class RuralUrbanAlgorithm extends AbstractAlgorithm {
 
     @Override
     public AlgorithmOutput execute(AlgorithmInput input) {
-        Map<String, Object> outputPatient = new HashMap<>();
-        List<Map<String, Object>> outputTumors = new ArrayList<>();
-        outputPatient.put(FIELD_TUMORS, outputTumors);
 
+        List<Map<String, Object>> outputTumors = new ArrayList<>();
         for (Map<String, Object> inputTumor : Utils.extractTumors(Utils.extractPatient(input))) {
-            StateCountyTractInputDto inputDto = new StateCountyTractInputDto();
-            inputDto.setAddressAtDxState((String)inputTumor.get(FIELD_STATE_DX));
-            inputDto.setCountyAtDxAnalysis((String)inputTumor.get(FIELD_COUNTY_AT_DX_ANALYSIS));
-            inputDto.setCensusTract2000((String)inputTumor.get(FIELD_CENSUS_2000));
-            inputDto.setCensusTract2010((String)inputTumor.get(FIELD_CENSUS_2010));
+            StateCountyTractInputDto inputDto = createStateCountyTractInputDto(inputTumor);
 
             Map<String, Object> outputTumor = new HashMap<>();
 
@@ -104,7 +97,7 @@ public class RuralUrbanAlgorithm extends AbstractAlgorithm {
             outputTumors.add(outputTumor);
         }
 
-        return AlgorithmOutput.of(outputPatient);
+        return AlgorithmOutput.of(outputTumors);
 
     }
 }
