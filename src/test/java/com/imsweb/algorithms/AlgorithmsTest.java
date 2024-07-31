@@ -25,7 +25,8 @@ public class AlgorithmsTest {
 
     @BeforeClass
     public static void setup() {
-        Algorithms.initialize();
+        if (!Algorithms.isInitialized())
+            Algorithms.initialize();
     }
 
     @Test
@@ -147,7 +148,7 @@ public class AlgorithmsTest {
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
         Assert.assertEquals("0120", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_SURV_MONTH_ACTIVE_FUP));
 
-        // Rural Urban
+        // census-related fields
         alg = Algorithms.getAlgorithm(Algorithms.ALG_RURAL_URBAN);
         Assert.assertTrue(alg.getParameters().isEmpty());
         Assert.assertFalse(alg.getUnknownValues().isEmpty());

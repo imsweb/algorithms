@@ -48,10 +48,7 @@ public class CancerReportingZoneAlgorithm extends AbstractAlgorithm {
         outputPatient.put(FIELD_TUMORS, outputTumors);
 
         for (Map<String, Object> inputTumor : Utils.extractTumors(Utils.extractPatient(input))) {
-            StateCountyTractInputDto inputDto = new StateCountyTractInputDto();
-            inputDto.setAddressAtDxState((String)inputTumor.get(FIELD_STATE_DX));
-            inputDto.setCountyAtDxAnalysis((String)inputTumor.get(FIELD_COUNTY_AT_DX_ANALYSIS));
-            inputDto.setCensusTract2010((String)inputTumor.get(FIELD_CENSUS_2010));
+            StateCountyTractInputDto inputDto = createStateCountyTractInputDto(inputTumor);
 
             CancerReportingZoneOutputDto outputDto = CancerReportingZoneUtils.computeCancerReportingZone(inputDto);
 

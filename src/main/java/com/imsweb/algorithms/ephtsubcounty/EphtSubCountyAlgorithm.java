@@ -13,7 +13,6 @@ import com.imsweb.algorithms.AbstractAlgorithm;
 import com.imsweb.algorithms.AlgorithmInput;
 import com.imsweb.algorithms.AlgorithmOutput;
 import com.imsweb.algorithms.Algorithms;
-import com.imsweb.algorithms.StateCountyTractInputDto;
 import com.imsweb.algorithms.internal.Utils;
 
 import static com.imsweb.algorithms.Algorithms.FIELD_CENSUS_2010;
@@ -22,7 +21,6 @@ import static com.imsweb.algorithms.Algorithms.FIELD_EPHT_2010_GEOID_20K;
 import static com.imsweb.algorithms.Algorithms.FIELD_EPHT_2010_GEOID_50K;
 import static com.imsweb.algorithms.Algorithms.FIELD_EPHT_2010_GEOID_5K;
 import static com.imsweb.algorithms.Algorithms.FIELD_STATE_DX;
-import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
 import static com.imsweb.algorithms.ephtsubcounty.EphtSubCountyUtils.EPHT_2010_GEO_ID_UNK_A;
 import static com.imsweb.algorithms.ephtsubcounty.EphtSubCountyUtils.EPHT_2010_GEO_ID_UNK_D;
 
@@ -46,26 +44,18 @@ public class EphtSubCountyAlgorithm extends AbstractAlgorithm {
 
     @Override
     public AlgorithmOutput execute(AlgorithmInput input) {
-        Map<String, Object> outputPatient = new HashMap<>();
+
         List<Map<String, Object>> outputTumors = new ArrayList<>();
-        outputPatient.put(FIELD_TUMORS, outputTumors);
-
         for (Map<String, Object> inputTumor : Utils.extractTumors(Utils.extractPatient(input))) {
-            StateCountyTractInputDto inputDto = new StateCountyTractInputDto();
-            inputDto.setAddressAtDxState((String)inputTumor.get(FIELD_STATE_DX));
-            inputDto.setCountyAtDxAnalysis((String)inputTumor.get(FIELD_COUNTY_AT_DX_ANALYSIS));
-            inputDto.setCensusTract2010((String)inputTumor.get(FIELD_CENSUS_2010));
-
-            EphtSubCountyOutputDto outputDto = EphtSubCountyUtils.computeEphtSubCounty(inputDto);
+            EphtSubCountyOutputDto outputDto = EphtSubCountyUtils.computeEphtSubCounty(createStateCountyTractInputDto(inputTumor));
 
             Map<String, Object> outputTumor = new HashMap<>();
             outputTumor.put(FIELD_EPHT_2010_GEOID_5K, outputDto.getEpht2010GeoId5k());
             outputTumor.put(FIELD_EPHT_2010_GEOID_20K, outputDto.getEpht2010GeoId20k());
             outputTumor.put(FIELD_EPHT_2010_GEOID_50K, outputDto.getEpht2010GeoId50k());
-
             outputTumors.add(outputTumor);
         }
 
-        return AlgorithmOutput.of(outputPatient);
+        return AlgorithmOutput.of(outputTumors);
     }
 }

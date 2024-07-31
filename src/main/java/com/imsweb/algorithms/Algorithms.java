@@ -27,6 +27,7 @@ import com.imsweb.algorithms.iccc.IcccAlgorithm;
 import com.imsweb.algorithms.lymphoma.LymphoidNeoplasmRecodeAlgorithm2021;
 import com.imsweb.algorithms.napiia.NapiiaAlgorithm;
 import com.imsweb.algorithms.nhia.NhiaAlgorithm;
+import com.imsweb.algorithms.persistentpoverty.PersistentPovertyAlgorithm;
 import com.imsweb.algorithms.prcda.PrcdaAlgorithm;
 import com.imsweb.algorithms.race.Race1RecodeAlgorithm;
 import com.imsweb.algorithms.ruralurban.RuralUrbanAlgorithm;
@@ -74,6 +75,7 @@ public final class Algorithms {
     public static final String ALG_EPHT_SUBCOUNTY = "epht-subcounty";
     public static final String ALG_TRACT_EST_CONGRESS_DIST = "tract-est-congress-dist";
     public static final String ALG_CANCER_REPORTING_ZONE = "cancer-reporting-zone";
+    public static final String ALG_PERSISTENT_POVERTY = "persistent-poverty";
     public static final String ALG_SEER_BRAIN_CNS_RECODE = "seer-brain-cns-recode";
     public static final String ALG_SEER_LYMPH_NEO_RECODE_2021 = "seer-lymphoid-neoplasm-recode-2021";
     public static final String ALG_SEER_DERIVED_SUMMARY_STAGE_2018 = "seer-derived-summary-stage-2018";
@@ -190,6 +192,7 @@ public final class Algorithms {
     public static final String FIELD_TRACT_EST_CONGRESS_DIST = "tractEstCongressDist";
     public static final String FIELD_CANCER_REPORTING_ZONE = "cancerReportingZone";
     public static final String FIELD_CANCER_REPORTING_ZONE_TRACT_REQ = "cancerReportingZoneTractReq";
+    public static final String FIELD_PERSISTENT_POVERTY = "persistentPoverty";
     public static final String FIELD_SEER_BRAIN_CSN_RECODE_2020 = "seerBrainCnsRecode2020";
     public static final String FIELD_SEER_LYMPH_NEO_RECODE_2021 = "seerLymphNeoplasmRecode2021";
     public static final String FIELD_DERIVED_SUMMARY_GRADE_2018 = "derivedSummaryGrade2018";
@@ -331,6 +334,7 @@ public final class Algorithms {
             addField(AlgorithmField.of(FIELD_TRACT_EST_CONGRESS_DIST, 9405, 2, "Tract-Estimated Congressional District", "Tract-Est Congress Dist", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_CANCER_REPORTING_ZONE, 9415, 10, "Cancer Reporting Zone", "Cancer Rpt Zone", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_CANCER_REPORTING_ZONE_TRACT_REQ, 9416, 1, "Census Tract Required for Cancer Reporting Zone", "Cancer Rpt Zone Tract Cert", DATA_LEVEL_TUMOR, false));
+            addField(AlgorithmField.of(FIELD_PERSISTENT_POVERTY, 9625, 1, "Persistence Poverty", "Persist Pov", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_SEER_BRAIN_CSN_RECODE_2020, 9455, 2, "SEER Brain/CNS Recode 2020", "Brain/CNS", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_SEER_LYMPH_NEO_RECODE_2021, 9450, 2, "SEER Lymphoid Neoplasm Recode 2021", "Lymph 21", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_DERIVED_SUMMARY_GRADE_2018, 1975, 1, "Derived Summary Grade 2018", "Der Sum Grade 18", DATA_LEVEL_TUMOR, false));
@@ -361,6 +365,7 @@ public final class Algorithms {
             addAlgorithm(new EphtSubCountyAlgorithm());
             addAlgorithm(new TractEstCongressDistAlgorithm());
             addAlgorithm(new CancerReportingZoneAlgorithm());
+            addAlgorithm(new PersistentPovertyAlgorithm());
             addAlgorithm(new LymphoidNeoplasmRecodeAlgorithm2021());
             addAlgorithm(new SocialVulnerabilityAlgorithm());
             addAlgorithm(new DaysToTreatmentAlgorithm());

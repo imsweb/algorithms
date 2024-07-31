@@ -139,8 +139,8 @@ public class TractDataLab {
         // 8/15/22 - new version of the SEER data was provided, but it's not posted online yet; a Puerto-Rico version of the data file was also provided (it won't be posted)
         Map<DataKey, Map<String, String>> tractValues = new TreeMap<>();
         Map<DataKey, Map<Integer, String>> tractYearBasedValues = new HashMap<>();
-        processMainSeerDataFile(Paths.get("C:\\dev\\tmp\\tract.level.ses.2008_17.txt.gz"), layout, tractValues, tractYearBasedValues);
-        processMainSeerDataFile(Paths.get("C:\\dev\\tmp\\tract.level.ses.2008_17.puerto.rico.txt.gz"), layout, tractValues, tractYearBasedValues);
+        processMainSeerDataFile(Paths.get("C:\\dev\\temp\\tract.level.ses.2008_17.txt.gz"), layout, tractValues, tractYearBasedValues);
+        processMainSeerDataFile(Paths.get("C:\\dev\\temp\\tract.level.ses.2008_17.puerto.rico.txt.gz"), layout, tractValues, tractYearBasedValues);
 
         // NAACCR Poverty Indicator 1995-2004
         Map<DataKey, String> naaccrPovertyIndicator9504 = new HashMap<>();
@@ -352,6 +352,7 @@ public class TractDataLab {
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("npcrEphtSubcounty50k", cleanTractValue(lineNum, line, "cdcSubcounty50k", "npcrEphtSubcounty50k"));
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("tractEstCongressDist", cleanTractValue(lineNum, line, "congressionalDistrict", "tractEstCongressDist", s -> StringUtils.substring(s, 2)));
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("sviOverallStateBased", cleanTractValue(lineNum, line, "sviOverallState", "sviOverallStateBased"));
+                tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("persistentPoverty", cleanTractValue(lineNum, line, "persistentPoverty", "persistentPoverty"));
 
                 line = layout.readNextRecord(reader);
             }

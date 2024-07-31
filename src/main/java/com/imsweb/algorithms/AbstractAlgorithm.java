@@ -8,6 +8,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.imsweb.algorithms.Algorithms.FIELD_CENSUS_2000;
+import static com.imsweb.algorithms.Algorithms.FIELD_CENSUS_2010;
+import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS;
+import static com.imsweb.algorithms.Algorithms.FIELD_STATE_DX;
+
 public abstract class AbstractAlgorithm implements Algorithm {
 
     protected String _id;
@@ -80,5 +85,16 @@ public abstract class AbstractAlgorithm implements Algorithm {
     @Override
     public Map<String, List<String>> getUnknownValues() {
         return _unknownValues;
+    }
+
+    protected StateCountyTractInputDto createStateCountyTractInputDto(Map<String, Object> inputTumor) {
+        StateCountyTractInputDto inputDto = new StateCountyTractInputDto();
+
+        inputDto.setAddressAtDxState((String)inputTumor.get(FIELD_STATE_DX));
+        inputDto.setCountyAtDxAnalysis((String)inputTumor.get(FIELD_COUNTY_AT_DX_ANALYSIS));
+        inputDto.setCensusTract2000((String)inputTumor.get(FIELD_CENSUS_2000));
+        inputDto.setCensusTract2010((String)inputTumor.get(FIELD_CENSUS_2010));
+
+        return inputDto;
     }
 }
