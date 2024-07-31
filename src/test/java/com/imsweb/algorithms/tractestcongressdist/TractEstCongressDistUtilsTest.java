@@ -27,7 +27,7 @@ public class TractEstCongressDistUtilsTest {
         input.setAddressAtDxState("LO");
         input.setCountyAtDxAnalysis("071");
         input.setCensusTract2010("007903");
-        Assert.assertEquals("08", TractEstCongressDistUtils.computeTractEstCongressDist(input).getTractEstCongressDist());
+        Assert.assertEquals("33", TractEstCongressDistUtils.computeTractEstCongressDist(input).getTractEstCongressDist());
 
         // test Puerto Rico
         input.setAddressAtDxState("PR");
