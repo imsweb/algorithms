@@ -16,8 +16,6 @@ import com.imsweb.algorithms.StateCountyTractInputDto;
 import com.imsweb.algorithms.StateCountyTractInputDto.CensusTract;
 import com.imsweb.algorithms.internal.CensusData;
 import com.imsweb.algorithms.internal.CountryData;
-import com.imsweb.algorithms.internal.CountyData;
-import com.imsweb.algorithms.internal.StateData;
 import com.imsweb.algorithms.internal.Utils;
 
 import static com.imsweb.algorithms.Algorithms.ALG_PERSISTENT_POVERTY;
@@ -25,7 +23,6 @@ import static com.imsweb.algorithms.Algorithms.FIELD_CENSUS_2010;
 import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS;
 import static com.imsweb.algorithms.Algorithms.FIELD_PERSISTENT_POVERTY;
 import static com.imsweb.algorithms.Algorithms.FIELD_STATE_DX;
-import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
 
 public class PersistentPovertyAlgorithm extends AbstractAlgorithm {
 
@@ -36,7 +33,7 @@ public class PersistentPovertyAlgorithm extends AbstractAlgorithm {
 
     public PersistentPovertyAlgorithm() {
         super(ALG_PERSISTENT_POVERTY, "Persistent Poverty", "v1 released by USDA on 12/08/2023");
-        
+
         _url = "https://www.ers.usda.gov/data-products/poverty-area-measures/";
 
         _inputFields.add(Algorithms.getField(FIELD_STATE_DX));
@@ -48,15 +45,12 @@ public class PersistentPovertyAlgorithm extends AbstractAlgorithm {
 
     @Override
     public AlgorithmOutput execute(AlgorithmInput input) {
-        Map<String, Object> outputPatient = new HashMap<>();
-        List<Map<String, Object>> outputTumors = new ArrayList<>();
-        outputPatient.put(FIELD_TUMORS, outputTumors);
 
+        List<Map<String, Object>> outputTumors = new ArrayList<>();
         for (Map<String, Object> inputTumor : Utils.extractTumors(Utils.extractPatient(input))) {
-            StateCountyTractInputDto inputDto = new StateCountyTractInputDto();
-            inputDto.setAddressAtDxState((String)inputTumor.get(FIELD_STATE_DX));
-            inputDto.setCountyAtDxAnalysis((String)inputTumor.get(FIELD_COUNTY_AT_DX_ANALYSIS));
-            inputDto.setCensusTract2010((String)inputTumor.get(FIELD_CENSUS_2010));
+            StateCountyTractInputDto inputDto = createStateCountyTractInputDto(inputTumor);
+            
+            inputDto.applyRecodes();
 
             String result = null;
             if (inputDto.hasInvalidStateCountyOrCensusTract(CensusTract.CENSUS_2010))
@@ -66,20 +60,11 @@ public class PersistentPovertyAlgorithm extends AbstractAlgorithm {
             else if (inputDto.countyIsNotReported())
                 result = PERSISTENT_POVERTY_UNK_B;
             else {
-
-                if (!CountryData.getInstance().isTractDataInitialized(inputDto.getAddressAtDxState()))
-                    CountryData.getInstance().initializeTractData(inputDto.getAddressAtDxState());
-
-                StateData stateData = CountryData.getInstance().getTractData(inputDto.getAddressAtDxState());
-                if (stateData != null) {
-                    CountyData countyData = stateData.getCountyData(inputDto.getCountyAtDxAnalysis());
-                    if (countyData != null) {
-                        CensusData censusData = countyData.getCensusData(inputDto.getCensusTract2010());
-                        if (censusData != null)
-                            result = censusData.getPersistentPoverty();
-                    }
-                }
+                CensusData censusData = CountryData.getCensusData(inputDto, CensusTract.CENSUS_2010);
+                if (censusData != null)
+                    result = censusData.getPersistentPoverty();
             }
+
             if (result == null)
                 result = PERSISTENT_POVERTY_UNK_C;
 
@@ -89,6 +74,6 @@ public class PersistentPovertyAlgorithm extends AbstractAlgorithm {
             outputTumors.add(outputTumor);
         }
 
-        return AlgorithmOutput.of(outputPatient);
+        return AlgorithmOutput.of(outputTumors);
     }
 }

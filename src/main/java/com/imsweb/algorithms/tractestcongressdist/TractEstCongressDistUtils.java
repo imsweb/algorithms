@@ -7,8 +7,6 @@ import com.imsweb.algorithms.StateCountyTractInputDto;
 import com.imsweb.algorithms.StateCountyTractInputDto.CensusTract;
 import com.imsweb.algorithms.internal.CensusData;
 import com.imsweb.algorithms.internal.CountryData;
-import com.imsweb.algorithms.internal.CountyData;
-import com.imsweb.algorithms.internal.StateData;
 
 public final class TractEstCongressDistUtils {
 
@@ -55,29 +53,16 @@ public final class TractEstCongressDistUtils {
 
         input.applyRecodes();
 
-        if (input.hasInvalidStateCountyOrCensusTract(CensusTract.CENSUS_2010)) {
+        if (input.hasInvalidStateCountyOrCensusTract(CensusTract.CENSUS_2010))
             result.setTractEstCongressDist(TRACT_EST_CONGRESS_DIST_UNK_A);
-        }
-        else if (input.hasUnknownStateCountyOrCensusTract(CensusTract.CENSUS_2010)) {
+        else if (input.hasUnknownStateCountyOrCensusTract(CensusTract.CENSUS_2010))
             result.setTractEstCongressDist(TRACT_EST_CONGRESS_DIST_UNK_D);
-        }
-        else if (input.countyIsNotReported()) {
+        else if (input.countyIsNotReported())
             result.setTractEstCongressDist(TRACT_EST_CONGRESS_DIST_UNK_B);
-        }
         else {
-
-            if (!CountryData.getInstance().isTractDataInitialized(input.getAddressAtDxState()))
-                CountryData.getInstance().initializeTractData(input.getAddressAtDxState());
-
-            StateData stateData = CountryData.getInstance().getTractData(input.getAddressAtDxState());
-            if (stateData != null) {
-                CountyData countyData = stateData.getCountyData(input.getCountyAtDxAnalysis());
-                if (countyData != null) {
-                    CensusData censusData = countyData.getCensusData(input.getCensusTract2010());
-                    if (censusData != null)
-                        result.setTractEstCongressDist(censusData.getTractEstCongressDist());
-                }
-            }
+            CensusData censusData = CountryData.getCensusData(input, CensusTract.CENSUS_2010);
+            if (censusData != null)
+                result.setTractEstCongressDist(censusData.getTractEstCongressDist());
         }
 
         if (result.getTractEstCongressDist() == null)

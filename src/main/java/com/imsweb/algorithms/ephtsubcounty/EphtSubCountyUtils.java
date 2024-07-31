@@ -7,8 +7,6 @@ import com.imsweb.algorithms.StateCountyTractInputDto;
 import com.imsweb.algorithms.StateCountyTractInputDto.CensusTract;
 import com.imsweb.algorithms.internal.CensusData;
 import com.imsweb.algorithms.internal.CountryData;
-import com.imsweb.algorithms.internal.CountyData;
-import com.imsweb.algorithms.internal.StateData;
 
 /**
  * This class can be used to calculate EPHT 2010 GEO ID 5K and EPHT 2010 GEO ID 20K.
@@ -70,21 +68,11 @@ public final class EphtSubCountyUtils {
             result.setEpht2010GeoId50k(EPHT_2010_GEO_ID_UNK_B);
         }
         else {
-
-            if (!CountryData.getInstance().isTractDataInitialized(input.getAddressAtDxState()))
-                CountryData.getInstance().initializeTractData(input.getAddressAtDxState());
-
-            StateData stateData = CountryData.getInstance().getTractData(input.getAddressAtDxState());
-            if (stateData != null) {
-                CountyData countyData = stateData.getCountyData(input.getCountyAtDxAnalysis());
-                if (countyData != null) {
-                    CensusData censusData = countyData.getCensusData(input.getCensusTract2010());
-                    if (censusData != null) {
-                        result.setEpht2010GeoId5k(censusData.getEpht2010GeoId5k());
-                        result.setEpht2010GeoId20k(censusData.getEpht2010GeoId20k());
-                        result.setEpht2010GeoId50k(censusData.getEpht2010GeoId50k());
-                    }
-                }
+            CensusData censusData = CountryData.getCensusData(input, CensusTract.CENSUS_2010);
+            if (censusData != null) {
+                result.setEpht2010GeoId5k(censusData.getEpht2010GeoId5k());
+                result.setEpht2010GeoId20k(censusData.getEpht2010GeoId20k());
+                result.setEpht2010GeoId50k(censusData.getEpht2010GeoId50k());
             }
         }
 
