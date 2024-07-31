@@ -102,7 +102,7 @@ public class CountryData {
             CountyData countyData = stateData.getCountyData(input.getCountyAtDxAnalysis());
             if (countyData != null) {
                 if (censusTract == CensusTract.CENSUS_2000)
-                    return countyData.getCensusData(input.getCensusTract2010());
+                    return countyData.getCensusData(input.getCensusTract2000());
                 else if (censusTract == CensusTract.CENSUS_2010)
                     return countyData.getCensusData(input.getCensusTract2010());
                 else
