@@ -35,7 +35,9 @@ public class PersistentPovertyAlgorithm extends AbstractAlgorithm {
     public static final String PERSISTENT_POVERTY_UNK_D = "D";
 
     public PersistentPovertyAlgorithm() {
-        super(ALG_PERSISTENT_POVERTY, "NPCR Persistent Poverty", "v1 released in August 2024");
+        super(ALG_PERSISTENT_POVERTY, "Persistent Poverty", "v1 released by USDA on 12/08/2023");
+        
+        _url = "https://www.ers.usda.gov/data-products/poverty-area-measures/";
 
         _inputFields.add(Algorithms.getField(FIELD_STATE_DX));
         _inputFields.add(Algorithms.getField(FIELD_COUNTY_AT_DX_ANALYSIS));
