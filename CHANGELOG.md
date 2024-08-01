@@ -4,6 +4,7 @@
 
 - Added new algorithm to compute SEER Race1 Recode.
 - Added new algorithm to compute Persistent Poverty.
+- Updated data for EPHT SubCounty and Congressional District algorithms.
 
 **Changes in version 4.10**
 

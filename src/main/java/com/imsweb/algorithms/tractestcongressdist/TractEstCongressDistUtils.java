@@ -3,6 +3,8 @@
  */
 package com.imsweb.algorithms.tractestcongressdist;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.imsweb.algorithms.StateCountyTractInputDto;
 import com.imsweb.algorithms.StateCountyTractInputDto.CensusTract;
 import com.imsweb.algorithms.internal.CensusData;
@@ -61,8 +63,12 @@ public final class TractEstCongressDistUtils {
             result.setTractEstCongressDist(TRACT_EST_CONGRESS_DIST_UNK_B);
         else {
             CensusData censusData = CountryData.getCensusData(input, CensusTract.CENSUS_2010);
-            if (censusData != null)
-                result.setTractEstCongressDist(censusData.getTractEstCongressDist());
+            if (censusData != null) {
+                String val = censusData.getCongressionalDistrict();
+                if (StringUtils.isNotBlank(val) && val.length() == 4)
+                    val = val.substring(2);
+                result.setTractEstCongressDist(val);
+            }
         }
 
         if (result.getTractEstCongressDist() == null)

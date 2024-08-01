@@ -41,12 +41,11 @@ public class CensusData {
     // EPHT SubCounty 50K
     private String _epht2010GeoId50k;
 
-    // TractEstCongressDist
-    private String _tractEstCongressDist;
-
     // Social Vulnerability Index
     private String _sviOverallStateBased;
-    
+
+    private String _congressionalDistrict;
+
     private String _persistentPoverty;
 
     // year data keyed by DX year
@@ -124,14 +123,6 @@ public class CensusData {
         _epht2010GeoId50k = epht2010GeoId50k;
     }
 
-    public String getTractEstCongressDist() {
-        return _tractEstCongressDist;
-    }
-
-    public void setTractEstCongressDist(String tractEstCongressDist) {
-        _tractEstCongressDist = tractEstCongressDist;
-    }
-
     public String getCancerReportingZone() {
         return _cancerReportingZone;
     }
@@ -154,6 +145,14 @@ public class CensusData {
 
     public void setSviOverallStateBased(String sviOverallStateBased) {
         _sviOverallStateBased = sviOverallStateBased;
+    }
+
+    public String getCongressionalDistrict() {
+        return _congressionalDistrict;
+    }
+
+    public void setCongressionalDistrict(String congressionalDistrict) {
+        _congressionalDistrict = congressionalDistrict;
     }
 
     public String getPersistentPoverty() {
