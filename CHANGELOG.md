@@ -1,5 +1,10 @@
 ## Algorithms Version History
 
+**Changes in version 4.11**
+
+- Added new algorithm to compute SEER Race1 Recode.
+- Added new algorithm to compute Persistent Poverty.
+
 **Changes in version 4.10**
 
 - Tweaked the Tumor Size Over Time algorithm.
