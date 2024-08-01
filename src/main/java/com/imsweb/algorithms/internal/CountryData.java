@@ -63,8 +63,8 @@ public class CountryData {
         _TRACT_FIELDS.put("npcrEphtSubcounty5k", 11);
         _TRACT_FIELDS.put("npcrEphtSubcounty20k", 11);
         _TRACT_FIELDS.put("npcrEphtSubcounty50k", 11);
-        _TRACT_FIELDS.put("tractEstCongressDist", 2);
         _TRACT_FIELDS.put("sviOverallStateBased", 5);
+        _TRACT_FIELDS.put("congressionalDistrict", 4);
         _TRACT_FIELDS.put("persistentPoverty", 1);
     }
 
@@ -216,11 +216,11 @@ public class CountryData {
                                 censusData.setCancerReportingZone(StringUtils.trimToNull(values.get("cancerReportingZone")));
                                 censusData.setCancerReportingZoneTractCert(StringUtils.trimToNull(values.get("cancerReportingZoneTractCert")));
 
-                                // Tract-estimate Congressional Districts
-                                censusData.setTractEstCongressDist(StringUtils.trimToNull(values.get("tractEstCongressDist")));
-
                                 // Social Vulnerability Index (SVI)
                                 censusData.setSviOverallStateBased(StringUtils.trimToNull(values.get("sviOverallStateBased")));
+
+                                // Congressional District
+                                censusData.setCongressionalDistrict(StringUtils.trimToNull(values.get("congressionalDistrict")));
 
                                 // persistence poverty
                                 censusData.setPersistentPoverty(StringUtils.trimToNull(values.get("persistentPoverty")));

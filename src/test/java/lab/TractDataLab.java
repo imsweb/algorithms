@@ -212,28 +212,12 @@ public class TractDataLab {
             throw new IllegalStateException(e);
         }
 
-        // Tract-estimate Congressional Districts
-        Map<DataKey, String> tractEstCongresDistricts = new HashMap<>();
-        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("tractestcongressdist/tract-estimated-congressional-districts.csv")) {
-            if (is == null)
-                throw new IllegalStateException("Missing data!");
-            try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
-                 CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build()) {
-                for (String[] row : csvReader.readAll())
-                    tractEstCongresDistricts.put(new DataKey(row[0], row[1], row[2]), row[3]);
-            }
-        }
-        catch (CsvException | IOException e) {
-            throw new IllegalStateException(e);
-        }
-
         // since we merge information from multiple sources, it's important to process the super set of all the keys!
         Set<DataKey> allKeys = new TreeSet<>(tractValues.keySet());
         allKeys.addAll(ruca2000Values.keySet());
         allKeys.addAll(uric2000Values.keySet());
         allKeys.addAll(naaccrPovertyIndicator9504.keySet());
         allKeys.addAll(naaccrPovertyIndicator0507.keySet());
-        allKeys.addAll(tractEstCongresDistricts.keySet());
 
         Path outputFile = Paths.get(System.getProperty("user.dir") + "\\src\\main\\resources\\tract\\tract-data.txt.gz");
         try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new GZIPOutputStream(Files.newOutputStream(outputFile)), StandardCharsets.US_ASCII))) {
@@ -288,6 +272,7 @@ public class TractDataLab {
         return cleanTractValue(lineNum, line, sourceField, targetField, null);
     }
 
+    @SuppressWarnings("SameParameterValue")
     private static String cleanTractValue(int lineNum, Map<String, String> line, String sourceField, String targetField, UnaryOperator<String> operator) {
         String value = line.get(sourceField);
         if (operator != null)
@@ -350,8 +335,8 @@ public class TractDataLab {
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("npcrEphtSubcounty5k", cleanTractValue(lineNum, line, "cdcSubcounty5k", "npcrEphtSubcounty5k"));
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("npcrEphtSubcounty20k", cleanTractValue(lineNum, line, "cdcSubcounty20k", "npcrEphtSubcounty20k"));
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("npcrEphtSubcounty50k", cleanTractValue(lineNum, line, "cdcSubcounty50k", "npcrEphtSubcounty50k"));
-                tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("tractEstCongressDist", cleanTractValue(lineNum, line, "congressionalDistrict", "tractEstCongressDist", s -> StringUtils.substring(s, 2)));
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("sviOverallStateBased", cleanTractValue(lineNum, line, "sviOverallState", "sviOverallStateBased"));
+                tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("congressionalDistrict", cleanTractValue(lineNum, line, "congressionalDistrict", "congressionalDistrict"));
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("persistentPoverty", cleanTractValue(lineNum, line, "persistentPoverty", "persistentPoverty"));
 
                 line = layout.readNextRecord(reader);
