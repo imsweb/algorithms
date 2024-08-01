@@ -29,6 +29,7 @@ import com.imsweb.algorithms.napiia.NapiiaAlgorithm;
 import com.imsweb.algorithms.nhia.NhiaAlgorithm;
 import com.imsweb.algorithms.persistentpoverty.PersistentPovertyAlgorithm;
 import com.imsweb.algorithms.prcda.PrcdaAlgorithm;
+import com.imsweb.algorithms.race.Race1RecodeAlgorithm;
 import com.imsweb.algorithms.ruralurban.RuralUrbanAlgorithm;
 import com.imsweb.algorithms.seersiterecode.SeerSiteRecode2023Algorithm;
 import com.imsweb.algorithms.seersiterecode.SeerSiteRecodeAlgorithm;
@@ -81,6 +82,7 @@ public final class Algorithms {
     public static final String ALG_SVI = "svi";
     public static final String ALG_DAYS_TO_TREATMENT = "days-to-treatment";
     public static final String ALG_TUMOR_SIZE_OVER_TIME = "tumor-size-over-time";
+    public static final String ALG_RACE_1_RECODE = "race-1-recode";
 
     // special properties
     public static final String FIELD_TUMORS = "tumors";
@@ -197,6 +199,7 @@ public final class Algorithms {
     public static final String FIELD_CDC_SVI_2018 = "cdcSVI2018";
     public static final String FIELD_DAYS_TO_TREATMENT = "daysToTreatment";
     public static final String FIELD_TUMOR_SIZE_OVER_TIME = "tumorSizeOverTime";
+    public static final String FIELD_RACE1_RECODE = "race1Recode";
 
     // options
     public static final String PARAM_NHIA_OPTION = "nhiaOption";
@@ -338,6 +341,7 @@ public final class Algorithms {
             addField(AlgorithmField.of(FIELD_CDC_SVI_2018, 9600, 5, "CDC/ATSDR Social Vulnerability Index 2018", "CDC/ATSDR SVI 2018", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_DAYS_TO_TREATMENT, 9750, 3, "Days from Diagnosis to Treatment", "Days to TX", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_TUMOR_SIZE_OVER_TIME, 9751, 3, "Tumor Size Over Time", "Tumor Size Over Time", DATA_LEVEL_TUMOR, false));
+            addField(AlgorithmField.of(FIELD_RACE1_RECODE, 9460, 2, "Race 1 Recode", "Race 1 Recode", DATA_LEVEL_PATIENT, false));
 
             // algorithms
             addAlgorithm(new NhiaAlgorithm());
@@ -367,6 +371,7 @@ public final class Algorithms {
             addAlgorithm(new DaysToTreatmentAlgorithm());
             addAlgorithm(new DerivedSummaryGradeAlgorithm2018());
             addAlgorithm(new TumorSizeOverTimeAlgorithm());
+            addAlgorithm(new Race1RecodeAlgorithm());
         }
         finally {
             _LOCK.writeLock().unlock();
