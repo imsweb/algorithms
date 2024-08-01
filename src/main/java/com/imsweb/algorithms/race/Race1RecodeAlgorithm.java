@@ -30,13 +30,13 @@ public final class Race1RecodeAlgorithm extends AbstractAlgorithm {
 
     private static final int _RACE_WHITE = 1;
     private static final int _RACE_BLACK = 2;
-    private static final int _RACE_AIAN = -1; // NOT SURE ABOUT THIS
-    private static final int _RACE_NONE = -1; // NOT SURE ABOUT THIS
-    private static final int _RACE_LAST_SPECIFIC = -1; // NOT SURE ABOUT THIS
+    private static final int _RACE_AIAN = 3;
+    private static final int _RACE_NONE = 88;
+    private static final int _RACE_LAST_SPECIFIC = 97;
     private static final int _RACE_OTHER = 98;
     private static final int _RACE_UNKNOWN = 99;
 
-    private static final String _IHS_INVALID = "?"; // NOT SURE ABOUT THIS
+    private static final String _IHS_INVALID = "9";
     private static final String _IHS_MATCH = "1";
 
     public Race1RecodeAlgorithm() {
@@ -72,13 +72,15 @@ public final class Race1RecodeAlgorithm extends AbstractAlgorithm {
         String race1 = (String)inputPatient.get(FIELD_RACE1);
         int iRace1 = NumberUtils.isDigits(race1) ? Integer.parseInt(race1) : _RACE_UNKNOWN;
         String race2 = (String)inputPatient.get(FIELD_RACE2);
-        int iRace2 = NumberUtils.isDigits(race1) ? Integer.parseInt(race2) : _RACE_UNKNOWN;
+        int iRace2 = NumberUtils.isDigits(race2) ? Integer.parseInt(race2) : _RACE_UNKNOWN;
 
+        // not recode by default
         int race1Recode = iRace1;
+        
+        // don't recode for AK state
         if (!states.contains("AK")) {
 
-            //switch race to favor non-whites, if a patient who's first record is after 1990 has race other, code to race 2 if known
-            //note all NAACCR cases are after 1990, so 'others' will always be switched for better race
+            // switch race to favor non-whites, if a patient who's first record is after 1990 has race other, code to race 2 if known
             if ((race1Recode == _RACE_WHITE && _RACE_BLACK <= iRace2 && iRace2 <= _RACE_LAST_SPECIFIC && iRace2 != _RACE_NONE) ||
                 (!hasRecordBefore1991 && race1Recode == _RACE_OTHER && _RACE_WHITE <= iRace2 && iRace2 <= _RACE_LAST_SPECIFIC && iRace2 != _RACE_NONE))
                 race1Recode = iRace2;
