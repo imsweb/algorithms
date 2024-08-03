@@ -27,13 +27,13 @@ public class TractEstCongressDistUtilsTest {
         input.setAddressAtDxState("LO");
         input.setCountyAtDxAnalysis("071");
         input.setCensusTract2010("007903");
-        Assert.assertEquals("33", TractEstCongressDistUtils.computeTractEstCongressDist(input).getTractEstCongressDist());
+        Assert.assertEquals("0633", TractEstCongressDistUtils.computeTractEstCongressDist(input).getTractEstCongressDist());
 
         // test Puerto Rico
         input.setAddressAtDxState("PR");
         input.setCountyAtDxAnalysis("001");
         input.setCensusTract2010("956300");
-        Assert.assertEquals("98", TractEstCongressDistUtils.computeTractEstCongressDist(input).getTractEstCongressDist());
+        Assert.assertEquals("7298", TractEstCongressDistUtils.computeTractEstCongressDist(input).getTractEstCongressDist());
 
         // test unknown A (state, county, or tract are invalid)
         for (String state : Arrays.asList("WA", "INVALID")) {
@@ -45,7 +45,7 @@ public class TractEstCongressDistUtilsTest {
                     String key = String.format("%s|%s|%s", state, county, tract);
 
                     if ("WA".equals(state) && "067".equals(county) && "012720".equals(tract))
-                        Assert.assertEquals(key, "03", TractEstCongressDistUtils.computeTractEstCongressDist(input).getTractEstCongressDist());
+                        Assert.assertEquals(key, "5303", TractEstCongressDistUtils.computeTractEstCongressDist(input).getTractEstCongressDist());
                     else
                         Assert.assertEquals(key, "A", TractEstCongressDistUtils.computeTractEstCongressDist(input).getTractEstCongressDist());
                 }
@@ -68,7 +68,7 @@ public class TractEstCongressDistUtilsTest {
                     String key = String.format("%s|%s|%s", state, county, tract);
 
                     if ("WA".equals(state) && "067".equals(county) && "012720".equals(tract))
-                        Assert.assertEquals(key, "03", TractEstCongressDistUtils.computeTractEstCongressDist(input).getTractEstCongressDist());
+                        Assert.assertEquals(key, "5303", TractEstCongressDistUtils.computeTractEstCongressDist(input).getTractEstCongressDist());
                     else
                         Assert.assertEquals(key, "C", TractEstCongressDistUtils.computeTractEstCongressDist(input).getTractEstCongressDist());
                 }
@@ -85,7 +85,7 @@ public class TractEstCongressDistUtilsTest {
                     String key = String.format("%s|%s|%s", state, county, tract);
 
                     if ("WA".equals(state) && "067".equals(county) && "012720".equals(tract))
-                        Assert.assertEquals(key, "03", TractEstCongressDistUtils.computeTractEstCongressDist(input).getTractEstCongressDist());
+                        Assert.assertEquals(key, "5303", TractEstCongressDistUtils.computeTractEstCongressDist(input).getTractEstCongressDist());
                     else
                         Assert.assertEquals(key, "D", TractEstCongressDistUtils.computeTractEstCongressDist(input).getTractEstCongressDist());
                 }
