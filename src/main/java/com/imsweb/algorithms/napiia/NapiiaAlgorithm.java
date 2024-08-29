@@ -17,7 +17,6 @@ import static com.imsweb.algorithms.Algorithms.FIELD_COUNTRY_BIRTH;
 import static com.imsweb.algorithms.Algorithms.FIELD_NAME_BIRTH_SURNAME;
 import static com.imsweb.algorithms.Algorithms.FIELD_NAME_FIRST;
 import static com.imsweb.algorithms.Algorithms.FIELD_NAME_LAST;
-import static com.imsweb.algorithms.Algorithms.FIELD_NAME_MAIDEN;
 import static com.imsweb.algorithms.Algorithms.FIELD_NAPIIA;
 import static com.imsweb.algorithms.Algorithms.FIELD_NAPIIA_NEEDS_REVIEW;
 import static com.imsweb.algorithms.Algorithms.FIELD_NAPIIA_REVIEW_REASON;
@@ -38,7 +37,6 @@ public class NapiiaAlgorithm extends AbstractAlgorithm {
 
         _inputFields.add(Algorithms.getField(FIELD_SPAN_HISP_OR));
         _inputFields.add(Algorithms.getField(FIELD_NAME_LAST));
-        _inputFields.add(Algorithms.getField(FIELD_NAME_MAIDEN));
         _inputFields.add(Algorithms.getField(FIELD_NAME_BIRTH_SURNAME));
         _inputFields.add(Algorithms.getField(FIELD_NAME_FIRST));
         _inputFields.add(Algorithms.getField(FIELD_COUNTRY_BIRTH));
@@ -71,7 +69,6 @@ public class NapiiaAlgorithm extends AbstractAlgorithm {
             dto.setRace4((String)patientMap.get(FIELD_RACE4));
             dto.setRace5((String)patientMap.get(FIELD_RACE5));
             dto.setNameLast((String)patientMap.get(FIELD_NAME_LAST));
-            dto.setNameMaiden((String)patientMap.get(FIELD_NAME_MAIDEN));
             dto.setNameBirthSurname((String)patientMap.get(FIELD_NAME_BIRTH_SURNAME));
             dto.setNameFirst((String)patientMap.get(FIELD_NAME_FIRST));
             inputDto.getNapiiaInputPatientDtoList().add(dto);

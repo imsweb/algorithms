@@ -13,8 +13,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import org.apache.commons.lang3.StringUtils;
-
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 
@@ -387,7 +385,7 @@ public final class NapiiaUtils {
         Short result = null;
         String lastname = input.getNameLast();
         String firstname = input.getNameFirst();
-        String birthSurname = StringUtils.isEmpty(input.getNameBirthSurname()) ? input.getNameMaiden() : input.getNameBirthSurname();
+        String birthSurname = input.getNameBirthSurname();
 
         if (birthSurname == null || birthSurname.trim().isEmpty()) {
             if (lastname != null && !lastname.trim().isEmpty()) {

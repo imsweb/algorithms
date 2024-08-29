@@ -5,6 +5,7 @@
 - Added new algorithm to compute SEER Race1 Recode.
 - Added new algorithm to compute Persistent Poverty.
 - Updated data for EPHT SubCounty and Congressional District algorithms.
+- Stopped using maidenName in NHIA and NAPPIA since the data item has been retired by NAACCR.
 
 **Changes in version 4.10**
 

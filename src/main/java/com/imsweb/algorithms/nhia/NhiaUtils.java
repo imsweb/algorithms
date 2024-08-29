@@ -17,8 +17,6 @@ import java.util.TreeMap;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.StringUtils;
-
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 
@@ -144,7 +142,6 @@ public final class NhiaUtils {
             input.setRace1(firstRecord.getRace1());
             input.setIhs(firstRecord.getIhs());
             input.setNameLast(firstRecord.getNameLast());
-            input.setNameMaiden(firstRecord.getNameMaiden());
             input.setNameBirthSurname(firstRecord.getNameBirthSurname());
             //The following 2 properties are specific to each record, lets get the first one for now.
             input.setCountyAtDxAnalysis(firstRecord.getCountyAtDxAnalysis());
@@ -291,7 +288,7 @@ public final class NhiaUtils {
         String sex = input.getSex();
         String ihs = input.getIhs();
         String nameLast = input.getNameLast();
-        String birthSurname = StringUtils.isEmpty(input.getNameBirthSurname()) ? input.getNameMaiden() : input.getNameBirthSurname();
+        String birthSurname = input.getNameBirthSurname();
 
         // try to use race (if it is in excluded race, no need to apply surname)
         if (_RACE_EXCLUDED.contains(race1) || "1".equals(ihs))

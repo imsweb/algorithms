@@ -9,8 +9,6 @@ public class NhiaInputRecordDto {
 
     private String _nameLast;
 
-    private String _nameMaiden;
-
     private String _nameBirthSurname;
 
     private String _birthplaceCountry;
@@ -39,14 +37,6 @@ public class NhiaInputRecordDto {
 
     public void setNameLast(String nameLast) {
         _nameLast = nameLast;
-    }
-
-    public String getNameMaiden() {
-        return _nameMaiden;
-    }
-
-    public void setNameMaiden(String nameMaiden) {
-        _nameMaiden = nameMaiden;
     }
 
     public String getNameBirthSurname() {

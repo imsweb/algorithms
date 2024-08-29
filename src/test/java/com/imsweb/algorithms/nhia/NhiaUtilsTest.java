@@ -49,18 +49,18 @@ public class NhiaUtilsTest {
         NhiaInputPatientDto patient2 = new NhiaInputPatientDto();
         Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, NhiaUtils.computeNhia(patient2, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
 
-        NhiaInputRecordDto rec = new NhiaInputRecordDto();
-        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, NhiaUtils.computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        NhiaInputRecordDto dto = new NhiaInputRecordDto();
+        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, NhiaUtils.computeNhia(dto, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
 
-        Map<String, String> record = new HashMap<>();
+        Map<String, String> rec = new HashMap<>();
 
         // special record values
-        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
 
         // bad options
         boolean exception = false;
         try {
-            computeNhia(record, "3");
+            computeNhia(rec, "3");
         }
         catch (RuntimeException e) {
             exception = true;
@@ -69,232 +69,232 @@ public class NhiaUtilsTest {
             Assert.fail("Was expecting an exception, didn't get it!");
 
         // direct identification
-        record.put(_PROP_SPANISH_HISPANIC_ORIGIN, "1");
-        Assert.assertEquals(NhiaUtils.NHIA_MEXICAN, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
-        record.put(_PROP_BIRTH_PLACE_COUNTRY, "PRI");
-        Assert.assertEquals(NhiaUtils.NHIA_MEXICAN, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.put(_PROP_SPANISH_HISPANIC_ORIGIN, "1");
+        Assert.assertEquals(NhiaUtils.NHIA_MEXICAN, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.put(_PROP_BIRTH_PLACE_COUNTRY, "PRI");
+        Assert.assertEquals(NhiaUtils.NHIA_MEXICAN, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
         //direct identification in cases of special race 96 & 97
-        record.put(_PROP_RACE1, "96");
-        Assert.assertEquals(NhiaUtils.NHIA_PUERTO_RICAN, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
-        record.put(_PROP_RACE1, "04");
-        Assert.assertEquals(NhiaUtils.NHIA_MEXICAN, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
-        record.put(_PROP_RACE1, "97");
-        Assert.assertEquals(NhiaUtils.NHIA_PUERTO_RICAN, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
-        record.put(_PROP_BIRTH_PLACE_COUNTRY, "NIC");
-        Assert.assertEquals(NhiaUtils.NHIA_SOUTH_CENTRAL_AMER, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.put(_PROP_RACE1, "96");
+        Assert.assertEquals(NhiaUtils.NHIA_PUERTO_RICAN, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.put(_PROP_RACE1, "04");
+        Assert.assertEquals(NhiaUtils.NHIA_MEXICAN, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.put(_PROP_RACE1, "97");
+        Assert.assertEquals(NhiaUtils.NHIA_PUERTO_RICAN, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.put(_PROP_BIRTH_PLACE_COUNTRY, "NIC");
+        Assert.assertEquals(NhiaUtils.NHIA_SOUTH_CENTRAL_AMER, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
 
         // direct identification when origin is 6
-        record.clear();
-        record.put(_PROP_SPANISH_HISPANIC_ORIGIN, "6");
-        Assert.assertEquals(NhiaUtils.NHIA_SPANISH_NOS, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.clear();
+        rec.put(_PROP_SPANISH_HISPANIC_ORIGIN, "6");
+        Assert.assertEquals(NhiaUtils.NHIA_SPANISH_NOS, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
 
         //direct+indirect identification when origin is 6
-        record.put(_PROP_BIRTH_PLACE_COUNTRY, "PRI");
-        Assert.assertEquals(NhiaUtils.NHIA_PUERTO_RICAN, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
-        record.put(_PROP_RACE1, "96");
-        Assert.assertEquals(NhiaUtils.NHIA_PUERTO_RICAN, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
-        record.put(_PROP_BIRTH_PLACE_COUNTRY, "GUY");
-        Assert.assertEquals(NhiaUtils.NHIA_SPANISH_NOS, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.put(_PROP_BIRTH_PLACE_COUNTRY, "PRI");
+        Assert.assertEquals(NhiaUtils.NHIA_PUERTO_RICAN, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.put(_PROP_RACE1, "96");
+        Assert.assertEquals(NhiaUtils.NHIA_PUERTO_RICAN, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.put(_PROP_BIRTH_PLACE_COUNTRY, "GUY");
+        Assert.assertEquals(NhiaUtils.NHIA_SPANISH_NOS, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
         //birthplace within in a range 253-257
-        record.put(_PROP_BIRTH_PLACE_COUNTRY, "NIC");
-        Assert.assertEquals(NhiaUtils.NHIA_SOUTH_CENTRAL_AMER, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.put(_PROP_BIRTH_PLACE_COUNTRY, "NIC");
+        Assert.assertEquals(NhiaUtils.NHIA_SOUTH_CENTRAL_AMER, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
 
         // indirect identification based on birth place
-        record.clear();
-        record.put(_PROP_SPANISH_HISPANIC_ORIGIN, " ");
-        record.put(_PROP_BIRTH_PLACE_COUNTRY, "PRI");
-        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
-        record.put(_PROP_SPANISH_HISPANIC_ORIGIN, null);
-        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
-        record.put(_PROP_SPANISH_HISPANIC_ORIGIN, "10");
-        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
-        record.put(_PROP_SPANISH_HISPANIC_ORIGIN, "rr");
-        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
-        record.put(_PROP_SPANISH_HISPANIC_ORIGIN, "9");
-        Assert.assertEquals(NhiaUtils.NHIA_PUERTO_RICAN, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
-        record.put(_PROP_SPANISH_HISPANIC_ORIGIN, "3");
-        Assert.assertEquals(NhiaUtils.NHIA_CUBAN, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.clear();
+        rec.put(_PROP_SPANISH_HISPANIC_ORIGIN, " ");
+        rec.put(_PROP_BIRTH_PLACE_COUNTRY, "PRI");
+        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.put(_PROP_SPANISH_HISPANIC_ORIGIN, null);
+        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.put(_PROP_SPANISH_HISPANIC_ORIGIN, "10");
+        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.put(_PROP_SPANISH_HISPANIC_ORIGIN, "rr");
+        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.put(_PROP_SPANISH_HISPANIC_ORIGIN, "9");
+        Assert.assertEquals(NhiaUtils.NHIA_PUERTO_RICAN, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.put(_PROP_SPANISH_HISPANIC_ORIGIN, "3");
+        Assert.assertEquals(NhiaUtils.NHIA_CUBAN, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
 
         //indirect identification based on birthplace with low probability.
-        record.clear();
-        record.put(_PROP_BIRTH_PLACE_COUNTRY, "GUY");
-        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
-        record.put(_PROP_SPANISH_HISPANIC_ORIGIN, "6");
-        Assert.assertEquals(NhiaUtils.NHIA_SPANISH_NOS, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
-        record.put(_PROP_SPANISH_HISPANIC_ORIGIN, "7");
-        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.clear();
+        rec.put(_PROP_BIRTH_PLACE_COUNTRY, "GUY");
+        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.put(_PROP_SPANISH_HISPANIC_ORIGIN, "6");
+        Assert.assertEquals(NhiaUtils.NHIA_SPANISH_NOS, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.put(_PROP_SPANISH_HISPANIC_ORIGIN, "7");
+        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
 
         //Indirect identification based on race
-        record.clear();
-        record.put(_PROP_RACE1, "96");
-        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
-        record.put(_PROP_BIRTH_PLACE_COUNTRY, "PRI");
-        Assert.assertEquals(NhiaUtils.NHIA_PUERTO_RICAN, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
-        record.put(_PROP_SPANISH_HISPANIC_ORIGIN, "1");
-        Assert.assertEquals(NhiaUtils.NHIA_PUERTO_RICAN, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
-        record.put(_PROP_RACE1, "99");
-        Assert.assertEquals(NhiaUtils.NHIA_MEXICAN, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.clear();
+        rec.put(_PROP_RACE1, "96");
+        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.put(_PROP_BIRTH_PLACE_COUNTRY, "PRI");
+        Assert.assertEquals(NhiaUtils.NHIA_PUERTO_RICAN, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.put(_PROP_SPANISH_HISPANIC_ORIGIN, "1");
+        Assert.assertEquals(NhiaUtils.NHIA_PUERTO_RICAN, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.put(_PROP_RACE1, "99");
+        Assert.assertEquals(NhiaUtils.NHIA_MEXICAN, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
 
         //Indirect Identification based on name and county
         //test with county higher that 5% hispanic
         //for male, if sex not given, always non-hispanic
-        record.clear();
-        record.put(_PROP_SPANISH_HISPANIC_ORIGIN, "9");
-        record.put(_PROP_STATE_DX, "AL");
-        record.put(_PROP_COUNTY_DX_ANALYSIS, "009");
-        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
-        record.put(_PROP_NAME_LAST, "AdOrno");
-        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
-        record.put(_PROP_SEX, "1");
-        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
-        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(record, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
-        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(record, NhiaUtils.NHIA_OPTION_SEVEN_ONLY).getNhia());
-        record.put(_PROP_SPANISH_HISPANIC_ORIGIN, "7");
-        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
-        record.put(_PROP_SPANISH_HISPANIC_ORIGIN, "0");
-        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
-        record.put(_PROP_NAME_LAST, "FLINT");
-        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.clear();
+        rec.put(_PROP_SPANISH_HISPANIC_ORIGIN, "9");
+        rec.put(_PROP_STATE_DX, "AL");
+        rec.put(_PROP_COUNTY_DX_ANALYSIS, "009");
+        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.put(_PROP_NAME_LAST, "AdOrno");
+        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.put(_PROP_SEX, "1");
+        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(rec, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
+        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(rec, NhiaUtils.NHIA_OPTION_SEVEN_ONLY).getNhia());
+        rec.put(_PROP_SPANISH_HISPANIC_ORIGIN, "7");
+        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.put(_PROP_SPANISH_HISPANIC_ORIGIN, "0");
+        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.put(_PROP_NAME_LAST, "FLINT");
+        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
         //female
-        record.clear();
-        record.put(_PROP_SPANISH_HISPANIC_ORIGIN, "9");
-        record.put(_PROP_STATE_DX, "AL");
-        record.put(_PROP_COUNTY_DX_ANALYSIS, "009");
-        record.put(_PROP_SEX, "2");
-        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
-        record.put(_PROP_NAME_LAST, "ADORNO");
-        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
-        record.put(_PROP_NAME_LAST, "FLINT");
-        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
-        record.put(_PROP_NAME_BIRTH_SURNAME, "FLINT");
-        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
-        record.put(_PROP_NAME_BIRTH_SURNAME, "ADORNO");
-        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.clear();
+        rec.put(_PROP_SPANISH_HISPANIC_ORIGIN, "9");
+        rec.put(_PROP_STATE_DX, "AL");
+        rec.put(_PROP_COUNTY_DX_ANALYSIS, "009");
+        rec.put(_PROP_SEX, "2");
+        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.put(_PROP_NAME_LAST, "ADORNO");
+        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.put(_PROP_NAME_LAST, "FLINT");
+        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.put(_PROP_NAME_BIRTH_SURNAME, "FLINT");
+        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.put(_PROP_NAME_BIRTH_SURNAME, "ADORNO");
+        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
         // *** following tests that maiden name can still be used...
-        record.put(_PROP_NAME_BIRTH_SURNAME, null);
-        record.put(_PROP_NAME_MAIDEN, "ADORNO");
-        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
-        record.put(_PROP_NAME_MAIDEN, null);
-        record.put(_PROP_NAME_BIRTH_SURNAME, "ADORNO");
+        rec.put(_PROP_NAME_BIRTH_SURNAME, null);
+        rec.put(_PROP_NAME_MAIDEN, "ADORNO");
+        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.put(_PROP_NAME_MAIDEN, null);
+        rec.put(_PROP_NAME_BIRTH_SURNAME, "ADORNO");
         // end maiden name check
-        record.put(_PROP_NAME_LAST, "FLINT");
-        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
-        record.put(_PROP_SEX, "1");
-        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
-        record.put(_PROP_SEX, "2");
-        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.put(_PROP_NAME_LAST, "FLINT");
+        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.put(_PROP_SEX, "1");
+        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.put(_PROP_SEX, "2");
+        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
         //if race is in excluded race
-        record.put(_PROP_RACE1, "03");
-        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.put(_PROP_RACE1, "03");
+        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
         //test if ihs == 1
-        record.clear();
-        record.put(_PROP_SPANISH_HISPANIC_ORIGIN, "0");
-        record.put(_PROP_STATE_DX, "AL");
-        record.put(_PROP_COUNTY_DX_ANALYSIS, "009");
-        record.put(_PROP_SEX, "2");
-        record.put(_PROP_NAME_LAST, "flint");
-        record.put(_PROP_NAME_BIRTH_SURNAME, "ADORNO");
-        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
-        record.put(_PROP_IHS, "1");
-        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.clear();
+        rec.put(_PROP_SPANISH_HISPANIC_ORIGIN, "0");
+        rec.put(_PROP_STATE_DX, "AL");
+        rec.put(_PROP_COUNTY_DX_ANALYSIS, "009");
+        rec.put(_PROP_SEX, "2");
+        rec.put(_PROP_NAME_LAST, "flint");
+        rec.put(_PROP_NAME_BIRTH_SURNAME, "ADORNO");
+        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.put(_PROP_IHS, "1");
+        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
 
         //test with county less that 5% hispanic
-        record.clear();
-        record.put(_PROP_SPANISH_HISPANIC_ORIGIN, "9");
-        record.put(_PROP_STATE_DX, "AL");
-        record.put(_PROP_COUNTY_DX_ANALYSIS, "001");
-        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
-        record.put(_PROP_NAME_LAST, "ADORNO");
-        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
-        record.put(_PROP_SEX, "1");
-        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
-        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(record, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
-        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_SEVEN_ONLY).getNhia());
-        record.put(_PROP_SPANISH_HISPANIC_ORIGIN, "0");
-        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
-        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
-        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_SEVEN_ONLY).getNhia());
-        record.put(_PROP_SPANISH_HISPANIC_ORIGIN, "7");
-        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
-        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(record, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
-        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(record, NhiaUtils.NHIA_OPTION_SEVEN_ONLY).getNhia());
-        record.put(_PROP_SEX, "2");
-        record.put(_PROP_NAME_BIRTH_SURNAME, "FLINT");
-        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
-        record.put(_PROP_BIRTH_PLACE_COUNTRY, "GUY");
-        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
-        record.put(_PROP_BIRTH_PLACE_COUNTRY, "PRI");
-        Assert.assertEquals(NhiaUtils.NHIA_PUERTO_RICAN, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.clear();
+        rec.put(_PROP_SPANISH_HISPANIC_ORIGIN, "9");
+        rec.put(_PROP_STATE_DX, "AL");
+        rec.put(_PROP_COUNTY_DX_ANALYSIS, "001");
+        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.put(_PROP_NAME_LAST, "ADORNO");
+        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.put(_PROP_SEX, "1");
+        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(rec, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
+        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(rec, NhiaUtils.NHIA_OPTION_SEVEN_ONLY).getNhia());
+        rec.put(_PROP_SPANISH_HISPANIC_ORIGIN, "0");
+        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(rec, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
+        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(rec, NhiaUtils.NHIA_OPTION_SEVEN_ONLY).getNhia());
+        rec.put(_PROP_SPANISH_HISPANIC_ORIGIN, "7");
+        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(rec, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
+        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(rec, NhiaUtils.NHIA_OPTION_SEVEN_ONLY).getNhia());
+        rec.put(_PROP_SEX, "2");
+        rec.put(_PROP_NAME_BIRTH_SURNAME, "FLINT");
+        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.put(_PROP_BIRTH_PLACE_COUNTRY, "GUY");
+        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.put(_PROP_BIRTH_PLACE_COUNTRY, "PRI");
+        Assert.assertEquals(NhiaUtils.NHIA_PUERTO_RICAN, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
 
         //random name
-        record.clear();
-        record.put(_PROP_SPANISH_HISPANIC_ORIGIN, "9");
-        record.put(_PROP_STATE_DX, "AL");
-        record.put(_PROP_COUNTY_DX_ANALYSIS, "009");
-        record.put(_PROP_SEX, "1");
-        record.put(_PROP_NAME_LAST, "sseewwbbeesseeww");
-        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        rec.clear();
+        rec.put(_PROP_SPANISH_HISPANIC_ORIGIN, "9");
+        rec.put(_PROP_STATE_DX, "AL");
+        rec.put(_PROP_COUNTY_DX_ANALYSIS, "009");
+        rec.put(_PROP_SEX, "1");
+        rec.put(_PROP_NAME_LAST, "sseewwbbeesseeww");
+        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
 
         //Added to test modifications related to squish issue 207
-        record.clear();
-        record.put(_PROP_SPANISH_HISPANIC_ORIGIN, "0");
-        record.put(_PROP_STATE_DX, "AL");
-        record.put(_PROP_COUNTY_DX_ANALYSIS, "005");
-        record.put(_PROP_SEX, "2");
-        record.put(_PROP_NAME_LAST, "ADORNO");
-        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(record, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
-        record.put(_PROP_BIRTH_PLACE_COUNTRY, "ZZP");
-        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(record, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
-        record.put(_PROP_BIRTH_PLACE_COUNTRY, "PAN");
-        Assert.assertEquals(NhiaUtils.NHIA_SOUTH_CENTRAL_AMER, computeNhia(record, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
-        record.put(_PROP_BIRTH_PLACE_COUNTRY, "UMI");
-        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(record, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
-        record.put(_PROP_BIRTH_PLACE_COUNTRY, "ZZS");
-        Assert.assertEquals(NhiaUtils.NHIA_SOUTH_CENTRAL_AMER, computeNhia(record, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
-        record.put(_PROP_BIRTH_PLACE_COUNTRY, "ZZU");
-        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(record, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
-        record.put(_PROP_STATE_DX, "GA");
-        record.put(_PROP_COUNTY_DX_ANALYSIS, "073");
-        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
-        record.put(_PROP_STATE_DX, "IL");
-        record.put(_PROP_COUNTY_DX_ANALYSIS, "103");
-        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(record, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
-        record.put(_PROP_STATE_DX, "AK");
-        record.put(_PROP_COUNTY_DX_ANALYSIS, "232");
-        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
-        record.put(_PROP_STATE_DX, "NE");
-        record.put(_PROP_COUNTY_DX_ANALYSIS, "007");
-        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
-        record.put(_PROP_STATE_DX, "AK");
-        record.put(_PROP_COUNTY_DX_ANALYSIS, "105");
-        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
-        record.put(_PROP_STATE_DX, "AK");
-        record.put(_PROP_COUNTY_DX_ANALYSIS, "280");
-        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
-        record.put(_PROP_STATE_DX, "AK");
-        record.put(_PROP_COUNTY_DX_ANALYSIS, "195");
-        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
+        rec.clear();
+        rec.put(_PROP_SPANISH_HISPANIC_ORIGIN, "0");
+        rec.put(_PROP_STATE_DX, "AL");
+        rec.put(_PROP_COUNTY_DX_ANALYSIS, "005");
+        rec.put(_PROP_SEX, "2");
+        rec.put(_PROP_NAME_LAST, "ADORNO");
+        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(rec, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
+        rec.put(_PROP_BIRTH_PLACE_COUNTRY, "ZZP");
+        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(rec, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
+        rec.put(_PROP_BIRTH_PLACE_COUNTRY, "PAN");
+        Assert.assertEquals(NhiaUtils.NHIA_SOUTH_CENTRAL_AMER, computeNhia(rec, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
+        rec.put(_PROP_BIRTH_PLACE_COUNTRY, "UMI");
+        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(rec, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
+        rec.put(_PROP_BIRTH_PLACE_COUNTRY, "ZZS");
+        Assert.assertEquals(NhiaUtils.NHIA_SOUTH_CENTRAL_AMER, computeNhia(rec, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
+        rec.put(_PROP_BIRTH_PLACE_COUNTRY, "ZZU");
+        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(rec, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
+        rec.put(_PROP_STATE_DX, "GA");
+        rec.put(_PROP_COUNTY_DX_ANALYSIS, "073");
+        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(rec, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
+        rec.put(_PROP_STATE_DX, "IL");
+        rec.put(_PROP_COUNTY_DX_ANALYSIS, "103");
+        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(rec, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
+        rec.put(_PROP_STATE_DX, "AK");
+        rec.put(_PROP_COUNTY_DX_ANALYSIS, "232");
+        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(rec, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
+        rec.put(_PROP_STATE_DX, "NE");
+        rec.put(_PROP_COUNTY_DX_ANALYSIS, "007");
+        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(rec, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
+        rec.put(_PROP_STATE_DX, "AK");
+        rec.put(_PROP_COUNTY_DX_ANALYSIS, "105");
+        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(rec, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
+        rec.put(_PROP_STATE_DX, "AK");
+        rec.put(_PROP_COUNTY_DX_ANALYSIS, "280");
+        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(rec, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
+        rec.put(_PROP_STATE_DX, "AK");
+        rec.put(_PROP_COUNTY_DX_ANALYSIS, "195");
+        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(rec, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
 
         //Testing Git issue #97
-        record.clear();
-        record.put(_PROP_RACE1, "96");
-        record.put(_PROP_BIRTH_PLACE_COUNTRY, "UMI");
-        record.put(_PROP_STATE_DX, "WA");
-        record.put(_PROP_COUNTY_DX_ANALYSIS, "005");
-        record.put(_PROP_SPANISH_HISPANIC_ORIGIN, "1");
-        record.put(_PROP_SEX, "2");
-        record.put(_PROP_NAME_LAST, "ADORNO");
-        Assert.assertEquals(NhiaUtils.NHIA_MEXICAN, computeNhia(record, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
-        record.put(_PROP_SPANISH_HISPANIC_ORIGIN, "4");
-        Assert.assertEquals(NhiaUtils.NHIA_SOUTH_CENTRAL_AMER, computeNhia(record, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
-        record.put(_PROP_SPANISH_HISPANIC_ORIGIN, "5");
-        Assert.assertEquals(NhiaUtils.NHIA_OTHER_SPANISH, computeNhia(record, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
-        record.put(_PROP_SPANISH_HISPANIC_ORIGIN, "6");
-        Assert.assertEquals(NhiaUtils.NHIA_SPANISH_NOS, computeNhia(record, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
-        record.put(_PROP_SPANISH_HISPANIC_ORIGIN, "9");
-        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(record, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
-        record.put(_PROP_RACE1, "01");
-        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(record, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
+        rec.clear();
+        rec.put(_PROP_RACE1, "96");
+        rec.put(_PROP_BIRTH_PLACE_COUNTRY, "UMI");
+        rec.put(_PROP_STATE_DX, "WA");
+        rec.put(_PROP_COUNTY_DX_ANALYSIS, "005");
+        rec.put(_PROP_SPANISH_HISPANIC_ORIGIN, "1");
+        rec.put(_PROP_SEX, "2");
+        rec.put(_PROP_NAME_LAST, "ADORNO");
+        Assert.assertEquals(NhiaUtils.NHIA_MEXICAN, computeNhia(rec, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
+        rec.put(_PROP_SPANISH_HISPANIC_ORIGIN, "4");
+        Assert.assertEquals(NhiaUtils.NHIA_SOUTH_CENTRAL_AMER, computeNhia(rec, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
+        rec.put(_PROP_SPANISH_HISPANIC_ORIGIN, "5");
+        Assert.assertEquals(NhiaUtils.NHIA_OTHER_SPANISH, computeNhia(rec, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
+        rec.put(_PROP_SPANISH_HISPANIC_ORIGIN, "6");
+        Assert.assertEquals(NhiaUtils.NHIA_SPANISH_NOS, computeNhia(rec, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
+        rec.put(_PROP_SPANISH_HISPANIC_ORIGIN, "9");
+        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(rec, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
+        rec.put(_PROP_RACE1, "01");
+        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(rec, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
     }
 
     @Test
@@ -385,18 +385,17 @@ public class NhiaUtilsTest {
     }
 
     // so many calls in this test were using the deprecated method that it was easier to create a private method that keeps using the deprecated logic...
-    public static NhiaResultsDto computeNhia(Map<String, String> record, String option) {
+    public static NhiaResultsDto computeNhia(Map<String, String> rec, String option) {
         NhiaInputRecordDto input = new NhiaInputRecordDto();
-        input.setSpanishHispanicOrigin(record.get(_PROP_SPANISH_HISPANIC_ORIGIN));
-        input.setBirthplaceCountry(record.get(_PROP_BIRTH_PLACE_COUNTRY));
-        input.setSex(record.get(_PROP_SEX));
-        input.setRace1(record.get(_PROP_RACE1));
-        input.setIhs(record.get(_PROP_IHS));
-        input.setNameLast(record.get(_PROP_NAME_LAST));
-        input.setNameMaiden(record.get(_PROP_NAME_MAIDEN));
-        input.setNameBirthSurname(record.get(_PROP_NAME_BIRTH_SURNAME));
-        input.setCountyAtDxAnalysis(record.get(_PROP_COUNTY_DX_ANALYSIS));
-        input.setStateAtDx(record.get(_PROP_STATE_DX));
+        input.setSpanishHispanicOrigin(rec.get(_PROP_SPANISH_HISPANIC_ORIGIN));
+        input.setBirthplaceCountry(rec.get(_PROP_BIRTH_PLACE_COUNTRY));
+        input.setSex(rec.get(_PROP_SEX));
+        input.setRace1(rec.get(_PROP_RACE1));
+        input.setIhs(rec.get(_PROP_IHS));
+        input.setNameLast(rec.get(_PROP_NAME_LAST));
+        input.setNameBirthSurname(rec.get(_PROP_NAME_BIRTH_SURNAME));
+        input.setCountyAtDxAnalysis(rec.get(_PROP_COUNTY_DX_ANALYSIS));
+        input.setStateAtDx(rec.get(_PROP_STATE_DX));
         return NhiaUtils.computeNhia(input, option);
     }
 
@@ -404,18 +403,17 @@ public class NhiaUtilsTest {
     public static NhiaResultsDto computeNhia(List<Map<String, String>> patient, String option) {
         NhiaInputPatientDto input = new NhiaInputPatientDto();
         input.setNhiaInputPatientDtoList(new ArrayList<>());
-        for (Map<String, String> record : patient) {
+        for (Map<String, String> rec : patient) {
             NhiaInputRecordDto dto = new NhiaInputRecordDto();
-            dto.setSpanishHispanicOrigin(record.get(_PROP_SPANISH_HISPANIC_ORIGIN));
-            dto.setBirthplaceCountry(record.get(_PROP_BIRTH_PLACE_COUNTRY));
-            dto.setSex(record.get(_PROP_SEX));
-            dto.setRace1(record.get(_PROP_RACE1));
-            dto.setIhs(record.get(_PROP_IHS));
-            dto.setNameLast(record.get(_PROP_NAME_LAST));
-            dto.setNameMaiden(record.get(_PROP_NAME_MAIDEN));
-            dto.setNameBirthSurname(record.get(_PROP_NAME_BIRTH_SURNAME));
-            dto.setCountyAtDxAnalysis(record.get(_PROP_COUNTY_DX_ANALYSIS));
-            dto.setStateAtDx(record.get(_PROP_STATE_DX));
+            dto.setSpanishHispanicOrigin(rec.get(_PROP_SPANISH_HISPANIC_ORIGIN));
+            dto.setBirthplaceCountry(rec.get(_PROP_BIRTH_PLACE_COUNTRY));
+            dto.setSex(rec.get(_PROP_SEX));
+            dto.setRace1(rec.get(_PROP_RACE1));
+            dto.setIhs(rec.get(_PROP_IHS));
+            dto.setNameLast(rec.get(_PROP_NAME_LAST));
+            dto.setNameBirthSurname(rec.get(_PROP_NAME_BIRTH_SURNAME));
+            dto.setCountyAtDxAnalysis(rec.get(_PROP_COUNTY_DX_ANALYSIS));
+            dto.setStateAtDx(rec.get(_PROP_STATE_DX));
             input.getNhiaInputPatientDtoList().add(dto);
         }
 
