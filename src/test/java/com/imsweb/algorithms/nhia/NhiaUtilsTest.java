@@ -24,7 +24,6 @@ public class NhiaUtilsTest {
     // using the properties as map keys is deprecated, but it would be too much work to properly fix these tests, so it uses a method to translate the maps into proper input objects...
     private static final String _PROP_SPANISH_HISPANIC_ORIGIN = "spanishHispanicOrigin";
     private static final String _PROP_NAME_LAST = "nameLast";
-    private static final String _PROP_NAME_MAIDEN = "nameMaiden";
     private static final String _PROP_NAME_BIRTH_SURNAME = "nameBirthSurname";
     private static final String _PROP_BIRTH_PLACE_COUNTRY = "birthplaceCountry";
     private static final String _PROP_RACE1 = "race1";
@@ -170,13 +169,6 @@ public class NhiaUtilsTest {
         Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
         rec.put(_PROP_NAME_BIRTH_SURNAME, "ADORNO");
         Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
-        // *** following tests that maiden name can still be used...
-        rec.put(_PROP_NAME_BIRTH_SURNAME, null);
-        rec.put(_PROP_NAME_MAIDEN, "ADORNO");
-        Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
-        rec.put(_PROP_NAME_MAIDEN, null);
-        rec.put(_PROP_NAME_BIRTH_SURNAME, "ADORNO");
-        // end maiden name check
         rec.put(_PROP_NAME_LAST, "FLINT");
         Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(rec, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
         rec.put(_PROP_SEX, "1");

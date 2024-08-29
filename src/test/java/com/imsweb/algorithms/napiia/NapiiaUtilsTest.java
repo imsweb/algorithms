@@ -31,7 +31,6 @@ public class NapiiaUtilsTest {
     private static final String _PROP_BIRTH_PLACE_COUNTRY = "birthplaceCountry";
     private static final String _PROP_SEX = "sex";
     private static final String _PROP_NAME_LAST = "nameLast";
-    private static final String _PROP_NAME_MAIDEN = "nameMaiden";
     private static final String _PROP_NAME_BIRTH_SURNAME = "nameBirthSurname";
     private static final String _PROP_NAME_FIRST = "nameFirst";
 
@@ -188,11 +187,6 @@ public class NapiiaUtilsTest {
         Assert.assertEquals("15", computeNapiia(rec).getNapiiaValue());
         Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
         Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        // *** following tests that maiden name can still be used...
-        rec.put(_PROP_NAME_BIRTH_SURNAME, null);
-        rec.put(_PROP_NAME_MAIDEN, "ffffff");
-        Assert.assertEquals("15", computeNapiia(rec).getNapiiaValue());
-        rec.put(_PROP_NAME_MAIDEN, null);
         // end maiden name check
         rec.put(_PROP_NAME_BIRTH_SURNAME, "NGU");
         Assert.assertEquals("15", computeNapiia(rec).getNapiiaValue());
