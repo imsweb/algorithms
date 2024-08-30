@@ -3,16 +3,27 @@
  */
 package com.imsweb.algorithms;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+import com.opencsv.exceptions.CsvException;
 
 import com.imsweb.algorithms.countyatdiagnosisanalysis.CountyAtDxAnalysisUtils;
 import com.imsweb.algorithms.internal.Utils;
@@ -29,8 +40,24 @@ public class AlgorithmsTest {
             Algorithms.initialize();
     }
 
+    @SuppressWarnings("SameParameterValue")
+    private static String getBuildProperty(String property) {
+        File propsFile = new File(System.getProperty("user.dir") + "/build.properties");
+        if (!propsFile.exists())
+            throw new IllegalStateException("Unable to read properties from " + propsFile.getPath());
+
+        try (InputStream is = Files.newInputStream(propsFile.toPath())) {
+            Properties props = new Properties();
+            props.load(is);
+            return props.getProperty(property);
+        }
+        catch (IOException e) {
+            throw new IllegalStateException("Unable to load build properties file, make sure the file is a legit properties file.", e);
+        }
+    }
+
     @Test
-    public void testFields() {
+    public void testFields() throws IOException, CsvException {
         NaaccrDictionary dictionary = NaaccrXmlDictionaryUtils.getMergedDictionaries(NaaccrFormat.NAACCR_VERSION_230);
 
         Set<String> ids = new HashSet<>();
@@ -56,6 +83,22 @@ public class AlgorithmsTest {
             if (field.isNaaccrStandard()) {
                 Assert.assertEquals(field.getId(), dictionary.getItemByNaaccrNum(field.getNumber()).getNaaccrId(), field.getId());
                 Assert.assertEquals(field.getId(), dictionary.getItemByNaaccrNum(field.getNumber()).getNaaccrName(), field.getName());
+            }
+        }
+
+        File nonStandardItemsFile = new File(getBuildProperty("non.standard.data.items.list"));
+        if (nonStandardItemsFile.exists()) {
+            Map<String, Integer> algNonStandardItems = new HashMap<>();
+            for (AlgorithmField field : Algorithms.getAllFields())
+                if (!field.isNaaccrStandard())
+                    algNonStandardItems.put(field.getId(), field.getNumber());
+
+            try (CSVReader reader = new CSVReaderBuilder(new InputStreamReader(Files.newInputStream(nonStandardItemsFile.toPath()), StandardCharsets.US_ASCII)).withSkipLines(1).build()) {
+                for (String[] row : reader.readAll()) {
+                    Integer algNum = algNonStandardItems.get(row[0]);
+                    if (algNum != null && algNum.equals(Integer.valueOf(row[1])))
+                        Assert.fail("Item '" + row[0] + "' has number " + algNum + " in this library, but " + row[1] + " in the submission dictionaries");
+                }
             }
         }
 

@@ -10,6 +10,7 @@ classes/*
 **/classes/*
 out/*
 **/out/*
+build.properties
 
 # intellij
 *.iml
