@@ -33,7 +33,7 @@ The following algorithms are available:
 * NAACCR Tract-Estimated Congressional Districts ([TractEstCongressDistUtils](https://github.com/imsweb/algorithms/blob/master/src/main/java/com/imsweb/algorithms/tractestcongressdist/TractEstCongressDistUtils.java))
 * NPCR PRCDA Linkage Program ([PrcdaUtils](https://github.com/imsweb/algorithms/blob/master/src/main/java/com/imsweb/algorithms/prcda/PrcdaUtils.java))
 * NPCR UIHO Linkage Program ([UihoUtils](https://github.com/imsweb/algorithms/blob/master/src/main/java/com/imsweb/algorithms/uiho/UihoUtils.java))
-* NPCR EPHT SubCounty ([NPCR EPHT SubCounty](https://github.com/imsweb/algorithms/blob/master/src/main/java/com/imsweb/algorithms/ephtsubcounty/EphtSubCountyUtils.java))
+* NPCR EPHT SubCounty ([EphtSubCountyUtils](https://github.com/imsweb/algorithms/blob/master/src/main/java/com/imsweb/algorithms/ephtsubcounty/EphtSubCountyUtils.java))
 * CDC/ATSDR Social Vulnerability Index ([SocialVulnerabilityIndexUtils](https://github.com/imsweb/algorithms/blob/master/src/main/java/com/imsweb/algorithms/svi/SocialVulnerabilityIndexUtils.java))
 * IARC Multiple Primary Algorithm ([IarcUtils](https://github.com/imsweb/algorithms/tree/master/src/main/java/com/imsweb/algorithms/iarc/IarcUtils.java))
 * Persistent Poverty ([PersistentPovertyAlgorithm](https://github.com/imsweb/algorithms/blob/master/src/main/java/com/imsweb/algorithms/persistentpoverty/PersistentPovertyAlgorithm.java))
