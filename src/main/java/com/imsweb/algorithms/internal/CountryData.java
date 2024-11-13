@@ -41,10 +41,13 @@ import com.imsweb.algorithms.StateCountyTractInputDto.CensusTract;
  */
 @SuppressWarnings("BooleanMethodIsAlwaysInverted")
 public class CountryData {
+    
+    private CountryData() {
+        // static utility class
+    }
 
     private static final String _SEER_CENSUS_DATA_FILE = "tract/tract-data.txt.gz";
 
-    //
     private static final Map<String, Integer> _TRACT_FIELDS = new LinkedHashMap<>();
 
     static {
