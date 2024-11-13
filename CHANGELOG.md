@@ -1,5 +1,10 @@
 ## Algorithms Version History
 
+**Changes in version 5.0**
+
+- Changed minimum Java language from Java 8 to Java 11.
+- Replace OpenCSV library by FastCSV.
+
 **Changes in version 4.12**
 
 - Fixed an issue in SEER Site Recode 2023 where Brain, CSN Other and Intracranial Gland (C700-C729, C751-C753) cases with a behavior of 0-1 and a histology of 9050-9055, 9140, 9590-9993 were incorrectly coded to unknown.
