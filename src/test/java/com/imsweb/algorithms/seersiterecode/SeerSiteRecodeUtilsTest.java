@@ -78,6 +78,7 @@ public class SeerSiteRecodeUtilsTest {
 
         // other cases
         Assert.assertEquals("79", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2023, "C809", "8140", "3", "2023"));
+        Assert.assertEquals("81", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2023, "C713", "9752", "0", "2008"));
 
     }
 
@@ -115,6 +116,7 @@ public class SeerSiteRecodeUtilsTest {
 
         // other cases
         Assert.assertEquals("82", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2023_EXPANDED, "C809", "8140", "3", "2023"));
+        Assert.assertEquals("84", SeerSiteRecodeUtils.calculateSiteRecode(VERSION_2023_EXPANDED, "C713", "9752", "0", "2008"));
     }
 
     @Test

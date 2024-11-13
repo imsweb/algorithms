@@ -26,7 +26,7 @@ repositories {
 dependencies {
     implementation 'org.apache.commons:commons-lang3:3.14.0'
     implementation 'com.opencsv:opencsv:5.9'
-    implementation 'com.thoughtworks.xstream:xstream:1.4.20'
+    implementation 'com.thoughtworks.xstream:xstream:1.4.21'
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'com.imsweb:layout:5.5'

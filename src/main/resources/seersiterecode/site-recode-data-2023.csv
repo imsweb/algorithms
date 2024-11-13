@@ -94,4 +94,4 @@
 "91","Mesothelioma","1","C000-C809","9050-9055",,"2,3",,,"77"
 "92","Kaposi Sarcoma","1","C000-C809","9140",,"2,3",,,"78"
 "93","Miscellaneous Neoplasms","1","C261,C420-C424,C760-C768,C770-C779,C809",,"9050-9055,9140,9590-9993","2,3",,,"79"
-"94","Brain, CNS Other and Intracranial Gland (Benign and Borderline)","1","C700-C729,C751-C753",,"9050-9055,9140,9590-9993","0,1",,,"81"
+"94","Brain, CNS Other and Intracranial Gland (Benign and Borderline)","1","C700-C729,C751-C753",,,"0,1",,,"81"

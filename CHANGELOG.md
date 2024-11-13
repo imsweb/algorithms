@@ -1,5 +1,10 @@
 ## Algorithms Version History
 
+**Changes in version 4.12**
+
+- Fixed an issue in SEER Site Recode 2023 where Brain, CSN Other and Intracranial Gland (C700-C729, C751-C753) cases with a behavior of 0-1 and a histology of 9050-9055, 9140, 9590-9993 were incorrectly coded to unknown.
+- Updated XStream library from version 1.4.20 to version 1.4.21.
+
 **Changes in version 4.11**
 
 - Added new algorithm to compute SEER Race1 Recode.
