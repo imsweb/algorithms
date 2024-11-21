@@ -3,19 +3,16 @@
  */
 package com.imsweb.algorithms.prcda;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.opencsv.CSVReader;
-import com.opencsv.CSVReaderBuilder;
-import com.opencsv.exceptions.CsvException;
+import de.siegmar.fastcsv.reader.CsvReader;
+import de.siegmar.fastcsv.reader.NamedCsvRecord;
 
 import com.imsweb.algorithms.internal.CountryData;
 import com.imsweb.algorithms.internal.CountyData;
@@ -86,20 +83,21 @@ public class PrcdaDataProvider {
         try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("prcda/prcda.csv")) {
             if (is == null)
                 throw new IllegalStateException("Unable to find PRCDA data!");
-            try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
-                 CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build()) {
-                for (String[] row : csvReader.readAll()) {
-                    String state = row[0];
-                    String county = row[1];
-                    String prcda2017 = row[2];
-                    String prcda2020 = row[3];
+
+            File csvFile = new File("src/main/resources/prcda/prcda.csv");
+            try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
+                reader.stream().forEach(line -> {
+                    String state = line.getField(0);
+                    String county = line.getField(1);
+                    String prcda2017 = line.getField(2);
+                    String prcda2020 = line.getField(3);
                     CountyData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new CountyData());
                     dto.setPrcda2017(StringUtils.leftPad(prcda2017, 1, '0'));
                     dto.setPrcda(StringUtils.leftPad(prcda2020, 1, '0'));
-                }
+                });
             }
         }
-        catch (CsvException | IOException e) {
+        catch (IOException e) {
             throw new IllegalStateException(e);
         }
         return result;

@@ -3,19 +3,16 @@
  */
 package com.imsweb.algorithms.uiho;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.opencsv.CSVReader;
-import com.opencsv.CSVReaderBuilder;
-import com.opencsv.exceptions.CsvException;
+import de.siegmar.fastcsv.reader.CsvReader;
+import de.siegmar.fastcsv.reader.NamedCsvRecord;
 
 import com.imsweb.algorithms.internal.CountryData;
 import com.imsweb.algorithms.internal.CountyData;
@@ -80,20 +77,21 @@ public class UihoDataProvider {
         try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("uiho/uiho.csv")) {
             if (is == null)
                 throw new IllegalStateException("Unable to find UIHO data!");
-            try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
-                 CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build()) {
-                for (String[] row : csvReader.readAll()) {
-                    String state = row[0];
-                    String county = row[1];
-                    String uiho = row[2];
-                    String city = row[3];
+
+            File csvFile = new File("src/main/resources/uiho/uiho.csv");
+            try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
+                reader.stream().forEach(line -> {
+                    String state = line.getField(0);
+                    String county = line.getField(1);
+                    String uiho = line.getField(2);
+                    String city = line.getField(3);
                     CountyData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new CountyData());
                     dto.setUiho(StringUtils.leftPad(uiho, 1, '0'));
                     dto.setUihoCity(StringUtils.leftPad(city, 2, '0'));
-                }
+                });
             }
         }
-        catch (CsvException | IOException e) {
+        catch (IOException e) {
             throw new IllegalStateException(e);
         }
         return result;

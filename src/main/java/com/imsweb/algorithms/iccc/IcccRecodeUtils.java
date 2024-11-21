@@ -1,9 +1,8 @@
 package com.imsweb.algorithms.iccc;
 
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -17,8 +16,8 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
-import com.opencsv.CSVReader;
-import com.opencsv.exceptions.CsvException;
+import de.siegmar.fastcsv.reader.CsvReader;
+import de.siegmar.fastcsv.reader.NamedCsvRecord;
 
 import com.imsweb.algorithms.internal.Utils;
 
@@ -191,25 +190,23 @@ public final class IcccRecodeUtils {
 
         Pattern codePattern = Pattern.compile("\\d{3}");
 
-        try (CSVReader csvReader = new CSVReader(new InputStreamReader(url.openStream(), StandardCharsets.US_ASCII))) {
-            List<String[]> allData = csvReader.readAll();
-            for (int i = 1; i < allData.size(); i++) {
-                String[] data = allData.get(i);
-
-                String id = data[0];
-                String name = data[1];
-                String level = data[2];
-                String siteIn = data[3];
-                String siteOut = data[4];
-                String histIn = data[5];
-                String histOut = data[6];
-                String recode = data[7];
-                String children = data[8];
+        File csvFile = new File(url.getFile());
+        try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
+            reader.stream().forEach(line -> {
+                String id = line.getField(0);
+                String name = line.getField(1);
+                String level = line.getField(2);
+                String siteIn = line.getField(3);
+                String siteOut = line.getField(4);
+                String histIn = line.getField(5);
+                String histOut = line.getField(6);
+                String recode = line.getField(7);
+                String children = line.getField(8);
                 String recodeExtended = "";
                 String behaviorInclusions = "";
                 if (!VERSION_THIRD_EDITION.equals(version)) {
-                    recodeExtended = data[9];
-                    behaviorInclusions = data[10];
+                    recodeExtended = line.getField(9);
+                    behaviorInclusions = line.getField(10);
                 }
 
                 IcccSiteGroupDto group = new IcccSiteGroupDto();
@@ -251,9 +248,9 @@ public final class IcccRecodeUtils {
 
                     executables.add(executable);
                 }
-            }
+            });
         }
-        catch (CsvException | IOException e) {
+        catch (IOException e) {
             throw new IllegalStateException(e);
         }
     }

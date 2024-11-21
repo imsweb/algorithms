@@ -3,10 +3,9 @@
  */
 package com.imsweb.algorithms.tumorsizeovertime;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -18,8 +17,8 @@ import org.apache.commons.lang3.Range;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
-import com.opencsv.CSVReader;
-import com.opencsv.exceptions.CsvException;
+import de.siegmar.fastcsv.reader.CsvReader;
+import de.siegmar.fastcsv.reader.CsvRecord;
 
 public final class TumorSizeOverTimeUtils {
 
@@ -192,16 +191,16 @@ public final class TumorSizeOverTimeUtils {
         try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("tumorsizeovertime/edits.csv")) {
             if (is == null)
                 throw new IllegalStateException("Unable to read internal data file");
-            try (CSVReader reader = new CSVReader(new InputStreamReader(is, StandardCharsets.US_ASCII))) {
-                for (String[] row : reader.readAll()) {
-                    String site = row[0].substring(0, 4);
-                    List<Object> sizes = getSizeList(row[1]);
+            File csvFile = new File("src/main/resources/tumorsizeovertime/edits.csv");
+            try (CsvReader<CsvRecord> reader = CsvReader.builder().ofCsvRecord(csvFile.toPath())) {
+                reader.stream().forEach(line -> {
+                    String site = line.getField(0).substring(0, 4);
+                    List<Object> sizes = getSizeList(line.getField(1));
                     map.put(site, sizes);
-
-                }
+                });
             }
         }
-        catch (CsvException | IOException e) {
+        catch (IOException e) {
             throw new IllegalStateException("Unable to read internal", e);
         }
 
