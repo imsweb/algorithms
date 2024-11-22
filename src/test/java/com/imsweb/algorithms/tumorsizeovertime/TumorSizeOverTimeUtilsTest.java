@@ -3,19 +3,16 @@
  */
 package com.imsweb.algorithms.tumorsizeovertime;
 
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.LineNumberReader;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.opencsv.CSVReader;
-import com.opencsv.CSVReaderBuilder;
-import com.opencsv.exceptions.CsvException;
+import de.siegmar.fastcsv.reader.CsvReader;
+import de.siegmar.fastcsv.reader.NamedCsvRecord;
 
 public class TumorSizeOverTimeUtilsTest {
 
@@ -177,32 +174,27 @@ public class TumorSizeOverTimeUtilsTest {
     }
 
     @Test
-    @SuppressWarnings("DataFlowIssue")
-    public void testCsvFile() throws IOException, CsvException {
-        try (LineNumberReader lineNumberReader = new LineNumberReader(new InputStreamReader(
-                Thread.currentThread().getContextClassLoader().getResourceAsStream("tumorsizeovertime/tumorsize.test.data.csv"), StandardCharsets.US_ASCII));
-                CSVReader reader = new CSVReaderBuilder(lineNumberReader).withSkipLines(1).build()) {
-            String[] row = reader.readNext();
-            while (row != null) {
+    public void testCsvFile() throws IOException {
+        File csvFile = new File("src/test/resources/tumorsizeovertime/tumorsize.test.data.csv");
+        try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
+            reader.stream().forEach(line -> {
                 TumorSizeOverTimeInputDto input = new TumorSizeOverTimeInputDto();
-                input.setDxYear(row[0]);
-                input.setSite(row[1]);
-                input.setHist(row[2]);
-                input.setBehavior(row[3]);
-                input.setEodTumorSize(row[4]);
-                input.setCsTumorSize(row[5]);
-                input.setTumorSizeSummary(row[6]);
+                input.setDxYear(line.getField(0));
+                input.setSite(line.getField(1));
+                input.setHist(line.getField(2));
+                input.setBehavior(line.getField(3));
+                input.setEodTumorSize(line.getField(4));
+                input.setCsTumorSize(line.getField(5));
+                input.setTumorSizeSummary(line.getField(6));
 
-                String expectedResult = row[7];
+                String expectedResult = line.getField(7);
                 if ("XX2".equals(expectedResult))
                     expectedResult = null;
                 String result = TumorSizeOverTimeUtils.computeTumorSizeOverTime(input);
 
                 if (!Objects.equals(expectedResult, result))
-                    Assert.fail("Line " + lineNumberReader.getLineNumber() + " - Unexpected result in CSV data file for row " + Arrays.asList(row) + " vs " + result);
-                
-                row = reader.readNext();
-            }
+                    Assert.fail("Line " + line.getStartingLineNumber() + " - Unexpected result in CSV data file for row " + Arrays.asList(line.getFields().toArray(new String[0])) + " vs " + result);
+            });
         }
     }
 }

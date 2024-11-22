@@ -4,12 +4,12 @@
 package lab;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.io.OutputStreamWriter;
-import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -29,9 +29,8 @@ import java.util.zip.GZIPOutputStream;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.opencsv.CSVReader;
-import com.opencsv.CSVReaderBuilder;
-import com.opencsv.exceptions.CsvException;
+import de.siegmar.fastcsv.reader.CsvReader;
+import de.siegmar.fastcsv.reader.NamedCsvRecord;
 
 import com.imsweb.algorithms.internal.CountryData;
 import com.imsweb.layout.LayoutUtils;
@@ -144,23 +143,24 @@ public class TractDataLab {
 
         // NAACCR Poverty Indicator 1995-2004
         Map<DataKey, String> naaccrPovertyIndicator9504 = new HashMap<>();
-        try (Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("povertyindicator/poverty-indicator-1995-2004.csv"), StandardCharsets.US_ASCII);
-             CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build()) {
-            for (String[] row : csvReader.readAll())
-                naaccrPovertyIndicator9504.put(new DataKey(row[0], row[1], row[2]), row[3]);
+
+        File csvFile = new File("src/test/resources/povertyindicator/poverty-indicator-1995-2004.csv");
+        try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
+            reader.stream().forEach(line -> naaccrPovertyIndicator9504.put(new DataKey(line.getField(0), line.getField(1), line.getField(2)), line.getField(3)));
         }
-        catch (CsvException | IOException e) {
+        catch (IOException e) {
             throw new IllegalStateException(e);
         }
 
         // NAACCR Poverty Indicator 2005-2007
         Map<DataKey, String> naaccrPovertyIndicator0507 = new HashMap<>();
-        try (Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("povertyindicator/poverty-indicator-2005-2007.csv"), StandardCharsets.US_ASCII);
-             CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build()) {
-            for (String[] row : csvReader.readAll())
-                naaccrPovertyIndicator0507.put(new DataKey(row[0], row[1], row[2]), row[3]);
+
+
+        csvFile = new File("src/test/resources/povertyindicator/poverty-indicator-2005-2007.csv");
+        try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
+            reader.stream().forEach(line -> naaccrPovertyIndicator0507.put(new DataKey(line.getField(0), line.getField(1), line.getField(2)), line.getField(3)));
         }
-        catch (CsvException | IOException e) {
+        catch (IOException e) {
             throw new IllegalStateException(e);
         }
 
@@ -169,14 +169,13 @@ public class TractDataLab {
         try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("ruralurban/rural-urban-commuting-area-2000.csv")) {
             if (is == null)
                 throw new IllegalStateException("Missing data file!");
-            try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
-                 CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build()) {
 
+            csvFile = new File("src/test/resources/ruralurban/rural-urban-commuting-area-2000.csv");
+            try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
                 List<String> urbanCommutingAreas = Arrays.asList("1.0", "1.1", "2.0", "2.1", "3.0", "4.1", "5.1", "7.1", "8.1", "10.1");
-
-                for (String[] row : csvReader.readAll()) {
-                    String primary = row[3];
-                    String secondary = row[4];
+                reader.stream().forEach(line -> {
+                    String primary = line.getField(3);
+                    String secondary = line.getField(4);
 
                     String val;
                     if (primary.equals("99"))
@@ -186,11 +185,11 @@ public class TractDataLab {
                     else
                         val = "2";
 
-                    ruca2000Values.put(new DataKey(row[0], row[1], row[2]), val);
-                }
+                    ruca2000Values.put(new DataKey(line.getField(0), line.getField(1), line.getField(2)), val);
+                });
             }
         }
-        catch (CsvException | IOException e) {
+        catch (IOException e) {
             throw new IllegalStateException(e);
         }
 
@@ -199,16 +198,17 @@ public class TractDataLab {
         try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("ruralurban/urban-rural-indicator-code-2000.csv")) {
             if (is == null)
                 throw new IllegalStateException("Missing data file!");
-            try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
-                 CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build()) {
-                for (String[] row : csvReader.readAll()) {
-                    if (row[4].length() != 1)
-                        throw new IllegalStateException("Found unexpected format for URIC value: " + row[4]);
-                    uric2000Values.put(new DataKey(row[0], row[1], row[2]), row[4]);
-                }
+
+            csvFile = new File("src/test/resources/ruralurban/urban-rural-indicator-code-2000.csv");
+            try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
+                reader.stream().forEach(line -> {
+                    if (line.getField(4).length() != 1)
+                        throw new IllegalStateException("Found unexpected format for URIC value: " + line.getField(4));
+                    uric2000Values.put(new DataKey(line.getField(0), line.getField(1), line.getField(2)), line.getField(4));
+                });
             }
         }
-        catch (CsvException | IOException e) {
+        catch (IOException e) {
             throw new IllegalStateException(e);
         }
 
