@@ -3,8 +3,10 @@
  */
 package com.imsweb.algorithms.tumorsizeovertime;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.LineNumberReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -175,9 +177,9 @@ public class TumorSizeOverTimeUtilsTest {
 
     @Test
     public void testCsvFile() throws IOException {
-        File csvFile = new File("src/test/resources/tumorsizeovertime/tumorsize.test.data.csv");
-        try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
-            reader.stream().forEach(line -> {
+        try (CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(new LineNumberReader(new InputStreamReader(
+                Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResourceAsStream("tumorsizeovertime/tumorsize.test.data.csv")), StandardCharsets.US_ASCII)))) {
+            csvReader.stream().forEach(line -> {
                 TumorSizeOverTimeInputDto input = new TumorSizeOverTimeInputDto();
                 input.setDxYear(line.getField(0));
                 input.setSite(line.getField(1));

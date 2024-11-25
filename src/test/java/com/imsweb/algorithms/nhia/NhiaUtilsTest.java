@@ -3,8 +3,9 @@
  */
 package com.imsweb.algorithms.nhia;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -344,9 +345,9 @@ public class NhiaUtilsTest {
     @SuppressWarnings("ConstantConditions")
     @Test
     public void testCsvFile() throws IOException {
-        File csvFile = new File("src/test/resources/nhia/testNHIA.csv");
-        try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
-            reader.stream().forEach(line -> {
+        try (CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(
+                new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("nhia/testNHIA.csv"), StandardCharsets.US_ASCII))) {
+            csvReader.stream().forEach(line -> {
                 Map<String, String> rec = new HashMap<>();
                 rec.put(_PROP_SPANISH_HISPANIC_ORIGIN, line.getField(0));
                 rec.put(_PROP_BIRTH_PLACE_COUNTRY, line.getField(1));

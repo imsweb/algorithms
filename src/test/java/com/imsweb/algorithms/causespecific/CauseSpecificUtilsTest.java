@@ -3,8 +3,10 @@
  */
 package com.imsweb.algorithms.causespecific;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -36,8 +38,8 @@ public class CauseSpecificUtilsTest {
     public void testCsvFile() throws IOException {
         AtomicInteger count = new AtomicInteger();
 
-        File csvFile = new File("src/test/resources/causespecific/testCauseSpecific.csv");
-        try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
+        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("causespecific/testCauseSpecific.csv");
+             CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(new InputStreamReader(is, StandardCharsets.US_ASCII))) {
             reader.stream().forEach(line -> {
                 CauseSpecificInputDto input = new CauseSpecificInputDto();
                 input.setSequenceNumberCentral(line.getField(0));
@@ -54,8 +56,8 @@ public class CauseSpecificUtilsTest {
                 String causeOtherCalculated = CauseSpecificUtils.computeCauseSpecific(input).getCauseOtherDeathClassification();
                 count.getAndIncrement();
                 if (!causeSpecificExpected.equals(causeSpecificCalculated) || !causeOtherExpected.equals(causeOtherCalculated)) {
-                    Assert.fail("Unexpected result for row number " + (count.get() + 1) + " " + Arrays.asList(line.getFields().toArray(new String[0])) + "\nExpected results: " + causeSpecificExpected + ", "
-                            + causeOtherExpected + " But found: " + causeSpecificCalculated + ", " + causeOtherCalculated);
+                    Assert.fail("Unexpected result for row number " + (count.get() + 1) + " " + Arrays.asList(line.getFields().toArray(new String[0])) + "\nExpected results: " + causeSpecificExpected
+                            + ", " + causeOtherExpected + " But found: " + causeSpecificCalculated + ", " + causeOtherCalculated);
                 }
             });
         }

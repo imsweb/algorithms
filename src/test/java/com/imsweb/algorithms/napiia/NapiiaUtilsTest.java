@@ -3,8 +3,9 @@
  */
 package com.imsweb.algorithms.napiia;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -854,10 +855,9 @@ public class NapiiaUtilsTest {
     public void testCsvFile() throws IOException {
         AtomicInteger count = new AtomicInteger();
 
-
-        File csvFile = new File("src/test/resources/napiia/testNAPIIA.csv");
-        try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
-            reader.stream().forEach(line -> {
+        try (CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(
+                new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("napiia/testNAPIIA.csv"), StandardCharsets.US_ASCII))) {
+            csvReader.stream().forEach(line -> {
                 count.getAndIncrement();
 
                 Map<String, String> rec = new HashMap<>();

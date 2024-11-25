@@ -6,6 +6,8 @@ package com.imsweb.algorithms;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Collections;
 import java.util.HashMap;
@@ -90,7 +92,7 @@ public class AlgorithmsTest {
                 if (!field.isNaaccrStandard())
                     algNonStandardItems.put(field.getId(), field.getNumber());
 
-            try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(nonStandardItemsFile.toPath())) {
+            try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(new InputStreamReader(Files.newInputStream(nonStandardItemsFile.toPath()), StandardCharsets.US_ASCII))) {
                 reader.stream().forEach(line -> {
                     Integer algNum = algNonStandardItems.get(line.getField(0));
                     if (algNum != null && algNum.equals(Integer.valueOf(line.getField(1))))
