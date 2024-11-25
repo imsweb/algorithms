@@ -3,9 +3,11 @@
  */
 package com.imsweb.algorithms.napiia;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -527,9 +529,9 @@ public final class NapiiaUtils {
         try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("napiia/" + file)) {
             if (is == null)
                 throw new IllegalStateException("Unable to read internal " + file);
-            File csvFile = new File("src/main/resources/napiia/" + file);
-            try (CsvReader<CsvRecord> reader = CsvReader.builder().ofCsvRecord(csvFile.toPath())) {
-                reader.stream().forEach(line -> map.put(line.getField(0).toUpperCase(), Short.valueOf(line.getField(1))));
+            try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
+                 CsvReader<CsvRecord> csvReader = CsvReader.builder().ofCsvRecord(reader)) {
+                csvReader.stream().forEach(line -> map.put(line.getField(0).toUpperCase(), Short.valueOf(line.getField(1))));
             }
         }
         catch (IOException e) {

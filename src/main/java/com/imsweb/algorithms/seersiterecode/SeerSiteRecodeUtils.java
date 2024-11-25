@@ -1,8 +1,9 @@
 package com.imsweb.algorithms.seersiterecode;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -213,9 +214,8 @@ public final class SeerSiteRecodeUtils {
 
         try {
             Set<String> names = new HashSet<>();
-            File csvFile = new File(url.getFile());
-            try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
-                reader.stream().forEach(line -> {
+            try (CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(new InputStreamReader(url.openStream(), StandardCharsets.US_ASCII))) {
+                csvReader.stream().forEach(line -> {
 
                     String id = line.getField(0).isEmpty() ? null : line.getField(0);
                     String name = line.getField(1).isEmpty() ? null : line.getField(1);

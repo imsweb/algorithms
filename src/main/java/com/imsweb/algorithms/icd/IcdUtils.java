@@ -4,10 +4,10 @@
 package com.imsweb.algorithms.icd;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -758,9 +758,9 @@ public final class IcdUtils {
             if (is == null)
                 throw new IllegalStateException("Unable to find ICD data file!");
 
-            File csvFile = new File("src/main/resources/icd/" + file);
-            try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
-                reader.stream().forEach(line -> {
+            try (Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
+                 CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
+                csvReader.stream().forEach(line -> {
                     if (line.getFieldCount() != 8)
                         throw new IllegalStateException("Was expecting 8 values, got " + line.getFieldCount() + " - " + line);
 

@@ -3,9 +3,11 @@
  */
 package com.imsweb.algorithms.ruralurban;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -131,9 +133,9 @@ public class RuralUrbanDataProvider {
         try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("ruralurban/rural-urban-continuum-1993.csv")) {
             if (is == null)
                 throw new IllegalStateException("Missing data file!");
-            File csvFile = new File("src/main/resources/ruralurban/rural-urban-continuum-1993.csv");
-            try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
-                reader.stream().forEach(line -> {
+            try (Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
+                 CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
+                csvReader.stream().forEach(line -> {
                     String state = line.getField(0);
                     String county = line.getField(1);
                     String val = line.getField(2);
@@ -151,9 +153,9 @@ public class RuralUrbanDataProvider {
         try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("ruralurban/rural-urban-continuum-2003.csv")) {
             if (is == null)
                 throw new IllegalStateException("Missing data file!");
-            File csvFile = new File("src/main/resources/ruralurban/rural-urban-continuum-2003.csv");
-            try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
-                reader.stream().forEach(line -> {
+            try (Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
+                 CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
+                csvReader.stream().forEach(line -> {
                     String state = line.getField(0);
                     String county = line.getField(1);
                     String val = line.getField(2);
@@ -171,9 +173,9 @@ public class RuralUrbanDataProvider {
         try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("ruralurban/rural-urban-continuum-2013.csv")) {
             if (is == null)
                 throw new IllegalStateException("Missing data file!");
-            File csvFile = new File("src/main/resources/ruralurban/rural-urban-continuum-2013.csv");
-            try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
-                reader.stream().forEach(line -> {
+            try (Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
+                 CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
+                csvReader.stream().forEach(line -> {
                     String state = line.getField(0);
                     String county = line.getField(1);
                     String val = line.getField(2);

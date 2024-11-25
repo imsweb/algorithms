@@ -3,9 +3,11 @@
  */
 package com.imsweb.algorithms.braincnsrecode;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,9 +69,9 @@ public final class BrainCnsRecodeUtils {
             if (is == null)
                 throw new IllegalStateException("Unable to find " + filename);
 
-            File csvFile = new File("src/main/resources/braincnsrecode/" + filename);
-            try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
-                reader.stream().forEach(line -> {
+            try (Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
+                 CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
+                csvReader.stream().forEach(line -> {
                     String site = StringUtils.trim(line.getField(1)).replace(" ", "");
                     String beh = StringUtils.trim(line.getField(2)).replace(" ", "");
                     String histInc = StringUtils.trim(line.getField(3)).replace(" ", "");

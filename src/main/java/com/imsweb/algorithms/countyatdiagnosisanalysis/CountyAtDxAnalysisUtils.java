@@ -3,8 +3,10 @@
  */
 package com.imsweb.algorithms.countyatdiagnosisanalysis;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -160,9 +162,9 @@ public final class CountyAtDxAnalysisUtils {
     private static Map<String, Map<String, CountyData>> loadCountyAtDxAnalysisData() {
         Map<String, java.util.Map<String, CountyData>> result = new HashMap<>();
 
-        File csvFile = new File("src/main/resources/countyatdxanalysis/state-county-map.csv");
-        try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
-            reader.stream().forEach(line -> result.computeIfAbsent(line.getField(0), k -> new HashMap<>()).computeIfAbsent(line.getField(1), k -> new CountyData()));
+        try (Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("countyatdxanalysis/state-county-map.csv"), StandardCharsets.US_ASCII);
+             CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
+            csvReader.stream().forEach(line -> result.computeIfAbsent(line.getField(0), k -> new HashMap<>()).computeIfAbsent(line.getField(1), k -> new CountyData()));
         }
         catch (IOException e) {
             throw new IllegalStateException(e);

@@ -3,9 +3,11 @@
  */
 package com.imsweb.algorithms.nhia;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -399,9 +401,9 @@ public final class NhiaUtils {
             if (is == null)
                 throw new IllegalStateException("Unable to read internal " + file);
 
-            File csvFile = new File("src/main/resources/nhia/" + file);
-            try (CsvReader<CsvRecord> reader = CsvReader.builder().ofCsvRecord(csvFile.toPath())) {
-                return reader.stream().map(line -> line.getField(0).toUpperCase()).collect(Collectors.toSet());
+            try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
+                 CsvReader<CsvRecord> csvReader = CsvReader.builder().ofCsvRecord(reader)) {
+                return csvReader.stream().map(line -> line.getField(0).toUpperCase()).collect(Collectors.toSet());
             }
         }
         catch (IOException e) {

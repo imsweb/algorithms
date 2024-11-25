@@ -3,9 +3,11 @@
  */
 package com.imsweb.algorithms.uiho;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -78,9 +80,9 @@ public class UihoDataProvider {
             if (is == null)
                 throw new IllegalStateException("Unable to find UIHO data!");
 
-            File csvFile = new File("src/main/resources/uiho/uiho.csv");
-            try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
-                reader.stream().forEach(line -> {
+            try (Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
+                 CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
+                csvReader.stream().forEach(line -> {
                     String state = line.getField(0);
                     String county = line.getField(1);
                     String uiho = line.getField(2);

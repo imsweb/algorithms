@@ -3,9 +3,11 @@
  */
 package com.imsweb.algorithms.lymphoma;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,9 +78,9 @@ public final class LymphoidNeoplasmRecodeUtils {
             if (is == null)
                 throw new IllegalStateException("Unable to find " + filename);
 
-            File csvFile = new File("src/main/resources/lymphoma/" + filename);
-            try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
-                reader.stream().forEach(line -> {
+            try (Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
+                 CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
+                csvReader.stream().forEach(line -> {
                     String site = StringUtils.trimToNull(line.getField(1));
                     String hist = StringUtils.trimToNull(line.getField(2));
                     String recode = StringUtils.trimToNull(line.getField(3));

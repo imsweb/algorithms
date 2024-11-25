@@ -3,9 +3,11 @@
  */
 package com.imsweb.algorithms.historicstage;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -669,9 +671,9 @@ public final class HistoricStageUtils {
             try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Leuk.csv")) {
                 if (is == null)
                     throw new IllegalStateException("Unable to read Historic-stage-Leuk.csv");
-                File csvFile = new File("src/main/resources/historicstage/Historic-stage-Leuk.csv");
-                try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
-                    reader.stream().forEach(line -> _DATA_LEUKEMIA.add(new HistStageDataLeukemiaDto(line.getFields().toArray(new String[0]))));
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
+                     CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
+                    csvReader.stream().forEach(line -> _DATA_LEUKEMIA.add(new HistStageDataLeukemiaDto(line.getFields().toArray(new String[0]))));
                 }
             }
             catch (IOException e) {
@@ -685,9 +687,9 @@ public final class HistoricStageUtils {
             try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-SchemaFor2004+.csv")) {
                 if (is == null)
                     throw new IllegalStateException("Unable to read Historic-stage-SchemaFor2004+.csv");
-                File csvFile = new File("src/main/resources/historicstage/Historic-stage-SchemaFor2004+.csv");
-                try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
-                    reader.stream().forEach(line -> _DATA_HISTORIC_STAGE_SCHEMA.add(new HistStageDataSchemaDto(line.getFields().toArray(new String[0]))));
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
+                     CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
+                    csvReader.stream().forEach(line -> _DATA_HISTORIC_STAGE_SCHEMA.add(new HistStageDataSchemaDto(line.getFields().toArray(new String[0]))));
                 }
             }
             catch (IOException e) {
@@ -701,9 +703,9 @@ public final class HistoricStageUtils {
             try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-csExt.csv")) {
                 if (is == null)
                     throw new IllegalStateException("Unable to read Historic-stage-csExt.csv");
-                File csvFile = new File("src/main/resources/historicstage/Historic-stage-csExt.csv");
-                try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
-                    reader.stream().forEach(line -> _DATA_CS_EXT.add(new HistStageDataCsExtDto(line.getFields().toArray(new String[0]))));
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
+                     CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
+                    csvReader.stream().forEach(line -> _DATA_CS_EXT.add(new HistStageDataCsExtDto(line.getFields().toArray(new String[0]))));
                 }
             }
             catch (IOException e) {
@@ -713,9 +715,9 @@ public final class HistoricStageUtils {
             try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-csNode.csv")) {
                 if (is == null)
                     throw new IllegalStateException("Unable to read Historic-stage-csNode.csv");
-                File csvFile = new File("src/main/resources/historicstage/Historic-stage-csNode.csv");
-                try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
-                    reader.stream().forEach(line -> _DATA_CS_NODE.add(new HistStageDataCsNodeDto(line.getFields().toArray(new String[0]))));
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
+                     CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
+                    csvReader.stream().forEach(line -> _DATA_CS_NODE.add(new HistStageDataCsNodeDto(line.getFields().toArray(new String[0]))));
                 }
             }
             catch (IOException e) {
@@ -725,9 +727,9 @@ public final class HistoricStageUtils {
             try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-csMets.csv")) {
                 if (is == null)
                     throw new IllegalStateException("Unable to read Historic-stage-csMets.csv");
-                File csvFile = new File("src/main/resources/historicstage/Historic-stage-csMets.csv");
-                try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
-                    reader.stream().forEach(line -> _DATA_CS_METS.add(new HistStageDataCsMetsDto(line.getFields().toArray(new String[0]))));
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
+                     CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
+                    csvReader.stream().forEach(line -> _DATA_CS_METS.add(new HistStageDataCsMetsDto(line.getFields().toArray(new String[0]))));
                 }
             }
             catch (IOException e) {
@@ -737,9 +739,9 @@ public final class HistoricStageUtils {
             try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-csStage.csv")) {
                 if (is == null)
                     throw new IllegalStateException("Unable to read Historic-stage-csStage.csv");
-                File csvFile = new File("src/main/resources/historicstage/Historic-stage-csStage.csv");
-                try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
-                    reader.stream().forEach(line -> _DATA_CS_STAGE.add(new HistStageDataCsStageDto(line.getFields().toArray(new String[0]))));
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
+                     CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
+                    csvReader.stream().forEach(line -> _DATA_CS_STAGE.add(new HistStageDataCsStageDto(line.getFields().toArray(new String[0]))));
                 }
             }
             catch (IOException e) {
@@ -753,9 +755,9 @@ public final class HistoricStageUtils {
             try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod10Ext.csv")) {
                 if (is == null)
                     throw new IllegalStateException("Unable to read Historic-stage-Eod10Ext.csv");
-                File csvFile = new File("src/main/resources/historicstage/Historic-stage-Eod10Ext.csv");
-                try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
-                    reader.stream().forEach(line -> _DATA_EOD10_EXT.add(new HistStageDataEod10ExtDto(line.getFields().toArray(new String[0]))));
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
+                     CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
+                    csvReader.stream().forEach(line -> _DATA_EOD10_EXT.add(new HistStageDataEod10ExtDto(line.getFields().toArray(new String[0]))));
                 }
             }
             catch (IOException e) {
@@ -765,9 +767,9 @@ public final class HistoricStageUtils {
             try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod10Node.csv")) {
                 if (is == null)
                     throw new IllegalStateException("Unable to read Historic-stage-Eod10Node.csv");
-                File csvFile = new File("src/main/resources/historicstage/Historic-stage-Eod10Node.csv");
-                try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
-                    reader.stream().forEach(line -> _DATA_EOD10_NODE.add(new HistStageDataEod10NodeDto(line.getFields().toArray(new String[0]))));
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
+                     CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
+                    csvReader.stream().forEach(line -> _DATA_EOD10_NODE.add(new HistStageDataEod10NodeDto(line.getFields().toArray(new String[0]))));
                 }
             }
             catch (IOException e) {
@@ -777,9 +779,9 @@ public final class HistoricStageUtils {
             try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod10Stage.csv")) {
                 if (is == null)
                     throw new IllegalStateException("Unable to read Historic-stage-Eod10Stage.csv");
-                File csvFile = new File("src/main/resources/historicstage/Historic-stage-Eod10Stage.csv");
-                try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
-                    reader.stream().forEach(line -> _DATA_EOD10_STAGE.add(new HistStageDataEod10StageDto(line.getFields().toArray(new String[0]))));
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
+                     CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
+                    csvReader.stream().forEach(line -> _DATA_EOD10_STAGE.add(new HistStageDataEod10StageDto(line.getFields().toArray(new String[0]))));
                 }
             }
             catch (IOException e) {
@@ -793,9 +795,9 @@ public final class HistoricStageUtils {
             try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-EodPatch.csv")) {
                 if (is == null)
                     throw new IllegalStateException("Unable to read Historic-stage-EodPatch.csv");
-                File csvFile = new File("src/main/resources/historicstage/Historic-stage-EodPatch.csv");
-                try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
-                    reader.stream().forEach(line -> _DATA_EOD_PATCH.add(new HistStageDataEodPatchDto(line.getFields().toArray(new String[0]))));
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
+                     CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
+                    csvReader.stream().forEach(line -> _DATA_EOD_PATCH.add(new HistStageDataEodPatchDto(line.getFields().toArray(new String[0]))));
                 }
             }
             catch (IOException e) {
@@ -809,9 +811,9 @@ public final class HistoricStageUtils {
             try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod4digStage.csv")) {
                 if (is == null)
                     throw new IllegalStateException("Unable to read Historic-stage-Eod4digStage.csv");
-                File csvFile = new File("src/main/resources/historicstage/Historic-stage-Eod4digStage.csv");
-                try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
-                    reader.stream().forEach(line -> _DATA_EOD_4DIG_STAGE.add(new HistStageDataEod4digStageDto(line.getFields().toArray(new String[0]))));
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
+                     CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
+                    csvReader.stream().forEach(line -> _DATA_EOD_4DIG_STAGE.add(new HistStageDataEod4digStageDto(line.getFields().toArray(new String[0]))));
                 }
             }
             catch (IOException e) {
@@ -827,9 +829,9 @@ public final class HistoricStageUtils {
             try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod13digNodes.csv")) {
                 if (is == null)
                     throw new IllegalStateException("Unable to read Historic-stage-Eod13digNodes.csv");
-                File csvFile = new File("src/main/resources/historicstage/Historic-stage-Eod13digNodes.csv");
-                try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
-                    reader.stream().forEach(line -> _DATA_EOD_13DIG_NODE.add(new HistStageDataEod13digNodeDto(line.getFields().toArray(new String[0]))));
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
+                     CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
+                    csvReader.stream().forEach(line -> _DATA_EOD_13DIG_NODE.add(new HistStageDataEod13digNodeDto(line.getFields().toArray(new String[0]))));
                 }
             }
             catch (IOException e) {
@@ -839,9 +841,9 @@ public final class HistoricStageUtils {
             try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod13digExt.csv")) {
                 if (is == null)
                     throw new IllegalStateException("Unable to read Historic-stage-Eod13digExt.csv");
-                File csvFile = new File("src/main/resources/historicstage/Historic-stage-Eod13digExt.csv");
-                try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
-                    reader.stream().forEach(line -> _DATA_EOD_13DIG_EXT.add(new HistStageDataEod13digExtDto(line.getFields().toArray(new String[0]))));
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
+                     CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
+                    csvReader.stream().forEach(line -> _DATA_EOD_13DIG_EXT.add(new HistStageDataEod13digExtDto(line.getFields().toArray(new String[0]))));
                 }
             }
             catch (IOException e) {
@@ -851,9 +853,9 @@ public final class HistoricStageUtils {
             try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod13digLung.csv")) {
                 if (is == null)
                     throw new IllegalStateException("Unable to read Historic-stage-Eod13digLung.csv");
-                File csvFile = new File("src/main/resources/historicstage/Historic-stage-Eod13digLung.csv");
-                try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
-                    reader.stream().forEach(line -> _DATA_EOD_13DIG_LUNG.add(new HistStageDataEod13digLungDto(line.getFields().toArray(new String[0]))));
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
+                     CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
+                    csvReader.stream().forEach(line -> _DATA_EOD_13DIG_LUNG.add(new HistStageDataEod13digLungDto(line.getFields().toArray(new String[0]))));
                 }
             }
             catch (IOException e) {
@@ -863,9 +865,9 @@ public final class HistoricStageUtils {
             try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod13digMelanoma.csv")) {
                 if (is == null)
                     throw new IllegalStateException("Unable to read Historic-stage-Eod13digMelanoma.csv");
-                File csvFile = new File("src/main/resources/historicstage/Historic-stage-Eod13digMelanoma.csv");
-                try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
-                    reader.stream().forEach(line -> _DATA_EOD_13DIG_MELANOMA.add(new HistStageDataEod13digMelanomaDto(line.getFields().toArray(new String[0]))));
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
+                     CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
+                    csvReader.stream().forEach(line -> _DATA_EOD_13DIG_MELANOMA.add(new HistStageDataEod13digMelanomaDto(line.getFields().toArray(new String[0]))));
                 }
             }
             catch (IOException e) {
@@ -875,9 +877,9 @@ public final class HistoricStageUtils {
             try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod13digBladder.csv")) {
                 if (is == null)
                     throw new IllegalStateException("Unable to read Historic-stage-Eod13digBladder.csv");
-                File csvFile = new File("src/main/resources/historicstage/Historic-stage-Eod13digBladder.csv");
-                try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
-                    reader.stream().forEach(line -> _DATA_EOD_13DIG_BLADDER.add(new HistStageDataEod13digBladderDto(line.getFields().toArray(new String[0]))));
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
+                     CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
+                    csvReader.stream().forEach(line -> _DATA_EOD_13DIG_BLADDER.add(new HistStageDataEod13digBladderDto(line.getFields().toArray(new String[0]))));
                 }
             }
             catch (IOException e) {
@@ -887,9 +889,9 @@ public final class HistoricStageUtils {
             try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod13digGeneralStage.csv")) {
                 if (is == null)
                     throw new IllegalStateException("Unable to read Historic-stage-Eod13digGeneralStage.csv");
-                File csvFile = new File("src/main/resources/historicstage/Historic-stage-Eod13digGeneralStage.csv");
-                try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
-                    reader.stream().forEach(line -> _DATA_EOD_13DIG_GENERAL_STAGE.add(new HistStageDataEod13digGeneralStageDto(line.getFields().toArray(new String[0]))));
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
+                     CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
+                    csvReader.stream().forEach(line -> _DATA_EOD_13DIG_GENERAL_STAGE.add(new HistStageDataEod13digGeneralStageDto(line.getFields().toArray(new String[0]))));
                 }
             }
             catch (IOException e) {
@@ -903,9 +905,9 @@ public final class HistoricStageUtils {
             try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod2digExt.csv")) {
                 if (is == null)
                     throw new IllegalStateException("Unable to read Historic-stage-Eod2digExt.csv");
-                File csvFile = new File("src/main/resources/historicstage/Historic-stage-Eod2digExt.csv");
-                try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
-                    reader.stream().forEach(line -> _DATA_EOD_2DIG_EXT.add(new HistStageDataEod2digExtDto(line.getFields().toArray(new String[0]))));
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
+                     CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
+                    csvReader.stream().forEach(line -> _DATA_EOD_2DIG_EXT.add(new HistStageDataEod2digExtDto(line.getFields().toArray(new String[0]))));
                 }
             }
             catch (IOException e) {
@@ -915,9 +917,9 @@ public final class HistoricStageUtils {
             try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod2digNode.csv")) {
                 if (is == null)
                     throw new IllegalStateException("Unable to read Historic-stage-Eod2digNode.csv");
-                File csvFile = new File("src/main/resources/historicstage/Historic-stage-Eod2digNode.csv");
-                try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
-                    reader.stream().forEach(line -> _DATA_EOD_2DIG_NODE.add(new HistStageDataEod2digNodeDto(line.getFields().toArray(new String[0]))));
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
+                     CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
+                    csvReader.stream().forEach(line -> _DATA_EOD_2DIG_NODE.add(new HistStageDataEod2digNodeDto(line.getFields().toArray(new String[0]))));
                 }
             }
             catch (IOException e) {
@@ -927,9 +929,9 @@ public final class HistoricStageUtils {
             try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod2digDirectStage.csv")) {
                 if (is == null)
                     throw new IllegalStateException("Unable to read Historic-stage-Eod2digDirectStage.csv");
-                File csvFile = new File("src/main/resources/historicstage/Historic-stage-Eod2digDirectStage.csv");
-                try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
-                    reader.stream().forEach(line -> _DATA_EOD_2DIG_DIRECT_STAGE.add(new HistStageDataEod2digDirectStageDto(line.getFields().toArray(new String[0]))));
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
+                     CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
+                    csvReader.stream().forEach(line -> _DATA_EOD_2DIG_DIRECT_STAGE.add(new HistStageDataEod2digDirectStageDto(line.getFields().toArray(new String[0]))));
                 }
             }
             catch (IOException e) {
@@ -939,9 +941,9 @@ public final class HistoricStageUtils {
             try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod2digExtNodeStage.csv")) {
                 if (is == null)
                     throw new IllegalStateException("Unable to read Historic-stage-Eod2digExtNodeStage.csv");
-                File csvFile = new File("src/main/resources/historicstage/Historic-stage-Eod2digExtNodeStage.csv");
-                try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
-                    reader.stream().forEach(line -> _DATA_EOD_2DIG_EXTENSION_NODE_STAGE.add(new HistStageDataEod2digExtNodeStageDto(line.getFields().toArray(new String[0]))));
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
+                     CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
+                    csvReader.stream().forEach(line -> _DATA_EOD_2DIG_EXTENSION_NODE_STAGE.add(new HistStageDataEod2digExtNodeStageDto(line.getFields().toArray(new String[0]))));
                 }
             }
             catch (IOException e) {
@@ -955,9 +957,9 @@ public final class HistoricStageUtils {
             try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("historicstage/Historic-stage-Eod0Stage.csv")) {
                 if (is == null)
                     throw new IllegalStateException("Unable to read Historic-stage-Eod0Stage.csv");
-                File csvFile = new File("src/main/resources/historicstage/Historic-stage-Eod0Stage.csv");
-                try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
-                    reader.stream().forEach(line -> _DATA_EOD0_STAGE.add(new HistStageDataEod0StageDto(line.getFields().toArray(new String[0]))));
+                try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
+                     CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
+                    csvReader.stream().forEach(line -> _DATA_EOD0_STAGE.add(new HistStageDataEod0StageDto(line.getFields().toArray(new String[0]))));
                 }
             }
             catch (IOException e) {

@@ -3,9 +3,11 @@
  */
 package com.imsweb.algorithms.ayasiterecode;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,10 +92,10 @@ public final class AyaSiteRecodeUtils {
 
             boolean txt = filename.endsWith(".txt");
 
-            File csvFile = new File("src/main/resources/ayasiterecode/" + filename);
-            try (CsvReader<CsvRecord> reader = CsvReader.builder().fieldSeparator(txt ? ';' : ',').ofCsvRecord(csvFile.toPath())) {
-                reader.skipLines(txt ? 2 : 1);
-                reader.stream().forEach(line -> {
+            try (Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
+                CsvReader<CsvRecord> csvReader = CsvReader.builder().fieldSeparator(txt ? ';' : ',').ofCsvRecord(reader)) {
+                csvReader.skipLines(txt ? 2 : 1);
+                csvReader.stream().forEach(line -> {
                     String beh = StringUtils.trimToNull(line.getField(txt ? 1 : 3));
                     String site = StringUtils.trimToNull(line.getField(2));
                     String hist = StringUtils.trimToNull(line.getField(txt ? 3 : 1));
