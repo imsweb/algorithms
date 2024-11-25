@@ -4,7 +4,6 @@
 package lab;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -144,8 +143,7 @@ public class TractDataLab {
         // NAACCR Poverty Indicator 1995-2004
         Map<DataKey, String> naaccrPovertyIndicator9504 = new HashMap<>();
 
-        File csvFile = new File("src/test/resources/povertyindicator/poverty-indicator-1995-2004.csv");
-        try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
+        try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("povertyindicator/poverty-indicator-1995-2004.csv"), StandardCharsets.US_ASCII))) {
             reader.stream().forEach(line -> naaccrPovertyIndicator9504.put(new DataKey(line.getField(0), line.getField(1), line.getField(2)), line.getField(3)));
         }
         catch (IOException e) {
@@ -156,8 +154,7 @@ public class TractDataLab {
         Map<DataKey, String> naaccrPovertyIndicator0507 = new HashMap<>();
 
 
-        csvFile = new File("src/test/resources/povertyindicator/poverty-indicator-2005-2007.csv");
-        try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
+        try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("povertyindicator/poverty-indicator-2005-2007.csv"), StandardCharsets.US_ASCII))) {
             reader.stream().forEach(line -> naaccrPovertyIndicator0507.put(new DataKey(line.getField(0), line.getField(1), line.getField(2)), line.getField(3)));
         }
         catch (IOException e) {
@@ -170,8 +167,7 @@ public class TractDataLab {
             if (is == null)
                 throw new IllegalStateException("Missing data file!");
 
-            csvFile = new File("src/test/resources/ruralurban/rural-urban-commuting-area-2000.csv");
-            try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
+            try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(new InputStreamReader(is, StandardCharsets.US_ASCII))) {
                 List<String> urbanCommutingAreas = Arrays.asList("1.0", "1.1", "2.0", "2.1", "3.0", "4.1", "5.1", "7.1", "8.1", "10.1");
                 reader.stream().forEach(line -> {
                     String primary = line.getField(3);
@@ -199,8 +195,7 @@ public class TractDataLab {
             if (is == null)
                 throw new IllegalStateException("Missing data file!");
 
-            csvFile = new File("src/test/resources/ruralurban/urban-rural-indicator-code-2000.csv");
-            try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(csvFile.toPath())) {
+            try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(new InputStreamReader(is, StandardCharsets.US_ASCII))) {
                 reader.stream().forEach(line -> {
                     if (line.getField(4).length() != 1)
                         throw new IllegalStateException("Found unexpected format for URIC value: " + line.getField(4));
