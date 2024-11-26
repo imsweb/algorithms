@@ -4,7 +4,7 @@
 
 - Fixed length of tractEstCongressDist and napiiaReasonForReview fields.
 - Changed minimum Java language from Java 8 to Java 11.
-- Replace OpenCSV library by FastCSV.
+- Replaced OpenCSV library by FastCSV.
 
 **Changes in version 4.12**
 
