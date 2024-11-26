@@ -6,6 +6,7 @@ package com.imsweb.algorithms.tumorsizeovertime;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,8 +19,8 @@ import org.apache.commons.lang3.Range;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
-import com.opencsv.CSVReader;
-import com.opencsv.exceptions.CsvException;
+import de.siegmar.fastcsv.reader.CsvReader;
+import de.siegmar.fastcsv.reader.CsvRecord;
 
 public final class TumorSizeOverTimeUtils {
 
@@ -145,12 +146,12 @@ public final class TumorSizeOverTimeUtils {
 
     public static boolean tumorSizeNotAvailable(int histology, int site) {
         return (histology >= 8000 && histology <= 9993 && ((site >= 420 && site <= 424) || site == 690 || (site >= 760 && site <= 779) || site == 809)) ||
-               (histology >= 8720 && histology <= 8790) || (histology >= 9590 && histology <= 9993) || histology == 9140;
+                (histology >= 8720 && histology <= 8790) || (histology >= 9590 && histology <= 9993) || histology == 9140;
     }
 
     public static boolean valid998(int hist, int site, String behavior) {
         return (((site >= 180 && site <= 189) || site == 199 || site == 209) && (hist == 8220 || hist == 8221) && "3".equals(behavior)) ||
-               (((site >= 150 && site <= 169) || (site >= 340 && site <= 349) || (site >= 500 && site <= 509)) && !((hist >= 8720 && hist <= 8790) || hist == 9140 || (hist >= 9590 && hist <= 9993)));
+                (((site >= 150 && site <= 169) || (site >= 340 && site <= 349) || (site >= 500 && site <= 509)) && !((hist >= 8720 && hist <= 8790) || hist == 9140 || (hist >= 9590 && hist <= 9993)));
 
     }
 
@@ -192,16 +193,16 @@ public final class TumorSizeOverTimeUtils {
         try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("tumorsizeovertime/edits.csv")) {
             if (is == null)
                 throw new IllegalStateException("Unable to read internal data file");
-            try (CSVReader reader = new CSVReader(new InputStreamReader(is, StandardCharsets.US_ASCII))) {
-                for (String[] row : reader.readAll()) {
-                    String site = row[0].substring(0, 4);
-                    List<Object> sizes = getSizeList(row[1]);
+            try (Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
+                 CsvReader<CsvRecord> csvReader = CsvReader.builder().ofCsvRecord(reader)) {
+                csvReader.stream().forEach(line -> {
+                    String site = line.getField(0).substring(0, 4);
+                    List<Object> sizes = getSizeList(line.getField(1));
                     map.put(site, sizes);
-
-                }
+                });
             }
         }
-        catch (CsvException | IOException e) {
+        catch (IOException e) {
             throw new IllegalStateException("Unable to read internal", e);
         }
 

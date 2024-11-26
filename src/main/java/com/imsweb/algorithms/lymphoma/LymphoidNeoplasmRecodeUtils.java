@@ -14,10 +14,8 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
-import com.opencsv.CSVParserBuilder;
-import com.opencsv.CSVReader;
-import com.opencsv.CSVReaderBuilder;
-import com.opencsv.exceptions.CsvException;
+import de.siegmar.fastcsv.reader.CsvReader;
+import de.siegmar.fastcsv.reader.NamedCsvRecord;
 
 public final class LymphoidNeoplasmRecodeUtils {
 
@@ -81,17 +79,17 @@ public final class LymphoidNeoplasmRecodeUtils {
                 throw new IllegalStateException("Unable to find " + filename);
 
             try (Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
-                 CSVReader csvReader = new CSVReaderBuilder(reader).withCSVParser(new CSVParserBuilder().withSeparator(',').build()).withSkipLines(1).build()) {
-                for (String[] row : csvReader.readAll()) {
-                    String site = StringUtils.trimToNull(row[1]);
-                    String hist = StringUtils.trimToNull(row[2]);
-                    String recode = StringUtils.trimToNull(row[3]);
+                 CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
+                csvReader.stream().forEach(line -> {
+                    String site = StringUtils.trimToNull(line.getField(1));
+                    String hist = StringUtils.trimToNull(line.getField(2));
+                    String recode = StringUtils.trimToNull(line.getField(3));
                     if (site != null && hist != null && recode != null && !recode.contains("-"))
                         result.add(new LymphoidNeoplasmRecodeData(site, hist, StringUtils.leftPad(recode, 2, "0")));
-                }
+                });
             }
         }
-        catch (CsvException | IOException e) {
+        catch (IOException e) {
             throw new IllegalStateException("Unable to read " + filename, e);
         }
         return result;

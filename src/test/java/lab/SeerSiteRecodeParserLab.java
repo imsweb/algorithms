@@ -5,17 +5,15 @@ package lab;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.opencsv.CSVReader;
-import com.opencsv.exceptions.CsvException;
+import de.siegmar.fastcsv.reader.CsvReader;
+import de.siegmar.fastcsv.reader.NamedCsvRecord;
 
 /**
  * Lab class was used to parse data from these locations:
@@ -25,33 +23,31 @@ import com.opencsv.exceptions.CsvException;
  */
 public class SeerSiteRecodeParserLab {
 
-    public static void main(String[] args) throws IOException, CsvException {
+    public static void main(String[] args) throws IOException {
         File input = new File("<original-csv-path>");
 
         List<List<String>> newLines = new ArrayList<>();
         newLines.add(Arrays.asList("ID", "Name", "Indentation", "Sites IN", "Hist IN", "Hist OUT", "Beh IN", "DX Year Min", "DX Year Max", "Recode"));
 
-        int count = 0;
-        try (CSVReader reader = new CSVReader(new InputStreamReader(Files.newInputStream(input.toPath()), StandardCharsets.US_ASCII))) {
-            String[] line = reader.readNext();
-            while (line != null) {
-                if (line.length != 6)
-                    throw new IllegalStateException("!!! " + Arrays.toString(line));
+        AtomicInteger count = new AtomicInteger();
+        try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(input.toPath())) {
+            reader.stream().forEach(line -> {
+                if (line.getFieldCount() != 6)
+                    throw new IllegalStateException("!!! " + Arrays.toString(line.getFields().toArray(new String[0])));
 
-                if ("Site Group".equals(line[0])) {
-                    line = reader.readNext();
-                    continue;
+                if ("Site Group".equals(line.getField(0))) {
+                    return;
                 }
 
-                String name = line[0].trim();
-                String site = line[1].trim();
-                String hist = line[2].trim();
-                String beh = line[3].trim();
-                String recode = line[4].trim();
+                String name = line.getField(0).trim();
+                String site = line.getField(1).trim();
+                String hist = line.getField(2).trim();
+                String beh = line.getField(3).trim();
+                String recode = line.getField(4).trim();
 
                 List<String> newLine = new ArrayList<>();
 
-                newLine.add(String.valueOf(++count));
+                newLine.add(String.valueOf(count.incrementAndGet()));
                 newLine.add(name);
                 newLine.add(StringUtils.isEmpty(site) ? "0" : "1");
                 newLine.add(site.replace(" ", ""));
@@ -118,8 +114,7 @@ public class SeerSiteRecodeParserLab {
                 if (newExtraLine != null)
                     newLines.add(newExtraLine);
 
-                line = reader.readNext();
-            }
+            });
         }
 
         List<String> lines = new ArrayList<>();

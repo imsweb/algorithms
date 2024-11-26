@@ -9,7 +9,7 @@ import java.io.LineNumberReader;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
-import com.opencsv.CSVWriter;
+import de.siegmar.fastcsv.writer.CsvWriter;
 
 import com.imsweb.algorithms.historicstage.HistoricStageInputDto;
 import com.imsweb.algorithms.historicstage.HistoricStageUtils;
@@ -25,7 +25,7 @@ public class HistoricStageNaaccrLab {
     public static void main(String[] args) throws IOException {
 
         NaaccrLayout layout = (NaaccrLayout)LayoutFactory.getLayout(LayoutFactory.LAYOUT_ID_NAACCR_16_INCIDENCE);
-        CSVWriter writer = new CSVWriter(new FileWriter(new File("C:\\Users\\flynng\\Desktop\\tmpTest\\algorithms.histstage.csv")));
+        CsvWriter writer = CsvWriter.builder().build(new FileWriter("C:\\Users\\flynng\\Desktop\\tmpTest\\algorithms.histstage.csv"));
         File dataDir = new File("C:\\Users\\flynng\\Desktop\\tmpTest\\");
 
         File[] files = dataDir.listFiles();
@@ -33,7 +33,6 @@ public class HistoricStageNaaccrLab {
             for (File dataFile : files) {
                 if (!dataFile.getName().endsWith(".txd.gz")) continue;
 
-                //LineNumberReader reader = new LineNumberReader(new InputStreamReader(new GZIPInputStream(new FileInputStream(new File("C:\\Users\\flynng\\Desktop\\tmpTest\\se171120.nov17.txd.gz")))));
                 LineNumberReader reader = new LineNumberReader(new InputStreamReader(new GZIPInputStream(new FileInputStream(dataFile))));
                 Map<String, String> record = layout.readNextRecord(reader);
                 while (record != null) {
@@ -49,7 +48,7 @@ public class HistoricStageNaaccrLab {
                     // translate record into input DTO (method taking a record was deprecated)
 
                     line[4] = HistoricStageUtils.computeHistoricStage(inputDto).getResult();
-                    writer.writeNext(line);
+                    writer.writeRecord(line);
                     record = layout.readNextRecord(reader);
                 }
                 reader.close();

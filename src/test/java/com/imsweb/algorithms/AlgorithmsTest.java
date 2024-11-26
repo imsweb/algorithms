@@ -21,9 +21,8 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.opencsv.CSVReader;
-import com.opencsv.CSVReaderBuilder;
-import com.opencsv.exceptions.CsvException;
+import de.siegmar.fastcsv.reader.CsvReader;
+import de.siegmar.fastcsv.reader.NamedCsvRecord;
 
 import com.imsweb.algorithms.countyatdiagnosisanalysis.CountyAtDxAnalysisUtils;
 import com.imsweb.algorithms.internal.Utils;
@@ -57,7 +56,7 @@ public class AlgorithmsTest {
     }
 
     @Test
-    public void testFields() throws IOException, CsvException {
+    public void testFields() throws IOException {
         NaaccrDictionary dictionary = NaaccrXmlDictionaryUtils.getMergedDictionaries(NaaccrFormat.NAACCR_VERSION_230);
 
         Set<String> ids = new HashSet<>();
@@ -93,12 +92,12 @@ public class AlgorithmsTest {
                 if (!field.isNaaccrStandard())
                     algNonStandardItems.put(field.getId(), field.getNumber());
 
-            try (CSVReader reader = new CSVReaderBuilder(new InputStreamReader(Files.newInputStream(nonStandardItemsFile.toPath()), StandardCharsets.US_ASCII)).withSkipLines(1).build()) {
-                for (String[] row : reader.readAll()) {
-                    Integer algNum = algNonStandardItems.get(row[0]);
-                    if (algNum != null && algNum.equals(Integer.valueOf(row[1])))
-                        Assert.fail("Item '" + row[0] + "' has number " + algNum + " in this library, but " + row[1] + " in the submission dictionaries");
-                }
+            try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(new InputStreamReader(Files.newInputStream(nonStandardItemsFile.toPath()), StandardCharsets.US_ASCII))) {
+                reader.stream().forEach(line -> {
+                    Integer algNum = algNonStandardItems.get(line.getField(0));
+                    if (algNum != null && algNum.equals(Integer.valueOf(line.getField(1))))
+                        Assert.fail("Item '" + line.getField(0) + "' has number " + algNum + " in this library, but " + line.getField(1) + " in the submission dictionaries");
+                });
             }
         }
 

@@ -13,10 +13,8 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.opencsv.CSVParserBuilder;
-import com.opencsv.CSVReader;
-import com.opencsv.CSVReaderBuilder;
-import com.opencsv.exceptions.CsvException;
+import de.siegmar.fastcsv.reader.CsvReader;
+import de.siegmar.fastcsv.reader.CsvRecord;
 
 public final class AyaSiteRecodeUtils {
 
@@ -95,18 +93,19 @@ public final class AyaSiteRecodeUtils {
             boolean txt = filename.endsWith(".txt");
 
             try (Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
-                 CSVReader csvReader = new CSVReaderBuilder(reader).withCSVParser(new CSVParserBuilder().withSeparator(txt ? ';' : ',').build()).withSkipLines(txt ? 2 : 1).build()) {
-                for (String[] row : csvReader.readAll()) {
-                    String beh = StringUtils.trimToNull(row[txt ? 1 : 3]);
-                    String site = StringUtils.trimToNull(row[2]);
-                    String hist = StringUtils.trimToNull(row[txt ? 3 : 1]);
-                    String recode = StringUtils.trimToNull(row[4]);
+                CsvReader<CsvRecord> csvReader = CsvReader.builder().fieldSeparator(txt ? ';' : ',').ofCsvRecord(reader)) {
+                csvReader.skipLines(txt ? 2 : 1);
+                csvReader.stream().forEach(line -> {
+                    String beh = StringUtils.trimToNull(line.getField(txt ? 1 : 3));
+                    String site = StringUtils.trimToNull(line.getField(2));
+                    String hist = StringUtils.trimToNull(line.getField(txt ? 3 : 1));
+                    String recode = StringUtils.trimToNull(line.getField(4));
                     if (beh != null && site != null && hist != null && recode != null)
                         result.add(new AyaSiteRecodeData(site, hist, beh, StringUtils.leftPad(recode, txt ? 2 : 3, "0")));
-                }
+                });
             }
         }
-        catch (CsvException | IOException e) {
+        catch (IOException e) {
             throw new IllegalStateException("Unable to read " + filename, e);
         }
         return result;

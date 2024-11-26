@@ -14,9 +14,8 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.opencsv.CSVReader;
-import com.opencsv.CSVReaderBuilder;
-import com.opencsv.exceptions.CsvException;
+import de.siegmar.fastcsv.reader.CsvReader;
+import de.siegmar.fastcsv.reader.NamedCsvRecord;
 
 import com.imsweb.algorithms.internal.CountryData;
 import com.imsweb.algorithms.internal.CountyData;
@@ -162,12 +161,12 @@ public final class CountyAtDxAnalysisUtils {
     @SuppressWarnings("ConstantConditions")
     private static Map<String, Map<String, CountyData>> loadCountyAtDxAnalysisData() {
         Map<String, java.util.Map<String, CountyData>> result = new HashMap<>();
+
         try (Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("countyatdxanalysis/state-county-map.csv"), StandardCharsets.US_ASCII);
-             CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build()) {
-            for (String[] row : csvReader.readAll())
-                result.computeIfAbsent(row[0], k -> new HashMap<>()).computeIfAbsent(row[1], k -> new CountyData());
+             CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
+            csvReader.stream().forEach(line -> result.computeIfAbsent(line.getField(0), k -> new HashMap<>()).computeIfAbsent(line.getField(1), k -> new CountyData()));
         }
-        catch (CsvException | IOException e) {
+        catch (IOException e) {
             throw new IllegalStateException(e);
         }
 

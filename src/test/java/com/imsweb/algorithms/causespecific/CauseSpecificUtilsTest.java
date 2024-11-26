@@ -8,13 +8,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.opencsv.CSVReader;
-import com.opencsv.CSVReaderBuilder;
-import com.opencsv.exceptions.CsvException;
+import de.siegmar.fastcsv.reader.CsvReader;
+import de.siegmar.fastcsv.reader.NamedCsvRecord;
 
 public class CauseSpecificUtilsTest {
 
@@ -35,31 +35,31 @@ public class CauseSpecificUtilsTest {
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    public void testCsvFile() throws IOException, CsvException {
-        int count = 0;
-        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("causespecific/testCauseSpecific.csv");
-             CSVReader reader = new CSVReaderBuilder(new InputStreamReader(is, StandardCharsets.US_ASCII)).withSkipLines(1).build()) {
-            for (String[] row : reader.readAll()) {
-                CauseSpecificInputDto input = new CauseSpecificInputDto();
-                input.setSequenceNumberCentral(row[0]);
-                input.setIcdRevisionNumber(row[1]);
-                input.setCauseOfDeath(row[2]);
-                input.setPrimarySite(row[3]);
-                input.setHistologyIcdO3(row[4]);
-                input.setDateOfLastContactYear(row[5]);
+    public void testCsvFile() throws IOException {
+        AtomicInteger count = new AtomicInteger();
 
-                String causeSpecificExpected = row[7];
-                String causeOtherExpected = row[8];
+        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("causespecific/testCauseSpecific.csv");
+             CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(new InputStreamReader(is, StandardCharsets.US_ASCII))) {
+            reader.stream().forEach(line -> {
+                CauseSpecificInputDto input = new CauseSpecificInputDto();
+                input.setSequenceNumberCentral(line.getField(0));
+                input.setIcdRevisionNumber(line.getField(1));
+                input.setCauseOfDeath(line.getField(2));
+                input.setPrimarySite(line.getField(3));
+                input.setHistologyIcdO3(line.getField(4));
+                input.setDateOfLastContactYear(line.getField(5));
+
+                String causeSpecificExpected = line.getField(7);
+                String causeOtherExpected = line.getField(8);
 
                 String causeSpecificCalculated = CauseSpecificUtils.computeCauseSpecific(input).getCauseSpecificDeathClassification();
                 String causeOtherCalculated = CauseSpecificUtils.computeCauseSpecific(input).getCauseOtherDeathClassification();
-                count++;
+                count.getAndIncrement();
                 if (!causeSpecificExpected.equals(causeSpecificCalculated) || !causeOtherExpected.equals(causeOtherCalculated)) {
-                    //System.out.println(SeerSiteRecodeUtils.calculateSiteRecode(row[3], row[4]));
-                    Assert.fail("Unexpected result for row number " + (count + 1) + " " + Arrays.asList(row) + "\nExpected results: " + causeSpecificExpected + ", " +
-                            "" + causeOtherExpected + " But found: " + causeSpecificCalculated + ", " + causeOtherCalculated);
+                    Assert.fail("Unexpected result for row number " + (count.get() + 1) + " " + Arrays.asList(line.getFields().toArray(new String[0])) + "\nExpected results: " + causeSpecificExpected
+                            + ", " + causeOtherExpected + " But found: " + causeSpecificCalculated + ", " + causeOtherCalculated);
                 }
-            }
+            });
         }
     }
 

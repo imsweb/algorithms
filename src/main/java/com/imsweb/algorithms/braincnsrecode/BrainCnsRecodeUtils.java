@@ -13,10 +13,8 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.opencsv.CSVParserBuilder;
-import com.opencsv.CSVReader;
-import com.opencsv.CSVReaderBuilder;
-import com.opencsv.exceptions.CsvException;
+import de.siegmar.fastcsv.reader.CsvReader;
+import de.siegmar.fastcsv.reader.NamedCsvRecord;
 
 public final class BrainCnsRecodeUtils {
 
@@ -72,19 +70,19 @@ public final class BrainCnsRecodeUtils {
                 throw new IllegalStateException("Unable to find " + filename);
 
             try (Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
-                 CSVReader csvReader = new CSVReaderBuilder(reader).withCSVParser(new CSVParserBuilder().build()).withSkipLines(1).build()) {
-                for (String[] row : csvReader.readAll()) {
-                    String site = StringUtils.trim(row[1]).replace(" ", "");
-                    String beh = StringUtils.trim(row[2]).replace(" ", "");
-                    String histInc = StringUtils.trim(row[3]).replace(" ", "");
-                    String histExc = StringUtils.trim(row[4]).replace(" ", "");
-                    String recode = StringUtils.trimToNull(row[5]);
+                 CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
+                csvReader.stream().forEach(line -> {
+                    String site = StringUtils.trim(line.getField(1)).replace(" ", "");
+                    String beh = StringUtils.trim(line.getField(2)).replace(" ", "");
+                    String histInc = StringUtils.trim(line.getField(3)).replace(" ", "");
+                    String histExc = StringUtils.trim(line.getField(4)).replace(" ", "");
+                    String recode = StringUtils.trimToNull(line.getField(5));
                     if (recode != null && !recode.contains("-"))
                         result.add(new BrainCnsRecodeData(site, beh, histInc, histExc, StringUtils.leftPad(recode, 2, "0")));
-                }
+                });
             }
         }
-        catch (CsvException | IOException e) {
+        catch (IOException e) {
             throw new IllegalStateException("Unable to read " + filename, e);
         }
         return result;

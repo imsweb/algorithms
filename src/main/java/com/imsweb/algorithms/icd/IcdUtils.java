@@ -7,9 +7,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -17,9 +17,8 @@ import java.util.Map;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
-import com.opencsv.CSVReader;
-import com.opencsv.CSVReaderBuilder;
-import com.opencsv.exceptions.CsvException;
+import de.siegmar.fastcsv.reader.CsvReader;
+import de.siegmar.fastcsv.reader.NamedCsvRecord;
 
 import com.imsweb.algorithms.icd.IcdO2Entry.ConversionResultType;
 
@@ -744,7 +743,7 @@ public final class IcdUtils {
                 while ((line = reader.readLine()) != null) {
                     // process the line.
                     line = line.trim();
-                    if (line.length() > 0)
+                    if (!line.isEmpty())
                         result.add(line);
                 }
             }
@@ -758,30 +757,32 @@ public final class IcdUtils {
         try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("icd/" + file)) {
             if (is == null)
                 throw new IllegalStateException("Unable to find ICD data file!");
-             try (CSVReader reader = new CSVReaderBuilder(new InputStreamReader(is, StandardCharsets.US_ASCII)).withSkipLines(1).build()){
-                for (String[] row : reader.readAll()) {
-                    if (row.length != 8)
-                        throw new IllegalStateException("Was expecting 8 values, got " + row.length + " - " + Arrays.toString(row));
+
+            try (Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
+                 CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
+                csvReader.stream().forEach(line -> {
+                    if (line.getFieldCount() != 8)
+                        throw new IllegalStateException("Was expecting 8 values, got " + line.getFieldCount() + " - " + line);
 
                     IcdO3Entry entry = new IcdO3Entry();
-                    entry.setSourceCode(row[0]);
-                    entry.setSite(row[1]);
-                    entry.setHistology(row[2].isEmpty() ? null : row[2]);
-                    entry.setBehavior(row[3].isEmpty() ? null : row[3]);
-                    entry.setGrade(row[4].isEmpty() ? null : row[4]);
-                    entry.setLaterality(row[5].isEmpty() ? null : row[5]);
-                    entry.setReportable(row[6].isEmpty() ? null : row[6]);
-                    entry.setSex(row[7].isEmpty() ? null : row[7]);
+                    entry.setSourceCode(line.getField(0));
+                    entry.setSite(line.getField(1));
+                    entry.setHistology(line.getField(2).isEmpty() ? null : line.getField(2));
+                    entry.setBehavior(line.getField(3).isEmpty() ? null : line.getField(3));
+                    entry.setGrade(line.getField(4).isEmpty() ? null : line.getField(4));
+                    entry.setLaterality(line.getField(5).isEmpty() ? null : line.getField(5));
+                    entry.setReportable(line.getField(6).isEmpty() ? null : line.getField(6));
+                    entry.setSex(line.getField(7).isEmpty() ? null : line.getField(7));
 
                     // the key will contain the sex if it's not blank in the data files (blank means the value applies for any sex value)
                     if (entry.getSex() != null)
                         result.put(entry.getSourceCode() + entry.getSex(), entry);
                     else
                         result.put(entry.getSourceCode(), entry);
-                }
+                });
             }
         }
-        catch (CsvException | IOException e) {
+        catch (IOException e) {
             throw new IllegalStateException(e);
         }
     }

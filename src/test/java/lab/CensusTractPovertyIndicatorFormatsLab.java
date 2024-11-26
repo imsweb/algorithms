@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.opencsv.CSVWriter;
+import de.siegmar.fastcsv.writer.CsvWriter;
 
 /**
  * Use this class to convert poverty_format_lib.fmt file to csv
@@ -92,17 +92,18 @@ public class CensusTractPovertyIndicatorFormatsLab {
             }
 
             reader.close();
-            CSVWriter writer9504 = new CSVWriter(new FileWriter(pov9504));
-            writer9504.writeAll(pov9504Data);
+
+            CsvWriter writer9504 = CsvWriter.builder().build(new FileWriter(pov9504));
+            pov9504Data.forEach(writer9504::writeRecord);
             writer9504.close();
-            CSVWriter writer0507 = new CSVWriter(new FileWriter(pov0507));
-            writer0507.writeAll(pov0507Data);
+            CsvWriter writer0507 = CsvWriter.builder().build(new FileWriter(pov0507));
+            pov0507Data.forEach(writer0507::writeRecord);
             writer0507.close();
-            CSVWriter writer08 = new CSVWriter(new FileWriter(pov08));
-            writer08.writeAll(pov08Data);
+            CsvWriter writer08 = CsvWriter.builder().build(new FileWriter(pov08));
+            pov08Data.forEach(writer08::writeRecord);
             writer08.close();
-            CSVWriter writer0911 = new CSVWriter(new FileWriter(pov0911));
-            writer0911.writeAll(pov0911Data);
+            CsvWriter writer0911 = CsvWriter.builder().build(new FileWriter(pov0911));
+            pov0911Data.forEach(writer0911::writeRecord);
             writer0911.close();
         }
         catch (IOException e) {

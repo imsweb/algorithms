@@ -11,13 +11,13 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.opencsv.CSVReader;
-import com.opencsv.CSVReaderBuilder;
-import com.opencsv.exceptions.CsvException;
+import de.siegmar.fastcsv.reader.CsvReader;
+import de.siegmar.fastcsv.reader.NamedCsvRecord;
 
 public class NapiiaUtilsTest {
 
@@ -852,42 +852,39 @@ public class NapiiaUtilsTest {
 
     @SuppressWarnings("ConstantConditions")
     @Test
-    public void testCsvFile() throws IOException, CsvException {
-        int line = 0;
-        try (CSVReader reader = new CSVReaderBuilder(
-                new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("napiia/testNAPIIA.csv"), StandardCharsets.US_ASCII)).withSkipLines(1).build()) {
-            for (String[] row : reader.readAll()) {
-                line++;
+    public void testCsvFile() throws IOException {
+        AtomicInteger count = new AtomicInteger();
 
-                //if (line != 10)
-                //    continue;
+        try (CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(
+                new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("napiia/testNAPIIA.csv"), StandardCharsets.US_ASCII))) {
+            csvReader.stream().forEach(line -> {
+                count.getAndIncrement();
 
                 Map<String, String> rec = new HashMap<>();
-                rec.put(_PROP_RACE1, row[0].trim().isEmpty() ? null : row[0]);
-                rec.put(_PROP_RACE2, row[1].trim().isEmpty() ? null : row[1]);
-                rec.put(_PROP_RACE3, row[2].trim().isEmpty() ? null : row[2]);
-                rec.put(_PROP_RACE4, row[3].trim().isEmpty() ? null : row[3]);
-                rec.put(_PROP_RACE5, row[4].trim().isEmpty() ? null : row[4]);
-                rec.put(_PROP_SPANISH_HISPANIC_ORIGIN, row[5].trim().isEmpty() ? null : row[5]);
-                rec.put(_PROP_BIRTH_PLACE_COUNTRY, row[6].trim().isEmpty() ? null : row[6]);
-                rec.put(_PROP_SEX, row[7].trim().isEmpty() ? null : row[7]);
-                rec.put(_PROP_NAME_LAST, row[8].trim().isEmpty() ? null : row[8]);
-                rec.put(_PROP_NAME_BIRTH_SURNAME, row[9].trim().isEmpty() ? null : row[9]);
-                rec.put(_PROP_NAME_FIRST, row[10].trim().isEmpty() ? null : row[10]);
+                rec.put(_PROP_RACE1, line.getField(0).trim().isEmpty() ? null : line.getField(0));
+                rec.put(_PROP_RACE2, line.getField(1).trim().isEmpty() ? null : line.getField(1));
+                rec.put(_PROP_RACE3, line.getField(2).trim().isEmpty() ? null : line.getField(2));
+                rec.put(_PROP_RACE4, line.getField(3).trim().isEmpty() ? null : line.getField(3));
+                rec.put(_PROP_RACE5, line.getField(4).trim().isEmpty() ? null : line.getField(4));
+                rec.put(_PROP_SPANISH_HISPANIC_ORIGIN, line.getField(5).trim().isEmpty() ? null : line.getField(5));
+                rec.put(_PROP_BIRTH_PLACE_COUNTRY, line.getField(6).trim().isEmpty() ? null : line.getField(6));
+                rec.put(_PROP_SEX, line.getField(7).trim().isEmpty() ? null : line.getField(7));
+                rec.put(_PROP_NAME_LAST, line.getField(8).trim().isEmpty() ? null : line.getField(8));
+                rec.put(_PROP_NAME_BIRTH_SURNAME, line.getField(9).trim().isEmpty() ? null : line.getField(9));
+                rec.put(_PROP_NAME_FIRST, line.getField(10).trim().isEmpty() ? null : line.getField(10));
 
-                String napiia = row[11];
-                Boolean review = Boolean.valueOf(row[12]);
-                String reason = row[13].trim().isEmpty() ? null : row[13];
+                String napiia = line.getField(11);
+                Boolean review = Boolean.valueOf(line.getField(12));
+                String reason = line.getField(13).trim().isEmpty() ? null : line.getField(13);
                 NapiiaResultsDto results = computeNapiia(rec);
 
                 if (!napiia.equals(results.getNapiiaValue()))
-                    Assert.fail("Unexpected napiia result in CSV data file for row #" + line + " " + Arrays.asList(row) + "  " + results.getNapiiaValue());
+                    Assert.fail("Unexpected napiia result in CSV data file for row #" + count + " " + Arrays.asList(line.getFields().toArray(new String[0])) + "  " + results.getNapiiaValue());
                 if (!review.equals(results.getNeedsHumanReview()))
-                    Assert.fail("Unexpected needs manual review result in CSV data file for row #" + line + " " + Arrays.asList(row) + "  " + results.getNeedsHumanReview());
+                    Assert.fail("Unexpected needs manual review result in CSV data file for row #" + count + " " + Arrays.asList(line.getFields().toArray(new String[0])) + "  " + results.getNeedsHumanReview());
                 if (results.getReasonForReview() == null ? reason != null : !results.getReasonForReview().equals(reason))
-                    Assert.fail("Unexpected reason for review result in CSV data file for row #" + line + " " + Arrays.asList(row) + "  " + results.getReasonForReview());
-            }
-            //System.out.println(line + " cases tested!");
+                    Assert.fail("Unexpected reason for review result in CSV data file for row #" + count + " " + Arrays.asList(line.getFields().toArray(new String[0])) + "  " + results.getReasonForReview());
+            });
         }
     }
 
