@@ -1,9 +1,5 @@
 package com.imsweb.algorithms.seersiterecode;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -16,9 +12,6 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
-
-import de.siegmar.fastcsv.reader.CsvReader;
-import de.siegmar.fastcsv.reader.NamedCsvRecord;
 
 import com.imsweb.algorithms.internal.Utils;
 
@@ -187,22 +180,19 @@ public final class SeerSiteRecodeUtils {
         if (_DATA.containsKey(version))
             return;
 
-        URL url;
+        String file;
         if (VERSION_2023.equals(version))
-            url = Thread.currentThread().getContextClassLoader().getResource("seersiterecode/site-recode-data-2023.csv");
+            file = "seersiterecode/site-recode-data-2023.csv";
         else if (VERSION_2023_EXPANDED.equals(version))
-            url = Thread.currentThread().getContextClassLoader().getResource("seersiterecode/site-recode-data-2023-expanded.csv");
+            file = "seersiterecode/site-recode-data-2023-expanded.csv";
         else if (VERSION_2008.equals(version))
-            url = Thread.currentThread().getContextClassLoader().getResource("seersiterecode/site-recode-data-2008.csv");
+            file = "seersiterecode/site-recode-data-2008.csv";
         else if (VERSION_2003.equals(version))
-            url = Thread.currentThread().getContextClassLoader().getResource("seersiterecode/site-recode-data-2003.csv");
+            file = "seersiterecode/site-recode-data-2003.csv";
         else if (VERSION_2003_WITHOUT_KSM.equals(version))
-            url = Thread.currentThread().getContextClassLoader().getResource("seersiterecode/site-recode-data-2003-without-kms.csv");
+            file = "seersiterecode/site-recode-data-2003-without-kms.csv";
         else
             throw new IllegalStateException("Unsupported version: " + version);
-
-        if (url == null)
-            throw new IllegalStateException("Unable to find internal data file for version " + version);
 
         List<SeerSiteGroupDto> groups = new ArrayList<>();
         _DATA.put(version, groups);
@@ -212,80 +202,72 @@ public final class SeerSiteRecodeUtils {
 
         boolean newFormat = VERSION_2023.equals(version) || VERSION_2023_EXPANDED.equals(version);
 
-        try {
-            Set<String> names = new HashSet<>();
-            try (CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(new InputStreamReader(url.openStream(), StandardCharsets.US_ASCII))) {
-                csvReader.stream().forEach(line -> {
+        Set<String> names = new HashSet<>();
+        Utils.processInternalFile(file, line -> {
+            String id = line.getField(0).isEmpty() ? null : line.getField(0);
+            String name = line.getField(1).isEmpty() ? null : line.getField(1);
+            String level = line.getField(2).isEmpty() ? "0" : line.getField(2);
+            String siteIn = line.getField(3).isEmpty() ? null : line.getField(3);
 
-                    String id = line.getField(0).isEmpty() ? null : line.getField(0);
-                    String name = line.getField(1).isEmpty() ? null : line.getField(1);
-                    String level = line.getField(2).isEmpty() ? "0" : line.getField(2);
-                    String siteIn = line.getField(3).isEmpty() ? null : line.getField(3);
-
-                    String siteOut = null;
-                    String histIn;
-                    String histOut;
-                    String behIn = null;
-                    String yearMin = null;
-                    String yearMax = null;
-                    String recode;
-                    String children = null;
-                    if (newFormat) {
-                        histIn = line.getField(4).isEmpty() ? null : line.getField(4);
-                        histOut = line.getField(5).isEmpty() ? null : line.getField(5);
-                        behIn = line.getField(6).isEmpty() ? null : line.getField(6);
-                        yearMin = line.getField(7).isEmpty() ? null : line.getField(7);
-                        yearMax = line.getField(8).isEmpty() ? null : line.getField(8);
-                        recode = line.getField(9).isEmpty() ? null : line.getField(9);
-                    }
-                    else {
-                        siteOut = line.getField(4).isEmpty() ? null : line.getField(4);
-                        histIn = line.getField(5).isEmpty() ? null : line.getField(5);
-                        histOut = line.getField(6).isEmpty() ? null : line.getField(6);
-                        recode = line.getField(7).isEmpty() ? null : line.getField(7);
-                        children = line.getField(8).isEmpty() ? null : line.getField(8);
-                    }
-
-                    if (!names.contains(name) || newFormat) {
-                        SeerSiteGroupDto group = new SeerSiteGroupDto();
-                        group.setId(id);
-                        group.setName(name);
-                        group.setLevel(Integer.valueOf(level));
-                        group.setSiteInclusions(siteIn);
-                        group.setSiteExclusions(siteOut);
-                        group.setHistologyInclusions(histIn);
-                        group.setHistologyExclusions(histOut);
-                        group.setBehaviorInclusions(behIn);
-                        group.setMinDxYear(yearMin);
-                        group.setMaxDxYear(yearMax);
-                        group.setRecode(recode);
-                        if (children != null)
-                            group.setChildrenRecodes(Arrays.asList(children.split(",")));
-                        groups.add(group);
-                        names.add(name);
-                    }
-
-                    if (recode != null) {
-                        SeerExecutableSiteGroupDto executable = new SeerExecutableSiteGroupDto();
-                        executable.setId(id);
-                        executable.setName(name);
-                        executable.setSiteInclusions(Utils.expandSitesAsIntegers(siteIn));
-                        executable.setSiteExclusions(Utils.expandSitesAsIntegers(siteOut));
-                        executable.setHistologyInclusions(Utils.expandHistologiesAsIntegers(histIn));
-                        executable.setHistologyExclusions(Utils.expandHistologiesAsIntegers(histOut));
-                        executable.setBehaviorInclusions(Utils.expandBehaviorsAsIntegers(behIn));
-                        if (NumberUtils.isDigits(yearMin))
-                            executable.setMinDxYear(Integer.valueOf(yearMin));
-                        if (NumberUtils.isDigits(yearMax))
-                            executable.setMaxDxYear(Integer.valueOf(yearMax));
-                        executable.setRecode(recode);
-                        executables.add(executable);
-                    }
-                });
+            String siteOut = null;
+            String histIn;
+            String histOut;
+            String behIn = null;
+            String yearMin = null;
+            String yearMax = null;
+            String recode;
+            String children = null;
+            if (newFormat) {
+                histIn = line.getField(4).isEmpty() ? null : line.getField(4);
+                histOut = line.getField(5).isEmpty() ? null : line.getField(5);
+                behIn = line.getField(6).isEmpty() ? null : line.getField(6);
+                yearMin = line.getField(7).isEmpty() ? null : line.getField(7);
+                yearMax = line.getField(8).isEmpty() ? null : line.getField(8);
+                recode = line.getField(9).isEmpty() ? null : line.getField(9);
             }
-        }
-        catch (IOException e) {
-            throw new IllegalStateException(e);
-        }
+            else {
+                siteOut = line.getField(4).isEmpty() ? null : line.getField(4);
+                histIn = line.getField(5).isEmpty() ? null : line.getField(5);
+                histOut = line.getField(6).isEmpty() ? null : line.getField(6);
+                recode = line.getField(7).isEmpty() ? null : line.getField(7);
+                children = line.getField(8).isEmpty() ? null : line.getField(8);
+            }
+
+            if (!names.contains(name) || newFormat) {
+                SeerSiteGroupDto group = new SeerSiteGroupDto();
+                group.setId(id);
+                group.setName(name);
+                group.setLevel(Integer.valueOf(level));
+                group.setSiteInclusions(siteIn);
+                group.setSiteExclusions(siteOut);
+                group.setHistologyInclusions(histIn);
+                group.setHistologyExclusions(histOut);
+                group.setBehaviorInclusions(behIn);
+                group.setMinDxYear(yearMin);
+                group.setMaxDxYear(yearMax);
+                group.setRecode(recode);
+                if (children != null)
+                    group.setChildrenRecodes(Arrays.asList(children.split(",")));
+                groups.add(group);
+                names.add(name);
+            }
+
+            if (recode != null) {
+                SeerExecutableSiteGroupDto executable = new SeerExecutableSiteGroupDto();
+                executable.setId(id);
+                executable.setName(name);
+                executable.setSiteInclusions(Utils.expandSitesAsIntegers(siteIn));
+                executable.setSiteExclusions(Utils.expandSitesAsIntegers(siteOut));
+                executable.setHistologyInclusions(Utils.expandHistologiesAsIntegers(histIn));
+                executable.setHistologyExclusions(Utils.expandHistologiesAsIntegers(histOut));
+                executable.setBehaviorInclusions(Utils.expandBehaviorsAsIntegers(behIn));
+                if (NumberUtils.isDigits(yearMin))
+                    executable.setMinDxYear(Integer.valueOf(yearMin));
+                if (NumberUtils.isDigits(yearMax))
+                    executable.setMaxDxYear(Integer.valueOf(yearMax));
+                executable.setRecode(recode);
+                executables.add(executable);
+            }
+        });
     }
 }

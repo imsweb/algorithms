@@ -3,19 +3,13 @@
  */
 package com.imsweb.algorithms.lymphoma;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
-import de.siegmar.fastcsv.reader.CsvReader;
-import de.siegmar.fastcsv.reader.NamedCsvRecord;
+import com.imsweb.algorithms.internal.Utils;
 
 public final class LymphoidNeoplasmRecodeUtils {
 
@@ -74,24 +68,15 @@ public final class LymphoidNeoplasmRecodeUtils {
     @SuppressWarnings("SameParameterValue")
     private static List<LymphoidNeoplasmRecodeData> readData(String filename) {
         List<LymphoidNeoplasmRecodeData> result = new ArrayList<>();
-        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("lymphoma/" + filename)) {
-            if (is == null)
-                throw new IllegalStateException("Unable to find " + filename);
 
-            try (Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
-                 CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
-                csvReader.stream().forEach(line -> {
-                    String site = StringUtils.trimToNull(line.getField(1));
-                    String hist = StringUtils.trimToNull(line.getField(2));
-                    String recode = StringUtils.trimToNull(line.getField(3));
-                    if (site != null && hist != null && recode != null && !recode.contains("-"))
-                        result.add(new LymphoidNeoplasmRecodeData(site, hist, StringUtils.leftPad(recode, 2, "0")));
-                });
-            }
-        }
-        catch (IOException e) {
-            throw new IllegalStateException("Unable to read " + filename, e);
-        }
+        Utils.processInternalFile("lymphoma/" + filename, line -> {
+            String site = StringUtils.trimToNull(line.getField(1));
+            String hist = StringUtils.trimToNull(line.getField(2));
+            String recode = StringUtils.trimToNull(line.getField(3));
+            if (site != null && hist != null && recode != null && !recode.contains("-"))
+                result.add(new LymphoidNeoplasmRecodeData(site, hist, StringUtils.leftPad(recode, 2, "0")));
+        });
+
         return result;
     }
 }

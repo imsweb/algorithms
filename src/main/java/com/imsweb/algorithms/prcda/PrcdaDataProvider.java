@@ -3,22 +3,15 @@
  */
 package com.imsweb.algorithms.prcda;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
-import de.siegmar.fastcsv.reader.CsvReader;
-import de.siegmar.fastcsv.reader.NamedCsvRecord;
-
 import com.imsweb.algorithms.internal.CountryData;
 import com.imsweb.algorithms.internal.CountyData;
 import com.imsweb.algorithms.internal.StateData;
+import com.imsweb.algorithms.internal.Utils;
 
 import static com.imsweb.algorithms.StateCountyInputDto.isInvalidStateOrCounty;
 import static com.imsweb.algorithms.StateCountyInputDto.isUnknownStateOrCounty;
@@ -82,26 +75,18 @@ public class PrcdaDataProvider {
 
     private Map<String, Map<String, CountyData>> loadPrcdaData() {
         Map<String, Map<String, CountyData>> result = new HashMap<>();
-        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("prcda/prcda.csv")) {
-            if (is == null)
-                throw new IllegalStateException("Unable to find PRCDA data!");
 
-            try (Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
-                 CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
-                csvReader.stream().forEach(line -> {
-                    String state = line.getField(0);
-                    String county = line.getField(1);
-                    String prcda2017 = line.getField(2);
-                    String prcda2020 = line.getField(3);
-                    CountyData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new CountyData());
-                    dto.setPrcda2017(StringUtils.leftPad(prcda2017, 1, '0'));
-                    dto.setPrcda(StringUtils.leftPad(prcda2020, 1, '0'));
-                });
-            }
-        }
-        catch (IOException e) {
-            throw new IllegalStateException(e);
-        }
+        Utils.processInternalFile("prcda/prcda.csv", line -> {
+
+            String state = line.getField(0);
+            String county = line.getField(1);
+            String prcda2017 = line.getField(2);
+            String prcda2020 = line.getField(3);
+            CountyData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new CountyData());
+            dto.setPrcda2017(StringUtils.leftPad(prcda2017, 1, '0'));
+            dto.setPrcda(StringUtils.leftPad(prcda2020, 1, '0'));
+        });
+
         return result;
     }
 }

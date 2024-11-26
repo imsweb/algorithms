@@ -1,9 +1,5 @@
 package com.imsweb.algorithms.iccc;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -16,9 +12,6 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
-
-import de.siegmar.fastcsv.reader.CsvReader;
-import de.siegmar.fastcsv.reader.NamedCsvRecord;
 
 import com.imsweb.algorithms.internal.Utils;
 
@@ -170,18 +163,15 @@ public final class IcccRecodeUtils {
         if (_DATA.containsKey(version))
             return;
 
-        URL url;
+        String file;
         if (VERSION_THIRD_EDITION.equals(version))
-            url = Thread.currentThread().getContextClassLoader().getResource("iccc/iccc-data-third-edition.csv");
+            file = "iccc/iccc-data-third-edition.csv";
         else if (VERSION_WHO_2008.equals(version))
-            url = Thread.currentThread().getContextClassLoader().getResource("iccc/iccc-data-who-2008.csv");
+            file = "iccc/iccc-data-who-2008.csv";
         else if (VERSION_THIRD_EDITION_IARC_2017.equals(version))
-            url = Thread.currentThread().getContextClassLoader().getResource("iccc/iccc-data-third-edition-iarc-2017.csv");
+            file = "iccc/iccc-data-third-edition-iarc-2017.csv";
         else
             throw new IllegalStateException("Unsupported version: " + version);
-
-        if (url == null)
-            throw new IllegalStateException("Unable to find internal data file for version " + version);
 
         List<IcccSiteGroupDto> groups = new ArrayList<>();
         _DATA.put(version, groups);
@@ -191,67 +181,62 @@ public final class IcccRecodeUtils {
 
         Pattern codePattern = Pattern.compile("\\d{3}");
 
-        try (CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(new InputStreamReader(url.openStream(), StandardCharsets.US_ASCII))) {
-            csvReader.stream().forEach(line -> {
-                String id = line.getField(0);
-                String name = line.getField(1);
-                String level = line.getField(2);
-                String siteIn = line.getField(3);
-                String siteOut = line.getField(4);
-                String histIn = line.getField(5);
-                String histOut = line.getField(6);
-                String recode = line.getField(7);
-                String children = line.getField(8);
-                String recodeExtended = "";
-                String behaviorInclusions = "";
-                if (!VERSION_THIRD_EDITION.equals(version)) {
-                    recodeExtended = line.getField(9);
-                    behaviorInclusions = line.getField(10);
-                }
+        Utils.processInternalFile(file, line -> {
+            String id = line.getField(0);
+            String name = line.getField(1);
+            String level = line.getField(2);
+            String siteIn = line.getField(3);
+            String siteOut = line.getField(4);
+            String histIn = line.getField(5);
+            String histOut = line.getField(6);
+            String recode = line.getField(7);
+            String children = line.getField(8);
+            String recodeExtended = "";
+            String behaviorInclusions = "";
+            if (!VERSION_THIRD_EDITION.equals(version)) {
+                recodeExtended = line.getField(9);
+                behaviorInclusions = line.getField(10);
+            }
 
-                IcccSiteGroupDto group = new IcccSiteGroupDto();
-                group.setId(id);
-                group.setName(name);
-                group.setLevel(Integer.valueOf(level));
-                group.setSiteInclusions(siteIn);
-                group.setSiteExclusions(siteOut);
-                group.setHistologyInclusions(histIn);
-                group.setHistologyExclusions(histOut);
-                group.setBehaviorInclusions(behaviorInclusions);
-                group.setRecode(recode);
-                group.setRecodeExtended(recodeExtended);
-                if (!StringUtils.isBlank(children)) {
-                    group.setChildrenRecodes(Arrays.asList(children.split(",")));
-                    for (String s : group.getChildrenRecodes())
-                        if (!codePattern.matcher(s).matches())
-                            throw new IllegalStateException("Invalid recode reference for " + group.getName() + ": " + s);
-                }
+            IcccSiteGroupDto group = new IcccSiteGroupDto();
+            group.setId(id);
+            group.setName(name);
+            group.setLevel(Integer.valueOf(level));
+            group.setSiteInclusions(siteIn);
+            group.setSiteExclusions(siteOut);
+            group.setHistologyInclusions(histIn);
+            group.setHistologyExclusions(histOut);
+            group.setBehaviorInclusions(behaviorInclusions);
+            group.setRecode(recode);
+            group.setRecodeExtended(recodeExtended);
+            if (!StringUtils.isBlank(children)) {
+                group.setChildrenRecodes(Arrays.asList(children.split(",")));
+                for (String s : group.getChildrenRecodes())
+                    if (!codePattern.matcher(s).matches())
+                        throw new IllegalStateException("Invalid recode reference for " + group.getName() + ": " + s);
+            }
 
-                if (!groups.contains(group))
-                    groups.add(group);
+            if (!groups.contains(group))
+                groups.add(group);
 
-                if (!StringUtils.isBlank(recode)) {
-                    if (!codePattern.matcher(recode).matches())
-                        throw new IllegalStateException("Invalid recode: " + recode + " for id " + id);
-                    if (!VERSION_THIRD_EDITION.equals(version) && !codePattern.matcher(recodeExtended).matches())
-                        throw new IllegalStateException("Invalid recode extended: " + recodeExtended + " for id " + id);
+            if (!StringUtils.isBlank(recode)) {
+                if (!codePattern.matcher(recode).matches())
+                    throw new IllegalStateException("Invalid recode: " + recode + " for id " + id);
+                if (!VERSION_THIRD_EDITION.equals(version) && !codePattern.matcher(recodeExtended).matches())
+                    throw new IllegalStateException("Invalid recode extended: " + recodeExtended + " for id " + id);
 
-                    IcccExecutableSiteGroupDto executable = new IcccExecutableSiteGroupDto();
-                    executable.setId(id);
-                    executable.setSiteInclusions(Utils.expandSitesAsIntegers(siteIn));
-                    executable.setSiteExclusions(Utils.expandSitesAsIntegers(siteOut));
-                    executable.setHistologyInclusions(Utils.expandHistologiesAsIntegers(histIn));
-                    executable.setHistologyExclusions(Utils.expandHistologiesAsIntegers(histOut));
-                    executable.setBehaviorInclusions(Utils.expandBehaviorsAsIntegers(behaviorInclusions));
-                    executable.setRecode(recode);
-                    executable.setRecodeExtended(recodeExtended);
+                IcccExecutableSiteGroupDto executable = new IcccExecutableSiteGroupDto();
+                executable.setId(id);
+                executable.setSiteInclusions(Utils.expandSitesAsIntegers(siteIn));
+                executable.setSiteExclusions(Utils.expandSitesAsIntegers(siteOut));
+                executable.setHistologyInclusions(Utils.expandHistologiesAsIntegers(histIn));
+                executable.setHistologyExclusions(Utils.expandHistologiesAsIntegers(histOut));
+                executable.setBehaviorInclusions(Utils.expandBehaviorsAsIntegers(behaviorInclusions));
+                executable.setRecode(recode);
+                executable.setRecodeExtended(recodeExtended);
 
-                    executables.add(executable);
-                }
-            });
-        }
-        catch (IOException e) {
-            throw new IllegalStateException(e);
-        }
+                executables.add(executable);
+            }
+        });
     }
 }

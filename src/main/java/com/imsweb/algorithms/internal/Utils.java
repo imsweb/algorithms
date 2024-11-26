@@ -3,16 +3,26 @@
  */
 package com.imsweb.algorithms.internal;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.Range;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+
+import de.siegmar.fastcsv.reader.CsvReader;
+import de.siegmar.fastcsv.reader.CsvRecord;
+import de.siegmar.fastcsv.reader.NamedCsvRecord;
 
 import com.imsweb.algorithms.AlgorithmInput;
 import com.imsweb.algorithms.Algorithms;
@@ -27,6 +37,32 @@ public final class Utils {
 
     private Utils() {
         // no instances of this class allowed!
+    }
+
+    public static void processInternalFile(String file, Consumer<NamedCsvRecord> consumer) {
+        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(file)) {
+            if (is == null)
+                throw new IllegalStateException("Unable to find " + file);
+            try (Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8); CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
+                csvReader.stream().forEach(consumer);
+            }
+        }
+        catch (IOException e) {
+            throw new IllegalStateException("Unable to read " + file, e);
+        }
+    }
+
+    public static void processInternalFileNoHeaders(String file, Consumer<CsvRecord> consumer) {
+        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(file)) {
+            if (is == null)
+                throw new IllegalStateException("Unable to find " + file);
+            try (Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8); CsvReader<CsvRecord> csvReader = CsvReader.builder().ofCsvRecord(reader)) {
+                csvReader.stream().forEach(consumer);
+            }
+        }
+        catch (IOException e) {
+            throw new IllegalStateException("Unable to read " + file, e);
+        }
     }
 
     /**

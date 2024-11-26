@@ -3,18 +3,12 @@
  */
 package com.imsweb.algorithms.braincnsrecode;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
-import de.siegmar.fastcsv.reader.CsvReader;
-import de.siegmar.fastcsv.reader.NamedCsvRecord;
+import com.imsweb.algorithms.internal.Utils;
 
 public final class BrainCnsRecodeUtils {
 
@@ -65,26 +59,17 @@ public final class BrainCnsRecodeUtils {
     @SuppressWarnings("SameParameterValue")
     private static List<BrainCnsRecodeData> readData(String filename) {
         List<BrainCnsRecodeData> result = new ArrayList<>();
-        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("braincnsrecode/" + filename)) {
-            if (is == null)
-                throw new IllegalStateException("Unable to find " + filename);
 
-            try (Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
-                 CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
-                csvReader.stream().forEach(line -> {
-                    String site = StringUtils.trim(line.getField(1)).replace(" ", "");
-                    String beh = StringUtils.trim(line.getField(2)).replace(" ", "");
-                    String histInc = StringUtils.trim(line.getField(3)).replace(" ", "");
-                    String histExc = StringUtils.trim(line.getField(4)).replace(" ", "");
-                    String recode = StringUtils.trimToNull(line.getField(5));
-                    if (recode != null && !recode.contains("-"))
-                        result.add(new BrainCnsRecodeData(site, beh, histInc, histExc, StringUtils.leftPad(recode, 2, "0")));
-                });
-            }
-        }
-        catch (IOException e) {
-            throw new IllegalStateException("Unable to read " + filename, e);
-        }
+        Utils.processInternalFile("braincnsrecode/" + filename, line -> {
+            String site = StringUtils.trim(line.getField(1)).replace(" ", "");
+            String beh = StringUtils.trim(line.getField(2)).replace(" ", "");
+            String histInc = StringUtils.trim(line.getField(3)).replace(" ", "");
+            String histExc = StringUtils.trim(line.getField(4)).replace(" ", "");
+            String recode = StringUtils.trimToNull(line.getField(5));
+            if (recode != null && !recode.contains("-"))
+                result.add(new BrainCnsRecodeData(site, beh, histInc, histExc, StringUtils.leftPad(recode, 2, "0")));
+        });
+
         return result;
     }
 }

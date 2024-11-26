@@ -3,19 +3,13 @@
  */
 package com.imsweb.algorithms.napiia;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import de.siegmar.fastcsv.reader.CsvReader;
-import de.siegmar.fastcsv.reader.CsvRecord;
+import com.imsweb.algorithms.internal.Utils;
 
 /**
  * This class is used to calculate the NAPIIA variable. More information can be found here:
@@ -526,16 +520,6 @@ public final class NapiiaUtils {
     }
 
     private static void readNameData(String file, Map<String, Short> map) {
-        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("napiia/" + file)) {
-            if (is == null)
-                throw new IllegalStateException("Unable to read internal " + file);
-            try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
-                 CsvReader<CsvRecord> csvReader = CsvReader.builder().ofCsvRecord(reader)) {
-                csvReader.stream().forEach(line -> map.put(line.getField(0).toUpperCase(), Short.valueOf(line.getField(1))));
-            }
-        }
-        catch (IOException e) {
-            throw new IllegalStateException("Unable to read internal " + file, e);
-        }
+        Utils.processInternalFileNoHeaders("napiia/" + file, line -> map.put(line.getField(0).toUpperCase(), Short.valueOf(line.getField(1))));
     }
 }

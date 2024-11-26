@@ -3,10 +3,6 @@
  */
 package com.imsweb.algorithms.countyatdiagnosisanalysis;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -14,12 +10,10 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
-import de.siegmar.fastcsv.reader.CsvReader;
-import de.siegmar.fastcsv.reader.NamedCsvRecord;
-
 import com.imsweb.algorithms.internal.CountryData;
 import com.imsweb.algorithms.internal.CountyData;
 import com.imsweb.algorithms.internal.StateData;
+import com.imsweb.algorithms.internal.Utils;
 
 public final class CountyAtDxAnalysisUtils {
 
@@ -162,13 +156,8 @@ public final class CountyAtDxAnalysisUtils {
     private static Map<String, Map<String, CountyData>> loadCountyAtDxAnalysisData() {
         Map<String, java.util.Map<String, CountyData>> result = new HashMap<>();
 
-        try (Reader reader = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("countyatdxanalysis/state-county-map.csv"), StandardCharsets.US_ASCII);
-             CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
-            csvReader.stream().forEach(line -> result.computeIfAbsent(line.getField(0), k -> new HashMap<>()).computeIfAbsent(line.getField(1), k -> new CountyData()));
-        }
-        catch (IOException e) {
-            throw new IllegalStateException(e);
-        }
+        Utils.processInternalFile("countyatdxanalysis/state-county-map.csv", line ->
+                result.computeIfAbsent(line.getField(0), k -> new HashMap<>()).computeIfAbsent(line.getField(1), k -> new CountyData()));
 
         return result;
     }

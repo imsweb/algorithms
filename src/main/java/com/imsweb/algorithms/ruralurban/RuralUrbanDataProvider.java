@@ -3,23 +3,16 @@
  */
 package com.imsweb.algorithms.ruralurban;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
-import de.siegmar.fastcsv.reader.CsvReader;
-import de.siegmar.fastcsv.reader.NamedCsvRecord;
-
 import com.imsweb.algorithms.internal.CensusData;
 import com.imsweb.algorithms.internal.CountryData;
 import com.imsweb.algorithms.internal.CountyData;
 import com.imsweb.algorithms.internal.StateData;
+import com.imsweb.algorithms.internal.Utils;
 
 import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.RURAL_URBAN_COMMUTING_AREA_UNKNOWN;
 import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.RURAL_URBAN_CONTINUUM_UNKNOWN;
@@ -130,64 +123,34 @@ public class RuralUrbanDataProvider {
         Map<String, Map<String, CountyData>> result = new HashMap<>();
 
         // load 1993 data
-        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("ruralurban/rural-urban-continuum-1993.csv")) {
-            if (is == null)
-                throw new IllegalStateException("Missing data file!");
-            try (Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
-                 CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
-                csvReader.stream().forEach(line -> {
-                    String state = line.getField(0);
-                    String county = line.getField(1);
-                    String val = line.getField(2);
+        Utils.processInternalFile("ruralurban/rural-urban-continuum-1993.csv", line -> {
+            String state = line.getField(0);
+            String county = line.getField(1);
+            String val = line.getField(2);
 
-                    CountyData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new CountyData());
-                    dto.setUrbanContinuum1993(StringUtils.leftPad(val, 2, '0'));
-                });
-            }
-        }
-        catch (IOException e) {
-            throw new IllegalStateException(e);
-        }
+            CountyData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new CountyData());
+            dto.setUrbanContinuum1993(StringUtils.leftPad(val, 2, '0'));
+        });
 
         // load 2003 data
-        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("ruralurban/rural-urban-continuum-2003.csv")) {
-            if (is == null)
-                throw new IllegalStateException("Missing data file!");
-            try (Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
-                 CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
-                csvReader.stream().forEach(line -> {
-                    String state = line.getField(0);
-                    String county = line.getField(1);
-                    String val = line.getField(2);
+        Utils.processInternalFile("ruralurban/rural-urban-continuum-2003.csv", line -> {
+            String state = line.getField(0);
+            String county = line.getField(1);
+            String val = line.getField(2);
 
-                    CountyData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new CountyData());
-                    dto.setUrbanContinuum2003(StringUtils.leftPad(val, 2, '0'));
-                });
-            }
-        }
-        catch (IOException e) {
-            throw new IllegalStateException(e);
-        }
+            CountyData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new CountyData());
+            dto.setUrbanContinuum2003(StringUtils.leftPad(val, 2, '0'));
+        });
 
         // load 2013 data
-        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("ruralurban/rural-urban-continuum-2013.csv")) {
-            if (is == null)
-                throw new IllegalStateException("Missing data file!");
-            try (Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
-                 CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
-                csvReader.stream().forEach(line -> {
-                    String state = line.getField(0);
-                    String county = line.getField(1);
-                    String val = line.getField(2);
+        Utils.processInternalFile("ruralurban/rural-urban-continuum-2013.csv", line -> {
+            String state = line.getField(0);
+            String county = line.getField(1);
+            String val = line.getField(2);
 
-                    CountyData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new CountyData());
-                    dto.setUrbanContinuum2013(StringUtils.leftPad(val, 2, '0'));
-                });
-            }
-        }
-        catch (IOException e) {
-            throw new IllegalStateException(e);
-        }
+            CountyData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new CountyData());
+            dto.setUrbanContinuum2013(StringUtils.leftPad(val, 2, '0'));
+        });
 
         return result;
     }

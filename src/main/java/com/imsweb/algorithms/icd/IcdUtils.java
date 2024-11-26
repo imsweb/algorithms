@@ -7,7 +7,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,10 +16,8 @@ import java.util.Map;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
-import de.siegmar.fastcsv.reader.CsvReader;
-import de.siegmar.fastcsv.reader.NamedCsvRecord;
-
 import com.imsweb.algorithms.icd.IcdO2Entry.ConversionResultType;
+import com.imsweb.algorithms.internal.Utils;
 
 public final class IcdUtils {
 
@@ -560,7 +557,7 @@ public final class IcdUtils {
 
         ConversionResultType res = result.getConversionResult();
         boolean invalid = res == ConversionResultType.CONVERSION_FAILED_INVALID_SITE || res == ConversionResultType.CONVERSION_FAILED_INVALID_HISTOLOGY || res ==
-                ConversionResultType.CONVERSION_FAILED_INVALID_BEHAVIOR;
+                                                                                                                                                           ConversionResultType.CONVERSION_FAILED_INVALID_BEHAVIOR;
         if (invalid && allowNullResult)
             result = null;
 
@@ -604,7 +601,7 @@ public final class IcdUtils {
 
         // Behavior invalid
         if (icdO3Behavior == null || ((!icdO3Behavior.equals("0")) && (!icdO3Behavior.equals("1")) && (!icdO3Behavior.equals("2")) &&
-                (!icdO3Behavior.equals("3")) && (!icdO3Behavior.equals("6")) && (!icdO3Behavior.equals("9"))))
+                                      (!icdO3Behavior.equals("3")) && (!icdO3Behavior.equals("6")) && (!icdO3Behavior.equals("9"))))
             result.setConversionResult(ConversionResultType.CONVERSION_FAILED_INVALID_BEHAVIOR);
 
     }
@@ -754,36 +751,25 @@ public final class IcdUtils {
     }
 
     private static void loadDataFile(String file, Map<String, IcdO3Entry> result) {
-        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("icd/" + file)) {
-            if (is == null)
-                throw new IllegalStateException("Unable to find ICD data file!");
+        Utils.processInternalFile("icd/" + file, line -> {
+            if (line.getFieldCount() != 8)
+                throw new IllegalStateException("Was expecting 8 values, got " + line.getFieldCount() + " - " + line);
 
-            try (Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
-                 CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
-                csvReader.stream().forEach(line -> {
-                    if (line.getFieldCount() != 8)
-                        throw new IllegalStateException("Was expecting 8 values, got " + line.getFieldCount() + " - " + line);
+            IcdO3Entry entry = new IcdO3Entry();
+            entry.setSourceCode(line.getField(0));
+            entry.setSite(line.getField(1));
+            entry.setHistology(line.getField(2).isEmpty() ? null : line.getField(2));
+            entry.setBehavior(line.getField(3).isEmpty() ? null : line.getField(3));
+            entry.setGrade(line.getField(4).isEmpty() ? null : line.getField(4));
+            entry.setLaterality(line.getField(5).isEmpty() ? null : line.getField(5));
+            entry.setReportable(line.getField(6).isEmpty() ? null : line.getField(6));
+            entry.setSex(line.getField(7).isEmpty() ? null : line.getField(7));
 
-                    IcdO3Entry entry = new IcdO3Entry();
-                    entry.setSourceCode(line.getField(0));
-                    entry.setSite(line.getField(1));
-                    entry.setHistology(line.getField(2).isEmpty() ? null : line.getField(2));
-                    entry.setBehavior(line.getField(3).isEmpty() ? null : line.getField(3));
-                    entry.setGrade(line.getField(4).isEmpty() ? null : line.getField(4));
-                    entry.setLaterality(line.getField(5).isEmpty() ? null : line.getField(5));
-                    entry.setReportable(line.getField(6).isEmpty() ? null : line.getField(6));
-                    entry.setSex(line.getField(7).isEmpty() ? null : line.getField(7));
-
-                    // the key will contain the sex if it's not blank in the data files (blank means the value applies for any sex value)
-                    if (entry.getSex() != null)
-                        result.put(entry.getSourceCode() + entry.getSex(), entry);
-                    else
-                        result.put(entry.getSourceCode(), entry);
-                });
-            }
-        }
-        catch (IOException e) {
-            throw new IllegalStateException(e);
-        }
+            // the key will contain the sex if it's not blank in the data files (blank means the value applies for any sex value)
+            if (entry.getSex() != null)
+                result.put(entry.getSourceCode() + entry.getSex(), entry);
+            else
+                result.put(entry.getSourceCode(), entry);
+        });
     }
 }

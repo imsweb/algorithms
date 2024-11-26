@@ -3,22 +3,15 @@
  */
 package com.imsweb.algorithms.uiho;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
-import de.siegmar.fastcsv.reader.CsvReader;
-import de.siegmar.fastcsv.reader.NamedCsvRecord;
-
 import com.imsweb.algorithms.internal.CountryData;
 import com.imsweb.algorithms.internal.CountyData;
 import com.imsweb.algorithms.internal.StateData;
+import com.imsweb.algorithms.internal.Utils;
 
 import static com.imsweb.algorithms.StateCountyInputDto.isInvalidStateOrCounty;
 import static com.imsweb.algorithms.StateCountyInputDto.isUnknownStateOrCounty;
@@ -76,26 +69,17 @@ public class UihoDataProvider {
 
     private Map<String, Map<String, CountyData>> loadUihoData() {
         Map<String, Map<String, CountyData>> result = new HashMap<>();
-        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("uiho/uiho.csv")) {
-            if (is == null)
-                throw new IllegalStateException("Unable to find UIHO data!");
 
-            try (Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
-                 CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(reader)) {
-                csvReader.stream().forEach(line -> {
-                    String state = line.getField(0);
-                    String county = line.getField(1);
-                    String uiho = line.getField(2);
-                    String city = line.getField(3);
-                    CountyData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new CountyData());
-                    dto.setUiho(StringUtils.leftPad(uiho, 1, '0'));
-                    dto.setUihoCity(StringUtils.leftPad(city, 2, '0'));
-                });
-            }
-        }
-        catch (IOException e) {
-            throw new IllegalStateException(e);
-        }
+        Utils.processInternalFile("uiho/uiho.csv", line -> {
+            String state = line.getField(0);
+            String county = line.getField(1);
+            String uiho = line.getField(2);
+            String city = line.getField(3);
+            CountyData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new CountyData());
+            dto.setUiho(StringUtils.leftPad(uiho, 1, '0'));
+            dto.setUihoCity(StringUtils.leftPad(city, 2, '0'));
+        });
+
         return result;
     }
 }

@@ -3,23 +3,17 @@
  */
 package com.imsweb.algorithms.nhia;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-import java.util.stream.Collectors;
 
-import de.siegmar.fastcsv.reader.CsvReader;
-import de.siegmar.fastcsv.reader.CsvRecord;
+import com.imsweb.algorithms.internal.Utils;
 
 /**
  * This class is used to calculate the NHIA variable. More information can be found here:
@@ -397,18 +391,11 @@ public final class NhiaUtils {
     }
 
     private static Set<String> readData(String file) {
-        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("nhia/" + file)) {
-            if (is == null)
-                throw new IllegalStateException("Unable to read internal " + file);
+        Set<String> result = new HashSet<>();
 
-            try (Reader reader = new InputStreamReader(is, StandardCharsets.US_ASCII);
-                 CsvReader<CsvRecord> csvReader = CsvReader.builder().ofCsvRecord(reader)) {
-                return csvReader.stream().map(line -> line.getField(0).toUpperCase()).collect(Collectors.toSet());
-            }
-        }
-        catch (IOException e) {
-            throw new IllegalStateException("Unable to read internal " + file, e);
-        }
+        Utils.processInternalFileNoHeaders("nhia/" + file, line -> result.add(line.getField(0).toUpperCase()));
+
+        return result;
     }
 
     /**
