@@ -305,7 +305,7 @@ public final class Algorithms {
 
             // non-standard fields
             addField(AlgorithmField.of(FIELD_NAPIIA_NEEDS_REVIEW, 9430, 1, "NAPIIA Needs Review", "NAPIIA Rev", DATA_LEVEL_PATIENT, false));
-            addField(AlgorithmField.of(FIELD_NAPIIA_REVIEW_REASON, 9431, 256, "NAPIIA Review Reason", "NAPIIA Rev Res", DATA_LEVEL_PATIENT, false));
+            addField(AlgorithmField.of(FIELD_NAPIIA_REVIEW_REASON, 9431, 65, "NAPIIA Review Reason", "NAPIIA Rev Res", DATA_LEVEL_PATIENT, false));
             addField(AlgorithmField.of(FIELD_SEER_SITE_RECODE, 9410, 5, "SEER Site Recode ICD-O-3", "Site Recode", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_SEER_SITE_RECODE_2023, 9412, 2, "SEER Site Recode ICD-O-3 2023 Revision", "Site Recode 23", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_SEER_SITE_RECODE_2023_EXPANDED, 9413, 2, "SEER Site Recode ICD-O-3 2023 Revision Expanded", "Site Recode 23 Exp", DATA_LEVEL_TUMOR, false));
@@ -329,7 +329,7 @@ public final class Algorithms {
             addField(AlgorithmField.of(FIELD_EPHT_2010_GEOID_5K, 9993, 11, "EPHT 2010 GEO ID 5K", "EPHT 5K", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_EPHT_2010_GEOID_20K, 9994, 11, "EPHT 2010 GEO ID 20K", "EPHT 20K", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_EPHT_2010_GEOID_50K, 9995, 11, "EPHT 2010 GEO ID 50K", "EPHT 50K", DATA_LEVEL_TUMOR, false));
-            addField(AlgorithmField.of(FIELD_TRACT_EST_CONGRESS_DIST, 9405, 2, "Tract-Estimated Congressional District", "Tract-Est Congress Dist", DATA_LEVEL_TUMOR, false));
+            addField(AlgorithmField.of(FIELD_TRACT_EST_CONGRESS_DIST, 9405, 4, "Tract-Estimated Congressional District", "Tract-Est Congress Dist", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_CANCER_REPORTING_ZONE, 9415, 10, "Cancer Reporting Zone", "Cancer Rpt Zone", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_CANCER_REPORTING_ZONE_TRACT_REQ, 9416, 1, "Census Tract Required for Cancer Reporting Zone", "Cancer Rpt Zone Tract Cert", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_PERSISTENT_POVERTY, 9625, 1, "Persistence Poverty", "Persist Pov", DATA_LEVEL_TUMOR, false));
