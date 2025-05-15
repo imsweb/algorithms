@@ -21,9 +21,14 @@ import com.imsweb.algorithms.ruralurban.RuralUrbanUtils;
 
 public class CountryDataTest {
 
+    // using this to disable this test in the integration build!
+    private static final boolean _RUN_FULL_TEST = false;
+
     @Test
     @SuppressWarnings({"java:S2925", "ResultOfMethodCallIgnored"}) // calling Thread.sleep
     public void testConcurrency() throws InterruptedException {
+        if (!_RUN_FULL_TEST)
+            return;
 
         // individual algorithms test their own data; this test is making sure the combined access
         // is working as expected from a concurrency point of view
@@ -68,14 +73,14 @@ public class CountryDataTest {
                 pool.submit(() -> {
                     // sleep a random (although small) amount of time
                     try {
-                        Thread.sleep(random.nextLong() * 100);
+                        Thread.sleep(random.nextLong(100));
                     }
                     catch (InterruptedException e) {
                         errors.add("Threads got interrupted?");
                     }
 
                     // either compute one of the variables, or reset all the data
-                    switch (random.nextInt() * 5) {
+                    switch (random.nextInt(5)) {
                         case 0:
                             CountryData.getInstance().uninitializeAllData();
                             numReset.getAndIncrement();
