@@ -34,14 +34,14 @@ public class HistoricStageNaaccrLab {
                 if (!dataFile.getName().endsWith(".txd.gz")) continue;
 
                 LineNumberReader reader = new LineNumberReader(new InputStreamReader(new GZIPInputStream(new FileInputStream(dataFile))));
-                Map<String, String> record = layout.readNextRecord(reader);
-                while (record != null) {
+                Map<String, String> rec = layout.readNextRecord(reader);
+                while (rec != null) {
                     // process record...
                     String[] line = new String[5];
-                    line[0] = record.get(layout.getFieldByNaaccrItemNumber(40).getName()); //Regsitry
-                    line[1] = record.get(layout.getFieldByNaaccrItemNumber(20).getName()); //Pat ID
-                    line[2] = record.get(layout.getFieldByNaaccrItemNumber(380).getName()); //Sequence number
-                    line[3] = record.get(layout.getFieldByNaaccrItemNumber(390).getName()); //Yeardx
+                    line[0] = rec.get(layout.getFieldByNaaccrItemNumber(40).getName()); //Regsitry
+                    line[1] = rec.get(layout.getFieldByNaaccrItemNumber(20).getName()); //Pat ID
+                    line[2] = rec.get(layout.getFieldByNaaccrItemNumber(380).getName()); //Sequence number
+                    line[3] = rec.get(layout.getFieldByNaaccrItemNumber(390).getName()); //Yeardx
 
                     HistoricStageInputDto inputDto = new HistoricStageInputDto();
 
@@ -49,7 +49,7 @@ public class HistoricStageNaaccrLab {
 
                     line[4] = HistoricStageUtils.computeHistoricStage(inputDto).getResult();
                     writer.writeRecord(line);
-                    record = layout.readNextRecord(reader);
+                    rec = layout.readNextRecord(reader);
                 }
                 reader.close();
             }

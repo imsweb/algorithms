@@ -139,9 +139,9 @@ public class BehaviorRecodeUtilsTest {
         Assert.assertEquals("3", computeBehaviorRecode(rec));
     }
 
-    private String computeBehaviorRecode(Map<String, String> record) {
-        if (record == null || record.isEmpty())
+    private String computeBehaviorRecode(Map<String, String> rec) {
+        if (rec == null || rec.isEmpty())
             return BehaviorRecodeUtils.UNKNOWN;
-        return BehaviorRecodeUtils.computeBehaviorRecode(record.get(_PROP_PRIMARY_SITE), record.get(_PROP_HISTOLOGY_3), record.get(_PROP_BEHAVIOR_3), record.get(_PROP_DATE_OF_DIAGNOSIS_YEAR));
+        return BehaviorRecodeUtils.computeBehaviorRecode(rec.get(_PROP_PRIMARY_SITE), rec.get(_PROP_HISTOLOGY_3), rec.get(_PROP_BEHAVIOR_3), rec.get(_PROP_DATE_OF_DIAGNOSIS_YEAR));
     }
 }
