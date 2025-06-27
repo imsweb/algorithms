@@ -2,6 +2,7 @@
 
 **Changes in version 5.1 (not released yet)**
 
+- Updated Cancer Reporting Zone data.
 - Updated CSV library from version 3.4.0 to version 3.7.0.
 
 **Changes in version 5.0**
