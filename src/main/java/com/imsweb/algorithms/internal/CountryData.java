@@ -40,7 +40,7 @@ import com.imsweb.algorithms.StateCountyTractInputDto.CensusTract;
  * initialized before it's being accessed.
  */
 @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-public class CountryData {
+public final class CountryData {
     
     private CountryData() {
         // static utility class
