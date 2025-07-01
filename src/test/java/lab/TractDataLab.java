@@ -138,7 +138,7 @@ public class TractDataLab {
         Map<DataKey, Map<String, String>> tractValues = new TreeMap<>();
         Map<DataKey, Map<Integer, String>> tractYearBasedValues = new HashMap<>();
         processMainSeerDataFile(Paths.get("C:\\dev\\temp\\tract.level.ses.2008_17.txt.gz"), layout, tractValues, tractYearBasedValues);
-        processMainSeerDataFile(Paths.get("C:\\dev\\temp\\tract.level.ses.2008_17.puerto.rico.txt.gz"), layout, tractValues, tractYearBasedValues);
+        processMainSeerDataFile(Paths.get("C:\\dev\\temp\\tract.level.ses.2008_17.puerto.rico.dt20230818.txt.gz"), layout, tractValues, tractYearBasedValues);
 
         // NAACCR Poverty Indicator 1995-2004
         Map<DataKey, String> naaccrPovertyIndicator9504 = new HashMap<>();
