@@ -1,6 +1,6 @@
 ## Algorithms Version History
 
-**Changes in version 5.1 (not released yet)**
+**Changes in version 5.1**
 
 - Added new survival time in days variables to the Survival Time algorithm.
 - Updated Cancer Reporting Zone data.
