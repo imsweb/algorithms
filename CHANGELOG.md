@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 5.2**
+
+- Changed the new survival time in days variables from 4 to 5 digits.
+
 **Changes in version 5.1**
 
 - Added new survival time in days variables to the Survival Time algorithm.

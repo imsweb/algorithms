@@ -35,6 +35,7 @@ public final class SurvivalTimeUtils {
     private static final double _DAYS_IN_MONTH = 365.24 / 12;
 
     public static final String UNKNOWN_SURVIVAL = "9999";
+    public static final String UNKNOWN_SURVIVAL_DAYS = "99999";
     public static final String BLANK_YEAR = null;
     public static final String BLANK_MONTH = null;
     public static final String BLANK_DAY = null;
@@ -92,8 +93,8 @@ public final class SurvivalTimeUtils {
                         recordResult.setSurvivalMonthsFlag(SURVIVAL_FLAG_UNKNOWN);
                         recordResult.setSurvivalMonthsPresumedAlive(UNKNOWN_SURVIVAL);
                         recordResult.setSurvivalMonthsFlagPresumedAlive(SURVIVAL_FLAG_UNKNOWN);
-                        recordResult.setSurvivalDays(UNKNOWN_SURVIVAL);
-                        recordResult.setSurvivalDaysPresumedAlive(UNKNOWN_SURVIVAL);
+                        recordResult.setSurvivalDays(UNKNOWN_SURVIVAL_DAYS);
+                        recordResult.setSurvivalDaysPresumedAlive(UNKNOWN_SURVIVAL_DAYS);
                         patientResultsList.add(recordResult);
                         tempInternalRecords.add(new InternalRecDto(orgRecord, recordResult));
                     }
@@ -175,8 +176,8 @@ public final class SurvivalTimeUtils {
                     recordResult.setSurvivalTimeDxYear(BLANK_YEAR);
                     recordResult.setSurvivalTimeDxMonth(BLANK_MONTH);
                     recordResult.setSurvivalTimeDxDay(BLANK_DAY);
-                    recordResult.setSurvivalDays(UNKNOWN_SURVIVAL);
-                    recordResult.setSurvivalDaysPresumedAlive(UNKNOWN_SURVIVAL);
+                    recordResult.setSurvivalDays(UNKNOWN_SURVIVAL_DAYS);
+                    recordResult.setSurvivalDaysPresumedAlive(UNKNOWN_SURVIVAL_DAYS);
                 }
                 else
                     validTempRecords.add(tempRec);
@@ -195,7 +196,7 @@ public final class SurvivalTimeUtils {
                     rec._recordResult.setSurvivalTimeDolcYear(BLANK_YEAR);
                     rec._recordResult.setSurvivalTimeDolcMonth(BLANK_MONTH);
                     rec._recordResult.setSurvivalTimeDolcDay(BLANK_DAY);
-                    rec._recordResult.setSurvivalDays(UNKNOWN_SURVIVAL);
+                    rec._recordResult.setSurvivalDays(UNKNOWN_SURVIVAL_DAYS);
                 }
             }
 
@@ -216,7 +217,7 @@ public final class SurvivalTimeUtils {
                     rec._recordResult.setSurvivalTimeDolcYearPresumedAlive(BLANK_YEAR);
                     rec._recordResult.setSurvivalTimeDolcMonthPresumedAlive(BLANK_MONTH);
                     rec._recordResult.setSurvivalTimeDolcDayPresumedAlive(BLANK_DAY);
-                    rec._recordResult.setSurvivalDaysPresumedAlive(UNKNOWN_SURVIVAL);
+                    rec._recordResult.setSurvivalDaysPresumedAlive(UNKNOWN_SURVIVAL_DAYS);
                 }
             }
 
@@ -224,10 +225,10 @@ public final class SurvivalTimeUtils {
             for (InternalRecDto rec : validTempRecords) {
                 if ("6".equals(rec._originalRecord.getTypeOfReportingSource()) || "7".equals(rec._originalRecord.getTypeOfReportingSource())) {
                     rec._recordResult.setSurvivalMonths(UNKNOWN_SURVIVAL);
-                    rec._recordResult.setSurvivalDays(UNKNOWN_SURVIVAL);
+                    rec._recordResult.setSurvivalDays(UNKNOWN_SURVIVAL_DAYS);
                     rec._recordResult.setSurvivalMonthsFlag(SURVIVAL_FLAG_DCO_AUTOPSY_ONLY);
                     rec._recordResult.setSurvivalMonthsPresumedAlive(UNKNOWN_SURVIVAL);
-                    rec._recordResult.setSurvivalDaysPresumedAlive(UNKNOWN_SURVIVAL);
+                    rec._recordResult.setSurvivalDaysPresumedAlive(UNKNOWN_SURVIVAL_DAYS);
                     rec._recordResult.setSurvivalMonthsFlagPresumedAlive(SURVIVAL_FLAG_DCO_AUTOPSY_ONLY);
                 }
             }
@@ -245,11 +246,11 @@ public final class SurvivalTimeUtils {
             for (SurvivalTimeInputRecordDto orgRecord : allRecords) {
                 SurvivalTimeOutputRecordDto recordResult = new SurvivalTimeOutputRecordDto();
                 recordResult.setSurvivalMonths(UNKNOWN_SURVIVAL);
+                recordResult.setSurvivalDays(UNKNOWN_SURVIVAL_DAYS);
                 recordResult.setSurvivalMonthsFlag(SURVIVAL_FLAG_UNKNOWN);
                 recordResult.setSurvivalMonthsPresumedAlive(UNKNOWN_SURVIVAL);
+                recordResult.setSurvivalDaysPresumedAlive(UNKNOWN_SURVIVAL_DAYS);
                 recordResult.setSurvivalMonthsFlagPresumedAlive(SURVIVAL_FLAG_UNKNOWN);
-                recordResult.setSurvivalDays(UNKNOWN_SURVIVAL);
-                recordResult.setSurvivalDaysPresumedAlive(UNKNOWN_SURVIVAL);
                 recordResult.setSurvivalTimeDxYear(orgRecord.getDateOfDiagnosisYear());
                 recordResult.setSurvivalTimeDxMonth(orgRecord.getDateOfDiagnosisMonth());
                 recordResult.setSurvivalTimeDxDay(orgRecord.getDateOfDiagnosisDay());
@@ -475,12 +476,12 @@ public final class SurvivalTimeUtils {
 
             if (presumeAlive) {
                 rec._recordResult.setSurvivalMonthsPresumedAlive(StringUtils.leftPad(String.valueOf(diffInMonth), 4, "0"));
-                rec._recordResult.setSurvivalDaysPresumedAlive(StringUtils.leftPad(String.valueOf(diffInDays), 4, "0"));
+                rec._recordResult.setSurvivalDaysPresumedAlive(StringUtils.leftPad(String.valueOf(diffInDays), 5, "0"));
                 rec._recordResult.setSurvivalMonthsFlagPresumedAlive(flag);
             }
             else {
                 rec._recordResult.setSurvivalMonths(StringUtils.leftPad(String.valueOf(diffInMonth), 4, "0"));
-                rec._recordResult.setSurvivalDays(StringUtils.leftPad(String.valueOf(diffInDays), 4, "0"));
+                rec._recordResult.setSurvivalDays(StringUtils.leftPad(String.valueOf(diffInDays), 5, "0"));
                 rec._recordResult.setSurvivalMonthsFlag(flag);
             }
         }

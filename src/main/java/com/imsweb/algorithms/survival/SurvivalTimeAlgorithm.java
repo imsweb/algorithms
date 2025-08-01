@@ -72,8 +72,8 @@ public class SurvivalTimeAlgorithm extends AbstractAlgorithm {
         _unknownValues.put(FIELD_SURV_FLAG_ACTIVE_FUP, Collections.singletonList(SurvivalTimeUtils.SURVIVAL_FLAG_UNKNOWN));
         _unknownValues.put(FIELD_SURV_MONTH_PRESUMED_ALIVE, Collections.singletonList(SurvivalTimeUtils.UNKNOWN_SURVIVAL));
         _unknownValues.put(FIELD_SURV_FLAG_PRESUMED_ALIVE, Collections.singletonList(SurvivalTimeUtils.SURVIVAL_FLAG_UNKNOWN));
-        _unknownValues.put(FIELD_SURV_DAYS_ACTIVE_FUP, Collections.singletonList(SurvivalTimeUtils.UNKNOWN_SURVIVAL));
-        _unknownValues.put(FIELD_SURV_DAYS_PRESUMED_ALIVE, Collections.singletonList(SurvivalTimeUtils.UNKNOWN_SURVIVAL));
+        _unknownValues.put(FIELD_SURV_DAYS_ACTIVE_FUP, Collections.singletonList(SurvivalTimeUtils.UNKNOWN_SURVIVAL_DAYS));
+        _unknownValues.put(FIELD_SURV_DAYS_PRESUMED_ALIVE, Collections.singletonList(SurvivalTimeUtils.UNKNOWN_SURVIVAL_DAYS));
     }
 
     @Override
