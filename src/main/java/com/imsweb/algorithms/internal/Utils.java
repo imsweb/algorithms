@@ -18,6 +18,7 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.Range;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import de.siegmar.fastcsv.reader.CsvReader;
@@ -82,7 +83,7 @@ public final class Utils {
 
         List<String> result = new ArrayList<>();
 
-        for (String elem : StringUtils.split(StringUtils.replace(sites, " ", "").toUpperCase(), ',')) {
+        for (String elem : StringUtils.split(Strings.CS.replace(sites, " ", "").toUpperCase(), ',')) {
             if (elem.isEmpty())
                 continue;
 

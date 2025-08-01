@@ -2,6 +2,7 @@
 
 **Changes in version 5.1 (not released yet)**
 
+- Added new survival time in days variables to the Survival Time algorithm.
 - Updated Cancer Reporting Zone data.
 - Updated CSV library from version 3.4.0 to version 3.7.0.
 

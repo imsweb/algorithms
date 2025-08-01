@@ -27,9 +27,13 @@ public class SurvivalTimeOutputRecordDto {
 
     private String _survivalMonthsFlag;
 
+    private String _survivalDays;
+
     private String _survivalMonthsPresumedAlive;
 
     private String _survivalMonthsFlagPresumedAlive;
+
+    private String _survivalDaysPresumedAlive;
 
     private Integer _sortedIndex;
 
@@ -143,5 +147,21 @@ public class SurvivalTimeOutputRecordDto {
 
     public void setSortedIndex(Integer sortedIndex) {
         _sortedIndex = sortedIndex;
+    }
+
+    public String getSurvivalDays() {
+        return _survivalDays;
+    }
+
+    public void setSurvivalDays(String survivalDays) {
+        _survivalDays = survivalDays;
+    }
+
+    public String getSurvivalDaysPresumedAlive() {
+        return _survivalDaysPresumedAlive;
+    }
+
+    public void setSurvivalDaysPresumedAlive(String survivalDaysPresumedAlive) {
+        _survivalDaysPresumedAlive = survivalDaysPresumedAlive;
     }
 }
