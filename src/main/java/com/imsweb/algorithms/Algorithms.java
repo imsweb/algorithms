@@ -133,8 +133,10 @@ public final class Algorithms {
     public static final String FIELD_SURV_DATE_ACTIVE_FUP = "survDateActiveFollowup";
     public static final String FIELD_SURV_DATE_PRESUMED_ALIVE = "survDatePresumedAlive";
     public static final String FIELD_SURV_MONTH_ACTIVE_FUP = "survMosActiveFollowup";
+    public static final String FIELD_SURV_DAYS_ACTIVE_FUP = "survDaysActiveFollowup";
     public static final String FIELD_SURV_FLAG_ACTIVE_FUP = "survFlagActiveFollowup";
     public static final String FIELD_SURV_MONTH_PRESUMED_ALIVE = "survMosPresumedAlive";
+    public static final String FIELD_SURV_DAYS_PRESUMED_ALIVE = "survDaysPresumedAlive";
     public static final String FIELD_SURV_FLAG_PRESUMED_ALIVE = "survFlagPresumedAlive";
     public static final String FIELD_SURV_REC_NUM_RECODE = "recordNumberRecode";
     public static final String FIELD_COUNTY_AT_DX_GEOCODE_1990 = "countyAtDxGeocode1990";
@@ -340,6 +342,8 @@ public final class Algorithms {
             addField(AlgorithmField.of(FIELD_DAYS_TO_TREATMENT, 9750, 3, "Days from Diagnosis to Treatment", "Days to TX", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_TUMOR_SIZE_OVER_TIME, 9650, 3, "Tumor Size Over Time", "Tumor Size Over Time", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_RACE1_RECODE, 9460, 2, "Race 1 Recode", "Race 1 Recode", DATA_LEVEL_PATIENT, false));
+            addField(AlgorithmField.of(FIELD_SURV_DAYS_ACTIVE_FUP, 9751, 4, "Surv-Days Active Followup", "Surv Days", DATA_LEVEL_TUMOR, false));
+            addField(AlgorithmField.of(FIELD_SURV_DAYS_PRESUMED_ALIVE, 9752, 4, "Surv-Days Presumed Alive", "Surv Days PA", DATA_LEVEL_TUMOR, false));
 
             // algorithms
             addAlgorithm(new NhiaAlgorithm());

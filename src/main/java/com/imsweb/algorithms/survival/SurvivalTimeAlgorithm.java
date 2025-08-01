@@ -25,6 +25,8 @@ import static com.imsweb.algorithms.Algorithms.FIELD_PAT_ID_NUMBER;
 import static com.imsweb.algorithms.Algorithms.FIELD_SEQ_NUM_CTRL;
 import static com.imsweb.algorithms.Algorithms.FIELD_SURV_DATE_ACTIVE_FUP;
 import static com.imsweb.algorithms.Algorithms.FIELD_SURV_DATE_PRESUMED_ALIVE;
+import static com.imsweb.algorithms.Algorithms.FIELD_SURV_DAYS_ACTIVE_FUP;
+import static com.imsweb.algorithms.Algorithms.FIELD_SURV_DAYS_PRESUMED_ALIVE;
 import static com.imsweb.algorithms.Algorithms.FIELD_SURV_DX_DATE_RECODE;
 import static com.imsweb.algorithms.Algorithms.FIELD_SURV_FLAG_ACTIVE_FUP;
 import static com.imsweb.algorithms.Algorithms.FIELD_SURV_FLAG_PRESUMED_ALIVE;
@@ -63,11 +65,15 @@ public class SurvivalTimeAlgorithm extends AbstractAlgorithm {
         _outputFields.add(Algorithms.getField(FIELD_SURV_DX_DATE_RECODE));
         _outputFields.add(Algorithms.getField(FIELD_SURV_VS_RECODE));
         _outputFields.add(Algorithms.getField(FIELD_SURV_REC_NUM_RECODE));
+        _outputFields.add(Algorithms.getField(FIELD_SURV_DAYS_ACTIVE_FUP));
+        _outputFields.add(Algorithms.getField(FIELD_SURV_DAYS_PRESUMED_ALIVE));
 
         _unknownValues.put(FIELD_SURV_MONTH_ACTIVE_FUP, Collections.singletonList(SurvivalTimeUtils.UNKNOWN_SURVIVAL));
         _unknownValues.put(FIELD_SURV_FLAG_ACTIVE_FUP, Collections.singletonList(SurvivalTimeUtils.SURVIVAL_FLAG_UNKNOWN));
         _unknownValues.put(FIELD_SURV_MONTH_PRESUMED_ALIVE, Collections.singletonList(SurvivalTimeUtils.UNKNOWN_SURVIVAL));
         _unknownValues.put(FIELD_SURV_FLAG_PRESUMED_ALIVE, Collections.singletonList(SurvivalTimeUtils.SURVIVAL_FLAG_UNKNOWN));
+        _unknownValues.put(FIELD_SURV_DAYS_ACTIVE_FUP, Collections.singletonList(SurvivalTimeUtils.UNKNOWN_SURVIVAL));
+        _unknownValues.put(FIELD_SURV_DAYS_PRESUMED_ALIVE, Collections.singletonList(SurvivalTimeUtils.UNKNOWN_SURVIVAL));
     }
 
     @Override
@@ -118,6 +124,8 @@ public class SurvivalTimeAlgorithm extends AbstractAlgorithm {
                     Utils.combineDate(dto.getSurvivalTimeDolcYearPresumedAlive(), dto.getSurvivalTimeDolcMonthPresumedAlive(), dto.getSurvivalTimeDolcDayPresumedAlive()));
             outputTumor.put(FIELD_SURV_DX_DATE_RECODE, Utils.combineDate(dto.getSurvivalTimeDxYear(), dto.getSurvivalTimeDxMonth(), dto.getSurvivalTimeDxDay()));
             outputTumor.put(FIELD_SURV_REC_NUM_RECODE, dto.getSortedIndex() == null ? null : StringUtils.leftPad(dto.getSortedIndex().toString(), 2, '0'));
+            outputTumor.put(FIELD_SURV_DAYS_ACTIVE_FUP, dto.getSurvivalDays());
+            outputTumor.put(FIELD_SURV_DAYS_PRESUMED_ALIVE, dto.getSurvivalDaysPresumedAlive());
 
             outputTumorList.add(outputTumor);
         }
