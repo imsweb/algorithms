@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 5.3**
+
+- Changed NAACCR number of new survival time in days variables to avoid conflict with existing NCCR items.
+
 **Changes in version 5.2**
 
 - Changed the new survival time in days variables from 4 to 5 digits.

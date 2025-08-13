@@ -342,8 +342,8 @@ public final class Algorithms {
             addField(AlgorithmField.of(FIELD_DAYS_TO_TREATMENT, 9750, 3, "Days from Diagnosis to Treatment", "Days to TX", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_TUMOR_SIZE_OVER_TIME, 9650, 3, "Tumor Size Over Time", "Tumor Size Over Time", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_RACE1_RECODE, 9460, 2, "Race 1 Recode", "Race 1 Recode", DATA_LEVEL_PATIENT, false));
-            addField(AlgorithmField.of(FIELD_SURV_DAYS_ACTIVE_FUP, 9751, 5, "Surv-Days Active Followup", "Surv Days", DATA_LEVEL_TUMOR, false));
-            addField(AlgorithmField.of(FIELD_SURV_DAYS_PRESUMED_ALIVE, 9752, 5, "Surv-Days Presumed Alive", "Surv Days PA", DATA_LEVEL_TUMOR, false));
+            addField(AlgorithmField.of(FIELD_SURV_DAYS_ACTIVE_FUP, 9753, 5, "Surv-Days Active Followup", "Surv Days", DATA_LEVEL_TUMOR, false));
+            addField(AlgorithmField.of(FIELD_SURV_DAYS_PRESUMED_ALIVE, 9754, 5, "Surv-Days Presumed Alive", "Surv Days PA", DATA_LEVEL_TUMOR, false));
 
             // algorithms
             addAlgorithm(new NhiaAlgorithm());
