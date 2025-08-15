@@ -64,10 +64,10 @@ AA,1,C798,C400,8000,2012,,9,9,invalid sequence number
 00,1,D455,,9960,2012,,1,0,icd-10 sequence 00 last rows under miscellaneous
 00,1,D466,,9962,2012,,1,0,icd-10 sequence 00 last rows under miscellaneous
 00,1,D477,,9989,2012,,1,0,icd-10 sequence 00 last rows under miscellaneous
-00,1,B20 ,C210,8950,2012,,1,0,icd-10 sequence 00 site specific Anus, Anal Canal and Anorectum
-00,1,K531,C211,8960,2012,,1,0,icd-10 sequence 00 site specific Anus, Anal Canal and Anorectum
-00,1,K578,C212,8962,2012,,1,0,icd-10 sequence 00 site specific Anus, Anal Canal and Anorectum
-00,1,K920,C218,8989,2012,,1,0,icd-10 sequence 00 site specific Anus, Anal Canal and Anorectum
+00,1,B20 ,C210,8950,2012,,1,0,"icd-10 sequence 00 site specific Anus, Anal Canal and Anorectum"
+00,1,K531,C211,8960,2012,,1,0,"icd-10 sequence 00 site specific Anus, Anal Canal and Anorectum"
+00,1,K578,C212,8962,2012,,1,0,"icd-10 sequence 00 site specific Anus, Anal Canal and Anorectum"
+00,1,K920,C218,8989,2012,,1,0,"icd-10 sequence 00 site specific Anus, Anal Canal and Anorectum"
 01,1,C798,,,2012,,1,0,icd-10 sequence 01 secondary other specified (C798)
 01,1,C80 ,C705,8022,2012,,1,0,icd-10 sequence 01 unknown primary (C80)
 01,1,C805,,,2012,,1,0,icd-10 sequence 01 unknown primary (C80)
