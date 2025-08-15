@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 5.4**
+
+- Fixed extra column added to rural-continuum-2003 file that caused issue with stricter CSV parser.
+
 **Changes in version 5.3**
 
 - Changed NAACCR number of new survival time in days variables to avoid conflict with existing NCCR items.
