@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 5.5**
+
+- Stopped using Lauderdal and NAACCR name lists in NAPIIA algorithm; removed name first input field since it's not used anymore.
+
 **Changes in version 5.4**
 
 - Fixed extra column added to rural-continuum-2003 file that caused issue with stricter CSV parser.

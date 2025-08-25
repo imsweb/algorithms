@@ -3,21 +3,13 @@
  */
 package com.imsweb.algorithms.napiia;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.Assert;
 import org.junit.Test;
-
-import de.siegmar.fastcsv.reader.CsvReader;
-import de.siegmar.fastcsv.reader.NamedCsvRecord;
 
 public class NapiiaUtilsTest {
 
@@ -32,7 +24,6 @@ public class NapiiaUtilsTest {
     private static final String _PROP_SEX = "sex";
     private static final String _PROP_NAME_LAST = "nameLast";
     private static final String _PROP_NAME_BIRTH_SURNAME = "nameBirthSurname";
-    private static final String _PROP_NAME_FIRST = "nameFirst";
 
     @Test
     public void assertInfo() {
@@ -148,61 +139,15 @@ public class NapiiaUtilsTest {
         rec.clear();
         rec.put(_PROP_RACE1, "96");
         rec.put(_PROP_SPANISH_HISPANIC_ORIGIN, "7");
-        rec.put(_PROP_NAME_FIRST, "Amrit");
-        Assert.assertEquals("96", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
+        rec.put(_PROP_NAME_LAST, "ABDOOL");
         rec.put(_PROP_SEX, "1");
         Assert.assertEquals("15", computeNapiia(rec).getNapiiaValue());
-        Assert.assertEquals("15", computeNapiia(rec).getNapiiaValue());
-        Assert.assertEquals("15", computeNapiia(rec).getNapiiaValue());
-        Assert.assertEquals("15", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_SEX, "8");
+        rec.put(_PROP_NAME_LAST, "OTHER");
         Assert.assertEquals("96", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_NAME_LAST, "tuat");
-        Assert.assertEquals("10", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_NAME_LAST, "tezuka");
-        Assert.assertEquals("05", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_NAME_LAST, "tovez");
-        Assert.assertEquals("96", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_SEX, "2");
-        Assert.assertEquals("15", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_NAME_LAST, "tezuka");
-        Assert.assertEquals("05", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_NAME_BIRTH_SURNAME, "ffffff");
-        Assert.assertEquals("15", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
         // end maiden name check
-        rec.put(_PROP_NAME_BIRTH_SURNAME, "NGU");
-        Assert.assertEquals("15", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_NAME_BIRTH_SURNAME, "ut");
-        Assert.assertEquals("10", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_NAME_BIRTH_SURNAME, "fong");
-        Assert.assertEquals("04", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_NAME_BIRTH_SURNAME, "NANTHAVONG");
-        Assert.assertEquals("96", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
+        rec.put(_PROP_SEX, "2");
+        rec.put(_PROP_NAME_BIRTH_SURNAME, "ABABA");
+        Assert.assertEquals("06", computeNapiia(rec).getNapiiaValue());
         Assert.assertNull(computeNapiia(rec).getReasonForReview());
 
         //SINGLE RACE: race 96 or race 97 at race 1, the remaining empty, non-hispanic origin (0,7,9)
@@ -213,66 +158,9 @@ public class NapiiaUtilsTest {
         Assert.assertEquals("97", computeNapiia(rec).getNapiiaValue());
         Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
         Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_NAME_FIRST, "keahi");
-        Assert.assertEquals("97", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_SEX, "");
-        Assert.assertEquals("97", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_SEX, "1");
-        Assert.assertEquals("97", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
         rec.put(_PROP_SEX, "2");
-        Assert.assertEquals("97", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_NAME_BIRTH_SURNAME, "keahi");
-        Assert.assertEquals("07", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_SEX, "1");
-        Assert.assertEquals("97", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_SEX, "x");
-        Assert.assertEquals("97", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_NAME_LAST, "keahi");
-        Assert.assertEquals("07", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_SEX, "1");
-        Assert.assertEquals("07", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_SEX, "2");
-        Assert.assertEquals("07", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_NAME_BIRTH_SURNAME, "quinene");
+        rec.put(_PROP_NAME_BIRTH_SURNAME, "ACFALLE");
         Assert.assertEquals("22", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_SEX, "1");
-        Assert.assertEquals("07", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_NAME_LAST, "LAULU");
-        Assert.assertEquals("27", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_SEX, "2");
-        Assert.assertEquals("22", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_NAME_BIRTH_SURNAME, "zhuo");
-        Assert.assertEquals("27", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
 
         //SINGLE RACE: single race other than 96 0r 97 at race1
         rec.clear();
@@ -439,10 +327,6 @@ public class NapiiaUtilsTest {
         Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
         Assert.assertNull(computeNapiia(rec).getReasonForReview());
         rec.put(_PROP_SEX, "1");
-        rec.put(_PROP_NAME_FIRST, "ATOIGUE");
-        Assert.assertEquals("97", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
         rec.put(_PROP_NAME_BIRTH_SURNAME, "ATOIGUE");
         Assert.assertEquals("97", computeNapiia(rec).getNapiiaValue());
         Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
@@ -536,104 +420,8 @@ public class NapiiaUtilsTest {
         Assert.assertEquals("96", computeNapiia(rec).getNapiiaValue());
         Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
         Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_NAME_LAST, "RAJARAMAN");
-        Assert.assertEquals("15", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_NAME_FIRST, "edita");
-        rec.put(_PROP_SEX, "1");
-        Assert.assertEquals("15", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_SEX, "8");
-        Assert.assertEquals("15", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_NAME_FIRST, "lalita");
-        Assert.assertEquals("15", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_SEX, "1");
-        Assert.assertEquals("15", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_NAME_LAST, "felIpe");
+        rec.put(_PROP_NAME_LAST, "ABABA");
         Assert.assertEquals("06", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_SEX, "8");
-        Assert.assertEquals("06", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_SEX, "1");
-        rec.put(_PROP_NAME_LAST, "bbbbbb");
-        Assert.assertEquals("15", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_NAME_LAST, "Moyo");
-        Assert.assertEquals("15", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_NAME_FIRST, "Moyo");
-        Assert.assertEquals("96", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_SEX, "2");
-        Assert.assertEquals("05", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_NAME_BIRTH_SURNAME, "VALLABHANENI");
-        Assert.assertEquals("15", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_NAME_BIRTH_SURNAME, "KUEHU");
-        Assert.assertEquals("05", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_NAME_FIRST, "dddddd");
-        Assert.assertEquals("96", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_NAME_LAST, "leeWong");
-        Assert.assertEquals("04", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_NAME_FIRST, "dddddd");
-        Assert.assertEquals("04", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_NAME_FIRST, "we");
-        Assert.assertEquals("08", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_NAME_BIRTH_SURNAME, "kurachi");
-        Assert.assertEquals("05", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_NAME_BIRTH_SURNAME, "GGGG");
-        Assert.assertEquals("08", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_NAME_BIRTH_SURNAME, "Manyvong");
-        Assert.assertEquals("96", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_NAME_BIRTH_SURNAME, "chitre");
-        Assert.assertEquals("15", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_NAME_BIRTH_SURNAME, "Maluia");
-        Assert.assertEquals("08", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_NAME_FIRST, "jagir");
-        Assert.assertEquals("15", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_SEX, "1");
-        Assert.assertEquals("04", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
 
         //test all other multiple races
         rec.clear();
@@ -704,188 +492,6 @@ public class NapiiaUtilsTest {
         Assert.assertEquals("96", computeNapiia(rec).getNapiiaValue());
         Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
         Assert.assertNull(computeNapiia(rec).getReasonForReview());
-
-        //testing special name LOW and HIGH (the sas xpt file had something to do with this names)
-        rec.clear();
-        rec.put(_PROP_RACE1, "96");
-        rec.put(_PROP_RACE2, "01");
-        rec.put(_PROP_SPANISH_HISPANIC_ORIGIN, "0");
-        rec.put(_PROP_BIRTH_PLACE_COUNTRY, "USA");
-        rec.put(_PROP_SEX, "2");
-        rec.put(_PROP_NAME_FIRST, "VALERIE");
-        rec.put(_PROP_NAME_LAST, "LOW");
-        Assert.assertEquals("04", computeNapiia(rec).getNapiiaValue());
-        Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertNull(computeNapiia(rec).getReasonForReview());
-
-        //testing cases with 1.3.4 and other related to #215
-        rec.clear();
-        rec.put(_PROP_RACE1, "01");
-        rec.put(_PROP_RACE2, "96");
-        rec.put(_PROP_BIRTH_PLACE_COUNTRY, "MDV");
-        Assert.assertEquals("96", computeNapiia(rec).getNapiiaValue());
-        rec.put(_PROP_SEX, "2");
-        rec.put(_PROP_NAME_FIRST, "VALERIE");
-        rec.put(_PROP_NAME_LAST, "LOW");
-        Assert.assertEquals("96", computeNapiia(rec).getNapiiaValue());
-
-        rec.clear();
-        rec.put(_PROP_RACE1, "01");
-        rec.put(_PROP_RACE2, "96");
-        rec.put(_PROP_BIRTH_PLACE_COUNTRY, "GTM");
-        Assert.assertEquals("96", computeNapiia(rec).getNapiiaValue());
-        rec.put(_PROP_SEX, "2");
-        rec.put(_PROP_NAME_FIRST, "VALERIE");
-        rec.put(_PROP_NAME_LAST, "LOW");
-        Assert.assertEquals("96", computeNapiia(rec).getNapiiaValue());
-
-        rec.clear();
-        rec.put(_PROP_RACE1, "01");
-        rec.put(_PROP_RACE2, "96");
-        rec.put(_PROP_BIRTH_PLACE_COUNTRY, "PHL");
-        Assert.assertEquals("06", computeNapiia(rec).getNapiiaValue());
-        rec.put(_PROP_SEX, "2");
-        rec.put(_PROP_NAME_FIRST, "VALERIE");
-        rec.put(_PROP_NAME_LAST, "LOW");
-        Assert.assertEquals("06", computeNapiia(rec).getNapiiaValue());
-
-        rec.clear();
-        rec.put(_PROP_RACE1, "01");
-        rec.put(_PROP_RACE2, "96");
-        rec.put(_PROP_BIRTH_PLACE_COUNTRY, "XMC");
-        Assert.assertEquals("96", computeNapiia(rec).getNapiiaValue());
-        rec.put(_PROP_SEX, "2");
-        rec.put(_PROP_NAME_FIRST, "VALERIE");
-        rec.put(_PROP_NAME_LAST, "LOW");
-        Assert.assertEquals("04", computeNapiia(rec).getNapiiaValue());
-
-        rec.clear();
-        rec.put(_PROP_RACE1, "01");
-        rec.put(_PROP_RACE2, "96");
-        rec.put(_PROP_BIRTH_PLACE_COUNTRY, "ZZU");
-        Assert.assertEquals("96", computeNapiia(rec).getNapiiaValue());
-        rec.put(_PROP_SEX, "2");
-        rec.put(_PROP_NAME_FIRST, "VALERIE");
-        rec.put(_PROP_NAME_LAST, "LOW");
-        Assert.assertEquals("04", computeNapiia(rec).getNapiiaValue());
-
-        rec.clear();
-        rec.put(_PROP_RACE1, "01");
-        rec.put(_PROP_RACE2, "96");
-        Assert.assertEquals("96", computeNapiia(rec).getNapiiaValue());
-        rec.put(_PROP_SEX, "2");
-        rec.put(_PROP_NAME_FIRST, "VALERIE");
-        rec.put(_PROP_NAME_LAST, "LOW");
-        Assert.assertEquals("04", computeNapiia(rec).getNapiiaValue());
-
-        //test r1 = 96
-        rec.clear();
-        rec.put(_PROP_RACE1, "96");
-        rec.put(_PROP_BIRTH_PLACE_COUNTRY, "MDV");
-        Assert.assertEquals("96", computeNapiia(rec).getNapiiaValue());
-        rec.put(_PROP_SEX, "2");
-        rec.put(_PROP_NAME_FIRST, "VALERIE");
-        rec.put(_PROP_NAME_LAST, "LOW");
-        Assert.assertEquals("96", computeNapiia(rec).getNapiiaValue());
-
-        rec.clear();
-        rec.put(_PROP_RACE1, "96");
-        rec.put(_PROP_BIRTH_PLACE_COUNTRY, "GTM");
-        Assert.assertEquals("96", computeNapiia(rec).getNapiiaValue());
-        rec.put(_PROP_SEX, "2");
-        rec.put(_PROP_NAME_FIRST, "VALERIE");
-        rec.put(_PROP_NAME_LAST, "LOW");
-        Assert.assertEquals("96", computeNapiia(rec).getNapiiaValue());
-
-        rec.clear();
-        rec.put(_PROP_RACE1, "96");
-        rec.put(_PROP_BIRTH_PLACE_COUNTRY, "PHL");
-        Assert.assertEquals("06", computeNapiia(rec).getNapiiaValue());
-        rec.put(_PROP_SEX, "2");
-        rec.put(_PROP_NAME_FIRST, "VALERIE");
-        rec.put(_PROP_NAME_LAST, "LOW");
-        Assert.assertEquals("06", computeNapiia(rec).getNapiiaValue());
-
-        rec.clear();
-        rec.put(_PROP_RACE1, "96");
-        rec.put(_PROP_BIRTH_PLACE_COUNTRY, "XMC");
-        Assert.assertEquals("96", computeNapiia(rec).getNapiiaValue());
-        rec.put(_PROP_SEX, "2");
-        rec.put(_PROP_NAME_FIRST, "VALERIE");
-        rec.put(_PROP_NAME_LAST, "LOW");
-        Assert.assertEquals("04", computeNapiia(rec).getNapiiaValue());
-
-        rec.clear();
-        rec.put(_PROP_RACE1, "96");
-        rec.put(_PROP_BIRTH_PLACE_COUNTRY, "ZZU");
-        Assert.assertEquals("96", computeNapiia(rec).getNapiiaValue());
-        rec.put(_PROP_SEX, "2");
-        rec.put(_PROP_NAME_FIRST, "VALERIE");
-        rec.put(_PROP_NAME_LAST, "LOW");
-        Assert.assertEquals("04", computeNapiia(rec).getNapiiaValue());
-
-        rec.clear();
-        rec.put(_PROP_RACE1, "96");
-        Assert.assertEquals("96", computeNapiia(rec).getNapiiaValue());
-        rec.put(_PROP_SEX, "2");
-        rec.put(_PROP_NAME_FIRST, "VALERIE");
-        rec.put(_PROP_NAME_LAST, "LOW");
-        Assert.assertEquals("04", computeNapiia(rec).getNapiiaValue());
-
-        rec.clear();
-        rec.put(_PROP_RACE2, "96");
-        Assert.assertEquals("", computeNapiia(rec).getNapiiaValue());
-        rec.put(_PROP_BIRTH_PLACE_COUNTRY, "PHL");
-        Assert.assertEquals("", computeNapiia(rec).getNapiiaValue());
-        rec.put(_PROP_SEX, "2");
-        rec.put(_PROP_NAME_FIRST, "VALERIE");
-        rec.put(_PROP_NAME_LAST, "LOW");
-        Assert.assertEquals("", computeNapiia(rec).getNapiiaValue());
-
-        rec.clear();
-        rec.put(_PROP_RACE1, "33");
-        rec.put(_PROP_RACE2, "96");
-        Assert.assertEquals("33", computeNapiia(rec).getNapiiaValue());
-        Assert.assertTrue(computeNapiia(rec).getNeedsHumanReview());
-        Assert.assertEquals(NapiiaUtils.REASON_1_3_7, computeNapiia(rec).getReasonForReview());
-    }
-
-    @SuppressWarnings("ConstantConditions")
-    @Test
-    public void testCsvFile() throws IOException {
-        AtomicInteger count = new AtomicInteger();
-
-        try (CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(
-                new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("napiia/testNAPIIA.csv"), StandardCharsets.US_ASCII))) {
-            csvReader.stream().forEach(line -> {
-                count.getAndIncrement();
-
-                Map<String, String> rec = new HashMap<>();
-                rec.put(_PROP_RACE1, line.getField(0).trim().isEmpty() ? null : line.getField(0));
-                rec.put(_PROP_RACE2, line.getField(1).trim().isEmpty() ? null : line.getField(1));
-                rec.put(_PROP_RACE3, line.getField(2).trim().isEmpty() ? null : line.getField(2));
-                rec.put(_PROP_RACE4, line.getField(3).trim().isEmpty() ? null : line.getField(3));
-                rec.put(_PROP_RACE5, line.getField(4).trim().isEmpty() ? null : line.getField(4));
-                rec.put(_PROP_SPANISH_HISPANIC_ORIGIN, line.getField(5).trim().isEmpty() ? null : line.getField(5));
-                rec.put(_PROP_BIRTH_PLACE_COUNTRY, line.getField(6).trim().isEmpty() ? null : line.getField(6));
-                rec.put(_PROP_SEX, line.getField(7).trim().isEmpty() ? null : line.getField(7));
-                rec.put(_PROP_NAME_LAST, line.getField(8).trim().isEmpty() ? null : line.getField(8));
-                rec.put(_PROP_NAME_BIRTH_SURNAME, line.getField(9).trim().isEmpty() ? null : line.getField(9));
-                rec.put(_PROP_NAME_FIRST, line.getField(10).trim().isEmpty() ? null : line.getField(10));
-
-                String napiia = line.getField(11);
-                Boolean review = Boolean.valueOf(line.getField(12));
-                String reason = line.getField(13).trim().isEmpty() ? null : line.getField(13);
-                NapiiaResultsDto results = computeNapiia(rec);
-
-                if (!napiia.equals(results.getNapiiaValue()))
-                    Assert.fail("Unexpected napiia result in CSV data file for row #" + count + " " + Arrays.asList(line.getFields().toArray(new String[0])) + "  " + results.getNapiiaValue());
-                if (!review.equals(results.getNeedsHumanReview()))
-                    Assert.fail("Unexpected needs manual review result in CSV data file for row #" + count + " " + Arrays.asList(line.getFields().toArray(new String[0])) + "  " + results.getNeedsHumanReview());
-                if (results.getReasonForReview() == null ? reason != null : !results.getReasonForReview().equals(reason))
-                    Assert.fail("Unexpected reason for review result in CSV data file for row #" + count + " " + Arrays.asList(line.getFields().toArray(new String[0])) + "  " + results.getReasonForReview());
-            });
-        }
     }
 
     // so many calls in this test were using the deprecated method that it was easier to create a private method that keeps using the deprecated logic...
@@ -901,7 +507,6 @@ public class NapiiaUtilsTest {
         input.setSex(rec.get(_PROP_SEX));
         input.setNameLast(rec.get(_PROP_NAME_LAST));
         input.setNameBirthSurname(rec.get(_PROP_NAME_BIRTH_SURNAME));
-        input.setNameFirst(rec.get(_PROP_NAME_FIRST));
         return NapiiaUtils.computeNapiia(input);
     }
 
@@ -920,7 +525,6 @@ public class NapiiaUtilsTest {
             input.setSex(patient.get(0).get(_PROP_SEX));
             input.setNameLast(patient.get(0).get(_PROP_NAME_LAST));
             input.setNameBirthSurname(patient.get(0).get(_PROP_NAME_BIRTH_SURNAME));
-            input.setNameFirst(patient.get(0).get(_PROP_NAME_FIRST));
         }
         return NapiiaUtils.computeNapiia(input);
     }

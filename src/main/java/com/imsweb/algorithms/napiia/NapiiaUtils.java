@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.imsweb.algorithms.internal.Utils;
 
 /**
@@ -91,11 +93,6 @@ public final class NapiiaUtils {
     //lookups
     private static final Map<String, Short> _LKUP_NAPIIA_SURNAME_CENSUS_ASIAN = new HashMap<>();
     private static final Map<String, Short> _LKUP_NAPIIA_SURNAME_CENSUS_PI = new HashMap<>();
-    private static final Map<String, Short> _LKUP_NAPIIA_SURNAME_LAUD = new HashMap<>();
-    private static final Map<String, Short> _LKUP_NAPIIA_GIVEN_LAUD_MALE = new HashMap<>();
-    private static final Map<String, Short> _LKUP_NAPIIA_GIVEN_LAUD_FEMALE = new HashMap<>();
-    private static final Map<String, Short> _LKUP_NAPIIA_SURNAME_NAACCR = new HashMap<>();
-    private static final Map<String, Short> _LKUP_NAPIIA_GIVEN_NAACCR = new HashMap<>();
 
     // internal lock to control concurrency to the data
     private static final ReentrantReadWriteLock _LOCK = new ReentrantReadWriteLock();
@@ -340,34 +337,22 @@ public final class NapiiaUtils {
      */
     private static String applyMaleNameIdentification(NapiiaInputRecordDto input, boolean asianNOS, boolean pacificIslanderNOS) {
         Short result = null;
-        String lastname = input.getNameLast();
-        String firstname = input.getNameFirst();
 
-        if (lastname != null && !lastname.trim().isEmpty()) {
-            // M1 - Surname in Census surname
-            if (asianNOS)
-                result = codeName(lastname, _LKUP_NAPIIA_SURNAME_CENSUS_ASIAN);
-            if (pacificIslanderNOS && result == null)
-                result = codeName(lastname, _LKUP_NAPIIA_SURNAME_CENSUS_PI);
+        String lastname = StringUtils.stripToNull(input.getNameLast());
 
-            // M2 - Surname in Lauderdale surname
-            if (asianNOS && result == null)
-                result = codeName(truncateName(lastname), _LKUP_NAPIIA_SURNAME_LAUD);
+        // M1 - Surname in Census surname
+        if (asianNOS)
+            result = codeName(lastname, _LKUP_NAPIIA_SURNAME_CENSUS_ASIAN);
+        if (result == null && pacificIslanderNOS)
+            result = codeName(lastname, _LKUP_NAPIIA_SURNAME_CENSUS_PI);
 
-            // M3 - Surname in NAACCR surname
-            if (asianNOS && result == null)
-                result = codeName(lastname, _LKUP_NAPIIA_SURNAME_NAACCR);
-        }
+        // M2 - Surname in Lauderdale surname (FD 08/25/2025 - this step was removed as requested by NAACCR)
 
-        if (firstname != null && !firstname.trim().isEmpty()) {
-            // M4 - Given name in Lauderdale given name
-            if (asianNOS && result == null)
-                result = codeName(truncateName(firstname), _LKUP_NAPIIA_GIVEN_LAUD_MALE);
+        // M3 - Surname in NAACCR surname (FD 08/25/2025 - this step was removed as requested by NAACCR)
 
-            // M5 - Given name in NAACCR given name
-            if (asianNOS && result == null)
-                result = codeName(firstname, _LKUP_NAPIIA_GIVEN_NAACCR);
-        }
+        // M4 - Given name in Lauderdale given name (FD 08/25/2025 - this step was removed as requested by NAACCR)
+
+        // M5 - Given name in NAACCR given name (FD 08/25/2025 - this step was removed as requested by NAACCR)
 
         return result == null ? null : String.format("%02d", result);
     }
@@ -378,77 +363,51 @@ public final class NapiiaUtils {
      */
     private static String applyFemaleNameIdentification(NapiiaInputRecordDto input, boolean asianNOS, boolean pacificIslanderNOS) {
         Short result = null;
-        String lastname = input.getNameLast();
-        String firstname = input.getNameFirst();
-        String birthSurname = input.getNameBirthSurname();
 
-        if (birthSurname == null || birthSurname.trim().isEmpty()) {
-            if (lastname != null && !lastname.trim().isEmpty()) {
-                // F2a - Surname in Census surname
-                if (asianNOS)
-                    result = codeName(lastname, _LKUP_NAPIIA_SURNAME_CENSUS_ASIAN);
-                if (pacificIslanderNOS && result == null)
-                    result = codeName(lastname, _LKUP_NAPIIA_SURNAME_CENSUS_PI);
+        String lastname = StringUtils.stripToNull(input.getNameLast());
+        String birthSurname = StringUtils.stripToNull(input.getNameBirthSurname());
 
-                // F3a - Surname in Lauderdale surname
-                if (asianNOS && result == null)
-                    result = codeName(truncateName(lastname), _LKUP_NAPIIA_SURNAME_LAUD);
+        if (birthSurname == null) {
 
-                // F4a - Surname in NAACCR surname
-                if (asianNOS && result == null)
-                    result = codeName(lastname, _LKUP_NAPIIA_SURNAME_NAACCR);
-            }
+            // F2a - Surname in Census surname
+            if (asianNOS)
+                result = codeName(lastname, _LKUP_NAPIIA_SURNAME_CENSUS_ASIAN);
+            if (result == null && pacificIslanderNOS)
+                result = codeName(lastname, _LKUP_NAPIIA_SURNAME_CENSUS_PI);
 
-            if (firstname != null && !firstname.trim().isEmpty()) {
-                // F5a - Given name in Lauderdale given name
-                if (asianNOS && result == null)
-                    result = codeName(truncateName(firstname), _LKUP_NAPIIA_GIVEN_LAUD_FEMALE);
+            // F3a - Surname in Lauderdale surname (FD 08/25/2025 - this step was removed as requested by NAACCR)
 
-                // F6a - Given name in NAACCR given name
-                if (asianNOS && result == null)
-                    result = codeName(firstname, _LKUP_NAPIIA_GIVEN_NAACCR);
-            }
+            // F4a - Surname in NAACCR surname (FD 08/25/2025 - this step was removed as requested by NAACCR)
+
+            // F5a - Given name in Lauderdale given name (FD 08/25/2025 - this step was removed as requested by NAACCR)
+
+            // F6a - Given name in NAACCR given name (FD 08/25/2025 - this step was removed as requested by NAACCR)
         }
         else {
+
             // F2b - Maiden in Census surname
             if (asianNOS)
                 result = codeName(birthSurname, _LKUP_NAPIIA_SURNAME_CENSUS_ASIAN);
-            if (pacificIslanderNOS && result == null)
+            if (result == null && pacificIslanderNOS)
                 result = codeName(birthSurname, _LKUP_NAPIIA_SURNAME_CENSUS_PI);
 
-            // F3b - Maiden name in Lauderdale surname
-            if (asianNOS && result == null)
-                result = codeName(truncateName(birthSurname), _LKUP_NAPIIA_SURNAME_LAUD);
+            // F3b - Maiden name in Lauderdale surname (FD 08/25/2025 - this step was removed as requested by NAACCR)
 
-            // F4b - Maiden name in NAACCR surname
-            if (asianNOS && result == null)
-                result = codeName(birthSurname, _LKUP_NAPIIA_SURNAME_NAACCR);
+            // F4b - Maiden name in NAACCR surname (FD 08/25/2025 - this step was removed as requested by NAACCR)
 
-            if (firstname != null && !firstname.trim().isEmpty()) {
-                // F5b - Given name in Lauderdale given name
-                if (asianNOS && result == null)
-                    result = codeName(truncateName(firstname), _LKUP_NAPIIA_GIVEN_LAUD_FEMALE);
+            // F5b - Given name in Lauderdale given name (FD 08/25/2025 - this step was removed as requested by NAACCR)
 
-                // F6b - Given name in NAACCR given name
-                if (asianNOS && result == null)
-                    result = codeName(firstname, _LKUP_NAPIIA_GIVEN_NAACCR);
-            }
+            // F6b - Given name in NAACCR given name (FD 08/25/2025 - this step was removed as requested by NAACCR)
 
-            if (lastname != null && !lastname.trim().isEmpty()) {
-                // F7b - Surname in Census surname
-                if (asianNOS && result == null)
-                    result = codeName(lastname, _LKUP_NAPIIA_SURNAME_CENSUS_ASIAN);
-                if (pacificIslanderNOS && result == null)
-                    result = codeName(lastname, _LKUP_NAPIIA_SURNAME_CENSUS_PI);
+            // F7b - Surname in Census surname
+            if (result == null && asianNOS)
+                result = codeName(lastname, _LKUP_NAPIIA_SURNAME_CENSUS_ASIAN);
+            if (result == null && pacificIslanderNOS)
+                result = codeName(lastname, _LKUP_NAPIIA_SURNAME_CENSUS_PI);
 
-                // F8b - Surname in Lauderdale surname
-                if (asianNOS && result == null)
-                    result = codeName(truncateName(lastname), _LKUP_NAPIIA_SURNAME_LAUD);
+            // F8b - Surname in Lauderdale surname (FD 08/25/2025 - this step was removed as requested by NAACCR)
 
-                // F9b - Surname in NAACCR surname
-                if (asianNOS && result == null)
-                    result = codeName(lastname, _LKUP_NAPIIA_SURNAME_NAACCR);
-            }
+            // F9b - Surname in NAACCR surname (FD 08/25/2025 - this step was removed as requested by NAACCR)
         }
 
         return result == null ? null : String.format("%02d", result);
@@ -462,31 +421,17 @@ public final class NapiiaUtils {
         Short result = null;
         String lastname = input.getNameLast();
 
-        if (lastname != null && !lastname.trim().isEmpty()) {
-            // NMF1 - Surname in Census surname
-            if (asianNOS)
-                result = codeName(lastname, _LKUP_NAPIIA_SURNAME_CENSUS_ASIAN);
-            if (pacificIslanderNOS && result == null)
-                result = codeName(lastname, _LKUP_NAPIIA_SURNAME_CENSUS_PI);
+        // NMF1 - Surname in Census surname
+        if (asianNOS)
+            result = codeName(lastname, _LKUP_NAPIIA_SURNAME_CENSUS_ASIAN);
+        if (result == null && pacificIslanderNOS)
+            result = codeName(lastname, _LKUP_NAPIIA_SURNAME_CENSUS_PI);
 
-            // NMF2 - Surname in Lauderdale surname
-            if (asianNOS && result == null)
-                result = codeName(truncateName(lastname), _LKUP_NAPIIA_SURNAME_LAUD);
+        // NMF2 - Surname in Lauderdale surname (FD 08/25/2025 - this step was removed as requested by NAACCR)
 
-            // NMF3 - Surname in NAACCR surname
-            if (asianNOS && result == null)
-                result = codeName(lastname, _LKUP_NAPIIA_SURNAME_NAACCR);
-        }
+        // NMF3 - Surname in NAACCR surname (FD 08/25/2025 - this step was removed as requested by NAACCR)
 
         return result == null ? null : String.format("%02d", result);
-    }
-
-    //Returns the name truncated to 12 characters.    
-    static String truncateName(String name) {
-        if (name == null || name.length() <= 12)
-            return name;
-        else
-            return name.substring(0, 12);
     }
 
     static Short codeName(String name, Map<String, Short> lkup) {
@@ -501,11 +446,6 @@ public final class NapiiaUtils {
                 try {
                     readNameData("napiia-census-asian.csv", _LKUP_NAPIIA_SURNAME_CENSUS_ASIAN);
                     readNameData("napiia-census-pi.csv", _LKUP_NAPIIA_SURNAME_CENSUS_PI);
-                    readNameData("napiia-laud-surname.csv", _LKUP_NAPIIA_SURNAME_LAUD);
-                    readNameData("napiia-laud-given-male.csv", _LKUP_NAPIIA_GIVEN_LAUD_MALE);
-                    readNameData("napiia-laud-given-female.csv", _LKUP_NAPIIA_GIVEN_LAUD_FEMALE);
-                    readNameData("napiia-naaccr-surname.csv", _LKUP_NAPIIA_SURNAME_NAACCR);
-                    readNameData("napiia-naaccr-given.csv", _LKUP_NAPIIA_GIVEN_NAACCR);
                 }
                 finally {
                     _LOCK.writeLock().unlock();
