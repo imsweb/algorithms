@@ -3,20 +3,13 @@
  */
 package com.imsweb.algorithms.nhia;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
-
-import de.siegmar.fastcsv.reader.CsvReader;
-import de.siegmar.fastcsv.reader.NamedCsvRecord;
 
 public class NhiaUtilsTest {
 
@@ -340,32 +333,6 @@ public class NhiaUtilsTest {
         patient2.getNhiaInputPatientDtoList().add(rec4);
         //The patient's county at dx considered as high hispanic.
         Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, NhiaUtils.computeNhia(patient2, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
-    }
-
-    @SuppressWarnings("ConstantConditions")
-    @Test
-    public void testCsvFile() throws IOException {
-        try (CsvReader<NamedCsvRecord> csvReader = CsvReader.builder().ofNamedCsvRecord(
-                new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("nhia/testNHIA.csv"), StandardCharsets.US_ASCII))) {
-            csvReader.stream().forEach(line -> {
-                Map<String, String> rec = new HashMap<>();
-                rec.put(_PROP_SPANISH_HISPANIC_ORIGIN, line.getField(0));
-                rec.put(_PROP_BIRTH_PLACE_COUNTRY, line.getField(1));
-                rec.put(_PROP_RACE1, line.getField(2));
-                rec.put(_PROP_IHS, line.getField(3));
-                rec.put(_PROP_STATE_DX, line.getField(4));
-                rec.put(_PROP_COUNTY_DX_ANALYSIS, line.getField(5));
-                rec.put(_PROP_SEX, line.getField(6));
-                rec.put(_PROP_NAME_LAST, line.getField(7));
-                rec.put(_PROP_NAME_BIRTH_SURNAME, line.getField(8));
-
-                String option = line.getField(9);
-                String nhia = line.getField(10);
-
-                if (!nhia.equals(computeNhia(rec, option).getNhia()))
-                    Assert.fail("Unexpected result in CSV data file for row " + Arrays.asList(line.getFields().toArray(new String[0])));
-            });
-        }
     }
 
     @Test

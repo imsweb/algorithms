@@ -25,8 +25,6 @@ public class NapiiaInputRecordDto {
 
     private String _nameBirthSurname;
 
-    private String _nameFirst;
-
     public String getRace1() {
         return _race1;
     }
@@ -105,13 +103,5 @@ public class NapiiaInputRecordDto {
 
     public void setNameBirthSurname(String nameBirthSurname) {
         _nameBirthSurname = nameBirthSurname;
-    }
-
-    public String getNameFirst() {
-        return _nameFirst;
-    }
-
-    public void setNameFirst(String nameFirst) {
-        _nameFirst = nameFirst;
     }
 }
