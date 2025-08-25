@@ -24,7 +24,7 @@ import com.imsweb.algorithms.internal.Utils;
 public final class NapiiaUtils {
 
     public static final String ALG_NAME = "NAACCR Asian/Pacific Islander Identification Algorithm (NAPIIA)";
-    public static final String ALG_VERSION = "v17 released in April 2017";
+    public static final String ALG_VERSION = "released in August 2025";
 
     public static final String REASON_1_3_3 = "More than one race 04-32 and one race 96 or 97 (step 1.3.3).";
     public static final String REASON_1_3_5 = "One or more races 02-03 and one race 96 (step 1.3.5).";

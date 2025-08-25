@@ -25,7 +25,7 @@ import com.imsweb.algorithms.internal.Utils;
 public final class NhiaUtils {
 
     public static final String ALG_NAME = "NAACCR Hispanic Identification Algorithm (NHIA)";
-    public static final String ALG_VERSION = "v17 released in April 2017";
+    public static final String ALG_VERSION = "released in August 2024";
 
     public static final String NHIA_NON_HISPANIC = "0";
     public static final String NHIA_MEXICAN = "1";
