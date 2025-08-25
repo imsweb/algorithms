@@ -161,6 +161,24 @@ public class NapiiaUtilsTest {
         rec.put(_PROP_SEX, "2");
         rec.put(_PROP_NAME_BIRTH_SURNAME, "ACFALLE");
         Assert.assertEquals("22", computeNapiia(rec).getNapiiaValue());
+        rec.put(_PROP_NAME_BIRTH_SURNAME, null);
+        rec.put(_PROP_NAME_LAST, "ACFALLE");
+        Assert.assertEquals("22", computeNapiia(rec).getNapiiaValue());
+        rec.put(_PROP_NAME_BIRTH_SURNAME, "OTHER");
+        Assert.assertEquals("22", computeNapiia(rec).getNapiiaValue());
+        rec.put(_PROP_NAME_LAST, "OTHER");
+        Assert.assertEquals("97", computeNapiia(rec).getNapiiaValue());
+        rec.put(_PROP_RACE1, "96");
+        rec.put(_PROP_NAME_LAST, "ABABA");
+        rec.put(_PROP_NAME_BIRTH_SURNAME, null);
+        Assert.assertEquals("06", computeNapiia(rec).getNapiiaValue());
+        rec.put(_PROP_NAME_BIRTH_SURNAME, null);
+        rec.put(_PROP_NAME_LAST, "ABABA");
+        Assert.assertEquals("06", computeNapiia(rec).getNapiiaValue());
+        rec.put(_PROP_NAME_BIRTH_SURNAME, "OTHER");
+        Assert.assertEquals("06", computeNapiia(rec).getNapiiaValue());
+        rec.put(_PROP_NAME_LAST, "OTHER");
+        Assert.assertEquals("96", computeNapiia(rec).getNapiiaValue());
 
         //SINGLE RACE: single race other than 96 0r 97 at race1
         rec.clear();
@@ -202,6 +220,16 @@ public class NapiiaUtilsTest {
         Assert.assertEquals("07", computeNapiia(rec).getNapiiaValue());
         Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
         Assert.assertNull(computeNapiia(rec).getReasonForReview());
+
+        // step 2.2.1 - One race code is 01, one race code is 02-32; others are blank or 88
+        rec.clear();
+        rec.put(_PROP_RACE1, "01");
+        rec.put(_PROP_RACE2, "02");
+        Assert.assertEquals("02", computeNapiia(rec).getNapiiaValue());
+        rec.put(_PROP_RACE2, "04");
+        Assert.assertEquals("04", computeNapiia(rec).getNapiiaValue());
+        rec.put(_PROP_RACE3, "07");
+        Assert.assertEquals("07", computeNapiia(rec).getNapiiaValue());
 
         rec.clear();
         rec.put(_PROP_RACE4, "07");
@@ -492,6 +520,13 @@ public class NapiiaUtilsTest {
         Assert.assertEquals("96", computeNapiia(rec).getNapiiaValue());
         Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
         Assert.assertNull(computeNapiia(rec).getReasonForReview());
+    }
+
+    @Test
+    public void testComputeNullInput() {
+        NapiiaResultsDto result = NapiiaUtils.computeNapiia((NapiiaInputRecordDto)null);
+        Assert.assertNull(result.getNapiiaValue());
+
     }
 
     // so many calls in this test were using the deprecated method that it was easier to create a private method that keeps using the deprecated logic...
