@@ -2,6 +2,7 @@
 
 **Changes in version 5.5**
 
+- Fixed negative values returned by survival algorithm for newly added days variables when dealing with invalid data. 
 - Stopped using Lauderdal and NAACCR name lists in NAPIIA algorithm; removed name first input field since it's not used anymore.
 
 **Changes in version 5.4**
