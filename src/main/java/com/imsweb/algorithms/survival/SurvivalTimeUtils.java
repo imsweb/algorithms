@@ -448,16 +448,18 @@ public final class SurvivalTimeUtils {
                 rec._diffInDays = diffInDays;
             int diffInMonth = (int)Math.floor(diffInDays / _DAYS_IN_MONTH);
 
+            // safety net - do not allow negative values
+            if (diffInDays < 0) {
+                diffInDays = 99999; // unknown days
+                diffInMonth = 9999; // unknown months
+            }
+
             //if we use end point dates as DOLC for calculation, use that date to calculate the flags too.
             if (dolc._yearSafe == endYear && dolc._monthSafe == endMonth && dolc._daySafe == endDay) {
                 dolc._year = endYear;
                 dolc._month = endMonth;
                 dolc._day = endDay;
             }
-
-            // safety net - do not allow negative values
-            if (diffInMonth < 0)
-                diffInMonth = 9999; // unknown
 
             // evaluate the flag
             String flag;
