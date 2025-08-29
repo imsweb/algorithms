@@ -1,7 +1,5 @@
 package com.imsweb.algorithms.yostacspoverty;
 
-import java.time.LocalDate;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
@@ -19,7 +17,7 @@ import com.imsweb.algorithms.internal.YearData;
 public final class YostAcsPovertyUtils {
 
     public static final String ALG_NAME = "NAACCR Yost Quintile & Area-Based Social Measures Linkage Program";
-    public static final String ALG_VERSION = "version 2.0 released in August 2020";
+    public static final String ALG_VERSION = "version 3.0 released in September 2025";
 
     private YostAcsPovertyUtils() {
         // no instances of this class allowed!
@@ -38,12 +36,15 @@ public final class YostAcsPovertyUtils {
 
         String state = input.getAddressAtDxState();
         String county = input.getCountyAtDxAnalysis();
-        String census = input.getCensusTract2010();
+        String census2010 = input.getCensusTract2010();
+        String census2020 = input.getCensusTract2020();
         String year = input.getDateOfDiagnosis() == null ? null : StringUtils.rightPad(input.getDateOfDiagnosis(), 4).substring(0, 4).trim();
 
-        if (state != null && county != null && census != null && NumberUtils.isDigits(year)) {
+        if (state != null && county != null && (census2010 != null || census2020 != null) && NumberUtils.isDigits(year)) {
             int dxYear = Integer.parseInt(year);
-            if (dxYear >= 2005 && dxYear <= LocalDate.now().getYear()) {
+
+            // only attempt the lookup if the year falls within the contained data...
+            if (dxYear >= 2008 && dxYear <= 2021) {
 
                 if (!CountryData.getInstance().isYearBasedTractDataInitialized(state))
                     CountryData.getInstance().initializeYearBasedTractData(state);
@@ -52,7 +53,7 @@ public final class YostAcsPovertyUtils {
                 if (stateData != null) {
                     CountyData countyData = stateData.getCountyData(county);
                     if (countyData != null) {
-                        CensusData censusData = countyData.getCensusData(census);
+                        CensusData censusData = countyData.getCensusData(dxYear <= 2017 ? census2010 : census2020);
                         if (censusData != null) {
                             YearData yearData = censusData.getYearData(year);
                             if (yearData != null) {

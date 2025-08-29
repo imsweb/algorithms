@@ -120,6 +120,7 @@ public final class Algorithms {
     public static final String FIELD_DX_DATE = "dateOfDiagnosis";
     public static final String FIELD_CENSUS_2000 = "censusTract2000";
     public static final String FIELD_CENSUS_2010 = "censusTract2010";
+    public static final String FIELD_CENSUS_2020 = "censusTract2020";
     public static final String FIELD_CENSUS_POVERTY_INDICTR = "censusTrPovertyIndictr";
     public static final String FIELD_URIC_2000 = "uric2000";
     public static final String FIELD_URIC_2010 = "uric2010";
@@ -190,17 +191,21 @@ public final class Algorithms {
     public static final String FIELD_EPHT_2010_GEOID_5K = "epht2010GeoId5k";
     public static final String FIELD_EPHT_2010_GEOID_20K = "epht2010GeoId20k";
     public static final String FIELD_EPHT_2010_GEOID_50K = "epht2010GeoId50k";
-    public static final String FIELD_TRACT_EST_CONGRESS_DIST = "tractEstCongressDist";
+    public static final String FIELD_TRACT_EST_CONGRESS_DIST_2010 = "tractEstCongressDist2010";
+    public static final String FIELD_TRACT_EST_CONGRESS_DIST_2020 = "tractEstCongressDist2020";
     public static final String FIELD_CANCER_REPORTING_ZONE = "cancerReportingZone";
     public static final String FIELD_CANCER_REPORTING_ZONE_TRACT_REQ = "cancerReportingZoneTractReq";
     public static final String FIELD_PERSISTENT_POVERTY = "persistentPoverty";
     public static final String FIELD_SEER_BRAIN_CSN_RECODE_2020 = "seerBrainCnsRecode2020";
     public static final String FIELD_SEER_LYMPH_NEO_RECODE_2021 = "seerLymphNeoplasmRecode2021";
     public static final String FIELD_DERIVED_SUMMARY_GRADE_2018 = "derivedSummaryGrade2018";
-    public static final String FIELD_CDC_SVI_2018 = "cdcSVI2018";
+    public static final String FIELD_CDC_SVI_2010 = "cdcSVI2010";
+    public static final String FIELD_CDC_SVI_2020 = "cdcSVI2020";
     public static final String FIELD_DAYS_TO_TREATMENT = "daysToTreatment";
     public static final String FIELD_TUMOR_SIZE_OVER_TIME = "tumorSizeOverTime";
     public static final String FIELD_RACE1_RECODE = "race1Recode";
+    public static final String FIELD_URIC_2020 = "uric2020";
+    public static final String FIELD_RUCA_2020 = "ruca2020";
 
     // options
     public static final String PARAM_NHIA_OPTION = "nhiaOption";
@@ -264,10 +269,11 @@ public final class Algorithms {
             addField(AlgorithmField.of(FIELD_DX_DATE, 390, 8, "Date of Diagnosis", "DX Dt", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_CENSUS_2000, 130, 6, "Census Tract 2000", "Cens 2000", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_CENSUS_2010, 135, 6, "Census Tract 2010", "Cens 2010", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_CENSUS_2020, 125, 6, "Census Tract 2020", "Cens 2020", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_CENSUS_POVERTY_INDICTR, 145, 1, "Census Tr Poverty Indictr", "Cens Pov", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_IHS_PRCDA, 194, 1, "IHS Purchased/Referred Care Delivery Area", "IHS PRCDA", DATA_LEVEL_TUMOR));
-            addField(AlgorithmField.of(FIELD_UIHO, 284, 1, "Urban Indian Health Organization (UIHO)", "UIHO", DATA_LEVEL_TUMOR));
-            addField(AlgorithmField.of(FIELD_UIHO_CITY, 285, 2, "UIHO City", "UIHO City", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_UIHO, 284, 1, "Urban Indian Organization (UIO)", "UIO", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_UIHO_CITY, 285, 2, "Urban Indian Organization (UIO) Service Area", "UIO Serv Area", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_URIC_2000, 345, 1, "URIC 2000", "URIC 2000", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_URIC_2010, 346, 1, "URIC 2010", "URIC 2010", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_RUCA_2000, 339, 1, "RUCA 2000", "RUCA 2000", DATA_LEVEL_TUMOR));
@@ -331,19 +337,23 @@ public final class Algorithms {
             addField(AlgorithmField.of(FIELD_EPHT_2010_GEOID_5K, 9993, 11, "EPHT 2010 GEO ID 5K", "EPHT 5K", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_EPHT_2010_GEOID_20K, 9994, 11, "EPHT 2010 GEO ID 20K", "EPHT 20K", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_EPHT_2010_GEOID_50K, 9995, 11, "EPHT 2010 GEO ID 50K", "EPHT 50K", DATA_LEVEL_TUMOR, false));
-            addField(AlgorithmField.of(FIELD_TRACT_EST_CONGRESS_DIST, 9405, 4, "Tract-Estimated Congressional District", "Tract-Est Congress Dist", DATA_LEVEL_TUMOR, false));
+            addField(AlgorithmField.of(FIELD_TRACT_EST_CONGRESS_DIST_2010, 9405, 4, "Tract-Estimated Congressional District 2010", "Tract-Est Congress Dist 10", DATA_LEVEL_TUMOR, false));
+            addField(AlgorithmField.of(FIELD_TRACT_EST_CONGRESS_DIST_2020, 9406, 4, "Tract-Estimated Congressional District 2020", "Tract-Est Congress Dist 20", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_CANCER_REPORTING_ZONE, 9415, 10, "Cancer Reporting Zone", "Cancer Rpt Zone", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_CANCER_REPORTING_ZONE_TRACT_REQ, 9416, 1, "Census Tract Required for Cancer Reporting Zone", "Cancer Rpt Zone Tract Cert", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_PERSISTENT_POVERTY, 9625, 1, "Persistence Poverty", "Persist Pov", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_SEER_BRAIN_CSN_RECODE_2020, 9455, 2, "SEER Brain/CNS Recode 2020", "Brain/CNS", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_SEER_LYMPH_NEO_RECODE_2021, 9450, 2, "SEER Lymphoid Neoplasm Recode 2021", "Lymph 21", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_DERIVED_SUMMARY_GRADE_2018, 1975, 1, "Derived Summary Grade 2018", "Der Sum Grade 18", DATA_LEVEL_TUMOR, false));
-            addField(AlgorithmField.of(FIELD_CDC_SVI_2018, 9600, 5, "CDC/ATSDR Social Vulnerability Index 2018", "CDC/ATSDR SVI 2018", DATA_LEVEL_TUMOR, false));
+            addField(AlgorithmField.of(FIELD_CDC_SVI_2010, 9600, 5, "CDC/ATSDR Social Vulnerability Index 2010", "CDC/ATSDR SVI 10", DATA_LEVEL_TUMOR, false));
+            addField(AlgorithmField.of(FIELD_CDC_SVI_2020, 9601, 5, "CDC/ATSDR Social Vulnerability Index 2020", "CDC/ATSDR SVI 20", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_DAYS_TO_TREATMENT, 9750, 3, "Days from Diagnosis to Treatment", "Days to TX", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_TUMOR_SIZE_OVER_TIME, 9650, 3, "Tumor Size Over Time", "Tumor Size Over Time", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_RACE1_RECODE, 9460, 2, "Race 1 Recode", "Race 1 Recode", DATA_LEVEL_PATIENT, false));
             addField(AlgorithmField.of(FIELD_SURV_DAYS_ACTIVE_FUP, 9753, 5, "Surv-Days Active Followup", "Surv Days", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_SURV_DAYS_PRESUMED_ALIVE, 9754, 5, "Surv-Days Presumed Alive", "Surv Days PA", DATA_LEVEL_TUMOR, false));
+            addField(AlgorithmField.of(FIELD_URIC_2020, 347, 1, "URIC 2020", "URIC 2020", DATA_LEVEL_TUMOR, false));
+            addField(AlgorithmField.of(FIELD_RUCA_2020, 342, 1, "RUCA 2020", "RUCA 2020", DATA_LEVEL_TUMOR, false));
 
             // algorithms
             addAlgorithm(new NhiaAlgorithm());

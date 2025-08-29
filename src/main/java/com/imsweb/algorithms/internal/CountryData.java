@@ -54,11 +54,13 @@ public final class CountryData {
         _TRACT_FIELDS.put("stateAbbreviation", 2);
         _TRACT_FIELDS.put("countyFips", 3);
         _TRACT_FIELDS.put("censusTract", 6);
-        _TRACT_FIELDS.put("yearData", 370);
+        _TRACT_FIELDS.put("yearData", 518); // repeated data structure defined in "_TRACT_YEAR_BASED_FIELDS"; each year takes 37 characters, there are 14 years -> 518
         _TRACT_FIELDS.put("ruca2000", 1);
         _TRACT_FIELDS.put("ruca2010", 1);
+        _TRACT_FIELDS.put("ruca2020", 1);
         _TRACT_FIELDS.put("uric2000", 1);
         _TRACT_FIELDS.put("uric2010", 1);
+        _TRACT_FIELDS.put("uric2020", 1);
         _TRACT_FIELDS.put("cancerReportingZone", 10);
         _TRACT_FIELDS.put("cancerReportingZoneTractCert", 1);
         _TRACT_FIELDS.put("naaccrPovertyIndicator9504", 1);
@@ -66,8 +68,10 @@ public final class CountryData {
         _TRACT_FIELDS.put("npcrEphtSubcounty5k", 11);
         _TRACT_FIELDS.put("npcrEphtSubcounty20k", 11);
         _TRACT_FIELDS.put("npcrEphtSubcounty50k", 11);
-        _TRACT_FIELDS.put("sviOverallStateBased", 5);
-        _TRACT_FIELDS.put("congressionalDistrict", 4);
+        _TRACT_FIELDS.put("sviOverallStateBased2018", 5);
+        _TRACT_FIELDS.put("sviOverallStateBased2022", 5);
+        _TRACT_FIELDS.put("congressionalDistrict118", 4);
+        _TRACT_FIELDS.put("congressionalDistrict119", 4);
         _TRACT_FIELDS.put("persistentPoverty", 1);
     }
 
@@ -94,7 +98,7 @@ public final class CountryData {
     }
 
     public static final int TRACT_YEAR_MIN_VAL = 2008;
-    public static final int TRACT_YEAR_MAX_VAL = 2017;
+    public static final int TRACT_YEAR_MAX_VAL = 2021;
 
     public static CensusData getCensusData(StateCountyTractInputDto input, CensusTract censusTract) {
         if (!CountryData.getInstance().isTractDataInitialized(input.getAddressAtDxState()))
@@ -108,6 +112,8 @@ public final class CountryData {
                     return countyData.getCensusData(input.getCensusTract2000());
                 else if (censusTract == CensusTract.CENSUS_2010)
                     return countyData.getCensusData(input.getCensusTract2010());
+                else if (censusTract == CensusTract.CENSUS_2020)
+                    return countyData.getCensusData(input.getCensusTract2020());
                 else
                     throw new IllegalArgumentException("Unsupported census tract: " + censusTract);
             }
@@ -205,10 +211,12 @@ public final class CountryData {
                                 // RUCA
                                 censusData.setCommutingArea2000(Objects.toString(StringUtils.trimToNull(values.get("ruca2000")), "9"));
                                 censusData.setCommutingArea2010(Objects.toString(StringUtils.trimToNull(values.get("ruca2010")), "9"));
+                                censusData.setCommutingArea2020(Objects.toString(StringUtils.trimToNull(values.get("ruca2020")), "9"));
 
                                 // URIC
                                 censusData.setIndicatorCode2000(Objects.toString(StringUtils.trimToNull(values.get("uric2000")), "9"));
                                 censusData.setIndicatorCode2010(Objects.toString(StringUtils.trimToNull(values.get("uric2010")), "9"));
+                                censusData.setIndicatorCode2020(Objects.toString(StringUtils.trimToNull(values.get("uric2020")), "9"));
 
                                 // NPCR EPHT SubCounty
                                 censusData.setEpht2010GeoId5k(StringUtils.leftPad(StringUtils.trimToNull(values.get("npcrEphtSubcounty5k")), 11, '0'));
@@ -220,10 +228,12 @@ public final class CountryData {
                                 censusData.setCancerReportingZoneTractCert(StringUtils.trimToNull(values.get("cancerReportingZoneTractCert")));
 
                                 // Social Vulnerability Index (SVI)
-                                censusData.setSviOverallStateBased(StringUtils.trimToNull(values.get("sviOverallStateBased")));
+                                censusData.setSviOverallStateBased2018(StringUtils.trimToNull(values.get("sviOverallStateBased2018")));
+                                censusData.setSviOverallStateBased2022(StringUtils.trimToNull(values.get("sviOverallStateBased2022")));
 
                                 // Congressional District
-                                censusData.setCongressionalDistrict(StringUtils.trimToNull(values.get("congressionalDistrict")));
+                                censusData.setCongressionalDistrict118(StringUtils.trimToNull(values.get("congressionalDistrict118")));
+                                censusData.setCongressionalDistrict119(StringUtils.trimToNull(values.get("congressionalDistrict119")));
 
                                 // persistence poverty
                                 censusData.setPersistentPoverty(StringUtils.trimToNull(values.get("persistentPoverty")));

@@ -13,7 +13,7 @@ import com.imsweb.algorithms.StateCountyTractInputDto.CensusTract;
 public final class RuralUrbanUtils {
 
     public static final String ALG_NAME = "NAACCR Rural Urban Program";
-    public static final String ALG_VERSION = "released in August 2019";
+    public static final String ALG_VERSION = "released in September 2025";
 
     // unknown values for each code
     public static final String URBAN_RURAL_INDICATOR_CODE_UNKNOWN = "C";
@@ -37,6 +37,7 @@ public final class RuralUrbanUtils {
 
     public static final String TRACT_CATEGORY_2000 = "2000";
     public static final String TRACT_CATEGORY_2010 = "2010";
+    public static final String TRACT_CATEGORY_2020 = "2020";
 
     // data provider
     private static final RuralUrbanDataProvider _PROVIDER = new RuralUrbanDataProvider();
@@ -54,6 +55,7 @@ public final class RuralUrbanUtils {
      * <li>countyAtDxAnalysis (#89)</li>
      * <li>censusTract2000 (#130)</li>
      * <li>censusTract2010 (#135)</li>
+     * <li>censusTract2020 (#125)</li>
      * </ul>
      * All those properties are defined as constants in this class.
      * <br/><br/>
@@ -104,6 +106,19 @@ public final class RuralUrbanUtils {
         if (result.getUrbanRuralIndicatorCode2010() == null)
             result.setUrbanRuralIndicatorCode2010(URBAN_RURAL_INDICATOR_CODE_UNKNOWN);
 
+        // 2020
+        if (input.hasInvalidStateCountyOrCensusTract(CensusTract.CENSUS_2020))
+            result.setUrbanRuralIndicatorCode2020("A");
+        else if (input.hasUnknownStateCountyOrCensusTract(CensusTract.CENSUS_2020))
+            result.setUrbanRuralIndicatorCode2020("D");
+        else if (input.countyIsNotReported())
+            result.setUrbanRuralIndicatorCode2020("B");
+        else
+            result.setUrbanRuralIndicatorCode2020(_PROVIDER.getUrbanRuralIndicatorCode(TRACT_CATEGORY_2020, input.getAddressAtDxState(), input.getCountyAtDxAnalysis(), input.getCensusTract2020()));
+
+        if (result.getUrbanRuralIndicatorCode2020() == null)
+            result.setUrbanRuralIndicatorCode2020(URBAN_RURAL_INDICATOR_CODE_UNKNOWN);
+
         return result;
     }
 
@@ -116,6 +131,7 @@ public final class RuralUrbanUtils {
      * <li>countyAtDxAnalysis (#89)</li>
      * <li>censusTract2000 (#130)</li>
      * <li>censusTract2010 (#135)</li>
+     * <li>censusTract2020 (#125)</li>
      * </ul>
      * All those properties are defined as constants in this class.
      * <br/><br/>
@@ -164,6 +180,19 @@ public final class RuralUrbanUtils {
 
         if (result.getRuralUrbanCommutingArea2010() == null)
             result.setRuralUrbanCommutingArea2010(RURAL_URBAN_COMMUTING_AREA_UNKNOWN);
+
+        // 2020
+        if (input.hasInvalidStateCountyOrCensusTract(CensusTract.CENSUS_2020))
+            result.setRuralUrbanCommutingArea2020("A");
+        else if (input.hasUnknownStateCountyOrCensusTract(CensusTract.CENSUS_2020))
+            result.setRuralUrbanCommutingArea2020("D");
+        else if (input.countyIsNotReported())
+            result.setRuralUrbanCommutingArea2020("B");
+        else
+            result.setRuralUrbanCommutingArea2020(_PROVIDER.getRuralUrbanCommutingArea(TRACT_CATEGORY_2020, input.getAddressAtDxState(), input.getCountyAtDxAnalysis(), input.getCensusTract2020()));
+
+        if (result.getRuralUrbanCommutingArea2020() == null)
+            result.setRuralUrbanCommutingArea2020(RURAL_URBAN_COMMUTING_AREA_UNKNOWN);
 
         return result;
     }

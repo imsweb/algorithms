@@ -20,6 +20,7 @@ public class RuralUrbanUtilsTest {
     private static final String _PROP_COUNTY_DX_ANALYSIS = "countyAtDxAnalysis";
     private static final String _PROP_CENSUS_TRACT_2000 = "censusTract2000";
     private static final String _PROP_CENSUS_TRACT_2010 = "censusTract2010";
+    private static final String _PROP_CENSUS_TRACT_2020 = "censusTract2020";
 
     @Test
     public void assertInfo() {
@@ -70,12 +71,14 @@ public class RuralUrbanUtilsTest {
                 for (String tract : tracts) {
                     rec.put(_PROP_CENSUS_TRACT_2000, tract);
                     rec.put(_PROP_CENSUS_TRACT_2010, tract);
+                    rec.put(_PROP_CENSUS_TRACT_2020, tract);
 
                     if ("--".equals(state) || "---".equals(county) || "000001".equals(tract)) {
                         Assert.assertEquals("A", computeUrbanRuralIndicatorCode(rec).getUrbanRuralIndicatorCode2000());
                         Assert.assertEquals("A", computeUrbanRuralIndicatorCode(rec).getUrbanRuralIndicatorCode2010());
                         Assert.assertEquals("A", computeRuralUrbanCommutingArea(rec).getRuralUrbanCommutingArea2000());
                         Assert.assertEquals("A", computeRuralUrbanCommutingArea(rec).getRuralUrbanCommutingArea2010());
+                        Assert.assertEquals("A", computeRuralUrbanCommutingArea(rec).getRuralUrbanCommutingArea2020());
                     }
                     else if (state == null || state.isEmpty() || state.equals("ZZ") || county == null || county.isEmpty() || county.equals("999") || tract == null || tract.isEmpty() || tract.equals(
                             "999999")) {
@@ -83,18 +86,21 @@ public class RuralUrbanUtilsTest {
                         Assert.assertEquals("D", computeUrbanRuralIndicatorCode(rec).getUrbanRuralIndicatorCode2010());
                         Assert.assertEquals("D", computeRuralUrbanCommutingArea(rec).getRuralUrbanCommutingArea2000());
                         Assert.assertEquals("D", computeRuralUrbanCommutingArea(rec).getRuralUrbanCommutingArea2010());
+                        Assert.assertEquals("D", computeRuralUrbanCommutingArea(rec).getRuralUrbanCommutingArea2020());
                     }
                     else if (county.equals("000")) {
                         Assert.assertEquals("B", computeUrbanRuralIndicatorCode(rec).getUrbanRuralIndicatorCode2000());
                         Assert.assertEquals("B", computeUrbanRuralIndicatorCode(rec).getUrbanRuralIndicatorCode2010());
                         Assert.assertEquals("B", computeRuralUrbanCommutingArea(rec).getRuralUrbanCommutingArea2000());
                         Assert.assertEquals("B", computeRuralUrbanCommutingArea(rec).getRuralUrbanCommutingArea2010());
+                        Assert.assertEquals("B", computeRuralUrbanCommutingArea(rec).getRuralUrbanCommutingArea2020());
                     }
                     else if (state.equals("MP") || county.equals("777") || tract.equals("123456")) {
                         Assert.assertEquals("C", computeUrbanRuralIndicatorCode(rec).getUrbanRuralIndicatorCode2000());
                         Assert.assertEquals("C", computeUrbanRuralIndicatorCode(rec).getUrbanRuralIndicatorCode2010());
                         Assert.assertEquals("C", computeRuralUrbanCommutingArea(rec).getRuralUrbanCommutingArea2000());
                         Assert.assertEquals("C", computeRuralUrbanCommutingArea(rec).getRuralUrbanCommutingArea2010());
+                        Assert.assertEquals("C", computeRuralUrbanCommutingArea(rec).getRuralUrbanCommutingArea2020());
                     }
                     else {
                         rec.put(_PROP_COUNTY_DX_ANALYSIS, "001");
@@ -107,11 +113,15 @@ public class RuralUrbanUtilsTest {
                         rec.put(_PROP_STATE_DX, "WY");
                         rec.put(_PROP_COUNTY_DX_ANALYSIS, "041");
                         rec.put(_PROP_CENSUS_TRACT_2010, "975200");
+                        rec.put(_PROP_CENSUS_TRACT_2020, "975200");
                         Assert.assertEquals("2", computeRuralUrbanCommutingArea(rec).getRuralUrbanCommutingArea2010());
+                        Assert.assertEquals("9", computeRuralUrbanCommutingArea(rec).getRuralUrbanCommutingArea2020());
                         rec.put(_PROP_STATE_DX, "WA");
                         rec.put(_PROP_COUNTY_DX_ANALYSIS, "067");
                         rec.put(_PROP_CENSUS_TRACT_2010, "010200");
+                        rec.put(_PROP_CENSUS_TRACT_2020, "010200");
                         Assert.assertEquals("1", computeRuralUrbanCommutingArea(rec).getRuralUrbanCommutingArea2010());
+                        Assert.assertEquals("1", computeRuralUrbanCommutingArea(rec).getRuralUrbanCommutingArea2020());
                     }
                 }
             }
@@ -191,6 +201,7 @@ public class RuralUrbanUtilsTest {
         input.setCountyAtDxAnalysis(rec.get(_PROP_COUNTY_DX_ANALYSIS));
         input.setCensusTract2000(rec.get(_PROP_CENSUS_TRACT_2000));
         input.setCensusTract2010(rec.get(_PROP_CENSUS_TRACT_2010));
+        input.setCensusTract2020(rec.get(_PROP_CENSUS_TRACT_2020));
         return RuralUrbanUtils.computeUrbanRuralIndicatorCode(input);
     }
 
@@ -201,6 +212,7 @@ public class RuralUrbanUtilsTest {
         input.setCountyAtDxAnalysis(rec.get(_PROP_COUNTY_DX_ANALYSIS));
         input.setCensusTract2000(rec.get(_PROP_CENSUS_TRACT_2000));
         input.setCensusTract2010(rec.get(_PROP_CENSUS_TRACT_2010));
+        input.setCensusTract2020(rec.get(_PROP_CENSUS_TRACT_2020));
         return RuralUrbanUtils.computeRuralUrbanCommutingArea(input);
     }
 

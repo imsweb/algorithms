@@ -7,7 +7,7 @@ public class CancerReportingZoneOutputDto {
 
     private String _cancerReportingZone;
 
-    private String _cancerReportingZoneTractCert;
+    private String _cancerReportingZoneTractReq;
 
     public String getCancerReportingZone() {
         return _cancerReportingZone;
@@ -17,11 +17,11 @@ public class CancerReportingZoneOutputDto {
         _cancerReportingZone = cancerReportingZone;
     }
 
-    public String getCancerReportingZoneTractCert() {
-        return _cancerReportingZoneTractCert;
+    public String getCancerReportingZoneTractReq() {
+        return _cancerReportingZoneTractReq;
     }
 
-    public void setCancerReportingZoneTractCert(String cancerReportingZoneTractCert) {
-        _cancerReportingZoneTractCert = cancerReportingZoneTractCert;
+    public void setCancerReportingZoneTractReq(String cancerReportingZoneTractReq) {
+        _cancerReportingZoneTractReq = cancerReportingZoneTractReq;
     }
 }

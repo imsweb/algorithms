@@ -18,6 +18,7 @@ import com.imsweb.algorithms.internal.Utils;
 
 import static com.imsweb.algorithms.Algorithms.FIELD_CENSUS_2000;
 import static com.imsweb.algorithms.Algorithms.FIELD_CENSUS_2010;
+import static com.imsweb.algorithms.Algorithms.FIELD_CENSUS_2020;
 import static com.imsweb.algorithms.Algorithms.FIELD_CENSUS_POVERTY_INDICTR;
 import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS;
 import static com.imsweb.algorithms.Algorithms.FIELD_DX_DATE;
@@ -39,6 +40,7 @@ public class CensusTractPovertyIndicatorAlgorithm extends AbstractAlgorithm {
         _inputFields.add(Algorithms.getField(FIELD_DX_DATE));
         _inputFields.add(Algorithms.getField(FIELD_CENSUS_2000));
         _inputFields.add(Algorithms.getField(FIELD_CENSUS_2010));
+        _inputFields.add(Algorithms.getField(FIELD_CENSUS_2020));
 
         _outputFields.add(Algorithms.getField(FIELD_CENSUS_POVERTY_INDICTR));
 
@@ -62,6 +64,7 @@ public class CensusTractPovertyIndicatorAlgorithm extends AbstractAlgorithm {
             inputDto.setDateOfDiagnosisYear(Utils.extractYear((String)inputTumor.get(FIELD_DX_DATE)));
             inputDto.setCensusTract2000((String)inputTumor.get(FIELD_CENSUS_2000));
             inputDto.setCensusTract2010((String)inputTumor.get(FIELD_CENSUS_2010));
+            inputDto.setCensusTract2020((String)inputTumor.get(FIELD_CENSUS_2020));
 
             CensusTractPovertyIndicatorOutputDto outputDto = CensusTractPovertyIndicatorUtils.computePovertyIndicator(inputDto, includeRecentYears);
             outputTumors.add(Collections.singletonMap(FIELD_CENSUS_POVERTY_INDICTR, outputDto.getCensusTractPovertyIndicator()));

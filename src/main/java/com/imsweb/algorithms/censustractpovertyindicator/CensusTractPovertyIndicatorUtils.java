@@ -21,7 +21,7 @@ import com.imsweb.algorithms.yostacspoverty.YostAcsPovertyUtils;
 public final class CensusTractPovertyIndicatorUtils {
 
     public static final String ALG_NAME = "NAACCR Poverty Linkage Program";
-    public static final String ALG_VERSION = "version 10.0 released in August 2020";
+    public static final String ALG_VERSION = "version 11.0 released in September 2020";
 
     //Unknown value for census tract poverty indicator
     public static final String POVERTY_INDICATOR_UNKNOWN = "9";
@@ -40,6 +40,7 @@ public final class CensusTractPovertyIndicatorUtils {
      * <li>_dateOfDiagnosisYear</li>
      * <li>_censusTract2000</li>
      * <li>_censusTract2010</li>
+     * <li>_censusTract2020</li>
      * </ul>
      * All those properties are defined as constants in this class.
      * <br/><br/>
@@ -68,6 +69,7 @@ public final class CensusTractPovertyIndicatorUtils {
      * <li>_dateOfDiagnosisYear</li>
      * <li>_censusTract2000</li>
      * <li>_censusTract2010</li>
+     * <li>_censusTract2020</li>
      * </ul>
      * All those properties are defined as constants in this class.
      * <br/><br/>
@@ -98,12 +100,13 @@ public final class CensusTractPovertyIndicatorUtils {
             if (censusData != null)
                 result.setCensusTractPovertyIndicator(year <= 2004 ? censusData.getNaaccrPovertyIndicator9504() : censusData.getNaaccrPovertyIndicator0507());
         }
-        else if (year >= 2008 && (year <= 2017 || (includeRecentYears && year <= LocalDate.now().getYear()))) {
+        else if (year >= 2008 && (year <= 2021 || (includeRecentYears && year <= LocalDate.now().getYear()))) {
             YostAcsPovertyInputDto yostAcsPovertyInput = new YostAcsPovertyInputDto();
             yostAcsPovertyInput.setAddressAtDxState(input.getAddressAtDxState());
             yostAcsPovertyInput.setCountyAtDxAnalysis(input.getCountyAtDxAnalysis());
             yostAcsPovertyInput.setCensusTract2010(input.getCensusTract2010());
-            yostAcsPovertyInput.setDateOfDiagnosis(String.valueOf(Math.min(year, 2017))); // we have to use 2017 (last year of data available) for all "recent years"...
+            yostAcsPovertyInput.setCensusTract2020(input.getCensusTract2020());
+            yostAcsPovertyInput.setDateOfDiagnosis(String.valueOf(Math.min(year, 2021))); // we have to use 2017 (last year of data available) for all "recent years"...
             result.setCensusTractPovertyIndicator(deriveValueFromPercentage(YostAcsPovertyUtils.computeYostAcsPovertyData(yostAcsPovertyInput).getAcsPctPovAllRaces()));
         }
 

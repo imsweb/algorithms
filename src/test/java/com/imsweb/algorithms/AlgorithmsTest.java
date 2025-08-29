@@ -57,7 +57,7 @@ public class AlgorithmsTest {
 
     @Test
     public void testFields() throws IOException {
-        NaaccrDictionary dictionary = NaaccrXmlDictionaryUtils.getMergedDictionaries(NaaccrFormat.NAACCR_VERSION_230);
+        NaaccrDictionary dictionary = NaaccrXmlDictionaryUtils.getMergedDictionaries(NaaccrFormat.NAACCR_VERSION_250);
 
         Set<String> ids = new HashSet<>();
         Set<Integer> nums = new HashSet<>();

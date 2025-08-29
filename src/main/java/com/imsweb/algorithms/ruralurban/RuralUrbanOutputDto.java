@@ -7,9 +7,11 @@ public class RuralUrbanOutputDto {
 
     private String _urbanRuralIndicatorCode2000;
     private String _urbanRuralIndicatorCode2010;
+    private String _urbanRuralIndicatorCode2020;
 
     private String _ruralUrbanCommutingArea2000;
     private String _ruralUrbanCommutingArea2010;
+    private String _ruralUrbanCommutingArea2020;
 
     private String _ruralUrbanContinuum1993;
     private String _ruralUrbanContinuum2003;
@@ -51,12 +53,28 @@ public class RuralUrbanOutputDto {
         _urbanRuralIndicatorCode2010 = urbanRuralIndicatorCode2010;
     }
 
+    public String getUrbanRuralIndicatorCode2020() {
+        return _urbanRuralIndicatorCode2020;
+    }
+
+    public void setUrbanRuralIndicatorCode2020(String urbanRuralIndicatorCode2020) {
+        _urbanRuralIndicatorCode2020 = urbanRuralIndicatorCode2020;
+    }
+
     public void setRuralUrbanCommutingArea2000(String ruralUrbanCommutingArea2000) {
         _ruralUrbanCommutingArea2000 = ruralUrbanCommutingArea2000;
     }
 
     public void setRuralUrbanCommutingArea2010(String ruralUrbanCommutingArea2010) {
         _ruralUrbanCommutingArea2010 = ruralUrbanCommutingArea2010;
+    }
+
+    public String getRuralUrbanCommutingArea2020() {
+        return _ruralUrbanCommutingArea2020;
+    }
+
+    public void setRuralUrbanCommutingArea2020(String ruralUrbanCommutingArea2020) {
+        _ruralUrbanCommutingArea2020 = ruralUrbanCommutingArea2020;
     }
 
     public void setRuralUrbanContinuum1993(String ruralUrbanContinuum1993) {
