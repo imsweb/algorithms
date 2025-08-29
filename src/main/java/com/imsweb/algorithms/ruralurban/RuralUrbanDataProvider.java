@@ -51,7 +51,7 @@ public class RuralUrbanDataProvider {
         if (censusData == null)
             return URBAN_RURAL_INDICATOR_CODE_UNKNOWN;
 
-        String result = null;
+        String result;
         switch (tractCategory) {
             case RuralUrbanUtils.TRACT_CATEGORY_2000:
                 result = censusData.getIndicatorCode2000();
@@ -62,6 +62,8 @@ public class RuralUrbanDataProvider {
             case RuralUrbanUtils.TRACT_CATEGORY_2020:
                 result = censusData.getIndicatorCode2020();
                 break;
+            default:
+                throw new IllegalStateException("Unknown tractCategory: " + tractCategory);
         }
 
         return result == null ? URBAN_RURAL_INDICATOR_CODE_UNKNOWN : result;
@@ -85,7 +87,7 @@ public class RuralUrbanDataProvider {
         if (censusData == null)
             return RURAL_URBAN_COMMUTING_AREA_UNKNOWN;
 
-        String result = null;
+        String result;
         switch (tractCategory) {
             case RuralUrbanUtils.TRACT_CATEGORY_2000:
                 result = censusData.getCommutingArea2000();
@@ -96,6 +98,8 @@ public class RuralUrbanDataProvider {
             case RuralUrbanUtils.TRACT_CATEGORY_2020:
                 result = censusData.getCommutingArea2020();
                 break;
+            default:
+                throw new IllegalStateException("Unknown tractCategory: " + tractCategory);
         }
 
         return result == null ? RURAL_URBAN_COMMUTING_AREA_UNKNOWN : result;
