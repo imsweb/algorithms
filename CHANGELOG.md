@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 5.6**
+
+- Added new "Breast Cancer Category" algorithm.
+
 **Changes in version 5.5**
 
 - Fixed negative values returned by survival algorithm for newly added days variables when dealing with invalid data. 
