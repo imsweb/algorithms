@@ -15,6 +15,7 @@ import com.imsweb.algorithms.ayasiterecode.AyaSiteRecodeAlgorithm2008;
 import com.imsweb.algorithms.ayasiterecode.AyaSiteRecodeAlgorithm2020;
 import com.imsweb.algorithms.behavrecode.SeerBehaviorRecodeAlgorithm;
 import com.imsweb.algorithms.braincnsrecode.BrainCnsRecodeAlgorithm2020;
+import com.imsweb.algorithms.breastcategory.BreastCategoryAlgorithm;
 import com.imsweb.algorithms.cancerreportingzone.CancerReportingZoneAlgorithm;
 import com.imsweb.algorithms.causespecific.DeathClassificationAlgorithm;
 import com.imsweb.algorithms.censustractpovertyindicator.CensusTractPovertyIndicatorAlgorithm;
@@ -83,6 +84,7 @@ public final class Algorithms {
     public static final String ALG_DAYS_TO_TREATMENT = "days-to-treatment";
     public static final String ALG_TUMOR_SIZE_OVER_TIME = "tumor-size-over-time";
     public static final String ALG_RACE_1_RECODE = "race-1-recode";
+    public static final String ALG_BREAST_CANCER_CATEGORY = "breast-cancer-category";
 
     // special properties
     public static final String FIELD_TUMORS = "tumors";
@@ -159,8 +161,19 @@ public final class Algorithms {
     public static final String FIELD_GRADE_PATHOLOGICAL = "gradePathological";
     public static final String FIELD_TUMOR_SIZE = "csTumorSize";
     public static final String FIELD_EOD_TUMOR_SIZE = "eodTumorSize";
-
     public static final String FIELD_TUMOR_SIZE_SUMMARY = "tumorSizeSummary";
+    public static final String FIELD_TUMOR_MARKER_1 = "tumorMarker1";
+    public static final String FIELD_TUMOR_MARKER_2 = "tumorMarker2";
+    public static final String FIELD_SSF_1 = "seerSiteSpecificFact1";
+    public static final String FIELD_SSF_2 = "seerSiteSpecificFact2";
+    public static final String FIELD_SSF_9 = "seerSiteSpecificFact9";
+    public static final String FIELD_SSF_11 = "seerSiteSpecificFact11";
+    public static final String FIELD_SSF_13 = "seerSiteSpecificFact13";
+    public static final String FIELD_SSF_14 = "seerSiteSpecificFact14";
+    public static final String FIELD_SSF_15 = "seerSiteSpecificFact15";
+    public static final String FIELD_ESTROGEN_RECEPTOR_SUMMARY = "estrogenReceptorSummary";
+    public static final String FIELD_PROGESTERONE_RECEPTOR_SUMMARY = "progesteroneRecepSummary";
+    public static final String FIELD_HER2_OVERALL_SUMMARY = "her2OverallSummary";
 
     // non-standard fields
     public static final String FIELD_NAPIIA_NEEDS_REVIEW = "napiiaNeedsHumanReview";
@@ -206,6 +219,10 @@ public final class Algorithms {
     public static final String FIELD_RACE1_RECODE = "race1Recode";
     public static final String FIELD_URIC_2020 = "uric2020";
     public static final String FIELD_RUCA_2020 = "ruca2020";
+    public static final String FIELD_BREAST_SUBTYPE = "breastSubtype";
+    public static final String FIELD_ESTROGEN_RECEPTOR_SUM_RECODE = "estrogenReceptorSumRecode";
+    public static final String FIELD_PROGESTERONE_RECEPTOR_SUM_RECODE = "progesteroneRecepSumRecode";
+    public static final String FIELD_HER2_OVERALL_SUM_RECODE = "her2OverallSumRecode";
 
     // options
     public static final String PARAM_NHIA_OPTION = "nhiaOption";
@@ -354,6 +371,10 @@ public final class Algorithms {
             addField(AlgorithmField.of(FIELD_SURV_DAYS_PRESUMED_ALIVE, 9754, 5, "Surv-Days Presumed Alive", "Surv Days PA", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_URIC_2020, 347, 1, "URIC 2020", "URIC 2020", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_RUCA_2020, 342, 1, "RUCA 2020", "RUCA 2020", DATA_LEVEL_TUMOR, false));
+            addField(AlgorithmField.of(FIELD_ESTROGEN_RECEPTOR_SUM_RECODE, 9755, 1, "Estrogen Receptor Summary Recode", "ER Recode", DATA_LEVEL_TUMOR, false));
+            addField(AlgorithmField.of(FIELD_PROGESTERONE_RECEPTOR_SUM_RECODE, 9756, 1, "Progesterone Receptor Summary Recode", "PR Recode", DATA_LEVEL_TUMOR, false));
+            addField(AlgorithmField.of(FIELD_HER2_OVERALL_SUM_RECODE, 9757, 1, "HER2 Overall Summary", "HER2 Recode", DATA_LEVEL_TUMOR, false));
+            addField(AlgorithmField.of(FIELD_BREAST_SUBTYPE, 9758, 1, "Breast Cancer Subtype", "Breast Sub", DATA_LEVEL_TUMOR, false));
 
             // algorithms
             addAlgorithm(new NhiaAlgorithm());
@@ -384,6 +405,7 @@ public final class Algorithms {
             addAlgorithm(new DerivedSummaryGradeAlgorithm2018());
             addAlgorithm(new TumorSizeOverTimeAlgorithm());
             addAlgorithm(new Race1RecodeAlgorithm());
+            addAlgorithm(new BreastCategoryAlgorithm());
         }
         finally {
             _LOCK.writeLock().unlock();
