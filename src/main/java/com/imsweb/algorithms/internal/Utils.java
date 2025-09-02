@@ -238,6 +238,11 @@ public final class Utils {
         return fullDate.substring(0, 4);
     }
 
+    public static int extractYearAsInt(String fullDate, int defaultValue) {
+        String year = extractYear(fullDate);
+        return NumberUtils.isDigits(year) && year.length() >= 4 ? Integer.parseInt(year.substring(0, 4)) : defaultValue;
+    }
+
     public static String extractMonth(String fullDate) {
         if (fullDate == null || fullDate.length() < 6)
             return null;
