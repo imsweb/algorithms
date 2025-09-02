@@ -363,8 +363,8 @@ public final class Algorithms {
             addField(AlgorithmField.of(FIELD_SURV_DAYS_PRESUMED_ALIVE, 9754, 5, "Surv-Days Presumed Alive", "Surv Days PA", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_ESTROGEN_RECEPTOR_SUM_RECODE, 9755, 1, "Estrogen Receptor Summary Recode", "ER Recode", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_PROGESTERONE_RECEPTOR_SUM_RECODE, 9756, 1, "Progesterone Receptor Summary Recode", "PR Recode", DATA_LEVEL_TUMOR, false));
-            addField(AlgorithmField.of(FIELD_HER2_OVERALL_SUM_RECODE, 9757, 1, "HER2 Overall Summary", "HER2 Recode", DATA_LEVEL_TUMOR, false));
-            addField(AlgorithmField.of(FIELD_BREAST_SUBTYPE, 9758, 1, "Breast Cancer Subtype", "Breast Sub", DATA_LEVEL_TUMOR, false));
+            addField(AlgorithmField.of(FIELD_HER2_OVERALL_SUM_RECODE, 9757, 1, "HER2 Overall Summary Recode", "HER2 Recode", DATA_LEVEL_TUMOR, false));
+            addField(AlgorithmField.of(FIELD_BREAST_SUBTYPE, 9758, 1, "Breast Subtype", "Breast Sub", DATA_LEVEL_TUMOR, false));
 
             // algorithms
             addAlgorithm(new NhiaAlgorithm());
