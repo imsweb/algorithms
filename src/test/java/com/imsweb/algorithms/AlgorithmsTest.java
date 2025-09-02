@@ -406,6 +406,23 @@ public class AlgorithmsTest {
         tumMap.put(Algorithms.FIELD_GRADE_CLINICAL, "1");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
         Assert.assertEquals("1", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_DERIVED_SUMMARY_GRADE_2018));
+
+        // Breast Category
+        alg = Algorithms.getAlgorithm(Algorithms.ALG_BREAST_CANCER_CATEGORY);
+        Assert.assertTrue(alg.getParameters().isEmpty());
+        Assert.assertFalse(alg.getUnknownValues().isEmpty());
+        input = new AlgorithmInput();
+        patMap = new HashMap<>();
+        input.setPatient(patMap);
+        tumMap = new HashMap<>();
+        tumMap.put(Algorithms.FIELD_DX_DATE, "20200101");
+        tumMap.put(Algorithms.FIELD_PRIMARY_SITE, "C500");
+        tumMap.put(Algorithms.FIELD_HIST_O3, "8000");
+        tumMap.put(Algorithms.FIELD_ESTROGEN_RECEPTOR_SUMMARY, "0");
+        tumMap.put(Algorithms.FIELD_PROGESTERONE_RECEPTOR_SUMMARY, "0");
+        tumMap.put(Algorithms.FIELD_HER2_OVERALL_SUMMARY, "0");
+        patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
+        Assert.assertEquals("4", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_BREAST_SUBTYPE));
     }
 
     @Test
