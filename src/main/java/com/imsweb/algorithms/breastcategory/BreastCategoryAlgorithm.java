@@ -33,6 +33,8 @@ import static com.imsweb.algorithms.Algorithms.FIELD_SSF_15;
 import static com.imsweb.algorithms.Algorithms.FIELD_SSF_2;
 import static com.imsweb.algorithms.Algorithms.FIELD_SSF_9;
 import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
+import static com.imsweb.algorithms.Algorithms.FIELD_TUMOR_MARKER_1;
+import static com.imsweb.algorithms.Algorithms.FIELD_TUMOR_MARKER_2;
 
 public class BreastCategoryAlgorithm extends AbstractAlgorithm {
 
@@ -57,6 +59,8 @@ public class BreastCategoryAlgorithm extends AbstractAlgorithm {
         _inputFields.add(Algorithms.getField(FIELD_DX_DATE));
         _inputFields.add(Algorithms.getField(FIELD_PRIMARY_SITE));
         _inputFields.add(Algorithms.getField(FIELD_HIST_O3));
+        _inputFields.add(Algorithms.getField(FIELD_TUMOR_MARKER_1));
+        _inputFields.add(Algorithms.getField(FIELD_TUMOR_MARKER_2));
         _inputFields.add(Algorithms.getField(FIELD_SSF_1));
         _inputFields.add(Algorithms.getField(FIELD_SSF_2));
         _inputFields.add(Algorithms.getField(FIELD_SSF_9));
@@ -96,7 +100,9 @@ public class BreastCategoryAlgorithm extends AbstractAlgorithm {
             int dxYear = Utils.extractYearAsInt((String)inputTumor.get(FIELD_DX_DATE), 0);
             String site = (String)inputTumor.get(FIELD_PRIMARY_SITE);
             String hist = (String)inputTumor.get(FIELD_HIST_O3);
-            if (dxYear >= 2010 && isBreastCase(site, hist)) {
+            if (isBreastCase(site, hist)) {
+                String tumorMarker1 = (String)inputTumor.get(FIELD_TUMOR_MARKER_1);
+                String tumorMarker2 = (String)inputTumor.get(FIELD_TUMOR_MARKER_2);
                 String ssf1 = (String)inputTumor.get(FIELD_SSF_1);
                 String ssf2 = (String)inputTumor.get(FIELD_SSF_2);
                 String ssf9 = (String)inputTumor.get(FIELD_SSF_9);
@@ -108,10 +114,10 @@ public class BreastCategoryAlgorithm extends AbstractAlgorithm {
                 String prSummary = (String)inputTumor.get(FIELD_PROGESTERONE_RECEPTOR_SUMMARY);
                 String her2Summary = (String)inputTumor.get(FIELD_HER2_OVERALL_SUMMARY);
 
-                erRecode = computeErPr(dxYear, ssf1, erSummary);
-                prRecode = computeErPr(dxYear, ssf2, prSummary);
+                erRecode = computeErPr(dxYear, tumorMarker1, ssf1, erSummary);
+                prRecode = computeErPr(dxYear, tumorMarker2, ssf2, prSummary);
                 her2Recode = computeHer2(dxYear, ssf9, ssf11, ssf13, ssf14, ssf15, her2Summary);
-                breastSubtype = computeBreastSubtype(erRecode, prRecode, her2Recode);
+                breastSubtype = computeBreastSubtype(dxYear, erRecode, prRecode, her2Recode);
             }
 
             outputTumor.put(FIELD_ESTROGEN_RECEPTOR_SUM_RECODE, erRecode);
@@ -123,32 +129,6 @@ public class BreastCategoryAlgorithm extends AbstractAlgorithm {
         }
 
         return AlgorithmOutput.of(outputPatient);
-    }
-
-    static String computeBreastSubtype(String erRecode, String prRecode, String her2Recode) {
-        String value;
-
-        if (ER_PR_HER2_POSITIVE.equals(her2Recode)) {
-            if (ER_PR_HER2_POSITIVE.equals(erRecode) || ER_PR_HER2_POSITIVE.equals(prRecode))
-                value = BREAST_SUBTYPE_HR_POS_HER2_POS;
-            else if (ER_PR_HER2_NEGATIVE.equals(erRecode) && ER_PR_HER2_NEGATIVE.equals(prRecode))
-                value = BREAST_SUBTYPE_HR_NEG_HER2_POS;
-            else
-                value = BREAST_SUBTYPE_UNKNOWN;
-        }
-        else if (ER_PR_HER2_NEGATIVE.equals(her2Recode)) {
-            if (ER_PR_HER2_POSITIVE.equals(erRecode) || ER_PR_HER2_POSITIVE.equals(prRecode))
-                value = BREAST_SUBTYPE_HR_POS_HER2_NEG;
-            else if (ER_PR_HER2_NEGATIVE.equals(erRecode) && ER_PR_HER2_NEGATIVE.equals(prRecode))
-                value = BREAST_SUBTYPE_HR_NEG_HER2_NEG;
-            else
-                value = BREAST_SUBTYPE_UNKNOWN;
-
-        }
-        else
-            value = BREAST_SUBTYPE_UNKNOWN;
-
-        return value;
     }
 
     static boolean isBreastCase(String site, String hist) {
@@ -164,10 +144,42 @@ public class BreastCategoryAlgorithm extends AbstractAlgorithm {
         return cond1 || cond2;
     }
 
-    static String computeErPr(int dxYear, String ssf, String ssdi) {
+    static String computeBreastSubtype(int dxYear, String erRecode, String prRecode, String her2Recode) {
         String result;
 
-        if (dxYear < 2018)
+        if (dxYear < 2010)
+            result = ER_PR_HER2_NOT_CODED;
+        else if (ER_PR_HER2_POSITIVE.equals(her2Recode)) {
+            if (ER_PR_HER2_POSITIVE.equals(erRecode) || ER_PR_HER2_POSITIVE.equals(prRecode))
+                result = BREAST_SUBTYPE_HR_POS_HER2_POS;
+            else if (ER_PR_HER2_NEGATIVE.equals(erRecode) && ER_PR_HER2_NEGATIVE.equals(prRecode))
+                result = BREAST_SUBTYPE_HR_NEG_HER2_POS;
+            else
+                result = BREAST_SUBTYPE_UNKNOWN;
+        }
+        else if (ER_PR_HER2_NEGATIVE.equals(her2Recode)) {
+            if (ER_PR_HER2_POSITIVE.equals(erRecode) || ER_PR_HER2_POSITIVE.equals(prRecode))
+                result = BREAST_SUBTYPE_HR_POS_HER2_NEG;
+            else if (ER_PR_HER2_NEGATIVE.equals(erRecode) && ER_PR_HER2_NEGATIVE.equals(prRecode))
+                result = BREAST_SUBTYPE_HR_NEG_HER2_NEG;
+            else
+                result = BREAST_SUBTYPE_UNKNOWN;
+
+        }
+        else
+            result = BREAST_SUBTYPE_UNKNOWN;
+
+        return result;
+    }
+
+    static String computeErPr(int dxYear, String tumorMarker, String ssf, String ssdi) {
+        String result;
+
+        if (dxYear < 1990)
+            result = ER_PR_HER2_NOT_CODED;
+        else if (dxYear < 2004)
+            result = computeErPrHer2ByTumorMarker(tumorMarker);
+        else if (dxYear < 2018)
             result = computeErPrHer2BySsf(ssf);
         else
             result = computeErPrHer2BySsdi(ssdi);
@@ -178,7 +190,9 @@ public class BreastCategoryAlgorithm extends AbstractAlgorithm {
     static String computeHer2(int dxYear, String ssf9, String ssf11, String ssf13, String ssf14, String ssf15, String ssdi) {
         String result;
 
-        if (dxYear < 2018) {
+        if (dxYear < 2010)
+            result = ER_PR_HER2_NOT_CODED;
+        else if (dxYear < 2018) {
             if (ssf15 == null || ssf15.isEmpty() || "988".equals(ssf15)) {
                 if ("010".equals(ssf11) || "010".equals(ssf13) || "010".equals(ssf14))
                     result = ER_PR_HER2_POSITIVE;
@@ -192,6 +206,27 @@ public class BreastCategoryAlgorithm extends AbstractAlgorithm {
         }
         else
             result = computeErPrHer2BySsdi(ssdi);
+
+        return result;
+    }
+
+    private static String computeErPrHer2ByTumorMarker(String tumorMarker) {
+        String result;
+
+        if (tumorMarker == null)
+            result = ER_PR_HER2_UNKNOWN;
+        else {
+            switch (tumorMarker) {
+                case "1":
+                    result = ER_PR_HER2_POSITIVE;
+                    break;
+                case "2":
+                    result = ER_PR_HER2_NEGATIVE;
+                    break;
+                default:
+                    result = ER_PR_HER2_UNKNOWN;
+            }
+        }
 
         return result;
     }

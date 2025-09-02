@@ -10,35 +10,13 @@ import static com.imsweb.algorithms.breastcategory.BreastCategoryAlgorithm.BREAS
 import static com.imsweb.algorithms.breastcategory.BreastCategoryAlgorithm.BREAST_SUBTYPE_HR_NEG_HER2_POS;
 import static com.imsweb.algorithms.breastcategory.BreastCategoryAlgorithm.BREAST_SUBTYPE_HR_POS_HER2_NEG;
 import static com.imsweb.algorithms.breastcategory.BreastCategoryAlgorithm.BREAST_SUBTYPE_HR_POS_HER2_POS;
+import static com.imsweb.algorithms.breastcategory.BreastCategoryAlgorithm.BREAST_SUBTYPE_NOT_CODED;
 import static com.imsweb.algorithms.breastcategory.BreastCategoryAlgorithm.BREAST_SUBTYPE_UNKNOWN;
 import static com.imsweb.algorithms.breastcategory.BreastCategoryAlgorithm.ER_PR_HER2_NEGATIVE;
 import static com.imsweb.algorithms.breastcategory.BreastCategoryAlgorithm.ER_PR_HER2_POSITIVE;
 import static com.imsweb.algorithms.breastcategory.BreastCategoryAlgorithm.ER_PR_HER2_UNKNOWN;
 
 public class BreastCategoryAlgorithmTest {
-
-    @Test
-    public void testComputeBreastSubtype() {
-        Assert.assertEquals(BREAST_SUBTYPE_UNKNOWN, BreastCategoryAlgorithm.computeBreastSubtype(null, null, null));
-        Assert.assertEquals(BREAST_SUBTYPE_UNKNOWN, BreastCategoryAlgorithm.computeBreastSubtype("1", null, null));
-        Assert.assertEquals(BREAST_SUBTYPE_UNKNOWN, BreastCategoryAlgorithm.computeBreastSubtype(null, "1", null));
-        Assert.assertEquals(BREAST_SUBTYPE_UNKNOWN, BreastCategoryAlgorithm.computeBreastSubtype(null, null, "1"));
-        Assert.assertEquals(BREAST_SUBTYPE_UNKNOWN, BreastCategoryAlgorithm.computeBreastSubtype("2", null, null));
-        Assert.assertEquals(BREAST_SUBTYPE_UNKNOWN, BreastCategoryAlgorithm.computeBreastSubtype(null, "2", null));
-        Assert.assertEquals(BREAST_SUBTYPE_UNKNOWN, BreastCategoryAlgorithm.computeBreastSubtype(null, null, "2"));
-
-        // HER2 positive (1)
-        Assert.assertEquals(BREAST_SUBTYPE_HR_POS_HER2_POS, BreastCategoryAlgorithm.computeBreastSubtype("1", "1", "1"));
-        Assert.assertEquals(BREAST_SUBTYPE_HR_POS_HER2_POS, BreastCategoryAlgorithm.computeBreastSubtype("1", "2", "1"));
-        Assert.assertEquals(BREAST_SUBTYPE_HR_POS_HER2_POS, BreastCategoryAlgorithm.computeBreastSubtype("2", "1", "1"));
-        Assert.assertEquals(BREAST_SUBTYPE_HR_NEG_HER2_POS, BreastCategoryAlgorithm.computeBreastSubtype("2", "2", "1"));
-
-        // HER2 negative (2)
-        Assert.assertEquals(BREAST_SUBTYPE_HR_NEG_HER2_NEG, BreastCategoryAlgorithm.computeBreastSubtype("2", "2", "2"));
-        Assert.assertEquals(BREAST_SUBTYPE_HR_POS_HER2_NEG, BreastCategoryAlgorithm.computeBreastSubtype("1", "1", "2"));
-        Assert.assertEquals(BREAST_SUBTYPE_HR_POS_HER2_NEG, BreastCategoryAlgorithm.computeBreastSubtype("1", "2", "2"));
-        Assert.assertEquals(BREAST_SUBTYPE_HR_POS_HER2_NEG, BreastCategoryAlgorithm.computeBreastSubtype("2", "1", "2"));
-    }
 
     @Test
     public void testIsBreastCase() {
@@ -63,15 +41,22 @@ public class BreastCategoryAlgorithmTest {
 
     @Test
     public void testComputeErPr() {
-        Assert.assertEquals(ER_PR_HER2_UNKNOWN, BreastCategoryAlgorithm.computeErPr(2010, null, null));
+        Assert.assertEquals(ER_PR_HER2_UNKNOWN, BreastCategoryAlgorithm.computeErPr(1990, null, null, null));
+        Assert.assertEquals(ER_PR_HER2_UNKNOWN, BreastCategoryAlgorithm.computeErPr(2000, null, null, null));
+        Assert.assertEquals(ER_PR_HER2_UNKNOWN, BreastCategoryAlgorithm.computeErPr(2010, null, null, null));
+        Assert.assertEquals(ER_PR_HER2_UNKNOWN, BreastCategoryAlgorithm.computeErPr(2020, null, null, null));
+
+        // use tumor marker for extra early years
+        Assert.assertEquals(ER_PR_HER2_POSITIVE, BreastCategoryAlgorithm.computeErPr(2000, "1", null, null));
+        Assert.assertEquals(ER_PR_HER2_NEGATIVE, BreastCategoryAlgorithm.computeErPr(2000, "2", null, null));
 
         // use SSF for early years
-        Assert.assertEquals(ER_PR_HER2_POSITIVE, BreastCategoryAlgorithm.computeErPr(2010, "010", null));
-        Assert.assertEquals(ER_PR_HER2_NEGATIVE, BreastCategoryAlgorithm.computeErPr(2010, "020", null));
+        Assert.assertEquals(ER_PR_HER2_POSITIVE, BreastCategoryAlgorithm.computeErPr(2010, null, "010", null));
+        Assert.assertEquals(ER_PR_HER2_NEGATIVE, BreastCategoryAlgorithm.computeErPr(2010, null, "020", null));
 
         // use SSDI for later years
-        Assert.assertEquals(ER_PR_HER2_POSITIVE, BreastCategoryAlgorithm.computeErPr(2018, null, "1"));
-        Assert.assertEquals(ER_PR_HER2_NEGATIVE, BreastCategoryAlgorithm.computeErPr(2018, null, "0"));
+        Assert.assertEquals(ER_PR_HER2_POSITIVE, BreastCategoryAlgorithm.computeErPr(2020, null, null, "1"));
+        Assert.assertEquals(ER_PR_HER2_NEGATIVE, BreastCategoryAlgorithm.computeErPr(2020, null, null, "0"));
     }
 
     @Test
@@ -100,4 +85,30 @@ public class BreastCategoryAlgorithmTest {
         Assert.assertEquals(ER_PR_HER2_UNKNOWN, BreastCategoryAlgorithm.computeHer2(2020, null, null, null, null, null, null));
     }
 
+    @Test
+    public void testComputeBreastSubtype() {
+        Assert.assertEquals(BREAST_SUBTYPE_NOT_CODED, BreastCategoryAlgorithm.computeBreastSubtype(2008, null, null, null));
+        Assert.assertEquals(BREAST_SUBTYPE_NOT_CODED, BreastCategoryAlgorithm.computeBreastSubtype(2008, "1", "1", "1"));
+        Assert.assertEquals(BREAST_SUBTYPE_NOT_CODED, BreastCategoryAlgorithm.computeBreastSubtype(2008, "2", "2", "2"));
+
+        Assert.assertEquals(BREAST_SUBTYPE_UNKNOWN, BreastCategoryAlgorithm.computeBreastSubtype(2020, null, null, null));
+        Assert.assertEquals(BREAST_SUBTYPE_UNKNOWN, BreastCategoryAlgorithm.computeBreastSubtype(2020, "1", null, null));
+        Assert.assertEquals(BREAST_SUBTYPE_UNKNOWN, BreastCategoryAlgorithm.computeBreastSubtype(2020, null, "1", null));
+        Assert.assertEquals(BREAST_SUBTYPE_UNKNOWN, BreastCategoryAlgorithm.computeBreastSubtype(2020, null, null, "1"));
+        Assert.assertEquals(BREAST_SUBTYPE_UNKNOWN, BreastCategoryAlgorithm.computeBreastSubtype(2020, "2", null, null));
+        Assert.assertEquals(BREAST_SUBTYPE_UNKNOWN, BreastCategoryAlgorithm.computeBreastSubtype(2020, null, "2", null));
+        Assert.assertEquals(BREAST_SUBTYPE_UNKNOWN, BreastCategoryAlgorithm.computeBreastSubtype(2020, null, null, "2"));
+
+        // HER2 positive (1)
+        Assert.assertEquals(BREAST_SUBTYPE_HR_POS_HER2_POS, BreastCategoryAlgorithm.computeBreastSubtype(2020, "1", "1", "1"));
+        Assert.assertEquals(BREAST_SUBTYPE_HR_POS_HER2_POS, BreastCategoryAlgorithm.computeBreastSubtype(2020, "1", "2", "1"));
+        Assert.assertEquals(BREAST_SUBTYPE_HR_POS_HER2_POS, BreastCategoryAlgorithm.computeBreastSubtype(2020, "2", "1", "1"));
+        Assert.assertEquals(BREAST_SUBTYPE_HR_NEG_HER2_POS, BreastCategoryAlgorithm.computeBreastSubtype(2020, "2", "2", "1"));
+
+        // HER2 negative (2)
+        Assert.assertEquals(BREAST_SUBTYPE_HR_NEG_HER2_NEG, BreastCategoryAlgorithm.computeBreastSubtype(2020, "2", "2", "2"));
+        Assert.assertEquals(BREAST_SUBTYPE_HR_POS_HER2_NEG, BreastCategoryAlgorithm.computeBreastSubtype(2020, "1", "1", "2"));
+        Assert.assertEquals(BREAST_SUBTYPE_HR_POS_HER2_NEG, BreastCategoryAlgorithm.computeBreastSubtype(2020, "1", "2", "2"));
+        Assert.assertEquals(BREAST_SUBTYPE_HR_POS_HER2_NEG, BreastCategoryAlgorithm.computeBreastSubtype(2020, "2", "1", "2"));
+    }
 }

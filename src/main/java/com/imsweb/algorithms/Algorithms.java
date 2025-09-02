@@ -161,6 +161,8 @@ public final class Algorithms {
     public static final String FIELD_TUMOR_SIZE = "csTumorSize";
     public static final String FIELD_EOD_TUMOR_SIZE = "eodTumorSize";
     public static final String FIELD_TUMOR_SIZE_SUMMARY = "tumorSizeSummary";
+    public static final String FIELD_TUMOR_MARKER_1 = "tumorMarker1";
+    public static final String FIELD_TUMOR_MARKER_2 = "tumorMarker2";
     public static final String FIELD_SSF_1 = "seerSiteSpecificFact1";
     public static final String FIELD_SSF_2 = "seerSiteSpecificFact2";
     public static final String FIELD_SSF_9 = "seerSiteSpecificFact9";
