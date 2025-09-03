@@ -324,6 +324,14 @@ public class TractDataLab {
                 if (Integer.valueOf(year).compareTo(CountryData.TRACT_YEAR_MIN_VAL) < 0 || Integer.valueOf(year).compareTo(CountryData.TRACT_YEAR_MAX_VAL) > 0)
                     throw new RuntimeException("Line " + lineNum + ": invalid/unexpected year: " + year);
 
+                // year-based data for 2016-2017 need to use the 2020 census boundaries; this fiel contains the data for those years for the 2010 boundaries, which is not used by
+                // any algorithm anymore, so it can be ignored (algorithms use a DX year of 2018, which is the first year for the 2020 boundaries) for those two DX years
+                // this was agreed in https://squishlist.com/naaccr/cfd/138/
+                if ("2016".equals(year) || "2017".equals(year)) {
+                    line = layout.readNextRecord(reader);
+                    continue;
+                }
+
                 DataKey key = new DataKey(_STATES.get(state), county, tract);
 
                 StringBuilder buf = new StringBuilder();

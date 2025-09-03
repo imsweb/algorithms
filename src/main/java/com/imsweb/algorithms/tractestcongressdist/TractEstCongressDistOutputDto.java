@@ -5,23 +5,23 @@ package com.imsweb.algorithms.tractestcongressdist;
 
 public class TractEstCongressDistOutputDto {
 
-    private String _tractEstCongressDist2010;
+    private String _tractEstCongressDist118;
 
-    private String _tractEstCongressDist2020;
+    private String _tractEstCongressDist119;
 
-    public String getTractEstCongressDist2010() {
-        return _tractEstCongressDist2010;
+    public String getTractEstCongressDist118() {
+        return _tractEstCongressDist118;
     }
 
-    public void setTractEstCongressDist2010(String tractEstCongressDist2010) {
-        _tractEstCongressDist2010 = tractEstCongressDist2010;
+    public void setTractEstCongressDist118(String tractEstCongressDist118) {
+        _tractEstCongressDist118 = tractEstCongressDist118;
     }
 
-    public String getTractEstCongressDist2020() {
-        return _tractEstCongressDist2020;
+    public String getTractEstCongressDist119() {
+        return _tractEstCongressDist119;
     }
 
-    public void setTractEstCongressDist2020(String tractEstCongressDist2020) {
-        _tractEstCongressDist2020 = tractEstCongressDist2020;
+    public void setTractEstCongressDist119(String tractEstCongressDist119) {
+        _tractEstCongressDist119 = tractEstCongressDist119;
     }
 }

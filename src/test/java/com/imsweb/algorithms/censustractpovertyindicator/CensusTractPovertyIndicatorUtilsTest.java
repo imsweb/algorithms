@@ -95,12 +95,12 @@ public class CensusTractPovertyIndicatorUtilsTest {
         rec.put("censusTract2010", "020600");
         rec.put("dateOfDiagnosisYear", "2015");
         Assert.assertEquals("3", computePovertyIndicator(rec).getCensusTractPovertyIndicator());
-        //test year category 11 with a combination of state, county and census 2010 in the lookup
-        rec.put("censusTract2010", "020600");
+        // test 2016 (census2020)
+        rec.put("censusTract2020", "020600");
         rec.put("dateOfDiagnosisYear", "2016");
         Assert.assertEquals("4", computePovertyIndicator(rec).getCensusTractPovertyIndicator());
-        // test 2017 (census2010)
-        rec.put("censusTract2010", "020600");
+        // test 2017 (census2020)
+        rec.put("censusTract2020", "020600");
         rec.put("dateOfDiagnosisYear", "2017");
         Assert.assertEquals("4", computePovertyIndicator(rec).getCensusTractPovertyIndicator());
         // test 2021 (census2020)
@@ -111,7 +111,6 @@ public class CensusTractPovertyIndicatorUtilsTest {
         rec.put("censusTract2020", "020600");
         rec.put("dateOfDiagnosisYear", "2025");
         Assert.assertEquals("2", computePovertyIndicator(rec).getCensusTractPovertyIndicator());
-        Assert.assertEquals("9", computePovertyIndicator(rec, false).getCensusTractPovertyIndicator());
         //test unknown year
         rec.put("dateOfDiagnosisYear", "9999");
         Assert.assertEquals("9", computePovertyIndicator(rec).getCensusTractPovertyIndicator());
@@ -120,16 +119,12 @@ public class CensusTractPovertyIndicatorUtilsTest {
         rec.clear();
         rec.put("addressAtDxState", "HI");
         rec.put("countyAtDxAnalysis", "003");
-        rec.put("censusTract2000", "003405");
+        rec.put("censusTract2010", "003405");
         rec.put("dateOfDiagnosisYear", "2007");
         Assert.assertEquals("3", computePovertyIndicator(rec).getCensusTractPovertyIndicator());
     }
 
     private CensusTractPovertyIndicatorOutputDto computePovertyIndicator(Map<String, String> rec) {
-        return computePovertyIndicator(rec, true);
-    }
-
-    private CensusTractPovertyIndicatorOutputDto computePovertyIndicator(Map<String, String> rec, boolean includeRecentYears) {
 
         CensusTractPovertyIndicatorInputDto input = new CensusTractPovertyIndicatorInputDto();
         input.setAddressAtDxState(rec.get("addressAtDxState"));
@@ -139,6 +134,6 @@ public class CensusTractPovertyIndicatorUtilsTest {
         input.setCensusTract2010(rec.get("censusTract2010"));
         input.setCensusTract2020(rec.get("censusTract2020"));
 
-        return CensusTractPovertyIndicatorUtils.computePovertyIndicator(input, includeRecentYears);
+        return CensusTractPovertyIndicatorUtils.computePovertyIndicator(input);
     }
 }

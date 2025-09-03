@@ -12,7 +12,6 @@ import java.util.Map;
 import com.imsweb.algorithms.AbstractAlgorithm;
 import com.imsweb.algorithms.AlgorithmInput;
 import com.imsweb.algorithms.AlgorithmOutput;
-import com.imsweb.algorithms.AlgorithmParam;
 import com.imsweb.algorithms.Algorithms;
 import com.imsweb.algorithms.internal.Utils;
 
@@ -24,16 +23,13 @@ import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS;
 import static com.imsweb.algorithms.Algorithms.FIELD_DX_DATE;
 import static com.imsweb.algorithms.Algorithms.FIELD_STATE_DX;
 import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
-import static com.imsweb.algorithms.Algorithms.PARAM_CENSUS_POVERTY_INC_RECENT_YEARS;
 
 public class CensusTractPovertyIndicatorAlgorithm extends AbstractAlgorithm {
 
     public CensusTractPovertyIndicatorAlgorithm() {
         super(Algorithms.ALG_CENSUS_POVERTY, CensusTractPovertyIndicatorUtils.ALG_NAME, CensusTractPovertyIndicatorUtils.ALG_VERSION);
-        
+
         _url = "https://www.naaccr.org/analysis-and-data-improvement-tools/#POVERTY";
-        
-        _params.add(AlgorithmParam.of(PARAM_CENSUS_POVERTY_INC_RECENT_YEARS, "Include Recent Years", Boolean.class));
 
         _inputFields.add(Algorithms.getField(FIELD_STATE_DX));
         _inputFields.add(Algorithms.getField(FIELD_COUNTY_AT_DX_ANALYSIS));
@@ -49,10 +45,6 @@ public class CensusTractPovertyIndicatorAlgorithm extends AbstractAlgorithm {
 
     @Override
     public AlgorithmOutput execute(AlgorithmInput input) {
-        Boolean includeRecentYears = (Boolean)input.getParameter(PARAM_CENSUS_POVERTY_INC_RECENT_YEARS);
-        if (includeRecentYears == null)
-            includeRecentYears = Boolean.TRUE;
-
         Map<String, Object> outputPatient = new HashMap<>();
         List<Map<String, Object>> outputTumors = new ArrayList<>();
         outputPatient.put(FIELD_TUMORS, outputTumors);
@@ -66,7 +58,7 @@ public class CensusTractPovertyIndicatorAlgorithm extends AbstractAlgorithm {
             inputDto.setCensusTract2010((String)inputTumor.get(FIELD_CENSUS_2010));
             inputDto.setCensusTract2020((String)inputTumor.get(FIELD_CENSUS_2020));
 
-            CensusTractPovertyIndicatorOutputDto outputDto = CensusTractPovertyIndicatorUtils.computePovertyIndicator(inputDto, includeRecentYears);
+            CensusTractPovertyIndicatorOutputDto outputDto = CensusTractPovertyIndicatorUtils.computePovertyIndicator(inputDto);
             outputTumors.add(Collections.singletonMap(FIELD_CENSUS_POVERTY_INDICTR, outputDto.getCensusTractPovertyIndicator()));
         }
 

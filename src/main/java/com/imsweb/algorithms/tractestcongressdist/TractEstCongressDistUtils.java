@@ -11,7 +11,7 @@ import com.imsweb.algorithms.internal.CountryData;
 public final class TractEstCongressDistUtils {
 
     public static final String ALG_NAME = "NAACCR Tract-Estimated Congressional Districts";
-    public static final String ALG_VERSION = "version 2.0 released in September 2025";
+    public static final String ALG_VERSION = "released in September 2025";
 
     //Unknown values for each code
     public static final String TRACT_EST_CONGRESS_DIST_UNK_A = "A";
@@ -56,32 +56,32 @@ public final class TractEstCongressDistUtils {
 
         // census 2010 (based on district 118)
         if (input.hasInvalidStateCountyOrCensusTract(CensusTract.CENSUS_2010))
-            result.setTractEstCongressDist2010(TRACT_EST_CONGRESS_DIST_UNK_A);
+            result.setTractEstCongressDist118(TRACT_EST_CONGRESS_DIST_UNK_A);
         else if (input.hasUnknownStateCountyOrCensusTract(CensusTract.CENSUS_2010))
-            result.setTractEstCongressDist2010(TRACT_EST_CONGRESS_DIST_UNK_D);
+            result.setTractEstCongressDist118(TRACT_EST_CONGRESS_DIST_UNK_D);
         else if (input.countyIsNotReported())
-            result.setTractEstCongressDist2010(TRACT_EST_CONGRESS_DIST_UNK_B);
+            result.setTractEstCongressDist118(TRACT_EST_CONGRESS_DIST_UNK_B);
         else {
             CensusData censusData = CountryData.getCensusData(input, CensusTract.CENSUS_2010);
             if (censusData != null)
-                result.setTractEstCongressDist2010(censusData.getCongressionalDistrict118());
+                result.setTractEstCongressDist118(censusData.getCongressionalDistrict118());
             else
-                result.setTractEstCongressDist2010(TRACT_EST_CONGRESS_DIST_UNK_C);
+                result.setTractEstCongressDist118(TRACT_EST_CONGRESS_DIST_UNK_C);
         }
 
         // census 2020 (based on district 119)
         if (input.hasInvalidStateCountyOrCensusTract(CensusTract.CENSUS_2020))
-            result.setTractEstCongressDist2020(TRACT_EST_CONGRESS_DIST_UNK_A);
+            result.setTractEstCongressDist119(TRACT_EST_CONGRESS_DIST_UNK_A);
         else if (input.hasUnknownStateCountyOrCensusTract(CensusTract.CENSUS_2020))
-            result.setTractEstCongressDist2020(TRACT_EST_CONGRESS_DIST_UNK_D);
+            result.setTractEstCongressDist119(TRACT_EST_CONGRESS_DIST_UNK_D);
         else if (input.countyIsNotReported())
-            result.setTractEstCongressDist2020(TRACT_EST_CONGRESS_DIST_UNK_B);
+            result.setTractEstCongressDist119(TRACT_EST_CONGRESS_DIST_UNK_B);
         else {
             CensusData censusData = CountryData.getCensusData(input, CensusTract.CENSUS_2020);
             if (censusData != null)
-                result.setTractEstCongressDist2020(censusData.getCongressionalDistrict119());
+                result.setTractEstCongressDist119(censusData.getCongressionalDistrict119());
             else
-                result.setTractEstCongressDist2020(TRACT_EST_CONGRESS_DIST_UNK_C);
+                result.setTractEstCongressDist119(TRACT_EST_CONGRESS_DIST_UNK_C);
         }
 
         return result;
