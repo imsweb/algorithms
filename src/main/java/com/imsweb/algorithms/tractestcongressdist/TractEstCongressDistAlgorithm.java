@@ -18,7 +18,8 @@ import com.imsweb.algorithms.internal.Utils;
 import static com.imsweb.algorithms.Algorithms.FIELD_CENSUS_2010;
 import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS;
 import static com.imsweb.algorithms.Algorithms.FIELD_STATE_DX;
-import static com.imsweb.algorithms.Algorithms.FIELD_TRACT_EST_CONGRESS_DIST;
+import static com.imsweb.algorithms.Algorithms.FIELD_TRACT_EST_CONGRESS_DIST_118;
+import static com.imsweb.algorithms.Algorithms.FIELD_TRACT_EST_CONGRESS_DIST_119;
 import static com.imsweb.algorithms.tractestcongressdist.TractEstCongressDistUtils.TRACT_EST_CONGRESS_DIST_UNK_A;
 import static com.imsweb.algorithms.tractestcongressdist.TractEstCongressDistUtils.TRACT_EST_CONGRESS_DIST_UNK_D;
 
@@ -31,9 +32,11 @@ public class TractEstCongressDistAlgorithm extends AbstractAlgorithm {
         _inputFields.add(Algorithms.getField(FIELD_COUNTY_AT_DX_ANALYSIS));
         _inputFields.add(Algorithms.getField(FIELD_CENSUS_2010));
 
-        _outputFields.add(Algorithms.getField(FIELD_TRACT_EST_CONGRESS_DIST));
+        _outputFields.add(Algorithms.getField(FIELD_TRACT_EST_CONGRESS_DIST_118));
+        _unknownValues.put(FIELD_TRACT_EST_CONGRESS_DIST_118, Arrays.asList(TRACT_EST_CONGRESS_DIST_UNK_A, TRACT_EST_CONGRESS_DIST_UNK_D));
 
-        _unknownValues.put(FIELD_TRACT_EST_CONGRESS_DIST, Arrays.asList(TRACT_EST_CONGRESS_DIST_UNK_A, TRACT_EST_CONGRESS_DIST_UNK_D));
+        _outputFields.add(Algorithms.getField(FIELD_TRACT_EST_CONGRESS_DIST_119));
+        _unknownValues.put(FIELD_TRACT_EST_CONGRESS_DIST_119, Arrays.asList(TRACT_EST_CONGRESS_DIST_UNK_A, TRACT_EST_CONGRESS_DIST_UNK_D));
     }
 
     @Override
@@ -44,7 +47,8 @@ public class TractEstCongressDistAlgorithm extends AbstractAlgorithm {
             TractEstCongressDistOutputDto outputDto = TractEstCongressDistUtils.computeTractEstCongressDist(createStateCountyTractInputDto(inputTumor));
 
             Map<String, Object> outputTumor = new HashMap<>();
-            outputTumor.put(FIELD_TRACT_EST_CONGRESS_DIST, outputDto.getTractEstCongressDist());
+            outputTumor.put(FIELD_TRACT_EST_CONGRESS_DIST_118, outputDto.getTractEstCongressDist118());
+            outputTumor.put(FIELD_TRACT_EST_CONGRESS_DIST_119, outputDto.getTractEstCongressDist119());
             outputTumors.add(outputTumor);
         }
 

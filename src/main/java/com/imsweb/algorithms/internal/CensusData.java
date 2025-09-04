@@ -14,11 +14,17 @@ public class CensusData {
     // RUCA 2010
     private String _commutingArea2010;
 
+    // RUCA 2020
+    private String _commutingArea2020;
+
     // URIC 2000
     private String _indicatorCode2000;
 
     // URIC 2010
     private String _indicatorCode2010;
+
+    // URIC 2020
+    private String _indicatorCode2020;
 
     // poverty indicator data (1995-2004)
     private String _naaccrPovertyIndicator9504;
@@ -41,11 +47,19 @@ public class CensusData {
     // EPHT SubCounty 50K
     private String _epht2010GeoId50k;
 
-    // Social Vulnerability Index
-    private String _sviOverallStateBased;
+    // Social Vulnerability Index (2018)
+    private String _sviOverallStateBased2018;
 
-    private String _congressionalDistrict;
+    // Social Vulnerability Index (2022)
+    private String _sviOverallStateBased2022;
 
+    // Congressional district (118)
+    private String _congressionalDistrict118;
+
+    // Congressional district (119)
+    private String _congressionalDistrict119;
+
+    // Persistent Poverty
     private String _persistentPoverty;
 
     // year data keyed by DX year
@@ -81,6 +95,22 @@ public class CensusData {
 
     public void setCommutingArea2010(String commutingArea2010) {
         _commutingArea2010 = commutingArea2010;
+    }
+
+    public String getIndicatorCode2020() {
+        return _indicatorCode2020;
+    }
+
+    public void setIndicatorCode2020(String indicatorCode2020) {
+        _indicatorCode2020 = indicatorCode2020;
+    }
+
+    public String getCommutingArea2020() {
+        return _commutingArea2020;
+    }
+
+    public void setCommutingArea2020(String commutingArea2020) {
+        _commutingArea2020 = commutingArea2020;
     }
 
     public String getNaaccrPovertyIndicator9504() {
@@ -139,20 +169,36 @@ public class CensusData {
         _cancerReportingZoneTractCert = cancerReportingZoneTractCert;
     }
 
-    public String getSviOverallStateBased() {
-        return _sviOverallStateBased;
+    public String getSviOverallStateBased2018() {
+        return _sviOverallStateBased2018;
     }
 
-    public void setSviOverallStateBased(String sviOverallStateBased) {
-        _sviOverallStateBased = sviOverallStateBased;
+    public void setSviOverallStateBased2018(String sviOverallStateBased2018) {
+        _sviOverallStateBased2018 = sviOverallStateBased2018;
     }
 
-    public String getCongressionalDistrict() {
-        return _congressionalDistrict;
+    public String getSviOverallStateBased2022() {
+        return _sviOverallStateBased2022;
     }
 
-    public void setCongressionalDistrict(String congressionalDistrict) {
-        _congressionalDistrict = congressionalDistrict;
+    public void setSviOverallStateBased2022(String sviOverallStateBased2022) {
+        _sviOverallStateBased2022 = sviOverallStateBased2022;
+    }
+
+    public String getCongressionalDistrict118() {
+        return _congressionalDistrict118;
+    }
+
+    public void setCongressionalDistrict118(String congressionalDistrict118) {
+        _congressionalDistrict118 = congressionalDistrict118;
+    }
+
+    public String getCongressionalDistrict119() {
+        return _congressionalDistrict119;
+    }
+
+    public void setCongressionalDistrict119(String congressionalDistrict119) {
+        _congressionalDistrict119 = congressionalDistrict119;
     }
 
     public String getPersistentPoverty() {

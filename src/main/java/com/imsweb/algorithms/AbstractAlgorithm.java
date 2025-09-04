@@ -10,6 +10,7 @@ import java.util.Map;
 
 import static com.imsweb.algorithms.Algorithms.FIELD_CENSUS_2000;
 import static com.imsweb.algorithms.Algorithms.FIELD_CENSUS_2010;
+import static com.imsweb.algorithms.Algorithms.FIELD_CENSUS_2020;
 import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS;
 import static com.imsweb.algorithms.Algorithms.FIELD_STATE_DX;
 
@@ -94,6 +95,7 @@ public abstract class AbstractAlgorithm implements Algorithm {
         inputDto.setCountyAtDxAnalysis((String)inputTumor.get(FIELD_COUNTY_AT_DX_ANALYSIS));
         inputDto.setCensusTract2000((String)inputTumor.get(FIELD_CENSUS_2000));
         inputDto.setCensusTract2010((String)inputTumor.get(FIELD_CENSUS_2010));
+        inputDto.setCensusTract2020((String)inputTumor.get(FIELD_CENSUS_2020));
 
         return inputDto;
     }

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<fixed-column-layout id="time-dependent-tract-data-layout-2025" name="Time-dependent Tract Data Layout 2025" length="246">
+    <field name="stateFipsCode" start="1" end="2" long-label="State FIPS code"/>
+	<field name="countyFipsCode" start="3" end="5" long-label="County FIPS code"/>
+	<field name="tract" start="6" end="11" long-label="Tract"/> <!-- 2020 tract -->
+	<field name="year" start="12" end="15" long-label="Year"/>
+	<field name="reserved" start="16" end="29" long-label="Reserved for future use"/>
+	<field name="medianHousholdIncome" start="30" end="34" long-label="Median household income (in tens)"/>
+	<field name="medianGrossRent" start="35" end="39" long-label="Median gross rent"/>
+	<field name="medianHouseValue" start="40" end="44" long-label="Median home value (in hundreds)"/>
+	<field name="percLessHighSchoolEduc" start="45" end="49" long-label="Percent of persons with less than high school education"/>
+	<field name="percWithHighSchoolEduc" start="50" end="54" long-label="Percent of persons with high school only education"/>
+	<field name="percMoreHighSchoolEduc" start="55" end="59" long-label="Percent of persons with more than high school education"/>
+	<field name="educationIndex" start="60" end="64" long-label="Education index"/>
+	<field name="percentBelow150PercentPoverty" start="65" end="69" long-label="Percent of persons below 150% poverty"/>
+	<field name="percentUnemployed" start="70" end="74" long-label="Percent unemployed"/>
+	<field name="percentWorkingClass" start="75" end="79" long-label="Percent working class"/>
+	<field name="yostUsBasedIndex" start="80" end="84" long-label="Yost - U.S.-based index"/>
+	<field name="yostStateBasedIndex" start="85" end="89" long-label="Yost - State-based index"/>
+	<field name="yostUsBasedQuintile" start="90" end="90" long-label="Yost - U.S.-based quintile"/>
+	<field name="yostStateBasedQuintile" start="91" end="91" long-label="Yost - State-based quintile"/>
+	<field name="percentBelowPovertyAllRaces" start="92" end="96" long-label="Percent of persons below poverty All races"/>
+	<field name="percentBelowPovertyWhite" start="97" end="101" long-label="Percent of persons below poverty White alone"/>
+	<field name="percentBelowPovertyBlack" start="102" end="106" long-label="Percent of persons below poverty Black or African American alone"/>
+	<field name="percentBelowPovertyAmIndian" start="107" end="111" long-label="Percent of persons below poverty American Indian and Alaska Native alone"/>
+	<field name="percentBelowPovertyAsian" start="112" end="116" long-label="Percent of persons below poverty Asian alone + Native Hawaiian and Other Pacific Islander alone"/>
+	<field name="percentBelowPovertyOtherMult" start="117" end="121" long-label="Percent of persons below poverty Some other race alone + two or more races"/>
+	<field name="percentBelowPovertyWhiteNotHisp" start="122" end="126" long-label="Percent of persons below poverty White alone, not Hispanic or Latino"/>
+	<field name="percentBelowPovertyHisp" start="127" end="131" long-label="Percent of persons below poverty Hispanic or Latino"/>
+	<field name="ruca2020A" start="132" end="132" long-label="2010 RUCA-based categorization A"/>
+	<field name="ruca2020C" start="133" end="133" long-label="2010 RUCA-based categorization C"/>
+	<field name="uric2020A" start="134" end="134" long-label="2010 Census-based Urban Rural Indicator Codes (URIC) categorization A"/>
+	<field name="uric2020B" start="135" end="135" long-label="2010 Census-based Urban Rural Indicator Codes (URIC) categorization B"/>
+	<field name="uric2020C" start="136" end="136" long-label="2010 Census-based Urban Rural Indicator Codes (URIC) categorization C"/>
+	<field name="woodsAndPoole2019" start="137" end="146" long-label="Woods and Poole Tract Population Vintage 2019"/>
+	<field name="zoneId" start="147" end="156" long-label="Zone ID"/>
+	<field name="zoneTractCertainty" start="157" end="157" long-label="Zone Tract Certainty"/>
+	<field name="naaccrPovertyIndicator" start="158" end="158" long-label="NAACCR poverty indicator"/>
+	<field name="cdcSubcounty5k" start="159" end="169" long-label="CDC Subcounty 5k Geography"/>
+	<field name="cdcSubcounty20k" start="170" end="180" long-label="CDC Subcounty 20k Geography"/>
+	<field name="cdcSubcounty50k" start="181" end="191" long-label="CDC Subcounty 50k Geography"/>
+	<field name="persistentPovertye2022" start="192" end="192" long-label="Persistent Poverty"/>
+	<field name="sviSocioEconStatusUse2022" start="193" end="197" long-label="SVI - Socioeconomic Status - US Based"/>
+	<field name="sviHouseCompAndDisabUse2022" start="198" end="202" long-label="SVI - Household Composition and Disability - US Based"/>
+	<field name="sviMinorotyStatusAndLangUse2022" start="203" end="207" long-label="SVI - Minority Status and Language - US Based"/>
+	<field name="sviHousingTypeAndTranspUse2022" start="208" end="212" long-label="SVI - Housing Type and Transportation - US Based"/>
+	<field name="sviOverallUse2022" start="213" end="217" long-label="SVI Overall - US Based"/>
+	<field name="sviSocioEconStatusStatee2022" start="218" end="222" long-label="SVI - Socioeconomic Status - State Based"/>
+	<field name="sviHouseCompAndDisabStatee2022" start="223" end="227" long-label="SVI - Household Composition and Disability - State Based"/>
+	<field name="sviMinorotyStatusAndLangStatee2022" start="228" end="232" long-label="SVI - Minority Status and Language - State Based"/>
+	<field name="sviHousingTypeAndTranspStatee2022" start="233" end="237" long-label="SVI - Housing Type and Transportation - State Based"/>
+	<field name="sviOverallState2022" start="238" end="242" long-label="SVI Overall - State Based"/>
+	<field name="congressionalDistrict119" start="243" end="246" long-label="Congressional District"/>
+</fixed-column-layout>

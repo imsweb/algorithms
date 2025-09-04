@@ -18,15 +18,18 @@ import com.imsweb.algorithms.internal.Utils;
 
 import static com.imsweb.algorithms.Algorithms.FIELD_CENSUS_2000;
 import static com.imsweb.algorithms.Algorithms.FIELD_CENSUS_2010;
+import static com.imsweb.algorithms.Algorithms.FIELD_CENSUS_2020;
 import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS;
 import static com.imsweb.algorithms.Algorithms.FIELD_RUCA_2000;
 import static com.imsweb.algorithms.Algorithms.FIELD_RUCA_2010;
+import static com.imsweb.algorithms.Algorithms.FIELD_RUCA_2020;
 import static com.imsweb.algorithms.Algorithms.FIELD_RURAL_CONT_1993;
 import static com.imsweb.algorithms.Algorithms.FIELD_RURAL_CONT_2003;
 import static com.imsweb.algorithms.Algorithms.FIELD_RURAL_CONT_2013;
 import static com.imsweb.algorithms.Algorithms.FIELD_STATE_DX;
 import static com.imsweb.algorithms.Algorithms.FIELD_URIC_2000;
 import static com.imsweb.algorithms.Algorithms.FIELD_URIC_2010;
+import static com.imsweb.algorithms.Algorithms.FIELD_URIC_2020;
 import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.CONTINUUM_UNK_96;
 import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.CONTINUUM_UNK_97;
 import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.CONTINUUM_UNK_98;
@@ -47,18 +50,23 @@ public class RuralUrbanAlgorithm extends AbstractAlgorithm {
         _inputFields.add(Algorithms.getField(FIELD_COUNTY_AT_DX_ANALYSIS));
         _inputFields.add(Algorithms.getField(FIELD_CENSUS_2000));
         _inputFields.add(Algorithms.getField(FIELD_CENSUS_2010));
+        _inputFields.add(Algorithms.getField(FIELD_CENSUS_2020));
 
         // RUCA
         _outputFields.add(Algorithms.getField(FIELD_RUCA_2000));
         _outputFields.add(Algorithms.getField(FIELD_RUCA_2010));
+        _outputFields.add(Algorithms.getField(FIELD_RUCA_2020));
         _unknownValues.put(FIELD_RUCA_2000, Arrays.asList(RUCA_VAL_UNK_A, RUCA_VAL_UNK_D));
         _unknownValues.put(FIELD_RUCA_2010, Arrays.asList(RUCA_VAL_UNK_A, RUCA_VAL_UNK_D));
+        _unknownValues.put(FIELD_RUCA_2020, Arrays.asList(RUCA_VAL_UNK_A, RUCA_VAL_UNK_D));
 
         // URIC
         _outputFields.add(Algorithms.getField(FIELD_URIC_2000));
         _outputFields.add(Algorithms.getField(FIELD_URIC_2010));
+        _outputFields.add(Algorithms.getField(FIELD_URIC_2020));
         _unknownValues.put(FIELD_URIC_2000, Arrays.asList(URIC_VAL_UNK_A, URIC_VAL_UNK_D));
         _unknownValues.put(FIELD_URIC_2010, Arrays.asList(URIC_VAL_UNK_A, URIC_VAL_UNK_D));
+        _unknownValues.put(FIELD_URIC_2020, Arrays.asList(URIC_VAL_UNK_A, URIC_VAL_UNK_D));
 
         // Continuum
         _outputFields.add(Algorithms.getField(FIELD_RURAL_CONT_1993));
@@ -82,11 +90,13 @@ public class RuralUrbanAlgorithm extends AbstractAlgorithm {
             RuralUrbanOutputDto rucaOutputDto = RuralUrbanUtils.computeRuralUrbanCommutingArea(inputDto);
             outputTumor.put(FIELD_RUCA_2000, rucaOutputDto.getRuralUrbanCommutingArea2000());
             outputTumor.put(FIELD_RUCA_2010, rucaOutputDto.getRuralUrbanCommutingArea2010());
+            outputTumor.put(FIELD_RUCA_2020, rucaOutputDto.getRuralUrbanCommutingArea2020());
 
             // URIC
             RuralUrbanOutputDto uricOutputDto = RuralUrbanUtils.computeUrbanRuralIndicatorCode(inputDto);
             outputTumor.put(FIELD_URIC_2000, uricOutputDto.getUrbanRuralIndicatorCode2000());
             outputTumor.put(FIELD_URIC_2010, uricOutputDto.getUrbanRuralIndicatorCode2010());
+            outputTumor.put(FIELD_URIC_2020, uricOutputDto.getUrbanRuralIndicatorCode2020());
 
             // Continuum
             RuralUrbanOutputDto continuumOutputDto = RuralUrbanUtils.computeRuralUrbanContinuum(inputDto);

@@ -2,6 +2,11 @@
 
 **Changes in version 5.6**
 
+- Added "RUCA 2020" and "URIC 2020" variables to the "NAACCR Rural Urban Program" algorithm based on census 2020.
+- Added "Tract-Estimated 119th Congressional District" variable to "NAACCR Tract-Estimated Congressional Districts" algorithm based on census 2020, added 118th suffix to existing variable.
+- Added "CDC/ATSDR Social Vulnerability Index 2022" variable to "CDC/ATSDR Social Vulnerability Index" algorithm based on census 2020.
+- Added support for years 2018-2021 using census 2020 in "NAACCR Yost Quintile & Area-Based Social Measures Linkage Program" algorithm.
+- Added support for years 2018-2021 using census 2020 in "NAACCR Poverty Linkage Program" algorithm.
 - Added new "Breast Cancer Category" algorithm.
 
 **Changes in version 5.5**

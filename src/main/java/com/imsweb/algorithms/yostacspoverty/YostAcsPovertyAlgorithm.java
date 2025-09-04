@@ -21,6 +21,7 @@ import static com.imsweb.algorithms.Algorithms.FIELD_ACS_POV_WHITE_NON_HISP;
 import static com.imsweb.algorithms.Algorithms.FIELD_ACS_YOST_QUINTILE_STATE;
 import static com.imsweb.algorithms.Algorithms.FIELD_ACS_YOST_QUINTILE_US;
 import static com.imsweb.algorithms.Algorithms.FIELD_CENSUS_2010;
+import static com.imsweb.algorithms.Algorithms.FIELD_CENSUS_2020;
 import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS;
 import static com.imsweb.algorithms.Algorithms.FIELD_DX_DATE;
 import static com.imsweb.algorithms.Algorithms.FIELD_STATE_DX;
@@ -34,6 +35,7 @@ public class YostAcsPovertyAlgorithm extends AbstractAlgorithm {
         _inputFields.add(Algorithms.getField(FIELD_STATE_DX));
         _inputFields.add(Algorithms.getField(FIELD_COUNTY_AT_DX_ANALYSIS));
         _inputFields.add(Algorithms.getField(FIELD_CENSUS_2010));
+        _inputFields.add(Algorithms.getField(FIELD_CENSUS_2020));
 
         _outputFields.add(Algorithms.getField(FIELD_ACS_YOST_QUINTILE_US));
         _outputFields.add(Algorithms.getField(FIELD_ACS_YOST_QUINTILE_STATE));
@@ -61,6 +63,7 @@ public class YostAcsPovertyAlgorithm extends AbstractAlgorithm {
             inputDto.setAddressAtDxState((String)tumor.get(FIELD_STATE_DX));
             inputDto.setCountyAtDxAnalysis((String)tumor.get(FIELD_COUNTY_AT_DX_ANALYSIS));
             inputDto.setCensusTract2010((String)tumor.get(FIELD_CENSUS_2010));
+            inputDto.setCensusTract2020((String)tumor.get(FIELD_CENSUS_2020));
             inputDto.setDateOfDiagnosis((String)tumor.get(FIELD_DX_DATE));
 
             YostAcsPovertyOutputDto resultDto;

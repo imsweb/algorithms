@@ -40,15 +40,15 @@
 	<field name="cdcSubcounty20k" start="170" end="180" long-label="CDC Subcounty 20k Geography"/>
 	<field name="cdcSubcounty50k" start="181" end="191" long-label="CDC Subcounty 50k Geography"/>
 	<field name="persistentPoverty" start="192" end="192" long-label="Persistent Poverty"/>
-	<field name="sviSocioEconStatusUs" start="193" end="197" long-label="SVI - Socioeconomic Status - US Based"/>
-	<field name="sviHouseCompAndDisabUs" start="198" end="202" long-label="SVI - Household Composition and Disability - US Based"/>
-	<field name="sviMinorotyStatusAndLangUs" start="203" end="207" long-label="SVI - Minority Status and Language - US Based"/>
-	<field name="sviHousingTypeAndTranspUs" start="208" end="212" long-label="SVI - Housing Type and Transportation - US Based"/>
-	<field name="sviOverallUs" start="213" end="217" long-label="SVI Overall - US Based"/>
-	<field name="sviSocioEconStatusState" start="218" end="222" long-label="SVI - Socioeconomic Status - State Based"/>
-	<field name="sviHouseCompAndDisabState" start="223" end="227" long-label="SVI - Household Composition and Disability - State Based"/>
-	<field name="sviMinorotyStatusAndLangState" start="228" end="232" long-label="SVI - Minority Status and Language - State Based"/>
-	<field name="sviHousingTypeAndTranspState" start="233" end="237" long-label="SVI - Housing Type and Transportation - State Based"/>
-	<field name="sviOverallState" start="238" end="242" long-label="SVI Overall - State Based"/>
-	<field name="congressionalDistrict" start="243" end="246" long-label="Congressional District"/>
+	<field name="sviSocioEconStatusUs2018" start="193" end="197" long-label="SVI - Socioeconomic Status - US Based"/>
+	<field name="sviHouseCompAndDisabUs2018" start="198" end="202" long-label="SVI - Household Composition and Disability - US Based"/>
+	<field name="sviMinorotyStatusAndLangUs2018" start="203" end="207" long-label="SVI - Minority Status and Language - US Based"/>
+	<field name="sviHousingTypeAndTranspUs2018" start="208" end="212" long-label="SVI - Housing Type and Transportation - US Based"/>
+	<field name="sviOverallUs2018" start="213" end="217" long-label="SVI Overall - US Based"/>
+	<field name="sviSocioEconStatusState2018" start="218" end="222" long-label="SVI - Socioeconomic Status - State Based"/>
+	<field name="sviHouseCompAndDisabState2018" start="223" end="227" long-label="SVI - Household Composition and Disability - State Based"/>
+	<field name="sviMinorotyStatusAndLangState2018" start="228" end="232" long-label="SVI - Minority Status and Language - State Based"/>
+	<field name="sviHousingTypeAndTranspState2018" start="233" end="237" long-label="SVI - Housing Type and Transportation - State Based"/>
+	<field name="sviOverallState2018" start="238" end="242" long-label="SVI Overall - State Based"/>
+	<field name="congressionalDistrict118" start="243" end="246" long-label="Congressional District"/>
 </fixed-column-layout>

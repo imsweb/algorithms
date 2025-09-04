@@ -11,7 +11,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 public class StateCountyTractInputDto extends StateCountyInputDto {
 
     public enum CensusTract {
-        CENSUS_2000, CENSUS_2010
+        CENSUS_2000, CENSUS_2010, CENSUS_2020
     }
 
     //NAACCR values for missing or unknown census tract
@@ -19,24 +19,24 @@ public class StateCountyTractInputDto extends StateCountyInputDto {
 
     private String _censusTract2000;
     private String _censusTract2010;
+    private String _censusTract2020;
 
     @Override
     public void applyRecodes() {
         super.applyRecodes();
         _censusTract2000 = _censusTract2000 == null ? "" : _censusTract2000.trim();
         _censusTract2010 = _censusTract2010 == null ? "" : _censusTract2010.trim();
+        _censusTract2020 = _censusTract2020 == null ? "" : _censusTract2020.trim();
     }
 
     private String getCensusTractVariable(CensusTract censusTract) {
-        if (CensusTract.CENSUS_2000.equals(censusTract)) {
+        if (CensusTract.CENSUS_2000.equals(censusTract))
             return _censusTract2000;
-        }
-        else if (CensusTract.CENSUS_2010.equals(censusTract)) {
+        if (CensusTract.CENSUS_2010.equals(censusTract))
             return _censusTract2010;
-        }
-        else {
-            return null;
-        }
+        if (CensusTract.CENSUS_2020.equals(censusTract))
+            return _censusTract2020;
+        return null;
     }
 
     public boolean hasInvalidStateCountyOrCensusTract(CensusTract censusTract) {
@@ -83,5 +83,13 @@ public class StateCountyTractInputDto extends StateCountyInputDto {
 
     public void setCensusTract2010(String censusTract2010) {
         _censusTract2010 = censusTract2010;
+    }
+
+    public String getCensusTract2020() {
+        return _censusTract2020;
+    }
+
+    public void setCensusTract2020(String censusTract2020) {
+        _censusTract2020 = censusTract2020;
     }
 }

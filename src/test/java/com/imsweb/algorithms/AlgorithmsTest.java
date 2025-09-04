@@ -57,7 +57,7 @@ public class AlgorithmsTest {
 
     @Test
     public void testFields() throws IOException {
-        NaaccrDictionary dictionary = NaaccrXmlDictionaryUtils.getMergedDictionaries(NaaccrFormat.NAACCR_VERSION_230);
+        NaaccrDictionary dictionary = NaaccrXmlDictionaryUtils.getMergedDictionaries(NaaccrFormat.NAACCR_VERSION_250);
 
         Set<String> ids = new HashSet<>();
         Set<Integer> nums = new HashSet<>();
@@ -158,7 +158,7 @@ public class AlgorithmsTest {
 
         // Census Tract Poverty
         alg = Algorithms.getAlgorithm(Algorithms.ALG_CENSUS_POVERTY);
-        Assert.assertFalse(alg.getParameters().isEmpty());
+        Assert.assertTrue(alg.getParameters().isEmpty());
         Assert.assertFalse(alg.getUnknownValues().isEmpty());
         input = new AlgorithmInput();
         patMap = new HashMap<>();
@@ -166,7 +166,7 @@ public class AlgorithmsTest {
         tumMap = new HashMap<>();
         tumMap.put(Algorithms.FIELD_STATE_DX, "HI");
         tumMap.put(Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS, "003");
-        tumMap.put(Algorithms.FIELD_CENSUS_2000, "003405");
+        tumMap.put(Algorithms.FIELD_CENSUS_2010, "003405");
         tumMap.put(Algorithms.FIELD_DX_DATE, "20070101");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
         Assert.assertEquals("3", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_CENSUS_POVERTY_INDICTR));
