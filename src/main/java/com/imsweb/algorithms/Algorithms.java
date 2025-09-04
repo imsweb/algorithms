@@ -55,6 +55,9 @@ import static com.imsweb.algorithms.AlgorithmField.DATA_LEVEL_TUMOR;
  */
 public final class Algorithms {
 
+    // the NAACCR version that this library uses (it only matters because some fields are defined as standard vs non-standard, and that definition varies by NAACCR version)
+    public static final String NAACCR_VERSION = "250";
+
     // algorithm IDs
     public static final String ALG_NHIA = "nhia";
     public static final String ALG_NAPIIA = "napiia";
@@ -254,8 +257,8 @@ public final class Algorithms {
         try {
             // standard fields
             addField(AlgorithmField.of(FIELD_PAT_ID_NUMBER, 20, 8, "Patient ID Number", "Pat ID #", DATA_LEVEL_PATIENT));
-            addField(AlgorithmField.of(FIELD_NAME_LAST, 2230, 50, "Name--Last", "Last", DATA_LEVEL_PATIENT));
-            addField(AlgorithmField.of(FIELD_NAME_FIRST, 2240, 50, "Name--First", "First", DATA_LEVEL_PATIENT));
+            addField(AlgorithmField.of(FIELD_NAME_LAST, 2230, 40, "Name--Last", "Last", DATA_LEVEL_PATIENT));
+            addField(AlgorithmField.of(FIELD_NAME_FIRST, 2240, 40, "Name--First", "First", DATA_LEVEL_PATIENT));
             addField(AlgorithmField.of(FIELD_NAME_BIRTH_SURNAME, 2232, 40, "Name--Birth Surname", "Birth Sur", DATA_LEVEL_PATIENT));
             addField(AlgorithmField.of(FIELD_COUNTRY_BIRTH, 254, 3, "Birthplace--Country", "Birth Country", DATA_LEVEL_PATIENT));
             addField(AlgorithmField.of(FIELD_DATE_OF_BIRTH, 240, 8, "Date of Birth", "Birth Dt", DATA_LEVEL_PATIENT));
@@ -326,6 +329,7 @@ public final class Algorithms {
             addField(AlgorithmField.of(FIELD_TUMOR_SIZE, 2800, 3, "CS Tumor Size", "CS Size", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_EOD_TUMOR_SIZE, 780, 3, "EOD--Tumor Size", "EOD Size", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_TUMOR_SIZE_SUMMARY, 756, 3, "Tumor Size Summary", "Tumor Size Summary", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_DERIVED_SUMMARY_GRADE_2018, 1975, 1, "Derived Summary Grade 2018", "Der Sum Grade 18", DATA_LEVEL_TUMOR));
 
             // non-standard fields
             addField(AlgorithmField.of(FIELD_NAPIIA_NEEDS_REVIEW, 9430, 1, "NAPIIA Needs Review", "NAPIIA Rev", DATA_LEVEL_PATIENT, false));
@@ -360,7 +364,6 @@ public final class Algorithms {
             addField(AlgorithmField.of(FIELD_PERSISTENT_POVERTY, 9625, 1, "Persistence Poverty", "Persist Pov", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_SEER_BRAIN_CSN_RECODE_2020, 9455, 2, "SEER Brain/CNS Recode 2020", "Brain/CNS", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_SEER_LYMPH_NEO_RECODE_2021, 9450, 2, "SEER Lymphoid Neoplasm Recode 2021", "Lymph 21", DATA_LEVEL_TUMOR, false));
-            addField(AlgorithmField.of(FIELD_DERIVED_SUMMARY_GRADE_2018, 1975, 1, "Derived Summary Grade 2018", "Der Sum Grade 18", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_CDC_SVI_2018, 9600, 5, "CDC/ATSDR Social Vulnerability Index 2018", "CDC/ATSDR SVI 18", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_CDC_SVI_2022, 9601, 5, "CDC/ATSDR Social Vulnerability Index 2022", "CDC/ATSDR SVI 22", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_DAYS_TO_TREATMENT, 9750, 3, "Days from Diagnosis to Treatment", "Days to TX", DATA_LEVEL_TUMOR, false));

@@ -3,33 +3,23 @@
  */
 package com.imsweb.algorithms;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import de.siegmar.fastcsv.reader.CsvReader;
-import de.siegmar.fastcsv.reader.NamedCsvRecord;
-
 import com.imsweb.algorithms.countyatdiagnosisanalysis.CountyAtDxAnalysisUtils;
 import com.imsweb.algorithms.internal.Utils;
 import com.imsweb.algorithms.nhia.NhiaUtils;
-import com.imsweb.naaccrxml.NaaccrFormat;
 import com.imsweb.naaccrxml.NaaccrXmlDictionaryUtils;
 import com.imsweb.naaccrxml.entity.dictionary.NaaccrDictionary;
+import com.imsweb.naaccrxml.entity.dictionary.NaaccrDictionaryItem;
 
 public class AlgorithmsTest {
 
@@ -39,25 +29,9 @@ public class AlgorithmsTest {
             Algorithms.initialize();
     }
 
-    @SuppressWarnings("SameParameterValue")
-    private static String getBuildProperty(String property) {
-        File propsFile = new File(System.getProperty("user.dir") + "/build.properties");
-        if (!propsFile.exists())
-            throw new IllegalStateException("Unable to read properties from " + propsFile.getPath());
-
-        try (InputStream is = Files.newInputStream(propsFile.toPath())) {
-            Properties props = new Properties();
-            props.load(is);
-            return props.getProperty(property);
-        }
-        catch (IOException e) {
-            throw new IllegalStateException("Unable to load build properties file, make sure the file is a legit properties file.", e);
-        }
-    }
-
     @Test
-    public void testFields() throws IOException {
-        NaaccrDictionary dictionary = NaaccrXmlDictionaryUtils.getMergedDictionaries(NaaccrFormat.NAACCR_VERSION_250);
+    public void testFields() {
+        NaaccrDictionary dictionary = NaaccrXmlDictionaryUtils.getMergedDictionaries(Algorithms.NAACCR_VERSION);
 
         Set<String> ids = new HashSet<>();
         Set<Integer> nums = new HashSet<>();
@@ -79,28 +53,17 @@ public class AlgorithmsTest {
                 Assert.fail(field.getNumber() + " is not unique!");
             nums.add(field.getNumber());
 
+            NaaccrDictionaryItem dictionaryItem = dictionary.getItemByNaaccrNum(field.getNumber());
             if (field.isNaaccrStandard()) {
-                Assert.assertEquals(field.getId(), dictionary.getItemByNaaccrNum(field.getNumber()).getNaaccrId(), field.getId());
-                Assert.assertEquals(field.getId(), dictionary.getItemByNaaccrNum(field.getNumber()).getNaaccrName(), field.getName());
+                Assert.assertNotNull(field.getId(), dictionaryItem);
+                Assert.assertEquals(field.getId(), dictionaryItem.getNaaccrId(), field.getId());
+                Assert.assertEquals(field.getId(), dictionaryItem.getNaaccrName(), field.getName());
+                Assert.assertEquals(field.getId(), dictionaryItem.getLength(), field.getLength());
+                Assert.assertEquals(field.getId(), dictionaryItem.getParentXmlElement(), field.getDataLevel());
             }
+            else
+                Assert.assertNull(field.getId(), dictionaryItem);
         }
-
-        File nonStandardItemsFile = new File(getBuildProperty("non.standard.data.items.list"));
-        if (nonStandardItemsFile.exists()) {
-            Map<String, Integer> algNonStandardItems = new HashMap<>();
-            for (AlgorithmField field : Algorithms.getAllFields())
-                if (!field.isNaaccrStandard())
-                    algNonStandardItems.put(field.getId(), field.getNumber());
-
-            try (CsvReader<NamedCsvRecord> reader = CsvReader.builder().ofNamedCsvRecord(new InputStreamReader(Files.newInputStream(nonStandardItemsFile.toPath()), StandardCharsets.US_ASCII))) {
-                reader.stream().forEach(line -> {
-                    Integer algNum = algNonStandardItems.get(line.getField(0));
-                    if (algNum != null && algNum.equals(Integer.valueOf(line.getField(1))))
-                        Assert.fail("Item '" + line.getField(0) + "' has number " + algNum + " in this library, but " + line.getField(1) + " in the submission dictionaries");
-                });
-            }
-        }
-
     }
 
     @Test
