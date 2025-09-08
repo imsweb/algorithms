@@ -335,10 +335,10 @@ public final class Algorithms {
             addField(AlgorithmField.of(FIELD_SSF_1, 2880, 3, "CS Site-Specific Factor 1", "SSF 1", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_SSF_2, 2890, 3, "CS Site-Specific Factor 2", "SSF 2", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_SSF_9, 2863, 3, "CS Site-Specific Factor 9", "SSF 9", DATA_LEVEL_TUMOR));
-            addField(AlgorithmField.of(FIELD_SSF_11, 2865, 3, "CS Site-Specific Factor 11", "SSF 11", DATA_LEVEL_TUMOR));
-            addField(AlgorithmField.of(FIELD_SSF_13, 2867, 3, "CS Site-Specific Factor 13", "SSF 13", DATA_LEVEL_TUMOR));
-            addField(AlgorithmField.of(FIELD_SSF_14, 2868, 3, "CS Site-Specific Factor 14", "SSF 14", DATA_LEVEL_TUMOR));
-            addField(AlgorithmField.of(FIELD_SSF_15, 2869, 3, "CS Site-Specific Factor 15", "SSF 15", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_SSF_11, 2865, 3, "CS Site-Specific Factor11", "SSF 11", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_SSF_13, 2867, 3, "CS Site-Specific Factor13", "SSF 13", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_SSF_14, 2868, 3, "CS Site-Specific Factor14", "SSF 14", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_SSF_15, 2869, 3, "CS Site-Specific Factor15", "SSF 15", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_ESTROGEN_RECEPTOR_SUMMARY, 3827, 1, "Estrogen Receptor Summary", "Est Rec Sum", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_PROGESTERONE_RECEPTOR_SUMMARY, 3915, 1, "Progesterone Receptor Summary", "Pro Rec Sum", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_HER2_OVERALL_SUMMARY, 3855, 1, "HER2 Overall Summary", "HER2 Ov Sum", DATA_LEVEL_TUMOR));
