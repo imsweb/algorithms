@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 5.7**
+
+- Fixed fields not properly initialized for new "Breast Cancer Category" algorithm.
+
 **Changes in version 5.6**
 
 - Added "RUCA 2020" and "URIC 2020" variables to the "NAACCR Rural Urban Program" algorithm based on census 2020.

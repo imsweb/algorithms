@@ -167,13 +167,13 @@ public final class Algorithms {
     public static final String FIELD_TUMOR_SIZE_SUMMARY = "tumorSizeSummary";
     public static final String FIELD_TUMOR_MARKER_1 = "tumorMarker1";
     public static final String FIELD_TUMOR_MARKER_2 = "tumorMarker2";
-    public static final String FIELD_SSF_1 = "seerSiteSpecificFact1";
-    public static final String FIELD_SSF_2 = "seerSiteSpecificFact2";
-    public static final String FIELD_SSF_9 = "seerSiteSpecificFact9";
-    public static final String FIELD_SSF_11 = "seerSiteSpecificFact11";
-    public static final String FIELD_SSF_13 = "seerSiteSpecificFact13";
-    public static final String FIELD_SSF_14 = "seerSiteSpecificFact14";
-    public static final String FIELD_SSF_15 = "seerSiteSpecificFact15";
+    public static final String FIELD_SSF_1 = "csSiteSpecificFactor1";
+    public static final String FIELD_SSF_2 = "csSiteSpecificFactor2";
+    public static final String FIELD_SSF_9 = "csSiteSpecificFactor9";
+    public static final String FIELD_SSF_11 = "csSiteSpecificFactor11";
+    public static final String FIELD_SSF_13 = "csSiteSpecificFactor13";
+    public static final String FIELD_SSF_14 = "csSiteSpecificFactor14";
+    public static final String FIELD_SSF_15 = "csSiteSpecificFactor15";
     public static final String FIELD_ESTROGEN_RECEPTOR_SUMMARY = "estrogenReceptorSummary";
     public static final String FIELD_PROGESTERONE_RECEPTOR_SUMMARY = "progesteroneRecepSummary";
     public static final String FIELD_HER2_OVERALL_SUMMARY = "her2OverallSummary";
@@ -330,6 +330,18 @@ public final class Algorithms {
             addField(AlgorithmField.of(FIELD_EOD_TUMOR_SIZE, 780, 3, "EOD--Tumor Size", "EOD Size", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_TUMOR_SIZE_SUMMARY, 756, 3, "Tumor Size Summary", "Tumor Size Summary", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_DERIVED_SUMMARY_GRADE_2018, 1975, 1, "Derived Summary Grade 2018", "Der Sum Grade 18", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_TUMOR_MARKER_1, 1150, 1, "Tumor Marker 1", "Tum Mark 1", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_TUMOR_MARKER_2, 1160, 1, "Tumor Marker 2", "Tum Mark 2", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_SSF_1, 2880, 3, "CS Site-Specific Factor 1", "SSF 1", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_SSF_2, 2890, 3, "CS Site-Specific Factor 2", "SSF 2", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_SSF_9, 2863, 3, "CS Site-Specific Factor 9", "SSF 9", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_SSF_11, 2865, 3, "CS Site-Specific Factor 11", "SSF 11", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_SSF_13, 2867, 3, "CS Site-Specific Factor 13", "SSF 13", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_SSF_14, 2868, 3, "CS Site-Specific Factor 14", "SSF 14", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_SSF_15, 2869, 3, "CS Site-Specific Factor 15", "SSF 15", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_ESTROGEN_RECEPTOR_SUMMARY, 3827, 1, "Estrogen Receptor Summary", "Est Rec Sum", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_PROGESTERONE_RECEPTOR_SUMMARY, 3915, 1, "Progesterone Receptor Summary", "Pro Rec Sum", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_HER2_OVERALL_SUMMARY, 3855, 1, "HER2 Overall Summary", "HER2 Ov Sum", DATA_LEVEL_TUMOR));
 
             // non-standard fields
             addField(AlgorithmField.of(FIELD_NAPIIA_NEEDS_REVIEW, 9430, 1, "NAPIIA Needs Review", "NAPIIA Rev", DATA_LEVEL_PATIENT, false));
