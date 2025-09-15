@@ -37,10 +37,14 @@ public class CauseSpecificUtilsTest {
         // other cases are covered in the testCsvFile() method.
 
         // test optional SEER Site Recode parameter
+        input.setSequenceNumberCentral("01");
+        input.setIcdRevisionNumber("1");
+        input.setCauseOfDeath("B220");
+        input.setDateOfLastContactYear("2013");
         Assert.assertEquals("0", CauseSpecificUtils.computeCauseSpecific(input, 2012, VERSION_2023).getCauseSpecificDeathClassification());
         Assert.assertEquals("0", CauseSpecificUtils.computeCauseSpecific(input, 2012, VERSION_2023).getCauseOtherDeathClassification());
-        Assert.assertEquals("1", CauseSpecificUtils.computeCauseSpecific(input, Calendar.getInstance().get(Calendar.YEAR), VERSION_2023).getCauseSpecificDeathClassification());
-        Assert.assertEquals("0", CauseSpecificUtils.computeCauseSpecific(input, Calendar.getInstance().get(Calendar.YEAR), VERSION_2023).getCauseOtherDeathClassification());
+        Assert.assertEquals("0", CauseSpecificUtils.computeCauseSpecific(input, Calendar.getInstance().get(Calendar.YEAR), VERSION_2023).getCauseSpecificDeathClassification());
+        Assert.assertEquals("1", CauseSpecificUtils.computeCauseSpecific(input, Calendar.getInstance().get(Calendar.YEAR), VERSION_2023).getCauseOtherDeathClassification());
 
 
     }
