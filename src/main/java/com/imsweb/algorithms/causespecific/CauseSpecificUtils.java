@@ -35,8 +35,9 @@ public final class CauseSpecificUtils {
     public static final String MISSING_UNKNOWN_DEATH_OF_CODE = "8";
     public static final String SEQUENCE_NOT_APPLICABLE = "9";
 
-    //lookup for tables
-    private static final List<CauseSpecificDataDto> _DATA_SITE_SPECIFIC = new ArrayList<>();
+    //lookup for tables (lazily loaded)
+    private static final List<CauseSpecificDataDto> _DATA_SITE_SPECIFIC_2008 = new ArrayList<>();
+    private static final List<CauseSpecificDataDto> _DATA_SITE_SPECIFIC_2023 = new ArrayList<>();
 
     private CauseSpecificUtils() {
         // no instances of this class allowed!
@@ -56,7 +57,7 @@ public final class CauseSpecificUtils {
      * </ul>
      * <br/><br/>
      * @param input an input dto which has the fields used to compute cause specific values as parameter.
-     * @return the computed cause specific and cause other death classification values. The out put values are:
+     * @return the computed cause specific and cause other death classification values. The output values are:
      * <ul>
      * <li>ALIVE OR DEAD OF OTHER CAUSES = "0"</li>
      * <li>DEAD = "1"</li>
@@ -64,9 +65,35 @@ public final class CauseSpecificUtils {
      * <li>SEQUENCE NOT APPLICABLE = "9"</li>
      * </ul>
      */
-
     public static CauseSpecificResultDto computeCauseSpecific(CauseSpecificInputDto input) {
-        return computeCauseSpecific(input, Calendar.getInstance().get(Calendar.YEAR));
+        return computeCauseSpecific(input, Calendar.getInstance().get(Calendar.YEAR), SeerSiteRecodeUtils.VERSION_DEFAULT);
+    }
+
+    /**
+     * Calculates cause specific and cause other death classification values for the provided input dto.
+     * <br/><br/>
+     * The input dto may have the following parameters:
+     * <ul>
+     * <li>sequenceNumberCentral</li>
+     * <li>icdRevisionNumber</li>
+     * <li>causeOfDeath</li>
+     * <li>primarySite</li>
+     * <li>histologyIcdO3</li>
+     * <li>dateOfLastContactYear</li>
+     * </ul>
+     * <br/><br/>
+     * @param input an input dto which has the fields used to compute cause specific values as parameter.
+     * @param cutOffYear submission year, if date of last contact is beyond this year, patient is assumed alive.
+     * @return the computed cause specific and cause other death classification values. The output values are:
+     * <ul>
+     * <li>ALIVE OR DEAD OF OTHER CAUSES = "0"</li>
+     * <li>DEAD = "1"</li>
+     * <li>MISSING UNKNOWN DEATH CODE = "8"</li>
+     * <li>SEQUENCE NOT APPLICABLE = "9"</li>
+     * </ul>
+     */
+    public static CauseSpecificResultDto computeCauseSpecific(CauseSpecificInputDto input, int cutOffYear) {
+        return computeCauseSpecific(input, cutOffYear, SeerSiteRecodeUtils.VERSION_DEFAULT);
     }
 
     /**
@@ -84,7 +111,8 @@ public final class CauseSpecificUtils {
      * <br/><br/>
      * @param input an input dto which has the fields used to compute cause specific values as parameter.
      * @param cutOffYear submission year, if date of last contact is beyond this year, patient is assumed alive.
-     * @return the computed cause specific and cause other death classification values. The out put values are:
+     * @param seerSiteRecodeVersion the SEER Site Recode verion to use
+     * @return the computed cause specific and cause other death classification values. The output values are:
      * <ul>
      * <li>ALIVE OR DEAD OF OTHER CAUSES = "0"</li>
      * <li>DEAD = "1"</li>
@@ -93,7 +121,7 @@ public final class CauseSpecificUtils {
      * </ul>
      */
     @SuppressWarnings({"DuplicateExpressions", "java:S1871"}) // branches with the same outcome
-    public static CauseSpecificResultDto computeCauseSpecific(CauseSpecificInputDto input, int cutOffYear) {
+    public static CauseSpecificResultDto computeCauseSpecific(CauseSpecificInputDto input, int cutOffYear, String seerSiteRecodeVersion) {
         CauseSpecificResultDto result = new CauseSpecificResultDto();
 
         int seq = NumberUtils.isDigits(input.getSequenceNumberCentral()) ? Integer.parseInt(input.getSequenceNumberCentral()) : -1;
@@ -121,7 +149,7 @@ public final class CauseSpecificUtils {
         int hist = NumberUtils.toInt(input.getHistologyIcdO3(), -1);
         String cod = input.getCauseOfDeath().toUpperCase();
         String cod3dig = cod.substring(0, 3);
-        String recode = SeerSiteRecodeUtils.calculateSiteRecode(SeerSiteRecodeUtils.VERSION_DEFAULT, input.getPrimarySite(), input.getHistologyIcdO3());
+        String recode = SeerSiteRecodeUtils.calculateSiteRecode(seerSiteRecodeVersion, input.getPrimarySite(), input.getHistologyIcdO3());
 
         // first do all the non-site-specific checks; some condition could be added to the text file which represents the tables. But I decided to use the same file and same structure of code as SAS
         int causeSpecific = 0;
@@ -185,12 +213,13 @@ public final class CauseSpecificUtils {
             return result;
         }
 
-        for (CauseSpecificDataDto obj : getData())
+        for (CauseSpecificDataDto obj : getData(seerSiteRecodeVersion)) {
             if (obj.doesMatchThisRow(input.getIcdRevisionNumber(), seq == 0 ? "0" : "1-59", recode, cod)) {
                 result.setCauseSpecificDeathClassification(DEAD);
                 result.setCauseOtherDeathClassification(ALIVE_OR_DEAD_OF_OTHER_CAUSES);
                 return result;
             }
+        }
 
         //If not found in the table cause-specific = '0' and cause- other = '1'
         result.setCauseSpecificDeathClassification(ALIVE_OR_DEAD_OF_OTHER_CAUSES);
@@ -198,29 +227,41 @@ public final class CauseSpecificUtils {
         return result;
     }
 
-    static synchronized List<CauseSpecificDataDto> getData() {
-        if (_DATA_SITE_SPECIFIC.isEmpty()) {
-            try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("causespecific/data.txt")) {
-                if (is == null)
-                    throw new IllegalStateException("Unable to read causespecific/data.txt");
+    private static synchronized List<CauseSpecificDataDto> getData(String version) {
+        if (SeerSiteRecodeUtils.VERSION_2008.equals(version)) {
+            if (_DATA_SITE_SPECIFIC_2008.isEmpty())
+                loadData("data_2008.txt", _DATA_SITE_SPECIFIC_2008);
+            return _DATA_SITE_SPECIFIC_2008;
+        }
+        else if (SeerSiteRecodeUtils.VERSION_2023.equals(version)) {
+            if (_DATA_SITE_SPECIFIC_2023.isEmpty())
+                loadData("data_2023.txt", _DATA_SITE_SPECIFIC_2023);
+            return _DATA_SITE_SPECIFIC_2023;
+        }
+        else
+            throw new IllegalArgumentException("Unsupported SEER Site Recode version: " + version);
+    }
 
-                try (LineNumberReader reader = new LineNumberReader(new InputStreamReader(is, StandardCharsets.US_ASCII))) {
-                    String line = reader.readLine();
+    private static void loadData(String filename, List<CauseSpecificDataDto> result) {
+        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("causespecific/" + filename)) {
+            if (is == null)
+                throw new IllegalStateException("Unable to find data file '" + filename + "'");
 
-                    //skip first line
-                    if (reader.getLineNumber() == 1)
-                        line = reader.readLine();
+            try (LineNumberReader reader = new LineNumberReader(new InputStreamReader(is, StandardCharsets.US_ASCII))) {
+                String line = reader.readLine();
 
-                    while (line != null) {
-                        _DATA_SITE_SPECIFIC.add(new CauseSpecificDataDto(StringUtils.split(line, ';')));
-                        line = reader.readLine();
-                    }
+                //skip first line
+                if (reader.getLineNumber() == 1)
+                    line = reader.readLine();
+
+                while (line != null) {
+                    result.add(new CauseSpecificDataDto(StringUtils.split(line, ';')));
+                    line = reader.readLine();
                 }
             }
-            catch (IOException e) {
-                throw new IllegalStateException(e);
-            }
         }
-        return _DATA_SITE_SPECIFIC;
+        catch (IOException e) {
+            throw new IllegalStateException("Unable to load " + filename, e);
+        }
     }
 }

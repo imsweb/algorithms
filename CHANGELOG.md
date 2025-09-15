@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 5.8 (not released yet)**
+
+- Added optional parameter to Cause of Death Classification utility methods to run the logic of the algorithm using a different SEER Site Recode version.
+
 **Changes in version 5.7**
 
 - Fixed fields not properly initialized for new "Breast Cancer Category" algorithm.
