@@ -56,7 +56,7 @@ public final class CauseSpecificUtils {
      * </ul>
      * <br/><br/>
      * @param input an input dto which has the fields used to compute cause specific values as parameter.
-     * @return the computed cause specific and cause other death classification values. The out put values are:
+     * @return the computed cause specific and cause other death classification values. The output values are:
      * <ul>
      * <li>ALIVE OR DEAD OF OTHER CAUSES = "0"</li>
      * <li>DEAD = "1"</li>
@@ -64,9 +64,35 @@ public final class CauseSpecificUtils {
      * <li>SEQUENCE NOT APPLICABLE = "9"</li>
      * </ul>
      */
-
     public static CauseSpecificResultDto computeCauseSpecific(CauseSpecificInputDto input) {
-        return computeCauseSpecific(input, Calendar.getInstance().get(Calendar.YEAR));
+        return computeCauseSpecific(input, Calendar.getInstance().get(Calendar.YEAR), SeerSiteRecodeUtils.VERSION_DEFAULT);
+    }
+
+    /**
+     * Calculates cause specific and cause other death classification values for the provided input dto.
+     * <br/><br/>
+     * The input dto may have the following parameters:
+     * <ul>
+     * <li>sequenceNumberCentral</li>
+     * <li>icdRevisionNumber</li>
+     * <li>causeOfDeath</li>
+     * <li>primarySite</li>
+     * <li>histologyIcdO3</li>
+     * <li>dateOfLastContactYear</li>
+     * </ul>
+     * <br/><br/>
+     * @param input an input dto which has the fields used to compute cause specific values as parameter.
+     * @param cutOffYear submission year, if date of last contact is beyond this year, patient is assumed alive.
+     * @return the computed cause specific and cause other death classification values. The output values are:
+     * <ul>
+     * <li>ALIVE OR DEAD OF OTHER CAUSES = "0"</li>
+     * <li>DEAD = "1"</li>
+     * <li>MISSING UNKNOWN DEATH CODE = "8"</li>
+     * <li>SEQUENCE NOT APPLICABLE = "9"</li>
+     * </ul>
+     */
+    public static CauseSpecificResultDto computeCauseSpecific(CauseSpecificInputDto input, int cutOffYear) {
+        return computeCauseSpecific(input, cutOffYear, SeerSiteRecodeUtils.VERSION_DEFAULT);
     }
 
     /**
@@ -84,7 +110,8 @@ public final class CauseSpecificUtils {
      * <br/><br/>
      * @param input an input dto which has the fields used to compute cause specific values as parameter.
      * @param cutOffYear submission year, if date of last contact is beyond this year, patient is assumed alive.
-     * @return the computed cause specific and cause other death classification values. The out put values are:
+     * @param seerSiteRecodeVersion the SEER Site Recode verion to use
+     * @return the computed cause specific and cause other death classification values. The output values are:
      * <ul>
      * <li>ALIVE OR DEAD OF OTHER CAUSES = "0"</li>
      * <li>DEAD = "1"</li>
@@ -93,7 +120,7 @@ public final class CauseSpecificUtils {
      * </ul>
      */
     @SuppressWarnings({"DuplicateExpressions", "java:S1871"}) // branches with the same outcome
-    public static CauseSpecificResultDto computeCauseSpecific(CauseSpecificInputDto input, int cutOffYear) {
+    public static CauseSpecificResultDto computeCauseSpecific(CauseSpecificInputDto input, int cutOffYear, String seerSiteRecodeVersion) {
         CauseSpecificResultDto result = new CauseSpecificResultDto();
 
         int seq = NumberUtils.isDigits(input.getSequenceNumberCentral()) ? Integer.parseInt(input.getSequenceNumberCentral()) : -1;
@@ -185,12 +212,13 @@ public final class CauseSpecificUtils {
             return result;
         }
 
-        for (CauseSpecificDataDto obj : getData())
+        for (CauseSpecificDataDto obj : getData(seerSiteRecodeVersion)) {
             if (obj.doesMatchThisRow(input.getIcdRevisionNumber(), seq == 0 ? "0" : "1-59", recode, cod)) {
                 result.setCauseSpecificDeathClassification(DEAD);
                 result.setCauseOtherDeathClassification(ALIVE_OR_DEAD_OF_OTHER_CAUSES);
                 return result;
             }
+        }
 
         //If not found in the table cause-specific = '0' and cause- other = '1'
         result.setCauseSpecificDeathClassification(ALIVE_OR_DEAD_OF_OTHER_CAUSES);
@@ -198,11 +226,20 @@ public final class CauseSpecificUtils {
         return result;
     }
 
-    static synchronized List<CauseSpecificDataDto> getData() {
+    static synchronized List<CauseSpecificDataDto> getData(String version) {
+
+        String file;
+        if (SeerSiteRecodeUtils.VERSION_2008.equals(version))
+            file = "data_2008.txt";
+        else if (SeerSiteRecodeUtils.VERSION_2023.equals(version))
+            file = "data_2023.txt";
+        else
+            throw new IllegalArgumentException("Unsupported SEER Site Recode version: " + version);
+
         if (_DATA_SITE_SPECIFIC.isEmpty()) {
-            try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("causespecific/data.txt")) {
+            try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("causespecific/" + file)) {
                 if (is == null)
-                    throw new IllegalStateException("Unable to read causespecific/data.txt");
+                    throw new IllegalStateException("Unable to find data file '" + file + "'");
 
                 try (LineNumberReader reader = new LineNumberReader(new InputStreamReader(is, StandardCharsets.US_ASCII))) {
                     String line = reader.readLine();
