@@ -35,8 +35,9 @@ public final class CauseSpecificUtils {
     public static final String MISSING_UNKNOWN_DEATH_OF_CODE = "8";
     public static final String SEQUENCE_NOT_APPLICABLE = "9";
 
-    //lookup for tables
-    private static final List<CauseSpecificDataDto> _DATA_SITE_SPECIFIC = new ArrayList<>();
+    //lookup for tables (lazily loaded)
+    private static final List<CauseSpecificDataDto> _DATA_SITE_SPECIFIC_2008 = new ArrayList<>();
+    private static final List<CauseSpecificDataDto> _DATA_SITE_SPECIFIC_2023 = new ArrayList<>();
 
     private CauseSpecificUtils() {
         // no instances of this class allowed!
@@ -226,38 +227,41 @@ public final class CauseSpecificUtils {
         return result;
     }
 
-    static synchronized List<CauseSpecificDataDto> getData(String version) {
-
-        String file;
-        if (SeerSiteRecodeUtils.VERSION_2008.equals(version))
-            file = "data_2008.txt";
-        else if (SeerSiteRecodeUtils.VERSION_2023.equals(version))
-            file = "data_2023.txt";
+    private static synchronized List<CauseSpecificDataDto> getData(String version) {
+        if (SeerSiteRecodeUtils.VERSION_2008.equals(version)) {
+            if (_DATA_SITE_SPECIFIC_2008.isEmpty())
+                loadData("data_2008.txt", _DATA_SITE_SPECIFIC_2008);
+            return _DATA_SITE_SPECIFIC_2008;
+        }
+        else if (SeerSiteRecodeUtils.VERSION_2023.equals(version)) {
+            if (_DATA_SITE_SPECIFIC_2023.isEmpty())
+                loadData("data_2023.txt", _DATA_SITE_SPECIFIC_2023);
+            return _DATA_SITE_SPECIFIC_2023;
+        }
         else
             throw new IllegalArgumentException("Unsupported SEER Site Recode version: " + version);
+    }
 
-        if (_DATA_SITE_SPECIFIC.isEmpty()) {
-            try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("causespecific/" + file)) {
-                if (is == null)
-                    throw new IllegalStateException("Unable to find data file '" + file + "'");
+    private static void loadData(String filename, List<CauseSpecificDataDto> result) {
+        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("causespecific/" + filename)) {
+            if (is == null)
+                throw new IllegalStateException("Unable to find data file '" + filename + "'");
 
-                try (LineNumberReader reader = new LineNumberReader(new InputStreamReader(is, StandardCharsets.US_ASCII))) {
-                    String line = reader.readLine();
+            try (LineNumberReader reader = new LineNumberReader(new InputStreamReader(is, StandardCharsets.US_ASCII))) {
+                String line = reader.readLine();
 
-                    //skip first line
-                    if (reader.getLineNumber() == 1)
-                        line = reader.readLine();
+                //skip first line
+                if (reader.getLineNumber() == 1)
+                    line = reader.readLine();
 
-                    while (line != null) {
-                        _DATA_SITE_SPECIFIC.add(new CauseSpecificDataDto(StringUtils.split(line, ';')));
-                        line = reader.readLine();
-                    }
+                while (line != null) {
+                    result.add(new CauseSpecificDataDto(StringUtils.split(line, ';')));
+                    line = reader.readLine();
                 }
             }
-            catch (IOException e) {
-                throw new IllegalStateException(e);
-            }
         }
-        return _DATA_SITE_SPECIFIC;
+        catch (IOException e) {
+            throw new IllegalStateException("Unable to load " + filename, e);
+        }
     }
 }
