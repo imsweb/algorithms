@@ -15,6 +15,8 @@ import org.junit.Test;
 import com.imsweb.algorithms.AlgorithmInput;
 import com.imsweb.algorithms.Algorithms;
 
+import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
+
 public class UtilsTest {
 
     @Test
@@ -54,16 +56,35 @@ public class UtilsTest {
     public void testExtractTumors() {
         Map<String, Object> patMap = new HashMap<>();
         Assert.assertTrue(Utils.extractTumors(patMap).isEmpty());
-        Assert.assertFalse(Utils.extractTumors(patMap, true).isEmpty());
 
         List<Map<String, Object>> tumList = new ArrayList<>();
         patMap.put(Algorithms.FIELD_TUMORS, tumList);
         Assert.assertTrue(Utils.extractTumors(patMap).isEmpty());
-        Assert.assertFalse(Utils.extractTumors(patMap, true).isEmpty());
 
         tumList.add(Collections.singletonMap("key", "value"));
         Assert.assertFalse(Utils.extractTumors(patMap).isEmpty());
-        Assert.assertFalse(Utils.extractTumors(patMap, true).isEmpty());
+    }
+
+    @Test
+    public void testCreatePatientOutput() {
+        Map<String, Object> patient = Utils.createPatientOutput();
+        Assert.assertEquals(1, patient.size());
+        Assert.assertTrue(patient.containsKey(FIELD_TUMORS));
+        Assert.assertEquals(new ArrayList<>(), patient.get(FIELD_TUMORS));
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testAddTumorOutput() {
+        Map<String, Object> tumor = new HashMap<>();
+
+        Map<String, Object> patient = Utils.createPatientOutput();
+        Utils.addTumorOutput(patient, tumor);
+        Assert.assertEquals(1, ((List<Map<String, Object>>)patient.get(FIELD_TUMORS)).size());
+
+        patient = new HashMap<>();
+        Utils.addTumorOutput(patient, tumor);
+        Assert.assertEquals(1, ((List<Map<String, Object>>)patient.get(FIELD_TUMORS)).size());
     }
 
     @Test

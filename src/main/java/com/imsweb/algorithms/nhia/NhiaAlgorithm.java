@@ -6,6 +6,7 @@ package com.imsweb.algorithms.nhia;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.imsweb.algorithms.AbstractAlgorithm;
@@ -56,8 +57,14 @@ public class NhiaAlgorithm extends AbstractAlgorithm {
     public AlgorithmOutput execute(AlgorithmInput input) {
         NhiaInputPatientDto inputPatient = new NhiaInputPatientDto();
         inputPatient.setNhiaInputPatientDtoList(new ArrayList<>());
+
+        // NHIA uses a couple of tumor-level fields; because of that, we want at least one tumor to be present in the input (because the utility method requires at least one)...
         Map<String, Object> patientMap = Utils.extractPatient(input);
-        for (Map<String, Object> tumorMap : Utils.extractTumors(patientMap, true)) {
+        List<Map<String, Object>> tumorList = Utils.extractTumors(patientMap);
+        if (tumorList.isEmpty())
+            tumorList.add(new HashMap<>());
+
+        for (Map<String, Object> tumorMap : tumorList) {
             NhiaInputRecordDto dto = new NhiaInputRecordDto();
             dto.setSpanishHispanicOrigin((String)patientMap.get(FIELD_SPAN_HISP_OR));
             dto.setBirthplaceCountry((String)patientMap.get(FIELD_COUNTRY_BIRTH));

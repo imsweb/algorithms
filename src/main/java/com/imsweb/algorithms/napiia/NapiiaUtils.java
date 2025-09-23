@@ -102,38 +102,6 @@ public final class NapiiaUtils {
     }
 
     /**
-     * Calculates the NAPIIA value for the provided Patient DTO.
-     * <br/><br/>
-     * The provided patient dto has a list of record input dto. The record Dto has the following parameters.
-     * <ul>
-     * <li>race1</li>
-     * <li>race2</li>
-     * <li>race3</li>
-     * <li>race4</li>
-     * <li>race5</li>
-     * <li>spanishHispanicOrigin</li>
-     * <li>birthplaceCountry</li>
-     * <li>sex</li>
-     * <li>nameLast</li>
-     * <li>nameMaiden</li>
-     * <li>nameBirthSurname</li>
-     * <li>nameFirst</li>
-     * </ul>
-     * <br/><br/>
-     * This algorithm returns a result containing the calculated value, a boolean indication whether a human review is required, in which case
-     * a reason is also provided.
-     * @param patient Dto
-     * @return the computed NAPIIA Results Dto, which has a calculated napiia value, a boolean which indicates whether a human review is needed or not and a reason if human review is required
-     */
-    public static NapiiaResultsDto computeNapiia(NapiiaInputPatientDto patient) {
-        NapiiaInputRecordDto input = new NapiiaInputRecordDto();
-        //Since the properties used to calculate napiia are the same for all record of a patient lets use one of them and build a record input dto
-        if (patient != null && patient.getNapiiaInputPatientDtoList() != null && !patient.getNapiiaInputPatientDtoList().isEmpty())
-            input = patient.getNapiiaInputPatientDtoList().get(0);
-        return computeNapiia(input);
-    }
-
-    /**
      * Calculates the NAPIIA value for the provided Record DTO.
      * <br/><br/>
      * The provided record Dto has the following parameters.

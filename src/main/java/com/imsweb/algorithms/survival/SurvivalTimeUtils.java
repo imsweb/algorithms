@@ -56,8 +56,9 @@ public final class SurvivalTimeUtils {
     public static SurvivalTimeOutputPatientDto calculateSurvivalTime(SurvivalTimeInputPatientDto input, int endPointYear) {
 
         SurvivalTimeOutputPatientDto patientResultsDto = new SurvivalTimeOutputPatientDto();
+        patientResultsDto.setSurvivalTimeOutputPatientDtoList(new ArrayList<>());
 
-        if (input == null || input.getSurvivalTimeInputPatientDtoList().isEmpty())
+        if (input == null || input.getSurvivalTimeInputPatientDtoList() == null || input.getSurvivalTimeInputPatientDtoList().isEmpty())
             return patientResultsDto;
 
         List<SurvivalTimeInputRecordDto> allRecords = input.getSurvivalTimeInputPatientDtoList();

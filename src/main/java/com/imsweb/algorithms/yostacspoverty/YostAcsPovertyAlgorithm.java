@@ -1,8 +1,6 @@
 package com.imsweb.algorithms.yostacspoverty;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.imsweb.algorithms.AbstractAlgorithm;
@@ -50,14 +48,9 @@ public class YostAcsPovertyAlgorithm extends AbstractAlgorithm {
 
     @Override
     public AlgorithmOutput execute(AlgorithmInput input) {
-        Map<String, Object> outputPatient = new HashMap<>();
-        List<Map<String, Object>> outputTumors = new ArrayList<>();
-        outputPatient.put("tumors", outputTumors);
+        Map<String, Object> outputPatient = Utils.createPatientOutput();
 
-        Map<String, Object> inputPatient = Utils.extractPatient(input);
-        List<Map<String, Object>> tumors = Utils.extractTumors(inputPatient);
-
-        for (Map<String, Object> tumor : tumors) {
+        for (Map<String, Object> tumor : Utils.extractTumors(input)) {
             YostAcsPovertyInputDto inputDto = new YostAcsPovertyInputDto();
 
             inputDto.setAddressAtDxState((String)tumor.get(FIELD_STATE_DX));
@@ -79,8 +72,9 @@ public class YostAcsPovertyAlgorithm extends AbstractAlgorithm {
             outputTumor.put(FIELD_ACS_POV_WHITE_NON_HISP, resultDto.getAcsPctPovWhiteNonHisp());
             outputTumor.put(FIELD_ACS_POV_HISP, resultDto.getAcsPctPovHispanic());
 
-            outputTumors.add(outputTumor);
+            Utils.addTumorOutput(outputPatient, outputTumor);
         }
+
         return AlgorithmOutput.of(outputPatient);
     }
 }

@@ -3,9 +3,7 @@
  */
 package com.imsweb.algorithms.tumorsizeovertime;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.imsweb.algorithms.AbstractAlgorithm;
@@ -19,7 +17,6 @@ import static com.imsweb.algorithms.Algorithms.FIELD_DX_DATE;
 import static com.imsweb.algorithms.Algorithms.FIELD_EOD_TUMOR_SIZE;
 import static com.imsweb.algorithms.Algorithms.FIELD_HIST_O3;
 import static com.imsweb.algorithms.Algorithms.FIELD_PRIMARY_SITE;
-import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
 import static com.imsweb.algorithms.Algorithms.FIELD_TUMOR_SIZE;
 import static com.imsweb.algorithms.Algorithms.FIELD_TUMOR_SIZE_OVER_TIME;
 import static com.imsweb.algorithms.Algorithms.FIELD_TUMOR_SIZE_SUMMARY;
@@ -42,11 +39,9 @@ public class TumorSizeOverTimeAlgorithm extends AbstractAlgorithm {
 
     @Override
     public AlgorithmOutput execute(AlgorithmInput input) {
-        Map<String, Object> outputPatient = new HashMap<>();
-        List<Map<String, Object>> outputTumors = new ArrayList<>();
-        outputPatient.put(FIELD_TUMORS, outputTumors);
+        Map<String, Object> outputPatient = Utils.createPatientOutput();
 
-        for (Map<String, Object> inputTumor : Utils.extractTumors(Utils.extractPatient(input))) {
+        for (Map<String, Object> inputTumor : Utils.extractTumors(input)) {
             TumorSizeOverTimeInputDto inputDto = new TumorSizeOverTimeInputDto();
             inputDto.setDxYear(Utils.extractYear((String)inputTumor.get(FIELD_DX_DATE)));
             inputDto.setEodTumorSize((String)inputTumor.get(FIELD_EOD_TUMOR_SIZE));
@@ -59,7 +54,7 @@ public class TumorSizeOverTimeAlgorithm extends AbstractAlgorithm {
             Map<String, Object> outputTumor = new HashMap<>();
             outputTumor.put(FIELD_TUMOR_SIZE_OVER_TIME, TumorSizeOverTimeUtils.computeTumorSizeOverTime(inputDto));
 
-            outputTumors.add(outputTumor);
+            Utils.addTumorOutput(outputPatient, outputTumor);
         }
 
         return AlgorithmOutput.of(outputPatient);

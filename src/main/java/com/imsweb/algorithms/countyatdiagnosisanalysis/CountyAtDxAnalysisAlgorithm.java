@@ -3,9 +3,7 @@
  */
 package com.imsweb.algorithms.countyatdiagnosisanalysis;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.imsweb.algorithms.AbstractAlgorithm;
@@ -27,7 +25,6 @@ import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_AT_DX_GEOCODE_2020;
 import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_DX;
 import static com.imsweb.algorithms.Algorithms.FIELD_DX_DATE;
 import static com.imsweb.algorithms.Algorithms.FIELD_STATE_DX;
-import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
 
 public class CountyAtDxAnalysisAlgorithm extends AbstractAlgorithm {
 
@@ -54,11 +51,9 @@ public class CountyAtDxAnalysisAlgorithm extends AbstractAlgorithm {
 
     @Override
     public AlgorithmOutput execute(AlgorithmInput input) {
-        Map<String, Object> patient = new HashMap<>();
-        List<Map<String, Object>> outputTumors = new ArrayList<>();
-        patient.put(FIELD_TUMORS, outputTumors);
+        Map<String, Object> outputPatient = Utils.createPatientOutput();
 
-        for (Map<String, Object> inputTumor : Utils.extractTumors(Utils.extractPatient(input))) {
+        for (Map<String, Object> inputTumor : Utils.extractTumors(input)) {
             CountyAtDxAnalysisInputDto inputDto = new CountyAtDxAnalysisInputDto();
             inputDto.setDateOfDiagnosis((String)inputTumor.get(FIELD_DX_DATE));
             inputDto.setAddrAtDxState((String)inputTumor.get(FIELD_STATE_DX));
@@ -77,10 +72,10 @@ public class CountyAtDxAnalysisAlgorithm extends AbstractAlgorithm {
             Map<String, Object> outputTumor = new HashMap<>();
             outputTumor.put(FIELD_COUNTY_AT_DX_ANALYSIS, output.getCountyAtDxAnalysis());
             outputTumor.put(FIELD_COUNTY_AT_DX_ANALYSIS_FLAG, output.getCountyAtDxAnalysisFlag());
-            outputTumors.add(outputTumor);
+            Utils.addTumorOutput(outputPatient, outputTumor);
         }
 
-        return AlgorithmOutput.of(patient);
+        return AlgorithmOutput.of(outputPatient);
 
     }
 }
