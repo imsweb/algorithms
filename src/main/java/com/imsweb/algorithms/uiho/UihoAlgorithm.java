@@ -3,10 +3,8 @@
  */
 package com.imsweb.algorithms.uiho;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.imsweb.algorithms.AbstractAlgorithm;
@@ -18,7 +16,6 @@ import com.imsweb.algorithms.internal.Utils;
 
 import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS;
 import static com.imsweb.algorithms.Algorithms.FIELD_STATE_DX;
-import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
 import static com.imsweb.algorithms.Algorithms.FIELD_UIHO;
 import static com.imsweb.algorithms.Algorithms.FIELD_UIHO_CITY;
 import static com.imsweb.algorithms.uiho.UihoUtils.UIHO_CITY_UNKNOWN;
@@ -41,11 +38,9 @@ public class UihoAlgorithm extends AbstractAlgorithm {
 
     @Override
     public AlgorithmOutput execute(AlgorithmInput input) {
-        Map<String, Object> outputPatient = new HashMap<>();
-        List<Map<String, Object>> outputTumors = new ArrayList<>();
-        outputPatient.put(FIELD_TUMORS, outputTumors);
+        Map<String, Object> outputPatient = Utils.createPatientOutput();
 
-        for (Map<String, Object> inputTumor : Utils.extractTumors(Utils.extractPatient(input))) {
+        for (Map<String, Object> inputTumor : Utils.extractTumors(input)) {
             StateCountyInputDto inputDto = new StateCountyInputDto();
             inputDto.setAddressAtDxState((String)inputTumor.get(FIELD_STATE_DX));
             inputDto.setCountyAtDxAnalysis((String)inputTumor.get(FIELD_COUNTY_AT_DX_ANALYSIS));
@@ -56,7 +51,7 @@ public class UihoAlgorithm extends AbstractAlgorithm {
             outputTumor.put(FIELD_UIHO, outputDto.getUiho());
             outputTumor.put(FIELD_UIHO_CITY, outputDto.getUihoCity());
 
-            outputTumors.add(outputTumor);
+            Utils.addTumorOutput(outputPatient, outputTumor);
         }
 
         return AlgorithmOutput.of(outputPatient);

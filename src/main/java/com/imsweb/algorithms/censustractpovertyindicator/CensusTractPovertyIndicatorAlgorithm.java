@@ -3,10 +3,7 @@
  */
 package com.imsweb.algorithms.censustractpovertyindicator;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.imsweb.algorithms.AbstractAlgorithm;
@@ -22,7 +19,6 @@ import static com.imsweb.algorithms.Algorithms.FIELD_CENSUS_POVERTY_INDICTR;
 import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS;
 import static com.imsweb.algorithms.Algorithms.FIELD_DX_DATE;
 import static com.imsweb.algorithms.Algorithms.FIELD_STATE_DX;
-import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
 
 public class CensusTractPovertyIndicatorAlgorithm extends AbstractAlgorithm {
 
@@ -45,11 +41,9 @@ public class CensusTractPovertyIndicatorAlgorithm extends AbstractAlgorithm {
 
     @Override
     public AlgorithmOutput execute(AlgorithmInput input) {
-        Map<String, Object> outputPatient = new HashMap<>();
-        List<Map<String, Object>> outputTumors = new ArrayList<>();
-        outputPatient.put(FIELD_TUMORS, outputTumors);
+        Map<String, Object> outputPatient = Utils.createPatientOutput();
 
-        for (Map<String, Object> inputTumor : Utils.extractTumors(Utils.extractPatient(input))) {
+        for (Map<String, Object> inputTumor : Utils.extractTumors(input)) {
             CensusTractPovertyIndicatorInputDto inputDto = new CensusTractPovertyIndicatorInputDto();
             inputDto.setAddressAtDxState((String)inputTumor.get(FIELD_STATE_DX));
             inputDto.setCountyAtDxAnalysis((String)inputTumor.get(FIELD_COUNTY_AT_DX_ANALYSIS));
@@ -59,7 +53,7 @@ public class CensusTractPovertyIndicatorAlgorithm extends AbstractAlgorithm {
             inputDto.setCensusTract2020((String)inputTumor.get(FIELD_CENSUS_2020));
 
             CensusTractPovertyIndicatorOutputDto outputDto = CensusTractPovertyIndicatorUtils.computePovertyIndicator(inputDto);
-            outputTumors.add(Collections.singletonMap(FIELD_CENSUS_POVERTY_INDICTR, outputDto.getCensusTractPovertyIndicator()));
+            Utils.addTumorOutput(outputPatient, Collections.singletonMap(FIELD_CENSUS_POVERTY_INDICTR, outputDto.getCensusTractPovertyIndicator()));
         }
 
         return AlgorithmOutput.of(outputPatient);

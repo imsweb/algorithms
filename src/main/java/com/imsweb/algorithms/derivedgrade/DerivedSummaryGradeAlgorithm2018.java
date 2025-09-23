@@ -3,10 +3,7 @@
  */
 package com.imsweb.algorithms.derivedgrade;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.imsweb.algorithms.AbstractAlgorithm;
@@ -20,7 +17,6 @@ import static com.imsweb.algorithms.Algorithms.FIELD_DERIVED_SUMMARY_GRADE_2018;
 import static com.imsweb.algorithms.Algorithms.FIELD_GRADE_CLINICAL;
 import static com.imsweb.algorithms.Algorithms.FIELD_GRADE_PATHOLOGICAL;
 import static com.imsweb.algorithms.Algorithms.FIELD_SCHEMA_ID;
-import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
 import static com.imsweb.algorithms.derivedgrade.DerivedSummaryGradeUtils.ALG_NAME;
 import static com.imsweb.algorithms.derivedgrade.DerivedSummaryGradeUtils.ALG_VERSION_2018;
 
@@ -43,16 +39,14 @@ public class DerivedSummaryGradeAlgorithm2018 extends AbstractAlgorithm {
 
     @Override
     public AlgorithmOutput execute(AlgorithmInput input) {
-        Map<String, Object> outputPatient = new HashMap<>();
-        List<Map<String, Object>> outputTumors = new ArrayList<>();
-        outputPatient.put(FIELD_TUMORS, outputTumors);
+        Map<String, Object> outputPatient = Utils.createPatientOutput();
 
-        for (Map<String, Object> inputTumor : Utils.extractTumors(Utils.extractPatient(input))) {
+        for (Map<String, Object> inputTumor : Utils.extractTumors(input)) {
             String schemaId = (String)inputTumor.get(FIELD_SCHEMA_ID);
             String beh = (String)inputTumor.get(FIELD_BEHAV_O3);
             String gradeClin = (String)inputTumor.get(FIELD_GRADE_CLINICAL);
             String gradePath = (String)inputTumor.get(FIELD_GRADE_PATHOLOGICAL);
-            outputTumors.add(Collections.singletonMap(FIELD_DERIVED_SUMMARY_GRADE_2018, DerivedSummaryGradeUtils.deriveSummaryGrade(schemaId, beh, gradeClin, gradePath)));
+            Utils.addTumorOutput(outputPatient, Collections.singletonMap(FIELD_DERIVED_SUMMARY_GRADE_2018, DerivedSummaryGradeUtils.deriveSummaryGrade(schemaId, beh, gradeClin, gradePath)));
         }
 
         return AlgorithmOutput.of(outputPatient);

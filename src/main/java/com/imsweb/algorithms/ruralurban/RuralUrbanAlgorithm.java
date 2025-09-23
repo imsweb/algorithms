@@ -79,9 +79,8 @@ public class RuralUrbanAlgorithm extends AbstractAlgorithm {
 
     @Override
     public AlgorithmOutput execute(AlgorithmInput input) {
-
         List<Map<String, Object>> outputTumors = new ArrayList<>();
-        for (Map<String, Object> inputTumor : Utils.extractTumors(Utils.extractPatient(input))) {
+        for (Map<String, Object> inputTumor : Utils.extractTumors(input)) {
             StateCountyTractInputDto inputDto = createStateCountyTractInputDto(inputTumor);
 
             Map<String, Object> outputTumor = new HashMap<>();

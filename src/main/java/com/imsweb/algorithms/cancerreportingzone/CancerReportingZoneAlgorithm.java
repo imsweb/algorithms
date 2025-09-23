@@ -3,10 +3,8 @@
  */
 package com.imsweb.algorithms.cancerreportingzone;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.imsweb.algorithms.AbstractAlgorithm;
@@ -21,7 +19,6 @@ import static com.imsweb.algorithms.Algorithms.FIELD_CANCER_REPORTING_ZONE_TRACT
 import static com.imsweb.algorithms.Algorithms.FIELD_CENSUS_2010;
 import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS;
 import static com.imsweb.algorithms.Algorithms.FIELD_STATE_DX;
-import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
 import static com.imsweb.algorithms.cancerreportingzone.CancerReportingZoneUtils.CANCER_REPORTING_ZONE_UNK_A;
 import static com.imsweb.algorithms.cancerreportingzone.CancerReportingZoneUtils.CANCER_REPORTING_ZONE_UNK_D;
 
@@ -43,11 +40,9 @@ public class CancerReportingZoneAlgorithm extends AbstractAlgorithm {
 
     @Override
     public AlgorithmOutput execute(AlgorithmInput input) {
-        Map<String, Object> outputPatient = new HashMap<>();
-        List<Map<String, Object>> outputTumors = new ArrayList<>();
-        outputPatient.put(FIELD_TUMORS, outputTumors);
+        Map<String, Object> outputPatient = Utils.createPatientOutput();
 
-        for (Map<String, Object> inputTumor : Utils.extractTumors(Utils.extractPatient(input))) {
+        for (Map<String, Object> inputTumor : Utils.extractTumors(input)) {
             StateCountyTractInputDto inputDto = createStateCountyTractInputDto(inputTumor);
 
             CancerReportingZoneOutputDto outputDto = CancerReportingZoneUtils.computeCancerReportingZone(inputDto);
@@ -56,7 +51,7 @@ public class CancerReportingZoneAlgorithm extends AbstractAlgorithm {
             outputTumor.put(FIELD_CANCER_REPORTING_ZONE, outputDto.getCancerReportingZone());
             outputTumor.put(FIELD_CANCER_REPORTING_ZONE_TRACT_REQ, outputDto.getCancerReportingZoneTractReq());
 
-            outputTumors.add(outputTumor);
+            Utils.addTumorOutput(outputPatient, outputTumor);
         }
 
         return AlgorithmOutput.of(outputPatient);

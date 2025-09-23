@@ -28,6 +28,8 @@ import de.siegmar.fastcsv.reader.NamedCsvRecord;
 import com.imsweb.algorithms.AlgorithmInput;
 import com.imsweb.algorithms.Algorithms;
 
+import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
+
 public final class Utils {
 
     private static final Pattern _SITE_PATTERN = Pattern.compile("[A-Z](\\d){0,3}");
@@ -217,18 +219,33 @@ public final class Utils {
         return input.getPatient() == null ? Collections.emptyMap() : input.getPatient();
     }
 
-    public static List<Map<String, Object>> extractTumors(Map<String, Object> patient) {
-        return extractTumors(patient, false);
+    public static List<Map<String, Object>> extractTumors(AlgorithmInput input) {
+        return extractTumors(extractPatient(input));
     }
 
     @SuppressWarnings("unchecked")
-    public static List<Map<String, Object>> extractTumors(Map<String, Object> patient, boolean createTumorIfEmpty) {
+    public static List<Map<String, Object>> extractTumors(Map<String, Object> patient) {
         List<Map<String, Object>> tumors = (List<Map<String, Object>>)patient.get(Algorithms.FIELD_TUMORS);
         if (tumors == null)
             tumors = new ArrayList<>();
-        if (tumors.isEmpty() && createTumorIfEmpty)
-            tumors.add(new HashMap<>());
         return tumors;
+    }
+
+    public static Map<String, Object> createPatientOutput() {
+        Map<String, Object> outputPatient = new HashMap<>();
+        List<Map<String, Object>> outputTumors = new ArrayList<>();
+        outputPatient.put(FIELD_TUMORS, outputTumors);
+        return outputPatient;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static void addTumorOutput(Map<String, Object> patient, Map<String, Object> tumor) {
+        List<Map<String, Object>> tumors =  (List<Map<String, Object>>)patient.get(Algorithms.FIELD_TUMORS);
+        if (tumors == null) {
+            tumors = new ArrayList<>();
+            patient.put(FIELD_TUMORS, tumors);
+        }
+        tumors.add(tumor);
     }
 
     public static String extractYear(String fullDate) {

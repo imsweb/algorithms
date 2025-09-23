@@ -24,7 +24,6 @@ import static com.imsweb.algorithms.Algorithms.FIELD_HIST_O3;
 import static com.imsweb.algorithms.Algorithms.FIELD_IARC_MP_INDICATOR;
 import static com.imsweb.algorithms.Algorithms.FIELD_PRIMARY_SITE;
 import static com.imsweb.algorithms.Algorithms.FIELD_SEQ_NUM_CTRL;
-import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
 import static com.imsweb.algorithms.Algorithms.PARAM_IARC_REVIEW_MODE;
 
 public class IarcAlgorithm extends AbstractAlgorithm {
@@ -52,7 +51,7 @@ public class IarcAlgorithm extends AbstractAlgorithm {
             reviewMode = Boolean.FALSE;
 
         List<IarcMpInputRecordDto> inputRecordDtoList = new ArrayList<>();
-        for (Map<String, Object> inputTumor : Utils.extractTumors(Utils.extractPatient(input))) {
+        for (Map<String, Object> inputTumor : Utils.extractTumors(input)) {
             IarcMpInputRecordDto inputRecordDto = new IarcMpInputRecordDto();
 
             inputRecordDto.setSite((String)inputTumor.get(FIELD_PRIMARY_SITE));
@@ -69,13 +68,11 @@ public class IarcAlgorithm extends AbstractAlgorithm {
 
         IarcUtils.calculateIarcMp(inputRecordDtoList, reviewMode);
 
-        Map<String, Object> outputPatient = new HashMap<>();
-        List<Map<String, Object>> outputTumors = new ArrayList<>();
-        outputPatient.put(FIELD_TUMORS, outputTumors);
+        Map<String, Object> outputPatient = Utils.createPatientOutput();
         for (IarcMpInputRecordDto dto : inputRecordDtoList) {
             Map<String, Object> outputTumor = new HashMap<>();
             outputTumor.put(FIELD_IARC_MP_INDICATOR, Objects.toString(dto.getInternationalPrimaryIndicator(), null));
-            outputTumors.add(outputTumor);
+            Utils.addTumorOutput(outputPatient, outputTumor);
         }
 
         return AlgorithmOutput.of(outputPatient);

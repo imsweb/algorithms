@@ -3,10 +3,8 @@
  */
 package com.imsweb.algorithms.prcda;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.imsweb.algorithms.AbstractAlgorithm;
@@ -20,7 +18,6 @@ import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS;
 import static com.imsweb.algorithms.Algorithms.FIELD_IHS_PRCDA;
 import static com.imsweb.algorithms.Algorithms.FIELD_IHS_PRCDA_2017;
 import static com.imsweb.algorithms.Algorithms.FIELD_STATE_DX;
-import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
 import static com.imsweb.algorithms.prcda.PrcdaUtils.PRCDA_UNKNOWN;
 
 public class PrcdaAlgorithm extends AbstractAlgorithm {
@@ -40,11 +37,9 @@ public class PrcdaAlgorithm extends AbstractAlgorithm {
 
     @Override
     public AlgorithmOutput execute(AlgorithmInput input) {
-        Map<String, Object> outputPatient = new HashMap<>();
-        List<Map<String, Object>> outputTumors = new ArrayList<>();
-        outputPatient.put(FIELD_TUMORS, outputTumors);
+        Map<String, Object> outputPatient = Utils.createPatientOutput();
 
-        for (Map<String, Object> inputTumor : Utils.extractTumors(Utils.extractPatient(input))) {
+        for (Map<String, Object> inputTumor : Utils.extractTumors(input)) {
             StateCountyInputDto inputDto = new StateCountyInputDto();
             inputDto.setAddressAtDxState((String)inputTumor.get(FIELD_STATE_DX));
             inputDto.setCountyAtDxAnalysis((String)inputTumor.get(FIELD_COUNTY_AT_DX_ANALYSIS));
@@ -55,7 +50,7 @@ public class PrcdaAlgorithm extends AbstractAlgorithm {
             outputTumor.put(FIELD_IHS_PRCDA, outputDto.getPrcda());
             outputTumor.put(FIELD_IHS_PRCDA_2017, outputDto.getPrcda2017());
 
-            outputTumors.add(outputTumor);
+            Utils.addTumorOutput(outputPatient, outputTumor);
         }
 
         return AlgorithmOutput.of(outputPatient);

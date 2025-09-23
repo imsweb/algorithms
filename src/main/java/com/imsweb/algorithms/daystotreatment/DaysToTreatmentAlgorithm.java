@@ -6,10 +6,8 @@ package com.imsweb.algorithms.daystotreatment;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -24,7 +22,6 @@ import com.imsweb.algorithms.internal.Utils;
 import static com.imsweb.algorithms.Algorithms.FIELD_DATE_INITIAL_RX_SEER;
 import static com.imsweb.algorithms.Algorithms.FIELD_DAYS_TO_TREATMENT;
 import static com.imsweb.algorithms.Algorithms.FIELD_DX_DATE;
-import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
 
 public class DaysToTreatmentAlgorithm extends AbstractAlgorithm {
 
@@ -41,14 +38,12 @@ public class DaysToTreatmentAlgorithm extends AbstractAlgorithm {
 
     @Override
     public AlgorithmOutput execute(AlgorithmInput input) {
-        Map<String, Object> outputPatient = new HashMap<>();
-        List<Map<String, Object>> outputTumors = new ArrayList<>();
-        outputPatient.put(FIELD_TUMORS, outputTumors);
+        Map<String, Object> outputPatient = Utils.createPatientOutput();
 
-        for (Map<String, Object> inputTumor : Utils.extractTumors(Utils.extractPatient(input))) {
+        for (Map<String, Object> inputTumor : Utils.extractTumors(input)) {
             Map<String, Object> outputTumor = new HashMap<>();
             outputTumor.put(FIELD_DAYS_TO_TREATMENT, computeDaysToTreatment((String)inputTumor.get(FIELD_DX_DATE), (String)inputTumor.get(FIELD_DATE_INITIAL_RX_SEER)));
-            outputTumors.add(outputTumor);
+            Utils.addTumorOutput(outputPatient, outputTumor);
         }
 
         return AlgorithmOutput.of(outputPatient);

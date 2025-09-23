@@ -3,7 +3,6 @@
  */
 package com.imsweb.algorithms.napiia;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,26 +51,22 @@ public class NapiiaAlgorithm extends AbstractAlgorithm {
 
     @Override
     public AlgorithmOutput execute(AlgorithmInput input) {
-        NapiiaInputPatientDto inputDto = new NapiiaInputPatientDto();
-        inputDto.setNapiiaInputPatientDtoList(new ArrayList<>());
-
         Map<String, Object> patientMap = Utils.extractPatient(input);
-        for (int i = 0; i < Utils.extractTumors(patientMap, true).size(); i++) {
-            NapiiaInputRecordDto dto = new NapiiaInputRecordDto();
-            dto.setSpanishHispanicOrigin((String)patientMap.get(FIELD_SPAN_HISP_OR));
-            dto.setBirthplaceCountry((String)patientMap.get(FIELD_COUNTRY_BIRTH));
-            dto.setSex((String)patientMap.get(FIELD_SEX));
-            dto.setRace1((String)patientMap.get(FIELD_RACE1));
-            dto.setRace2((String)patientMap.get(FIELD_RACE2));
-            dto.setRace3((String)patientMap.get(FIELD_RACE3));
-            dto.setRace4((String)patientMap.get(FIELD_RACE4));
-            dto.setRace5((String)patientMap.get(FIELD_RACE5));
-            dto.setNameLast((String)patientMap.get(FIELD_NAME_LAST));
-            dto.setNameBirthSurname((String)patientMap.get(FIELD_NAME_BIRTH_SURNAME));
-            inputDto.getNapiiaInputPatientDtoList().add(dto);
-        }
 
-        NapiiaResultsDto result = NapiiaUtils.computeNapiia(inputDto);
+        // NAPIIA doesn't use any tumor-level field; the computation is only based on a single (demographic-level) "input" record...
+        NapiiaInputRecordDto dto = new NapiiaInputRecordDto();
+        dto.setSpanishHispanicOrigin((String)patientMap.get(FIELD_SPAN_HISP_OR));
+        dto.setBirthplaceCountry((String)patientMap.get(FIELD_COUNTRY_BIRTH));
+        dto.setSex((String)patientMap.get(FIELD_SEX));
+        dto.setRace1((String)patientMap.get(FIELD_RACE1));
+        dto.setRace2((String)patientMap.get(FIELD_RACE2));
+        dto.setRace3((String)patientMap.get(FIELD_RACE3));
+        dto.setRace4((String)patientMap.get(FIELD_RACE4));
+        dto.setRace5((String)patientMap.get(FIELD_RACE5));
+        dto.setNameLast((String)patientMap.get(FIELD_NAME_LAST));
+        dto.setNameBirthSurname((String)patientMap.get(FIELD_NAME_BIRTH_SURNAME));
+
+        NapiiaResultsDto result = NapiiaUtils.computeNapiia(dto);
 
         Map<String, Object> outputPatient = new HashMap<>();
         outputPatient.put(FIELD_NAPIIA, result.getNapiiaValue());

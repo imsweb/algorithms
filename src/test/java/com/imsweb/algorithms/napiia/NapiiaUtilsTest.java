@@ -41,16 +41,6 @@ public class NapiiaUtilsTest {
         Assert.assertTrue(computeNapiia(patient1).getNeedsHumanReview());
         Assert.assertEquals(NapiiaUtils.REASON_2_2_3, computeNapiia(patient1).getReasonForReview());
 
-        NapiiaInputPatientDto patient2 = new NapiiaInputPatientDto();
-        Assert.assertEquals("", NapiiaUtils.computeNapiia(patient2).getNapiiaValue());
-        Assert.assertTrue(NapiiaUtils.computeNapiia(patient2).getNeedsHumanReview());
-        Assert.assertEquals(NapiiaUtils.REASON_2_2_3, NapiiaUtils.computeNapiia(patient2).getReasonForReview());
-
-        NapiiaInputRecordDto dto = new NapiiaInputRecordDto();
-        Assert.assertEquals("", NapiiaUtils.computeNapiia(dto).getNapiiaValue());
-        Assert.assertTrue(NapiiaUtils.computeNapiia(dto).getNeedsHumanReview());
-        Assert.assertEquals(NapiiaUtils.REASON_2_2_3, NapiiaUtils.computeNapiia(dto).getReasonForReview());
-
         Map<String, String> rec = new HashMap<>();
         //special record value
         Assert.assertEquals("", computeNapiia(rec).getNapiiaValue());
@@ -524,7 +514,7 @@ public class NapiiaUtilsTest {
 
     @Test
     public void testComputeNullInput() {
-        NapiiaResultsDto result = NapiiaUtils.computeNapiia((NapiiaInputRecordDto)null);
+        NapiiaResultsDto result = NapiiaUtils.computeNapiia(null);
         Assert.assertNull(result.getNapiiaValue());
 
     }

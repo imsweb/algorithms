@@ -34,7 +34,6 @@ import static com.imsweb.algorithms.Algorithms.FIELD_SURV_MONTH_ACTIVE_FUP;
 import static com.imsweb.algorithms.Algorithms.FIELD_SURV_MONTH_PRESUMED_ALIVE;
 import static com.imsweb.algorithms.Algorithms.FIELD_SURV_REC_NUM_RECODE;
 import static com.imsweb.algorithms.Algorithms.FIELD_SURV_VS_RECODE;
-import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
 import static com.imsweb.algorithms.Algorithms.FIELD_TYPE_RPT_SRC;
 import static com.imsweb.algorithms.Algorithms.FIELD_VS;
 import static com.imsweb.algorithms.Algorithms.PARAM_SURV_CUTOFF_YEAR;
@@ -108,10 +107,10 @@ public class SurvivalTimeAlgorithm extends AbstractAlgorithm {
 
         SurvivalTimeOutputPatientDto patResultDto = SurvivalTimeUtils.calculateSurvivalTime(patDto, cutoffYear);
 
-        Map<String, Object> outputPatient = new HashMap<>();
+        Map<String, Object> outputPatient = Utils.createPatientOutput();
         outputPatient.put(FIELD_SURV_VS_RECODE, patResultDto.getVitalStatusRecode());
 
-        List<Map<String, Object>> outputTumorList = new ArrayList<>();
+        // we expect the utility method to always provide the same number of output tumors as the number of input tumors, and in the same order...
         for (SurvivalTimeOutputRecordDto dto : patResultDto.getSurvivalTimeOutputPatientDtoList()) {
             Map<String, Object> outputTumor = new HashMap<>();
 
@@ -127,9 +126,8 @@ public class SurvivalTimeAlgorithm extends AbstractAlgorithm {
             outputTumor.put(FIELD_SURV_DAYS_ACTIVE_FUP, dto.getSurvivalDays());
             outputTumor.put(FIELD_SURV_DAYS_PRESUMED_ALIVE, dto.getSurvivalDaysPresumedAlive());
 
-            outputTumorList.add(outputTumor);
+            Utils.addTumorOutput(outputPatient, outputTumor);
         }
-        outputPatient.put(FIELD_TUMORS, outputTumorList);
 
         return AlgorithmOutput.of(outputPatient);
     }

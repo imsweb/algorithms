@@ -3,10 +3,8 @@
  */
 package com.imsweb.algorithms.breastcategory;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.imsweb.algorithms.AbstractAlgorithm;
@@ -17,14 +15,14 @@ import com.imsweb.algorithms.internal.Utils;
 
 import static com.imsweb.algorithms.Algorithms.FIELD_BREAST_SUBTYPE;
 import static com.imsweb.algorithms.Algorithms.FIELD_DX_DATE;
+import static com.imsweb.algorithms.Algorithms.FIELD_ESTROGEN_RECEPTOR_SUMMARY;
 import static com.imsweb.algorithms.Algorithms.FIELD_ESTROGEN_RECEPTOR_SUM_RECODE;
+import static com.imsweb.algorithms.Algorithms.FIELD_HER2_OVERALL_SUMMARY;
 import static com.imsweb.algorithms.Algorithms.FIELD_HER2_OVERALL_SUM_RECODE;
 import static com.imsweb.algorithms.Algorithms.FIELD_HIST_O3;
 import static com.imsweb.algorithms.Algorithms.FIELD_PRIMARY_SITE;
-import static com.imsweb.algorithms.Algorithms.FIELD_PROGESTERONE_RECEPTOR_SUM_RECODE;
-import static com.imsweb.algorithms.Algorithms.FIELD_ESTROGEN_RECEPTOR_SUMMARY;
-import static com.imsweb.algorithms.Algorithms.FIELD_HER2_OVERALL_SUMMARY;
 import static com.imsweb.algorithms.Algorithms.FIELD_PROGESTERONE_RECEPTOR_SUMMARY;
+import static com.imsweb.algorithms.Algorithms.FIELD_PROGESTERONE_RECEPTOR_SUM_RECODE;
 import static com.imsweb.algorithms.Algorithms.FIELD_SSF_1;
 import static com.imsweb.algorithms.Algorithms.FIELD_SSF_11;
 import static com.imsweb.algorithms.Algorithms.FIELD_SSF_13;
@@ -32,7 +30,6 @@ import static com.imsweb.algorithms.Algorithms.FIELD_SSF_14;
 import static com.imsweb.algorithms.Algorithms.FIELD_SSF_15;
 import static com.imsweb.algorithms.Algorithms.FIELD_SSF_2;
 import static com.imsweb.algorithms.Algorithms.FIELD_SSF_9;
-import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
 import static com.imsweb.algorithms.Algorithms.FIELD_TUMOR_MARKER_1;
 import static com.imsweb.algorithms.Algorithms.FIELD_TUMOR_MARKER_2;
 
@@ -85,11 +82,9 @@ public class BreastCategoryAlgorithm extends AbstractAlgorithm {
 
     @Override
     public AlgorithmOutput execute(AlgorithmInput input) {
-        Map<String, Object> outputPatient = new HashMap<>();
-        List<Map<String, Object>> outputTumors = new ArrayList<>();
-        outputPatient.put(FIELD_TUMORS, outputTumors);
+        Map<String, Object> outputPatient = Utils.createPatientOutput();
 
-        for (Map<String, Object> inputTumor : Utils.extractTumors(Utils.extractPatient(input))) {
+        for (Map<String, Object> inputTumor : Utils.extractTumors(input)) {
             Map<String, Object> outputTumor = new HashMap<>();
 
             String erRecode = ER_PR_HER2_NOT_CODED;
@@ -125,7 +120,7 @@ public class BreastCategoryAlgorithm extends AbstractAlgorithm {
             outputTumor.put(FIELD_HER2_OVERALL_SUM_RECODE, her2Recode);
             outputTumor.put(FIELD_BREAST_SUBTYPE, breastSubtype);
 
-            outputTumors.add(outputTumor);
+            Utils.addTumorOutput(outputPatient, outputTumor);
         }
 
         return AlgorithmOutput.of(outputPatient);

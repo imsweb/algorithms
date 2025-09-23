@@ -3,10 +3,7 @@
  */
 package com.imsweb.algorithms.ayasiterecode;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.imsweb.algorithms.AbstractAlgorithm;
@@ -19,7 +16,6 @@ import static com.imsweb.algorithms.Algorithms.FIELD_AYA_SITE_RECODE_2008;
 import static com.imsweb.algorithms.Algorithms.FIELD_BEHAV_O3;
 import static com.imsweb.algorithms.Algorithms.FIELD_HIST_O3;
 import static com.imsweb.algorithms.Algorithms.FIELD_PRIMARY_SITE;
-import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
 import static com.imsweb.algorithms.ayasiterecode.AyaSiteRecodeUtils.ALG_NAME;
 import static com.imsweb.algorithms.ayasiterecode.AyaSiteRecodeUtils.ALG_VERSION_2008;
 
@@ -41,15 +37,13 @@ public class AyaSiteRecodeAlgorithm2008 extends AbstractAlgorithm {
 
     @Override
     public AlgorithmOutput execute(AlgorithmInput input) {
-        Map<String, Object> outputPatient = new HashMap<>();
-        List<Map<String, Object>> outputTumors = new ArrayList<>();
-        outputPatient.put(FIELD_TUMORS, outputTumors);
+        Map<String, Object> outputPatient = Utils.createPatientOutput();
 
-        for (Map<String, Object> inputTumor : Utils.extractTumors(Utils.extractPatient(input))) {
+        for (Map<String, Object> inputTumor : Utils.extractTumors(input)) {
             String site = (String)inputTumor.get(FIELD_PRIMARY_SITE);
             String hist = (String)inputTumor.get(FIELD_HIST_O3);
             String beh = (String)inputTumor.get(FIELD_BEHAV_O3);
-            outputTumors.add(Collections.singletonMap(FIELD_AYA_SITE_RECODE_2008, AyaSiteRecodeUtils.calculateSiteRecode(ALG_VERSION_2008, site, hist, beh)));
+            Utils.addTumorOutput(outputPatient, Collections.singletonMap(FIELD_AYA_SITE_RECODE_2008, AyaSiteRecodeUtils.calculateSiteRecode(ALG_VERSION_2008, site, hist, beh)));
         }
 
         return AlgorithmOutput.of(outputPatient);

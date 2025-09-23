@@ -3,11 +3,9 @@
  */
 package com.imsweb.algorithms.causespecific;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.imsweb.algorithms.AbstractAlgorithm;
@@ -25,7 +23,6 @@ import static com.imsweb.algorithms.Algorithms.FIELD_PRIMARY_SITE;
 import static com.imsweb.algorithms.Algorithms.FIELD_SEER_COD_CLASS;
 import static com.imsweb.algorithms.Algorithms.FIELD_SEER_COD_OTHER;
 import static com.imsweb.algorithms.Algorithms.FIELD_SEQ_NUM_CTRL;
-import static com.imsweb.algorithms.Algorithms.FIELD_TUMORS;
 import static com.imsweb.algorithms.Algorithms.PARAM_SEER_COD_CLASS_CUTOFF_YEAR;
 
 public class DeathClassificationAlgorithm extends AbstractAlgorithm {
@@ -53,9 +50,7 @@ public class DeathClassificationAlgorithm extends AbstractAlgorithm {
 
     @Override
     public AlgorithmOutput execute(AlgorithmInput input) {
-        Map<String, Object> outputPatient = new HashMap<>();
-        List<Map<String, Object>> outputTumors = new ArrayList<>();
-        outputPatient.put(FIELD_TUMORS, outputTumors);
+        Map<String, Object> outputPatient = Utils.createPatientOutput();
 
         Integer cutoffYear = (Integer)input.getParameter(PARAM_SEER_COD_CLASS_CUTOFF_YEAR);
         if (cutoffYear == null)
@@ -76,7 +71,7 @@ public class DeathClassificationAlgorithm extends AbstractAlgorithm {
             Map<String, Object> outputTumor = new HashMap<>();
             outputTumor.put(FIELD_SEER_COD_CLASS, resultDto.getCauseSpecificDeathClassification());
             outputTumor.put(FIELD_SEER_COD_OTHER, resultDto.getCauseOtherDeathClassification());
-            outputTumors.add(outputTumor);
+            Utils.addTumorOutput(outputPatient, outputTumor);
         }
 
         return AlgorithmOutput.of(outputPatient);
