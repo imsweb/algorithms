@@ -55,28 +55,26 @@ public class NhiaAlgorithm extends AbstractAlgorithm {
 
     @Override
     public AlgorithmOutput execute(AlgorithmInput input) {
-        NhiaInputPatientDto inputPatient = new NhiaInputPatientDto();
-        inputPatient.setNhiaInputPatientDtoList(new ArrayList<>());
-
-        // NHIA uses a couple of tumor-level fields; because of that, we want at least one tumor to be present in the input (because the utility method requires at least one)...
         Map<String, Object> patientMap = Utils.extractPatient(input);
-        List<Map<String, Object>> tumorList = Utils.extractTumors(patientMap);
-        if (tumorList.isEmpty())
-            tumorList.add(new HashMap<>());
 
-        for (Map<String, Object> tumorMap : tumorList) {
-            NhiaInputRecordDto dto = new NhiaInputRecordDto();
-            dto.setSpanishHispanicOrigin((String)patientMap.get(FIELD_SPAN_HISP_OR));
-            dto.setBirthplaceCountry((String)patientMap.get(FIELD_COUNTRY_BIRTH));
-            dto.setSex((String)patientMap.get(FIELD_SEX));
-            dto.setRace1((String)patientMap.get(FIELD_RACE1));
-            dto.setIhs((String)patientMap.get(FIELD_IHS));
-            dto.setNameLast((String)patientMap.get(FIELD_NAME_LAST));
-            dto.setNameBirthSurname((String)patientMap.get(FIELD_NAME_BIRTH_SURNAME));
-            dto.setCountyAtDxAnalysis((String)tumorMap.get(FIELD_COUNTY_AT_DX_ANALYSIS));
-            dto.setStateAtDx((String)tumorMap.get(FIELD_STATE_DX));
-            inputPatient.getNhiaInputPatientDtoList().add(dto);
+        NhiaInputPatientDto inputPatient = new NhiaInputPatientDto();
+        inputPatient.setSpanishHispanicOrigin((String)patientMap.get(FIELD_SPAN_HISP_OR));
+        inputPatient.setBirthplaceCountry((String)patientMap.get(FIELD_COUNTRY_BIRTH));
+        inputPatient.setSex((String)patientMap.get(FIELD_SEX));
+        inputPatient.setRace1((String)patientMap.get(FIELD_RACE1));
+        inputPatient.setIhs((String)patientMap.get(FIELD_IHS));
+        inputPatient.setNameLast((String)patientMap.get(FIELD_NAME_LAST));
+        inputPatient.setNameBirthSurname((String)patientMap.get(FIELD_NAME_BIRTH_SURNAME));
+
+        // NHIA uses a couple of tumor-level fields...
+        List<NhiaInputTumorDto> inputTumors = new ArrayList<>();
+        for (Map<String, Object> tumorMap : Utils.extractTumors(patientMap)) {
+            NhiaInputTumorDto inputTumor = new NhiaInputTumorDto();
+            inputTumor.setCountyAtDxAnalysis((String)tumorMap.get(FIELD_COUNTY_AT_DX_ANALYSIS));
+            inputTumor.setStateAtDx((String)tumorMap.get(FIELD_STATE_DX));
+            inputTumors.add(inputTumor);
         }
+        inputPatient.setTumors(inputTumors);
 
         NhiaResultsDto result = NhiaUtils.computeNhia(inputPatient, (String)input.getParameter(PARAM_NHIA_OPTION));
 

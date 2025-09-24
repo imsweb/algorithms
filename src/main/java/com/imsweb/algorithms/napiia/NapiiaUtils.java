@@ -126,7 +126,7 @@ public final class NapiiaUtils {
      * @return the computed NAPIIA Results Dto, which has a calculated napiia value, a boolean which indicates whether a human review is needed or not and a reason if human review is required
      */
     @SuppressWarnings({"ConstantConditions", "java:S3776"}) // method too complex
-    public static NapiiaResultsDto computeNapiia(NapiiaInputRecordDto input) {
+    public static NapiiaResultsDto computeNapiia(NapiiaInputPatientDto input) {
         NapiiaResultsDto napiiaResults = new NapiiaResultsDto();
 
         //NPE
@@ -303,7 +303,7 @@ public final class NapiiaUtils {
      * Executes the male indirect identification based on name.
      * @return new NAPIIA code, possible the not-calculated code
      */
-    private static String applyMaleNameIdentification(NapiiaInputRecordDto input, boolean asianNOS, boolean pacificIslanderNOS) {
+    private static String applyMaleNameIdentification(NapiiaInputPatientDto input, boolean asianNOS, boolean pacificIslanderNOS) {
         Short result = null;
 
         String lastname = StringUtils.stripToNull(input.getNameLast());
@@ -329,7 +329,7 @@ public final class NapiiaUtils {
      * Executes the female indirect identification based on name.
      * @return new NAPIIA code, possible the not-calculated code
      */
-    private static String applyFemaleNameIdentification(NapiiaInputRecordDto input, boolean asianNOS, boolean pacificIslanderNOS) {
+    private static String applyFemaleNameIdentification(NapiiaInputPatientDto input, boolean asianNOS, boolean pacificIslanderNOS) {
         Short result = null;
 
         String lastname = StringUtils.stripToNull(input.getNameLast());
@@ -385,7 +385,7 @@ public final class NapiiaUtils {
      * Executes the non-male-and-non-female indirect identification based on name.
      * @return new NAPIIA code, possible the not-calculated code
      */
-    private static String applyNotMaleNotFemaleNameIdentification(NapiiaInputRecordDto input, boolean asianNOS, boolean pacificIslanderNOS) {
+    private static String applyNotMaleNotFemaleNameIdentification(NapiiaInputPatientDto input, boolean asianNOS, boolean pacificIslanderNOS) {
         Short result = null;
         String lastname = input.getNameLast();
 

@@ -4,6 +4,7 @@
 package com.imsweb.algorithms.nhia;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,8 +41,7 @@ public class NhiaUtilsTest {
         NhiaInputPatientDto patient2 = new NhiaInputPatientDto();
         Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, NhiaUtils.computeNhia(patient2, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
 
-        NhiaInputRecordDto dto = new NhiaInputRecordDto();
-        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, NhiaUtils.computeNhia(dto, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
+        Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, NhiaUtils.computeNhia(patient2, null, null, NhiaUtils.NHIA_OPTION_ALL_CASES).getNhia());
 
         Map<String, String> rec = new HashMap<>();
 
@@ -309,28 +309,24 @@ public class NhiaUtilsTest {
         Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, computeNhia(patient1, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
 
         NhiaInputPatientDto patient2 = new NhiaInputPatientDto();
-        NhiaInputRecordDto rec3 = new NhiaInputRecordDto();
-        rec3.setSpanishHispanicOrigin("0");
-        rec3.setSex("2");
-        rec3.setNameLast("ADORNO");
-        rec3.setBirthplaceCountry("ZZP");
+        patient2.setTumors(new ArrayList<>());
+        NhiaInputTumorDto rec3 = new NhiaInputTumorDto();
+        patient2.setSpanishHispanicOrigin("0");
+        patient2.setSex("2");
+        patient2.setNameLast("ADORNO");
+        patient2.setBirthplaceCountry("ZZP");
         rec3.setStateAtDx("AL");
         rec3.setCountyAtDxAnalysis("007");
         //one record with low hispanic county at DX
-        patient2.setNhiaInputPatientDtoList(new ArrayList<>());
-        patient2.getNhiaInputPatientDtoList().add(rec3);
+        patient2.getTumors().add(rec3);
         //name option doesn't run.
         Assert.assertEquals(NhiaUtils.NHIA_NON_HISPANIC, NhiaUtils.computeNhia(patient2, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
 
-        NhiaInputRecordDto rec4 = new NhiaInputRecordDto();
-        rec4.setSpanishHispanicOrigin("0");
-        rec4.setSex("2");
-        rec4.setNameLast("ADORNO");
-        rec4.setBirthplaceCountry("ZZP");
+        NhiaInputTumorDto rec4 = new NhiaInputTumorDto();
         rec4.setStateAtDx("AL");
         rec4.setCountyAtDxAnalysis("005");
         //Add one more record with high hispanic county at DX
-        patient2.getNhiaInputPatientDtoList().add(rec4);
+        patient2.getTumors().add(rec4);
         //The patient's county at dx considered as high hispanic.
         Assert.assertEquals(NhiaUtils.NHIA_SURNAME_ONLY, NhiaUtils.computeNhia(patient2, NhiaUtils.NHIA_OPTION_SEVEN_AND_NINE).getNhia());
     }
@@ -342,7 +338,7 @@ public class NhiaUtilsTest {
 
     // so many calls in this test were using the deprecated method that it was easier to create a private method that keeps using the deprecated logic...
     public static NhiaResultsDto computeNhia(Map<String, String> rec, String option) {
-        NhiaInputRecordDto input = new NhiaInputRecordDto();
+        NhiaInputPatientDto input = new NhiaInputPatientDto();
         input.setSpanishHispanicOrigin(rec.get(_PROP_SPANISH_HISPANIC_ORIGIN));
         input.setBirthplaceCountry(rec.get(_PROP_BIRTH_PLACE_COUNTRY));
         input.setSex(rec.get(_PROP_SEX));
@@ -350,27 +346,31 @@ public class NhiaUtilsTest {
         input.setIhs(rec.get(_PROP_IHS));
         input.setNameLast(rec.get(_PROP_NAME_LAST));
         input.setNameBirthSurname(rec.get(_PROP_NAME_BIRTH_SURNAME));
-        input.setCountyAtDxAnalysis(rec.get(_PROP_COUNTY_DX_ANALYSIS));
-        input.setStateAtDx(rec.get(_PROP_STATE_DX));
+        NhiaInputTumorDto tumor = new NhiaInputTumorDto();
+        tumor.setCountyAtDxAnalysis(rec.get(_PROP_COUNTY_DX_ANALYSIS));
+        tumor.setStateAtDx(rec.get(_PROP_STATE_DX));
+        input.setTumors(Collections.singletonList(tumor));
         return NhiaUtils.computeNhia(input, option);
     }
 
     // so many calls in this test were using the deprecated method that it was easier to create a private method that keeps using the deprecated logic...
     public static NhiaResultsDto computeNhia(List<Map<String, String>> patient, String option) {
         NhiaInputPatientDto input = new NhiaInputPatientDto();
-        input.setNhiaInputPatientDtoList(new ArrayList<>());
-        for (Map<String, String> rec : patient) {
-            NhiaInputRecordDto dto = new NhiaInputRecordDto();
-            dto.setSpanishHispanicOrigin(rec.get(_PROP_SPANISH_HISPANIC_ORIGIN));
-            dto.setBirthplaceCountry(rec.get(_PROP_BIRTH_PLACE_COUNTRY));
-            dto.setSex(rec.get(_PROP_SEX));
-            dto.setRace1(rec.get(_PROP_RACE1));
-            dto.setIhs(rec.get(_PROP_IHS));
-            dto.setNameLast(rec.get(_PROP_NAME_LAST));
-            dto.setNameBirthSurname(rec.get(_PROP_NAME_BIRTH_SURNAME));
-            dto.setCountyAtDxAnalysis(rec.get(_PROP_COUNTY_DX_ANALYSIS));
-            dto.setStateAtDx(rec.get(_PROP_STATE_DX));
-            input.getNhiaInputPatientDtoList().add(dto);
+        if (!patient.isEmpty()) {
+            input.setSpanishHispanicOrigin(patient.getFirst().get(_PROP_SPANISH_HISPANIC_ORIGIN));
+            input.setBirthplaceCountry(patient.getFirst().get(_PROP_BIRTH_PLACE_COUNTRY));
+            input.setSex(patient.getFirst().get(_PROP_SEX));
+            input.setRace1(patient.getFirst().get(_PROP_RACE1));
+            input.setIhs(patient.getFirst().get(_PROP_IHS));
+            input.setNameLast(patient.getFirst().get(_PROP_NAME_LAST));
+            input.setNameBirthSurname(patient.getFirst().get(_PROP_NAME_BIRTH_SURNAME));
+            input.setTumors(new ArrayList<>());
+            for (Map<String, String> rec : patient) {
+                NhiaInputTumorDto dto = new NhiaInputTumorDto();
+                dto.setCountyAtDxAnalysis(rec.get(_PROP_COUNTY_DX_ANALYSIS));
+                dto.setStateAtDx(rec.get(_PROP_STATE_DX));
+                input.getTumors().add(dto);
+            }
         }
 
         return NhiaUtils.computeNhia(input, option);

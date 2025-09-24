@@ -54,7 +54,7 @@ public class NapiiaAlgorithm extends AbstractAlgorithm {
         Map<String, Object> patientMap = Utils.extractPatient(input);
 
         // NAPIIA doesn't use any tumor-level field; the computation is only based on a single (demographic-level) "input" record...
-        NapiiaInputRecordDto dto = new NapiiaInputRecordDto();
+        NapiiaInputPatientDto dto = new NapiiaInputPatientDto();
         dto.setSpanishHispanicOrigin((String)patientMap.get(FIELD_SPAN_HISP_OR));
         dto.setBirthplaceCountry((String)patientMap.get(FIELD_COUNTRY_BIRTH));
         dto.setSex((String)patientMap.get(FIELD_SEX));

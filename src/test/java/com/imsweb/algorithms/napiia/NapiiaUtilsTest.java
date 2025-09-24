@@ -521,7 +521,7 @@ public class NapiiaUtilsTest {
 
     // so many calls in this test were using the deprecated method that it was easier to create a private method that keeps using the deprecated logic...
     private NapiiaResultsDto computeNapiia(Map<String, String> rec) {
-        NapiiaInputRecordDto input = new NapiiaInputRecordDto();
+        NapiiaInputPatientDto input = new NapiiaInputPatientDto();
         input.setRace1(rec.get(_PROP_RACE1));
         input.setRace2(rec.get(_PROP_RACE2));
         input.setRace3(rec.get(_PROP_RACE3));
@@ -537,7 +537,7 @@ public class NapiiaUtilsTest {
 
     // so many calls in this test were using the deprecated method that it was easier to create a private method that keeps using the deprecated logic...
     private NapiiaResultsDto computeNapiia(List<Map<String, String>> patient) {
-        NapiiaInputRecordDto input = new NapiiaInputRecordDto();
+        NapiiaInputPatientDto input = new NapiiaInputPatientDto();
         //Since the following properties are the same for all records lets use one of them and build a record input dto
         if (patient != null && !patient.isEmpty()) {
             input.setRace1(patient.get(0).get(_PROP_RACE1));

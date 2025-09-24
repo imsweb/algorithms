@@ -122,43 +122,37 @@ public final class NhiaUtils {
      * (corresponds to the 'OPTION2' option in the SAS algorithm)</li>
      * </ul>
      * If you are not sure which option to provide, use NHIA_OPTION_SEVEN_AND_NINE since this is the default that the SAS algorithm uses.
-     * @param patient an Input Dto which has a list of Record dtos
+     * @param input a patient-level input DTO; the list of tumor-level input DTO it contains will be used to determine the state/county to use.
      * @param option option indicating when to apply the Indirect Identification based on names for spanish/hispanic original values of 0, 7 and 9
      * @return the computed NHIA value
      */
-    public static NhiaResultsDto computeNhia(NhiaInputPatientDto patient, String option) {
-        NhiaInputRecordDto input = new NhiaInputRecordDto();
-        if (patient != null && patient.getNhiaInputPatientDtoList() != null && !patient.getNhiaInputPatientDtoList().isEmpty()) {
-            //since most of the properties (Except county and state at DX) are the same for all record dtos, lets get the first one
-            NhiaInputRecordDto firstRecord = patient.getNhiaInputPatientDtoList().get(0);
-            input.setSpanishHispanicOrigin(firstRecord.getSpanishHispanicOrigin());
-            input.setBirthplaceCountry(firstRecord.getBirthplaceCountry());
-            input.setSex(firstRecord.getSex());
-            input.setRace1(firstRecord.getRace1());
-            input.setIhs(firstRecord.getIhs());
-            input.setNameLast(firstRecord.getNameLast());
-            input.setNameBirthSurname(firstRecord.getNameBirthSurname());
-            //The following 2 properties are specific to each record, lets get the first one for now.
-            input.setCountyAtDxAnalysis(firstRecord.getCountyAtDxAnalysis());
-            input.setStateAtDx(firstRecord.getStateAtDx());
+    public static NhiaResultsDto computeNhia(NhiaInputPatientDto input, String option) {
+
+        String state = null;
+        String county = null;
+        if (input != null && input.getTumors() != null && !input.getTumors().isEmpty()) {
+            state = input.getTumors().getFirst().getStateAtDx();
+            county = input.getTumors().getFirst().getCountyAtDxAnalysis();
+
             //The option (to run the surname portion) is applied for a patient if hispanic percentage is < 5 % for all of the counties of DX.
             //Lets first assume all counties are less than 5% hispanic.
             boolean lowHispanicCounty = true;
             //Then lets go through all records and see if there are counties with hispanic percentage greater than 5%, if we get one consider the countyDx of the patient as high hispanic
-            for (NhiaInputRecordDto rec : patient.getNhiaInputPatientDtoList())
-                if (!isLowHispanicEthnicityCounty(rec.getCountyAtDxAnalysis(), rec.getStateAtDx())) {
+            for (NhiaInputTumorDto tumor : input.getTumors())
+                if (!isLowHispanicEthnicityCounty(tumor.getCountyAtDxAnalysis(), tumor.getStateAtDx())) {
                     lowHispanicCounty = false;
                     //Lets use that county which is more than 5%
-                    input.setStateAtDx(rec.getStateAtDx());
-                    input.setCountyAtDxAnalysis(rec.getCountyAtDxAnalysis());
+                    state = tumor.getStateAtDx();
+                    county = tumor.getCountyAtDxAnalysis();
                     break;
                 }
             //if lowHispanicCounty is still true, that means all counties of Dx are low hispanic, So we should consider the patient is in low hispanic county.
             //lets use unknown county which is always considered as low hispanic
             if (lowHispanicCounty)
-                input.setCountyAtDxAnalysis("999");
+                county = "999";
         }
-        return computeNhia(input, option);
+
+        return computeNhia(input, state, county, option);
     }
 
     /**
@@ -178,7 +172,7 @@ public final class NhiaUtils {
      * <li>nameBirthSurname</li>
      * </ul>
      * <br/><br/>
-     * The optiosn are also defined as constants in this class:
+     * The options are also defined as constants in this class:
      * <ul>
      * <li>O: always apply the surname portion of the algorithm (corresponds to the 'All Records' option in the SAS algorithm</li>
      * <li>1: run the surname portion only if Spanish/Hispanic Origin is 7 or 9 (corresponds to the 'OPTION1' option in the SAS algorithm)</li>
@@ -186,11 +180,13 @@ public final class NhiaUtils {
      * (corresponds to the 'OPTION2' option in the SAS algorithm)</li>
      * </ul>
      * If you are not sure which option to provide, use NHIA_OPTION_SEVEN_AND_NINE since this is the default that the SAS algorithm uses.
-     * @param input an Record Input Dto which has a list of parameters used in the calculation
+     * @param input a patient-level input DTO; the list of tumor-level input DTO it contains won't be used
+     * @param state the state at DX value to use
+     * @param county the county at DX analysis value to use
      * @param option option indicating when to apply the Indirect Identification based on names for spanish/hispanic original values of 0, 7 and 9
      * @return the computed NHIA value
      */
-    public static NhiaResultsDto computeNhia(NhiaInputRecordDto input, String option) {
+    public static NhiaResultsDto computeNhia(NhiaInputPatientDto input, String state, String county, String option) {
         NhiaResultsDto nhia = new NhiaResultsDto(NHIA_NON_HISPANIC);
 
         // avoid the NPE
@@ -230,8 +226,6 @@ public final class NhiaUtils {
             else if (!_SPAN_HISP_ORIG_SPANISH_NOS.equals(spanishOrigin) && !_RACE_PACIFIC.contains(race1)) {
                 // try to use indirect identification using surnames
                 boolean runSurname = true;
-                String county = input.getCountyAtDxAnalysis();
-                String state = input.getStateAtDx();
                 if (_SPAN_HISP_ORIG_NON_HISPANIC.equals(spanishOrigin)) {
                     if (isLowHispanicEthnicityCounty(county, state))
                         runSurname = NHIA_OPTION_ALL_CASES.equals(option);
@@ -275,7 +269,7 @@ public final class NhiaUtils {
 
     }
 
-    private static String applyIndirectIdentification(NhiaInputRecordDto input, boolean applySurnames) {
+    private static String applyIndirectIdentification(NhiaInputPatientDto input, boolean applySurnames) {
         String result = null;
 
         // get the variables

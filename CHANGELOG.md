@@ -4,6 +4,7 @@
 
 - Added optional parameter to Cause of Death Classification utility methods to run the logic of the algorithm using a different SEER Site Recode version.
 - Harmonized behavior of processing patient with no tumors.
+- Cleaned up NHIA and NAPIIA input classes to fix issues with cases that don't have any tumor-level data. 
 
 **Changes in version 5.7**
 
