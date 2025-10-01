@@ -17,6 +17,7 @@ import org.junit.Test;
 import de.siegmar.fastcsv.reader.CsvReader;
 import de.siegmar.fastcsv.reader.NamedCsvRecord;
 
+import static com.imsweb.algorithms.seersiterecode.SeerSiteRecodeUtils.VERSION_2008;
 import static com.imsweb.algorithms.seersiterecode.SeerSiteRecodeUtils.VERSION_2023;
 
 public class CauseSpecificUtilsTest {
@@ -46,7 +47,14 @@ public class CauseSpecificUtilsTest {
         Assert.assertEquals("0", CauseSpecificUtils.computeCauseSpecific(input, Calendar.getInstance().get(Calendar.YEAR), VERSION_2023).getCauseSpecificDeathClassification());
         Assert.assertEquals("1", CauseSpecificUtils.computeCauseSpecific(input, Calendar.getInstance().get(Calendar.YEAR), VERSION_2023).getCauseOtherDeathClassification());
 
-
+        // test a case that is different between teh 2008 and 2023 versions
+        input.setDateOfLastContactYear("2020");
+        input.setSequenceNumberCentral("01");
+        input.setIcdRevisionNumber("1");
+        input.setCauseOfDeath("C770");
+        input.setHistologyIcdO3("9950");
+        Assert.assertEquals("1", CauseSpecificUtils.computeCauseSpecific(input, 2025, VERSION_2008).getCauseSpecificDeathClassification());
+        Assert.assertEquals("0", CauseSpecificUtils.computeCauseSpecific(input, 2025, VERSION_2023).getCauseSpecificDeathClassification());
     }
 
     @Test

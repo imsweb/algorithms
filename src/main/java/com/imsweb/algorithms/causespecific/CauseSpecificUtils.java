@@ -111,7 +111,7 @@ public final class CauseSpecificUtils {
      * <br/><br/>
      * @param input an input dto which has the fields used to compute cause specific values as parameter.
      * @param cutOffYear submission year, if date of last contact is beyond this year, patient is assumed alive.
-     * @param seerSiteRecodeVersion the SEER Site Recode verion to use
+     * @param seerSiteRecodeVersion the SEER Site Recode version to use
      * @return the computed cause specific and cause other death classification values. The output values are:
      * <ul>
      * <li>ALIVE OR DEAD OF OTHER CAUSES = "0"</li>
@@ -148,7 +148,7 @@ public final class CauseSpecificUtils {
 
         int hist = NumberUtils.toInt(input.getHistologyIcdO3(), -1);
         String cod = input.getCauseOfDeath().toUpperCase();
-        String cod3dig = cod.substring(0, 3);
+        String cod3dig = cod.length() >= 3 ? cod.substring(0, 3) : "";
         String recode = SeerSiteRecodeUtils.calculateSiteRecode(seerSiteRecodeVersion, input.getPrimarySite(), input.getHistologyIcdO3());
 
         // first do all the non-site-specific checks; some condition could be added to the text file which represents the tables. But I decided to use the same file and same structure of code as SAS
@@ -195,14 +195,17 @@ public final class CauseSpecificUtils {
                     //Melanoma of any site (8720-8799) with a cause of death of C43, D03 or D22 is coded as 'dead'. (footnote)
                 else if (hist >= 8720 && hist <= 8799 && ("C43".equals(cod3dig) || "D03".equals(cod3dig) || "D22".equals(cod3dig)))
                     causeSpecific = 1;
-                    //The last 4 rows (special cases) under miscellaneous, C77, C81-96,D36,D45-47 for histology 9950, 9960-9964, 9980-9989 and C00-D48, D619 for other                
-                else if (hist == 9950 || (hist >= 9960 && hist <= 9964) || (hist >= 9980 && hist <= 9989)) {
-                    if ("C77".equals(cod3dig) || ("C81".compareTo(cod3dig) <= 0 && "C96".compareTo(cod3dig) >= 0) || "D36".equals(cod3dig) || ("D45".compareTo(cod3dig) <= 0 && "D47".compareTo(cod3dig)
-                            >= 0))
+                    //The last 4 rows (special cases) under miscellaneous, C77, C81-96,D36,D45-47 for histology 9950, 9960-9964, 9980-9989 and C00-D48, D619 for other
+                else if (SeerSiteRecodeUtils.VERSION_2008.equals(seerSiteRecodeVersion)) {
+                    if (hist == 9950 || (hist >= 9960 && hist <= 9964) || (hist >= 9980 && hist <= 9989)) {
+                        if ("C77".equals(cod3dig) || ("C81".compareTo(cod3dig) <= 0 && "C96".compareTo(cod3dig) >= 0) || "D36".equals(cod3dig) || ("D45".compareTo(cod3dig) <= 0 && "D47".compareTo(
+                                cod3dig)
+                                >= 0))
+                            causeSpecific = 1;
+                    }
+                    else if ("37000".equals(recode) && (("C00".compareTo(cod3dig) <= 0 && "D489".compareTo(cod) >= 0) || "D619".equals(cod)))
                         causeSpecific = 1;
                 }
-                else if ("37000".equals(recode) && (("C00".compareTo(cod3dig) <= 0 && "D489".compareTo(cod) >= 0) || "D619".equals(cod)))
-                    causeSpecific = 1;
             }
         }
 
