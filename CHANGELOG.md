@@ -2,7 +2,7 @@
 
 **Changes in version 5.8 (not released yet)**
 
-- Added optional parameter to Cause of Death Classification utility methods to run the logic of the algorithm using a different SEER Site Recode version.
+- Added optional parameter to Cause of Death Classification utility methods to run the logic of the algorithm using a different SEER Site Recode version. Using version 2023 is still being evaluated and should not be used in any production environment.
 - Harmonized behavior of processing patient with no tumors.
 - Cleaned up NHIA and NAPIIA input classes to fix issues with cases that don't have any tumor-level data. 
 
