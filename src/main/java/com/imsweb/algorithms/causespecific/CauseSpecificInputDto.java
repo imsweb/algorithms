@@ -9,6 +9,10 @@ public class CauseSpecificInputDto {
 
     private String _histologyIcdO3;
 
+    private String _behaviorIcdO3;
+
+    private String _dateOfDiagnosisYear;
+
     private String _sequenceNumberCentral;
 
     private String _icdRevisionNumber;
@@ -31,6 +35,22 @@ public class CauseSpecificInputDto {
 
     public void setHistologyIcdO3(String histologyIcdO3) {
         _histologyIcdO3 = histologyIcdO3;
+    }
+
+    public String getBehaviorIcdO3() {
+        return _behaviorIcdO3;
+    }
+
+    public void setBehaviorIcdO3(String behaviorIcdO3) {
+        _behaviorIcdO3 = behaviorIcdO3;
+    }
+
+    public String getDateOfDiagnosisYear() {
+        return _dateOfDiagnosisYear;
+    }
+
+    public void setDateOfDiagnosisYear(String dateOfDiagnosisYear) {
+        _dateOfDiagnosisYear = dateOfDiagnosisYear;
     }
 
     public String getSequenceNumberCentral() {

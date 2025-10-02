@@ -99,8 +99,8 @@ public final class SeerSiteRecodeUtils {
      * @param version data version
      * @param site site
      * @param histology histology
-     * @param behavior behavior
-     * @param dxYear DX Year
+     * @param behavior behavior (only needed for version 2023 or later)
+     * @param dxYear DX Year (only needed for version 2023 or later)
      * @return the calculated site recode for the provided parameters, unknown if it can't be calculated
      */
     public static String calculateSiteRecode(String version, String site, String histology, String behavior, String dxYear) {

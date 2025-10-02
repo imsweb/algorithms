@@ -66,6 +66,7 @@ public class DeathClassificationAlgorithm extends AbstractAlgorithm {
             inputDto.setCauseOfDeath((String)inputPatient.get(FIELD_COD));
             inputDto.setDateOfLastContactYear(Utils.extractYear((String)inputPatient.get(FIELD_DOLC)));
 
+            // note that this uses the default (2008) SEER Site Recode; if this ever changes to the 2023 version, the behavior and DX year need to be added as input...
             CauseSpecificResultDto resultDto = CauseSpecificUtils.computeCauseSpecific(inputDto, cutoffYear);
 
             Map<String, Object> outputTumor = new HashMap<>();

@@ -52,7 +52,10 @@ public class CauseSpecificUtilsTest {
         input.setSequenceNumberCentral("01");
         input.setIcdRevisionNumber("1");
         input.setCauseOfDeath("C770");
+        input.setPrimarySite("C770");
         input.setHistologyIcdO3("9950");
+        input.setBehaviorIcdO3("3");
+        input.setDateOfDiagnosisYear("2020");
         Assert.assertEquals("1", CauseSpecificUtils.computeCauseSpecific(input, 2025, VERSION_2008).getCauseSpecificDeathClassification());
         Assert.assertEquals("0", CauseSpecificUtils.computeCauseSpecific(input, 2025, VERSION_2023).getCauseSpecificDeathClassification());
     }

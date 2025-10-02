@@ -74,22 +74,22 @@ public final class CauseSpecificUtils {
      * <br/><br/>
      * The input dto may have the following parameters:
      * <ul>
-     * <li>sequenceNumberCentral</li>
-     * <li>icdRevisionNumber</li>
-     * <li>causeOfDeath</li>
-     * <li>primarySite</li>
-     * <li>histologyIcdO3</li>
-     * <li>dateOfLastContactYear</li>
+     *   <li>sequenceNumberCentral</li>
+     *   <li>icdRevisionNumber</li>
+     *   <li>causeOfDeath</li>
+     *   <li>dateOfLastContactYear</li>
+     *   <li>primarySite</li>
+     *   <li>histologyIcdO3</li>
      * </ul>
      * <br/><br/>
      * @param input an input dto which has the fields used to compute cause specific values as parameter.
      * @param cutOffYear submission year, if date of last contact is beyond this year, patient is assumed alive.
      * @return the computed cause specific and cause other death classification values. The output values are:
      * <ul>
-     * <li>ALIVE OR DEAD OF OTHER CAUSES = "0"</li>
-     * <li>DEAD = "1"</li>
-     * <li>MISSING UNKNOWN DEATH CODE = "8"</li>
-     * <li>SEQUENCE NOT APPLICABLE = "9"</li>
+     *   <li>ALIVE OR DEAD OF OTHER CAUSES = "0"</li>
+     *   <li>DEAD = "1"</li>
+     *   <li>MISSING UNKNOWN DEATH CODE = "8"</li>
+     *   <li>SEQUENCE NOT APPLICABLE = "9"</li>
      * </ul>
      */
     public static CauseSpecificResultDto computeCauseSpecific(CauseSpecificInputDto input, int cutOffYear) {
@@ -101,12 +101,14 @@ public final class CauseSpecificUtils {
      * <br/><br/>
      * The input dto may have the following parameters:
      * <ul>
-     * <li>sequenceNumberCentral</li>
-     * <li>icdRevisionNumber</li>
-     * <li>causeOfDeath</li>
-     * <li>primarySite</li>
-     * <li>histologyIcdO3</li>
-     * <li>dateOfLastContactYear</li>
+     *   <li>sequenceNumberCentral</li>
+     *   <li>icdRevisionNumber</li>
+     *   <li>causeOfDeath</li>
+     *   <li>dateOfLastContactYear</li>
+     *   <li>primarySite</li>
+     *   <li>histologyIcdO3</li>
+     *   <li>behaviorIcdO3 (only needed for SEER Site Recode 2023 or later)</li>
+     *   <li>dateOfDiagnosisYear(only needed for SEER Site Recode 2023 or later)</li>
      * </ul>
      * <br/><br/>
      * @param input an input dto which has the fields used to compute cause specific values as parameter.
@@ -114,10 +116,10 @@ public final class CauseSpecificUtils {
      * @param seerSiteRecodeVersion the SEER Site Recode version to use
      * @return the computed cause specific and cause other death classification values. The output values are:
      * <ul>
-     * <li>ALIVE OR DEAD OF OTHER CAUSES = "0"</li>
-     * <li>DEAD = "1"</li>
-     * <li>MISSING UNKNOWN DEATH CODE = "8"</li>
-     * <li>SEQUENCE NOT APPLICABLE = "9"</li>
+     *   <li>ALIVE OR DEAD OF OTHER CAUSES = "0"</li>
+     *   <li>DEAD = "1"</li>
+     *   <li>MISSING UNKNOWN DEATH CODE = "8"</li>
+     *   <li>SEQUENCE NOT APPLICABLE = "9"</li>
      * </ul>
      */
     @SuppressWarnings({"DuplicateExpressions", "java:S1871"}) // branches with the same outcome
@@ -149,7 +151,7 @@ public final class CauseSpecificUtils {
         int hist = NumberUtils.toInt(input.getHistologyIcdO3(), -1);
         String cod = input.getCauseOfDeath().toUpperCase();
         String cod3dig = cod.length() >= 3 ? cod.substring(0, 3) : "";
-        String recode = SeerSiteRecodeUtils.calculateSiteRecode(seerSiteRecodeVersion, input.getPrimarySite(), input.getHistologyIcdO3());
+        String recode = SeerSiteRecodeUtils.calculateSiteRecode(seerSiteRecodeVersion, input.getPrimarySite(), input.getHistologyIcdO3(), input.getBehaviorIcdO3(), input.getDateOfDiagnosisYear());
 
         // first do all the non-site-specific checks; some condition could be added to the text file which represents the tables. But I decided to use the same file and same structure of code as SAS
         int causeSpecific = 0;
