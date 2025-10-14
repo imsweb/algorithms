@@ -3,6 +3,7 @@
 **Changes in version 5.9 (not released yet)**
 
 - Added optional behavior and DX year input to the Cause of Death Classification utility methods. This won't affect the corresponding algorithm, which uses the 2008 SEER Site Recode logic.
+- Fixed small data issue with Cause of Death Classification algorithm.
 
 **Changes in version 5.8**
 
