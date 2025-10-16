@@ -42,10 +42,10 @@ public class CauseSpecificUtilsTest {
         input.setIcdRevisionNumber("1");
         input.setCauseOfDeath("B220");
         input.setDateOfLastContactYear("2013");
-        Assert.assertEquals("0", CauseSpecificUtils.computeCauseSpecific(input, 2012, VERSION_2023).getCauseSpecificDeathClassification());
-        Assert.assertEquals("0", CauseSpecificUtils.computeCauseSpecific(input, 2012, VERSION_2023).getCauseOtherDeathClassification());
-        Assert.assertEquals("0", CauseSpecificUtils.computeCauseSpecific(input, Calendar.getInstance().get(Calendar.YEAR), VERSION_2023).getCauseSpecificDeathClassification());
-        Assert.assertEquals("1", CauseSpecificUtils.computeCauseSpecific(input, Calendar.getInstance().get(Calendar.YEAR), VERSION_2023).getCauseOtherDeathClassification());
+        Assert.assertEquals("0", CauseSpecificUtils.computeCauseSpecific(input, 2012, VERSION_2023, false).getCauseSpecificDeathClassification());
+        Assert.assertEquals("0", CauseSpecificUtils.computeCauseSpecific(input, 2012, VERSION_2023, false).getCauseOtherDeathClassification());
+        Assert.assertEquals("0", CauseSpecificUtils.computeCauseSpecific(input, Calendar.getInstance().get(Calendar.YEAR), VERSION_2023, false).getCauseSpecificDeathClassification());
+        Assert.assertEquals("1", CauseSpecificUtils.computeCauseSpecific(input, Calendar.getInstance().get(Calendar.YEAR), VERSION_2023, false).getCauseOtherDeathClassification());
 
         // test a case that is different between teh 2008 and 2023 versions
         input.setDateOfLastContactYear("2020");
@@ -56,8 +56,8 @@ public class CauseSpecificUtilsTest {
         input.setHistologyIcdO3("9950");
         input.setBehaviorIcdO3("3");
         input.setDateOfDiagnosisYear("2020");
-        Assert.assertEquals("1", CauseSpecificUtils.computeCauseSpecific(input, 2025, VERSION_2008).getCauseSpecificDeathClassification());
-        Assert.assertEquals("0", CauseSpecificUtils.computeCauseSpecific(input, 2025, VERSION_2023).getCauseSpecificDeathClassification());
+        Assert.assertEquals("1", CauseSpecificUtils.computeCauseSpecific(input, 2025, VERSION_2008, true).getCauseSpecificDeathClassification());
+        Assert.assertEquals("0", CauseSpecificUtils.computeCauseSpecific(input, 2025, VERSION_2023, false).getCauseSpecificDeathClassification());
     }
 
     @Test

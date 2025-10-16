@@ -36,7 +36,8 @@ public final class CauseSpecificUtils {
     public static final String SEQUENCE_NOT_APPLICABLE = "9";
 
     //lookup for tables (lazily loaded)
-    private static final List<CauseSpecificDataDto> _DATA_SITE_SPECIFIC_2008 = new ArrayList<>();
+    private static final List<CauseSpecificDataDto> _DATA_SITE_SPECIFIC_2008_PRE_BUG_FIX = new ArrayList<>();
+    private static final List<CauseSpecificDataDto> _DATA_SITE_SPECIFIC_2008_POST_BUG_FIX = new ArrayList<>();
     private static final List<CauseSpecificDataDto> _DATA_SITE_SPECIFIC_2023 = new ArrayList<>();
 
     private CauseSpecificUtils() {
@@ -66,7 +67,7 @@ public final class CauseSpecificUtils {
      * </ul>
      */
     public static CauseSpecificResultDto computeCauseSpecific(CauseSpecificInputDto input) {
-        return computeCauseSpecific(input, Calendar.getInstance().get(Calendar.YEAR), SeerSiteRecodeUtils.VERSION_DEFAULT);
+        return computeCauseSpecific(input, Calendar.getInstance().get(Calendar.YEAR), SeerSiteRecodeUtils.VERSION_DEFAULT, false);
     }
 
     /**
@@ -93,7 +94,7 @@ public final class CauseSpecificUtils {
      * </ul>
      */
     public static CauseSpecificResultDto computeCauseSpecific(CauseSpecificInputDto input, int cutOffYear) {
-        return computeCauseSpecific(input, cutOffYear, SeerSiteRecodeUtils.VERSION_DEFAULT);
+        return computeCauseSpecific(input, cutOffYear, SeerSiteRecodeUtils.VERSION_DEFAULT, false);
     }
 
     /**
@@ -123,7 +124,7 @@ public final class CauseSpecificUtils {
      * </ul>
      */
     @SuppressWarnings({"DuplicateExpressions", "java:S1871"}) // branches with the same outcome
-    public static CauseSpecificResultDto computeCauseSpecific(CauseSpecificInputDto input, int cutOffYear, String seerSiteRecodeVersion) {
+    public static CauseSpecificResultDto computeCauseSpecific(CauseSpecificInputDto input, int cutOffYear, String seerSiteRecodeVersion, boolean useFixed2008data) {
         CauseSpecificResultDto result = new CauseSpecificResultDto();
 
         int seq = NumberUtils.isDigits(input.getSequenceNumberCentral()) ? Integer.parseInt(input.getSequenceNumberCentral()) : -1;
@@ -218,7 +219,7 @@ public final class CauseSpecificUtils {
             return result;
         }
 
-        for (CauseSpecificDataDto obj : getData(seerSiteRecodeVersion)) {
+        for (CauseSpecificDataDto obj : getData(seerSiteRecodeVersion, useFixed2008data)) {
             if (obj.doesMatchThisRow(input.getIcdRevisionNumber(), seq == 0 ? "0" : "1-59", recode, cod)) {
                 result.setCauseSpecificDeathClassification(DEAD);
                 result.setCauseOtherDeathClassification(ALIVE_OR_DEAD_OF_OTHER_CAUSES);
@@ -232,11 +233,18 @@ public final class CauseSpecificUtils {
         return result;
     }
 
-    private static synchronized List<CauseSpecificDataDto> getData(String version) {
+    private static synchronized List<CauseSpecificDataDto> getData(String version, boolean useFixed2008data) {
         if (SeerSiteRecodeUtils.VERSION_2008.equals(version)) {
-            if (_DATA_SITE_SPECIFIC_2008.isEmpty())
-                loadData("data_2008.txt", _DATA_SITE_SPECIFIC_2008);
-            return _DATA_SITE_SPECIFIC_2008;
+            if (useFixed2008data) {
+                if (_DATA_SITE_SPECIFIC_2008_POST_BUG_FIX.isEmpty())
+                    loadData("data_2008_post_bug_fix.txt", _DATA_SITE_SPECIFIC_2008_POST_BUG_FIX);
+                return _DATA_SITE_SPECIFIC_2008_POST_BUG_FIX;
+            }
+            else {
+                if (_DATA_SITE_SPECIFIC_2008_PRE_BUG_FIX.isEmpty())
+                    loadData("data_2008_pre_bug_fix.txt", _DATA_SITE_SPECIFIC_2008_PRE_BUG_FIX);
+                return _DATA_SITE_SPECIFIC_2008_PRE_BUG_FIX;
+            }
         }
         else if (SeerSiteRecodeUtils.VERSION_2023.equals(version)) {
             if (_DATA_SITE_SPECIFIC_2023.isEmpty())
