@@ -4,7 +4,8 @@
 package com.imsweb.algorithms;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
@@ -15,7 +16,7 @@ public class StateCountyTractInputDto extends StateCountyInputDto {
     }
 
     //NAACCR values for missing or unknown census tract
-    private static final List<String> _MISSING_OR_UNKNOWN_CENSUS_TRACTS = Arrays.asList("", "000000", "999999");
+    private static final Set<String> _MISSING_OR_UNKNOWN_CENSUS_TRACTS = new HashSet<>(Arrays.asList("", "000000", "999999"));
 
     private String _censusTract2000;
     private String _censusTract2010;

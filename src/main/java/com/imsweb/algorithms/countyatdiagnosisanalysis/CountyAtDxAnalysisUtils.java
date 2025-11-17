@@ -5,8 +5,9 @@ package com.imsweb.algorithms.countyatdiagnosisanalysis;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -38,7 +39,7 @@ public final class CountyAtDxAnalysisUtils {
     public static final String OTHER_STATE_OR_DX_YEAR_BLANK = "10";
     public static final String OTHER_REP_AND_GEO_BLANK = "10.1";
 
-    private static final List<String> _CANADIAN_STATE_ABBREVIATIONS = Arrays.asList("AB", "BC", "MB", "NB", "NL", "NS", "NT", "NU", "ON", "PE", "QC", "SK", "YT");
+    private static final Set<String> _CANADIAN_STATE_ABBREVIATIONS = new HashSet<>(Arrays.asList("AB", "BC", "MB", "NB", "NL", "NS", "NT", "NU", "ON", "PE", "QC", "SK", "YT"));
 
     private CountyAtDxAnalysisUtils() {
         // no instances of this class allowed!
@@ -115,11 +116,11 @@ public final class CountyAtDxAnalysisUtils {
                     output.setCountyAtDxAnalysis(geocoderCountyAtDx);
                     output.setCountyAtDxAnalysisFlag(GEO_CERT_KNOWN_REP_UNK);
                 }
-                else if (Arrays.asList("1", "6").contains(geocoderCertainty)) {
+                else if ("1".equals(geocoderCertainty) || "6".equals(geocoderCertainty)) {
                     output.setCountyAtDxAnalysis(geocoderCountyAtDx);
                     output.setCountyAtDxAnalysisFlag(GEO_CERT_1_OR_6);
                 }
-                else if (Arrays.asList("2", "3", "4").contains(geocoderCertainty)) {
+                else if ("2".equals(geocoderCertainty) || "3".equals(geocoderCertainty) || "4".equals(geocoderCertainty)) {
                     output.setCountyAtDxAnalysis(input.getCountyAtDx());
                     output.setCountyAtDxAnalysisFlag(REP_CERT_2_3_OR_4);
                 }

@@ -56,34 +56,35 @@ public final class NhiaUtils {
     private static final String _GENDER_FEMALE = "2";
 
     // spanish/Hispanic origins for direct identification
-    private static final List<String> _DIRECT_IDENTIFICATION_ORIGINS = Arrays.asList("1", "2", "3", "4", "5", "6", "8");
+    private static final Set<String> _DIRECT_IDENTIFICATION_ORIGINS = new HashSet<>(Arrays.asList("1", "2", "3", "4", "5", "6", "8"));
 
     // spanish/Hispanic origins for indirect identification
-    private static final List<String> _INDIRECT_IDENTIFICATION_ORIGINS = Arrays.asList("0", "6", "7", "9");
+    private static final Set<String> _INDIRECT_IDENTIFICATION_ORIGINS = new HashSet<>(Arrays.asList("0", "6", "7", "9"));
 
     // Birthplace countries corresponding to NHIA of MEXICAN (under the High Probability of Hispanic Ethnicity in documentation)
-    private static final List<String> _BPC_MEXICAN = Collections.singletonList("MEX");
+    private static final Set<String> _BPC_MEXICAN = new HashSet<>(Collections.singletonList("MEX"));
 
     // birthplace countries corresponding to NHIA of PERTO-RICAN (under the High Probability of Hispanic Ethnicity in documentation)
-    private static final List<String> _BPC_PUERTO_RICAN = Collections.singletonList("PRI");
+    private static final Set<String> _BPC_PUERTO_RICAN = new HashSet<>(Collections.singletonList("PRI"));
 
     // birthplace countries corresponding to NHIA of CUBAN (under the High Probability of Hispanic Ethnicity in documentation)
-    private static final List<String> _BPC_CUBAN = Collections.singletonList("CUB");
+    private static final Set<String> _BPC_CUBAN = new HashSet<>(Collections.singletonList("CUB"));
 
     // birthplace countries corresponding to NHIA of SOUTH-CENTRAL-AMERICAN (under the High Probability of Hispanic Ethnicity in documentation)
-    private static final List<String> _BPC_SOUTH_CENTRAL_AMER = Arrays.asList("ZZC", "GTM", "HND", "SLV", "NIC", "CRI", "PAN", "ZZS", "COL", "VEN", "ECU", "PER", "BOL", "CHL", "ARG", "PRY", "URY");
+    private static final Set<String> _BPC_SOUTH_CENTRAL_AMER = new HashSet<>(
+            Arrays.asList("ZZC", "GTM", "HND", "SLV", "NIC", "CRI", "PAN", "ZZS", "COL", "VEN", "ECU", "PER", "BOL", "CHL", "ARG", "PRY", "URY"));
 
     // birthplace countries corresponding to NHIA of OTHER-SPANISH (under the High Probability of Hispanic Ethnicity in documentation)
-    private static final List<String> _BPC_OTHER_SPANISH = Arrays.asList("ESP", "AND");
+    private static final Set<String> _BPC_OTHER_SPANISH = new HashSet<>(Arrays.asList("ESP", "AND"));
 
     // birthplace countries corresponding to NHIA of DOMINICAN-REPUBLIC (under the High Probability of Hispanic Ethnicity in documentation)
-    private static final List<String> _BPC_DOMINICAN_REP = Collections.singletonList("DOM");
+    private static final Set<String> _BPC_DOMINICAN_REP = new HashSet<>(Collections.singletonList("DOM"));
 
     // race being excluded from Indirect Identification
-    private static final List<String> _RACE_EXCLUDED = Arrays.asList("03", "06", "07");
+    private static final Set<String> _RACE_EXCLUDED = new HashSet<>(Arrays.asList("03", "06", "07"));
 
     // special Asian and Pacific Islander
-    private static final List<String> _RACE_PACIFIC = Arrays.asList("96", "97");
+    private static final Set<String> _RACE_PACIFIC = new HashSet<>(Arrays.asList("96", "97"));
 
     // cached lookups
     private static Set<String> _LOW_HISP_ETHN_COUNTIES;

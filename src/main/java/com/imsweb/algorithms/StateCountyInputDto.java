@@ -5,25 +5,26 @@ package com.imsweb.algorithms;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
 public class StateCountyInputDto {
 
     //Valid NAACCR values for state at dx
-    private static final List<String> _VALID_STATES = Arrays.asList("AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "GA",
+    private static final Set<String> _VALID_STATES = new HashSet<>(Arrays.asList("AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "GA",
             "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ",
             "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY",
             "AS", "GU", "MP", "PW", "PR", "UM", "VI", "FM", "MH", "TT", "AB", "BC", "MB", "NB", "NL", "NS", "NT", "NU", "ON", "PE",
-            "QC", "SK", "YT", "AA", "AE", "AP");
+            "QC", "SK", "YT", "AA", "AE", "AP"));
 
     //NAACCR values for missing or unknown state at dx
-    private static final List<String> _MISSING_OR_UNKNOWN_STATES = Arrays.asList("", "CD", "US", "XX", "YY", "ZZ");
+    private static final Set<String> _MISSING_OR_UNKNOWN_STATES = new HashSet<>(Arrays.asList("", "CD", "US", "XX", "YY", "ZZ"));
 
     //NAACCR values for missing or unknown county at dx
-    private static final List<String> _MISSING_OR_UNKNOWN_COUNTIES = Arrays.asList("", "999");
+    private static final Set<String> _MISSING_OR_UNKNOWN_COUNTIES = new HashSet<>(Arrays.asList("", "999"));
 
     // SEER City recodes
     private static final Map<String, String> _SEER_CITY_RECODES = new HashMap<>();
