@@ -6,7 +6,9 @@ package com.imsweb.algorithms.prcda;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.imsweb.algorithms.StateCountyInputDto;
 
@@ -28,10 +30,10 @@ public final class PrcdaUtils {
     public static final String PRCDA_UNKNOWN = "9";
 
     // States where every county is PRCDA
-    public static final List<String> ENTIRE_STATE_PRCDA = Collections.unmodifiableList(Arrays.asList("AK", "CT", "NV", "OK", "SC"));
+    public static final Set<String> ENTIRE_STATE_PRCDA = Collections.unmodifiableSet(new HashSet<>(Arrays.asList("AK", "CT", "NV", "OK", "SC")));
 
     // States where every county is non-PRCDA
-    public static final List<String> ENTIRE_STATE_NON_PRCDA;
+    public static final Set<String> ENTIRE_STATE_NON_PRCDA;
     static {
         List<String> nonPrcda = new ArrayList<>(Arrays.asList("AR", "DE", "DC", "GA", "HI", "IL", "KY", "MD", "MO", "NH", "NJ", "OH", "TN", "VT", "WV"));
         List<String> territory = Arrays.asList("AS", "GU", "MP", "PW", "PR", "UM", "VI", "FM", "MH", "TT");
@@ -41,7 +43,7 @@ public final class PrcdaUtils {
         nonPrcda.addAll(territory);
         nonPrcda.addAll(province);
         nonPrcda.addAll(military);
-        ENTIRE_STATE_NON_PRCDA = Collections.unmodifiableList(nonPrcda);
+        ENTIRE_STATE_NON_PRCDA = Collections.unmodifiableSet(new HashSet<>(nonPrcda));
     }
 
     private static final PrcdaDataProvider _PROVIDER = new PrcdaDataProvider();

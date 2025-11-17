@@ -5,8 +5,10 @@ package com.imsweb.algorithms.napiia;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import org.apache.commons.lang3.StringUtils;
@@ -84,11 +86,11 @@ public final class NapiiaUtils {
     }
 
     //Asian birth place countries excluded from indirect identification based on names
-    private static final List<String> _BPC_EXCLUDE_ASIAN = Arrays.asList("MDV", "NPL", "BTN", "BGD", "LKA", "MMR", "XMS", "MYS", "SGP", "BND", "IDN", "TLS", "MNG");
+    private static final Set<String> _BPC_EXCLUDE_ASIAN = new HashSet<>(Arrays.asList("MDV", "NPL", "BTN", "BGD", "LKA", "MMR", "XMS", "MYS", "SGP", "BND", "IDN", "TLS", "MNG"));
     //Hispanic birth place countries excluded from identification based on names
-    private static final List<String> _BPC_EXCLUDE_HISP = Arrays.asList("PRI", "MEX", "CUB", "DOM", "ZZC", "GTM", "HND", "SLV", "NIC", "CRI", "PAN", "ZZS", "COL", "VEN", "ECU", "PER", "BOL", "CHL",
-            "ARG", "PRY", "URY", "ESP", "AND");
-    private static final List<String> _SPANISH_ORIGIN_IS_SPANISH = Arrays.asList("1", "2", "3", "4", "5", "6", "8");
+    private static final Set<String> _BPC_EXCLUDE_HISP = new HashSet<>(Arrays.asList("PRI", "MEX", "CUB", "DOM", "ZZC", "GTM", "HND", "SLV", "NIC", "CRI", "PAN", "ZZS", "COL", "VEN", "ECU", "PER",
+            "BOL", "CHL", "ARG", "PRY", "URY", "ESP", "AND"));
+    private static final Set<String> _SPANISH_ORIGIN_IS_SPANISH = new HashSet<>(Arrays.asList("1", "2", "3", "4", "5", "6", "8"));
 
     //lookups
     private static final Map<String, Short> _LKUP_NAPIIA_SURNAME_CENSUS_ASIAN = new HashMap<>();

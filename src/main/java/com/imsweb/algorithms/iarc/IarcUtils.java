@@ -6,9 +6,12 @@ package com.imsweb.algorithms.iarc;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang3.math.NumberUtils;
+import org.apache.commons.lang3.tuple.Pair;
 
 import com.imsweb.algorithms.internal.Utils;
 
@@ -25,6 +28,37 @@ public final class IarcUtils {
     public static final Integer DUPLICATE = 0;
     public static final Integer PRIMARY = 1;
     public static final Integer INSITU = 9;
+
+    private static final Set<String> _SITE_GROUP_C02 = new HashSet<>(Arrays.asList("C01", "C02"));
+    private static final Set<String> _SITE_GROUP_C06 = new HashSet<>(Arrays.asList("C00", "C03", "C04", "C05", "C06"));
+    private static final Set<String> _SITE_GROUP_C14 = new HashSet<>(Arrays.asList("C09", "C10", "C12", "C13", "C14"));
+    private static final Set<String> _SITE_GROUP_C20 = new HashSet<>(Arrays.asList("C19", "C20"));
+    private static final Set<String> _SITE_GROUP_C24 = new HashSet<>(Arrays.asList("C23", "C24"));
+    private static final Set<String> _SITE_GROUP_C34 = new HashSet<>(Arrays.asList("C33", "C34"));
+    private static final Set<String> _SITE_GROUP_C41 = new HashSet<>(Arrays.asList("C40", "C41"));
+    private static final Set<String> _SITE_GROUP_C68 = new HashSet<>(Arrays.asList("C65", "C66", "C67", "C68"));
+
+    private static final List<Pair<List<Object>, Integer>> _HISTOLOGY_RANGES = new ArrayList<>();
+
+    static {
+        _HISTOLOGY_RANGES.add(Pair.of(Utils.expandHistologiesAsIntegers("8051-8084,8120-8131"), 1));
+        _HISTOLOGY_RANGES.add(Pair.of(Utils.expandHistologiesAsIntegers("8090-8110"), 2));
+        _HISTOLOGY_RANGES.add(Pair.of(Utils.expandHistologiesAsIntegers("8140-8149,8160-8162,8190-8221,8260-8337,8350-8551,8570-8576,8940-8941"), 3));
+        _HISTOLOGY_RANGES.add(Pair.of(Utils.expandHistologiesAsIntegers("8030-8046,8150-8157,8170-8180,8230-8255,8340-8347,8560-8562,8580-8671"), 4));
+        _HISTOLOGY_RANGES.add(Pair.of(Utils.expandHistologiesAsIntegers("8010-8015,8020-8022,8050"), 5));
+        _HISTOLOGY_RANGES.add(Pair.of(Utils.expandHistologiesAsIntegers("8680-8713,8800-8921,8990-8991,9040-9044,9120-9125,9130-9136,9141-9252,9370-9373,9540-9582"), 6));
+        _HISTOLOGY_RANGES.add(Pair.of(Utils.expandHistologiesAsIntegers("9050-9055"), 7));
+        _HISTOLOGY_RANGES.add(Pair.of(Utils.expandHistologiesAsIntegers("9840,9861-9931,9945-9946,9950,9961-9964,9980-9987,9991-9992"), 8));
+        _HISTOLOGY_RANGES.add(Pair.of(Utils.expandHistologiesAsIntegers("9597,9670-9699,9712,9728,9731-9738,9761-9767,9769,9811-9818,9823-9826,9833,9836,9940"), 9));
+        _HISTOLOGY_RANGES.add(Pair.of(Utils.expandHistologiesAsIntegers("9700-9726,9729,9768,9827-9831,9834,9837,9948"), 10));
+        _HISTOLOGY_RANGES.add(Pair.of(Utils.expandHistologiesAsIntegers("9650-9667"), 11));
+        _HISTOLOGY_RANGES.add(Pair.of(Utils.expandHistologiesAsIntegers("9740-9742"), 12));
+        _HISTOLOGY_RANGES.add(Pair.of(Utils.expandHistologiesAsIntegers("9750-9759"), 13));
+        _HISTOLOGY_RANGES.add(Pair.of(Utils.expandHistologiesAsIntegers("9590-9591,9596,9727,9760,9800-9809,9820,9832,9835,9860,9960,9965-9975,9989"), 14));
+        _HISTOLOGY_RANGES.add(Pair.of(Utils.expandHistologiesAsIntegers("9140"), 15));
+        _HISTOLOGY_RANGES.add(Pair.of(Utils.expandHistologiesAsIntegers("8720-8790,8930-8936,8950-8983,9000-9030,9060-9110,9260-9365,9380-9539"), 16));
+        _HISTOLOGY_RANGES.add(Pair.of(Utils.expandHistologiesAsIntegers("8000-8005"), 17));
+    }
 
     private IarcUtils() {
         // utility class
@@ -112,21 +146,21 @@ public final class IarcUtils {
         String siteGroup = site != null && site.length() >= 3 ? site.toUpperCase().substring(0, 3) : null;
 
         if (siteGroup != null) {
-            if (Arrays.asList("C01", "C02").contains(siteGroup))
+            if (_SITE_GROUP_C02.contains(siteGroup))
                 siteGroup = "C02";
-            else if (Arrays.asList("C00", "C03", "C04", "C05", "C06").contains(siteGroup))
+            else if (_SITE_GROUP_C06.contains(siteGroup))
                 siteGroup = "C06";
-            else if (Arrays.asList("C09", "C10", "C12", "C13", "C14").contains(siteGroup))
+            else if (_SITE_GROUP_C14.contains(siteGroup))
                 siteGroup = "C14";
-            else if (Arrays.asList("C19", "C20").contains(siteGroup))
+            else if (_SITE_GROUP_C20.contains(siteGroup))
                 siteGroup = "C20";
-            else if (Arrays.asList("C23", "C24").contains(siteGroup))
+            else if (_SITE_GROUP_C24.contains(siteGroup))
                 siteGroup = "C24";
-            else if (Arrays.asList("C33", "C34").contains(siteGroup))
+            else if (_SITE_GROUP_C34.contains(siteGroup))
                 siteGroup = "C34";
-            else if (Arrays.asList("C40", "C41").contains(siteGroup))
+            else if (_SITE_GROUP_C41.contains(siteGroup))
                 siteGroup = "C41";
-            else if (Arrays.asList("C65", "C66", "C67", "C68").contains(siteGroup))
+            else if (_SITE_GROUP_C68.contains(siteGroup))
                 siteGroup = "C68";
         }
 
@@ -138,41 +172,12 @@ public final class IarcUtils {
 
         if (NumberUtils.isDigits(histology)) {
             int hist = NumberUtils.toInt(histology);
-
-            if (Utils.isHistologyContained("8051-8084,8120-8131", hist))
-                histologyGroup = 1;
-            else if (Utils.isHistologyContained("8090-8110", hist))
-                histologyGroup = 2;
-            else if (Utils.isHistologyContained("8140-8149,8160-8162,8190-8221,8260-8337,8350-8551,8570-8576,8940-8941", hist))
-                histologyGroup = 3;
-            else if (Utils.isHistologyContained("8030-8046,8150-8157,8170-8180,8230-8255,8340-8347,8560-8562,8580-8671", hist))
-                histologyGroup = 4;
-            else if (Utils.isHistologyContained("8010-8015,8020-8022,8050", hist))
-                histologyGroup = 5;
-            else if (Utils.isHistologyContained("8680-8713,8800-8921,8990-8991,9040-9044,9120-9125,9130-9136,9141-9252,9370-9373,9540-9582", hist))
-                histologyGroup = 6;
-            else if (Utils.isHistologyContained("9050-9055", hist))
-                histologyGroup = 7;
-            else if (Utils.isHistologyContained("9840,9861-9931,9945-9946,9950,9961-9964,9980-9987,9991-9992", hist))
-                histologyGroup = 8;
-            else if (Utils.isHistologyContained("9597,9670-9699,9712,9728,9731-9738,9761-9767,9769,9811-9818,9823-9826,9833,9836,9940", hist))
-                histologyGroup = 9;
-            else if (Utils.isHistologyContained("9700-9726,9729,9768,9827-9831,9834,9837,9948", hist))
-                histologyGroup = 10;
-            else if (Utils.isHistologyContained("9650-9667", hist))
-                histologyGroup = 11;
-            else if (Utils.isHistologyContained("9740-9742", hist))
-                histologyGroup = 12;
-            else if (Utils.isHistologyContained("9750-9759", hist))
-                histologyGroup = 13;
-            else if (Utils.isHistologyContained("9590-9591,9596,9727,9760,9800-9809,9820,9832,9835,9860,9960,9965-9975,9989", hist))
-                histologyGroup = 14;
-            else if (hist == 9140)
-                histologyGroup = 15;
-            else if (Utils.isHistologyContained("8720-8790,8930-8936,8950-8983,9000-9030,9060-9110,9260-9365,9380-9539", hist))
-                histologyGroup = 16;
-            else if (Utils.isHistologyContained("8000-8005", hist))
-                histologyGroup = 17;
+            for (Pair<List<Object>, Integer> pair : _HISTOLOGY_RANGES) {
+                if (Utils.isContained(pair.getLeft(), hist)) {
+                    histologyGroup = pair.getRight();
+                    break;
+                }
+            }
         }
 
         return histologyGroup;
@@ -204,18 +209,18 @@ public final class IarcUtils {
         //14 is NOS for 8-13
         //5 is NOS for 1-4
         return (rec1.getHistGroup() == 17 && ((rec2.getHistGroup() >= 1 && rec2.getHistGroup() <= 7) || rec2.getHistGroup() == 15 || rec2.getHistGroup() == 16)) ||
-               (rec2.getHistGroup() == 17 && ((rec1.getHistGroup() >= 1 && rec1.getHistGroup() <= 7) || rec1.getHistGroup() == 15 || rec1.getHistGroup() == 16)) ||
-               (rec1.getHistGroup() == 14 && rec2.getHistGroup() >= 8 && rec2.getHistGroup() <= 13) ||
-               (rec2.getHistGroup() == 14 && rec1.getHistGroup() >= 8 && rec1.getHistGroup() <= 13) ||
-               (rec1.getHistGroup() == 5 && rec2.getHistGroup() >= 1 && rec2.getHistGroup() <= 4) ||
-               (rec2.getHistGroup() == 5 && rec1.getHistGroup() >= 1 && rec1.getHistGroup() <= 4);
+                (rec2.getHistGroup() == 17 && ((rec1.getHistGroup() >= 1 && rec1.getHistGroup() <= 7) || rec1.getHistGroup() == 15 || rec1.getHistGroup() == 16)) ||
+                (rec1.getHistGroup() == 14 && rec2.getHistGroup() >= 8 && rec2.getHistGroup() <= 13) ||
+                (rec2.getHistGroup() == 14 && rec1.getHistGroup() >= 8 && rec1.getHistGroup() <= 13) ||
+                (rec1.getHistGroup() == 5 && rec2.getHistGroup() >= 1 && rec2.getHistGroup() <= 4) ||
+                (rec2.getHistGroup() == 5 && rec1.getHistGroup() >= 1 && rec1.getHistGroup() <= 4);
     }
 
     private static boolean needToUpdateHistology(IarcMpInputRecordDto primaryRec, IarcMpInputRecordDto dupRecord) {
         return (primaryRec.getHistGroup() == 17 && ((dupRecord.getHistGroup() >= 1 && dupRecord.getHistGroup() <= 7) || dupRecord.getHistGroup() == 15 || dupRecord.getHistGroup() == 16)) ||
-               (primaryRec.getHistGroup() == 14 && dupRecord.getHistGroup() >= 8 && dupRecord.getHistGroup() <= 13) ||
-               (primaryRec.getHistGroup() == 5 && dupRecord.getHistGroup() >= 1 && dupRecord.getHistGroup() <= 4) ||
-               (primaryRec.getHistGroup().equals(dupRecord.getHistGroup()) && NumberUtils.toInt(primaryRec.getHistology()) < NumberUtils.toInt(dupRecord.getHistology()));
+                (primaryRec.getHistGroup() == 14 && dupRecord.getHistGroup() >= 8 && dupRecord.getHistGroup() <= 13) ||
+                (primaryRec.getHistGroup() == 5 && dupRecord.getHistGroup() >= 1 && dupRecord.getHistGroup() <= 4) ||
+                (primaryRec.getHistGroup().equals(dupRecord.getHistGroup()) && NumberUtils.toInt(primaryRec.getHistology()) < NumberUtils.toInt(dupRecord.getHistology()));
     }
 
     private static class InternalRecDto implements Comparable<InternalRecDto> {

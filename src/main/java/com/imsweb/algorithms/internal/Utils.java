@@ -211,10 +211,6 @@ public final class Utils {
         return false;
     }
 
-    public static boolean isHistologyContained(String list, Integer value) {
-        return isContained(expandHistologiesAsIntegers(list), value);
-    }
-
     public static Map<String, Object> extractPatient(AlgorithmInput input) {
         return input.getPatient() == null ? Collections.emptyMap() : input.getPatient();
     }
