@@ -1,6 +1,6 @@
 ## Algorithms Version History
 
-**Changes in version 5.9 (not released yet)**
+**Changes in version 5.9**
 
 - Changed format of version for NHIA and NAPIIA and set both values to "20240801" and "20250801" respectively.
 - Optimized multiple algorithms to use sets instead of lists when looking if a value is contained in a collection (no changes in behavior).
