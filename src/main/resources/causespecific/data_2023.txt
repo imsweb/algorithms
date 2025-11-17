@@ -42,8 +42,8 @@ ICDVersion;SeqType;Siterec2023;Deathcodes-ignoring4thdigit;Deathcodes-requiring4
 8;0;71;279;6959,7434,7572;Lymphoid Leukemias (excluding CLL/SLL)
 8;0;72;279;6959,7434,7572;Acute Myeloid Leukemias
 8;0;73;279;6959,7434,7572;Other Leukemias
-8;0;74;279; ;Plasma Cell Neoplasms and Immunoproliferative Diseases
-8;0;75;279; ;Myeloproliferative Neoplasms and Myelodysplastic Syndromes
+8;0;74;279;6959,7434,7572;Plasma Cell Neoplasms and Immunoproliferative Diseases
+8;0;75;279;6959,7434,7572;Myeloproliferative Neoplasms and Myelodysplastic Syndromes
 8;0;76;279;6959,7434,7572;Miscellaneous Hematopoietic Neoplasms
 8;0;78; ;7572;Kaposi Sarcoma
 8;0;79;284;2759,7572;Miscellaneous Neoplasms
@@ -122,8 +122,8 @@ ICDVersion;SeqType;Siterec2023;Deathcodes-ignoring4thdigit;Deathcodes-requiring4
 8;1-59;71;200,202-204,209,279;2069,2079,2262,2381,2389,2391,6959,7434,7572;Lymphoid Leukemias (excluding CLL/SLL)
 8;1-59;72;200,202-204,209,279;2069,2079,2262,2381,2389,2391,6959,7434,7572;Acute Myeloid Leukemias
 8;1-59;73;200,202-204,209,279;2069,2079,2262,2381,2389,2391,6959,7434,7572;Other Leukemias
-8;1-59;74;203,279;2079;Plasma Cell Neoplasms and Immunoproliferative Diseases
-8;1-59;75;203,279;2079;Myeloproliferative Neoplasms and Myelodysplastic Syndromes
+8;1-59;74;140-198,200-209,279,284;2759,7572;Plasma Cell Neoplasms and Immunoproliferative Diseases
+8;1-59;75;140-198,200-209,279,284;2759,7572;Myeloproliferative Neoplasms and Myelodysplastic Syndromes
 8;1-59;76;140-198,200-209,284;2759,7572;Miscellaneous Hematopoietic Neoplasms
 8;1-59;77;162-163;1711,1942;Mesothelioma
 8;1-59;78; ;7572;Kaposi Sarcoma
@@ -256,8 +256,8 @@ ICDVersion;SeqType;Siterec2023;Deathcodes-ignoring4thdigit;Deathcodes-requiring4
 9;1-59;71;200,202-204,237;2387;Lymphoid Leukemias (excluding CLL/SLL)
 9;1-59;72;200,202-204,237;2387;Acute Myeloid Leukemias
 9;1-59;73;200,202-204,237;2387;Other Leukemias
-9;1-59;74;203,279;2079;Plasma Cell Neoplasms and Immunoproliferative Diseases
-9;1-59;75;203,279;2079;Myeloproliferative Neoplasms and Myelodysplastic Syndromes
+9;1-59;74;140-198,200-208,279,284;2384,2385,2387,2731;Plasma Cell Neoplasms and Immunoproliferative Diseases
+9;1-59;75;140-198,200-208,279,284;2384,2385,2387,2731;Myeloproliferative Neoplasms and Myelodysplastic Syndromes
 9;1-59;76;140-198,200-208,284;2384,2385,2387,2731;Miscellaneous Hematopoietic Neoplasms
 9;1-59;77;162-165; ;Mesothelioma
 9;1-59;78;042-044,176; ;Kaposi Sarcoma
@@ -380,16 +380,16 @@ ICDVersion;SeqType;Siterec2023;Deathcodes-ignoring4thdigit;Deathcodes-requiring4
 1;1-59;64;C37,C74,C75,D35;C797,D093,D150,D384,D441-D449;Adrenal Gland
 1;1-59;65;C37,C74,C75,D35;C797,D093,D150,D384,D441-D449;Parathyroid
 1;1-59;66;C37,C74,C75,D35;C797,D093,D150,D384,D441-D449;Endocrine Other
-1;1-59;67;C82-C86,C88,C91-C96,D46,D47;D760,D763;Precursor Lymphoid Neoplasms
-1;1-59;68;C82-C86,C88,C91-C96,D46,D47;D760,D763;Chronic lymphocytic leukemia (CLL)/Small lymphocytic lymphoma
+1;1-59;67;C81-C96,D46,D47;D760,D763;Precursor Lymphoid Neoplasms
+1;1-59;68;C81-C96,D46,D47;D760,D763;Chronic lymphocytic leukemia (CLL)/Small lymphocytic lymphoma
 1;1-59;69;B20-B24,C77,C81-C96,D36,D47; ;Hodgkin Lymphomas
 1;1-59;70;B20-B24,C77,C81-C96,D36,D47; ;Non-Hodgkin Lymphomas
-1;1-59;71;C82-C86,C88,C91-C96,D46,D47; ;Lymphoid Leukemias (excluding CLL/SLL)
-1;1-59;72;C82-C86,C88,C91-C96,D46,D47; ;Acute Myeloid Leukemias
-1;1-59;73;C82-C86,C88,C91-C96,D46,D47; ;Other Leukemias
-1;1-59;74;C90;D472,D477;Plasma Cell Neoplasms and Immunoproliferative Diseases
-1;1-59;75;C90;D472,D477;Myeloproliferative Neoplasms and Myelodysplastic Syndromes
-1;1-59;76;C82-C86,C88,C91-C96,D46,D47;D760,D763;Miscellaneous Hematopoietic Neoplasms
+1;1-59;71;C81-C96,D46,D47; ;Lymphoid Leukemias (excluding CLL/SLL)
+1;1-59;72;C81-C96,D46,D47; ;Acute Myeloid Leukemias
+1;1-59;73;C81-C96,D46,D47; ;Other Leukemias
+1;1-59;74;C81-C96,D46,D47;D760,D763;Plasma Cell Neoplasms and Immunoproliferative Diseases
+1;1-59;75;C81-C96,D46,D47;D760,D763;Myeloproliferative Neoplasms and Myelodysplastic Syndromes
+1;1-59;76;C81-C96,D46,D47;D760,D763;Miscellaneous Hematopoietic Neoplasms
 1;1-59;77;C34,C38-C39,C45; ;Mesothelioma
 1;1-59;78;B20-B24,C46; ;Kaposi Sarcoma
 1;1-59;79;C00-D48;D619;Miscellaneous Neoplasms
