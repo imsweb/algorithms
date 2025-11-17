@@ -2,6 +2,7 @@
 
 **Changes in version 5.9 (not released yet)**
 
+- Changed format of version for NHIA and NAPIIA and set both values to "20240801" and "20250801" respectively.
 - Added optional behavior and DX year input to the Cause of Death Classification utility methods. This won't affect the corresponding algorithm, which uses the 2008 SEER Site Recode logic.
 
 **Changes in version 5.8**
