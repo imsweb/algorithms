@@ -1,5 +1,10 @@
 ## Algorithms Version History
 
+**Changes in version 5.10**
+
+- Changed the minimum Java language for this library from Java 11 to Java 21.
+- Updated dependencies.
+
 **Changes in version 5.9**
 
 - Changed format of version for NHIA and NAPIIA and set both values to "20240801" and "20250801" respectively.
