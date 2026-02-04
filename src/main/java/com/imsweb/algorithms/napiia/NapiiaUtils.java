@@ -270,7 +270,7 @@ public final class NapiiaUtils {
         }
 
         // step 4 - Indirect Identification Based on Name
-        String sex = input.getSex();
+        String sex = input.getSexAssignedAtBirth();
         String nameResult = null;
         if (runNames) {
             if (_GENDER_MALE.equals(sex))

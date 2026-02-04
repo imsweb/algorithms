@@ -2,6 +2,7 @@
 
 **Changes in version 5.10**
 
+- Updated NHIA/NAPIIA algorithms to use new "sexAssignedAtBirth" variable instead of deprecated "sex" one.
 - Changed the minimum Java language for this library from Java 11 to Java 21.
 - Updated dependencies.
 

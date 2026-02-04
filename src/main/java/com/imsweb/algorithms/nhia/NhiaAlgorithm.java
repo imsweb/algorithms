@@ -23,7 +23,7 @@ import static com.imsweb.algorithms.Algorithms.FIELD_NAME_BIRTH_SURNAME;
 import static com.imsweb.algorithms.Algorithms.FIELD_NAME_LAST;
 import static com.imsweb.algorithms.Algorithms.FIELD_NHIA;
 import static com.imsweb.algorithms.Algorithms.FIELD_RACE1;
-import static com.imsweb.algorithms.Algorithms.FIELD_SEX;
+import static com.imsweb.algorithms.Algorithms.FIELD_SEX_ASSIGNED_AT_BIRTH;
 import static com.imsweb.algorithms.Algorithms.FIELD_SPAN_HISP_OR;
 import static com.imsweb.algorithms.Algorithms.FIELD_STATE_DX;
 import static com.imsweb.algorithms.Algorithms.PARAM_NHIA_OPTION;
@@ -45,7 +45,7 @@ public class NhiaAlgorithm extends AbstractAlgorithm {
         _inputFields.add(Algorithms.getField(FIELD_NAME_BIRTH_SURNAME));
         _inputFields.add(Algorithms.getField(FIELD_COUNTRY_BIRTH));
         _inputFields.add(Algorithms.getField(FIELD_RACE1));
-        _inputFields.add(Algorithms.getField(FIELD_SEX));
+        _inputFields.add(Algorithms.getField(FIELD_SEX_ASSIGNED_AT_BIRTH));
         _inputFields.add(Algorithms.getField(FIELD_IHS));
         _inputFields.add(Algorithms.getField(FIELD_COUNTY_AT_DX_ANALYSIS));
         _inputFields.add(Algorithms.getField(FIELD_STATE_DX));
@@ -60,7 +60,7 @@ public class NhiaAlgorithm extends AbstractAlgorithm {
         NhiaInputPatientDto inputPatient = new NhiaInputPatientDto();
         inputPatient.setSpanishHispanicOrigin((String)patientMap.get(FIELD_SPAN_HISP_OR));
         inputPatient.setBirthplaceCountry((String)patientMap.get(FIELD_COUNTRY_BIRTH));
-        inputPatient.setSex((String)patientMap.get(FIELD_SEX));
+        inputPatient.setSexAssignedAtBirth((String)patientMap.get(FIELD_SEX_ASSIGNED_AT_BIRTH));
         inputPatient.setRace1((String)patientMap.get(FIELD_RACE1));
         inputPatient.setIhs((String)patientMap.get(FIELD_IHS));
         inputPatient.setNameLast((String)patientMap.get(FIELD_NAME_LAST));

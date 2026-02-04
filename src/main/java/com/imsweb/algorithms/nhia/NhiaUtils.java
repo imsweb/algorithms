@@ -109,7 +109,7 @@ public final class NhiaUtils {
      * <li>ihs</li>
      * <li>addressAtDxState</li>
      * <li>countyAtDxAnalysis</li>
-     * <li>sex</li>
+     * <li>sexAssignedAtBirth</li>
      * <li>nameLast</li>
      * <li>nameMaiden</li>
      * <li>nameBirthSurname</li>
@@ -249,24 +249,16 @@ public final class NhiaUtils {
     }
 
     private static String applyDirectIdentification(String spanishOrigin) {
-        String result;
-        if (_SPAN_HISP_ORIG_MEXICAN.equals(spanishOrigin))
-            result = NHIA_MEXICAN;
-        else if (_SPAN_HISP_ORIG_PUERTO_RICAN.equals(spanishOrigin))
-            result = NHIA_PUERTO_RICAN;
-        else if (_SPAN_HISP_ORIG_CUBAN.equals(spanishOrigin))
-            result = NHIA_CUBAN;
-        else if (_SPAN_HISP_ORIG_SOUTH_CENTRAL_AMER.equals(spanishOrigin))
-            result = NHIA_SOUTH_CENTRAL_AMER;
-        else if (_SPAN_HISP_ORIG_OTHER_SPANISH.equals(spanishOrigin))
-            result = NHIA_OTHER_SPANISH;
-        else if (_SPAN_HISP_ORIG_DOMINICAN.equals(spanishOrigin))
-            result = NHIA_DOMINICAN;
-        else if (_SPAN_HISP_ORIG_SPANISH_NOS.equals(spanishOrigin))
-            result = NHIA_SPANISH_NOS;
-        else
-            result = NHIA_NON_HISPANIC;
-        return result;
+        return switch (spanishOrigin) {
+            case _SPAN_HISP_ORIG_MEXICAN -> NHIA_MEXICAN;
+            case _SPAN_HISP_ORIG_PUERTO_RICAN -> NHIA_PUERTO_RICAN;
+            case _SPAN_HISP_ORIG_CUBAN -> NHIA_CUBAN;
+            case _SPAN_HISP_ORIG_SOUTH_CENTRAL_AMER -> NHIA_SOUTH_CENTRAL_AMER;
+            case _SPAN_HISP_ORIG_OTHER_SPANISH -> NHIA_OTHER_SPANISH;
+            case _SPAN_HISP_ORIG_DOMINICAN -> NHIA_DOMINICAN;
+            case _SPAN_HISP_ORIG_SPANISH_NOS -> NHIA_SPANISH_NOS;
+            case null, default -> NHIA_NON_HISPANIC;
+        };
 
     }
 
@@ -275,7 +267,7 @@ public final class NhiaUtils {
 
         // get the variables
         String race1 = input.getRace1();
-        String sex = input.getSex();
+        String sex = input.getSexAssignedAtBirth();
         String ihs = input.getIhs();
         String nameLast = input.getNameLast();
         String birthSurname = input.getNameBirthSurname();

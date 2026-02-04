@@ -21,7 +21,7 @@ public class NapiiaUtilsTest {
     private static final String _PROP_RACE5 = "race5";
     private static final String _PROP_SPANISH_HISPANIC_ORIGIN = "spanishHispanicOrigin";
     private static final String _PROP_BIRTH_PLACE_COUNTRY = "birthplaceCountry";
-    private static final String _PROP_SEX = "sex";
+    private static final String _PROP_SEX_ASSIGNED_AT_BIRTH = "sexAssignedAtBirth";
     private static final String _PROP_NAME_LAST = "nameLast";
     private static final String _PROP_NAME_BIRTH_SURNAME = "nameBirthSurname";
 
@@ -130,12 +130,12 @@ public class NapiiaUtilsTest {
         rec.put(_PROP_RACE1, "96");
         rec.put(_PROP_SPANISH_HISPANIC_ORIGIN, "7");
         rec.put(_PROP_NAME_LAST, "ABDOOL");
-        rec.put(_PROP_SEX, "1");
+        rec.put(_PROP_SEX_ASSIGNED_AT_BIRTH, "1");
         Assert.assertEquals("15", computeNapiia(rec).getNapiiaValue());
         rec.put(_PROP_NAME_LAST, "OTHER");
         Assert.assertEquals("96", computeNapiia(rec).getNapiiaValue());
         // end maiden name check
-        rec.put(_PROP_SEX, "2");
+        rec.put(_PROP_SEX_ASSIGNED_AT_BIRTH, "2");
         rec.put(_PROP_NAME_BIRTH_SURNAME, "ABABA");
         Assert.assertEquals("06", computeNapiia(rec).getNapiiaValue());
         Assert.assertNull(computeNapiia(rec).getReasonForReview());
@@ -148,7 +148,7 @@ public class NapiiaUtilsTest {
         Assert.assertEquals("97", computeNapiia(rec).getNapiiaValue());
         Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
         Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_SEX, "2");
+        rec.put(_PROP_SEX_ASSIGNED_AT_BIRTH, "2");
         rec.put(_PROP_NAME_BIRTH_SURNAME, "ACFALLE");
         Assert.assertEquals("22", computeNapiia(rec).getNapiiaValue());
         rec.put(_PROP_NAME_BIRTH_SURNAME, null);
@@ -344,7 +344,7 @@ public class NapiiaUtilsTest {
         Assert.assertEquals("97", computeNapiia(rec).getNapiiaValue());
         Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
         Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_SEX, "1");
+        rec.put(_PROP_SEX_ASSIGNED_AT_BIRTH, "1");
         rec.put(_PROP_NAME_BIRTH_SURNAME, "ATOIGUE");
         Assert.assertEquals("97", computeNapiia(rec).getNapiiaValue());
         Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
@@ -357,11 +357,11 @@ public class NapiiaUtilsTest {
         Assert.assertEquals("97", computeNapiia(rec).getNapiiaValue());
         Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
         Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_SEX, "2");
+        rec.put(_PROP_SEX_ASSIGNED_AT_BIRTH, "2");
         Assert.assertEquals("22", computeNapiia(rec).getNapiiaValue());
         Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
         Assert.assertNull(computeNapiia(rec).getReasonForReview());
-        rec.put(_PROP_SEX, "3");
+        rec.put(_PROP_SEX_ASSIGNED_AT_BIRTH, "3");
         Assert.assertEquals("97", computeNapiia(rec).getNapiiaValue());
         Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
         Assert.assertNull(computeNapiia(rec).getReasonForReview());
@@ -493,7 +493,7 @@ public class NapiiaUtilsTest {
         rec.put(_PROP_RACE1, "96");
         rec.put(_PROP_SPANISH_HISPANIC_ORIGIN, "9");
         rec.put(_PROP_BIRTH_PLACE_COUNTRY, "BLZ");
-        rec.put(_PROP_SEX, "1");
+        rec.put(_PROP_SEX_ASSIGNED_AT_BIRTH, "1");
         rec.put(_PROP_NAME_LAST, "AGUYEN");
         Assert.assertEquals("10", computeNapiia(rec).getNapiiaValue());
         Assert.assertFalse(computeNapiia(rec).getNeedsHumanReview());
@@ -529,7 +529,7 @@ public class NapiiaUtilsTest {
         input.setRace5(rec.get(_PROP_RACE5));
         input.setSpanishHispanicOrigin(rec.get(_PROP_SPANISH_HISPANIC_ORIGIN));
         input.setBirthplaceCountry(rec.get(_PROP_BIRTH_PLACE_COUNTRY));
-        input.setSex(rec.get(_PROP_SEX));
+        input.setSexAssignedAtBirth(rec.get(_PROP_SEX_ASSIGNED_AT_BIRTH));
         input.setNameLast(rec.get(_PROP_NAME_LAST));
         input.setNameBirthSurname(rec.get(_PROP_NAME_BIRTH_SURNAME));
         return NapiiaUtils.computeNapiia(input);
@@ -540,16 +540,16 @@ public class NapiiaUtilsTest {
         NapiiaInputPatientDto input = new NapiiaInputPatientDto();
         //Since the following properties are the same for all records lets use one of them and build a record input dto
         if (patient != null && !patient.isEmpty()) {
-            input.setRace1(patient.get(0).get(_PROP_RACE1));
-            input.setRace2(patient.get(0).get(_PROP_RACE2));
-            input.setRace3(patient.get(0).get(_PROP_RACE3));
-            input.setRace4(patient.get(0).get(_PROP_RACE4));
-            input.setRace5(patient.get(0).get(_PROP_RACE5));
-            input.setSpanishHispanicOrigin(patient.get(0).get(_PROP_SPANISH_HISPANIC_ORIGIN));
-            input.setBirthplaceCountry(patient.get(0).get(_PROP_BIRTH_PLACE_COUNTRY));
-            input.setSex(patient.get(0).get(_PROP_SEX));
-            input.setNameLast(patient.get(0).get(_PROP_NAME_LAST));
-            input.setNameBirthSurname(patient.get(0).get(_PROP_NAME_BIRTH_SURNAME));
+            input.setRace1(patient.getFirst().get(_PROP_RACE1));
+            input.setRace2(patient.getFirst().get(_PROP_RACE2));
+            input.setRace3(patient.getFirst().get(_PROP_RACE3));
+            input.setRace4(patient.getFirst().get(_PROP_RACE4));
+            input.setRace5(patient.getFirst().get(_PROP_RACE5));
+            input.setSpanishHispanicOrigin(patient.getFirst().get(_PROP_SPANISH_HISPANIC_ORIGIN));
+            input.setBirthplaceCountry(patient.getFirst().get(_PROP_BIRTH_PLACE_COUNTRY));
+            input.setSexAssignedAtBirth(patient.getFirst().get(_PROP_SEX_ASSIGNED_AT_BIRTH));
+            input.setNameLast(patient.getFirst().get(_PROP_NAME_LAST));
+            input.setNameBirthSurname(patient.getFirst().get(_PROP_NAME_BIRTH_SURNAME));
         }
         return NapiiaUtils.computeNapiia(input);
     }

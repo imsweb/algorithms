@@ -17,7 +17,7 @@ public class NhiaInputPatientDto {
 
     private String _race1;
 
-    private String _sex;
+    private String _sexAssignedAtBirth;
 
     private String _ihs;
 
@@ -63,12 +63,12 @@ public class NhiaInputPatientDto {
         _race1 = race1;
     }
 
-    public String getSex() {
-        return _sex;
+    public String getSexAssignedAtBirth() {
+        return _sexAssignedAtBirth;
     }
 
-    public void setSex(String sex) {
-        _sex = sex;
+    public void setSexAssignedAtBirth(String sexAssignedAtBirth) {
+        _sexAssignedAtBirth = sexAssignedAtBirth;
     }
 
     public String getIhs() {

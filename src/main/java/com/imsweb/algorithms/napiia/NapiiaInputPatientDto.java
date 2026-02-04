@@ -19,7 +19,7 @@ public class NapiiaInputPatientDto {
 
     private String _birthplaceCountry;
 
-    private String _sex;
+    private String _sexAssignedAtBirth;
 
     private String _nameLast;
 
@@ -81,12 +81,12 @@ public class NapiiaInputPatientDto {
         _birthplaceCountry = birthplaceCountry;
     }
 
-    public String getSex() {
-        return _sex;
+    public String getSexAssignedAtBirth() {
+        return _sexAssignedAtBirth;
     }
 
-    public void setSex(String sex) {
-        _sex = sex;
+    public void setSexAssignedAtBirth(String sexAssignedAtBirth) {
+        _sexAssignedAtBirth = sexAssignedAtBirth;
     }
 
     public String getNameLast() {

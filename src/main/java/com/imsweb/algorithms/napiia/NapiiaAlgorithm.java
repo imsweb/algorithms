@@ -23,7 +23,7 @@ import static com.imsweb.algorithms.Algorithms.FIELD_RACE2;
 import static com.imsweb.algorithms.Algorithms.FIELD_RACE3;
 import static com.imsweb.algorithms.Algorithms.FIELD_RACE4;
 import static com.imsweb.algorithms.Algorithms.FIELD_RACE5;
-import static com.imsweb.algorithms.Algorithms.FIELD_SEX;
+import static com.imsweb.algorithms.Algorithms.FIELD_SEX_ASSIGNED_AT_BIRTH;
 import static com.imsweb.algorithms.Algorithms.FIELD_SPAN_HISP_OR;
 
 public class NapiiaAlgorithm extends AbstractAlgorithm {
@@ -42,7 +42,7 @@ public class NapiiaAlgorithm extends AbstractAlgorithm {
         _inputFields.add(Algorithms.getField(FIELD_RACE3));
         _inputFields.add(Algorithms.getField(FIELD_RACE4));
         _inputFields.add(Algorithms.getField(FIELD_RACE5));
-        _inputFields.add(Algorithms.getField(FIELD_SEX));
+        _inputFields.add(Algorithms.getField(FIELD_SEX_ASSIGNED_AT_BIRTH));
 
         _outputFields.add(Algorithms.getField(FIELD_NAPIIA));
         _outputFields.add(Algorithms.getField(FIELD_NAPIIA_NEEDS_REVIEW));
@@ -57,7 +57,7 @@ public class NapiiaAlgorithm extends AbstractAlgorithm {
         NapiiaInputPatientDto dto = new NapiiaInputPatientDto();
         dto.setSpanishHispanicOrigin((String)patientMap.get(FIELD_SPAN_HISP_OR));
         dto.setBirthplaceCountry((String)patientMap.get(FIELD_COUNTRY_BIRTH));
-        dto.setSex((String)patientMap.get(FIELD_SEX));
+        dto.setSexAssignedAtBirth((String)patientMap.get(FIELD_SEX_ASSIGNED_AT_BIRTH));
         dto.setRace1((String)patientMap.get(FIELD_RACE1));
         dto.setRace2((String)patientMap.get(FIELD_RACE2));
         dto.setRace3((String)patientMap.get(FIELD_RACE3));
