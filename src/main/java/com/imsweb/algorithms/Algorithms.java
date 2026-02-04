@@ -56,7 +56,7 @@ import static com.imsweb.algorithms.AlgorithmField.DATA_LEVEL_TUMOR;
 public final class Algorithms {
 
     // the NAACCR version that this library uses (it only matters because some fields are defined as standard vs non-standard, and that definition varies by NAACCR version)
-    public static final String NAACCR_VERSION = "250";
+    public static final String NAACCR_VERSION = "260";
 
     // algorithm IDs
     public static final String ALG_NHIA = "nhia";
@@ -129,8 +129,10 @@ public final class Algorithms {
     public static final String FIELD_CENSUS_POVERTY_INDICTR = "censusTrPovertyIndictr";
     public static final String FIELD_URIC_2000 = "uric2000";
     public static final String FIELD_URIC_2010 = "uric2010";
+    public static final String FIELD_URIC_2020 = "uric2020";
     public static final String FIELD_RUCA_2000 = "ruca2000";
     public static final String FIELD_RUCA_2010 = "ruca2010";
+    public static final String FIELD_RUCA_2020 = "ruca2020";
     public static final String FIELD_RURAL_CONT_1993 = "ruralurbanContinuum1993";
     public static final String FIELD_RURAL_CONT_2003 = "ruralurbanContinuum2003";
     public static final String FIELD_RURAL_CONT_2013 = "ruralurbanContinuum2013";
@@ -220,8 +222,6 @@ public final class Algorithms {
     public static final String FIELD_DAYS_TO_TREATMENT = "daysToTreatment";
     public static final String FIELD_TUMOR_SIZE_OVER_TIME = "tumorSizeOverTime";
     public static final String FIELD_RACE1_RECODE = "race1Recode";
-    public static final String FIELD_URIC_2020 = "uric2020";
-    public static final String FIELD_RUCA_2020 = "ruca2020";
     public static final String FIELD_BREAST_SUBTYPE = "breastSubtype";
     public static final String FIELD_ESTROGEN_RECEPTOR_SUM_RECODE = "estrogenReceptorSumRecode";
     public static final String FIELD_PROGESTERONE_RECEPTOR_SUM_RECODE = "progesteroneRecepSumRecode";
@@ -295,8 +295,10 @@ public final class Algorithms {
             addField(AlgorithmField.of(FIELD_UIHO_CITY, 285, 2, "Urban Indian Organization (UIO) Service Area", "UIO Serv Area", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_URIC_2000, 345, 1, "URIC 2000", "URIC 2000", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_URIC_2010, 346, 1, "URIC 2010", "URIC 2010", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_URIC_2020, 347, 1, "URIC 2020", "URIC 2020", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_RUCA_2000, 339, 1, "RUCA 2000", "RUCA 2000", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_RUCA_2010, 341, 1, "RUCA 2010", "RUCA 2010", DATA_LEVEL_TUMOR));
+            addField(AlgorithmField.of(FIELD_RUCA_2020, 342, 1, "RUCA 2020", "RUCA 2020", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_RURAL_CONT_1993, 3300, 2, "RuralUrban Continuum 1993", "Rur Urb Cont 93", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_RURAL_CONT_2003, 3310, 2, "RuralUrban Continuum 2003", "Rur Urb Cont 03", DATA_LEVEL_TUMOR));
             addField(AlgorithmField.of(FIELD_RURAL_CONT_2013, 3312, 2, "RuralUrban Continuum 2013", "Rur Urb Cont 13", DATA_LEVEL_TUMOR));
@@ -383,8 +385,6 @@ public final class Algorithms {
             addField(AlgorithmField.of(FIELD_RACE1_RECODE, 9460, 2, "Race 1 Recode", "Race 1 Recode", DATA_LEVEL_PATIENT, false));
             addField(AlgorithmField.of(FIELD_SURV_DAYS_ACTIVE_FUP, 9753, 5, "Surv-Days Active Followup", "Surv Days", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_SURV_DAYS_PRESUMED_ALIVE, 9754, 5, "Surv-Days Presumed Alive", "Surv Days PA", DATA_LEVEL_TUMOR, false));
-            addField(AlgorithmField.of(FIELD_URIC_2020, 347, 1, "URIC 2020", "URIC 2020", DATA_LEVEL_TUMOR, false));
-            addField(AlgorithmField.of(FIELD_RUCA_2020, 342, 1, "RUCA 2020", "RUCA 2020", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_ESTROGEN_RECEPTOR_SUM_RECODE, 9755, 1, "Estrogen Receptor Summary Recode", "ER Recode", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_PROGESTERONE_RECEPTOR_SUM_RECODE, 9756, 1, "Progesterone Receptor Summary Recode", "PR Recode", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_HER2_OVERALL_SUM_RECODE, 9757, 1, "HER2 Overall Summary Recode", "HER2 Recode", DATA_LEVEL_TUMOR, false));

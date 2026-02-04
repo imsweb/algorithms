@@ -13,7 +13,7 @@ import com.imsweb.algorithms.historicstage.internal.HistStageDataDto;
 
 public class HistStageDataDtoTest {
 
-    private static class HistStageDataTestDto extends HistStageDataDto {
+    private static final class HistStageDataTestDto extends HistStageDataDto {
 
         @Override
         protected List<Object> parse(String str) {
