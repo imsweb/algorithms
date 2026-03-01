@@ -45,11 +45,14 @@ public final class YostAcsPovertyUtils {
         if (state != null && county != null && (census2010 != null || census2020 != null) && NumberUtils.isDigits(year)) {
             int dxYear = Integer.parseInt(year);
 
-            // 1. 2006-2007 use 2008 from 2010 census
-            // 2. 2008-2015 use data provided by year for 2010 census
-            // 3. 2016-2017 use 2018 data from 2020 census
-            // 4. 2018-2021 use provided by year for 2020 census
-            // 5. 2022+ use 2021 data from 2020 census
+            // The algorithm uses data from 2006 to 2023, but it uses 5-years estimate data points, meaning it only has data from 2008 to 2021.
+            // Census2010 is used for the 2008-2017 data points and Census2020 is used for the 2018-2021 data points.
+            // Additionally, some DX years use a different data point, which allows values for older cases and/or more recent cases to still be calculated:
+            //  - 2006-2007 use the 2008 data point from 2010 census
+            //  - 2008-2015 use the provided year data point for 2010 census (so 2008 uses the 2008 data point, 2009 uses the 2009 data point, etc...)
+            //  - 2016-2017 use the 2018 data point from 2020 census
+            //  - 2018-2021 use the provided year data point for 2020 census (so 2018 uses the 2018 data point, etc...)
+            //  - 2022+ use the 2021 data point from 2020 census
 
             if (dxYear >= 2006 && dxYear <= LocalDate.now().getYear()) {
 
