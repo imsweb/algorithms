@@ -62,6 +62,24 @@ public final class CountyAtDxAnalysisUtils {
             }
         }
 
+        // The algorithm selects a geocoded county based on the DX year:
+        //
+        // 1999 and prior: countyAtDxGeocode1990
+        // 2000-2009: countyAtDxGeocode2000
+        // 2010-2019: countyAtDxGeocode2010
+        // 2020 and later: countyAtDxGeocode2020
+        //
+        // It then uses the following logic to set the county at DX analysis based on the geocoded county, or the county at DX:
+        //
+        // 1. Invalid state or geocoded is invalid for the state: use the county at DX value.
+        // 2. Blank/9's county at DX and geocoded certainty is known: use the geocoded value.
+        // 3. Geocoded certainty of 1 or 6: use the geocoded value.
+        // 4. Geocoded certainty of 2, 3, 4, or 5: use the county at DX value.
+        // 5. Blank/9's county at DX: use the geocoded value.
+        // 6. Use the county at DX value.
+        //
+        // So at the end, it will use the geocoded value if it can, but there are situations where it will fall back to the county at DX.
+
         if (diagnosisYear == null || StringUtils.isBlank(input.getAddrAtDxState())) {
             output.setCountyAtDxAnalysis(INVALID_COUNTY_CODE);
             output.setCountyAtDxAnalysisFlag(OTHER_STATE_OR_DX_YEAR_BLANK);
