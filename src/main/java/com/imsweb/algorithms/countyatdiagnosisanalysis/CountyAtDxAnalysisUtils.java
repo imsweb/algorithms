@@ -62,6 +62,11 @@ public final class CountyAtDxAnalysisUtils {
             }
         }
 
+        // A few pre-conditions are checked:
+        //
+        // 1. If the DX year is blank/unknown or the state is blank, set to 999.
+        // 2. If the state is Canadian province, set to 998.
+        //
         // The algorithm selects a geocoded county based on the DX year:
         //
         // 1999 and prior: countyAtDxGeocode1990
@@ -71,12 +76,14 @@ public final class CountyAtDxAnalysisUtils {
         //
         // It then uses the following logic to set the county at DX analysis based on the geocoded county, or the county at DX:
         //
-        // 1. Invalid state or geocoded is invalid for the state: use the county at DX value.
-        // 2. Blank/9's county at DX and geocoded certainty is known: use the geocoded value.
-        // 3. Geocoded certainty of 1 or 6: use the geocoded value.
-        // 4. Geocoded certainty of 2, 3, 4, or 5: use the county at DX value.
-        // 5. Blank/9's county at DX: use the geocoded value.
-        // 6. Use the county at DX value.
+        // 1. If both the county at DX and geocoded county are blank: set to 999.
+        // 2. Blank/9's geocoded county or geocoded county same as the county at DX: use the county at DX value.
+        // 3. Invalid state or geocoded county is invalid for the state: use the county at DX value.
+        // 4. Blank/9's county at DX and geocoded certainty is known: use the geocoded value.
+        // 5. Geocoded certainty of 1 or 6: use the geocoded value.
+        // 6. Geocoded certainty of 2, 3, 4, or 5: use the county at DX value.
+        // 7. Blank/9's county at DX: use the geocoded value.
+        // 8. Use the county at DX value.
         //
         // So at the end, it will use the geocoded value if it can, but there are situations where it will fall back to the county at DX.
 
