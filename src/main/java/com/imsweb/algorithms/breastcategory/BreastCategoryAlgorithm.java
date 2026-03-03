@@ -126,7 +126,7 @@ public class BreastCategoryAlgorithm extends AbstractAlgorithm {
         return AlgorithmOutput.of(outputPatient);
     }
 
-    static boolean isBreastCase(String site, String hist) {
+    public static boolean isBreastCase(String site, String hist) {
         if (site == null || site.length() != 4 || hist == null || hist.length() != 4)
             return false;
 
@@ -139,7 +139,7 @@ public class BreastCategoryAlgorithm extends AbstractAlgorithm {
         return cond1 || cond2;
     }
 
-    static String computeBreastSubtype(int dxYear, String erRecode, String prRecode, String her2Recode) {
+    public static String computeBreastSubtype(int dxYear, String erRecode, String prRecode, String her2Recode) {
         String result;
 
         if (dxYear < 2010)
@@ -167,7 +167,7 @@ public class BreastCategoryAlgorithm extends AbstractAlgorithm {
         return result;
     }
 
-    static String computeErPr(int dxYear, String tumorMarker, String ssf, String ssdi) {
+    public static String computeErPr(int dxYear, String tumorMarker, String ssf, String ssdi) {
         String result;
 
         if (dxYear < 1990)
@@ -182,7 +182,7 @@ public class BreastCategoryAlgorithm extends AbstractAlgorithm {
         return result;
     }
 
-    static String computeHer2(int dxYear, String ssf9, String ssf11, String ssf13, String ssf14, String ssf15, String ssdi) {
+    public static String computeHer2(int dxYear, String ssf9, String ssf11, String ssf13, String ssf14, String ssf15, String ssdi) {
         String result;
 
         if (dxYear < 2010)
@@ -205,64 +205,49 @@ public class BreastCategoryAlgorithm extends AbstractAlgorithm {
         return result;
     }
 
-    private static String computeErPrHer2ByTumorMarker(String tumorMarker) {
+    public static String computeErPrHer2ByTumorMarker(String tumorMarker) {
         String result;
 
         if (tumorMarker == null)
             result = ER_PR_HER2_UNKNOWN;
         else {
-            switch (tumorMarker) {
-                case "1":
-                    result = ER_PR_HER2_POSITIVE;
-                    break;
-                case "2":
-                    result = ER_PR_HER2_NEGATIVE;
-                    break;
-                default:
-                    result = ER_PR_HER2_UNKNOWN;
-            }
+            result = switch (tumorMarker) {
+                case "1" -> ER_PR_HER2_POSITIVE;
+                case "2" -> ER_PR_HER2_NEGATIVE;
+                default -> ER_PR_HER2_UNKNOWN;
+            };
         }
 
         return result;
     }
 
-    private static String computeErPrHer2BySsf(String ssf) {
+    public static String computeErPrHer2BySsf(String ssf) {
         String result;
 
         if (ssf == null)
             result = ER_PR_HER2_UNKNOWN;
         else {
-            switch (ssf) {
-                case "010":
-                    result = ER_PR_HER2_POSITIVE;
-                    break;
-                case "020":
-                    result = ER_PR_HER2_NEGATIVE;
-                    break;
-                default:
-                    result = ER_PR_HER2_UNKNOWN;
-            }
+            result = switch (ssf) {
+                case "010" -> ER_PR_HER2_POSITIVE;
+                case "020" -> ER_PR_HER2_NEGATIVE;
+                default -> ER_PR_HER2_UNKNOWN;
+            };
         }
 
         return result;
     }
 
-    private static String computeErPrHer2BySsdi(String ssdi) {
+    public static String computeErPrHer2BySsdi(String ssdi) {
         String result;
 
         if (ssdi == null)
             result = ER_PR_HER2_UNKNOWN;
         else {
-            switch (ssdi) {
-                case "1":
-                    result = ER_PR_HER2_POSITIVE;
-                    break;
-                case "0":
-                    result = ER_PR_HER2_NEGATIVE;
-                    break;
-                default:
-                    result = ER_PR_HER2_UNKNOWN;
-            }
+            result = switch (ssdi) {
+                case "1" -> ER_PR_HER2_POSITIVE;
+                case "0" -> ER_PR_HER2_NEGATIVE;
+                default -> ER_PR_HER2_UNKNOWN;
+            };
         }
 
         return result;
