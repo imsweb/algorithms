@@ -7,7 +7,7 @@ plugins {
     id 'com.vanniktech.maven.publish' version '0.36.0' // publish to Maven Central
     id 'com.github.ben-manes.versions' version '0.53.0' // check for out-of-date dependencies (run 'dependencyUpdates' manually)
     id 'com.github.spotbugs' version '6.4.8' // spotbugs code analysis
-    id 'org.sonarqube' version '7.2.2.6593' // sonarQube analysis
+    id 'org.sonarqube' version '7.2.3.7755' // sonarQube analysis
 }
 
 group = 'com.imsweb'
@@ -145,7 +145,7 @@ mavenPublishing {
 
 // Gradle wrapper, this allows to build the project without having to install Gradle!
 wrapper {
-    gradleVersion = '9.2.1'
+    gradleVersion = '9.4.0'
     distributionType = Wrapper.DistributionType.ALL
 }
 
