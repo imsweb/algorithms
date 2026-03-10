@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 5.11 (not released yet)**
+
+- Updated dependencies.
+
 **Changes in version 5.10**
 
 - Updated NHIA/NAPIIA algorithms to use new "sexAssignedAtBirth" variable instead of deprecated "sex" one.

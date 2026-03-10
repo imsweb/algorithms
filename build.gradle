@@ -23,9 +23,9 @@ repositories {
 dependencies {
     implementation 'com.thoughtworks.xstream:xstream:1.4.21'
     implementation 'org.apache.commons:commons-lang3:3.20.0'
-    implementation 'de.siegmar:fastcsv:4.1.0'
+    implementation 'de.siegmar:fastcsv:4.1.1'
 
-    testImplementation 'com.imsweb:layout:7.0'
+    testImplementation 'com.imsweb:layout:7.1'
     testImplementation 'com.imsweb:seerutils:5.7'
     testImplementation 'com.imsweb:seerutils-gui:1.20'
     testImplementation 'junit:junit:4.13.2'
