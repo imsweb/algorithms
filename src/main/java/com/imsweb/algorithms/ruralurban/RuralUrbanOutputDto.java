@@ -16,6 +16,7 @@ public class RuralUrbanOutputDto {
     private String _ruralUrbanContinuum1993;
     private String _ruralUrbanContinuum2003;
     private String _ruralUrbanContinuum2013;
+    private String _ruralUrbanContinuum2023;
 
     public String getUrbanRuralIndicatorCode2000() {
         return _urbanRuralIndicatorCode2000;
@@ -43,6 +44,10 @@ public class RuralUrbanOutputDto {
 
     public String getRuralUrbanContinuum2013() {
         return _ruralUrbanContinuum2013;
+    }
+
+    public String getRuralUrbanContinuum2023() {
+        return _ruralUrbanContinuum2023;
     }
 
     public void setUrbanRuralIndicatorCode2000(String urbanRuralIndicatorCode2000) {
@@ -87,6 +92,10 @@ public class RuralUrbanOutputDto {
 
     public void setRuralUrbanContinuum2013(String ruralUrbanContinuum2013) {
         _ruralUrbanContinuum2013 = ruralUrbanContinuum2013;
+    }
+
+    public void setRuralUrbanContinuum2023(String ruralUrbanContinuum2023) {
+        _ruralUrbanContinuum2023 = ruralUrbanContinuum2023;
     }
 
 }

@@ -16,20 +16,7 @@ import com.imsweb.algorithms.Algorithms;
 import com.imsweb.algorithms.StateCountyTractInputDto;
 import com.imsweb.algorithms.internal.Utils;
 
-import static com.imsweb.algorithms.Algorithms.FIELD_CENSUS_2000;
-import static com.imsweb.algorithms.Algorithms.FIELD_CENSUS_2010;
-import static com.imsweb.algorithms.Algorithms.FIELD_CENSUS_2020;
-import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS;
-import static com.imsweb.algorithms.Algorithms.FIELD_RUCA_2000;
-import static com.imsweb.algorithms.Algorithms.FIELD_RUCA_2010;
-import static com.imsweb.algorithms.Algorithms.FIELD_RUCA_2020;
-import static com.imsweb.algorithms.Algorithms.FIELD_RURAL_CONT_1993;
-import static com.imsweb.algorithms.Algorithms.FIELD_RURAL_CONT_2003;
-import static com.imsweb.algorithms.Algorithms.FIELD_RURAL_CONT_2013;
-import static com.imsweb.algorithms.Algorithms.FIELD_STATE_DX;
-import static com.imsweb.algorithms.Algorithms.FIELD_URIC_2000;
-import static com.imsweb.algorithms.Algorithms.FIELD_URIC_2010;
-import static com.imsweb.algorithms.Algorithms.FIELD_URIC_2020;
+import static com.imsweb.algorithms.Algorithms.*;
 import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.CONTINUUM_UNK_96;
 import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.CONTINUUM_UNK_97;
 import static com.imsweb.algorithms.ruralurban.RuralUrbanUtils.CONTINUUM_UNK_98;
@@ -72,9 +59,11 @@ public class RuralUrbanAlgorithm extends AbstractAlgorithm {
         _outputFields.add(Algorithms.getField(FIELD_RURAL_CONT_1993));
         _outputFields.add(Algorithms.getField(FIELD_RURAL_CONT_2003));
         _outputFields.add(Algorithms.getField(FIELD_RURAL_CONT_2013));
+        _outputFields.add(Algorithms.getField(FIELD_RURAL_CONT_2023));
         _unknownValues.put(FIELD_RURAL_CONT_1993, Arrays.asList(CONTINUUM_UNK_96, CONTINUUM_UNK_97, CONTINUUM_UNK_98, CONTINUUM_UNK_99));
         _unknownValues.put(FIELD_RURAL_CONT_2003, Arrays.asList(CONTINUUM_UNK_96, CONTINUUM_UNK_97, CONTINUUM_UNK_98, CONTINUUM_UNK_99));
         _unknownValues.put(FIELD_RURAL_CONT_2013, Arrays.asList(CONTINUUM_UNK_96, CONTINUUM_UNK_97, CONTINUUM_UNK_98, CONTINUUM_UNK_99));
+        _unknownValues.put(FIELD_RURAL_CONT_2023, Arrays.asList(CONTINUUM_UNK_96, CONTINUUM_UNK_97, CONTINUUM_UNK_98, CONTINUUM_UNK_99));
     }
 
     @Override
@@ -102,6 +91,7 @@ public class RuralUrbanAlgorithm extends AbstractAlgorithm {
             outputTumor.put(FIELD_RURAL_CONT_1993, continuumOutputDto.getRuralUrbanContinuum1993());
             outputTumor.put(FIELD_RURAL_CONT_2003, continuumOutputDto.getRuralUrbanContinuum2003());
             outputTumor.put(FIELD_RURAL_CONT_2013, continuumOutputDto.getRuralUrbanContinuum2013());
+            outputTumor.put(FIELD_RURAL_CONT_2023, continuumOutputDto.getRuralUrbanContinuum2023());
 
             outputTumors.add(outputTumor);
         }

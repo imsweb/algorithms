@@ -34,6 +34,7 @@ public final class RuralUrbanUtils {
     public static final String BEALE_CATEGORY_1993 = "1993";
     public static final String BEALE_CATEGORY_2003 = "2003";
     public static final String BEALE_CATEGORY_2013 = "2013";
+    public static final String BEALE_CATEGORY_2023 = "2023";
 
     public static final String TRACT_CATEGORY_2000 = "2000";
     public static final String TRACT_CATEGORY_2010 = "2010";
@@ -135,7 +136,6 @@ public final class RuralUrbanUtils {
      * </ul>
      * All those properties are defined as constants in this class.
      * <br/><br/>
-     * The returned urban rural commuting area will have the following values depending on the year (1993, 2003, or 2013):
      * The returned urban rural commuting area will have the following values depending on the census tract (2000, or 2010):
      * <ul>
      * <li>1 = Urban commuting area - RUCA codes 1.0, 1.1, 2.0, 2.1, 3.0, 4.1, 5.1, 7.1, 8.1, and 10.1</li>
@@ -198,7 +198,7 @@ public final class RuralUrbanUtils {
     }
 
     /**
-     * Calculates the rural urban continuum (ruralUrbanContinuum1993, ruralUrbanContinuum2003, ruralUrbanContinuum2013) input DTO.
+     * Calculates the rural urban continuum (ruralUrbanContinuum1993, ruralUrbanContinuum2003, ruralUrbanContinuum2013, ruralUrbanContinuum2023) for the provided input DTO.
      * <br/><br/>
      * The provided input dto has the following parameters used in the calculation:
      * <ul>
@@ -207,7 +207,7 @@ public final class RuralUrbanUtils {
      * </ul>
      * All those properties are defined as constants in this class.
      * <br/><br/>
-     * The returned urban rural continuum will have the following values depending on the year (1993, 2003, or 2013):
+     * The returned urban rural continuum will have the following values depending on the year (1993, 2003, 2013, or 2023):
      * <ul>
      * <li>00 = Central counties of metro areas of 1 million population or more (1993 only)</li>
      * <li>01 = Counties of metro areas of 1 million population or more</li>
@@ -237,21 +237,25 @@ public final class RuralUrbanUtils {
             result.setRuralUrbanContinuum1993("96");
             result.setRuralUrbanContinuum2003("96");
             result.setRuralUrbanContinuum2013("96");
+            result.setRuralUrbanContinuum2023("96");
         }
         else if (input.hasUnknownStateOrCounty()) {
             result.setRuralUrbanContinuum1993("99");
             result.setRuralUrbanContinuum2003("99");
             result.setRuralUrbanContinuum2013("99");
+            result.setRuralUrbanContinuum2023("99");
         }
         else if (input.countyIsNotReported()) {
             result.setRuralUrbanContinuum1993("97");
             result.setRuralUrbanContinuum2003("97");
             result.setRuralUrbanContinuum2013("97");
+            result.setRuralUrbanContinuum2023("97");
         }
         else {
             result.setRuralUrbanContinuum1993(_PROVIDER.getRuralUrbanContinuum(BEALE_CATEGORY_1993, input.getAddressAtDxState(), input.getCountyAtDxAnalysis()));
             result.setRuralUrbanContinuum2003(_PROVIDER.getRuralUrbanContinuum(BEALE_CATEGORY_2003, input.getAddressAtDxState(), input.getCountyAtDxAnalysis()));
             result.setRuralUrbanContinuum2013(_PROVIDER.getRuralUrbanContinuum(BEALE_CATEGORY_2013, input.getAddressAtDxState(), input.getCountyAtDxAnalysis()));
+            result.setRuralUrbanContinuum2023(_PROVIDER.getRuralUrbanContinuum(BEALE_CATEGORY_2023, input.getAddressAtDxState(), input.getCountyAtDxAnalysis()));
         }
 
         if (result.getRuralUrbanContinuum1993() == null)
@@ -260,6 +264,8 @@ public final class RuralUrbanUtils {
             result.setRuralUrbanContinuum2003(RURAL_URBAN_CONTINUUM_UNKNOWN);
         if (result.getRuralUrbanContinuum2013() == null)
             result.setRuralUrbanContinuum2013(RURAL_URBAN_CONTINUUM_UNKNOWN);
+        if (result.getRuralUrbanContinuum2023() == null)
+            result.setRuralUrbanContinuum2023(RURAL_URBAN_CONTINUUM_UNKNOWN);
 
         return result;
     }

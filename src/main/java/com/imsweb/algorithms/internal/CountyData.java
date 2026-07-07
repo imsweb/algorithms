@@ -21,6 +21,7 @@ public class CountyData {
     private String _urbanContinuum1993;
     private String _urbanContinuum2003;
     private String _urbanContinuum2013;
+    private String _urbanContinuum2023;
 
     // census data keyed by census tract code
     private Map<String, CensusData> _censusData = new HashMap<>();
@@ -79,6 +80,14 @@ public class CountyData {
 
     public void setUrbanContinuum2013(String urbanContinuum2013) {
         _urbanContinuum2013 = urbanContinuum2013;
+    }
+
+    public String getUrbanContinuum2023() {
+        return _urbanContinuum2023;
+    }
+
+    public void setUrbanContinuum2023(String urbanContinuum2023) {
+        _urbanContinuum2023 = urbanContinuum2023;
     }
 
     /**
