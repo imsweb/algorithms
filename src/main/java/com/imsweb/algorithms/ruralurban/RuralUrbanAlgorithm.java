@@ -26,6 +26,7 @@ import static com.imsweb.algorithms.Algorithms.FIELD_RUCA_2020;
 import static com.imsweb.algorithms.Algorithms.FIELD_RURAL_CONT_1993;
 import static com.imsweb.algorithms.Algorithms.FIELD_RURAL_CONT_2003;
 import static com.imsweb.algorithms.Algorithms.FIELD_RURAL_CONT_2013;
+import static com.imsweb.algorithms.Algorithms.FIELD_RURAL_CONT_2023;
 import static com.imsweb.algorithms.Algorithms.FIELD_STATE_DX;
 import static com.imsweb.algorithms.Algorithms.FIELD_URIC_2000;
 import static com.imsweb.algorithms.Algorithms.FIELD_URIC_2010;
@@ -72,9 +73,11 @@ public class RuralUrbanAlgorithm extends AbstractAlgorithm {
         _outputFields.add(Algorithms.getField(FIELD_RURAL_CONT_1993));
         _outputFields.add(Algorithms.getField(FIELD_RURAL_CONT_2003));
         _outputFields.add(Algorithms.getField(FIELD_RURAL_CONT_2013));
+        _outputFields.add(Algorithms.getField(FIELD_RURAL_CONT_2023));
         _unknownValues.put(FIELD_RURAL_CONT_1993, Arrays.asList(CONTINUUM_UNK_96, CONTINUUM_UNK_97, CONTINUUM_UNK_98, CONTINUUM_UNK_99));
         _unknownValues.put(FIELD_RURAL_CONT_2003, Arrays.asList(CONTINUUM_UNK_96, CONTINUUM_UNK_97, CONTINUUM_UNK_98, CONTINUUM_UNK_99));
         _unknownValues.put(FIELD_RURAL_CONT_2013, Arrays.asList(CONTINUUM_UNK_96, CONTINUUM_UNK_97, CONTINUUM_UNK_98, CONTINUUM_UNK_99));
+        _unknownValues.put(FIELD_RURAL_CONT_2023, Arrays.asList(CONTINUUM_UNK_96, CONTINUUM_UNK_97, CONTINUUM_UNK_98, CONTINUUM_UNK_99));
     }
 
     @Override
@@ -102,6 +105,7 @@ public class RuralUrbanAlgorithm extends AbstractAlgorithm {
             outputTumor.put(FIELD_RURAL_CONT_1993, continuumOutputDto.getRuralUrbanContinuum1993());
             outputTumor.put(FIELD_RURAL_CONT_2003, continuumOutputDto.getRuralUrbanContinuum2003());
             outputTumor.put(FIELD_RURAL_CONT_2013, continuumOutputDto.getRuralUrbanContinuum2013());
+            outputTumor.put(FIELD_RURAL_CONT_2023, continuumOutputDto.getRuralUrbanContinuum2023());
 
             outputTumors.add(outputTumor);
         }

@@ -136,6 +136,7 @@ public final class Algorithms {
     public static final String FIELD_RURAL_CONT_1993 = "ruralurbanContinuum1993";
     public static final String FIELD_RURAL_CONT_2003 = "ruralurbanContinuum2003";
     public static final String FIELD_RURAL_CONT_2013 = "ruralurbanContinuum2013";
+    public static final String FIELD_RURAL_CONT_2023 = "ruralurbanContinuum2023";
     public static final String FIELD_SURV_VS_RECODE = "vitalStatusRecode";
     public static final String FIELD_SURV_DX_DATE_RECODE = "survDateDxRecode";
     public static final String FIELD_SURV_DATE_ACTIVE_FUP = "survDateActiveFollowup";
@@ -358,6 +359,7 @@ public final class Algorithms {
             addField(AlgorithmField.of(FIELD_ICCC_EXT, 9422, 3, "Int Class of Childhood Cancer (ICCC) Extended Code", "ICCC Ext", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_IARC_MP_INDICATOR, 9400, 1, "IARC Multiple Primary Indicator", "IARC MP", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_COUNTY_AT_DX_ANALYSIS_FLAG, 9440, 4, "County at DX Analysis Flag", "DX Anlys Cty Fg", DATA_LEVEL_TUMOR, false));
+            addField(AlgorithmField.of(FIELD_RURAL_CONT_2023, 9470, 2, "RuralUrban Continuum 2023", "Rur Urb Cont 23", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_IHS_PRCDA_2017, 9970, 1, "IHS PRCDA 2017", "IHS PRCDA 2017", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_ACS_YOST_QUINTILE_US, 9610, 1, "Yost Quintile (Across States)", "Yost US", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_ACS_YOST_QUINTILE_STATE, 9611, 1, "Yost Quintile (State Specific)", "Yost State", DATA_LEVEL_TUMOR, false));

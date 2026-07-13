@@ -420,6 +420,7 @@ public final class CountryData {
                         countyData.setUrbanContinuum1993(countyEntry.getValue().getUrbanContinuum1993());
                         countyData.setUrbanContinuum2003(countyEntry.getValue().getUrbanContinuum2003());
                         countyData.setUrbanContinuum2013(countyEntry.getValue().getUrbanContinuum2013());
+                        countyData.setUrbanContinuum2023(countyEntry.getValue().getUrbanContinuum2023());
                     }
                 }
             }

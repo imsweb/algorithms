@@ -173,6 +173,7 @@ public class AlgorithmsTest {
         Assert.assertEquals("02", Utils.extractTumors(alg.execute(input).getPatient()).getFirst().get(Algorithms.FIELD_RURAL_CONT_1993));
         Assert.assertEquals("02", Utils.extractTumors(alg.execute(input).getPatient()).getFirst().get(Algorithms.FIELD_RURAL_CONT_2003));
         Assert.assertEquals("02", Utils.extractTumors(alg.execute(input).getPatient()).getFirst().get(Algorithms.FIELD_RURAL_CONT_2013));
+        Assert.assertEquals("02", Utils.extractTumors(alg.execute(input).getPatient()).getFirst().get(Algorithms.FIELD_RURAL_CONT_2023));
 
         // SEER Site Recode
         alg = Algorithms.getAlgorithm(Algorithms.ALG_SEER_SITE_RECODE);

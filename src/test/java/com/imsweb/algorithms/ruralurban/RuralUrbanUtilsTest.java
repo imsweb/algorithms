@@ -46,26 +46,31 @@ public class RuralUrbanUtilsTest {
                     Assert.assertEquals("96", computeRuralUrbanContinuum(rec).getRuralUrbanContinuum1993());
                     Assert.assertEquals("96", computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2003());
                     Assert.assertEquals("96", computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2013());
+                    Assert.assertEquals("96", computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2023());
                 }
                 else if (state == null || state.isEmpty() || state.equals("ZZ") || county == null || county.isEmpty() || county.equals("999")) {
                     Assert.assertEquals("99", computeRuralUrbanContinuum(rec).getRuralUrbanContinuum1993());
                     Assert.assertEquals("99", computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2003());
                     Assert.assertEquals("99", computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2013());
+                    Assert.assertEquals("99", computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2023());
                 }
                 else if (county.equals("000")) {
                     Assert.assertEquals("97", computeRuralUrbanContinuum(rec).getRuralUrbanContinuum1993());
                     Assert.assertEquals("97", computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2003());
                     Assert.assertEquals("97", computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2013());
+                    Assert.assertEquals("97", computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2023());
                 }
                 else if (state.equals("MP") || county.equals("777")) {
                     Assert.assertEquals("98", computeRuralUrbanContinuum(rec).getRuralUrbanContinuum1993());
                     Assert.assertEquals("98", computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2003());
                     Assert.assertEquals("98", computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2013());
+                    Assert.assertEquals("98", computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2023());
                 }
                 else {
                     Assert.assertEquals("02", computeRuralUrbanContinuum(rec).getRuralUrbanContinuum1993());
                     Assert.assertEquals("04", computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2003());
                     Assert.assertEquals("03", computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2013());
+                    Assert.assertEquals("03", computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2023());
                 }
 
                 for (String tract : tracts) {
@@ -136,10 +141,12 @@ public class RuralUrbanUtilsTest {
         String result1993 = computeRuralUrbanContinuum(rec).getRuralUrbanContinuum1993();
         String result2003 = computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2003();
         String result2013 = computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2013();
+        String result2023 = computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2023();
         rec.put(_PROP_STATE_DX, "WA");
         Assert.assertEquals(result1993, computeRuralUrbanContinuum(rec).getRuralUrbanContinuum1993());
         Assert.assertEquals(result2003, computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2003());
         Assert.assertEquals(result2013, computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2013());
+        Assert.assertEquals(result2023, computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2023());
 
         // test recoding of Los Angeles to California
         rec.put(_PROP_STATE_DX, "LO");
@@ -147,10 +154,12 @@ public class RuralUrbanUtilsTest {
         result1993 = computeRuralUrbanContinuum(rec).getRuralUrbanContinuum1993();
         result2003 = computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2003();
         result2013 = computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2013();
+        result2023 = computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2023();
         rec.put(_PROP_STATE_DX, "CA");
         Assert.assertEquals(result1993, computeRuralUrbanContinuum(rec).getRuralUrbanContinuum1993());
         Assert.assertEquals(result2003, computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2003());
         Assert.assertEquals(result2013, computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2013());
+        Assert.assertEquals(result2023, computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2023());
 
         // test recoding of Greater Bay to California
         rec.put(_PROP_STATE_DX, "GB");
@@ -158,10 +167,12 @@ public class RuralUrbanUtilsTest {
         result1993 = computeRuralUrbanContinuum(rec).getRuralUrbanContinuum1993();
         result2003 = computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2003();
         result2013 = computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2013();
+        result2023 = computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2023();
         rec.put(_PROP_STATE_DX, "CA");
         Assert.assertEquals(result1993, computeRuralUrbanContinuum(rec).getRuralUrbanContinuum1993());
         Assert.assertEquals(result2003, computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2003());
         Assert.assertEquals(result2013, computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2013());
+        Assert.assertEquals(result2023, computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2023());
 
         // test recoding of Atlanta to Georgia
         rec.put(_PROP_STATE_DX, "AT");
@@ -169,10 +180,12 @@ public class RuralUrbanUtilsTest {
         result1993 = computeRuralUrbanContinuum(rec).getRuralUrbanContinuum1993();
         result2003 = computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2003();
         result2013 = computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2013();
+        result2023 = computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2023();
         rec.put(_PROP_STATE_DX, "GA");
         Assert.assertEquals(result1993, computeRuralUrbanContinuum(rec).getRuralUrbanContinuum1993());
         Assert.assertEquals(result2003, computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2003());
         Assert.assertEquals(result2013, computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2013());
+        Assert.assertEquals(result2023, computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2023());
 
         // test recoding of Detroit to Michigan
         rec.put(_PROP_STATE_DX, "DT");
@@ -180,10 +193,12 @@ public class RuralUrbanUtilsTest {
         result1993 = computeRuralUrbanContinuum(rec).getRuralUrbanContinuum1993();
         result2003 = computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2003();
         result2013 = computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2013();
+        result2023 = computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2023();
         rec.put(_PROP_STATE_DX, "MI");
         Assert.assertEquals(result1993, computeRuralUrbanContinuum(rec).getRuralUrbanContinuum1993());
         Assert.assertEquals(result2003, computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2003());
         Assert.assertEquals(result2013, computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2013());
+        Assert.assertEquals(result2023, computeRuralUrbanContinuum(rec).getRuralUrbanContinuum2023());
 
         //////////////////////////////////////////////////////////////////////////////////////////////
         // TEST KALAWAO, HAWAII - 2003

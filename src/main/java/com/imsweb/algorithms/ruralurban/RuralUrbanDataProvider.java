@@ -130,8 +130,11 @@ public class RuralUrbanDataProvider {
             case RuralUrbanUtils.BEALE_CATEGORY_2013:
                 result = countyData.getUrbanContinuum2013();
                 break;
+            case RuralUrbanUtils.BEALE_CATEGORY_2023:
+                result = countyData.getUrbanContinuum2023();
+                break;
             default:
-                throw new IllegalStateException("Invalid beale category: " + bealeCategory);
+                throw new IllegalStateException("Unknown bealeCategory: " + bealeCategory);
         }
 
         return result == null ? RURAL_URBAN_CONTINUUM_UNKNOWN : result;
@@ -168,6 +171,16 @@ public class RuralUrbanDataProvider {
 
             CountyData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new CountyData());
             dto.setUrbanContinuum2013(StringUtils.leftPad(val, 2, '0'));
+        });
+
+        // load 2023 data
+        Utils.processInternalFile("ruralurban/rural-urban-continuum-2023.csv", line -> {
+            String state = line.getField(0);
+            String county = line.getField(1);
+            String val = line.getField(2);
+
+            CountyData dto = result.computeIfAbsent(state, k -> new HashMap<>()).computeIfAbsent(county, k -> new CountyData());
+            dto.setUrbanContinuum2023(StringUtils.leftPad(val, 2, '0'));
         });
 
         return result;
