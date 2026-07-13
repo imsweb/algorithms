@@ -2,6 +2,7 @@
 
 **Changes in version 5.11 (not released yet)**
 
+- Added 2023 calculated field for Rural Urban Continuum algorithm.
 - Updated dependencies.
 
 **Changes in version 5.10**
