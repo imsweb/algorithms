@@ -16,6 +16,7 @@ import com.imsweb.algorithms.Algorithms;
 import com.imsweb.algorithms.internal.Utils;
 
 import static com.imsweb.algorithms.Algorithms.FIELD_CENSUS_2010;
+import static com.imsweb.algorithms.Algorithms.FIELD_CENSUS_2020;
 import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS;
 import static com.imsweb.algorithms.Algorithms.FIELD_STATE_DX;
 import static com.imsweb.algorithms.Algorithms.FIELD_TRACT_EST_CONGRESS_DIST_118;
@@ -31,6 +32,7 @@ public class TractEstCongressDistAlgorithm extends AbstractAlgorithm {
         _inputFields.add(Algorithms.getField(FIELD_STATE_DX));
         _inputFields.add(Algorithms.getField(FIELD_COUNTY_AT_DX_ANALYSIS));
         _inputFields.add(Algorithms.getField(FIELD_CENSUS_2010));
+        _inputFields.add(Algorithms.getField(FIELD_CENSUS_2020));
 
         _outputFields.add(Algorithms.getField(FIELD_TRACT_EST_CONGRESS_DIST_118));
         _unknownValues.put(FIELD_TRACT_EST_CONGRESS_DIST_118, Arrays.asList(TRACT_EST_CONGRESS_DIST_UNK_A, TRACT_EST_CONGRESS_DIST_UNK_D));
