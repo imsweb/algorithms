@@ -23,7 +23,7 @@ import com.imsweb.algorithms.StateCountyInputDto;
 public final class PrcdaUtils {
 
     public static final String ALG_NAME = "NPCR PRCDA Linkage Program";
-    public static final String ALG_VERSION = "version 2.2 released in June 2022";
+    public static final String ALG_VERSION = "July 30, 2026";
 
     public static final String PRCDA_NO = "0";
     public static final String PRCDA_YES = "1";
@@ -53,7 +53,7 @@ public final class PrcdaUtils {
     }
 
     /**
-     * Calculates PRCDA and PRCDA2017 for the provided record
+     * Calculates PRCDA for the provided record
      * <br/><br/>
      * The provided record doesn't need to contain all the input variables, but the algorithm will use the following ones:
      * <ul>
@@ -62,7 +62,7 @@ public final class PrcdaUtils {
      * </ul>
      * All those properties are defined as constants in this class.
      * <br/><br/>
-     * PRCDA and PRCDA2017 will have one the following values:
+     * PRCDA will have one the following values:
      * 0 = Not a PRCDA county
      * 1 = PRCDA county
      * 9 = Unknown
@@ -77,28 +77,22 @@ public final class PrcdaUtils {
 
         if (ENTIRE_STATE_PRCDA.contains(input.getAddressAtDxState())) {
             result.setPrcda(PRCDA_YES);
-            result.setPrcda2017(PRCDA_YES);
         }
         else if (ENTIRE_STATE_NON_PRCDA.contains(input.getAddressAtDxState())) {
             result.setPrcda(PRCDA_NO);
-            result.setPrcda2017(PRCDA_NO);
         }
         else {
             if (input.hasInvalidStateOrCounty() || input.hasUnknownStateOrCounty() || input.countyIsNotReported()) {
                 result.setPrcda(PRCDA_UNKNOWN);
-                result.setPrcda2017(PRCDA_UNKNOWN);
             }
             else {
                 result.setPrcda(_PROVIDER.getPrcda(input.getAddressAtDxState(), input.getCountyAtDxAnalysis()));
-                result.setPrcda2017(_PROVIDER.getPrcda2017(input.getAddressAtDxState(), input.getCountyAtDxAnalysis()));
             }
         }
 
         // get methods should never return null, but let's make sure we don't return null value anyway
         if (result.getPrcda() == null)
             result.setPrcda(PRCDA_NO);
-        if (result.getPrcda2017() == null)
-            result.setPrcda2017(PRCDA_NO);
 
         return result;
     }

@@ -16,7 +16,6 @@ import com.imsweb.algorithms.internal.Utils;
 
 import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS;
 import static com.imsweb.algorithms.Algorithms.FIELD_IHS_PRCDA;
-import static com.imsweb.algorithms.Algorithms.FIELD_IHS_PRCDA_2017;
 import static com.imsweb.algorithms.Algorithms.FIELD_STATE_DX;
 import static com.imsweb.algorithms.prcda.PrcdaUtils.PRCDA_UNKNOWN;
 
@@ -29,10 +28,8 @@ public class PrcdaAlgorithm extends AbstractAlgorithm {
         _inputFields.add(Algorithms.getField(FIELD_COUNTY_AT_DX_ANALYSIS));
 
         _outputFields.add(Algorithms.getField(FIELD_IHS_PRCDA));
-        _outputFields.add(Algorithms.getField(FIELD_IHS_PRCDA_2017));
 
         _unknownValues.put(FIELD_IHS_PRCDA, Collections.singletonList(PRCDA_UNKNOWN));
-        _unknownValues.put(FIELD_IHS_PRCDA_2017, Collections.singletonList(PRCDA_UNKNOWN));
     }
 
     @Override
@@ -48,7 +45,6 @@ public class PrcdaAlgorithm extends AbstractAlgorithm {
 
             Map<String, Object> outputTumor = new HashMap<>();
             outputTumor.put(FIELD_IHS_PRCDA, outputDto.getPrcda());
-            outputTumor.put(FIELD_IHS_PRCDA_2017, outputDto.getPrcda2017());
 
             Utils.addTumorOutput(outputPatient, outputTumor);
         }

@@ -314,7 +314,6 @@ public class AlgorithmsTest {
         tumMap.put(Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS, "035");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
         tumor = Utils.extractTumors(alg.execute(input).getPatient()).getFirst();
-        Assert.assertEquals("0", tumor.get(Algorithms.FIELD_IHS_PRCDA_2017));
         Assert.assertEquals("1", tumor.get(Algorithms.FIELD_IHS_PRCDA));
 
         // UIHO
