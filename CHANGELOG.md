@@ -6,6 +6,7 @@
 - Added 2023 calculated field for Rural Urban Continuum algorithm.
 - Updated the lookup for item #194 in the PRCDA algorithm to use 2024 PRCDA counties
 - Removed the 2017 calculated field from the PRCDA algorithm.
+- Added missing census2020 input field to Tract-Estimated Congressional Districts; this only affects documentation, the logic was actually using the field.
 - Updated dependencies.
 
 **Changes in version 5.10**
