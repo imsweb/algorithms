@@ -18,7 +18,7 @@ public final class YostAcsPovertyUtils {
     public static final String ALG_NAME = "NAACCR Yost Quintile & Area-Based Social Measures Linkage Program";
     public static final String ALG_VERSION = "August 13, 2026";
 
-    public static final int YOST_ACS_CENSUS_TRACT_PIVOT_YEAR = 2015;
+    public static final int YOST_ACS_CENSUS_TRACT_PIVOT_YEAR = 2017;
 
     //Unknown values for each code
     public static final String YOST_ACS_UNK_A = "A";
@@ -35,8 +35,7 @@ public final class YostAcsPovertyUtils {
      * The algorithm uses data from 2006 to 2024, but it uses 5-years estimate data points, meaning it only has data points from 2008 to 2022.
      * Different DX years use different data points:
      *   - 2006-2007 use the 2008 data point from 2010 census
-     *   - 2008-2015 use the provided year data point for 2010 census (so 2008 uses the 2008 data point, 2009 uses the 2009 data point, etc...)
-     *   - 2016-2017 use the 2018 data point from 2020 census
+     *   - 2008-2017 use the provided year data point for 2010 census (so 2008 uses the 2008 data point, 2009 uses the 2009 data point, etc...)
      *   - 2018-2022 use the provided year data point for 2020 census (so 2018 uses the 2018 data point, etc...)
      *   - 2023+ use the 2022 data point from 2020 census
      * @param dxYear the year of diagnosis from the input dto
@@ -46,8 +45,6 @@ public final class YostAcsPovertyUtils {
         int yearForLookup = dxYear;
         if (dxYear == 2006 || dxYear == 2007)
             yearForLookup = 2008;
-        else if (dxYear == 2016 || dxYear == 2017)
-            yearForLookup = 2018;
         else if (dxYear >= 2023)
             yearForLookup = 2022;
         return yearForLookup;
