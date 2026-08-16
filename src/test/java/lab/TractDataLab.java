@@ -22,7 +22,6 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.function.UnaryOperator;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
@@ -105,7 +104,7 @@ public class TractDataLab {
         _STATES.put("99", "YY");
     }
 
-    @SuppressWarnings("ConstantConditions")
+    @SuppressWarnings({"ConstantConditions", "IfCanBeSwitch"})
     public static void main(String[] args) throws IOException {
 
         // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -143,9 +142,9 @@ public class TractDataLab {
         // 8/29/25 - an extra version of the SEER data was provided for years 2018-2021, using census2020 boundaries; Puerto-Rico file not available yet.
         Map<DataKey, Map<String, String>> tractValues = new TreeMap<>();
         Map<DataKey, Map<Integer, String>> tractYearBasedValues = new HashMap<>();
-        processMainSeerDataFile_2008_2017(Paths.get("C:\\dev\\temp\\tract.level.ses.2008_17.txt.gz"), layout2022, tractValues, tractYearBasedValues);
-        processMainSeerDataFile_2008_2017(Paths.get("C:\\dev\\temp\\tract.level.ses.2008_17.puerto.rico.dt20230818.txt.gz"), layout2022, tractValues, tractYearBasedValues);
-        processMainSeerDataFile_2018_2021(Paths.get("C:\\dev\\temp\\tract.level.ses.2018_21.vint2023.pops.dat.txd.gz"), layout2025, tractValues, tractYearBasedValues);
+        processMainSeerDataFile_2008_2017(Paths.get("D:\\temp\\tract.level.ses.2008_17.txt.gz"), layout2022, tractValues, tractYearBasedValues);
+        processMainSeerDataFile_2008_2017(Paths.get("D:\\temp\\tract.level.ses.2008_17.puerto.rico.dt20230818.txt.gz"), layout2022, tractValues, tractYearBasedValues);
+        processMainSeerDataFile_2018_2021(Paths.get("D:\\temp\\tract.level.ses.2018_21.vint2023.pops.dat.txd.gz"), layout2025, tractValues, tractYearBasedValues);
 
         // NAACCR Poverty Indicator 1995-2004
         Map<DataKey, String> naaccrPovertyIndicator9504 = new HashMap<>();
@@ -247,7 +246,7 @@ public class TractDataLab {
                     else if ("yearData".equals(field)) {
                         Map<Integer, String> yearData = tractYearBasedValues.get(key);
                         if (yearData != null) {
-                            for (Integer year : IntStream.rangeClosed(CountryData.TRACT_YEAR_MIN_VAL, CountryData.TRACT_YEAR_MAX_VAL).boxed().collect(Collectors.toList()))
+                            for (Integer year : IntStream.rangeClosed(CountryData.TRACT_YEAR_MIN_VAL, CountryData.TRACT_YEAR_MAX_VAL).boxed().toList())
                                 buf.append(yearData.getOrDefault(year, StringUtils.rightPad("", CountryData.getTractYearBasedFields().values().stream().mapToInt(Integer::intValue).sum(), " ")));
                         }
                         else
@@ -323,14 +322,6 @@ public class TractDataLab {
                     throw new RuntimeException("Line " + lineNum + ": missing year");
                 if (Integer.valueOf(year).compareTo(CountryData.TRACT_YEAR_MIN_VAL) < 0 || Integer.valueOf(year).compareTo(CountryData.TRACT_YEAR_MAX_VAL) > 0)
                     throw new RuntimeException("Line " + lineNum + ": invalid/unexpected year: " + year);
-
-                // year-based data for 2016-2017 need to use the 2020 census boundaries; this fiel contains the data for those years for the 2010 boundaries, which is not used by
-                // any algorithm anymore, so it can be ignored (algorithms use a DX year of 2018, which is the first year for the 2020 boundaries) for those two DX years
-                // this was agreed in https://squishlist.com/naaccr/cfd/138/
-                if ("2016".equals(year) || "2017".equals(year)) {
-                    line = layout.readNextRecord(reader);
-                    continue;
-                }
 
                 DataKey key = new DataKey(_STATES.get(state), county, tract);
 

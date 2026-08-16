@@ -95,14 +95,14 @@ public class CensusTractPovertyIndicatorUtilsTest {
         rec.put("censusTract2010", "020600");
         rec.put("dateOfDiagnosisYear", "2015");
         Assert.assertEquals("3", computePovertyIndicator(rec).getCensusTractPovertyIndicator());
-        // test 2016 (census2010) - note: this may fail if 2017 data is added to the SEER big data file (2010 geographies)
+        // test 2016 (census2010)
         rec.put("censusTract2010", "020600");
         rec.put("dateOfDiagnosisYear", "2016");
-        Assert.assertEquals("9", computePovertyIndicator(rec).getCensusTractPovertyIndicator());
-        // test 2017 (census2010) - note: this may fail if 2017 data is added to the SEER big data file (2010 geographies)
+        Assert.assertEquals("4", computePovertyIndicator(rec).getCensusTractPovertyIndicator());
+        // test 2017 (census2010)
         rec.put("censusTract2010", "020600");
         rec.put("dateOfDiagnosisYear", "2017");
-        Assert.assertEquals("9", computePovertyIndicator(rec).getCensusTractPovertyIndicator());
+        Assert.assertEquals("4", computePovertyIndicator(rec).getCensusTractPovertyIndicator());
         // test 2018 (census2020)
         rec.put("censusTract2010", "");
         rec.put("censusTract2020", "020600");
