@@ -14,9 +14,9 @@ import org.apache.commons.lang3.StringUtils;
 
 public final class NeoAdjuvantTherapyTxEffectUtils {
 
-    private static final Set<String> _A_SCHEMA = new HashSet<>(Arrays.asList("00350", "00360", "00381", "00382", "00383", "00400", "00410", "00421", "00422", "00430", "00440", "00450"));
+    private static final Set<String> _A_SCHEMA = new HashSet<>(Arrays.asList("00350", "09350", "00360", "09360", "00381", "00382", "00383", "00400", "00410", "00421", "00422", "00430", "00440", "00450"));
     private static final Set<String> _B_SCHEMA = new HashSet<>(Collections.singletonList("00480"));
-    private static final Set<String> _C_SCHEMA = new HashSet<>(Arrays.asList("00161", "00169", "00170", "00200", "00210", "00280"));
+    private static final Set<String> _C_SCHEMA = new HashSet<>(Arrays.asList("00161", "00169", "00170", "00200", "00210", "09210", "00280"));
     private static final Set<String> _D_SCHEMA = new HashSet<>(Arrays.asList("00551", "00552", "00553"));
     private static final Set<String> _E_SCHEMA = new HashSet<>(Collections.singletonList("00580"));
     private static final Set<String> _G_SCHEMA = new HashSet<>(Arrays.asList("00790", "00795", "00811", "00812", "00821", "00822", "00830", "99999"));
