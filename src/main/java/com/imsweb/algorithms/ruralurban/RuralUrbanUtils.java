@@ -13,7 +13,7 @@ import com.imsweb.algorithms.StateCountyTractInputDto.CensusTract;
 public final class RuralUrbanUtils {
 
     public static final String ALG_NAME = "NAACCR Rural Urban Program";
-    public static final String ALG_VERSION = "released in September 2025";
+    public static final String ALG_VERSION = "July 8, 2026";
 
     // unknown values for each code
     public static final String URBAN_RURAL_INDICATOR_CODE_UNKNOWN = "C";

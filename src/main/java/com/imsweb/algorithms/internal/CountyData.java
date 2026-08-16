@@ -13,7 +13,6 @@ public class CountyData {
 
     // prcda, uiho data
     private String _prcda;
-    private String _prcda2017;
     private String _uiho;
     private String _uihoCity;
 
@@ -30,16 +29,8 @@ public class CountyData {
         return _prcda;
     }
 
-    public String getPrcda2017() {
-        return _prcda2017;
-    }
-
     public void setPrcda(String prcda) {
         _prcda = prcda;
-    }
-
-    public void setPrcda2017(String prcda2017) {
-        _prcda2017 = prcda2017;
     }
 
     public String getUiho() {

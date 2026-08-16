@@ -27,13 +27,11 @@ public class PrcdaUtilsTest {
         input.setAddressAtDxState("LO");
         input.setCountyAtDxAnalysis("071");
         Assert.assertEquals("1", PrcdaUtils.computePrcda(input).getPrcda());
-        Assert.assertEquals("1", PrcdaUtils.computePrcda(input).getPrcda2017());
 
         // test Puerto Rico
         input.setAddressAtDxState("PR");
         input.setCountyAtDxAnalysis("001");
         Assert.assertEquals("0", PrcdaUtils.computePrcda(input).getPrcda());
-        Assert.assertEquals("0", PrcdaUtils.computePrcda(input).getPrcda2017());
 
         // test for when the entire state is PRCDA
         // if the entire state is PRCDA then we should always return 1 regardless of what the county is
@@ -42,7 +40,6 @@ public class PrcdaUtilsTest {
             input.setCountyAtDxAnalysis(county);
             String key = String.format("%s|%s", input.getAddressAtDxState(), county);
             Assert.assertEquals(key, "1", PrcdaUtils.computePrcda(input).getPrcda());
-            Assert.assertEquals(key, "1", PrcdaUtils.computePrcda(input).getPrcda2017());
         }
 
         // test for when the entire state is NOT PRCDA
@@ -52,7 +49,6 @@ public class PrcdaUtilsTest {
             input.setCountyAtDxAnalysis(county);
             String key = String.format("%s|%s", input.getAddressAtDxState(), county);
             Assert.assertEquals(key, "0", PrcdaUtils.computePrcda(input).getPrcda());
-            Assert.assertEquals(key, "0", PrcdaUtils.computePrcda(input).getPrcda2017());
         }
 
         // test missing or invalid state or county - or county not reported
@@ -63,11 +59,9 @@ public class PrcdaUtilsTest {
                 String key = String.format("%s|%s", state, county);
                 if ("MN".equals(state) && "035".equals(county)) {
                     Assert.assertEquals(key, "1", PrcdaUtils.computePrcda(input).getPrcda());
-                    Assert.assertEquals(key, "0", PrcdaUtils.computePrcda(input).getPrcda2017());
                 }
                 else {
                     Assert.assertEquals(key, "9", PrcdaUtils.computePrcda(input).getPrcda());
-                    Assert.assertEquals(key, "9", PrcdaUtils.computePrcda(input).getPrcda2017());
                 }
             }
         }

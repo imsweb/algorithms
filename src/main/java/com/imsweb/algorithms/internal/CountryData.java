@@ -513,7 +513,6 @@ public final class CountryData {
                     for (Map.Entry<String, CountyData> countyEntry : stateEntry.getValue().entrySet()) {
                         CountyData countyData = stateData.getData().computeIfAbsent(countyEntry.getKey(), k -> new CountyData());
                         countyData.setPrcda(countyEntry.getValue().getPrcda());
-                        countyData.setPrcda2017(countyEntry.getValue().getPrcda2017());
                     }
                 }
             }
