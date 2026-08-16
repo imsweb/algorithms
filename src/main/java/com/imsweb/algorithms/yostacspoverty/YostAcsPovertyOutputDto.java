@@ -24,6 +24,18 @@ public class YostAcsPovertyOutputDto {
         return _yostQuintileUS;
     }
 
+    public void setAllFields(String value) {
+        _yostQuintileUS = value;
+        _yostQuintileState = value;
+        _acsPctPovAllRaces = value;
+        _acsPctPovWhite = value;
+        _acsPctPovBlack = value;
+        _acsPctPovAIAN = value;
+        _acsPctPovAsianNHOPI = value;
+        _acsPctPovWhiteNonHisp = value;
+        _acsPctPovHispanic = value;
+    }
+
     public void setYostQuintileUS(String yostQuintileUS) {
         _yostQuintileUS = yostQuintileUS;
     }

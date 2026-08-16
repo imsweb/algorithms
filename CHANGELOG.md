@@ -2,6 +2,7 @@
 
 **Changes in version 5.11 (not released yet)**
 
+- Updated the Yost/ACS algorithm to extend the second-to-last range of the "year for lookup" by one year and to implement the A,B,C,D codes that are found in other census tract lookups.  
 - Added 2023 calculated field for Rural Urban Continuum algorithm.
 - Updated the lookup for item #194 in the PRCDA algorithm to use 2024 PRCDA counties
 - Removed the 2017 calculated field from the PRCDA algorithm.

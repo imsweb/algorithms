@@ -30,7 +30,7 @@ public class StateCountyTractInputDto extends StateCountyInputDto {
         _censusTract2020 = _censusTract2020 == null ? "" : _censusTract2020.trim();
     }
 
-    private String getCensusTractVariable(CensusTract censusTract) {
+    protected String getCensusTractVariable(CensusTract censusTract) {
         if (CensusTract.CENSUS_2000.equals(censusTract))
             return _censusTract2000;
         if (CensusTract.CENSUS_2010.equals(censusTract))
@@ -53,7 +53,7 @@ public class StateCountyTractInputDto extends StateCountyInputDto {
     }
 
     public static boolean isInvalidStateCountyOrCensusTract(String state, String county, String censusTract) {
-        return isInvalidState(state) || isInValidCounty(county) || isInvalidCensusTract(censusTract);
+        return isInvalidState(state) || isInvalidCounty(county) || isInvalidCensusTract(censusTract);
     }
 
     public static boolean isUnknownCensusTract(String censusTract) {

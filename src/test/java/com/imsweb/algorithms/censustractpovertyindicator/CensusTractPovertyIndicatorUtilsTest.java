@@ -95,22 +95,27 @@ public class CensusTractPovertyIndicatorUtilsTest {
         rec.put("censusTract2010", "020600");
         rec.put("dateOfDiagnosisYear", "2015");
         Assert.assertEquals("3", computePovertyIndicator(rec).getCensusTractPovertyIndicator());
-        // test 2016 (census2020)
-        rec.put("censusTract2020", "020600");
+        // test 2016 (census2010) - note: this may fail if 2017 data is added to the SEER big data file (2010 geographies)
+        rec.put("censusTract2010", "020600");
         rec.put("dateOfDiagnosisYear", "2016");
-        Assert.assertEquals("4", computePovertyIndicator(rec).getCensusTractPovertyIndicator());
-        // test 2017 (census2020)
-        rec.put("censusTract2020", "020600");
+        Assert.assertEquals("9", computePovertyIndicator(rec).getCensusTractPovertyIndicator());
+        // test 2017 (census2010) - note: this may fail if 2017 data is added to the SEER big data file (2010 geographies)
+        rec.put("censusTract2010", "020600");
         rec.put("dateOfDiagnosisYear", "2017");
+        Assert.assertEquals("9", computePovertyIndicator(rec).getCensusTractPovertyIndicator());
+        // test 2018 (census2020)
+        rec.put("censusTract2010", "");
+        rec.put("censusTract2020", "020600");
+        rec.put("dateOfDiagnosisYear", "2018");
         Assert.assertEquals("4", computePovertyIndicator(rec).getCensusTractPovertyIndicator());
         // test 2021 (census2020)
         rec.put("censusTract2020", "020600");
         rec.put("dateOfDiagnosisYear", "2021");
         Assert.assertEquals("2", computePovertyIndicator(rec).getCensusTractPovertyIndicator());
-        // test 2025 (census2020)
+        // test 2025 (census2020) - note: this may fail once 2022 data is added to the SEER big data file (2020 geographies)
         rec.put("censusTract2020", "020600");
         rec.put("dateOfDiagnosisYear", "2025");
-        Assert.assertEquals("2", computePovertyIndicator(rec).getCensusTractPovertyIndicator());
+        Assert.assertEquals("9", computePovertyIndicator(rec).getCensusTractPovertyIndicator());
         //test unknown year
         rec.put("dateOfDiagnosisYear", "9999");
         Assert.assertEquals("9", computePovertyIndicator(rec).getCensusTractPovertyIndicator());

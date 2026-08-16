@@ -57,7 +57,7 @@ public class StateCountyInputDto {
         return isUnknownStateOrCounty(_addressAtDxState, _countyAtDxAnalysis);
     }
 
-    public static boolean isInValidCounty(String county) {
+    public static boolean isInvalidCounty(String county) {
         return !(isValidCounty(county) || isUnknownCounty(county));
     }
 
@@ -66,7 +66,7 @@ public class StateCountyInputDto {
     }
 
     public static boolean isInvalidStateOrCounty(String state, String county) {
-        return isInvalidState(state) || isInValidCounty(county);
+        return isInvalidState(state) || isInvalidCounty(county);
     }
 
     public static boolean isUnknownCounty(String county) {
