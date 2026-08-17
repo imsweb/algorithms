@@ -3,7 +3,6 @@
  */
 package com.imsweb.algorithms.neoadjuvant;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -12,14 +11,18 @@ import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 
+/**
+ * This utility class provides schema-specific lookups for the "Neoadjuvant Therapy – Treatment Effect" field (#1634).
+ */
 public final class NeoAdjuvantTherapyTxEffectUtils {
 
-    private static final Set<String> _A_SCHEMA = new HashSet<>(Arrays.asList("00350", "09350", "00360", "09360", "00381", "00382", "00383", "00400", "00410", "00421", "00422", "00430", "00440", "00450"));
-    private static final Set<String> _B_SCHEMA = new HashSet<>(Collections.singletonList("00480"));
-    private static final Set<String> _C_SCHEMA = new HashSet<>(Arrays.asList("00161", "00169", "00170", "00200", "00210", "09210", "00280"));
-    private static final Set<String> _D_SCHEMA = new HashSet<>(Arrays.asList("00551", "00552", "00553"));
-    private static final Set<String> _E_SCHEMA = new HashSet<>(Collections.singletonList("00580"));
-    private static final Set<String> _G_SCHEMA = new HashSet<>(Arrays.asList("00790", "00795", "00811", "00812", "00821", "00822", "00830", "99999"));
+    // any schema not explicitly defined here will use a "default" lookup
+    private static final Set<String> _A_SCHEMA = Set.of("00350", "09350", "00360", "09360", "00381", "00382", "00383", "00400", "00410", "00421", "00422", "00430", "00440", "00450");
+    private static final Set<String> _B_SCHEMA = Set.of("00480");
+    private static final Set<String> _C_SCHEMA = Set.of("00161", "00169", "00170", "00200", "00210", "09210", "00280");
+    private static final Set<String> _D_SCHEMA = Set.of("00551", "00552", "00553");
+    private static final Set<String> _E_SCHEMA = Set.of("00580");
+    private static final Set<String> _F_SCHEMA = Set.of("00790", "00795", "00811", "00812", "00821", "00822", "00830", "99999");
 
     private static final Map<String, String> _A = new LinkedHashMap<>();
     private static final Map<String, String> _B = new LinkedHashMap<>();
@@ -27,7 +30,8 @@ public final class NeoAdjuvantTherapyTxEffectUtils {
     private static final Map<String, String> _D = new LinkedHashMap<>();
     private static final Map<String, String> _E = new LinkedHashMap<>();
     private static final Map<String, String> _F = new LinkedHashMap<>();
-    private static final Map<String, String> _G = new LinkedHashMap<>();
+
+    private static final Map<String, String> _DEFAULT = new LinkedHashMap<>();
 
     // Commonly used entries - fixing SonarQube warning
     private static final String ENTRY_0 = "Neoadjuvant therapy not given/no known presurgical therapy";
@@ -81,17 +85,17 @@ public final class NeoAdjuvantTherapyTxEffectUtils {
         _E.put("7", ENTRY_7);
         _E.put("9", ENTRY_9);
 
-        _F.put("0", ENTRY_0);
-        _F.put("1", "Complete pathological response\nPresent: No viable cancer cells/no residual invasive carcinoma identified\nResidual in situ carcinoma only");
-        _F.put("2", "Near complete pathological response Present: Single cells or rare small groups of invasive cancer cells");
-        _F.put("3", "Partial or minimal pathological response Present: Residual invasive cancer with evident tumor regression, but more than single cells or rare small groups of cancer cells");
-        _F.put("4", "Poor or no pathological response\nAbsent: Extensive residual cancer with no evident tumor regression");
-        _F.put("6", ENTRY_6);
-        _F.put("7", ENTRY_7);
-        _F.put("9", ENTRY_9);
+        _F.put("0", "No Neoadjuvant therapy (not applicable)");
+        _F.put("9", "Death certificate only (DCO)");
 
-        _G.put("0", "No Neoadjuvant therapy (not applicable)");
-        _G.put("9", "Death certificate only (DCO)");
+        _DEFAULT.put("0", ENTRY_0);
+        _DEFAULT.put("1", "Complete pathological response\nPresent: No viable cancer cells/no residual invasive carcinoma identified\nResidual in situ carcinoma only");
+        _DEFAULT.put("2", "Near complete pathological response Present: Single cells or rare small groups of invasive cancer cells");
+        _DEFAULT.put("3", "Partial or minimal pathological response Present: Residual invasive cancer with evident tumor regression, but more than single cells or rare small groups of cancer cells");
+        _DEFAULT.put("4", "Poor or no pathological response\nAbsent: Extensive residual cancer with no evident tumor regression");
+        _DEFAULT.put("6", ENTRY_6);
+        _DEFAULT.put("7", ENTRY_7);
+        _DEFAULT.put("9", ENTRY_9);
     }
 
     private static final Set<String> _ALL_ALLOWED_VALUES = new HashSet<>();
@@ -103,7 +107,7 @@ public final class NeoAdjuvantTherapyTxEffectUtils {
         _ALL_ALLOWED_VALUES.addAll(_D.keySet());
         _ALL_ALLOWED_VALUES.addAll(_E.keySet());
         _ALL_ALLOWED_VALUES.addAll(_F.keySet());
-        _ALL_ALLOWED_VALUES.addAll(_G.keySet());
+        _ALL_ALLOWED_VALUES.addAll(_DEFAULT.keySet());
     }
 
     private NeoAdjuvantTherapyTxEffectUtils() {
@@ -111,7 +115,7 @@ public final class NeoAdjuvantTherapyTxEffectUtils {
     }
 
     /**
-     * Returns the lookup for neoadjuvTherapyTreatmentEffect (#1634) corresponding to the provided schemaId (#3800).
+     * Returns the lookup for the "Neoadjuvant Therapy – Treatment Effect" field (#1634) corresponding to the provided schema ID (#3800).
      */
     @SuppressWarnings("java:S1168")
     public static Map<String, String> getLookup(String schemaId) {
@@ -129,18 +133,32 @@ public final class NeoAdjuvantTherapyTxEffectUtils {
             result = _D;
         else if (_E_SCHEMA.contains(schemaId))
             result = _E;
-        else if (_G_SCHEMA.contains(schemaId))
-            result = _G;
-        else
+        else if (_F_SCHEMA.contains(schemaId))
             result = _F;
+        else
+            result = _DEFAULT;
 
         return Collections.unmodifiableMap(result);
     }
 
     /**
-     * Returns all the possible values for neoadjuvTherapyTreatmentEffect (#1634) in the different lookups.
+     * Returns all the possible values for the "Neoadjuvant Therapy – Treatment Effect" field (#1634) in the different lookups.
      */
     public static Set<String> getAllAllowedValues() {
         return Collections.unmodifiableSet(_ALL_ALLOWED_VALUES);
+    }
+
+    /**
+     * Returns the set of schema IDs that don't use the "default" lookup.
+     */
+    public static Set<String> getNonDefaultSchemas() {
+        Set<String> result = new HashSet<>();
+        result.addAll(_A_SCHEMA);
+        result.addAll(_B_SCHEMA);
+        result.addAll(_C_SCHEMA);
+        result.addAll(_D_SCHEMA);
+        result.addAll(_E_SCHEMA);
+        result.addAll(_F_SCHEMA);
+        return result;
     }
 }

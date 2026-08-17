@@ -35,4 +35,9 @@ public class NeoAdjuvantTherapyTxEffectUtilsTest {
         Assert.assertFalse(NeoAdjuvantTherapyTxEffectUtils.getAllAllowedValues().contains("5"));
     }
 
+    @Test
+    public void testGetNonDefaultSchemas() {
+        Assert.assertTrue(NeoAdjuvantTherapyTxEffectUtils.getNonDefaultSchemas().contains("00350"));
+        Assert.assertFalse(NeoAdjuvantTherapyTxEffectUtils.getNonDefaultSchemas().contains("00000"));
+    }
 }
