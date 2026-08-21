@@ -29,7 +29,7 @@ public class CancerReportingZoneUtilsTest {
         input.setCensusTract2020("007903");
         Assert.assertEquals("06A0274ca", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone2010());
         Assert.assertEquals("1", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZoneTractReq2010());
-        Assert.assertEquals("06A0274ca", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone2020());
+        Assert.assertEquals("06A9357za", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone2020());
         Assert.assertEquals("1", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZoneTractReq2020());
 
         // test Puerto Rico
@@ -52,7 +52,7 @@ public class CancerReportingZoneUtilsTest {
 
                     if ("WA".equals(state) && "067".equals(county) && "012720".equals(tract)) {
                         Assert.assertEquals(key, "53A9071za", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone2010());
-                        Assert.assertEquals(key, "53A9071za", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone2020());
+                        Assert.assertEquals(key, "53", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone2020());
                     }
                     else {
                         Assert.assertEquals(key, "A", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone2010());
@@ -82,7 +82,7 @@ public class CancerReportingZoneUtilsTest {
 
                     if ("WA".equals(state) && "067".equals(county) && "012720".equals(tract)) {
                         Assert.assertEquals(key, "53A9071za", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone2010());
-                        Assert.assertEquals(key, "53A9071za", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone2020());
+                        Assert.assertEquals(key, "53", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone2020());
                     }
                     else {
                         Assert.assertEquals(key, "C", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone2010());
@@ -103,7 +103,7 @@ public class CancerReportingZoneUtilsTest {
 
                     if ("WA".equals(state) && "067".equals(county) && "012720".equals(tract)) {
                         Assert.assertEquals(key, "53A9071za", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone2010());
-                        Assert.assertEquals(key, "53A9071za", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone2020());
+                        Assert.assertEquals(key, "53", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone2020());
                     }
                     else {
                         Assert.assertEquals(key, "D", CancerReportingZoneUtils.computeCancerReportingZone(input).getCancerReportingZone2010());

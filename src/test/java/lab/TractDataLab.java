@@ -397,8 +397,8 @@ public class TractDataLab {
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("uric2020", cleanTractValue(lineNum, line, "uric2020A", "uric2020"));
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("cancerReportingZone2010", cleanTractValue(lineNum, line, "zoneId2010", "cancerReportingZone2010"));
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("cancerReportingZoneTractCert2010",
-                        cleanTractValue(lineNum, line, "zoneTractCertainty2010", "cancerReportingZoneTractCert2020"));
-                tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("cancerReportingZone2020", cleanTractValue(lineNum, line, "zoneId2020", "cancerReportingZone2010"));
+                        cleanTractValue(lineNum, line, "zoneTractCertainty2010", "cancerReportingZoneTractCert2010"));
+                tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("cancerReportingZone2020", cleanTractValue(lineNum, line, "zoneId2020", "cancerReportingZone2020"));
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("cancerReportingZoneTractCert2020",
                         cleanTractValue(lineNum, line, "zoneTractCertainty2020", "cancerReportingZoneTractCert2020"));
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("npcrEphtSubcounty5k", cleanTractValue(lineNum, line, "cdcSubcounty5k", "npcrEphtSubcounty5k"));
