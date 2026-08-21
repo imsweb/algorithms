@@ -11,7 +11,7 @@ import com.imsweb.algorithms.internal.CountryData;
 public final class CancerReportingZoneUtils {
 
     public static final String ALG_NAME = "NAACCR Cancer Reporting Zones";
-    public static final String ALG_VERSION = "version 1.0 released in August 2021";
+    public static final String ALG_VERSION = "August 21, 2026";
 
     //Unknown values for each code
     public static final String CANCER_REPORTING_ZONE_UNK_A = "A";
@@ -30,11 +30,11 @@ public final class CancerReportingZoneUtils {
      * <ul>
      * <li>addressAtDxState (#80)</li>
      * <li>countyAtDxAnalysis (#89)</li>
-     * <li>censusTract2010 (#135)</li>
+     * <li>censusTract2020 (#135)</li>
      * </ul>
      * All those properties are defined as constants in this class.
      * <br/><br/>
-     * The returned Cancer Reporting Zone will be a 5-digit or 7-digit alphanumeric code or it can be one of the unknown values listed below :
+     * The returned Cancer Reporting Zone will be a 5-digit or 7-digit alphanumeric code, or it can be one of the unknown values listed below :
      * <ul>
      * <li>A = State, county, or tract are invalid</li>
      * <li>B = State and tract are valid, but county was not reported</li>
@@ -50,30 +50,52 @@ public final class CancerReportingZoneUtils {
 
         input.applyRecodes();
 
-        if (input.hasInvalidStateCountyOrCensusTract(CensusTract.CENSUS_2010)) {
-            result.setCancerReportingZone(CANCER_REPORTING_ZONE_UNK_A);
-            result.setCancerReportingZoneTractReq(CANCER_REPORTING_ZONE_UNK_A);
+        if (input.hasInvalidStateCountyOrCensusTract(CensusTract.CENSUS_2020)) {
+            // 2010
+            result.setCancerReportingZone2010(CANCER_REPORTING_ZONE_UNK_A);
+            result.setCancerReportingZoneTractReq2010(CANCER_REPORTING_ZONE_UNK_A);
+            // 2020
+            result.setCancerReportingZone2020(CANCER_REPORTING_ZONE_UNK_A);
+            result.setCancerReportingZoneTractReq2020(CANCER_REPORTING_ZONE_UNK_A);
         }
-        else if (input.hasUnknownStateCountyOrCensusTract(CensusTract.CENSUS_2010)) {
-            result.setCancerReportingZone(CANCER_REPORTING_ZONE_UNK_D);
-            result.setCancerReportingZoneTractReq(CANCER_REPORTING_ZONE_UNK_D);
+        else if (input.hasUnknownStateCountyOrCensusTract(CensusTract.CENSUS_2020)) {
+            // 2010
+            result.setCancerReportingZone2010(CANCER_REPORTING_ZONE_UNK_D);
+            result.setCancerReportingZoneTractReq2010(CANCER_REPORTING_ZONE_UNK_D);
+            // 2020
+            result.setCancerReportingZone2020(CANCER_REPORTING_ZONE_UNK_D);
+            result.setCancerReportingZoneTractReq2020(CANCER_REPORTING_ZONE_UNK_D);
         }
         else if (input.countyIsNotReported()) {
-            result.setCancerReportingZone(CANCER_REPORTING_ZONE_UNK_B);
-            result.setCancerReportingZoneTractReq(CANCER_REPORTING_ZONE_UNK_B);
+            // 2010
+            result.setCancerReportingZone2010(CANCER_REPORTING_ZONE_UNK_B);
+            result.setCancerReportingZoneTractReq2010(CANCER_REPORTING_ZONE_UNK_B);
+            // 2020
+            result.setCancerReportingZone2020(CANCER_REPORTING_ZONE_UNK_B);
+            result.setCancerReportingZoneTractReq2020(CANCER_REPORTING_ZONE_UNK_B);
         }
         else {
-            CensusData censusData = CountryData.getCensusData(input, CensusTract.CENSUS_2010);
+            CensusData censusData = CountryData.getCensusData(input, CensusTract.CENSUS_2020);
             if (censusData != null) {
-                result.setCancerReportingZone(censusData.getCancerReportingZone());
-                result.setCancerReportingZoneTractReq(censusData.getCancerReportingZoneTractCert());
+                // 2010
+                result.setCancerReportingZone2010(censusData.getCancerReportingZone2010());
+                result.setCancerReportingZoneTractReq2010(censusData.getCancerReportingZoneTractCert2010());
+                // 2020
+                result.setCancerReportingZone2020(censusData.getCancerReportingZone2020());
+                result.setCancerReportingZoneTractReq2020(censusData.getCancerReportingZoneTractCert2020());
             }
         }
 
-        if (result.getCancerReportingZone() == null)
-            result.setCancerReportingZone(CANCER_REPORTING_ZONE_UNK_C);
-        if (result.getCancerReportingZoneTractReq() == null)
-            result.setCancerReportingZoneTractReq(CANCER_REPORTING_ZONE_UNK_C);
+        // 2010
+        if (result.getCancerReportingZone2010() == null)
+            result.setCancerReportingZone2010(CANCER_REPORTING_ZONE_UNK_C);
+        if (result.getCancerReportingZoneTractReq2010() == null)
+            result.setCancerReportingZoneTractReq2010(CANCER_REPORTING_ZONE_UNK_C);
+        // 2020
+        if (result.getCancerReportingZone2020() == null)
+            result.setCancerReportingZone2020(CANCER_REPORTING_ZONE_UNK_C);
+        if (result.getCancerReportingZoneTractReq2020() == null)
+            result.setCancerReportingZoneTractReq2020(CANCER_REPORTING_ZONE_UNK_C);
 
         return result;
     }

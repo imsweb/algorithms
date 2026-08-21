@@ -29,11 +29,14 @@ public class PersistentPovertyAlgorithmTest {
         input.setPatient(patMap);
         Map<String, Object> tumMap = new HashMap<>();
         tumMap.put(Algorithms.FIELD_STATE_DX, "AL");
-        tumMap.put(Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS, "001");
+        tumMap.put(Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS, "057");
         tumMap.put(Algorithms.FIELD_CENSUS_2010, "020200");
+        tumMap.put(Algorithms.FIELD_CENSUS_2020, "020200");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
 
-        Assert.assertEquals("0", Utils.extractTumors(alg.execute(input).getPatient()).get(0).get(Algorithms.FIELD_PERSISTENT_POVERTY));
+        // that combination of input computes a value that is different in each of the data file...
+        Assert.assertEquals("2", Utils.extractTumors(alg.execute(input).getPatient()).getFirst().get(Algorithms.FIELD_PERSISTENT_POVERTY_0711));
+        Assert.assertEquals("0", Utils.extractTumors(alg.execute(input).getPatient()).getFirst().get(Algorithms.FIELD_PERSISTENT_POVERTY_1721));
     }
 
 }

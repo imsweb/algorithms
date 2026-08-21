@@ -54,15 +54,17 @@ public final class CountryData {
         _TRACT_FIELDS.put("stateAbbreviation", 2);
         _TRACT_FIELDS.put("countyFips", 3);
         _TRACT_FIELDS.put("censusTract", 6);
-        _TRACT_FIELDS.put("yearData", 518); // repeated data structure defined in "_TRACT_YEAR_BASED_FIELDS"; each year takes 37 characters, there are 14 years -> 518
+        _TRACT_FIELDS.put("yearData", 555); // repeated data structure defined in "_TRACT_YEAR_BASED_FIELDS"; each year takes 37 characters, there are 15 years -> 555
         _TRACT_FIELDS.put("ruca2000", 1);
         _TRACT_FIELDS.put("ruca2010", 1);
         _TRACT_FIELDS.put("ruca2020", 1);
         _TRACT_FIELDS.put("uric2000", 1);
         _TRACT_FIELDS.put("uric2010", 1);
         _TRACT_FIELDS.put("uric2020", 1);
-        _TRACT_FIELDS.put("cancerReportingZone", 10);
-        _TRACT_FIELDS.put("cancerReportingZoneTractCert", 1);
+        _TRACT_FIELDS.put("cancerReportingZone2010", 10);
+        _TRACT_FIELDS.put("cancerReportingZoneTractCert2010", 1);
+        _TRACT_FIELDS.put("cancerReportingZone2020", 10);
+        _TRACT_FIELDS.put("cancerReportingZoneTractCert2020", 1);
         _TRACT_FIELDS.put("naaccrPovertyIndicator9504", 1);
         _TRACT_FIELDS.put("naaccrPovertyIndicator0507", 1);
         _TRACT_FIELDS.put("npcrEphtSubcounty5k", 11);
@@ -72,7 +74,8 @@ public final class CountryData {
         _TRACT_FIELDS.put("sviOverallStateBased2022", 5);
         _TRACT_FIELDS.put("congressionalDistrict118", 4);
         _TRACT_FIELDS.put("congressionalDistrict119", 4);
-        _TRACT_FIELDS.put("persistentPoverty", 1);
+        _TRACT_FIELDS.put("persistentPoverty0711", 1);
+        _TRACT_FIELDS.put("persistentPoverty1721", 1);
     }
 
     public static Map<String, Integer> getTractFields() {
@@ -98,7 +101,7 @@ public final class CountryData {
     }
 
     public static final int TRACT_YEAR_MIN_VAL = 2008;
-    public static final int TRACT_YEAR_MAX_VAL = 2021;
+    public static final int TRACT_YEAR_MAX_VAL = 2022;
 
     public static CensusData getCensusData(StateCountyTractInputDto input, CensusTract censusTract) {
         if (!CountryData.getInstance().isTractDataInitialized(input.getAddressAtDxState()))
@@ -224,8 +227,10 @@ public final class CountryData {
                                 censusData.setEpht2010GeoId50k(StringUtils.leftPad(StringUtils.trimToNull(values.get("npcrEphtSubcounty50k")), 11, '0'));
 
                                 // Cancer Reporting Zone
-                                censusData.setCancerReportingZone(StringUtils.trimToNull(values.get("cancerReportingZone")));
-                                censusData.setCancerReportingZoneTractCert(StringUtils.trimToNull(values.get("cancerReportingZoneTractCert")));
+                                censusData.setCancerReportingZone2010(StringUtils.trimToNull(values.get("cancerReportingZone2010")));
+                                censusData.setCancerReportingZoneTractCert2010(StringUtils.trimToNull(values.get("cancerReportingZoneTractCert2010")));
+                                censusData.setCancerReportingZone2020(StringUtils.trimToNull(values.get("cancerReportingZone2020")));
+                                censusData.setCancerReportingZoneTractCert2020(StringUtils.trimToNull(values.get("cancerReportingZoneTractCert2020")));
 
                                 // Social Vulnerability Index (SVI)
                                 censusData.setSviOverallStateBased2018(StringUtils.trimToNull(values.get("sviOverallStateBased2018")));
@@ -236,7 +241,8 @@ public final class CountryData {
                                 censusData.setCongressionalDistrict119(StringUtils.trimToNull(values.get("congressionalDistrict119")));
 
                                 // persistence poverty
-                                censusData.setPersistentPoverty(StringUtils.trimToNull(values.get("persistentPoverty")));
+                                censusData.setPersistentPoverty0711(StringUtils.trimToNull(values.get("persistentPoverty0711")));
+                                censusData.setPersistentPoverty1721(StringUtils.trimToNull(values.get("persistentPoverty1721")));
                             }
 
                             line = reader.readLine();

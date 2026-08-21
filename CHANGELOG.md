@@ -2,6 +2,10 @@
 
 **Changes in version 5.11 (not released yet)**
 
+- Updated data for the EPH SubCountry algorithms and switched to the 2020 geographies; the three 2010 output variables were retired and replaced by 2020 variables. 
+- Updated data for the Persistence Poverty algorithm; added new variable based on 2020 geographies and added output value 2 (not available) in addition to the 0 and 1.
+- Updated data for the Tract-Estimated Congressional Districts algorithm.
+- Retired two Cancer Reporting Zone variables and replaced them on two sets of 2010/2020 variables all based on 2020 geographies.
 - Updated neoadjuvTherapyTreatmentEffect lookups (added missing schemas 09210, 09350 and 09360).
 - Updated the Yost/ACS algorithm to extend the second-to-last range of the "year for lookup" by one year and to implement the A,B,C,D codes that are found in other census tract lookups.  
 - Added 2023 calculated field for Rural Urban Continuum algorithm.

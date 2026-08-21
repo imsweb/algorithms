@@ -337,21 +337,20 @@ public class YostAcsPovertyUtilsTest {
         Assert.assertEquals("8.09", odto.getAcsPctPovHispanic());
 
         // 2025 using census2020 with yearForLookup 2022
-        // note: this may fail once 2022 data is added to the big SEER data file
         idto.setAddressAtDxState("AK");
         idto.setCountyAtDxAnalysis("020");
         idto.setCensusTract2010("");
         idto.setCensusTract2020("001702");
         idto.setDateOfDiagnosis("2025");
         odto = YostAcsPovertyUtils.computeYostAcsPovertyData(idto);
-        Assert.assertEquals("C", odto.getYostQuintileUS());
-        Assert.assertEquals("C", odto.getYostQuintileState());
-        Assert.assertEquals("C", odto.getAcsPctPovAllRaces());
-        Assert.assertEquals("C", odto.getAcsPctPovWhite());
-        Assert.assertEquals("C", odto.getAcsPctPovBlack());
-        Assert.assertEquals("C", odto.getAcsPctPovAIAN());
-        Assert.assertEquals("C", odto.getAcsPctPovAsianNHOPI());
-        Assert.assertEquals("C", odto.getAcsPctPovWhiteNonHisp());
-        Assert.assertEquals("C", odto.getAcsPctPovHispanic());
+        Assert.assertEquals("4", odto.getYostQuintileUS());
+        Assert.assertEquals("4", odto.getYostQuintileState());
+        Assert.assertEquals("7.11", odto.getAcsPctPovAllRaces());
+        Assert.assertEquals("4.10", odto.getAcsPctPovWhite());
+        Assert.assertEquals("20.44", odto.getAcsPctPovBlack());
+        Assert.assertEquals("25.73", odto.getAcsPctPovAIAN());
+        Assert.assertEquals("0.00", odto.getAcsPctPovAsianNHOPI());
+        Assert.assertEquals("4.19", odto.getAcsPctPovWhiteNonHisp());
+        Assert.assertEquals("6.52", odto.getAcsPctPovHispanic());
     }
 }

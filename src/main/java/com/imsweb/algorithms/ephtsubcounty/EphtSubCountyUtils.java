@@ -9,34 +9,34 @@ import com.imsweb.algorithms.internal.CensusData;
 import com.imsweb.algorithms.internal.CountryData;
 
 /**
- * This class can be used to calculate EPHT 2010 GEO ID 5K and EPHT 2010 GEO ID 20K.
+ * This class can be used to calculate EPHT 2020 GEO ID 5K/20K/50K.
  */
 public final class EphtSubCountyUtils {
 
     public static final String ALG_NAME = "NPCR EPHT SubCounty";
-    public static final String ALG_VERSION = "version 1.0 released in August 2021";
+    public static final String ALG_VERSION = "August 21, 2026";
 
-    public static final String EPHT_2010_GEO_ID_UNK_A = "A";
-    public static final String EPHT_2010_GEO_ID_UNK_B = "B";
-    public static final String EPHT_2010_GEO_ID_UNK_C = "C";
-    public static final String EPHT_2010_GEO_ID_UNK_D = "D";
+    public static final String EPHT_2020_GEO_ID_UNK_A = "A";
+    public static final String EPHT_2020_GEO_ID_UNK_B = "B";
+    public static final String EPHT_2020_GEO_ID_UNK_C = "C";
+    public static final String EPHT_2020_GEO_ID_UNK_D = "D";
 
     private EphtSubCountyUtils() {
         // no instances of this class allowed!
     }
 
     /**
-     * Calculates the EPHT 2010 GEO ID 5K and EPHT 2010 GEO ID 20K for the provided input DTO
+     * Calculates the EPHT 2020 GEO ID 5K/20K/50K for the provided input DTO
      * <br/><br/>
      * The provided input dto has the following parameters used in the calculation:
      * <ul>
      * <li>addressAtDxState (#80)</li>
      * <li>countyAtDxAnalysis (#89)</li>
-     * <li>censusTract2010 (#135)</li>
+     * <li>censusTract2020 (#135)</li>
      * </ul>
      * All those properties are defined as constants in this class.
      * <br/><br/>
-     * The returned dto will have either an 11-digit value for EPHT 2010 GEO ID 5K, EPHT 2010 GEO ID 20K and EPHT 2010 GEO ID 50K, or one of the possible unknown values:
+     * The returned dto will have either an 11-digit value for EPHT 2020 GEO ID 5K, EPHT 2020 GEO ID 20K and EPHT 2020 GEO ID 50K, or one of the possible unknown values:
      * <ul>
      * <li>A = State, county, or tract are invalid</li>
      * <li>B = State and tract are valid, but county was not reported</li>
@@ -52,36 +52,36 @@ public final class EphtSubCountyUtils {
 
         input.applyRecodes();
 
-        if (input.hasInvalidStateCountyOrCensusTract(CensusTract.CENSUS_2010)) {
-            result.setEpht2010GeoId5k(EPHT_2010_GEO_ID_UNK_A);
-            result.setEpht2010GeoId20k(EPHT_2010_GEO_ID_UNK_A);
-            result.setEpht2010GeoId50k(EPHT_2010_GEO_ID_UNK_A);
+        if (input.hasInvalidStateCountyOrCensusTract(CensusTract.CENSUS_2020)) {
+            result.setEpht2020GeoId5k(EPHT_2020_GEO_ID_UNK_A);
+            result.setEpht2020GeoId20k(EPHT_2020_GEO_ID_UNK_A);
+            result.setEpht2020GeoId50k(EPHT_2020_GEO_ID_UNK_A);
         }
-        else if (input.hasUnknownStateCountyOrCensusTract(CensusTract.CENSUS_2010)) {
-            result.setEpht2010GeoId5k(EPHT_2010_GEO_ID_UNK_D);
-            result.setEpht2010GeoId20k(EPHT_2010_GEO_ID_UNK_D);
-            result.setEpht2010GeoId50k(EPHT_2010_GEO_ID_UNK_D);
+        else if (input.hasUnknownStateCountyOrCensusTract(CensusTract.CENSUS_2020)) {
+            result.setEpht2020GeoId5k(EPHT_2020_GEO_ID_UNK_D);
+            result.setEpht2020GeoId20k(EPHT_2020_GEO_ID_UNK_D);
+            result.setEpht2020GeoId50k(EPHT_2020_GEO_ID_UNK_D);
         }
         else if (input.countyIsNotReported()) {
-            result.setEpht2010GeoId5k(EPHT_2010_GEO_ID_UNK_B);
-            result.setEpht2010GeoId20k(EPHT_2010_GEO_ID_UNK_B);
-            result.setEpht2010GeoId50k(EPHT_2010_GEO_ID_UNK_B);
+            result.setEpht2020GeoId5k(EPHT_2020_GEO_ID_UNK_B);
+            result.setEpht2020GeoId20k(EPHT_2020_GEO_ID_UNK_B);
+            result.setEpht2020GeoId50k(EPHT_2020_GEO_ID_UNK_B);
         }
         else {
-            CensusData censusData = CountryData.getCensusData(input, CensusTract.CENSUS_2010);
+            CensusData censusData = CountryData.getCensusData(input, CensusTract.CENSUS_2020);
             if (censusData != null) {
-                result.setEpht2010GeoId5k(censusData.getEpht2010GeoId5k());
-                result.setEpht2010GeoId20k(censusData.getEpht2010GeoId20k());
-                result.setEpht2010GeoId50k(censusData.getEpht2010GeoId50k());
+                result.setEpht2020GeoId5k(censusData.getEpht2010GeoId5k());
+                result.setEpht2020GeoId20k(censusData.getEpht2010GeoId20k());
+                result.setEpht2020GeoId50k(censusData.getEpht2010GeoId50k());
             }
         }
 
-        if (result.getEpht2010GeoId5k() == null)
-            result.setEpht2010GeoId5k(EPHT_2010_GEO_ID_UNK_C);
-        if (result.getEpht2010GeoId20k() == null)
-            result.setEpht2010GeoId20k(EPHT_2010_GEO_ID_UNK_C);
-        if (result.getEpht2010GeoId50k() == null)
-            result.setEpht2010GeoId50k(EPHT_2010_GEO_ID_UNK_C);
+        if (result.getEpht2020GeoId5k() == null)
+            result.setEpht2020GeoId5k(EPHT_2020_GEO_ID_UNK_C);
+        if (result.getEpht2020GeoId20k() == null)
+            result.setEpht2020GeoId20k(EPHT_2020_GEO_ID_UNK_C);
+        if (result.getEpht2020GeoId50k() == null)
+            result.setEpht2020GeoId50k(EPHT_2020_GEO_ID_UNK_C);
 
         return result;
     }

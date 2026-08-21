@@ -14,8 +14,10 @@ import com.imsweb.algorithms.Algorithms;
 import com.imsweb.algorithms.StateCountyTractInputDto;
 import com.imsweb.algorithms.internal.Utils;
 
-import static com.imsweb.algorithms.Algorithms.FIELD_CANCER_REPORTING_ZONE;
-import static com.imsweb.algorithms.Algorithms.FIELD_CANCER_REPORTING_ZONE_TRACT_REQ;
+import static com.imsweb.algorithms.Algorithms.FIELD_CANCER_RPT_ZONE_2010;
+import static com.imsweb.algorithms.Algorithms.FIELD_CANCER_RPT_ZONE_2020;
+import static com.imsweb.algorithms.Algorithms.FIELD_CANCER_RPT_ZONE_TRACT_REQ_2010;
+import static com.imsweb.algorithms.Algorithms.FIELD_CANCER_RPT_ZONE_TRACT_REQ_2020;
 import static com.imsweb.algorithms.Algorithms.FIELD_CENSUS_2010;
 import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS;
 import static com.imsweb.algorithms.Algorithms.FIELD_STATE_DX;
@@ -31,11 +33,15 @@ public class CancerReportingZoneAlgorithm extends AbstractAlgorithm {
         _inputFields.add(Algorithms.getField(FIELD_COUNTY_AT_DX_ANALYSIS));
         _inputFields.add(Algorithms.getField(FIELD_CENSUS_2010));
 
-        _outputFields.add(Algorithms.getField(FIELD_CANCER_REPORTING_ZONE));
-        _outputFields.add(Algorithms.getField(FIELD_CANCER_REPORTING_ZONE_TRACT_REQ));
+        _outputFields.add(Algorithms.getField(FIELD_CANCER_RPT_ZONE_2010));
+        _outputFields.add(Algorithms.getField(FIELD_CANCER_RPT_ZONE_TRACT_REQ_2010));
+        _outputFields.add(Algorithms.getField(FIELD_CANCER_RPT_ZONE_2020));
+        _outputFields.add(Algorithms.getField(FIELD_CANCER_RPT_ZONE_TRACT_REQ_2020));
 
-        _unknownValues.put(FIELD_CANCER_REPORTING_ZONE, Arrays.asList(CANCER_REPORTING_ZONE_UNK_A, CANCER_REPORTING_ZONE_UNK_D));
-        _unknownValues.put(FIELD_CANCER_REPORTING_ZONE_TRACT_REQ, Arrays.asList(CANCER_REPORTING_ZONE_UNK_A, CANCER_REPORTING_ZONE_UNK_D));
+        _unknownValues.put(FIELD_CANCER_RPT_ZONE_2010, Arrays.asList(CANCER_REPORTING_ZONE_UNK_A, CANCER_REPORTING_ZONE_UNK_D));
+        _unknownValues.put(FIELD_CANCER_RPT_ZONE_TRACT_REQ_2010, Arrays.asList(CANCER_REPORTING_ZONE_UNK_A, CANCER_REPORTING_ZONE_UNK_D));
+        _unknownValues.put(FIELD_CANCER_RPT_ZONE_2020, Arrays.asList(CANCER_REPORTING_ZONE_UNK_A, CANCER_REPORTING_ZONE_UNK_D));
+        _unknownValues.put(FIELD_CANCER_RPT_ZONE_TRACT_REQ_2020, Arrays.asList(CANCER_REPORTING_ZONE_UNK_A, CANCER_REPORTING_ZONE_UNK_D));
     }
 
     @Override
@@ -48,8 +54,10 @@ public class CancerReportingZoneAlgorithm extends AbstractAlgorithm {
             CancerReportingZoneOutputDto outputDto = CancerReportingZoneUtils.computeCancerReportingZone(inputDto);
 
             Map<String, Object> outputTumor = new HashMap<>();
-            outputTumor.put(FIELD_CANCER_REPORTING_ZONE, outputDto.getCancerReportingZone());
-            outputTumor.put(FIELD_CANCER_REPORTING_ZONE_TRACT_REQ, outputDto.getCancerReportingZoneTractReq());
+            outputTumor.put(FIELD_CANCER_RPT_ZONE_2010, outputDto.getCancerReportingZone2010());
+            outputTumor.put(FIELD_CANCER_RPT_ZONE_TRACT_REQ_2010, outputDto.getCancerReportingZoneTractReq2020());
+            outputTumor.put(FIELD_CANCER_RPT_ZONE_2020, outputDto.getCancerReportingZone2010());
+            outputTumor.put(FIELD_CANCER_RPT_ZONE_TRACT_REQ_2020, outputDto.getCancerReportingZoneTractReq2020());
 
             Utils.addTumorOutput(outputPatient, outputTumor);
         }
