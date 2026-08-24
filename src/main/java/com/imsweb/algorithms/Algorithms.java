@@ -371,9 +371,9 @@ public final class Algorithms {
             addField(AlgorithmField.of(FIELD_ACS_POV_ASIAN_NHOPI, 9616, 6, "ACS Pct Poverty (2Asian/NHOPI)", "ACS Pov Asian/NHOPI", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_ACS_POV_WHITE_NON_HISP, 9618, 6, "ACS Pct Poverty (White, Non-Hispanic)", "ACS Pov Non-Hispanic", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_ACS_POV_HISP, 9619, 6, "ACS Pct Poverty (Hispanic)", "ACS Pov Hispanic", DATA_LEVEL_TUMOR, false));
-            addField(AlgorithmField.of(FIELD_EPHT_2020_GEOID_5K, 9996, 11, "EPHT 2010 GEO ID 5K", "EPHT 5K", DATA_LEVEL_TUMOR, false));
-            addField(AlgorithmField.of(FIELD_EPHT_2020_GEOID_20K, 9997, 11, "EPHT 2010 GEO ID 20K", "EPHT 20K", DATA_LEVEL_TUMOR, false));
-            addField(AlgorithmField.of(FIELD_EPHT_2020_GEOID_50K, 9998, 11, "EPHT 2010 GEO ID 50K", "EPHT 50K", DATA_LEVEL_TUMOR, false));
+            addField(AlgorithmField.of(FIELD_EPHT_2020_GEOID_5K, 9996, 13, "EPHT 2020 GEO ID 5K", "EPHT 5K", DATA_LEVEL_TUMOR, false));
+            addField(AlgorithmField.of(FIELD_EPHT_2020_GEOID_20K, 9997, 13, "EPHT 2020 GEO ID 20K", "EPHT 20K", DATA_LEVEL_TUMOR, false));
+            addField(AlgorithmField.of(FIELD_EPHT_2020_GEOID_50K, 9998, 13, "EPHT 2020 GEO ID 50K", "EPHT 50K", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_TRACT_EST_CONGRESS_DIST_118, 9405, 4, "Tract-Estimated 118th Congressional District", "Tract-Est 118", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_TRACT_EST_CONGRESS_DIST_119, 9406, 4, "Tract-Estimated 119th Congressional District", "Tract-Est 119", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_CANCER_RPT_ZONE_2010, 9435, 10, "Cancer Reporting Zone (2010 Defined)", "Cancer Rpt Zone 10", DATA_LEVEL_TUMOR, false));
