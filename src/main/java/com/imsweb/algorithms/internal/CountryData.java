@@ -228,9 +228,9 @@ public final class CountryData {
 
                                 // Cancer Reporting Zone
                                 censusData.setCancerReportingZone2010(StringUtils.trimToNull(values.get("cancerReportingZone2010")));
-                                censusData.setCancerReportingZoneTractReq2010(StringUtils.trimToNull(values.get("cancerReportingZoneTractCert2010")));
+                                censusData.setCancerReportingZoneTractReq2010(StringUtils.trimToNull(values.get("cancerReportingZoneTractReq2010")));
                                 censusData.setCancerReportingZone2020(StringUtils.trimToNull(values.get("cancerReportingZone2020")));
-                                censusData.setCancerReportingZoneTractReq2020(StringUtils.trimToNull(values.get("cancerReportingZoneTractCert2020")));
+                                censusData.setCancerReportingZoneTractReq2020(StringUtils.trimToNull(values.get("cancerReportingZoneTractReq2020")));
 
                                 // Social Vulnerability Index (SVI)
                                 censusData.setSviOverallStateBased2018(StringUtils.trimToNull(values.get("sviOverallStateBased2018")));
