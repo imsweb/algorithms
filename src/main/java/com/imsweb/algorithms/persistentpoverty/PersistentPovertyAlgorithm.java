@@ -34,7 +34,7 @@ public class PersistentPovertyAlgorithm extends AbstractAlgorithm {
     public static final String PERSISTENT_POVERTY_UNK_D = "D";
 
     public PersistentPovertyAlgorithm() {
-        super(ALG_PERSISTENT_POVERTY, "Persistent Poverty", "August 21, 2026");
+        super(ALG_PERSISTENT_POVERTY, "NAACCR Persistent Poverty", "August 21, 2026");
 
         _url = "https://www.ers.usda.gov/data-products/poverty-area-measures/";
 
