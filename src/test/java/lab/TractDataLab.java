@@ -131,20 +131,21 @@ public class TractDataLab {
         try (InputStream fis = Thread.currentThread().getContextClassLoader().getResourceAsStream("tract/time-dependent-tract-data-layout-2022.xml")) {
             layout2022 = new FixedColumnsLayout(LayoutUtils.readFixedColumnsLayout(fis));
         }
-        FixedColumnsLayout layout2025;
-        try (InputStream fis = Thread.currentThread().getContextClassLoader().getResourceAsStream("tract/time-dependent-tract-data-layout-2025.xml")) {
-            layout2025 = new FixedColumnsLayout(LayoutUtils.readFixedColumnsLayout(fis));
+        FixedColumnsLayout layout2026;
+        try (InputStream fis = Thread.currentThread().getContextClassLoader().getResourceAsStream("tract/time-dependent-tract-data-layout-2026.xml")) {
+            layout2026 = new FixedColumnsLayout(LayoutUtils.readFixedColumnsLayout(fis));
         }
 
         // load the data from the big SEER tract data file (it was not added to the project, too big)
         //    https://seer.cancer.gov/seerstat/variables/countyattribs/census-tract-attribs.html
         // 8/15/22 - new version of the SEER data was provided, but it's not posted online yet; a Puerto-Rico version of the data file was also provided (it won't be posted)
         // 8/29/25 - an extra version of the SEER data was provided for years 2018-2021, using census2020 boundaries; Puerto-Rico file not available yet.
+        // 8/21/26 - new version of the 2008-2017 file (no format change, Puerto-Rico didn't change); new version of the 2018-2022 file (unreleased, format changed, no Puerto-Rico).
         Map<DataKey, Map<String, String>> tractValues = new TreeMap<>();
         Map<DataKey, Map<Integer, String>> tractYearBasedValues = new HashMap<>();
-        processMainSeerDataFile_2008_2017(Paths.get("D:\\temp\\tract.level.ses.2008_17.txt.gz"), layout2022, tractValues, tractYearBasedValues);
+        processMainSeerDataFile_2008_2017(Paths.get("D:\\temp\\tract.level.ses.2008_17.dt20260819.gz"), layout2022, tractValues, tractYearBasedValues);
         processMainSeerDataFile_2008_2017(Paths.get("D:\\temp\\tract.level.ses.2008_17.puerto.rico.dt20230818.txt.gz"), layout2022, tractValues, tractYearBasedValues);
-        processMainSeerDataFile_2018_2021(Paths.get("D:\\temp\\tract.level.ses.2018_21.vint2023.pops.dat.txd.gz"), layout2025, tractValues, tractYearBasedValues);
+        processMainSeerDataFile_2018_2022(Paths.get("D:\\temp\\tract.level.ses.2018_22.dt20260819.not.public.with.cdc_geos.gz"), layout2026, tractValues, tractYearBasedValues);
 
         // NAACCR Poverty Indicator 1995-2004
         Map<DataKey, String> naaccrPovertyIndicator9504 = new HashMap<>();
@@ -230,31 +231,32 @@ public class TractDataLab {
                 // also, most fields come from the big shared SEER data file, those don't have their own if/else statements
                 for (String field : CountryData.getTractFields().keySet()) {
                     if ("stateAbbreviation".equals(field))
-                        buf.append(key.getState());
+                        addToBuffer(buf, key.getState(), key, field);
                     else if ("countyFips".equals(field))
-                        buf.append(key.getCounty());
+                        addToBuffer(buf, key.getCounty(), key, field);
                     else if ("censusTract".equals(field))
-                        buf.append(key.getTract());
+                        addToBuffer(buf, key.getTract(), key, field);
                     else if ("naaccrPovertyIndicator9504".equals(field))
-                        buf.append(naaccrPovertyIndicator9504.getOrDefault(key, " "));
+                        addToBuffer(buf, naaccrPovertyIndicator9504.getOrDefault(key, " "), key, field);
                     else if ("naaccrPovertyIndicator0507".equals(field))
-                        buf.append(naaccrPovertyIndicator0507.getOrDefault(key, " "));
+                        addToBuffer(buf, naaccrPovertyIndicator0507.getOrDefault(key, " "), key, field);
                     else if ("ruca2000".equals(field))
-                        buf.append(ruca2000Values.getOrDefault(key, " "));
+                        addToBuffer(buf, ruca2000Values.getOrDefault(key, " "), key, field);
                     else if ("uric2000".equals(field))
-                        buf.append(uric2000Values.getOrDefault(key, " "));
+                        addToBuffer(buf, uric2000Values.getOrDefault(key, " "), key, field);
                     else if ("yearData".equals(field)) {
                         Map<Integer, String> yearData = tractYearBasedValues.get(key);
                         if (yearData != null) {
                             for (Integer year : IntStream.rangeClosed(CountryData.TRACT_YEAR_MIN_VAL, CountryData.TRACT_YEAR_MAX_VAL).boxed().toList())
-                                buf.append(yearData.getOrDefault(year, StringUtils.rightPad("", CountryData.getTractYearBasedFields().values().stream().mapToInt(Integer::intValue).sum(), " ")));
+                                addToBuffer(buf, yearData.getOrDefault(year, StringUtils.rightPad("", CountryData.getTractYearBasedFields().values().stream().mapToInt(Integer::intValue).sum(), " ")),
+                                        key, field);
                         }
                         else
-                            buf.append(StringUtils.rightPad("", CountryData.getTractFields().get(field), " "));
+                            addToBuffer(buf, StringUtils.rightPad("", CountryData.getTractFields().get(field), " "), key, field);
                     }
                     else {
                         String val = tractValues.getOrDefault(key, new HashMap<>()).getOrDefault(field, "");
-                        buf.append(StringUtils.rightPad(val, CountryData.getTractFields().get(field), " "));
+                        addToBuffer(buf, StringUtils.rightPad(val, CountryData.getTractFields().get(field), " "), key, field);
                     }
                 }
 
@@ -268,6 +270,13 @@ public class TractDataLab {
                 writer.newLine();
             }
         }
+    }
+
+    @SuppressWarnings("unused")
+    private static void addToBuffer(StringBuilder buf, String value, DataKey key, String field) {
+        //if (key.getState().equals("AL") && key.getCounty().equals("057") && key.getTract().equals("020200"))
+        //System.out.println(key.getState() + "/" + key.getCounty() + "/" + key.getTract() + " - " + field  + ": " + value);
+        buf.append(value);
     }
 
     private static String cleanTractValue(int lineNum, Map<String, String> line, String sourceField, String targetField) {
@@ -332,22 +341,22 @@ public class TractDataLab {
 
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("ruca2010", cleanTractValue(lineNum, line, "ruca2010C", "ruca2010"));
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("uric2010", cleanTractValue(lineNum, line, "uric2010A", "uric2010"));
-                tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("cancerReportingZone", cleanTractValue(lineNum, line, "zoneId", "cancerReportingZone"));
-                tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("cancerReportingZoneTractCert", cleanTractValue(lineNum, line, "zoneTractCertainty", "cancerReportingZoneTractCert"));
-                // commented out the EPHT Subcounty for 2010 geographies, we are now using the 2020 geographies for those...
+                // commented out the Cancer Reporting Zone and EPHT Subcounty for 2010 geographies, we are now using the 2020 geographies for those...
+                //tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("cancerReportingZone", cleanTractValue(lineNum, line, "zoneId", "cancerReportingZone"));
+                //tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("cancerReportingZoneTractReq", cleanTractValue(lineNum, line, "zoneTractRequired", "cancerReportingZoneTractReq"));
                 //tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("npcrEphtSubcounty5k", cleanTractValue(lineNum, line, "cdcSubcounty5k", "npcrEphtSubcounty5k"));
                 //tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("npcrEphtSubcounty20k", cleanTractValue(lineNum, line, "cdcSubcounty20k", "npcrEphtSubcounty20k"));
                 //tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("npcrEphtSubcounty50k", cleanTractValue(lineNum, line, "cdcSubcounty50k", "npcrEphtSubcounty50k"));
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("sviOverallStateBased2018", cleanTractValue(lineNum, line, "sviOverallState2018", "sviOverallStateBased2018"));
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("congressionalDistrict118", cleanTractValue(lineNum, line, "congressionalDistrict118", "congressionalDistrict118"));
-                tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("persistentPoverty", cleanTractValue(lineNum, line, "persistentPoverty", "persistentPoverty"));
+                tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("persistentPoverty0711", cleanTractValue(lineNum, line, "persistentPoverty", "persistentPoverty0711"));
 
                 line = layout.readNextRecord(reader);
             }
         }
     }
 
-    private static void processMainSeerDataFile_2018_2021(Path inputFile, FixedColumnsLayout layout, Map<DataKey, Map<String, String>> tractValues, Map<DataKey, Map<Integer, String>> tractYearBasedValues) throws IOException {
+    private static void processMainSeerDataFile_2018_2022(Path inputFile, FixedColumnsLayout layout, Map<DataKey, Map<String, String>> tractValues, Map<DataKey, Map<Integer, String>> tractYearBasedValues) throws IOException {
         try (LineNumberReader reader = new LineNumberReader(new InputStreamReader(new GZIPInputStream(Files.newInputStream(inputFile)), StandardCharsets.US_ASCII))) {
 
             Map<String, String> line = layout.readNextRecord(reader);
@@ -386,14 +395,18 @@ public class TractDataLab {
 
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("ruca2020", cleanTractValue(lineNum, line, "ruca2020C", "ruca2020"));
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("uric2020", cleanTractValue(lineNum, line, "uric2020A", "uric2020"));
-                tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("cancerReportingZone", cleanTractValue(lineNum, line, "zoneId", "cancerReportingZone"));
-                tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("cancerReportingZoneTractCert", cleanTractValue(lineNum, line, "zoneTractCertainty", "cancerReportingZoneTractCert"));
+                tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("cancerReportingZone2010", cleanTractValue(lineNum, line, "zoneId2010", "cancerReportingZone2010"));
+                tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("cancerReportingZoneTractReq2010",
+                        cleanTractValue(lineNum, line, "zoneTractRequired2010", "cancerReportingZoneTractReq2010"));
+                tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("cancerReportingZone2020", cleanTractValue(lineNum, line, "zoneId2020", "cancerReportingZone2020"));
+                tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("cancerReportingZoneTractReq2020",
+                        cleanTractValue(lineNum, line, "zoneTractRequired2020", "cancerReportingZoneTractReq2020"));
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("npcrEphtSubcounty5k", cleanTractValue(lineNum, line, "cdcSubcounty5k", "npcrEphtSubcounty5k"));
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("npcrEphtSubcounty20k", cleanTractValue(lineNum, line, "cdcSubcounty20k", "npcrEphtSubcounty20k"));
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("npcrEphtSubcounty50k", cleanTractValue(lineNum, line, "cdcSubcounty50k", "npcrEphtSubcounty50k"));
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("sviOverallStateBased2022", cleanTractValue(lineNum, line, "sviOverallState2022", "sviOverallStateBased2022"));
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("congressionalDistrict119", cleanTractValue(lineNum, line, "congressionalDistrict119", "congressionalDistrict119"));
-                tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("persistentPoverty", cleanTractValue(lineNum, line, "persistentPoverty", "persistentPoverty"));
+                tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("persistentPoverty1721", cleanTractValue(lineNum, line, "persistentPoverty", "persistentPoverty1721"));
 
                 line = layout.readNextRecord(reader);
             }

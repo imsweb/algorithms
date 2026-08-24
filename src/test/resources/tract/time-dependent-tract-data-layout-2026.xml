@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<fixed-column-layout id="time-dependent-tract-data-layout-2025" name="Time-dependent Tract Data Layout 2025" length="246">
+<fixed-column-layout id="time-dependent-tract-data-layout-2026" name="Time-dependent Tract Data Layout 2026" length="268">
     <field name="stateFipsCode" start="1" end="2" long-label="State FIPS code"/>
 	<field name="countyFipsCode" start="3" end="5" long-label="County FIPS code"/>
 	<field name="tract" start="6" end="11" long-label="Tract"/> <!-- 2020 tract -->
@@ -33,8 +33,9 @@
 	<field name="uric2020B" start="135" end="135" long-label="2010 Census-based Urban Rural Indicator Codes (URIC) categorization B"/>
 	<field name="uric2020C" start="136" end="136" long-label="2010 Census-based Urban Rural Indicator Codes (URIC) categorization C"/>
 	<field name="woodsAndPoole2019" start="137" end="146" long-label="Woods and Poole Tract Population Vintage 2019"/>
-	<field name="zoneId" start="147" end="156" long-label="Zone ID"/>
-	<field name="zoneTractRequired" start="157" end="157" long-label="Zone Tract Required"/>
+    <!-- old cancer reporting zone fields are now blank, they have been split into two sets added at the end of the file -->
+    <!-- <field name="zoneId" start="147" end="156" long-label="Zone ID"> -->
+	<!-- <field name="zoneTractRequired" start="157" end="157" long-label="Zone Tract Required"/> -->
 	<field name="naaccrPovertyIndicator" start="158" end="158" long-label="NAACCR poverty indicator"/>
 	<field name="cdcSubcounty5k" start="159" end="169" long-label="CDC Subcounty 5k Geography"/>
 	<field name="cdcSubcounty20k" start="170" end="180" long-label="CDC Subcounty 20k Geography"/>
@@ -51,4 +52,8 @@
 	<field name="sviHousingTypeAndTranspStatee2022" start="233" end="237" long-label="SVI - Housing Type and Transportation - State Based"/>
 	<field name="sviOverallState2022" start="238" end="242" long-label="SVI Overall - State Based"/>
 	<field name="congressionalDistrict119" start="243" end="246" long-label="Congressional District"/>
+	<field name="zoneId2010" start="247" end="256" long-label="Zone ID 2010"/>
+	<field name="zoneTractRequired2010" start="257" end="257" long-label="Zone Tract Required 2010"/>
+	<field name="zoneId2020" start="258" end="267" long-label="Zone ID 2020"/>
+	<field name="zoneTractRequired2020" start="268" end="268" long-label="Zone Tract Required 2020"/>
 </fixed-column-layout>

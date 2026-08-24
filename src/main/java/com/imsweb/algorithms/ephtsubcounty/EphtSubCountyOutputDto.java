@@ -5,33 +5,33 @@ package com.imsweb.algorithms.ephtsubcounty;
 
 public class EphtSubCountyOutputDto {
 
-    private String _epht2010GeoId5k;
+    private String _epht2020GeoId5k;
 
-    private String _epht2010GeoId20k;
+    private String _epht2020GeoId20k;
 
-    private String _epht2010GeoId50k;
+    private String _epht2020GeoId50k;
 
-    public String getEpht2010GeoId5k() {
-        return _epht2010GeoId5k;
+    public String getEpht2020GeoId5k() {
+        return _epht2020GeoId5k;
     }
 
-    public void setEpht2010GeoId5k(String epht2010GeoId5k) {
-        _epht2010GeoId5k = epht2010GeoId5k;
+    public void setEpht2020GeoId5k(String epht2020GeoId5k) {
+        _epht2020GeoId5k = epht2020GeoId5k;
     }
 
-    public String getEpht2010GeoId20k() {
-        return _epht2010GeoId20k;
+    public String getEpht2020GeoId20k() {
+        return _epht2020GeoId20k;
     }
 
-    public void setEpht2010GeoId20k(String epht2010GeoId20k) {
-        _epht2010GeoId20k = epht2010GeoId20k;
+    public void setEpht2020GeoId20k(String epht2020GeoId20k) {
+        _epht2020GeoId20k = epht2020GeoId20k;
     }
 
-    public String getEpht2010GeoId50k() {
-        return _epht2010GeoId50k;
+    public String getEpht2020GeoId50k() {
+        return _epht2020GeoId50k;
     }
 
-    public void setEpht2010GeoId50k(String epht2010GeoId50k) {
-        _epht2010GeoId50k = epht2010GeoId50k;
+    public void setEpht2020GeoId50k(String epht2020GeoId50k) {
+        _epht2020GeoId50k = epht2020GeoId50k;
     }
 }
