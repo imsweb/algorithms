@@ -62,9 +62,9 @@ public final class CountryData {
         _TRACT_FIELDS.put("uric2010", 1);
         _TRACT_FIELDS.put("uric2020", 1);
         _TRACT_FIELDS.put("cancerReportingZone2010", 10);
-        _TRACT_FIELDS.put("cancerReportingZoneTractCert2010", 1);
+        _TRACT_FIELDS.put("cancerReportingZoneTractReq2010", 1);
         _TRACT_FIELDS.put("cancerReportingZone2020", 10);
-        _TRACT_FIELDS.put("cancerReportingZoneTractCert2020", 1);
+        _TRACT_FIELDS.put("cancerReportingZoneTractReq2020", 1);
         _TRACT_FIELDS.put("naaccrPovertyIndicator9504", 1);
         _TRACT_FIELDS.put("naaccrPovertyIndicator0507", 1);
         _TRACT_FIELDS.put("npcrEphtSubcounty5k", 11);
@@ -228,9 +228,9 @@ public final class CountryData {
 
                                 // Cancer Reporting Zone
                                 censusData.setCancerReportingZone2010(StringUtils.trimToNull(values.get("cancerReportingZone2010")));
-                                censusData.setCancerReportingZoneTractCert2010(StringUtils.trimToNull(values.get("cancerReportingZoneTractCert2010")));
+                                censusData.setCancerReportingZoneTractReq2010(StringUtils.trimToNull(values.get("cancerReportingZoneTractCert2010")));
                                 censusData.setCancerReportingZone2020(StringUtils.trimToNull(values.get("cancerReportingZone2020")));
-                                censusData.setCancerReportingZoneTractCert2020(StringUtils.trimToNull(values.get("cancerReportingZoneTractCert2020")));
+                                censusData.setCancerReportingZoneTractReq2020(StringUtils.trimToNull(values.get("cancerReportingZoneTractCert2020")));
 
                                 // Social Vulnerability Index (SVI)
                                 censusData.setSviOverallStateBased2018(StringUtils.trimToNull(values.get("sviOverallStateBased2018")));

@@ -34,7 +34,7 @@
 	<field name="uric2020C" start="136" end="136" long-label="2010 Census-based Urban Rural Indicator Codes (URIC) categorization C"/>
 	<field name="woodsAndPoole2019" start="137" end="146" long-label="Woods and Poole Tract Population Vintage 2019"/>
 	<field name="zoneId" start="147" end="156" long-label="Zone ID"/>
-	<field name="zoneTractCertainty" start="157" end="157" long-label="Zone Tract Certainty"/>
+	<field name="zoneTractRequired" start="157" end="157" long-label="Zone Tract Required"/>
 	<field name="naaccrPovertyIndicator" start="158" end="158" long-label="NAACCR poverty indicator"/>
 	<field name="cdcSubcounty5k" start="159" end="169" long-label="CDC Subcounty 5k Geography"/>
 	<field name="cdcSubcounty20k" start="170" end="180" long-label="CDC Subcounty 20k Geography"/>

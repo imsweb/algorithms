@@ -36,13 +36,13 @@ public class CensusData {
     private String _cancerReportingZone2010;
 
     // Cancer Reporting Zone Tract Certainty 2010
-    private String _cancerReportingZoneTractCert2010;
+    private String _cancerReportingZoneTractReq2010;
 
     // Cancer Reporting Zone 2020
     private String _cancerReportingZone2020;
 
     // Cancer Reporting Zone Tract Certainty 2020
-    private String _cancerReportingZoneTractCert2020;
+    private String _cancerReportingZoneTractReq2020;
 
     // EPHT SubCounty 5K
     private String _epht2010GeoId5k;
@@ -170,12 +170,12 @@ public class CensusData {
         _cancerReportingZone2010 = cancerReportingZone2010;
     }
 
-    public String getCancerReportingZoneTractCert2010() {
-        return _cancerReportingZoneTractCert2010;
+    public String getCancerReportingZoneTractReq2010() {
+        return _cancerReportingZoneTractReq2010;
     }
 
-    public void setCancerReportingZoneTractCert2010(String cancerReportingZoneTractCert2010) {
-        _cancerReportingZoneTractCert2010 = cancerReportingZoneTractCert2010;
+    public void setCancerReportingZoneTractReq2010(String cancerReportingZoneTractReq2010) {
+        _cancerReportingZoneTractReq2010 = cancerReportingZoneTractReq2010;
     }
 
     public String getCancerReportingZone2020() {
@@ -186,12 +186,12 @@ public class CensusData {
         _cancerReportingZone2020 = cancerReportingZone2020;
     }
 
-    public String getCancerReportingZoneTractCert2020() {
-        return _cancerReportingZoneTractCert2020;
+    public String getCancerReportingZoneTractReq2020() {
+        return _cancerReportingZoneTractReq2020;
     }
 
-    public void setCancerReportingZoneTractCert2020(String cancerReportingZoneTractCert2020) {
-        _cancerReportingZoneTractCert2020 = cancerReportingZoneTractCert2020;
+    public void setCancerReportingZoneTractReq2020(String cancerReportingZoneTractReq2020) {
+        _cancerReportingZoneTractReq2020 = cancerReportingZoneTractReq2020;
     }
 
     public String getSviOverallStateBased2018() {

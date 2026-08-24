@@ -376,10 +376,10 @@ public final class Algorithms {
             addField(AlgorithmField.of(FIELD_EPHT_2020_GEOID_50K, 9998, 11, "EPHT 2010 GEO ID 50K", "EPHT 50K", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_TRACT_EST_CONGRESS_DIST_118, 9405, 4, "Tract-Estimated 118th Congressional District", "Tract-Est 118", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_TRACT_EST_CONGRESS_DIST_119, 9406, 4, "Tract-Estimated 119th Congressional District", "Tract-Est 119", DATA_LEVEL_TUMOR, false));
-            addField(AlgorithmField.of(FIELD_CANCER_RPT_ZONE_2010, 9435, 10, "Cancer Reporting Zone 2010", "Cancer Rpt Zone 10", DATA_LEVEL_TUMOR, false));
-            addField(AlgorithmField.of(FIELD_CANCER_RPT_ZONE_TRACT_REQ_2010, 9436, 1, "Census Tract Req for Cancer Rpt Zone (2010 Def)", "Cancer Rpt Zone Tract Cert 10", DATA_LEVEL_TUMOR, false));
-            addField(AlgorithmField.of(FIELD_CANCER_RPT_ZONE_2020, 9437, 10, "Cancer Reporting Zone 2020", "Cancer Rpt Zone 20", DATA_LEVEL_TUMOR, false));
-            addField(AlgorithmField.of(FIELD_CANCER_RPT_ZONE_TRACT_REQ_2020, 9438, 1, "Census Tract Req for Cancer Rpt Zone (2020 Def)", "Cancer Rpt Zone Tract Cert 20", DATA_LEVEL_TUMOR, false));
+            addField(AlgorithmField.of(FIELD_CANCER_RPT_ZONE_2010, 9435, 10, "Cancer Reporting Zone (2010 Defined)", "Cancer Rpt Zone 10", DATA_LEVEL_TUMOR, false));
+            addField(AlgorithmField.of(FIELD_CANCER_RPT_ZONE_TRACT_REQ_2010, 9436, 1, "Census Tract Req for Cancer Rpt Zone (2010 Def)", "Cancer Rpt Zone Tract Req 10", DATA_LEVEL_TUMOR, false));
+            addField(AlgorithmField.of(FIELD_CANCER_RPT_ZONE_2020, 9437, 10, "Cancer Reporting Zone (2020 Defined)", "Cancer Rpt Zone 20", DATA_LEVEL_TUMOR, false));
+            addField(AlgorithmField.of(FIELD_CANCER_RPT_ZONE_TRACT_REQ_2020, 9438, 1, "Census Tract Req for Cancer Rpt Zone (2020 Def)", "Cancer Rpt Zone Tract Req 20", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_PERSISTENT_POVERTY_0711, 9626, 1, "Persistent Poverty 2007-2011", "Persist Pov 07-11", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_PERSISTENT_POVERTY_1721, 9627, 1, "Persistent Poverty 2017-2021", "Persist Pov 17-21", DATA_LEVEL_TUMOR, false));
             addField(AlgorithmField.of(FIELD_SEER_BRAIN_CSN_RECODE_2020, 9455, 2, "SEER Brain/CNS Recode 2020", "Brain/CNS", DATA_LEVEL_TUMOR, false));

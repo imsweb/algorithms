@@ -35,7 +35,7 @@
 	<field name="woodsAndPoole2019" start="137" end="146" long-label="Woods and Poole Tract Population Vintage 2019"/>
     <!-- old cancer reporting zone fields are now blank, they have been split into two sets added at the end of the file -->
     <!-- <field name="zoneId" start="147" end="156" long-label="Zone ID"> -->
-	<!-- <field name="zoneTractCertainty" start="157" end="157" long-label="Zone Tract Certainty"/> -->
+	<!-- <field name="zoneTractRequired" start="157" end="157" long-label="Zone Tract Required"/> -->
 	<field name="naaccrPovertyIndicator" start="158" end="158" long-label="NAACCR poverty indicator"/>
 	<field name="cdcSubcounty5k" start="159" end="169" long-label="CDC Subcounty 5k Geography"/>
 	<field name="cdcSubcounty20k" start="170" end="180" long-label="CDC Subcounty 20k Geography"/>
@@ -53,7 +53,7 @@
 	<field name="sviOverallState2022" start="238" end="242" long-label="SVI Overall - State Based"/>
 	<field name="congressionalDistrict119" start="243" end="246" long-label="Congressional District"/>
 	<field name="zoneId2010" start="247" end="256" long-label="Zone ID 2010"/>
-	<field name="zoneTractCertainty2010" start="257" end="257" long-label="Zone Tract Certainty 2010"/>
+	<field name="zoneTractRequired2010" start="257" end="257" long-label="Zone Tract Required 2010"/>
 	<field name="zoneId2020" start="258" end="267" long-label="Zone ID 2020"/>
-	<field name="zoneTractCertainty2020" start="268" end="268" long-label="Zone Tract Certainty 2020"/>
+	<field name="zoneTractRequired2020" start="268" end="268" long-label="Zone Tract Required 2020"/>
 </fixed-column-layout>

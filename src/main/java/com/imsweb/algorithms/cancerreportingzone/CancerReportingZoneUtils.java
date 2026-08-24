@@ -79,10 +79,10 @@ public final class CancerReportingZoneUtils {
             if (censusData != null) {
                 // 2010
                 result.setCancerReportingZone2010(censusData.getCancerReportingZone2010());
-                result.setCancerReportingZoneTractReq2010(censusData.getCancerReportingZoneTractCert2010());
+                result.setCancerReportingZoneTractReq2010(censusData.getCancerReportingZoneTractReq2010());
                 // 2020
                 result.setCancerReportingZone2020(censusData.getCancerReportingZone2020());
-                result.setCancerReportingZoneTractReq2020(censusData.getCancerReportingZoneTractCert2020());
+                result.setCancerReportingZoneTractReq2020(censusData.getCancerReportingZoneTractReq2020());
             }
         }
 

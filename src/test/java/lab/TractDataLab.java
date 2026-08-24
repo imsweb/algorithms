@@ -343,7 +343,7 @@ public class TractDataLab {
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("uric2010", cleanTractValue(lineNum, line, "uric2010A", "uric2010"));
                 // commented out the Cancer Reporting Zone and EPHT Subcounty for 2010 geographies, we are now using the 2020 geographies for those...
                 //tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("cancerReportingZone", cleanTractValue(lineNum, line, "zoneId", "cancerReportingZone"));
-                //tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("cancerReportingZoneTractCert", cleanTractValue(lineNum, line, "zoneTractCertainty", "cancerReportingZoneTractCert"));
+                //tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("cancerReportingZoneTractReq", cleanTractValue(lineNum, line, "zoneTractRequired", "cancerReportingZoneTractReq"));
                 //tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("npcrEphtSubcounty5k", cleanTractValue(lineNum, line, "cdcSubcounty5k", "npcrEphtSubcounty5k"));
                 //tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("npcrEphtSubcounty20k", cleanTractValue(lineNum, line, "cdcSubcounty20k", "npcrEphtSubcounty20k"));
                 //tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("npcrEphtSubcounty50k", cleanTractValue(lineNum, line, "cdcSubcounty50k", "npcrEphtSubcounty50k"));
@@ -396,11 +396,11 @@ public class TractDataLab {
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("ruca2020", cleanTractValue(lineNum, line, "ruca2020C", "ruca2020"));
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("uric2020", cleanTractValue(lineNum, line, "uric2020A", "uric2020"));
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("cancerReportingZone2010", cleanTractValue(lineNum, line, "zoneId2010", "cancerReportingZone2010"));
-                tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("cancerReportingZoneTractCert2010",
-                        cleanTractValue(lineNum, line, "zoneTractCertainty2010", "cancerReportingZoneTractCert2010"));
+                tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("cancerReportingZoneTractReq2010",
+                        cleanTractValue(lineNum, line, "zoneTractRequired2010", "cancerReportingZoneTractReq2010"));
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("cancerReportingZone2020", cleanTractValue(lineNum, line, "zoneId2020", "cancerReportingZone2020"));
-                tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("cancerReportingZoneTractCert2020",
-                        cleanTractValue(lineNum, line, "zoneTractCertainty2020", "cancerReportingZoneTractCert2020"));
+                tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("cancerReportingZoneTractReq2020",
+                        cleanTractValue(lineNum, line, "zoneTractRequired2020", "cancerReportingZoneTractReq2020"));
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("npcrEphtSubcounty5k", cleanTractValue(lineNum, line, "cdcSubcounty5k", "npcrEphtSubcounty5k"));
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("npcrEphtSubcounty20k", cleanTractValue(lineNum, line, "cdcSubcounty20k", "npcrEphtSubcounty20k"));
                 tractValues.computeIfAbsent(key, k -> new HashMap<>()).put("npcrEphtSubcounty50k", cleanTractValue(lineNum, line, "cdcSubcounty50k", "npcrEphtSubcounty50k"));
