@@ -15,7 +15,7 @@ import com.imsweb.algorithms.AlgorithmOutput;
 import com.imsweb.algorithms.Algorithms;
 import com.imsweb.algorithms.internal.Utils;
 
-import static com.imsweb.algorithms.Algorithms.FIELD_CENSUS_2010;
+import static com.imsweb.algorithms.Algorithms.FIELD_CENSUS_2020;
 import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS;
 import static com.imsweb.algorithms.Algorithms.FIELD_EPHT_2020_GEOID_20K;
 import static com.imsweb.algorithms.Algorithms.FIELD_EPHT_2020_GEOID_50K;
@@ -31,7 +31,7 @@ public class EphtSubCountyAlgorithm extends AbstractAlgorithm {
 
         _inputFields.add(Algorithms.getField(FIELD_STATE_DX));
         _inputFields.add(Algorithms.getField(FIELD_COUNTY_AT_DX_ANALYSIS));
-        _inputFields.add(Algorithms.getField(FIELD_CENSUS_2010));
+        _inputFields.add(Algorithms.getField(FIELD_CENSUS_2020));
 
         _outputFields.add(Algorithms.getField(FIELD_EPHT_2020_GEOID_5K));
         _outputFields.add(Algorithms.getField(FIELD_EPHT_2020_GEOID_20K));

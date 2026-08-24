@@ -18,7 +18,7 @@ import static com.imsweb.algorithms.Algorithms.FIELD_CANCER_RPT_ZONE_2010;
 import static com.imsweb.algorithms.Algorithms.FIELD_CANCER_RPT_ZONE_2020;
 import static com.imsweb.algorithms.Algorithms.FIELD_CANCER_RPT_ZONE_TRACT_REQ_2010;
 import static com.imsweb.algorithms.Algorithms.FIELD_CANCER_RPT_ZONE_TRACT_REQ_2020;
-import static com.imsweb.algorithms.Algorithms.FIELD_CENSUS_2010;
+import static com.imsweb.algorithms.Algorithms.FIELD_CENSUS_2020;
 import static com.imsweb.algorithms.Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS;
 import static com.imsweb.algorithms.Algorithms.FIELD_STATE_DX;
 import static com.imsweb.algorithms.cancerreportingzone.CancerReportingZoneUtils.CANCER_REPORTING_ZONE_UNK_A;
@@ -31,7 +31,7 @@ public class CancerReportingZoneAlgorithm extends AbstractAlgorithm {
 
         _inputFields.add(Algorithms.getField(FIELD_STATE_DX));
         _inputFields.add(Algorithms.getField(FIELD_COUNTY_AT_DX_ANALYSIS));
-        _inputFields.add(Algorithms.getField(FIELD_CENSUS_2010));
+        _inputFields.add(Algorithms.getField(FIELD_CENSUS_2020));
 
         _outputFields.add(Algorithms.getField(FIELD_CANCER_RPT_ZONE_2010));
         _outputFields.add(Algorithms.getField(FIELD_CANCER_RPT_ZONE_TRACT_REQ_2010));
