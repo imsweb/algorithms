@@ -26,9 +26,9 @@ public class EphtSubCountyUtilsTest {
         input.setAddressAtDxState("LO");
         input.setCountyAtDxAnalysis("071");
         input.setCensusTract2020("007903");
-        Assert.assertEquals("00060710132", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2020GeoId5k());
-        Assert.assertEquals("00060713913", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2020GeoId20k());
-        Assert.assertEquals("00060717176", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2020GeoId50k());
+        Assert.assertEquals("060710132", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2020GeoId5k());
+        Assert.assertEquals("060713913", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2020GeoId20k());
+        Assert.assertEquals("060717176", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2020GeoId50k());
 
         // test Puerto Rico
         input.setAddressAtDxState("PR");
@@ -49,8 +49,8 @@ public class EphtSubCountyUtilsTest {
 
                     if ("WA".equals(state) && "067".equals(county) && "012720".equals(tract)) {
                         Assert.assertEquals(key, "53067012720", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2020GeoId5k());
-                        Assert.assertEquals(key, "00530675647", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2020GeoId20k());
-                        Assert.assertEquals(key, "00530671456", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2020GeoId50k());
+                        Assert.assertEquals(key, "530675647", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2020GeoId20k());
+                        Assert.assertEquals(key, "530671456", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2020GeoId50k());
                     }
                     else {
                         Assert.assertEquals(key, "A", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2020GeoId5k());
@@ -80,8 +80,8 @@ public class EphtSubCountyUtilsTest {
 
                     if ("WA".equals(state) && "067".equals(county) && "012720".equals(tract)) {
                         Assert.assertEquals(key, "53067012720", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2020GeoId5k());
-                        Assert.assertEquals(key, "00530675647", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2020GeoId20k());
-                        Assert.assertEquals(key, "00530671456", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2020GeoId50k());
+                        Assert.assertEquals(key, "530675647", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2020GeoId20k());
+                        Assert.assertEquals(key, "530671456", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2020GeoId50k());
                     }
                     else {
                         Assert.assertEquals(key, "C", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2020GeoId5k());
@@ -103,8 +103,8 @@ public class EphtSubCountyUtilsTest {
 
                     if ("WA".equals(state) && "067".equals(county) && "012720".equals(tract)) {
                         Assert.assertEquals(key, "53067012720", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2020GeoId5k());
-                        Assert.assertEquals(key, "00530675647", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2020GeoId20k());
-                        Assert.assertEquals(key, "00530671456", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2020GeoId50k());
+                        Assert.assertEquals(key, "530675647", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2020GeoId20k());
+                        Assert.assertEquals(key, "530671456", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2020GeoId50k());
                     }
                     else {
                         Assert.assertEquals(key, "D", EphtSubCountyUtils.computeEphtSubCounty(input).getEpht2020GeoId5k());

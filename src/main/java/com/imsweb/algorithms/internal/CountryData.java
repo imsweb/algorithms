@@ -222,9 +222,9 @@ public final class CountryData {
                                 censusData.setIndicatorCode2020(Objects.toString(StringUtils.trimToNull(values.get("uric2020")), "9"));
 
                                 // NPCR EPHT SubCounty
-                                censusData.setEpht2010GeoId5k(StringUtils.leftPad(StringUtils.trimToNull(values.get("npcrEphtSubcounty5k")), 11, '0'));
-                                censusData.setEpht2010GeoId20k(StringUtils.leftPad(StringUtils.trimToNull(values.get("npcrEphtSubcounty20k")), 11, '0'));
-                                censusData.setEpht2010GeoId50k(StringUtils.leftPad(StringUtils.trimToNull(values.get("npcrEphtSubcounty50k")), 11, '0'));
+                                censusData.setEpht2010GeoId5k(StringUtils.trimToNull(values.get("npcrEphtSubcounty5k")));
+                                censusData.setEpht2010GeoId20k(StringUtils.trimToNull(values.get("npcrEphtSubcounty20k")));
+                                censusData.setEpht2010GeoId50k(StringUtils.trimToNull(values.get("npcrEphtSubcounty50k")));
 
                                 // Cancer Reporting Zone
                                 censusData.setCancerReportingZone2010(StringUtils.trimToNull(values.get("cancerReportingZone2010")));
