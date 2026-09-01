@@ -386,6 +386,23 @@ public class AlgorithmsTest {
         tumMap.put(Algorithms.FIELD_HER2_OVERALL_SUMMARY, "0");
         patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
         Assert.assertEquals("4", Utils.extractTumors(alg.execute(input).getPatient()).getFirst().get(Algorithms.FIELD_BREAST_SUBTYPE));
+
+        // Cancer Zone
+        alg = Algorithms.getAlgorithm(Algorithms.ALG_CANCER_REPORTING_ZONE);
+        Assert.assertTrue(alg.getParameters().isEmpty());
+        Assert.assertFalse(alg.getUnknownValues().isEmpty());
+        input = new AlgorithmInput();
+        patMap = new HashMap<>();
+        input.setPatient(patMap);
+        tumMap = new HashMap<>();
+        tumMap.put(Algorithms.FIELD_STATE_DX, "LO");
+        tumMap.put(Algorithms.FIELD_COUNTY_AT_DX_ANALYSIS, "071");
+        tumMap.put(Algorithms.FIELD_CENSUS_2020, "007903");
+        patMap.put(Algorithms.FIELD_TUMORS, Collections.singletonList(tumMap));
+        Assert.assertEquals("06A0274ca", Utils.extractTumors(alg.execute(input).getPatient()).getFirst().get(Algorithms.FIELD_CANCER_RPT_ZONE_2010));
+        Assert.assertEquals("1", Utils.extractTumors(alg.execute(input).getPatient()).getFirst().get(Algorithms.FIELD_CANCER_RPT_ZONE_TRACT_REQ_2010));
+        Assert.assertEquals("06A9357za", Utils.extractTumors(alg.execute(input).getPatient()).getFirst().get(Algorithms.FIELD_CANCER_RPT_ZONE_2020));
+        Assert.assertEquals("1", Utils.extractTumors(alg.execute(input).getPatient()).getFirst().get(Algorithms.FIELD_CANCER_RPT_ZONE_TRACT_REQ_2020));
     }
 
     @Test

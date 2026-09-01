@@ -55,8 +55,8 @@ public class CancerReportingZoneAlgorithm extends AbstractAlgorithm {
 
             Map<String, Object> outputTumor = new HashMap<>();
             outputTumor.put(FIELD_CANCER_RPT_ZONE_2010, outputDto.getCancerReportingZone2010());
-            outputTumor.put(FIELD_CANCER_RPT_ZONE_TRACT_REQ_2010, outputDto.getCancerReportingZoneTractReq2020());
-            outputTumor.put(FIELD_CANCER_RPT_ZONE_2020, outputDto.getCancerReportingZone2010());
+            outputTumor.put(FIELD_CANCER_RPT_ZONE_TRACT_REQ_2010, outputDto.getCancerReportingZoneTractReq2010());
+            outputTumor.put(FIELD_CANCER_RPT_ZONE_2020, outputDto.getCancerReportingZone2020());
             outputTumor.put(FIELD_CANCER_RPT_ZONE_TRACT_REQ_2020, outputDto.getCancerReportingZoneTractReq2020());
 
             Utils.addTumorOutput(outputPatient, outputTumor);
