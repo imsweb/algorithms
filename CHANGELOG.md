@@ -1,6 +1,6 @@
 ## Algorithms Version History
 
-**Changes in version 5.11 (not released yet)**
+**Changes in version 5.11**
 
 - Updated data for the EPH SubCountry algorithms and switched to the 2020 geographies; the three 2010 output variables were retired and replaced by 2020 variables. 
 - Updated data for the Persistence Poverty algorithm; added new variable based on 2020 geographies and added output value 2 (not available) in addition to the 0 and 1.
