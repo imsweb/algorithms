@@ -51,6 +51,20 @@ public class PrcdaUtilsTest {
             Assert.assertEquals(key, "0", PrcdaUtils.computePrcda(input).getPrcda());
         }
 
+        // states that have some PRCDA counties shouldn't be considered entirely non-PRCDA, so unknown counties should return 9
+        for (String state : Arrays.asList("MD", "TN")) {
+            input.setAddressAtDxState(state);
+            input.setCountyAtDxAnalysis("999");
+            Assert.assertEquals(state, "9", PrcdaUtils.computePrcda(input).getPrcda());
+        }
+
+        // states that are not in the PRCDA data are entirely non-PRCDA
+        for (String state : Arrays.asList("AR", "DC", "WV", "ON", "AA")) {
+            input.setAddressAtDxState(state);
+            input.setCountyAtDxAnalysis("999");
+            Assert.assertEquals(state, "0", PrcdaUtils.computePrcda(input).getPrcda());
+        }
+
         // test missing or invalid state or county - or county not reported
         for (String state : Arrays.asList("MN", "ZZ", "INVALID", null)) {
             for (String county : Arrays.asList("035", "000", "999", "INVALID", null)) {

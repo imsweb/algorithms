@@ -1,5 +1,9 @@
 ## Algorithms Version History
 
+**Changes in version 5.12**
+
+- Fixed PRCDA algorithm returning 0 instead of 9 for unknown counties in states that now have PRCDA counties (like MD and TN); the states where every county is non-PRCDA are now computed from the PRCDA data. 
+
 **Changes in version 5.11**
 
 - Updated data for the EPH SubCountry algorithms and switched to the 2020 geographies; the three 2010 output variables were retired and replaced by 2020 variables. 

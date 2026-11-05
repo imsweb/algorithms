@@ -15,8 +15,6 @@ import com.imsweb.algorithms.internal.Utils;
 
 import static com.imsweb.algorithms.StateCountyInputDto.isInvalidStateOrCounty;
 import static com.imsweb.algorithms.StateCountyInputDto.isUnknownStateOrCounty;
-import static com.imsweb.algorithms.prcda.PrcdaUtils.ENTIRE_STATE_NON_PRCDA;
-import static com.imsweb.algorithms.prcda.PrcdaUtils.ENTIRE_STATE_PRCDA;
 import static com.imsweb.algorithms.prcda.PrcdaUtils.PRCDA_NO;
 import static com.imsweb.algorithms.prcda.PrcdaUtils.PRCDA_UNKNOWN;
 import static com.imsweb.algorithms.prcda.PrcdaUtils.PRCDA_YES;
@@ -31,15 +29,12 @@ import static com.imsweb.algorithms.prcda.PrcdaUtils.PRCDA_YES;
 public class PrcdaDataProvider {
 
     public String getPrcda(String state, String county) {
-        if (ENTIRE_STATE_PRCDA.contains(state))
+        if (isEntireStatePrcda(state))
             return PRCDA_YES;
-        else if (ENTIRE_STATE_NON_PRCDA.contains(state))
+        else if (isEntireStateNonPrcda(state))
             return PRCDA_NO;
         else if (isInvalidStateOrCounty(state, county) || isUnknownStateOrCounty(state, county) || "000".equals(county))
             return PRCDA_UNKNOWN;
-
-        if (!CountryData.getInstance().isPrcdaDataInitialized())
-            CountryData.getInstance().initializePrcdaData(loadPrcdaData());
 
         StateData stateData = CountryData.getInstance().getPrcdaData(state);
         if (stateData == null)
@@ -50,6 +45,23 @@ public class PrcdaDataProvider {
             return PRCDA_NO;
 
         return countyData.getPrcda();
+    }
+
+    /**
+     * Returns true if every county of the requested state is PRCDA, false otherwise.
+     */
+    public boolean isEntireStatePrcda(String state) {
+        return CountryData.getInstance().isPrcdaEntireStatePrcda(state);
+    }
+
+    /**
+     * Returns true if every county of the requested state is non-PRCDA (based on the states present in the PRCDA data), false otherwise.
+     */
+    public boolean isEntireStateNonPrcda(String state) {
+        if (!CountryData.getInstance().isPrcdaDataInitialized())
+            CountryData.getInstance().initializePrcdaData(loadPrcdaData());
+
+        return CountryData.getInstance().isPrcdaEntireStateNonPrcda(state);
     }
 
     private Map<String, Map<String, CountyData>> loadPrcdaData() {
