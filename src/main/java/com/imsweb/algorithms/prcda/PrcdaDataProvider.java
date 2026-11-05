@@ -15,7 +15,6 @@ import com.imsweb.algorithms.internal.Utils;
 
 import static com.imsweb.algorithms.StateCountyInputDto.isInvalidStateOrCounty;
 import static com.imsweb.algorithms.StateCountyInputDto.isUnknownStateOrCounty;
-import static com.imsweb.algorithms.prcda.PrcdaUtils.ENTIRE_STATE_PRCDA;
 import static com.imsweb.algorithms.prcda.PrcdaUtils.PRCDA_NO;
 import static com.imsweb.algorithms.prcda.PrcdaUtils.PRCDA_UNKNOWN;
 import static com.imsweb.algorithms.prcda.PrcdaUtils.PRCDA_YES;
@@ -30,7 +29,7 @@ import static com.imsweb.algorithms.prcda.PrcdaUtils.PRCDA_YES;
 public class PrcdaDataProvider {
 
     public String getPrcda(String state, String county) {
-        if (ENTIRE_STATE_PRCDA.contains(state))
+        if (isEntireStatePrcda(state))
             return PRCDA_YES;
         else if (isEntireStateNonPrcda(state))
             return PRCDA_NO;
@@ -46,6 +45,13 @@ public class PrcdaDataProvider {
             return PRCDA_NO;
 
         return countyData.getPrcda();
+    }
+
+    /**
+     * Returns true if every county of the requested state is PRCDA, false otherwise.
+     */
+    public boolean isEntireStatePrcda(String state) {
+        return CountryData.getInstance().isPrcdaEntireStatePrcda(state);
     }
 
     /**

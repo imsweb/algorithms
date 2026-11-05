@@ -3,11 +3,6 @@
  */
 package com.imsweb.algorithms.prcda;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-
 import com.imsweb.algorithms.StateCountyInputDto;
 
 /**
@@ -26,9 +21,6 @@ public final class PrcdaUtils {
     public static final String PRCDA_NO = "0";
     public static final String PRCDA_YES = "1";
     public static final String PRCDA_UNKNOWN = "9";
-
-    // States where every county is PRCDA
-    public static final Set<String> ENTIRE_STATE_PRCDA = Collections.unmodifiableSet(new HashSet<>(Arrays.asList("AK", "CT", "NV", "OK", "SC")));
 
     private static final PrcdaDataProvider _PROVIDER = new PrcdaDataProvider();
 
@@ -59,7 +51,7 @@ public final class PrcdaUtils {
         
         input.applyRecodes();
 
-        if (ENTIRE_STATE_PRCDA.contains(input.getAddressAtDxState())) {
+        if (_PROVIDER.isEntireStatePrcda(input.getAddressAtDxState())) {
             result.setPrcda(PRCDA_YES);
         }
         else if (_PROVIDER.isEntireStateNonPrcda(input.getAddressAtDxState())) {

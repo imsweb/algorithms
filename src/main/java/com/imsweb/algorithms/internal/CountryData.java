@@ -135,6 +135,9 @@ public final class CountryData {
             "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT",
             "VA", "WA", "WV", "WI", "WY");
 
+    // states where every county is PRCDA
+    private static final List<String> _PRCDA_ENTIRE_STATE_PRCDA = Arrays.asList("AK", "CT", "NV", "OK", "SC");
+
     // territories, Canadian provinces and military codes; those are always non-PRCDA
     private static final List<String> _PRCDA_TERRITORIES = Arrays.asList("AS", "GU", "MP", "PW", "PR", "UM", "VI", "FM", "MH", "TT");
     private static final List<String> _PRCDA_PROVINCES = Arrays.asList("AB", "BC", "MB", "NB", "NL", "NS", "NT", "NU", "ON", "PE", "QC", "SK", "YT");
@@ -511,6 +514,13 @@ public final class CountryData {
     }
 
     /**
+     * Returns true if every county of the requested state is PRCDA, false otherwise.
+     */
+    public boolean isPrcdaEntireStatePrcda(String state) {
+        return _PRCDA_ENTIRE_STATE_PRCDA.contains(state);
+    }
+
+    /**
      * Returns true if every county of the requested state is non-PRCDA, false otherwise.
      */
     public boolean isPrcdaEntireStateNonPrcda(String state) {
@@ -553,8 +563,10 @@ public final class CountryData {
                     }
                 }
 
-                // every state that doesn't have any county in the PRCDA data is entirely non-PRCDA
-                _PRCDA_US_STATES.stream().filter(state -> !data.containsKey(state)).forEach(_prcdaEntireStateNonPrcda::add);
+                // every state that doesn't have any county in the PRCDA data (and that isn't entirely PRCDA) is entirely non-PRCDA
+                _PRCDA_US_STATES.stream()
+                        .filter(state -> !data.containsKey(state) && !_PRCDA_ENTIRE_STATE_PRCDA.contains(state))
+                        .forEach(_prcdaEntireStateNonPrcda::add);
                 _prcdaEntireStateNonPrcda.addAll(_PRCDA_TERRITORIES);
                 _prcdaEntireStateNonPrcda.addAll(_PRCDA_PROVINCES);
                 _prcdaEntireStateNonPrcda.addAll(_PRCDA_MILITARY);
